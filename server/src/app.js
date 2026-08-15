@@ -21,8 +21,12 @@ const settingsRoutes = require("./modules/settings/settings.routes");
 // Phase 11 — Activity Logs
 const activityLogRoutes = require("./modules/activity-logs/activityLog.routes");
 
+// Phase 12 — OTP Routes (public — customer-facing)
+const otpRoutes = require("./modules/otp/otp.routes");
+
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
+
 
 
 const path = require("path");
@@ -52,10 +56,11 @@ app.get("/health", (req, res) => {
   });
 });
 
-// ─── PUBLIC auth routes ────────────────────────────────────────────────────────
-// Mounted BEFORE the auth middleware so login is never blocked.
-// Allow-list: only /api/v1/auth/* is public. Everything else under /admin/* is protected.
+// ─── PUBLIC routes ─────────────────────────────────────────────────────────────
+// Mounted BEFORE the auth middleware so public endpoints are never blocked.
 app.use("/api/v1/auth/admin", adminUserRoutes);
+app.use("/api/v1/otp", otpRoutes);
+
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route
