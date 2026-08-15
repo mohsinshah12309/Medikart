@@ -12,6 +12,9 @@ const auth = require("./middleware/auth");
 const productRoutes = require("./modules/products/product.routes");
 const categoryRoutes = require("./modules/categories/category.routes");
 
+// Phase 7 — Cities & Delivery Pricing
+const cityRoutes = require("./modules/cities/city.routes");
+
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 
@@ -52,6 +55,9 @@ app.use("/api/v1/admin", auth);
 // Per rules.md Section 2: /api/v1/<resource>
 app.use("/api/v1/admin/products", productRoutes);
 app.use("/api/v1/admin/categories", categoryRoutes);
+
+// Phase 7 — Cities & Delivery Pricing (auth-protected)
+app.use("/api/v1/admin/cities", cityRoutes);
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)
