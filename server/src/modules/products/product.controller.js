@@ -88,10 +88,69 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
+/**
+ * PATCH /admin/products/:id/narcotics — Phase 11 single product flag update
+ */
+const setNarcoticFlag = async (req, res, next) => {
+  try {
+    const product = await productService.setNarcoticFlag(
+      req.params.id,
+      req.body.isNarcotic,
+      req.admin
+    );
+    res.status(200).json({
+      status: "success",
+      data: { product },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * PATCH /admin/products/bulk/narcotics — Phase 11 bulk product flag update
+ */
+const bulkSetNarcoticFlag = async (req, res, next) => {
+  try {
+    const products = await productService.bulkSetNarcoticFlag(
+      req.body.productIds,
+      req.body.isNarcotic,
+      req.admin
+    );
+    res.status(200).json({
+      status: "success",
+      results: products.length,
+      data: { products },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * GET /admin/products/narcotics — Phase 11 narcotics audit view
+ */
+const getNarcoticProducts = async (req, res, next) => {
+  try {
+    const products = await productService.getNarcoticProducts();
+    res.status(200).json({
+      status: "success",
+      results: products.length,
+      data: { products },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProduct,
   deleteProduct,
+  setNarcoticFlag,
+  bulkSetNarcoticFlag,
+  getNarcoticProducts,
 };
+

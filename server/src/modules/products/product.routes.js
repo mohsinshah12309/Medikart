@@ -19,6 +19,8 @@ const {
   updateProductSchema,
   productIdSchema,
   productImageParamsSchema,
+  narcoticToggleSchema,
+  bulkNarcoticsSchema,
 } = require("./product.validation");
 const { productDiscountSchema } = require("./product.discount.validation");
 
@@ -27,6 +29,25 @@ router.post("/", validate(createProductSchema), productController.createProduct)
 
 // GET /admin/products — get all products (with optional filters)
 router.get("/", productController.getAllProducts);
+
+// ── Phase 11 — Narcotics Flagging & Audit Routes ─────────────────────────────
+// GET /admin/products/narcotics — list products flagged isNarcotic: true (FR-AD-14)
+router.get("/narcotics", productController.getNarcoticProducts);
+
+// PATCH /admin/products/bulk/narcotics — bulk add/remove narcotics flag (FR-AD-13)
+router.patch(
+  "/bulk/narcotics",
+  validate(bulkNarcoticsSchema),
+  productController.bulkSetNarcoticFlag
+);
+
+// PATCH /admin/products/:id/narcotics — single product narcotics flag (FR-AD-11/12)
+router.patch(
+  "/:id/narcotics",
+  validateParams(productIdSchema),
+  validate(narcoticToggleSchema),
+  productController.setNarcoticFlag
+);
 
 // GET /admin/products/:id — get single product
 router.get(
@@ -42,6 +63,7 @@ router.put(
   validate(updateProductSchema),
   productController.updateProduct
 );
+
 
 const productImagesController = require("./productImages.controller");
 const upload = require("../../middleware/upload");

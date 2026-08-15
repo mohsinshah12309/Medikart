@@ -73,9 +73,30 @@ const productImageParamsSchema = z.object({
   imageId: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid image ID format"),
 });
 
+// Phase 11 — Single product narcotics flag update schema
+const narcoticToggleSchema = z
+  .object({
+    isNarcotic: z.boolean({ required_error: "isNarcotic boolean is required" }),
+  })
+  .strict();
+
+// Phase 11 — Bulk narcotics flag update schema (OWASP API4 max batch size enforced)
+const bulkNarcoticsSchema = z
+  .object({
+    productIds: z
+      .array(z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid product ID format"))
+      .min(1, "At least one product ID is required")
+      .max(100, "Maximum batch size is 100 products per request"),
+    isNarcotic: z.boolean({ required_error: "isNarcotic boolean is required" }),
+  })
+  .strict();
+
 module.exports = {
   createProductSchema,
   updateProductSchema,
   productIdSchema,
   productImageParamsSchema,
+  narcoticToggleSchema,
+  bulkNarcoticsSchema,
 };
+

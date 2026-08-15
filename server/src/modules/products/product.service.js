@@ -115,10 +115,91 @@ const deleteProduct = async (productId) => {
   return product;
 };
 
+const activityLogService = require("../activity-logs/activityLog.service");
+
+/**
+ * Phase 11 — Set or remove Narcotics flag on a single product.
+ * Writes ActivityLog entry (non-blocking).
+ */
+const setNarcoticFlag = async (productId, isNarcotic, actor) => {
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    throw new NotFoundError("Product not found");
+  }
+
+  const previousFlag = product.isNarcotic;
+  product.isNarcotic = isNarcotic;
+  await product.save();
+
+  // Audit log entry (FR-AD-15 / NFR-COMP-02) — non-blocking call
+  const action = isNarcotic ? "narcotics_flag_added" : "narcotics_flag_removed";
+  activityLogService.logActivity({
+    actor,
+    action,
+    entityType: "product",
+    entityId: product._id,
+    before: { isNarcotic: previousFlag },
+    after: { isNarcotic },
+  });
+
+  return formatProductWithImages(product);
+};
+
+/**
+ * Phase 11 — Bulk set/remove Narcotics flag across multiple products (FR-AD-13).
+ * Writes ActivityLog entry for each updated product (non-blocking).
+ */
+const bulkSetNarcoticFlag = async (productIds, isNarcotic, actor) => {
+  const products = await Product.find({ _id: { $in: productIds } });
+
+  if (!products || products.length === 0) {
+    throw new NotFoundError("No matching products found for bulk update");
+  }
+
+  const updatedProducts = [];
+  const action = isNarcotic ? "narcotics_flag_added" : "narcotics_flag_removed";
+
+  for (const product of products) {
+    const previousFlag = product.isNarcotic;
+    product.isNarcotic = isNarcotic;
+    await product.save();
+
+    activityLogService.logActivity({
+      actor,
+      action,
+      entityType: "product",
+      entityId: product._id,
+      before: { isNarcotic: previousFlag },
+      after: { isNarcotic },
+    });
+
+    updatedProducts.push(formatProductWithImages(product));
+  }
+
+  return updatedProducts;
+};
+
+/**
+ * Phase 11 — Get all products currently flagged as isNarcotic: true (FR-AD-14).
+ * Admin audit view.
+ */
+const getNarcoticProducts = async () => {
+  const products = await Product.find({ isNarcotic: true })
+    .populate("categoryIds", "name slug")
+    .sort({ createdAt: -1 });
+
+  return products.map(formatProductWithImages);
+};
+
 module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProduct,
   deleteProduct,
+  setNarcoticFlag,
+  bulkSetNarcoticFlag,
+  getNarcoticProducts,
 };
+

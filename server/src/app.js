@@ -18,8 +18,12 @@ const cityRoutes = require("./modules/cities/city.routes");
 // Phase 8 — Settings (storewide discount placeholder)
 const settingsRoutes = require("./modules/settings/settings.routes");
 
+// Phase 11 — Activity Logs
+const activityLogRoutes = require("./modules/activity-logs/activityLog.routes");
+
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
+
 
 const path = require("path");
 
@@ -70,6 +74,10 @@ app.use("/api/v1/admin/cities", cityRoutes);
 
 // Phase 8 — Settings: storewide discount (auth-protected)
 app.use("/api/v1/admin/settings", settingsRoutes);
+
+// Phase 11 — Activity Logs (auth-protected)
+app.use("/api/v1/admin/activity-logs", activityLogRoutes);
+
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)
