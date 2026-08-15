@@ -5,6 +5,11 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
 const { connectDB } = require("./config/db");
+const errorHandler = require("./middleware/errorHandler");
+
+// Phase 4 — API Routes
+const productRoutes = require("./modules/products/product.routes");
+const categoryRoutes = require("./modules/categories/category.routes");
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +31,16 @@ app.get("/health", (req, res) => {
     database: dbConnected ? "connected" : "disconnected",
   });
 });
+
+// Phase 4 — Product & Category CRUD APIs
+// Per rules.md Section 2: /api/v1/<resource>
+app.use("/api/v1/admin/products", productRoutes);
+app.use("/api/v1/admin/categories", categoryRoutes);
+
+// Central error handler — must be AFTER all routes
+// Per rules.md Section 2: typed errors (NotFoundError, ValidationError)
+// caught here, never raw stack traces to clients
+app.use(errorHandler);
 
 // Start Server if run directly
 const PORT = process.env.PORT || 5000;
