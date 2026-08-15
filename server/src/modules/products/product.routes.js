@@ -12,12 +12,14 @@ const express = require("express");
 const router = express.Router();
 
 const productController = require("./product.controller");
+const productDiscountController = require("./product.discount.controller");
 const { validate, validateParams } = require("../../middleware/validate");
 const {
   createProductSchema,
   updateProductSchema,
   productIdSchema,
 } = require("./product.validation");
+const { productDiscountSchema } = require("./product.discount.validation");
 
 // POST /admin/products — create new product
 router.post("/", validate(createProductSchema), productController.createProduct);
@@ -38,6 +40,15 @@ router.put(
   validateParams(productIdSchema),
   validate(updateProductSchema),
   productController.updateProduct
+);
+
+// PATCH /admin/products/:id/discount — Phase 8: set/clear product-level discount
+// Only touches the discount sub-document (allow-list enforced by Zod + controller)
+router.patch(
+  "/:id/discount",
+  validateParams(productIdSchema),
+  validate(productDiscountSchema),
+  productDiscountController.setProductDiscount
 );
 
 // DELETE /admin/products/:id — delete product

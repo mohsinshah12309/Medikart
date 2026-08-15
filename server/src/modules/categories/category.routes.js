@@ -12,12 +12,14 @@ const express = require("express");
 const router = express.Router();
 
 const categoryController = require("./category.controller");
+const categoryDiscountController = require("./category.discount.controller");
 const { validate, validateParams } = require("../../middleware/validate");
 const {
   createCategorySchema,
   updateCategorySchema,
   categoryIdSchema,
 } = require("./category.validation");
+const { categoryDiscountSchema } = require("./category.discount.validation");
 
 // POST /admin/categories — create new category
 router.post("/", validate(createCategorySchema), categoryController.createCategory);
@@ -38,6 +40,14 @@ router.put(
   validateParams(categoryIdSchema),
   validate(updateCategorySchema),
   categoryController.updateCategory
+);
+
+// PATCH /admin/categories/:id/discount — Phase 8: set/clear category-level discount
+router.patch(
+  "/:id/discount",
+  validateParams(categoryIdSchema),
+  validate(categoryDiscountSchema),
+  categoryDiscountController.setCategoryDiscount
 );
 
 // DELETE /admin/categories/:id — delete category

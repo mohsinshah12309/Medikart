@@ -5,7 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "test": "jest tests/unit --verbose",
+    "test:all": "jest --verbose"
   },
   "keywords": [
     "medikart",
@@ -26,6 +28,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-circus": "^30.4.2",
     "nodemon": "^3.1.4"
   }
 }
