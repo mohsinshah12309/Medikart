@@ -1,0 +1,61 @@
+/**
+ * auth middleware — Phase 5.
+ *
+ * Verifies the JWT on every request that passes through it.
+ * Applied in app.js before ALL /api/v1/admin/* routes so that the
+ * default posture is "deny unless token is valid" — never the other way.
+ *
+ * Public routes (e.g., POST /api/v1/auth/admin/login) are mounted BEFORE
+ * this middleware so they are never accidentally blocked.
+ *
+ * Security contract:
+ *   - Expects the token in the Authorization header: "Bearer <token>"
+ *   - Returns a generic 401 for any failure (missing, malformed, expired,
+ *     wrong signature) — no detail that would help an attacker.
+ *   - Attaches `req.admin` with { id, role, email } for downstream
+ *     middleware (e.g., requireSuperAdmin) and controllers.
+ *   - Never logs the token itself.
+ */
+
+const jwt = require("jsonwebtoken");
+const { UnauthorizedError } = require("../utils/errors");
+
+const auth = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      throw new UnauthorizedError("Authentication required");
+    }
+
+    const token = authHeader.slice(7); // strip "Bearer "
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      // Server misconfiguration — this is a 500, not a 401
+      throw new Error("JWT_SECRET is not configured on the server");
+    }
+
+    // jwt.verify throws on any problem (expired, bad signature, malformed)
+    const decoded = jwt.verify(token, secret);
+
+    // Attach minimal identity info — downstream code reads req.admin
+    req.admin = {
+      id: decoded.sub,
+      role: decoded.role,
+      email: decoded.email,
+    };
+
+    next();
+  } catch (error) {
+    // Catch jwt.verify errors (JsonWebTokenError, TokenExpiredError, etc.)
+    // and surface them all as a generic 401 — never leak verification detail
+    if (error.isOperational) {
+      return next(error); // already a typed AppError (e.g., UnauthorizedError)
+    }
+    // JWT library error — normalise to 401
+    return next(new UnauthorizedError("Authentication required"));
+  }
+};
+
+module.exports = auth;

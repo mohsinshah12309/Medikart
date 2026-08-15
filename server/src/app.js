@@ -6,10 +6,14 @@ const mongoose = require("mongoose");
 
 const { connectDB } = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
+const auth = require("./middleware/auth");
 
-// Phase 4 — API Routes
+// Phase 4 — CRUD Routes
 const productRoutes = require("./modules/products/product.routes");
 const categoryRoutes = require("./modules/categories/category.routes");
+
+// Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
+const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 
 // Load environment variables
 dotenv.config();
@@ -32,7 +36,19 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Phase 4 — Product & Category CRUD APIs
+// ─── PUBLIC auth routes ────────────────────────────────────────────────────────
+// Mounted BEFORE the auth middleware so login is never blocked.
+// Allow-list: only /api/v1/auth/* is public. Everything else under /admin/* is protected.
+app.use("/api/v1/auth/admin", adminUserRoutes);
+
+// ─── PROTECTED /admin routes ───────────────────────────────────────────────────
+// auth middleware is applied here, before any /admin route, so every route
+// mounted under /api/v1/admin/* is protected by default.
+// To make a future route public, mount it above this line — never disable auth
+// per-route by skipping the middleware selectively.
+app.use("/api/v1/admin", auth);
+
+// Phase 4 — Product & Category CRUD APIs (now auth-protected)
 // Per rules.md Section 2: /api/v1/<resource>
 app.use("/api/v1/admin/products", productRoutes);
 app.use("/api/v1/admin/categories", categoryRoutes);
