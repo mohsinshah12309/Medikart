@@ -21,15 +21,21 @@ const settingsRoutes = require("./modules/settings/settings.routes");
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 
+const path = require("path");
+
 // Load environment variables
 dotenv.config();
 
 const app = express();
 
 // Base Middleware
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(cors());
 app.use(express.json());
+
+// Public static serving for uploaded product images & placeholder asset
+const uploadsDir = path.join(__dirname, "../uploads");
+app.use("/uploads", express.static(uploadsDir));
 
 // FR-SYS-01 / Phase 2: GET /health reports DB connection status.
 // mongoose readyState: 0 = disconnected, 1 = connected, 2 = connecting,

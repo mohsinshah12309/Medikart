@@ -21,6 +21,24 @@ const createProduct = async (productData) => {
   return product;
 };
 
+const PLACEHOLDER_PATH = "/uploads/placeholder.webp";
+
+/** Helper: attach coverImage and fallback placeholder if no images exist */
+const formatProductWithImages = (productDoc) => {
+  if (!productDoc) return productDoc;
+  const obj = productDoc.toObject ? productDoc.toObject() : { ...productDoc };
+
+  if (!obj.images || obj.images.length === 0) {
+    obj.images = [{ path: PLACEHOLDER_PATH, isPrimary: true }];
+    obj.coverImage = PLACEHOLDER_PATH;
+  } else {
+    const primary = obj.images.find((img) => img.isPrimary) || obj.images[0];
+    obj.coverImage = primary ? primary.path : obj.images[0].path;
+  }
+
+  return obj;
+};
+
 /**
  * Get all products (with optional filtering)
  */
@@ -45,7 +63,7 @@ const getAllProducts = async (filters = {}) => {
     .populate("categoryIds", "name slug")
     .sort({ createdAt: -1 });
 
-  return products;
+  return products.map(formatProductWithImages);
 };
 
 /**
@@ -61,7 +79,7 @@ const getProductById = async (productId) => {
     throw new NotFoundError("Product not found");
   }
 
-  return product;
+  return formatProductWithImages(product);
 };
 
 /**

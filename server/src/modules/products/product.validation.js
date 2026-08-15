@@ -67,8 +67,15 @@ const productIdSchema = z.object({
   id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid product ID format"),
 });
 
+// Routes with both product id and imageId
+const productImageParamsSchema = z.object({
+  id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid product ID format"),
+  imageId: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid image ID format"),
+});
+
 module.exports = {
   createProductSchema,
   updateProductSchema,
   productIdSchema,
+  productImageParamsSchema,
 };

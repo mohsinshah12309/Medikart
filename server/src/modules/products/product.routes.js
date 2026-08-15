@@ -18,6 +18,7 @@ const {
   createProductSchema,
   updateProductSchema,
   productIdSchema,
+  productImageParamsSchema,
 } = require("./product.validation");
 const { productDiscountSchema } = require("./product.discount.validation");
 
@@ -42,13 +43,38 @@ router.put(
   productController.updateProduct
 );
 
-// PATCH /admin/products/:id/discount — Phase 8: set/clear product-level discount
-// Only touches the discount sub-document (allow-list enforced by Zod + controller)
+const productImagesController = require("./productImages.controller");
+const upload = require("../../middleware/upload");
+
+// POST /admin/products/:id/discount — Phase 8
 router.patch(
   "/:id/discount",
   validateParams(productIdSchema),
   validate(productDiscountSchema),
   productDiscountController.setProductDiscount
+);
+
+// ── Phase 10 — Product Image Routes ──────────────────────────────────────────
+// POST /admin/products/:id/images — upload 1+ images
+router.post(
+  "/:id/images",
+  validateParams(productIdSchema),
+  upload.array("images", 5),
+  productImagesController.uploadProductImages
+);
+
+// PATCH /admin/products/:id/images/:imageId/primary — set primary cover image
+router.patch(
+  "/:id/images/:imageId/primary",
+  validateParams(productImageParamsSchema),
+  productImagesController.setPrimaryImage
+);
+
+// DELETE /admin/products/:id/images/:imageId — delete single image
+router.delete(
+  "/:id/images/:imageId",
+  validateParams(productImageParamsSchema),
+  productImagesController.deleteProductImage
 );
 
 // DELETE /admin/products/:id — delete product
