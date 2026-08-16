@@ -5,14 +5,55 @@
  * shape the response. Business logic lives in order.service.js and handlers.
  */
 
-const orderService = require('./order.service');
-const { prescriptionUpload } = require('./instantOrder.handler');
+const orderService = require("./order.service");
+const { prescriptionUpload } = require("./instantOrder.handler");
 
 const placeStandardOrder = async (req, res, next) => {
   try {
-    const order = await orderService.placeOrder('standard', req.body);
+    const order = await orderService.placeOrder("standard", req.body);
     res.status(201).json({
-      status: 'success',
+      status: "success",
+      data: { order },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const placeNarcoticsOrder = async (req, res, next) => {
+  // Use multer middleware to handle prescription file upload
+  prescriptionUpload(req, res, async (err) => {
+    if (err) return next(err);
+
+    try {
+      const payload = {
+        customer: req.body.customer ? JSON.parse(req.body.customer) : undefined,
+        items: req.body.items ? JSON.parse(req.body.items) : [],
+        paymentMethod: req.body.paymentMethod,
+        otp: req.body.otp ? JSON.parse(req.body.otp) : undefined,
+        prescriptionFilename: req.file ? req.file.filename : null,
+      };
+
+      const order = await orderService.placeOrder("narcotics", payload);
+      res.status(201).json({
+        status: "success",
+        data: { order },
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
+};
+
+const reviewNarcoticsOrder = async (req, res, next) => {
+  try {
+    const order = await orderService.reviewNarcoticsOrder(
+      req.params.id,
+      req.body.decision,
+      req.admin,
+    );
+    res.status(200).json({
+      status: "success",
       data: { order },
     });
   } catch (err) {
@@ -34,9 +75,9 @@ const placeInstantOrder = async (req, res, next) => {
         prescriptionFilename: req.file ? req.file.filename : null,
       };
 
-      const order = await orderService.placeOrder('instant', payload);
+      const order = await orderService.placeOrder("instant", payload);
       res.status(201).json({
-        status: 'success',
+        status: "success",
         data: { order },
       });
     } catch (err) {
@@ -49,7 +90,7 @@ const getOrders = async (req, res, next) => {
   try {
     const result = await orderService.getOrders(req.query);
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: result,
     });
   } catch (err) {
@@ -61,7 +102,7 @@ const getOrderById = async (req, res, next) => {
   try {
     const order = await orderService.getOrderById(req.params.id);
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { order },
     });
   } catch (err) {
@@ -73,7 +114,7 @@ const priceInstantOrder = async (req, res, next) => {
   try {
     const order = await orderService.priceInstantOrder(req.params.id, req.body);
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { order },
     });
   } catch (err) {
@@ -81,4 +122,12 @@ const priceInstantOrder = async (req, res, next) => {
   }
 };
 
-module.exports = { placeStandardOrder, placeInstantOrder, getOrders, getOrderById, priceInstantOrder };
+module.exports = {
+  placeStandardOrder,
+  placeNarcoticsOrder,
+  reviewNarcoticsOrder,
+  placeInstantOrder,
+  getOrders,
+  getOrderById,
+  priceInstantOrder,
+};

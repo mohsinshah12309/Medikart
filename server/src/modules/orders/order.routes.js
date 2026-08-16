@@ -14,51 +14,67 @@
  *   PATCH /api/v1/admin/orders/:id/items — price an instant order (Phase 14 / FR-AD-19)
  */
 
-const express = require('express');
-const { validate, validateQuery, validateParams } = require('../../middleware/validate');
+const express = require("express");
+const {
+  validate,
+  validateQuery,
+  validateParams,
+} = require("../../middleware/validate");
 const {
   placeStandardOrderSchema,
   priceInstantOrderSchema,
   adminOrderQuerySchema,
   orderIdParamsSchema,
-} = require('./order.validation');
-const orderController = require('./order.controller');
+  narcoticsVerificationSchema,
+} = require("./order.validation");
+const orderController = require("./order.controller");
 
 // ── Public routes ─────────────────────────────────────────────────────────────
 const publicOrderRoutes = express.Router();
 
 publicOrderRoutes.post(
-  '/standard',
+  "/standard",
   validate(placeStandardOrderSchema),
-  orderController.placeStandardOrder
+  orderController.placeStandardOrder,
 );
 
 // Instant order route — multipart/form-data handled by multer in controller
-publicOrderRoutes.post(
-  '/instant',
-  orderController.placeInstantOrder
-);
+publicOrderRoutes.post("/instant", orderController.placeInstantOrder);
+
+// Narcotics order route — multipart/form-data, prescription upload required
+// when the cart contains a narcotics-flagged product (Phase 15 / FR-CW-13/14).
+// Multer (prescriptionUpload) runs inside the controller.
+publicOrderRoutes.post("/narcotics", orderController.placeNarcoticsOrder);
 
 // ── Admin routes (mounted behind auth in app.js) ──────────────────────────────
 const adminOrderRoutes = express.Router();
 
 adminOrderRoutes.get(
-  '/',
+  "/",
   validateQuery(adminOrderQuerySchema),
-  orderController.getOrders
+  orderController.getOrders,
 );
 
 adminOrderRoutes.get(
-  '/:id',
+  "/:id",
   validateParams(orderIdParamsSchema),
-  orderController.getOrderById
+  orderController.getOrderById,
 );
 
 adminOrderRoutes.patch(
-  '/:id/items',
+  "/:id/items",
   validateParams(orderIdParamsSchema),
   validate(priceInstantOrderSchema),
-  orderController.priceInstantOrder
+  orderController.priceInstantOrder,
+);
+
+// PATCH /api/v1/admin/orders/:id/verification — approve/reject a narcotics
+// prescription (Phase 15 / FR-AD-20). Auth applied at mount point in app.js.
+adminOrderRoutes.patch(
+  "/:id/verification",
+  validateParams(orderIdParamsSchema),
+  validate(narcoticsVerificationSchema),
+  orderController.reviewNarcoticsOrder,
 );
 
 module.exports = { publicOrderRoutes, adminOrderRoutes };

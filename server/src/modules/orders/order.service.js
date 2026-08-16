@@ -5,14 +5,20 @@
  * Phase 15 (narcotics) will add its own handler branch.
  */
 
-const { placeStandardOrder } = require('./standardOrder.handler');
-const { placeInstantOrder } = require('./instantOrder.handler');
-const Order = require('./order.model');
-const Product = require('../products/product.model');
-const { getEffectivePrice } = require('../discounts/discount.service');
-const { getStorewideDiscount } = require('../settings/settings.service');
-const { getDeliveryCharge } = require('../cities/city.service');
-const { BadRequestError, NotFoundError, ForbiddenError } = require('../../utils/errors');
+const { placeStandardOrder } = require("./standardOrder.handler");
+const { placeInstantOrder } = require("./instantOrder.handler");
+const { placeNarcoticsOrder } = require("./narcoticsOrder.handler");
+const Order = require("./order.model");
+const Product = require("../products/product.model");
+const { getEffectivePrice } = require("../discounts/discount.service");
+const { getStorewideDiscount } = require("../settings/settings.service");
+const { getDeliveryCharge } = require("../cities/city.service");
+const { logActivity } = require("../activity-logs/activityLog.service");
+const {
+  BadRequestError,
+  NotFoundError,
+  ForbiddenError,
+} = require("../../utils/errors");
 
 const round2 = (n) => Math.round(n * 100) / 100;
 
@@ -20,8 +26,9 @@ const round2 = (n) => Math.round(n * 100) / 100;
  * Route order placement to the correct handler by type.
  */
 const placeOrder = async (type, payload) => {
-  if (type === 'standard') return placeStandardOrder(payload);
-  if (type === 'instant') return placeInstantOrder(payload);
+  if (type === "standard") return placeStandardOrder(payload);
+  if (type === "instant") return placeInstantOrder(payload);
+  if (type === "narcotics") return placeNarcoticsOrder(payload);
   throw new BadRequestError(`Unknown order type: ${type}`);
 };
 
@@ -47,7 +54,7 @@ const getOrders = async ({ type, status, page = 1, limit = 20 } = {}) => {
  */
 const getOrderById = async (orderId) => {
   const order = await Order.findById(orderId);
-  if (!order) throw new NotFoundError('Order not found');
+  if (!order) throw new NotFoundError("Order not found");
   return order;
 };
 
@@ -64,19 +71,23 @@ const getOrderById = async (orderId) => {
 const priceInstantOrder = async (orderId, { items }) => {
   // Step 1: Load order and validate it's awaiting pricing
   const order = await Order.findById(orderId);
-  if (!order) throw new NotFoundError('Order not found');
+  if (!order) throw new NotFoundError("Order not found");
 
-  if (order.type !== 'instant') {
-    throw new BadRequestError('Only instant orders can be priced through this endpoint');
+  if (order.type !== "instant") {
+    throw new BadRequestError(
+      "Only instant orders can be priced through this endpoint",
+    );
   }
 
-  if (order.status !== 'awaiting-pharmacist-pricing') {
-    throw new ForbiddenError('This order has already been priced or is not in a priceable state');
+  if (order.status !== "awaiting-pharmacist-pricing") {
+    throw new ForbiddenError(
+      "This order has already been priced or is not in a priceable state",
+    );
   }
 
   // Step 2: Validate items array
   if (!items || !Array.isArray(items) || items.length === 0) {
-    throw new BadRequestError('At least one item is required');
+    throw new BadRequestError("At least one item is required");
   }
 
   // Step 3: Fetch products from DB (never trust client prices)
@@ -84,12 +95,13 @@ const priceInstantOrder = async (orderId, { items }) => {
   const products = await Product.find({
     _id: { $in: productIds },
     active: true,
-  }).populate('categoryIds', 'name slug discount');
+  }).populate("categoryIds", "name slug discount");
 
   // Step 4: Validate existence for every requested item
   for (const item of items) {
     const product = products.find((p) => p._id.toString() === item.productId);
-    if (!product) throw new NotFoundError(`Product not found: ${item.productId}`);
+    if (!product)
+      throw new NotFoundError(`Product not found: ${item.productId}`);
   }
 
   // Step 5: Fetch storewide discount once
@@ -99,7 +111,11 @@ const priceInstantOrder = async (orderId, { items }) => {
   const orderItems = items.map((item) => {
     const product = products.find((p) => p._id.toString() === item.productId);
     const category = product.categoryIds?.[0] ?? null;
-    const { effectivePrice } = getEffectivePrice(product, category, storewidePercent);
+    const { effectivePrice } = getEffectivePrice(
+      product,
+      category,
+      storewidePercent,
+    );
     return {
       productId: product._id,
       name: product.name,
@@ -109,22 +125,100 @@ const priceInstantOrder = async (orderId, { items }) => {
   });
 
   // Step 7: Compute totals server-side
-  const subtotal = round2(orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0));
+  const subtotal = round2(
+    orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
+  );
   const deliveryCharge = await getDeliveryCharge(order.customer.city);
   const total = round2(subtotal + deliveryCharge);
 
   // Step 8: Check if any item is a narcotic and update requiresVerification
-  const requiresVerification = products.some((product) => product.isNarcotic === true);
+  const requiresVerification = products.some(
+    (product) => product.isNarcotic === true,
+  );
 
   // Step 9: Update order with pricing, move to pending status
   order.items = orderItems;
   order.totals = { subtotal, deliveryCharge, total };
   order.requiresVerification = requiresVerification;
-  order.status = 'pending';
+  order.status = "pending";
 
   await order.save();
 
   return order;
 };
 
-module.exports = { placeOrder, getOrders, getOrderById, priceInstantOrder };
+/**
+ * Admin review of a narcotics prescription (Phase 15 / FR-AD-20).
+ *
+ * Security / compliance guarantees:
+ *   1. Object-level authorization: operates ONLY on the specific order ID
+ *      provided — never a bulk/indirect target.
+ *   2. Confirms the order is actually awaiting verification before acting.
+ *      Approving/rejecting an order that isn't in pending_verification is
+ *      rejected, not silently allowed.
+ *   3. `requiresVerification` is NEVER recomputed here — the snapshot from
+ *      submission time is immutable (FR-AD-16).
+ *   4. Approve → verification.status = 'approved', records reviewer +
+ *      timestamp, order proceeds toward normal fulfillment (status → pending).
+ *   5. Reject → verification.status = 'rejected', order status → 'rejected'.
+ *      A rejected order can never proceed to delivered from this state.
+ *   6. Every decision is written to Activity Logs (reviewer, decision,
+ *      timestamp) — NFR-COMP-02.
+ *
+ * @param {string} orderId
+ * @param {'approved'|'rejected'} decision
+ * @param {object} reviewer - req.admin { id, role, email }
+ */
+const reviewNarcoticsOrder = async (orderId, decision, reviewer) => {
+  // Step 1: Load the specific order by ID — object-level authorization is
+  // implicit: this endpoint only ever touches this one document.
+  const order = await Order.findById(orderId);
+  if (!order) throw new NotFoundError("Order not found");
+
+  // Step 2: The order must actually be awaiting verification.
+  if (order.status !== "pending_verification") {
+    throw new ForbiddenError(
+      "This order is not awaiting verification and cannot be reviewed",
+    );
+  }
+
+  if (decision === "approved") {
+    order.verification = {
+      status: "approved",
+      reviewedBy: reviewer.email || reviewer.id,
+      reviewedAt: new Date(),
+    };
+    // Order proceeds toward normal fulfillment.
+    order.status = "pending";
+  } else {
+    order.verification = {
+      status: "rejected",
+      reviewedBy: reviewer.email || reviewer.id,
+      reviewedAt: new Date(),
+    };
+    // Rejected orders can never proceed to delivered from this state.
+    order.status = "rejected";
+  }
+
+  await order.save();
+
+  // Step 3: Write to Activity Logs — non-blocking (rules.md §6)
+  logActivity({
+    actor: reviewer,
+    action: `narcotics_${decision}`,
+    entityType: "order",
+    entityId: order._id,
+    before: { verification: { status: "pending" } },
+    after: { verification: order.verification, status: order.status },
+  });
+
+  return order;
+};
+
+module.exports = {
+  placeOrder,
+  getOrders,
+  getOrderById,
+  priceInstantOrder,
+  reviewNarcoticsOrder,
+};
