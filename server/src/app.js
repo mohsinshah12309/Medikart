@@ -24,6 +24,9 @@ const activityLogRoutes = require("./modules/activity-logs/activityLog.routes");
 // Phase 12 — OTP Routes (public — customer-facing)
 const otpRoutes = require("./modules/otp/otp.routes");
 
+// Phase 13 — Order Routes (public + admin)
+const { publicOrderRoutes, adminOrderRoutes } = require("./modules/orders/order.routes");
+
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 
@@ -60,6 +63,7 @@ app.get("/health", (req, res) => {
 // Mounted BEFORE the auth middleware so public endpoints are never blocked.
 app.use("/api/v1/auth/admin", adminUserRoutes);
 app.use("/api/v1/otp", otpRoutes);
+app.use("/api/v1/orders", publicOrderRoutes);
 
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
@@ -82,6 +86,9 @@ app.use("/api/v1/admin/settings", settingsRoutes);
 
 // Phase 11 — Activity Logs (auth-protected)
 app.use("/api/v1/admin/activity-logs", activityLogRoutes);
+
+// Phase 13 — Admin Order Routes (auth-protected)
+app.use("/api/v1/admin/orders", adminOrderRoutes);
 
 
 // Central error handler — must be AFTER all routes
