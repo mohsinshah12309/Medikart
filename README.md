@@ -2,6 +2,45 @@
 
 Medikart is a custom Pharmacy E-Commerce and Pharmacy Management System.
 
+## Implementation Status
+
+Backend development is complete through **Phase 13 — Standard Order Workflow (COD only)**. The
+project follows a backend-first delivery plan: each API workflow is implemented and verified before
+it is consumed by the admin dashboard or customer storefront.
+
+### Completed Phases (1–13)
+
+1. **Project scaffolding** — Established the monorepo, base Express/Next.js/React applications,
+   environment examples, Git hygiene, and a health endpoint.
+2. **Database connection** — Added MongoDB Atlas development connectivity and database status in
+   the health check.
+3. **Core data models** — Created the catalog schemas for products, categories, and delivery cities.
+4. **Product and category management** — Added validated admin CRUD APIs with explicit request
+   field allow-lists.
+5. **Admin authentication and roles** — Added JWT-protected admin routes, roles, permissions, and
+   Super Admin authorization support.
+6. **Admin password reset** — Added short-lived, single-use password-reset tokens and reset email
+   endpoints.
+7. **Cities and delivery pricing** — Added city management and server-side delivery-charge
+   calculation (configured active cities vs. the default charge).
+8. **Discounts** — Implemented product, category, and storewide discounts with the documented
+   product → category → storewide precedence.
+9. **Bulk Excel import** — Added validated product catalog import with row-level error reporting.
+10. **Product image pipeline** — Added multi-image uploads, Sharp-based WebP processing, primary
+    image selection, deletion, and placeholder-image handling.
+11. **Narcotics flagging and audit** — Added single and bulk narcotics controls, a filtered view,
+    and audit logging for every change.
+12. **Email OTP verification** — Added generation, delivery, verification, expiry, and rate
+    limiting for order-verification OTPs.
+13. **Standard COD orders** — Added the cart-to-checkout workflow: valid OTP verification,
+    server-calculated delivery charge and totals, MongoDB order creation, and confirmation email.
+
+### Phase 13 Verification
+
+The standard-order workflow is covered by `server/testPhase13.js`. Its expected end-to-end path is:
+submit a cart with a verified OTP and Cash on Delivery, then confirm that the saved order has the
+correct items, delivery charge, total, and confirmation email behavior.
+
 ## Project Structure
 
 This project is laid out as a monorepo consisting of the following key directories:
