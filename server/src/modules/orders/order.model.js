@@ -76,7 +76,7 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['pending', 'packed', 'shipped', 'delivered', 'cancelled'],
+      enum: ['awaiting-pharmacist-pricing', 'pending', 'packed', 'shipped', 'delivered', 'cancelled'],
       default: 'pending',
     },
     requiresVerification: { type: Boolean, required: true, default: false },
