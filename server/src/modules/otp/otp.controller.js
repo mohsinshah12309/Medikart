@@ -11,7 +11,10 @@ const otpService = require("./otp.service");
  */
 const requestOtp = async (req, res, next) => {
   try {
-    const result = await otpService.requestOtp(req.body.email);
+    // Fix 5 — pass the client IP for per-IP rate limiting (NFR-SEC-03).
+    // Express sets req.ip from the socket; behind a proxy the app should
+    // trust the X-Forwarded-For header via 'trust proxy' at deploy time.
+    const result = await otpService.requestOtp(req.body.email, req.ip);
     res.status(200).json(result);
   } catch (error) {
     next(error);

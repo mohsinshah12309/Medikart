@@ -35,7 +35,8 @@ const placeStandardOrderSchema = z.object({
         quantity: z
           .number({ invalid_type_error: "Quantity must be a number" })
           .int("Quantity must be a whole number")
-          .min(1, "Quantity must be at least 1"),
+          .min(1, "Quantity must be at least 1")
+          .max(99, "Quantity must not exceed 99"),
       }),
     )
     .min(1, "At least one item is required"),
@@ -50,7 +51,9 @@ const placeStandardOrderSchema = z.object({
 });
 
 // POST /api/v1/orders/instant — customer-facing, no auth, multipart/form-data
-// Note: Validated manually in controller after multer processes the file
+// Note: The JSON fields (customer, otp) arrive as strings in multipart form
+// data. They are parsed and then validated against this schema inside the
+// controller after multer processes the file (Fix 3).
 const placeInstantOrderSchema = z.object({
   customer: z.object({
     name: z.string().min(1, "Customer name is required").trim(),
@@ -74,6 +77,45 @@ const placeInstantOrderSchema = z.object({
   branchDescription: z.string().optional(),
 });
 
+// POST /api/v1/orders/narcotics — customer-facing, no auth, multipart/form-data
+// Same JSON-field parsing applies (Fix 3). Mirrors placeStandardOrderSchema;
+// items are required with a min of 1, quantity bounded 1-99.
+const placeNarcoticsOrderSchema = z.object({
+  customer: z.object({
+    name: z.string().min(1, "Customer name is required").trim(),
+    email: z
+      .string()
+      .email("Valid email address is required")
+      .trim()
+      .toLowerCase(),
+    phone: z.string().min(1, "Phone number is required").trim(),
+    address: z.string().min(1, "Delivery address is required").trim(),
+    city: z.string().min(1, "City is required").trim(),
+  }),
+  items: z
+    .array(
+      z.object({
+        productId: z
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/, "Invalid product ID format"),
+        quantity: z
+          .number({ invalid_type_error: "Quantity must be a number" })
+          .int("Quantity must be a whole number")
+          .min(1, "Quantity must be at least 1")
+          .max(99, "Quantity must not exceed 99"),
+      }),
+    )
+    .min(1, "At least one item is required"),
+  paymentMethod: z.literal("cod"),
+  otp: z.object({
+    email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
+    code: z
+      .string()
+      .length(6, "OTP code must be exactly 6 digits")
+      .regex(/^\d{6}$/, "OTP code must contain digits only"),
+  }),
+});
+
 // PATCH /api/v1/admin/orders/:id/items — admin pricing endpoint (Phase 14 / FR-AD-19)
 // SECURITY: Only items array is writable — totals computed server-side
 const priceInstantOrderSchema = z.object({
@@ -86,7 +128,8 @@ const priceInstantOrderSchema = z.object({
         quantity: z
           .number({ invalid_type_error: "Quantity must be a number" })
           .int("Quantity must be a whole number")
-          .min(1, "Quantity must be at least 1"),
+          .min(1, "Quantity must be at least 1")
+          .max(99, "Quantity must not exceed 99"),
       }),
     )
     .min(1, "At least one item is required"),
@@ -129,6 +172,7 @@ const orderIdParamsSchema = z.object({
 module.exports = {
   placeStandardOrderSchema,
   placeInstantOrderSchema,
+  placeNarcoticsOrderSchema,
   priceInstantOrderSchema,
   narcoticsVerificationSchema,
   adminOrderQuerySchema,

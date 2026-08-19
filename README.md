@@ -4,11 +4,11 @@ Medikart is a custom Pharmacy E-Commerce and Pharmacy Management System.
 
 ## Implementation Status
 
-Backend development is complete through **Phase 13 — Standard Order Workflow (COD only)**. The
+Backend development is complete through **Phase 15 — Narcotics Order Workflow**. The
 project follows a backend-first delivery plan: each API workflow is implemented and verified before
 it is consumed by the admin dashboard or customer storefront.
 
-### Completed Phases (1–13)
+### Completed Phases (1–15)
 
 1. **Project scaffolding** — Established the monorepo, base Express/Next.js/React applications,
    environment examples, Git hygiene, and a health endpoint.
@@ -34,12 +34,15 @@ it is consumed by the admin dashboard or customer storefront.
     limiting for order-verification OTPs.
 13. **Standard COD orders** — Added the cart-to-checkout workflow: valid OTP verification,
     server-calculated delivery charge and totals, MongoDB order creation, and confirmation email.
+14. **Instant orders** — Added prescription upload + contact-details ordering with empty items,
+    admin pricing, and structured totals.
+15. **Narcotics order workflow** — Added prescription verification gating, the
+    `requiresVerification` snapshot (FR-AD-16), `pending_verification` status, and
+    approve/reject review endpoints.
 
-### Phase 13 Verification
+### Automated Test Suites
 
-The standard-order workflow is covered by `server/testPhase13.js`. Its expected end-to-end path is:
-submit a cart with a verified OTP and Cash on Delivery, then confirm that the saved order has the
-correct items, delivery charge, total, and confirmation email behavior.
+The backend logic and compliance requirements for Phases 1–15 are fully covered by automated Jest test suites in `server/tests/unit/` (11 test suites covering unit logic, access control, Zod validation, instant/narcotics orders, and rate limiting).
 
 ## Project Structure
 

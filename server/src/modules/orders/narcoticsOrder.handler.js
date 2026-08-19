@@ -140,8 +140,10 @@ const placeNarcoticsOrder = async ({
     status: "pending_verification",
     requiresVerification, // SNAPSHOT — never recomputed after this write
     verification: { status: "pending" },
+    // Fix 1 — prescription files are ONLY accessible through the
+    // authenticated admin route, never a public static URL (FR-SYS-02).
     prescriptionUrl: prescriptionFilename
-      ? `/uploads/prescriptions/${prescriptionFilename}`
+      ? `/api/v1/admin/prescriptions/${prescriptionFilename}`
       : null,
   });
 

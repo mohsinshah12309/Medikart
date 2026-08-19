@@ -83,7 +83,7 @@ const updateCity = async (cityId, updateData) => {
   const city = await City.findByIdAndUpdate(
     cityId,
     { $set: updateData },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
   );
   if (!city) throw new NotFoundError("City not found");
   return city;
@@ -102,4 +102,5 @@ module.exports = {
   getCityById,
   updateCity,
   deleteCity,
+  DEFAULT_DELIVERY_CHARGE, // exported for tests/config reference
 };

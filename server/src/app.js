@@ -21,16 +21,20 @@ const settingsRoutes = require("./modules/settings/settings.routes");
 // Phase 11 — Activity Logs
 const activityLogRoutes = require("./modules/activity-logs/activityLog.routes");
 
+// Fix 1 — Prescription Access Control (authenticated admin route)
+const prescriptionRoutes = require("./modules/prescriptions/prescription.routes");
+
 // Phase 12 — OTP Routes (public — customer-facing)
 const otpRoutes = require("./modules/otp/otp.routes");
 
 // Phase 13 — Order Routes (public + admin)
-const { publicOrderRoutes, adminOrderRoutes } = require("./modules/orders/order.routes");
+const {
+  publicOrderRoutes,
+  adminOrderRoutes,
+} = require("./modules/orders/order.routes");
 
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
-
-
 
 const path = require("path");
 
@@ -44,9 +48,18 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(cors());
 app.use(express.json());
 
-// Public static serving for uploaded product images & placeholder asset
-const uploadsDir = path.join(__dirname, "../uploads");
-app.use("/uploads", express.static(uploadsDir));
+// Public static serving for uploaded PRODUCT images & the placeholder asset ONLY.
+// Prescriptions are NEVER served statically — they are only reachable through
+// the authenticated admin route GET /api/v1/admin/prescriptions/:filename
+// (Fix 1 — FR-SYS-02 / PRD §15.3 / §17.7).
+const productsUploadsDir = path.join(__dirname, "../uploads/products");
+app.use("/uploads/products", express.static(productsUploadsDir));
+
+// Placeholder asset is outside the products dir — serve it explicitly.
+const placeholderPath = path.join(__dirname, "../uploads/placeholder.webp");
+app.get("/uploads/placeholder.webp", (req, res) => {
+  res.sendFile(placeholderPath);
+});
 
 // FR-SYS-01 / Phase 2: GET /health reports DB connection status.
 // mongoose readyState: 0 = disconnected, 1 = connected, 2 = connecting,
@@ -64,7 +77,6 @@ app.get("/health", (req, res) => {
 app.use("/api/v1/auth/admin", adminUserRoutes);
 app.use("/api/v1/otp", otpRoutes);
 app.use("/api/v1/orders", publicOrderRoutes);
-
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route
@@ -87,9 +99,11 @@ app.use("/api/v1/admin/settings", settingsRoutes);
 // Phase 11 — Activity Logs (auth-protected)
 app.use("/api/v1/admin/activity-logs", activityLogRoutes);
 
+// Fix 1 — Authenticated prescription access (mounted AFTER auth middleware)
+app.use("/api/v1/admin/prescriptions", prescriptionRoutes);
+
 // Phase 13 — Admin Order Routes (auth-protected)
 app.use("/api/v1/admin/orders", adminOrderRoutes);
-
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)

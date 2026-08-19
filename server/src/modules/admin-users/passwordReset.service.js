@@ -35,7 +35,7 @@ const bcrypt = require("bcryptjs");
 
 const AdminUser = require("./adminUser.model");
 const PasswordReset = require("./passwordReset.model");
-const { sendEmail } = require("../../utils/email");
+const { sendEmail } = require("../../integrations/smtp");
 const { BadRequestError } = require("../../utils/errors");
 
 const TOKEN_EXPIRY_MINUTES = 30;

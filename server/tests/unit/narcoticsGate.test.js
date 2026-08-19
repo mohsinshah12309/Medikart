@@ -33,8 +33,15 @@ const City = require("../../src/modules/cities/city.model");
 const AdminUser = require("../../src/modules/admin-users/adminUser.model");
 const Otp = require("../../src/modules/otp/otp.model");
 const ActivityLog = require("../../src/modules/activity-logs/activityLog.model");
+const otpService = require("../../src/modules/otp/otp.service");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+// Minimal valid JPEG buffer — real magic bytes (FF D8 FF) so the Fix 4
+// content validation accepts the test prescription file.
+const VALID_JPEG_BUFFER = Buffer.from([
+  0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01,
+]);
 
 let authToken;
 let narcoticsProduct; // isNarcotic: true
@@ -143,15 +150,21 @@ const makeCustomer = (email) => ({
   city: city.name,
 });
 
-/** Helper: write a dummy prescription file into the tests dir. */
+/** Helper: write a valid-JPEG prescription file into the tests dir. */
 const makePrescriptionFile = async (name) => {
   const filePath = path.join(__dirname, name);
-  await fs.writeFile(filePath, "fake-prescription-content");
+  await fs.writeFile(filePath, VALID_JPEG_BUFFER);
   return filePath;
 };
 
 describe("Phase 15 — Narcotics Order Verification Gate", () => {
+  // Fix 5 — the per-IP OTP limiter is shared across the whole jest process.
+  // Reset it before each test so test OTP requests are never blocked.
   beforeEach(() => {
+    // Fix 5 — the per-IP OTP limiter is shared across the whole jest process.
+    // Reset it before each test so test OTP requests are never blocked.
+    otpService._resetIpRequestLog();
+
     // Ensure a fresh narcotics-flagged product for each test. Each test is
     // independent — a flag changed in test 3 must not leak into test 4.
     return (async () => {
@@ -227,7 +240,10 @@ describe("Phase 15 — Narcotics Order Verification Gate", () => {
       type: "narcotics",
       requiresVerification: true,
       status: "pending_verification",
-      prescriptionUrl: expect.stringMatching(/\/uploads\/prescriptions\/.+/),
+      // Fix 1 — prescription URLs point at the authenticated admin route.
+      prescriptionUrl: expect.stringMatching(
+        /\/api\/v1\/admin\/prescriptions\/.+/,
+      ),
     });
     expect(order.verification).toMatchObject({ status: "pending" });
     expect(order.totals.subtotal).toBeGreaterThan(0);

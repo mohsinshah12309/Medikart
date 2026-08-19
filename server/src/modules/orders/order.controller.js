@@ -6,7 +6,29 @@
  */
 
 const orderService = require("./order.service");
-const { prescriptionUpload } = require("./instantOrder.handler");
+const {
+  prescriptionUpload,
+  savePrescriptionToDisk,
+} = require("./instantOrder.handler");
+const {
+  placeInstantOrderSchema,
+  placeNarcoticsOrderSchema,
+} = require("./order.validation");
+const { BadRequestError } = require("../../utils/errors");
+
+/**
+ * Helper — safely parse a JSON string field from a multipart form body.
+ * Fix 3: returns undefined if the field is absent; throws a 400
+ * BadRequestError on malformed JSON (never an unhandled 500).
+ */
+const parseJsonField = (raw, fieldName) => {
+  if (raw === undefined || raw === null || raw === "") return undefined;
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    throw new BadRequestError(`Invalid JSON in field '${fieldName}'`);
+  }
+};
 
 const placeStandardOrder = async (req, res, next) => {
   try {
@@ -26,13 +48,24 @@ const placeNarcoticsOrder = async (req, res, next) => {
     if (err) return next(err);
 
     try {
+      // Fix 3 — parse the JSON form fields safely (400 on malformed JSON).
       const payload = {
-        customer: req.body.customer ? JSON.parse(req.body.customer) : undefined,
-        items: req.body.items ? JSON.parse(req.body.items) : [],
+        customer: parseJsonField(req.body.customer, "customer"),
+        items: parseJsonField(req.body.items, "items") || [],
         paymentMethod: req.body.paymentMethod,
-        otp: req.body.otp ? JSON.parse(req.body.otp) : undefined,
-        prescriptionFilename: req.file ? req.file.filename : null,
+        otp: parseJsonField(req.body.otp, "otp"),
+        prescriptionFilename: null,
       };
+
+      // Fix 3 — validate the parsed JSON before touching the file system.
+      placeNarcoticsOrderSchema.parse(payload);
+
+      // Fix 4 — validate the prescription file's TRUE content (magic bytes)
+      // and write it to disk only after the payload is known to be valid.
+      // A renamed .exe or fake mimetype is rejected here — never stored.
+      payload.prescriptionFilename = req.file
+        ? await savePrescriptionToDisk(req.file.buffer)
+        : null;
 
       const order = await orderService.placeOrder("narcotics", payload);
       res.status(201).json({
@@ -67,13 +100,23 @@ const placeInstantOrder = async (req, res, next) => {
     if (err) return next(err);
 
     try {
+      // Fix 3 — parse the JSON form fields safely (400 on malformed JSON).
       const payload = {
-        customer: req.body.customer ? JSON.parse(req.body.customer) : undefined,
+        customer: parseJsonField(req.body.customer, "customer"),
         paymentMethod: req.body.paymentMethod,
-        otp: req.body.otp ? JSON.parse(req.body.otp) : undefined,
+        otp: parseJsonField(req.body.otp, "otp"),
         branchDescription: req.body.branchDescription,
-        prescriptionFilename: req.file ? req.file.filename : null,
+        prescriptionFilename: null,
       };
+
+      // Fix 3 — validate the parsed JSON before touching the file system.
+      placeInstantOrderSchema.parse(payload);
+
+      // Fix 4 — validate the prescription file's TRUE content (magic bytes)
+      // and write it to disk only after the payload is known to be valid.
+      payload.prescriptionFilename = req.file
+        ? await savePrescriptionToDisk(req.file.buffer)
+        : null;
 
       const order = await orderService.placeOrder("instant", payload);
       res.status(201).json({

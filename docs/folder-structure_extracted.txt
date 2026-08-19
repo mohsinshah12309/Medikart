@@ -1,0 +1,452 @@
+=== FOLDER-STRUCTURE (11 pages) ===
+Medikart
+Pharmacy E-Commerce & Pharmacy Management System
+Project Folder Structure
+Version 1.0 | August 2026
+This document lays out the full repository structure for Medikart, organized around how the project will actually
+be hosted: a Next.js storefront and an Express API running as managed processes on the VPS, and a
+React/Vite admin dashboard built to static files served by Nginx. The tree below is followed by a
+plain-language explanation of what each significant file and folder is for.
+Folder Structure
+Real .env files are shown because they genuinely exist on disk — the root .gitignore is what keeps them,
+node_modules, and build output out of Git. Only what's actually committed to the repository is meant to be
+tracked; everything else is either a secret, reproducible from a lockfile, or generated at build/deploy time.
+medikart/
+|
+|-- apps/
+| |
+| |-- web/ # Customer storefront -- Next.js (SSR/SSG)
+| | |-- app/
+| | | |-- layout.jsx
+| | | |-- page.jsx
+| | | |-- sitemap.js
+| | | |-- robots.js
+| | | |-- products/
+| | | | |-- page.jsx
+| | | | `-- [slug]/
+| | | | |-- page.jsx
+| | | | `-- opengraph-image.jsx
+| | | |-- categories/[slug]/page.jsx
+| | | |-- cart/page.jsx
+| | | |-- checkout/
+| | | | |-- page.jsx
+| | | | `-- confirmation/page.jsx
+| | | |-- instant-order/page.jsx
+| | | |-- about/page.jsx
+| | | `-- contact/page.jsx
+| | |-- components/
+| | | |-- ui/
+| | | | |-- LabelStub.jsx
+| | | | |-- DiscountBadge.jsx
+| | | | |-- Button.jsx
+| | | | `-- PriceTag.jsx
+| | | |-- product/
+| | | | |-- ProductCard.jsx
+| | | | |-- ProductGrid.jsx
+| | | | |-- ProductImage.jsx
+| | | | `-- StockBadge.jsx
+| | | |-- cart/
+| | | | |-- CartDrawer.jsx
+| | | | `-- CartLineItem.jsx
+| | | |-- checkout/
+| | | | |-- CheckoutStepper.jsx
+| | | | |-- OtpInput.jsx
+| | | | |-- DeliveryCityField.jsx
+| | | | |-- PaymentMethodSelect.jsx
+| | | | `-- PrescriptionUpload.jsx
+| | | |-- chatbot/
+| | | | |-- ChatWidget.jsx
+| | | | `-- ChatMessage.jsx
+| | | |-- whatsapp/
+| | | | `-- WhatsAppButton.jsx
+| | | `-- layout/
+| | | |-- Header.jsx
+| | | `-- Footer.jsx
+| | |-- lib/
+| | | |-- apiClient.js
+| | | |-- schema.js
+| | | |-- formatCurrency.js
+| | | |-- formatDiscount.js
+| | | `-- metadata.js
+| | |-- public/
+| | | |-- favicon.ico
+| | | `-- logo.svg
+| | |-- styles/
+| | | |-- tokens.css
+| | | `-- globals.css
+| | |-- node_modules/ # installed, gitignored
+| | |-- .env.local # REAL secrets -- gitignored
+| | |-- .env.local.example # committed template
+| | |-- next-sitemap.config.js
+| | |-- next.config.js
+| | |-- tailwind.config.js
+| | |-- package.json
+| | `-- package-lock.json
+| |
+| `-- admin/ # Staff dashboard -- React + Vite (SPA)
+| |-- src/
+| | |-- pages/
+| | | |-- Overview/index.jsx
+| | | |-- Products/
+| | | | |-- ProductList.jsx
+| | | | |-- ProductEdit.jsx
+| | | | |-- NarcoticsView.jsx
+| | | | |-- BulkImport.jsx
+| | | | `-- MissingImages.jsx
+| | | |-- Categories/index.jsx
+| | | |-- Discounts/index.jsx
+| | | |-- Orders/
+| | | | |-- StandardOrders.jsx
+| | | | |-- InstantOrders.jsx
+| | | | `-- NarcoticsOrders.jsx
+| | | |-- Cities/index.jsx
+| | | |-- Reports/index.jsx
+| | | |-- AdminUsers/
+| | | | |-- UserList.jsx
+| | | | `-- UserEdit.jsx # role + module access (Super Admin only)
+| | | |-- Settings/
+| | | | |-- General.jsx
+| | | | |-- Delivery.jsx
+| | | | |-- Payment.jsx
+| | | | |-- Email.jsx
+| | | | |-- Prescription.jsx
+| | | | |-- GoogleSheets.jsx
+| | | | |-- Security.jsx
+| | | | |-- Backup.jsx
+| | | | `-- Pages.jsx # About / Contact Us content
+| | | |-- ActivityLogs/index.jsx
+| | | |-- Login.jsx
+| | | `-- ForgotPassword.jsx / ResetPassword.jsx
+| | |-- components/
+| | | |-- DataTable/
+| | | |-- ProductForm/
+| | | | |-- NarcoticsToggle.jsx
+| | | | `-- DiscountField.jsx
+| | | |-- OrderCard/
+| | | |-- SearchBar.jsx
+| | | |-- BulkActionBar.jsx
+| | | |-- NotificationBell.jsx
+| | | `-- RoleAccessEditor.jsx
+| | |-- hooks/
+| | | |-- useProducts.js
+| | | |-- useProductSearch.js
+| | | |-- useOrders.js
+| | | |-- useAuth.js
+| | | |-- useActivityLogs.js
+| | | `-- useAdminUsers.js
+| | |-- api/
+| | | |-- products.js
+| | | |-- orders.js
+| | | |-- categories.js
+| | | |-- cities.js
+| | | |-- discounts.js
+| | | |-- reports.js
+| | | |-- settings.js
+| | | `-- adminUsers.js
+| | |-- store/
+| | | `-- authStore.js
+| | |-- App.jsx
+| | `-- main.jsx
+| |-- node_modules/ # installed, gitignored
+| |-- .env # REAL secrets -- gitignored
+| |-- .env.example # committed template
+| |-- index.html
+| |-- vite.config.js
+| |-- tailwind.config.js
+| |-- package.json
+| `-- package-lock.json
+|
+|-- server/ # Backend API -- Node.js + Express
+| |-- src/
+| | |-- modules/
+| | | |-- products/
+| | | | |-- product.routes.js
+| | | | |-- product.controller.js
+| | | | |-- product.service.js # incl. discount + narcotics-flag logic
+| | | | |-- product.model.js
+| | | | |-- product.validation.js
+| | | | `-- productImages.controller.js # multi-image upload/delete/set-primary
+| | | |-- categories/
+| | | | |-- category.routes.js
+| | | | |-- category.controller.js
+| | | | |-- category.service.js
+| | | | `-- category.model.js
+| | | |-- cities/
+| | | | |-- city.routes.js
+| | | | |-- city.controller.js
+| | | | |-- city.service.js
+| | | | `-- city.model.js
+| | | |-- discounts/
+| | | | `-- discount.service.js # shared precedence logic (product > category)
+| | | |-- orders/
+| | | | |-- order.routes.js
+| | | | |-- order.controller.js
+| | | | |-- order.service.js # incl. cancellation: COD / void / refund
+| | | | |-- order.model.js
+| | | | |-- standardOrder.handler.js
+| | | | |-- instantOrder.handler.js
+| | | | |-- narcoticsOrder.handler.js
+| | | | `-- cancelOrder.handler.js # cancel order + auto void/refund
+| | | |-- prescriptions/
+| | | | |-- prescription.routes.js
+| | | | |-- prescription.controller.js
+| | | | `-- prescription.service.js
+| | | |-- otp/
+| | | | |-- otp.routes.js
+| | | | |-- otp.controller.js
+| | | | |-- otp.service.js
+| | | | `-- otp.model.js
+| | | |-- payments/
+| | | | |-- payment.routes.js
+| | | | |-- payment.controller.js
+| | | | |-- payment.service.js # incl. void()/refund() + charge()/authorize()
+| | | | |-- providers/
+| | | | | `-- habibMetro.provider.js
+| | | | `-- webhook.controller.js
+| | | |-- admin-users/
+| | | | |-- adminUser.routes.js
+| | | | |-- adminUser.controller.js # create/edit-role/delete -- Super Admin only
+| | | | |-- adminUser.service.js
+| | | | |-- adminUser.model.js
+| | | | |-- passwordReset.controller.js
+| | | | `-- passwordReset.service.js
+| | | |-- chatbot/
+| | | | |-- chatbot.routes.js
+| | | | |-- chatbot.controller.js
+| | | | |-- chatbot.service.js # Groq call + narcotics filter + disclaimer
+| | | | `-- chatbotConversation.model.js
+| | | |-- activity-logs/
+| | | | |-- activityLog.routes.js
+| | | | |-- activityLog.service.js
+| | | | `-- activityLog.model.js
+| | | |-- reports/
+| | | | |-- report.routes.js
+| | | | |-- report.controller.js
+| | | | `-- report.service.js
+| | | `-- settings/
+| | | |-- settings.routes.js
+| | | |-- settings.controller.js
+| | | |-- settings.service.js
+| | | `-- settings.model.js # incl. discount + pages groups
+| | |-- integrations/
+| | | |-- googleSheets.js
+| | | |-- smtp.js
+| | | |-- imageProcessor.js # sharp: resize/compress/WebP
+| | | |-- notifications.js # WebSocket/SSE to admin dashboard
+| | | |-- redisClient.js # cache + rate-limit + session/OTP store
+| | | `-- groqClient.js # chatbot LLM calls
+| | |-- middleware/
+| | | |-- auth.js
+| | | |-- requireSuperAdmin.js
+| | | |-- errorHandler.js
+| | | |-- rateLimiter.js # Redis-backed, global default + per-route limits
+| | | |-- csrf.js
+| | | `-- validateRequest.js
+| | |-- jobs/
+| | | |-- weeklyReport.js
+| | | |-- sheetSync.js
+| | | `-- narcoticsAuthExpiry.js
+| | |-- config/
+| | | |-- db.js
+| | | |-- redis.js
+| | | `-- env.js
+| | `-- app.js
+| |
+| |-- uploads/
+| | |-- products/
+| | | `-- {sku}/
+| | | |-- original.jpg
+| | | |-- thumb.webp
+| | | `-- full.webp
+| | |-- prescriptions/ # PRIVATE -- authenticated route only
+| | `-- placeholder.webp
+| |
+| |-- scripts/
+| | |-- importProducts.js
+| | |-- matchProductImages.js
+| | `-- seedNarcotics.js
+| |
+| |-- tests/
+| | `-- unit/
+| | |-- discount.test.js
+| | |-- deliveryCharge.test.js
+| | |-- narcoticsGate.test.js
+| | |-- otp.test.js
+| | `-- cancelOrder.test.js # COD / void / refund branching (Phase 17)
+| |
+| |-- node_modules/ # installed, gitignored
+| |-- .env # REAL secrets -- gitignored
+| |-- .env.example # committed template
+| |-- ecosystem.config.js # PM2 process definitions
+| |-- package.json
+| `-- package-lock.json
+|
+|-- docs/
+| |-- SRS.docx
+| |-- PRD.docx
+| |-- design.md
+| |-- rules.md
+| |-- phases.md
+| |-- workflow-flowcharts.pdf
+| `-- folder-structure.pdf
+|
+|-- nginx/
+| `-- medikart.conf # reverse proxy + static routing (no secrets)
+|
+|-- .gitignore
+`-- README.md
+File & Folder Reference
+What each significant file or folder is for, grouped the same way as the tree above.
+apps/web — Customer Storefront (Next.js)
+app/layout.jsx Root layout shared by every page — loads fonts, design tokens, and
+global providers (cart context, etc.).
+app/page.jsx Home page — the search-first hero and featured categories.
+app/sitemap.js Generates sitemap.xml at build/request time from the live product and
+category data, for Google Search Console.
+app/products/[slug]/page A single product page, server-rendered so price, stock, and discount are
+.jsx visible to Google — not assembled client-side.
+app/products/[slug]/open Auto-generates the preview image shown when a product link is shared
+graph-image.jsx on WhatsApp/social apps.
+app/checkout/page.jsx The Details -> OTP -> Payment -> Confirm checkout flow, including the
+narcotics prescription-upload gate.
+app/instant-order/page.j Prescription-only ordering flow — no product selection, per the Instant
+sx Order requirement.
+app/about/page.jsx, Static pages whose text content is pulled from Settings, so the client can
+app/contact/page.jsx edit wording without a developer.
+components/ui/DiscountBa Renders the struck-through original price + discounted price +
+dge.jsx percentage-off badge.
+components/checkout/Pres Shared upload component used by both the Narcotics and Instant Order
+criptionUpload.jsx flows.
+components/chatbot/ChatW The floating AI assistant — sends symptom text to the backend chatbot
+idget.jsx endpoint and renders suggested products plus the mandatory disclaimer.
+components/whatsapp/What The persistent floating icon linking to the client's WhatsApp Business
+sAppButton.jsx number via a wa.me link.
+lib/schema.js Builds the JSON-LD structured data (Product, Organization,
+LocalBusiness) that powers rich search results.
+lib/formatDiscount.js Formats the original/discounted price pair and percentage-off text
+consistently everywhere it's shown.
+.env.local / Real secrets (API base URL, etc.) vs. the committed template teammates
+.env.local.example copy to create their own.
+next.config.js Next.js build/runtime configuration — image domains, redirects, etc.
+apps/admin — Staff Dashboard (React + Vite)
+pages/Products/Narcotics Filtered list of every product currently flagged Narcotics — the staff audit
+View.jsx view, independent of the general catalog.
+pages/Discounts/index.js Where the storewide discount is set/cleared; product- and category-level
+x discounts are set from their own edit screens.
+pages/Orders/NarcoticsOr Where a pharmacist approves or rejects an uploaded prescription.
+ders.jsx
+pages/AdminUsers/UserEdi Super-Admin-only screen to set another admin's role and which modules
+t.jsx they can access.
+pages/Settings/Pages.jsx Where the client edits the About and Contact Us page content shown on
+the storefront.
+pages/ForgotPassword.jsx The admin password-recovery flow — request a reset link, then set a new
+/ ResetPassword.jsx password from it.
+components/ProductForm/N The specific form controls for flagging a product as Narcotics and setting
+arcoticsToggle.jsx, its discount.
+DiscountField.jsx
+components/SearchBar.jsx Product search-by-name/SKU on the Products list.
+components/RoleAccessEdi The module-level access checklist a Super Admin uses when editing
+tor.jsx another admin's permissions.
+api/*.js One file per backend module — every network call the dashboard makes
+is defined here, not scattered through components.
+.env / .env.example Real secrets (e.g. the API base URL) vs. the committed template.
+server — Backend API (Node.js + Express)
+modules//*.routes.js Defines the URLs for that module and which controller function handles
+each one.
+modules//*.controller.js Reads the request, calls the service layer, shapes the response — no
+business logic lives here.
+modules//*.service.js The actual business rules — e.g. product.service.js decides how a
+product's discount and narcotics flag are applied.
+modules//*.model.js The MongoDB schema (Mongoose) for that module's data.
+modules/discounts/discou Shared logic implementing the confirmed precedence rule (product >
+nt.service.js category > storewide) so it's written once and reused everywhere a price
+is calculated.
+modules/orders/standardO The three distinct order-type workflows, kept separate rather than one
+rder.handler.js, tangled order function.
+instantOrder.handler.js,
+narcoticsOrder.handler.j
+s
+modules/orders/cancelOrd Cancels a Pending/Packed order (FR-AD-39) and decides the correct
+er.handler.js payment reversal — nothing to reverse for COD, a void for an
+authorized-only narcotics hold, or a real refund for an already-captured
+payment (FR-SYS-10) — plus the distinct cancellation email (FR-CW-24).
+modules/products/product Handles multiple images per product (FR-AD-40): upload one or more
+Images.controller.js files in a single request, mark one as the primary/cover image, delete a
+single image without touching the rest.
+modules/payments/payment The abstracted interface every provider implements: charge(), authorize(),
+.service.js and — since Order Cancellation — void() and refund() too, so
+cancelOrder.handler.js never needs to know which gateway is behind it.
+modules/payments/provide The Habib Metro-specific integration code, isolated behind the shared
+rs/habibMetro.provider.j payment.service.js interface so the gateway can be swapped without
+s touching order logic.
+modules/payments/webhook Receives and signature-verifies the gateway's payment-confirmation
+.controller.js callback — the source of truth for whether an order was actually paid.
+modules/admin-users/admi Create/edit-role/delete for other admin accounts — every route here
+nUser.controller.js requires the Super Admin check.
+modules/admin-users/pass The forgot-password token flow, mirroring the OTP pattern already used
+wordReset.* at checkout.
+modules/chatbot/chatbot. Calls Groq, filters out any Narcotics-flagged product from the suggestions,
+service.js and attaches the mandatory disclaimer before the response is ever sent
+to a customer.
+modules/chatbot/chatbotC Logs each chatbot conversation for the periodic review this feature's
+onversation.model.js compliance rule requires.
+integrations/redisClient Shared Redis connection used for catalog/price caching, rate-limit
+.js counters, and OTP/session storage.
+integrations/imageProces The sharp-based pipeline that resizes and converts every uploaded
+sor.js image to WebP before it's saved.
+integrations/groqClient. Thin wrapper around the Groq API — kept separate from
+js chatbot.service.js so the AI provider could be swapped later without
+touching the business rules.
+middleware/requireSuperA Blocks any admin-account-management route unless the logged-in user
+dmin.js is a Super Admin.
+middleware/rateLimiter.j Redis-backed token-bucket rate limiting applied as the default on every
+s route — not only OTP/login/chatbot — with tighter overrides on those
+specific sensitive endpoints (Section 17.2 of the PRD).
+middleware/csrf.js Cross-site request forgery protection on admin state-changing requests.
+jobs/narcoticsAuthExpiry Scheduled job that auto-cancels a narcotics order's held card
+.js authorization if it's never approved within the configured window.
+uploads/products/{sku}/ Where compressed product images actually live on disk, organized by
+SKU so they're easy to match back to a product.
+uploads/prescriptions/ Prescription images — deliberately outside any public Nginx route,
+reachable only through an authenticated admin endpoint.
+scripts/importProducts.j One-time/repeatable bulk Excel import of the client's product catalog, with
+s per-row error reporting.
+scripts/matchProductImag Matches the bulk AI-generated image folder to the correct product by
+es.js SKU.
+scripts/seedNarcotics.js Applies the client's manually-provided Narcotics product list,
+cross-checked against the keyword-scan candidate list.
+tests/unit/ Unit tests for the business logic where a silent bug would cost money or
+create a compliance gap: discount precedence, delivery-charge
+calculation, the narcotics checkout gate, OTP verification, and order
+cancellation's COD/void/refund branching.
+ecosystem.config.js The PM2 file that defines and keeps alive the two long-running Node
+processes on the VPS: the Express API and the Next.js server.
+.env / .env.example Real secrets (Mongo URI, Redis URL, SMTP, Habib Metro keys, Groq
+API key, JWT secret) vs. the committed template.
+Root & Deployment Files
+nginx/medikart.conf Routes traffic: the storefront domain to the Next.js PM2 process,
+/api to the Express PM2 process, the admin subdomain to the static
+Vite build, and /uploads to the images folder. Safe to commit —
+contains no secrets.
+.gitignore Keeps .env files, node_modules, build output, and uploaded
+images out of Git — see the note below.
+README.md Setup instructions: environment variables needed, how to run each
+app locally, and the deploy steps for the VPS.
+docs/ Every planning document produced so far — SRS, PRD, design
+direction, engineering rules, phases, and this folder structure —
+versioned alongside the code.
+Why .env is real but never committed: .env holds actual secrets — the live MongoDB connection string,
+Redis URL, SMTP credentials, and eventually the Habib Metro gateway keys. If it were committed, anyone
+with repository access would have live credentials to the database and payment gateway. .env.example is the
+safe, committed template — same variable names, no real values — so anyone setting up the project knows
+exactly what needs to be filled in without ever seeing the actual secrets.
+How This Maps to Hosting
+Three things run on the VPS, coordinated by Nginx and PM2 exactly as already planned:
+apps/web Built and run as a Node process (`next start`), kept alive by PM2 via
+ecosystem.config.js. Nginx reverse-proxies the storefront domain to it.
+apps/admin Built once (`vite build`) into static files; Nginx serves them directly — no running
+process needed for this one.
+server Runs as a second Node process under the same PM2 file. Nginx reverse-proxies
+/api requests to it, and serves /uploads directly from server/uploads/ as static files.
+Redis and MongoDB Atlas sit alongside this: Redis runs locally on the VPS (or a small managed instance)
+since the API talks to it constantly and low latency matters; MongoDB stays on Atlas as already decided.

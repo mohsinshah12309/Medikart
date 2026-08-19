@@ -18,14 +18,65 @@ const smtp = require("../../integrations/smtp");
 const { BadRequestError } = require("../../utils/errors");
 
 /**
+ * Per-IP OTP request rate limiting (Fix 5 — NFR-SEC-03).
+ *
+ * Redis-based global rate limiting is planned for Phase 21. Until then, a
+ * simple in-memory sliding-window counter prevents an attacker from rotating
+ * many different emails from a single IP to bypass the per-email limit.
+ *
+ * Key design notes:
+ *   - Keyed by IP + a fixed 15-minute window.
+ *   - Same cap as the email limit (3 requests per 15 minutes).
+ *   - In-memory is acceptable for now: the counter only needs to survive the
+ *     request window, and Redis replaces it in Phase 21.
+ *   - A timestamp array is stored per IP; stale entries are pruned on access
+ *     so the map never grows unbounded.
+ */
+const IP_RATE_LIMIT_MAX = 3;
+const IP_RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const ipRequestLog = new Map(); // ip -> [timestamps]
+
+const isIpRateLimited = (ip) => {
+  if (!ip) return false;
+  const now = Date.now();
+  const cutoff = now - IP_RATE_LIMIT_WINDOW_MS;
+  const timestamps = (ipRequestLog.get(ip) || []).filter((t) => t > cutoff);
+  ipRequestLog.set(ip, timestamps);
+  return timestamps.length >= IP_RATE_LIMIT_MAX;
+};
+
+const recordIpRequest = (ip) => {
+  if (!ip) return;
+  const now = Date.now();
+  const cutoff = now - IP_RATE_LIMIT_WINDOW_MS;
+  const timestamps = (ipRequestLog.get(ip) || []).filter((t) => t > cutoff);
+  timestamps.push(now);
+  ipRequestLog.set(ip, timestamps);
+};
+
+/** Test helper — clear the per-IP request log (test isolation). */
+const resetIpRequestLog = () => {
+  ipRequestLog.clear();
+};
+
+/**
  * Request a new 6-digit OTP code for an email address.
  *
  * @param {String} email
+ * @param {String} [ip] - client IP for per-IP rate limiting (Fix 5)
  */
-const requestOtp = async (email) => {
+const requestOtp = async (email, ip) => {
   const normalizedEmail = email.trim().toLowerCase();
 
-  // 1. Per-email rate limiting (max 3 requests per email in 15 minutes)
+  // 1. Per-IP rate limiting FIRST (NFR-SEC-03) — prevents email rotation
+  //    from a single IP from bypassing the per-email cap.
+  if (isIpRateLimited(ip)) {
+    throw new BadRequestError(
+      "Too many OTP requests from this device. Please wait 15 minutes before trying again.",
+    );
+  }
+
+  // 2. Per-email rate limiting (max 3 requests per email in 15 minutes)
   const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
   const recentRequests = await Otp.countDocuments({
     email: normalizedEmail,
@@ -34,9 +85,14 @@ const requestOtp = async (email) => {
 
   if (recentRequests >= 3) {
     throw new BadRequestError(
-      "Too many OTP requests for this email. Please wait 15 minutes before trying again."
+      "Too many OTP requests for this email. Please wait 15 minutes before trying again.",
     );
   }
+
+  // Record this request against the IP AFTER passing the per-email check.
+  // (If the email itself is over its own limit, we don't count the IP hit —
+  // the request was rejected for an email-specific reason.)
+  recordIpRequest(ip);
 
   // 2. Invalidate any unexpired, unverified OTP for this email (don't stack live codes)
   await Otp.updateMany(
@@ -47,7 +103,7 @@ const requestOtp = async (email) => {
     },
     {
       $set: { invalidated: true },
-    }
+    },
   );
 
   // 3. Generate 6-digit random code
@@ -95,7 +151,6 @@ const requestOtp = async (email) => {
   return responsePayload;
 };
 
-
 /**
  * Verify a 6-digit OTP code.
  *
@@ -112,7 +167,9 @@ const verifyOtp = async (email, code) => {
   }).sort({ createdAt: -1 });
 
   if (!otpDoc) {
-    throw new BadRequestError("OTP expired or invalid. Please request a new code.");
+    throw new BadRequestError(
+      "OTP expired or invalid. Please request a new code.",
+    );
   }
 
   // 2. Hard 10-minute expiry check
@@ -125,7 +182,7 @@ const verifyOtp = async (email, code) => {
   // 3. Single-use check: if already verified, reject immediately
   if (otpDoc.verified) {
     throw new BadRequestError(
-      "This OTP has already been verified and used. Please request a new code."
+      "This OTP has already been verified and used. Please request a new code.",
     );
   }
 
@@ -134,7 +191,7 @@ const verifyOtp = async (email, code) => {
     otpDoc.invalidated = true;
     await otpDoc.save();
     throw new BadRequestError(
-      "Maximum verification attempts exceeded. Please request a new code."
+      "Maximum verification attempts exceeded. Please request a new code.",
     );
   }
 
@@ -150,7 +207,7 @@ const verifyOtp = async (email, code) => {
 
     if (otpDoc.attempts >= 4) {
       throw new BadRequestError(
-        "Maximum verification attempts exceeded. Please request a new code."
+        "Maximum verification attempts exceeded. Please request a new code.",
       );
     }
     throw new BadRequestError("Invalid verification code");
@@ -169,4 +226,8 @@ const verifyOtp = async (email, code) => {
 module.exports = {
   requestOtp,
   verifyOtp,
+  // Test/utility helpers — expose the per-IP limiter for unit-test isolation.
+  _isIpRateLimited: isIpRateLimited,
+  _recordIpRequest: recordIpRequest,
+  _resetIpRequestLog: resetIpRequestLog,
 };

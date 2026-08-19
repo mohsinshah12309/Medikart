@@ -13,61 +13,130 @@
  *   5. Silent overwrite prevention: already-priced orders reject re-pricing.
  */
 
-const Order = require('./order.model');
-const otpService = require('../otp/otp.service');
-const { getDeliveryCharge } = require('../cities/city.service');
-const smtp = require('../../integrations/smtp');
-const { BadRequestError } = require('../../utils/errors');
-const multer = require('multer');
-const path = require('path');
-const crypto = require('crypto');
-const fs = require('fs').promises;
+const Order = require("./order.model");
+const otpService = require("../otp/otp.service");
+const { getDeliveryCharge } = require("../cities/city.service");
+const smtp = require("../../integrations/smtp");
+const { BadRequestError, ValidationError } = require("../../utils/errors");
+const multer = require("multer");
+const path = require("path");
+const crypto = require("crypto");
+const fs = require("fs").promises;
 
 // ── Prescription Upload Configuration ────────────────────────────────────────
 // Stored outside public routes: server/uploads/prescriptions/
-const PRESCRIPTIONS_DIR = path.join(__dirname, '../../../uploads/prescriptions');
+const PRESCRIPTIONS_DIR = path.join(
+  __dirname,
+  "../../../uploads/prescriptions",
+);
 
-const prescriptionStorage = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    try {
-      await fs.mkdir(PRESCRIPTIONS_DIR, { recursive: true });
-      cb(null, PRESCRIPTIONS_DIR);
-    } catch (err) {
-      cb(err);
-    }
-  },
-  filename: (req, file, cb) => {
-    const uniqueId = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}-${uniqueId}${ext}`);
-  },
-});
-
+// Fix 4 — TRUE content validation. Files are held in memory first so the
+// actual bytes can be inspected (magic-byte/header check) BEFORE anything is
+// written to disk. A file renamed to .jpg or .pdf with fake mimetype is
+// rejected — never stored. NFR-SEC-04.
 const prescriptionUpload = multer({
-  storage: prescriptionStorage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
   fileFilter: (req, file, cb) => {
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+    const allowedMimeTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
+      "application/pdf",
+    ];
     if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new BadRequestError('Prescription must be a JPEG, PNG, or PDF file'));
+      cb(new BadRequestError("Prescription must be a JPEG, PNG, or PDF file"));
     }
   },
-}).single('prescription');
+}).single("prescription");
+
+/**
+ * Validate the actual content of a prescription buffer (magic bytes / header).
+ * Fix 4 — extension and client-supplied mimetype are NOT trusted.
+ *
+ * @param {Buffer} buffer - raw file content from multer
+ * @returns {string} - true file extension ('.jpg', '.png', or '.pdf')
+ */
+const validatePrescriptionContent = (buffer) => {
+  if (!buffer || !Buffer.isBuffer(buffer) || buffer.length < 4) {
+    throw new ValidationError("Prescription file is empty or too small");
+  }
+
+  // PDF: starts with "%PDF-" (bytes 25 50 44 46 2D)
+  if (
+    buffer[0] === 0x25 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x44 &&
+    buffer[3] === 0x46 &&
+    buffer[4] === 0x2d
+  ) {
+    return ".pdf";
+  }
+
+  // PNG: starts with 89 50 4E 47 0D 0A 1A 0A
+  if (
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a
+  ) {
+    return ".png";
+  }
+
+  // JPEG: starts with FF D8 FF
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return ".jpg";
+  }
+
+  throw new ValidationError(
+    "Prescription file content is not a valid JPEG, PNG, or PDF",
+  );
+};
+
+/**
+ * Store a validated prescription buffer to disk.
+ * Fix 4 — called AFTER content validation; generates a random filename.
+ *
+ * @param {Buffer} buffer - validated prescription file content
+ * @returns {Promise<string>} - the stored filename
+ */
+const savePrescriptionToDisk = async (buffer) => {
+  const ext = validatePrescriptionContent(buffer);
+  const uniqueId = crypto.randomBytes(16).toString("hex");
+  const filename = `${Date.now()}-${uniqueId}${ext}`;
+
+  await fs.mkdir(PRESCRIPTIONS_DIR, { recursive: true });
+  await fs.writeFile(path.join(PRESCRIPTIONS_DIR, filename), buffer);
+
+  return filename;
+};
 
 // ── Place Instant Order ───────────────────────────────────────────────────────
 const placeInstantOrder = async (payload) => {
-  const { customer, paymentMethod, otp, branchDescription, prescriptionFilename } = payload;
+  const {
+    customer,
+    paymentMethod,
+    otp,
+    branchDescription,
+    prescriptionFilename,
+  } = payload;
 
   // Validate prescription was uploaded
   if (!prescriptionFilename) {
-    throw new BadRequestError('Prescription file is required for instant orders');
+    throw new BadRequestError(
+      "Prescription file is required for instant orders",
+    );
   }
 
   // Validate OTP email matches customer email
   if (otp.email !== customer.email) {
-    throw new BadRequestError('OTP email must match the customer email');
+    throw new BadRequestError("OTP email must match the customer email");
   }
 
   // Verify OTP (FR-CW-09)
@@ -76,23 +145,39 @@ const placeInstantOrder = async (payload) => {
   // Get delivery charge (server-side only)
   const deliveryCharge = await getDeliveryCharge(customer.city);
 
+  // ── SNAPSHOT (FR-AD-16) ───────────────────────────────────────────────
+  // An instant order is submitted WITHOUT product selection (items: []), so
+  // there are no narcotics-flagged items at submission time — the snapshot is
+  // false by definition. This is the same snapshot-at-submission principle as
+  // standardOrder.handler.js / narcoticsOrder.handler.js.
+  // The value is SNAPSHOTTED onto the order document here and is NEVER
+  // recomputed from live Product documents later (e.g. when the admin prices
+  // the order). A product flagged narcotics after this order exists must not
+  // retroactively change this value.
+  const requiresVerification = false;
+
   // Create order with empty items, awaiting-pharmacist-pricing status
   const order = await Order.create({
-    type: 'instant',
+    type: "instant",
     customer,
     items: [],
     totals: { subtotal: 0, deliveryCharge, total: deliveryCharge },
     paymentMethod,
-    paymentState: 'pending',
-    status: 'awaiting-pharmacist-pricing',
-    requiresVerification: false,
-    branchDescription: branchDescription || '',
-    prescriptionUrl: `/uploads/prescriptions/${prescriptionFilename}`,
+    paymentState: "pending",
+    status: "awaiting-pharmacist-pricing",
+    // SNAPSHOT — never recomputed after this write (FR-AD-16)
+    requiresVerification,
+    branchDescription: branchDescription || "",
+    // Fix 1 — prescription files are ONLY accessible through the
+    // authenticated admin route, never a public static URL (FR-SYS-02).
+    prescriptionUrl: `/api/v1/admin/prescriptions/${prescriptionFilename}`,
   });
 
   // Confirmation email — non-blocking
   sendInstantOrderConfirmationEmail(order).catch((err) => {
-    console.error(`[orders] Instant order confirmation email failed for order ${order._id}: ${err.message}`);
+    console.error(
+      `[orders] Instant order confirmation email failed for order ${order._id}: ${err.message}`,
+    );
   });
 
   return order;
@@ -144,4 +229,9 @@ const sendInstantOrderConfirmationEmail = async (order) => {
   });
 };
 
-module.exports = { placeInstantOrder, prescriptionUpload };
+module.exports = {
+  placeInstantOrder,
+  prescriptionUpload,
+  savePrescriptionToDisk,
+  validatePrescriptionContent,
+};

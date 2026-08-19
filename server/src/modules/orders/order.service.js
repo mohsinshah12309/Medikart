@@ -131,16 +131,20 @@ const priceInstantOrder = async (orderId, { items }) => {
   const deliveryCharge = await getDeliveryCharge(order.customer.city);
   const total = round2(subtotal + deliveryCharge);
 
-  // Step 8: Check if any item is a narcotic and update requiresVerification
-  const requiresVerification = products.some(
-    (product) => product.isNarcotic === true,
-  );
+  // Step 8: NEVER recompute requiresVerification from live Product data.
+  // The snapshot was taken at order submission time (FR-AD-16) — a product's
+  // narcotics flag changing after submission must not retroactively alter
+  // this order. We only READ the stored snapshot.
+  const { requiresVerification } = order;
 
-  // Step 9: Update order with pricing, move to pending status
+  // Step 9: Update order with pricing.
+  // If the snapshotted requiresVerification is true, the order must enter the
+  // narcotics verification workflow (pending_verification) — NOT proceed
+  // straight to pending — so the pharmacist reviews the prescription before
+  // fulfillment. Otherwise move to the normal pending status.
   order.items = orderItems;
   order.totals = { subtotal, deliveryCharge, total };
-  order.requiresVerification = requiresVerification;
-  order.status = "pending";
+  order.status = requiresVerification ? "pending_verification" : "pending";
 
   await order.save();
 
