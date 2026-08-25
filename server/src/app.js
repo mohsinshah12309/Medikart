@@ -72,11 +72,14 @@ app.get("/health", (req, res) => {
   });
 });
 
+const paymentRoutes = require("./modules/payments/payment.routes");
+
 // ─── PUBLIC routes ─────────────────────────────────────────────────────────────
 // Mounted BEFORE the auth middleware so public endpoints are never blocked.
 app.use("/api/v1/auth/admin", adminUserRoutes);
 app.use("/api/v1/otp", otpRoutes);
 app.use("/api/v1/orders", publicOrderRoutes);
+app.use("/api/v1/payments", paymentRoutes);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route

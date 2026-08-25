@@ -95,6 +95,10 @@ const placeNarcoticsOrder = async ({
       "Prescription file is required for an order containing narcotics-flagged products",
     );
   }
+  
+  if (requiresVerification && paymentMethod !== 'cod') {
+    throw new BadRequestError("Narcotics orders can only be paid via Cash on Delivery.");
+  }
 
   // ── Step 5: Verify OTP (FR-CW-09) ──────────────────────────────────────────
   // Must succeed before any order document is created.

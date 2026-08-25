@@ -46,6 +46,13 @@ publicOrderRoutes.post("/instant", orderController.placeInstantOrder);
 // Multer (prescriptionUpload) runs inside the controller.
 publicOrderRoutes.post("/narcotics", orderController.placeNarcoticsOrder);
 
+const paymentController = require("../payments/payment.controller");
+publicOrderRoutes.post(
+  "/:id/payment/initiate",
+  validateParams(orderIdParamsSchema),
+  paymentController.initiatePayment
+);
+
 // ── Admin routes (mounted behind auth in app.js) ──────────────────────────────
 const adminOrderRoutes = express.Router();
 

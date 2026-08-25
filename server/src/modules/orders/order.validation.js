@@ -40,7 +40,7 @@ const placeStandardOrderSchema = z.object({
       }),
     )
     .min(1, "At least one item is required"),
-  paymentMethod: z.literal("cod"),
+  paymentMethod: z.enum(["cod", "card"]),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
     code: z
@@ -66,7 +66,7 @@ const placeInstantOrderSchema = z.object({
     address: z.string().min(1, "Delivery address is required").trim(),
     city: z.string().min(1, "City is required").trim(),
   }),
-  paymentMethod: z.literal("cod"),
+  paymentMethod: z.enum(["cod", "card"]),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
     code: z
@@ -106,7 +106,7 @@ const placeNarcoticsOrderSchema = z.object({
       }),
     )
     .min(1, "At least one item is required"),
-  paymentMethod: z.literal("cod"),
+  paymentMethod: z.enum(["cod", "card"]),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
     code: z

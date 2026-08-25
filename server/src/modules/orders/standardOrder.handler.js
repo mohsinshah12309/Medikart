@@ -61,6 +61,11 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
   // first so a failed stock check does not unnecessarily consume an OTP.
   await otpService.verifyOtp(otp.email, otp.code);
 
+  const requiresVerification = products.some((product) => product.isNarcotic === true);
+  if (requiresVerification && paymentMethod !== 'cod') {
+    throw new BadRequestError("Narcotics orders can only be paid via Cash on Delivery.");
+  }
+
   // ── Step 4: Fetch storewide discount once (discount.service is pure) ───────
   const storewidePercent = await getStorewideDiscount();
 
@@ -98,7 +103,7 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     status: 'pending',
     // Snapshot the source product state at submission time. Phase 15 owns the
     // prescription gate and verification workflow; this phase only persists it.
-    requiresVerification: products.some((product) => product.isNarcotic === true),
+    requiresVerification,
   });
 
   // ── Step 8: Confirmation email — non-blocking (rules.md §6) ──────────────
