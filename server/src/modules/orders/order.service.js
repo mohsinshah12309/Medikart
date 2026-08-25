@@ -14,6 +14,7 @@ const { getEffectivePrice } = require("../discounts/discount.service");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getDeliveryCharge } = require("../cities/city.service");
 const { logActivity } = require("../activity-logs/activityLog.service");
+const smtp = require("../../integrations/smtp");
 const {
   BadRequestError,
   NotFoundError,
@@ -219,10 +220,180 @@ const reviewNarcoticsOrder = async (orderId, decision, reviewer) => {
   return order;
 };
 
+/**
+ * Admin cancels an order (Phase 17).
+ *
+ * @param {string} orderId
+ * @param {object} options
+ * @param {string} options.reason - optional reason for cancellation
+ * @param {object} options.admin - authenticated admin user
+ */
+const cancelOrder = async (orderId, { reason, admin }) => {
+  const order = await Order.findById(orderId);
+  if (!order) throw new NotFoundError("Order not found");
+
+  const currentStatus = order.status ? order.status.toLowerCase() : "";
+  if (currentStatus !== "pending" && currentStatus !== "packed") {
+    throw new BadRequestError(
+      `Cannot cancel order in "${order.status}" status. Only Pending or Packed orders can be cancelled.`
+    );
+  }
+
+  const previousStatus = order.status;
+  order.status = "cancelled";
+
+  if (order.paymentState === "paid") {
+    order.cancellation = {
+      reason,
+      cancelledBy: admin.id || admin._id || admin,
+      cancelledAt: new Date(),
+      refundStatus: "refund_pending",
+    };
+  } else {
+    order.cancellation = {
+      reason,
+      cancelledBy: admin.id || admin._id || admin,
+      cancelledAt: new Date(),
+      refundStatus: "not_applicable",
+    };
+  }
+
+  await order.save();
+
+  logActivity({
+    actor: {
+      id: admin.id || admin._id || admin,
+      email: admin.email,
+      role: admin.role,
+    },
+    action: "order_cancelled",
+    entityType: "order",
+    entityId: order._id,
+    before: { status: previousStatus },
+    after: { status: "cancelled" },
+  });
+
+  sendOrderCancellationEmail(order).catch((err) => {
+    console.error(
+      `[orders] Cancellation email failed for order ${order._id}: ${err.message}`
+    );
+  });
+
+  return order;
+};
+
+/**
+ * Admin marks a pending refund as completed (Phase 17).
+ *
+ * @param {string} orderId
+ * @param {object} admin - authenticated admin user
+ */
+const refundOrder = async (orderId, admin) => {
+  const order = await Order.findById(orderId);
+  if (!order) throw new NotFoundError("Order not found");
+
+  if (!order.cancellation || order.cancellation.refundStatus !== "refund_pending") {
+    throw new BadRequestError(
+      "Only orders with a refundStatus of 'refund_pending' can be marked as refunded."
+    );
+  }
+
+  order.cancellation.refundStatus = "refunded";
+  order.cancellation.refundedBy = admin.id || admin._id || admin;
+  order.cancellation.refundedAt = new Date();
+  order.paymentState = "refunded";
+
+  await order.save();
+
+  logActivity({
+    actor: {
+      id: admin.id || admin._id || admin,
+      email: admin.email,
+      role: admin.role,
+    },
+    action: "refund_marked_complete",
+    entityType: "order",
+    entityId: order._id,
+    before: { refundStatus: "refund_pending" },
+    after: { refundStatus: "refunded" },
+  });
+
+  return order;
+};
+
+/**
+ * Sends a cancellation email to the customer.
+ *
+ * @param {object} order
+ */
+const sendOrderCancellationEmail = async (order) => {
+  const isRefundPending = order.cancellation?.refundStatus === "refund_pending";
+  
+  let refundNoteHtml = "";
+  let refundNoteText = "";
+
+  if (isRefundPending) {
+    refundNoteHtml = `<p><strong>Refund Notice:</strong> Since your order was paid online, your refund of <strong>PKR ${order.totals.total.toFixed(2)}</strong> has been initiated and will be processed manually to your account within <strong>3-5 business days</strong>.</p>`;
+    refundNoteText = ` Since your order was paid online, your refund of PKR ${order.totals.total.toFixed(2)} has been initiated and will be processed manually to your account within 3-5 business days.`;
+  } else {
+    refundNoteHtml = `<p>No payment reversal is required for this order.</p>`;
+  }
+
+  const itemRows = order.items
+    .map(
+      (i) => `<tr>
+        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;">${i.name}</td>
+        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:center;">${i.quantity}</td>
+        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;">PKR ${i.price.toFixed(2)}</td>
+      </tr>`
+    )
+    .join("");
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+      <h2 style="color:#dc2626;">Order Cancelled — Medikart</h2>
+      <p>Hello ${order.customer.name},</p>
+      <p>We regret to inform you that your order has been cancelled.</p>
+      <p><strong>Order ID:</strong> ${order._id}</p>
+      ${order.cancellation?.reason ? `<p><strong>Reason for cancellation:</strong> ${order.cancellation.reason}</p>` : ""}
+      ${refundNoteHtml}
+      <h3 style="margin-top:20px;border-bottom:2px solid #e5e7eb;padding-bottom:4px;">Cancelled Items</h3>
+      <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+        <thead>
+          <tr style="background:#f3f4f6;">
+            <th style="padding:8px 12px;text-align:left;">Product</th>
+            <th style="padding:8px 12px;text-align:center;">Qty</th>
+            <th style="padding:8px 12px;text-align:right;">Price</th>
+          </tr>
+        </thead>
+        <tbody>${itemRows}</tbody>
+      </table>
+      <table style="width:100%;margin-top:8px;">
+        <tr style="font-weight:bold;font-size:1.05em;">
+          <td style="padding:8px 12px;">Total Refundable Amount</td>
+          <td style="padding:8px 12px;text-align:right;">PKR ${order.totals.total.toFixed(2)}</td>
+        </tr>
+      </table>
+      <hr style="margin:16px 0;">
+      <p style="color:#6b7280;font-size:0.875em;">
+        If you have any questions regarding this cancellation or your refund, please reply directly to this email or contact support.
+      </p>
+    </div>`;
+
+  await smtp.sendEmail({
+    to: order.customer.email,
+    subject: `Order Cancelled — Medikart (#${order._id})`,
+    html,
+    text: `Your order #${order._id} has been cancelled.${order.cancellation?.reason ? ` Reason: ${order.cancellation.reason}.` : ""}${refundNoteText} Total Amount: PKR ${order.totals.total.toFixed(2)}.`,
+  });
+};
+
 module.exports = {
   placeOrder,
   getOrders,
   getOrderById,
   priceInstantOrder,
   reviewNarcoticsOrder,
+  cancelOrder,
+  refundOrder,
 };

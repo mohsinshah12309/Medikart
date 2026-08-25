@@ -165,6 +165,33 @@ const priceInstantOrder = async (req, res, next) => {
   }
 };
 
+const cancelOrder = async (req, res, next) => {
+  try {
+    const order = await orderService.cancelOrder(req.params.id, {
+      reason: req.body.reason,
+      admin: req.admin,
+    });
+    res.status(200).json({
+      status: "success",
+      data: { order },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const refundOrder = async (req, res, next) => {
+  try {
+    const order = await orderService.refundOrder(req.params.id, req.admin);
+    res.status(200).json({
+      status: "success",
+      data: { order },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   placeStandardOrder,
   placeNarcoticsOrder,
@@ -173,4 +200,6 @@ module.exports = {
   getOrders,
   getOrderById,
   priceInstantOrder,
+  cancelOrder,
+  refundOrder,
 };

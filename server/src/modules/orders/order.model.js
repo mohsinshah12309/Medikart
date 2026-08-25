@@ -52,8 +52,14 @@ const totalsSchema = new mongoose.Schema(
 const cancellationSchema = new mongoose.Schema(
   {
     reason: { type: String },
-    cancelledBy: { type: String }, // admin ID or 'system'
+    cancelledBy: { type: mongoose.Schema.Types.ObjectId, ref: "AdminUser" },
     cancelledAt: { type: Date },
+    refundStatus: {
+      type: String,
+      enum: ["not_applicable", "refund_pending", "refunded"],
+    },
+    refundedBy: { type: mongoose.Schema.Types.ObjectId, ref: "AdminUser" },
+    refundedAt: { type: Date },
   },
   { _id: false },
 );

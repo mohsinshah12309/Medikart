@@ -169,6 +169,11 @@ const orderIdParamsSchema = z.object({
   id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid order ID format"),
 });
 
+// PATCH /api/v1/admin/orders/:id/cancel
+const cancelOrderSchema = z.object({
+  reason: z.string().trim().optional(),
+});
+
 module.exports = {
   placeStandardOrderSchema,
   placeInstantOrderSchema,
@@ -177,4 +182,5 @@ module.exports = {
   narcoticsVerificationSchema,
   adminOrderQuerySchema,
   orderIdParamsSchema,
+  cancelOrderSchema,
 };

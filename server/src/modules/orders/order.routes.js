@@ -26,6 +26,7 @@ const {
   adminOrderQuerySchema,
   orderIdParamsSchema,
   narcoticsVerificationSchema,
+  cancelOrderSchema,
 } = require("./order.validation");
 const orderController = require("./order.controller");
 
@@ -82,6 +83,21 @@ adminOrderRoutes.patch(
   validateParams(orderIdParamsSchema),
   validate(narcoticsVerificationSchema),
   orderController.reviewNarcoticsOrder,
+);
+
+// PATCH /api/v1/admin/orders/:id/cancel — cancel order (Phase 17)
+adminOrderRoutes.patch(
+  "/:id/cancel",
+  validateParams(orderIdParamsSchema),
+  validate(cancelOrderSchema),
+  orderController.cancelOrder,
+);
+
+// PATCH /api/v1/admin/orders/:id/refund — complete manual refund (Phase 17)
+adminOrderRoutes.patch(
+  "/:id/refund",
+  validateParams(orderIdParamsSchema),
+  orderController.refundOrder,
 );
 
 module.exports = { publicOrderRoutes, adminOrderRoutes };
