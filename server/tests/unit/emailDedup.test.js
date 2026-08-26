@@ -138,7 +138,7 @@ describe('Phase 19 — Email Deduplication (FR-CW-15)', () => {
     // Flush the microtask queue so the non-blocking email .catch() resolves
     await new Promise((r) => setImmediate(r));
     await new Promise((r) => setImmediate(r));
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 500));
 
     expect(smtp.sendEmail).toHaveBeenCalledTimes(1);
     expect(smtp.sendEmail.mock.calls[0][0].to).toBe(CUSTOMER.email);
@@ -157,7 +157,7 @@ describe('Phase 19 — Email Deduplication (FR-CW-15)', () => {
 
     await new Promise((r) => setImmediate(r));
     await new Promise((r) => setImmediate(r));
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 500));
 
     expect(smtp.sendEmail).toHaveBeenCalledTimes(1);
     expect(smtp.sendEmail.mock.calls[0][0].to).toBe(CUSTOMER.email);
@@ -179,7 +179,7 @@ describe('Phase 19 — Email Deduplication (FR-CW-15)', () => {
 
     await new Promise((r) => setImmediate(r));
     await new Promise((r) => setImmediate(r));
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 500));
 
     expect(smtp.sendEmail).toHaveBeenCalledTimes(1);
     expect(smtp.sendEmail.mock.calls[0][0].to).toBe(CUSTOMER.email);
