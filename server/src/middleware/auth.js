@@ -19,8 +19,9 @@
 
 const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../utils/errors");
+const AdminUser = require("../modules/admin-users/adminUser.model");
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
@@ -39,11 +40,17 @@ const auth = (req, res, next) => {
     // jwt.verify throws on any problem (expired, bad signature, malformed)
     const decoded = jwt.verify(token, secret);
 
+    // Fetch the admin user from DB to check current account state (especially 'active')
+    const adminUser = await AdminUser.findById(decoded.sub);
+    if (!adminUser || !adminUser.active) {
+      throw new UnauthorizedError("Authentication required");
+    }
+
     // Attach minimal identity info — downstream code reads req.admin
     req.admin = {
-      id: decoded.sub,
-      role: decoded.role,
-      email: decoded.email,
+      id: adminUser._id.toString(),
+      role: adminUser.role,
+      email: adminUser.email,
     };
 
     next();

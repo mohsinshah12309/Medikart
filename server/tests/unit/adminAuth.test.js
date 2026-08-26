@@ -21,6 +21,8 @@ const auth = require("../../src/middleware/auth");
 const requireSuperAdmin = require("../../src/middleware/requireSuperAdmin");
 const errorHandler = require("../../src/middleware/errorHandler");
 
+const AdminUser = require("../../src/modules/admin-users/adminUser.model");
+
 // Dummy Express app mounting requireSuperAdmin middleware for role test
 const testApp = express();
 testApp.use(express.json());
@@ -40,22 +42,46 @@ beforeAll(async () => {
   }
   await mongoose.connect(mongoUri);
 
+  await AdminUser.deleteMany({ email: { $in: ["admin@test.com", "super@test.com"] } });
+
+  const superAdminId = new mongoose.Types.ObjectId();
+  const regularAdminId = new mongoose.Types.ObjectId();
+
+  await AdminUser.create({
+    _id: superAdminId,
+    name: "Super Admin",
+    email: "super@test.com",
+    role: "super_admin",
+    passwordHash: "dummy",
+    active: true,
+  });
+
+  await AdminUser.create({
+    _id: regularAdminId,
+    name: "Regular Admin",
+    email: "admin@test.com",
+    role: "admin",
+    passwordHash: "dummy",
+    active: true,
+  });
+
   const secret = process.env.JWT_SECRET || "test-secret";
 
   regularAdminToken = jwt.sign(
-    { sub: "admin-reg-1", role: "admin", email: "admin@test.com" },
+    { sub: regularAdminId.toString(), role: "admin", email: "admin@test.com" },
     secret,
     { expiresIn: "1h" },
   );
 
   superAdminToken = jwt.sign(
-    { sub: "admin-super-1", role: "super_admin", email: "super@test.com" },
+    { sub: superAdminId.toString(), role: "super_admin", email: "super@test.com" },
     secret,
     { expiresIn: "1h" },
   );
 }, 90000);
 
 afterAll(async () => {
+  await AdminUser.deleteMany({ email: { $in: ["admin@test.com", "super@test.com"] } });
   await mongoose.connection.close();
 }, 90000);
 

@@ -18,6 +18,7 @@ const fs = require("fs").promises;
 const jwt = require("jsonwebtoken");
 const app = require("../../src/app");
 const Order = require("../../src/modules/orders/order.model");
+const AdminUser = require("../../src/modules/admin-users/adminUser.model");
 
 const TEST_FILENAME = "test-access-prescription.jpg";
 const PRESCRIPTIONS_DIR = path.join(
@@ -41,6 +42,20 @@ beforeAll(async () => {
     prescriptionUrl: { $regex: new RegExp(`${TEST_FILENAME}$`) },
   });
 
+  // Clean up existing admin users in test DB
+  await AdminUser.deleteMany({ email: "admin@medikart.pk" });
+
+  const adminId = new mongoose.Types.ObjectId();
+
+  await AdminUser.create({
+    _id: adminId,
+    name: "Test Admin",
+    email: "admin@medikart.pk",
+    role: "admin",
+    passwordHash: "dummy",
+    active: true,
+  });
+
   // Create real prescription file on disk
   const validJpeg = Buffer.from([
     0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01,
@@ -51,7 +66,7 @@ beforeAll(async () => {
   // Generate valid admin token
   const secret = process.env.JWT_SECRET || "test-secret";
   adminToken = jwt.sign(
-    { sub: "admin-123", role: "admin", email: "admin@medikart.pk" },
+    { sub: adminId.toString(), role: "admin", email: "admin@medikart.pk" },
     secret,
     { expiresIn: "1h" },
   );
@@ -77,6 +92,7 @@ afterAll(async () => {
   if (testOrder) {
     await Order.deleteOne({ _id: testOrder._id });
   }
+  await AdminUser.deleteMany({ email: "admin@medikart.pk" });
   try {
     await fs.unlink(TEST_FILE_PATH);
   } catch (err) {

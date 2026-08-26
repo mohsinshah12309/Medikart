@@ -91,6 +91,7 @@ const sanitizeUser = (user) => {
   if (!user) return user;
   const obj = user.toObject ? user.toObject() : { ...user };
   delete obj.passwordHash;
+  delete obj.twoFactorSecret;
   return obj;
 };
 
