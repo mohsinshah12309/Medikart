@@ -13,7 +13,7 @@ const router = express.Router();
 
 const productController = require("./product.controller");
 const productDiscountController = require("./product.discount.controller");
-const { validate, validateParams } = require("../../middleware/validate");
+const { validate, validateParams, validateQuery } = require("../../middleware/validate");
 const {
   createProductSchema,
   updateProductSchema,
@@ -21,6 +21,7 @@ const {
   productImageParamsSchema,
   narcoticToggleSchema,
   bulkNarcoticsSchema,
+  listProductsQuerySchema,
 } = require("./product.validation");
 const { productDiscountSchema } = require("./product.discount.validation");
 
@@ -28,7 +29,7 @@ const { productDiscountSchema } = require("./product.discount.validation");
 router.post("/", validate(createProductSchema), productController.createProduct);
 
 // GET /admin/products — get all products (with optional filters)
-router.get("/", productController.getAllProducts);
+router.get("/", validateQuery(listProductsQuerySchema), productController.getAllProducts);
 
 // ── Phase 11 — Narcotics Flagging & Audit Routes ─────────────────────────────
 // GET /admin/products/narcotics — list products flagged isNarcotic: true (FR-AD-14)

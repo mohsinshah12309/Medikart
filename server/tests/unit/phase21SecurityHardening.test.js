@@ -13,6 +13,7 @@ const app = require("../../src/app");
 const AdminUser = require("../../src/modules/admin-users/adminUser.model");
 const ActivityLog = require("../../src/modules/activity-logs/activityLog.model");
 const PasswordReset = require("../../src/modules/admin-users/passwordReset.model");
+const { resetRateLimiters } = require("../../src/middleware/rateLimiter");
 
 // Mock SMTP sendEmail so it doesn't try to connect to a real SMTP server
 jest.mock("../../src/integrations/smtp", () => ({
@@ -38,6 +39,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  resetRateLimiters();
   await AdminUser.deleteMany({});
   await ActivityLog.deleteMany({});
   await PasswordReset.deleteMany({});

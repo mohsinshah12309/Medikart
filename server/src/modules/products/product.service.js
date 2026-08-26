@@ -42,7 +42,7 @@ const formatProductWithImages = (productDoc) => {
 /**
  * Get all products (with optional filtering)
  */
-const getAllProducts = async (filters = {}) => {
+const getAllProducts = async (filters = {}, page = 1, limit = 20) => {
   const query = {};
 
   // Build query filters if provided
@@ -59,9 +59,13 @@ const getAllProducts = async (filters = {}) => {
     query.categoryIds = filters.categoryId;
   }
 
+  const skip = (page - 1) * limit;
+
   const products = await Product.find(query)
     .populate("categoryIds", "name slug")
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
 
   return products.map(formatProductWithImages);
 };

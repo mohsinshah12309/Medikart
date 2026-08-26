@@ -2,6 +2,7 @@
 module.exports = {
   testEnvironment: "node",
   testMatch: ["**/tests/unit/**/*.test.js"],
+  setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
   // The unit/integration tests share a single MongoDB test database and use
   // overlapping fixtures (same slugs/emails/cities). Running them in parallel
   // across multiple workers causes cross-file data races (e.g. one file's

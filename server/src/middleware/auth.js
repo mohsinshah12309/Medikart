@@ -22,6 +22,11 @@ const { UnauthorizedError } = require("../utils/errors");
 const AdminUser = require("../modules/admin-users/adminUser.model");
 
 const auth = async (req, res, next) => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    return next(new Error("JWT_SECRET is not configured on the server"));
+  }
+
   try {
     const authHeader = req.headers.authorization;
 
@@ -30,12 +35,6 @@ const auth = async (req, res, next) => {
     }
 
     const token = authHeader.slice(7); // strip "Bearer "
-
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-      // Server misconfiguration — this is a 500, not a 401
-      throw new Error("JWT_SECRET is not configured on the server");
-    }
 
     // jwt.verify throws on any problem (expired, bad signature, malformed)
     const decoded = jwt.verify(token, secret);

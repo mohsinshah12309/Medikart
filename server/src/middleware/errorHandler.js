@@ -62,9 +62,27 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // Unknown/unexpected errors — log the full error server-side but never
-  // expose stack traces to the client
-  console.error("❌ Unexpected error:", err);
+  // For Multer errors (file upload size/limits) (Phase 22 / Step 6)
+  if (err.name === "MulterError") {
+    const isSizeLimit = err.code === "LIMIT_FILE_SIZE";
+    return res.status(400).json({
+      status: "error",
+      message: isSizeLimit ? "File too large" : err.message,
+    });
+  }
+
+  // Handle standard HTTP/Express errors (e.g., body-parser 413 Payload Too Large or 400 Malformed JSON)
+  if (err.status || err.statusCode) {
+    const statusCode = err.status || err.statusCode;
+    return res.status(statusCode).json({
+      status: "error",
+      message: err.message || "Request failed",
+    });
+  }
+
+  // Unknown/unexpected errors — log the full error server-side with Request ID, but never
+  // expose stack traces or database/filesystem internals to the client
+  console.error(`❌ [Request ID: ${req.id || "N/A"}] Unexpected error:`, err);
 
   return res.status(500).json({
     status: "error",

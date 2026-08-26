@@ -60,8 +60,17 @@ const categoryIdSchema = z.object({
   id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid category ID format"),
 });
 
+// GET /admin/categories query schema (Phase 22 / Step 13)
+const listCategoriesQuerySchema = z.object({
+  active: z.enum(["true", "false"]).optional(),
+  isNarcotic: z.enum(["true", "false"]).optional(),
+  page: z.coerce.number().int().min(1, "Page must be at least 1").optional().default(1),
+  limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(100, "Limit cannot exceed 100").optional().default(20),
+});
+
 module.exports = {
   createCategorySchema,
   updateCategorySchema,
   categoryIdSchema,
+  listCategoriesQuerySchema,
 };

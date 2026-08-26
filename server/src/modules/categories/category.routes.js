@@ -13,11 +13,12 @@ const router = express.Router();
 
 const categoryController = require("./category.controller");
 const categoryDiscountController = require("./category.discount.controller");
-const { validate, validateParams } = require("../../middleware/validate");
+const { validate, validateParams, validateQuery } = require("../../middleware/validate");
 const {
   createCategorySchema,
   updateCategorySchema,
   categoryIdSchema,
+  listCategoriesQuerySchema,
 } = require("./category.validation");
 const { categoryDiscountSchema } = require("./category.discount.validation");
 
@@ -25,7 +26,7 @@ const { categoryDiscountSchema } = require("./category.discount.validation");
 router.post("/", validate(createCategorySchema), categoryController.createCategory);
 
 // GET /admin/categories — get all categories (with optional filters)
-router.get("/", categoryController.getAllCategories);
+router.get("/", validateQuery(listCategoriesQuerySchema), categoryController.getAllCategories);
 
 // GET /admin/categories/:id — get single category
 router.get(

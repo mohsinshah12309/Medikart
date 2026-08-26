@@ -27,16 +27,22 @@ const createCategory = async (req, res, next) => {
  */
 const getAllCategories = async (req, res, next) => {
   try {
+    const { active, isNarcotic, page, limit } = req.query;
+
     // Extract query filters if provided
     const filters = {
-      active: req.query.active === "true" ? true : req.query.active === "false" ? false : undefined,
-      isNarcotic: req.query.isNarcotic === "true" ? true : req.query.isNarcotic === "false" ? false : undefined,
+      active: active === "true" ? true : active === "false" ? false : undefined,
+      isNarcotic: isNarcotic === "true" ? true : isNarcotic === "false" ? false : undefined,
     };
 
-    const categories = await categoryService.getAllCategories(filters);
+    const categories = await categoryService.getAllCategories(filters, page, limit);
     res.status(200).json({
       status: "success",
       results: categories.length,
+      pagination: {
+        page,
+        limit,
+      },
       data: { categories },
     });
   } catch (error) {

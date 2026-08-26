@@ -8,6 +8,8 @@ const { connectDB } = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./middleware/auth");
 const requireSuperAdmin = require("./middleware/requireSuperAdmin");
+const crypto = require("crypto");
+const { createRateLimiter } = require("./middleware/rateLimiter");
 
 // Phase 4 — CRUD Routes
 const productRoutes = require("./modules/products/product.routes");
@@ -52,10 +54,89 @@ dotenv.config();
 
 const app = express();
 
-// Base Middleware
-app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
-app.use(cors());
-app.use(express.json());
+// 1. Request ID / Traceability Middleware (Phase 22 / Step 17)
+app.use((req, res, next) => {
+  req.id = crypto.randomUUID();
+  res.setHeader("X-Request-Id", req.id);
+  next();
+});
+
+// 2. HTTP Security Headers (Phase 22 / Step 7)
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "blob:", "http:", "https:"],
+        connectSrc: ["'self'", "http:", "https:"],
+      },
+    },
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+    hsts: {
+      maxAge: 31536000, // 1 year
+      includeSubDomains: true,
+      preload: true,
+    },
+    frameguard: { action: "deny" },
+    dnsPrefetchControl: { allow: false },
+  })
+);
+
+// 3. CORS Security (Phase 22 / Step 8)
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
+  : [];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, postman, or local tests)
+    if (!origin) return callback(null, true);
+
+    if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
+// 4. Request Size Limits (Phase 22 / Step 6)
+app.use(express.json({ limit: "2mb" }));
+app.use(express.urlencoded({ extended: true, limit: "2mb" }));
+
+// 5. Rate Limiters Setup (Phase 22 / Step 2)
+const authLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: "Too many attempts. Please try again in 15 minutes.",
+});
+
+const otpLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: "Too many OTP attempts. Please wait 15 minutes.",
+});
+
+const adminLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: "Too many administrative operations. Please try again in 15 minutes.",
+});
+
+const expensiveLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: "Rate limit exceeded for resource-heavy operations. Please wait.",
+});
 
 // Public static serving for uploaded PRODUCT images & the placeholder asset ONLY.
 // Prescriptions are NEVER served statically — they are only reachable through
@@ -85,8 +166,8 @@ const paymentRoutes = require("./modules/payments/payment.routes");
 
 // ─── PUBLIC routes ─────────────────────────────────────────────────────────────
 // Mounted BEFORE the auth middleware so public endpoints are never blocked.
-app.use("/api/v1/auth/admin", adminUserRoutes);
-app.use("/api/v1/otp", otpRoutes);
+app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
+app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", publicOrderRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 
@@ -99,8 +180,8 @@ app.use("/api/v1/admin", auth);
 
 // Phase 4 — Product & Category CRUD APIs (now auth-protected)
 // Per rules.md Section 2: /api/v1/<resource>
-app.use("/api/v1/admin/products", productRoutes);
-app.use("/api/v1/admin/categories", categoryRoutes);
+app.use("/api/v1/admin/products", expensiveLimiter, productRoutes);
+app.use("/api/v1/admin/categories", expensiveLimiter, categoryRoutes);
 
 // Phase 7 — Cities & Delivery Pricing (auth-protected)
 app.use("/api/v1/admin/cities", cityRoutes);
@@ -109,19 +190,19 @@ app.use("/api/v1/admin/cities", cityRoutes);
 app.use("/api/v1/admin/settings", settingsRoutes);
 
 // Phase 11 — Activity Logs (auth-protected)
-app.use("/api/v1/admin/activity-logs", activityLogRoutes);
+app.use("/api/v1/admin/activity-logs", expensiveLimiter, activityLogRoutes);
 
 // Fix 1 — Authenticated prescription access (mounted AFTER auth middleware)
 app.use("/api/v1/admin/prescriptions", prescriptionRoutes);
 
 // Phase 13 — Admin Order Routes (auth-protected)
-app.use("/api/v1/admin/orders", adminOrderRoutes);
+app.use("/api/v1/admin/orders", expensiveLimiter, adminOrderRoutes);
 
 // Phase 19 — Admin Reports Routes (auth-protected)
-app.use('/api/v1/admin/reports', reportsRoutes);
+app.use('/api/v1/admin/reports', expensiveLimiter, reportsRoutes);
 
 // Phase 20 — Admin Account Management (Super Admin)
-app.use("/api/v1/admin/users", requireSuperAdmin, adminUserManagementRoutes);
+app.use("/api/v1/admin/users", adminLimiter, requireSuperAdmin, adminUserManagementRoutes);
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)

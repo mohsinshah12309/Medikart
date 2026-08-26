@@ -29,18 +29,24 @@ const createProduct = async (req, res, next) => {
  */
 const getAllProducts = async (req, res, next) => {
   try {
+    const { active, isNarcotic, stockStatus, categoryId, page, limit } = req.query;
+
     // Extract query filters if provided
     const filters = {
-      active: req.query.active === "true" ? true : req.query.active === "false" ? false : undefined,
-      isNarcotic: req.query.isNarcotic === "true" ? true : req.query.isNarcotic === "false" ? false : undefined,
-      stockStatus: req.query.stockStatus,
-      categoryId: req.query.categoryId,
+      active: active === "true" ? true : active === "false" ? false : undefined,
+      isNarcotic: isNarcotic === "true" ? true : isNarcotic === "false" ? false : undefined,
+      stockStatus,
+      categoryId,
     };
 
-    const products = await productService.getAllProducts(filters);
+    const products = await productService.getAllProducts(filters, page, limit);
     res.status(200).json({
       status: "success",
       results: products.length,
+      pagination: {
+        page,
+        limit,
+      },
       data: { products },
     });
   } catch (error) {

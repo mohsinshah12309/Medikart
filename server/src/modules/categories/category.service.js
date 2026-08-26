@@ -23,7 +23,7 @@ const createCategory = async (categoryData) => {
 /**
  * Get all categories (with optional filtering)
  */
-const getAllCategories = async (filters = {}) => {
+const getAllCategories = async (filters = {}, page = 1, limit = 20) => {
   const query = {};
 
   // Build query filters if provided
@@ -34,7 +34,12 @@ const getAllCategories = async (filters = {}) => {
     query.isNarcotic = filters.isNarcotic;
   }
 
-  const categories = await Category.find(query).sort({ name: 1 });
+  const skip = (page - 1) * limit;
+
+  const categories = await Category.find(query)
+    .sort({ name: 1 })
+    .skip(skip)
+    .limit(limit);
 
   return categories;
 };
