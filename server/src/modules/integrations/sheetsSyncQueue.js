@@ -119,6 +119,9 @@ const buildInstantRow = (order) => [
 
 // ── Retry runner ──────────────────────────────────────────────────────────────
 
+const activeJobs = new Set();
+let shutdownInProgress = false;
+
 /**
  * Execute `fn` with exponential-backoff retry.
  * On permanent failure, logs the error and resolves cleanly — never throws.
@@ -130,6 +133,11 @@ const runWithRetry = async (fn, label) => {
   let delay = BASE_DELAY_MS;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    if (shutdownInProgress) {
+      console.log(`[sheetsSync] Shutdown in progress. Aborting job: ${label}`);
+      return;
+    }
+
     try {
       await fn();
       if (attempt > 1) {
@@ -137,6 +145,11 @@ const runWithRetry = async (fn, label) => {
       }
       return; // success
     } catch (err) {
+      if (shutdownInProgress) {
+        console.log(`[sheetsSync] Shutdown in progress. Aborting retry for job: ${label}`);
+        return;
+      }
+
       const isLast = attempt === MAX_ATTEMPTS;
       if (isLast) {
         // All retries exhausted — log and give up cleanly.
@@ -166,6 +179,11 @@ const runWithRetry = async (fn, label) => {
  * @param {object} order - saved Mongoose order document
  */
 const enqueueSheetSync = (order) => {
+  if (shutdownInProgress) {
+    console.warn(`[sheetsSync] Cannot enqueue sync job. Shutdown in progress.`);
+    return;
+  }
+
   const orderId = order._id?.toString() ?? 'unknown';
   const isInstant = order.type === 'instant';
   const tabName = isInstant ? INSTANT_TAB : STANDARD_TAB;
@@ -173,15 +191,50 @@ const enqueueSheetSync = (order) => {
 
   const label = `order ${orderId} → "${tabName}"`;
 
-  // Fire-and-forget — intentionally not awaited by the caller
-  runWithRetry(() => appendRow(tabName, rowValues), label).catch((err) => {
-    // runWithRetry should never throw, but catch defensively anyway
-    console.error(`[sheetsSync] Unexpected error in retry runner for ${label}: ${err.message}`);
+  // Fire-and-forget — tracked locally for graceful shutdown
+  const promise = runWithRetry(() => appendRow(tabName, rowValues), label)
+    .catch((err) => {
+      console.error(`[sheetsSync] Unexpected error in retry runner for ${label}: ${err.message}`);
+    })
+    .finally(() => {
+      activeJobs.delete(promise);
+    });
+
+  activeJobs.add(promise);
+};
+
+/**
+ * Stop accepting new sync jobs, and wait for any active syncs to complete.
+ * Resolves within a timeout to avoid hanging shutdown.
+ *
+ * @param {number} timeoutMs - maximum time to wait in milliseconds
+ */
+const waitForActiveJobs = async (timeoutMs = 5000) => {
+  shutdownInProgress = true;
+  if (activeJobs.size === 0) {
+    return;
+  }
+
+  console.log(`[sheetsSync] Waiting for ${activeJobs.size} active Google Sheets sync jobs to drain...`);
+  
+  const allCompleted = Promise.all(Array.from(activeJobs));
+  let timeoutHandle;
+  const timeoutPromise = new Promise((resolve) => {
+    timeoutHandle = setTimeout(() => {
+      console.warn(`[sheetsSync] Graceful sync drain timed out after ${timeoutMs}ms. Dropping remaining active jobs.`);
+      resolve();
+    }, timeoutMs);
   });
+
+  await Promise.race([allCompleted, timeoutPromise]);
+  if (timeoutHandle) {
+    clearTimeout(timeoutHandle);
+  }
 };
 
 module.exports = {
   enqueueSheetSync,
+  waitForActiveJobs,
   // Exported for unit tests only:
   buildStandardRow,
   buildInstantRow,
@@ -190,4 +243,9 @@ module.exports = {
   INSTANT_TAB,
   /** Override retry base delay for tests — never call in production code. */
   _setBaseDelayMsForTests: (ms) => { BASE_DELAY_MS = ms; },
+  /** Reset status for testing */
+  _resetStatus: () => {
+    shutdownInProgress = false;
+    activeJobs.clear();
+  }
 };

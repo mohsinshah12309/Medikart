@@ -44,8 +44,9 @@ const getTransporter = () => {
  * @param {String} options.subject - Email subject line
  * @param {String} options.text - Plain text content
  * @param {String} [options.html] - HTML content
+ * @param {Array} [options.attachments] - Array of attachment objects
  */
-const sendEmail = async ({ to, subject, text, html }) => {
+const sendEmail = async ({ to, subject, text, html, attachments }) => {
   if (process.env.NODE_ENV === "test") {
     // In test environment, skip external network call to prevent third-party SMTP rate limits
     return { messageId: "test-mock-id", accepted: [to] };
@@ -59,6 +60,7 @@ const sendEmail = async ({ to, subject, text, html }) => {
       subject,
       text,
       html: html || text,
+      attachments,
     };
 
     const transport = getTransporter();

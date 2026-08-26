@@ -169,6 +169,8 @@ const runWeeklyReport = async (options = {}) => {
   return sendWeeklyReport(options);
 };
 
+let cronTask = null;
+
 /**
  * Register the scheduled weekly report cron job.
  *
@@ -187,7 +189,7 @@ const scheduleWeeklyReport = () => {
 
   const schedule = process.env.REPORT_CRON_SCHEDULE || '0 8 * * 1'; // Mon 08:00
 
-  const task = cron.schedule(schedule, async () => {
+  cronTask = cron.schedule(schedule, async () => {
     console.log('[weeklyReport] Cron triggered — generating weekly order report');
     try {
       await sendWeeklyReport();
@@ -197,7 +199,18 @@ const scheduleWeeklyReport = () => {
   });
 
   console.log(`[weeklyReport] Scheduled with cron expression: "${schedule}"`);
-  return task;
+  return cronTask;
+};
+
+/**
+ * Stops the weekly report cron job if it is running.
+ */
+const stopWeeklyReport = () => {
+  if (cronTask) {
+    cronTask.stop();
+    console.log('[weeklyReport] Stopped weekly report cron job');
+    cronTask = null;
+  }
 };
 
 module.exports = {
@@ -205,6 +218,7 @@ module.exports = {
   sendWeeklyReport,
   runWeeklyReport,
   scheduleWeeklyReport,
+  stopWeeklyReport,
   // Exported for tests
   COLUMNS,
   orderToRow,

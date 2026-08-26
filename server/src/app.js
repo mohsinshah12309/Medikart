@@ -48,9 +48,18 @@ const { scheduleWeeklyReport } = require('./jobs/weeklyReport.job');
 
 
 const path = require("path");
+const { validateEnv } = require("./config/env");
 
 // Load environment variables
 dotenv.config();
+
+// Validate config
+try {
+  validateEnv();
+} catch (err) {
+  console.error("❌ CRITICAL CONFIGURATION ERROR:", err.message);
+  process.exit(1);
+}
 
 const app = express();
 
@@ -211,17 +220,78 @@ app.use(errorHandler);
 
 // Start Server if run directly
 const PORT = process.env.PORT || 5000;
+let server = null;
+
 if (require.main === module) {
   // Phase 2: connect to MongoDB on startup. connectDB() never throws and
   // never crashes the process — a failed connection is logged clearly and
   // GET /health reports "database": "disconnected" until the DB is reachable.
   connectDB().finally(() => {
-    app.listen(PORT, () => {
+    server = app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
     // Phase 19: register the weekly report cron job (skipped in test env).
     scheduleWeeklyReport();
+    setupGracefulShutdown();
   });
+}
+
+function setupGracefulShutdown() {
+  const shutdown = async (signal) => {
+    console.log(`\n[Server] Received ${signal}. Starting graceful shutdown...`);
+
+    // Set a timeout to force exit if closing resources takes too long
+    const forceExitTimeout = setTimeout(() => {
+      console.error("[Server] Graceful shutdown timed out. Force exiting.");
+      process.exit(1);
+    }, 10000);
+    forceExitTimeout.unref();
+
+    // 1. Close HTTP server (stop accepting new requests)
+    if (server) {
+      console.log("[Server] Closing HTTP server...");
+      await new Promise((resolve) => {
+        server.close(() => {
+          console.log("[Server] HTTP server closed");
+          resolve();
+        });
+      });
+    }
+
+    // 2. Stop weekly reports cron job
+    try {
+      const { stopWeeklyReport } = require("./jobs/weeklyReport.job");
+      stopWeeklyReport();
+    } catch (err) {
+      console.error("[Server] Error stopping weekly report job:", err.message);
+    }
+
+    // 3. Stop retry queues (Google Sheets sync queue)
+    try {
+      const { waitForActiveJobs } = require("./modules/integrations/sheetsSyncQueue");
+      await waitForActiveJobs(5000);
+    } catch (err) {
+      console.error("[Server] Error waiting for background sync jobs:", err.message);
+    }
+
+    // 4. Close database connection
+    if (mongoose.connection.readyState !== 0) {
+      try {
+        console.log("[DB] Closing MongoDB connection...");
+        await mongoose.connection.close();
+        console.log("[DB] MongoDB connection closed");
+      } catch (err) {
+        console.error("[DB] Error closing MongoDB connection:", err.message);
+      }
+    }
+
+    clearTimeout(forceExitTimeout);
+    console.log("[Server] Graceful shutdown completed. Exiting.");
+    process.exit(0);
+  };
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
 }
 
 module.exports = app;
