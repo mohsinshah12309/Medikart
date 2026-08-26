@@ -24,4 +24,41 @@ const loginSchema = z
   })
   .strict(); // reject any extra fields
 
-module.exports = { loginSchema };
+// POST /api/v1/admin/users
+const createAdminUserSchema = z
+  .object({
+    name: z.string({ required_error: "Name is required" }).min(1, "Name is required").trim(),
+    email: z
+      .string({ required_error: "Email is required" })
+      .email("Invalid email format")
+      .toLowerCase()
+      .trim(),
+    role: z.enum(["super_admin", "admin"], {
+      invalid_type_error: "Role must be super_admin or admin",
+    }).default("admin"),
+    permissions: z.array(z.string()).default([]),
+  })
+  .strict();
+
+// PUT /api/v1/admin/users/:id
+const updateAdminUserSchema = z
+  .object({
+    name: z.string().min(1, "Name must not be empty").trim().optional(),
+    email: z.string().email("Invalid email format").toLowerCase().trim().optional(),
+    role: z.enum(["super_admin", "admin"]).optional(),
+    permissions: z.array(z.string()).optional(),
+    active: z.boolean().optional(),
+  })
+  .strict();
+
+// URL parameter validation for admin user ID
+const adminUserIdParamsSchema = z.object({
+  id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid admin user ID format"),
+});
+
+module.exports = {
+  loginSchema,
+  createAdminUserSchema,
+  updateAdminUserSchema,
+  adminUserIdParamsSchema,
+};

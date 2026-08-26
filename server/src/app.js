@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const { connectDB } = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./middleware/auth");
+const requireSuperAdmin = require("./middleware/requireSuperAdmin");
 
 // Phase 4 — CRUD Routes
 const productRoutes = require("./modules/products/product.routes");
@@ -35,6 +36,9 @@ const {
 
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
+
+// Phase 20 — Admin Account Management (Super Admin)
+const adminUserManagementRoutes = require("./modules/admin-users/adminUserManagement.routes");
 
 // Phase 19 — Weekly Report (admin trigger route + cron scheduler)
 const reportsRoutes = require('./modules/orders/reports.routes');
@@ -115,6 +119,9 @@ app.use("/api/v1/admin/orders", adminOrderRoutes);
 
 // Phase 19 — Admin Reports Routes (auth-protected)
 app.use('/api/v1/admin/reports', reportsRoutes);
+
+// Phase 20 — Admin Account Management (Super Admin)
+app.use("/api/v1/admin/users", requireSuperAdmin, adminUserManagementRoutes);
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)

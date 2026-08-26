@@ -18,9 +18,12 @@
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const AdminUser = require("./adminUser.model");
-const { UnauthorizedError } = require("../../utils/errors");
+const { forgotPassword } = require("./passwordReset.service");
+const activityLogService = require("../activity-logs/activityLog.service");
+const { UnauthorizedError, BadRequestError, NotFoundError } = require("../../utils/errors");
 
 const BCRYPT_ROUNDS = 12;
 const JWT_EXPIRY = "8h"; // sensible session window
@@ -84,4 +87,152 @@ const login = async ({ email, password }) => {
   };
 };
 
-module.exports = { login, hashPassword };
+const sanitizeUser = (user) => {
+  if (!user) return user;
+  const obj = user.toObject ? user.toObject() : { ...user };
+  delete obj.passwordHash;
+  return obj;
+};
+
+/**
+ * Get all admin users (select: -passwordHash by default anyway).
+ */
+const getAdminUsers = async () => {
+  const users = await AdminUser.find({});
+  return users.map(sanitizeUser);
+};
+
+/**
+ * Create a new admin user.
+ * Assigns role/permissions, sets a random password, and fires the password reset email flow.
+ */
+const createAdminUser = async (data, actor) => {
+  const { name, email, role, permissions } = data;
+
+  // Generate a random temporary password
+  const tempPassword = crypto.randomBytes(32).toString("hex");
+  const passwordHash = await hashPassword(tempPassword);
+
+  const user = await AdminUser.create({
+    name,
+    email,
+    role,
+    permissions,
+    passwordHash,
+    active: true,
+  });
+
+  // Re-use the forgot-password service to trigger the reset token email pattern
+  await forgotPassword(email);
+
+  const sanitized = sanitizeUser(user);
+
+  // Write to Activity Logs
+  await activityLogService.logActivity({
+    actor,
+    action: "admin_user_created",
+    entityType: "admin_user",
+    entityId: user._id,
+    before: null,
+    after: sanitized,
+  });
+
+  return sanitized;
+};
+
+/**
+ * Update an admin user's role, permissions, active status.
+ * Rejects if deactivating/demoting the last active super_admin.
+ */
+const updateAdminUser = async (id, data, actor) => {
+  const user = await AdminUser.findById(id).select("+passwordHash");
+  if (!user) {
+    throw new NotFoundError("Admin user not found");
+  }
+
+  // Safeguard: Cannot demote or deactivate the last active super admin
+  const isTargetActiveSuperAdmin = user.role === "super_admin" && user.active;
+  const willBeInactiveOrDemoted = (data.active === false) || (data.role && data.role !== "super_admin");
+
+  if (isTargetActiveSuperAdmin && willBeInactiveOrDemoted) {
+    const activeSuperAdminCount = await AdminUser.countDocuments({
+      role: "super_admin",
+      active: true,
+    });
+    if (activeSuperAdminCount <= 1) {
+      throw new BadRequestError("Cannot demote or deactivate the last remaining active Super Admin");
+    }
+  }
+
+  const before = sanitizeUser(user);
+
+  // Apply updates
+  if (data.name !== undefined) user.name = data.name;
+  if (data.email !== undefined) user.email = data.email;
+  if (data.role !== undefined) user.role = data.role;
+  if (data.permissions !== undefined) user.permissions = data.permissions;
+  if (data.active !== undefined) user.active = data.active;
+
+  await user.save();
+
+  const after = sanitizeUser(user);
+
+  // Log to Activity Logs
+  await activityLogService.logActivity({
+    actor,
+    action: "admin_user_updated",
+    entityType: "admin_user",
+    entityId: user._id,
+    before,
+    after,
+  });
+
+  return after;
+};
+
+/**
+ * Delete an admin user.
+ * Rejects if deleting the last active super_admin.
+ */
+const deleteAdminUser = async (id, actor) => {
+  const user = await AdminUser.findById(id);
+  if (!user) {
+    throw new NotFoundError("Admin user not found");
+  }
+
+  // Safeguard: Cannot delete the last active super admin
+  if (user.role === "super_admin" && user.active) {
+    const activeSuperAdminCount = await AdminUser.countDocuments({
+      role: "super_admin",
+      active: true,
+    });
+    if (activeSuperAdminCount <= 1) {
+      throw new BadRequestError("Cannot delete the last remaining active Super Admin");
+    }
+  }
+
+  const before = sanitizeUser(user);
+
+  await AdminUser.findByIdAndDelete(id);
+
+  // Log to Activity Logs
+  await activityLogService.logActivity({
+    actor,
+    action: "admin_user_deleted",
+    entityType: "admin_user",
+    entityId: user._id,
+    before,
+    after: null,
+  });
+
+  return before;
+};
+
+module.exports = {
+  login,
+  hashPassword,
+  getAdminUsers,
+  createAdminUser,
+  updateAdminUser,
+  deleteAdminUser,
+};

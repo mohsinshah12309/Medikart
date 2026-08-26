@@ -22,4 +22,71 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+/**
+ * GET /api/v1/admin/users
+ */
+const getAdminUsers = async (req, res, next) => {
+  try {
+    const users = await adminUserService.getAdminUsers();
+    res.status(200).json({
+      status: "success",
+      data: users,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * POST /api/v1/admin/users
+ */
+const createAdminUser = async (req, res, next) => {
+  try {
+    const user = await adminUserService.createAdminUser(req.body, req.admin);
+    res.status(201).json({
+      status: "success",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * PUT /api/v1/admin/users/:id
+ */
+const updateAdminUser = async (req, res, next) => {
+  try {
+    const user = await adminUserService.updateAdminUser(req.params.id, req.body, req.admin);
+    res.status(200).json({
+      status: "success",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * DELETE /api/v1/admin/users/:id
+ */
+const deleteAdminUser = async (req, res, next) => {
+  try {
+    const user = await adminUserService.deleteAdminUser(req.params.id, req.admin);
+    res.status(200).json({
+      status: "success",
+      message: "Admin user deleted successfully",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  login,
+  getAdminUsers,
+  createAdminUser,
+  updateAdminUser,
+  deleteAdminUser,
+};

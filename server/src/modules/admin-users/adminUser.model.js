@@ -60,6 +60,11 @@ const adminUserSchema = new mongoose.Schema(
       default: [],
     },
 
+    twoFactorSecret: {
+      type: String,
+      select: false,
+    },
+
     active: {
       type: Boolean,
       default: true,
