@@ -9,16 +9,22 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
         </div>
         <nav className="sidebar-nav">
           <div
-            className={`nav-item ${activeTab === "dashboard" ? "active" : ""}`}
-            onClick={() => onTabChange("dashboard")}
+            className={`nav-item ${activeTab === "overview" ? "active" : ""}`}
+            onClick={() => onTabChange("overview")}
           >
-            Dashboard
+            Overview
           </div>
           <div
             className={`nav-item ${activeTab === "products" ? "active" : ""}`}
             onClick={() => onTabChange("products")}
           >
             Products
+          </div>
+          <div
+            className={`nav-item ${activeTab === "categories" ? "active" : ""}`}
+            onClick={() => onTabChange("categories")}
+          >
+            Categories
           </div>
           <div
             className={`nav-item ${activeTab === "orders" ? "active" : ""}`}
