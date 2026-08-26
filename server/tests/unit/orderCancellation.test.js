@@ -21,6 +21,11 @@ jest.mock("../../src/integrations/smtp", () => ({
   sendEmail: jest.fn().mockResolvedValue({ messageId: "test-mock-id", accepted: [] }),
 }));
 
+// Mock sheetsSyncQueue to avoid Sheets API calls and background timers/retries
+jest.mock("../../src/modules/integrations/sheetsSyncQueue", () => ({
+  enqueueSheetSync: jest.fn(),
+}));
+
 let authToken;
 let adminId;
 

@@ -52,7 +52,9 @@ mongoose.connection.on("error", (err) => {
 });
 
 mongoose.connection.on("disconnected", () => {
-  console.warn("[DB] MongoDB disconnected");
+  if (process.env.NODE_ENV !== "test") {
+    console.warn("[DB] MongoDB disconnected");
+  }
 });
 
 mongoose.connection.on("reconnected", () => {

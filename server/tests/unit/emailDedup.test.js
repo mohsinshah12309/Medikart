@@ -30,19 +30,10 @@ jest.mock('../../src/integrations/smtp', () => ({
   sendEmail: jest.fn().mockResolvedValue({ messageId: 'mock-dedup-id' }),
 }));
 
-// ─── Mock googleapis (sheetsSyncQueue imports it) ─────────────────────────────
-jest.mock('googleapis', () => {
-  const mockAppend = jest.fn().mockResolvedValue({ data: { updates: { updatedRows: 1 } } });
-  const mockSheets = {
-    spreadsheets: { values: { append: mockAppend, get: jest.fn() } },
-  };
-  return {
-    google: {
-      auth: { JWT: jest.fn().mockImplementation(() => ({})) },
-      sheets: jest.fn().mockReturnValue(mockSheets),
-    },
-  };
-});
+// Mock sheetsSyncQueue to avoid Sheets API calls and background timers/retries
+jest.mock('../../src/modules/integrations/sheetsSyncQueue', () => ({
+  enqueueSheetSync: jest.fn(),
+}));
 
 // ─── Mock OTP service ────────────────────────────────────────────────────────
 jest.mock('../../src/modules/otp/otp.service', () => ({

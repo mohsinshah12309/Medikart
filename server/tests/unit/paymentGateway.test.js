@@ -15,6 +15,11 @@ const fs = require('fs').promises;
 jest.mock('../../src/modules/payments/providers/kuickpay.provider');
 const kuickpayProvider = require('../../src/modules/payments/providers/kuickpay.provider');
 
+// Mock sheetsSyncQueue to avoid Sheets API calls and background timers/retries
+jest.mock('../../src/modules/integrations/sheetsSyncQueue', () => ({
+  enqueueSheetSync: jest.fn(),
+}));
+
 const VALID_JPEG_BUFFER = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01]);
 
 let city, category, standardProduct, narcoticsProduct, authToken;

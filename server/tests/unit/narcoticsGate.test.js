@@ -37,6 +37,11 @@ const otpService = require("../../src/modules/otp/otp.service");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// Mock sheetsSyncQueue to avoid Sheets API calls and background timers/retries
+jest.mock("../../src/modules/integrations/sheetsSyncQueue", () => ({
+  enqueueSheetSync: jest.fn(),
+}));
+
 // Minimal valid JPEG buffer — real magic bytes (FF D8 FF) so the Fix 4
 // content validation accepts the test prescription file.
 const VALID_JPEG_BUFFER = Buffer.from([

@@ -25,6 +25,11 @@ const otpService = require("../../src/modules/otp/otp.service");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// Mock sheetsSyncQueue to avoid Sheets API calls and background timers/retries
+jest.mock("../../src/modules/integrations/sheetsSyncQueue", () => ({
+  enqueueSheetSync: jest.fn(),
+}));
+
 let authToken;
 let product1, product2;
 let city;
