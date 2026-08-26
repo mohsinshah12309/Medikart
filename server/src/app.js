@@ -52,6 +52,8 @@ const { scheduleWeeklyReport } = require('./jobs/weeklyReport.job');
 // Phase 22 — Chatbot Routes
 const chatbotRoutes = require("./modules/chatbot/chatbot.routes");
 
+// Phase 25 — Storefront Public Routes
+const storefrontRoutes = require("./modules/products/storefront.routes");
 
 const path = require("path");
 const { validateEnv } = require("./config/env");
@@ -185,6 +187,7 @@ app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", publicOrderRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1/chatbot", chatbotRoutes);
+app.use("/api/v1", storefrontRoutes);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route

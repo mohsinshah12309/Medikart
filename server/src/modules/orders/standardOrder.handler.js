@@ -69,8 +69,8 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
   await otpService.verifyOtp(otp.email, otp.code);
 
   const requiresVerification = products.some((product) => product.isNarcotic === true);
-  if (requiresVerification && paymentMethod !== 'cod') {
-    throw new BadRequestError("Narcotics orders can only be paid via Cash on Delivery.");
+  if (requiresVerification) {
+    throw new BadRequestError("This order contains items that require a prescription. Narcotics items cannot be purchased through standard checkout.");
   }
 
   // ── Step 4: Fetch storewide discount once (discount.service is pure) ───────
