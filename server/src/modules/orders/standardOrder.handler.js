@@ -1,17 +1,17 @@
 /**
- * Standard Order Handler — Phase 13 (FR-CW-09, FR-CW-11, rules.md §1, §3).
+ * Standard Order Handler â€” Phase 13 (FR-CW-09, FR-CW-11, rules.md Â§1, Â§3).
  *
  * Full standard COD order path:
- *   OTP verify → product lookup → server-side price computation →
- *   delivery charge lookup → order save → confirmation email (non-blocking)
+ *   OTP verify â†’ product lookup â†’ server-side price computation â†’
+ *   delivery charge lookup â†’ order save â†’ confirmation email (non-blocking)
  *
  * Security guarantees:
  *   1. OTP must verify before ANY order document is created (FR-CW-09).
- *   2. Prices are ALWAYS read from DB and run through discount.service —
+ *   2. Prices are ALWAYS read from DB and run through discount.service â€”
  *      any price field in the request was stripped by Zod before this runs.
  *   3. Delivery charge is server-only via city.service (FR-CW-11).
  *   4. requiresVerification is snapshotted from the current product flags
- *      (PRD §12 / FR-AD-16), without introducing the Phase 15 gate here.
+ *      (PRD Â§12 / FR-AD-16), without introducing the Phase 15 gate here.
  */
 
 const Product = require('../products/product.model');
@@ -21,6 +21,7 @@ const { getDeliveryCharge } = require('../cities/city.service');
 const { getEffectivePrice } = require('../discounts/discount.service');
 const { getStorewideDiscount } = require('../settings/settings.service');
 const smtp = require('../../integrations/smtp');
+const { enqueueSheetSync } = require('../integrations/sheetsSyncQueue');
 const { NotFoundError, BadRequestError } = require('../../utils/errors');
 
 const round2 = (n) => Math.round(n * 100) / 100;
@@ -36,14 +37,14 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     throw new BadRequestError('OTP email must match the customer email');
   }
 
-  // ── Step 1: Fetch products from DB (never trust client prices) ─────────────
+  // â”€â”€ Step 1: Fetch products from DB (never trust client prices) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const productIds = items.map((i) => i.productId);
   const products = await Product.find({
     _id: { $in: productIds },
     active: true,
   }).populate('categoryIds', 'name slug discount');
 
-  // ── Step 2: Validate existence and stock for every requested item ──────────
+  // â”€â”€ Step 2: Validate existence and stock for every requested item â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   for (const item of items) {
     const product = products.find((p) => p._id.toString() === item.productId);
     if (!product) {
@@ -56,7 +57,7 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     }
   }
 
-  // ── Step 3: Verify OTP (FR-CW-09) ─────────────────────────────────────────
+  // â”€â”€ Step 3: Verify OTP (FR-CW-09) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Must succeed before any order document is created. We validate the cart
   // first so a failed stock check does not unnecessarily consume an OTP.
   await otpService.verifyOtp(otp.email, otp.code);
@@ -66,11 +67,11 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     throw new BadRequestError("Narcotics orders can only be paid via Cash on Delivery.");
   }
 
-  // ── Step 4: Fetch storewide discount once (discount.service is pure) ───────
+  // â”€â”€ Step 4: Fetch storewide discount once (discount.service is pure) â”€â”€â”€â”€â”€â”€â”€
   const storewidePercent = await getStorewideDiscount();
 
-  // ── Step 5: Build order items with server-computed effective prices ─────────
-  // Prices are snapshotted at order time — a later discount change does not
+  // â”€â”€ Step 5: Build order items with server-computed effective prices â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Prices are snapshotted at order time â€” a later discount change does not
   // alter existing order line items.
   const orderItems = items.map((item) => {
     const product = products.find((p) => p._id.toString() === item.productId);
@@ -85,14 +86,14 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     };
   });
 
-  // ── Step 6: Compute totals server-side (rules.md §1) ─────────────────────
+  // â”€â”€ Step 6: Compute totals server-side (rules.md Â§1) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const subtotal = round2(
     orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
   );
   const deliveryCharge = await getDeliveryCharge(customer.city); // FR-CW-11
   const total = round2(subtotal + deliveryCharge);
 
-  // ── Step 7: Save order ────────────────────────────────────────────────────
+  // â”€â”€ Step 7: Save order â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const order = await Order.create({
     type: 'standard',
     customer,
@@ -114,10 +115,15 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     );
   });
 
+  // ── Step 9: Google Sheets sync — non-blocking (Phase 18 / FR-SYS-03) ─────
+  // Enqueued AFTER the order is persisted to MongoDB. A Sheets API failure
+  // (transient or permanent) never blocks or rolls back the order.
+  enqueueSheetSync(order);
+
   return order;
 };
 
-// ─── Confirmation email ───────────────────────────────────────────────────────
+// ─── Confirmation email ─────────────────────────────────────────────────────
 
 const sendOrderConfirmationEmail = async (order) => {
   const itemRows = order.items
@@ -132,7 +138,7 @@ const sendOrderConfirmationEmail = async (order) => {
 
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-      <h2 style="color:#0d9488;">Order Confirmed — Medikart</h2>
+      <h2 style="color:#0d9488;">Order Confirmed â€” Medikart</h2>
       <p>Hello ${order.customer.name},</p>
       <p>Thank you for your order. We have received it and it is being processed.</p>
       <p><strong>Order ID:</strong> ${order._id}</p>
@@ -170,7 +176,7 @@ const sendOrderConfirmationEmail = async (order) => {
 
   await smtp.sendEmail({
     to: order.customer.email,
-    subject: `Order Confirmed — Medikart (#${order._id})`,
+    subject: `Order Confirmed â€” Medikart (#${order._id})`,
     html,
     text: `Order confirmed! Order ID: ${order._id}. Total: PKR ${order.totals.total.toFixed(2)}. Payment: Cash on Delivery. Delivery to: ${order.customer.address}, ${order.customer.city}.`,
   });

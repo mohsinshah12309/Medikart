@@ -17,6 +17,7 @@ const Order = require("./order.model");
 const otpService = require("../otp/otp.service");
 const { getDeliveryCharge } = require("../cities/city.service");
 const smtp = require("../../integrations/smtp");
+const { enqueueSheetSync } = require("../integrations/sheetsSyncQueue");
 const { BadRequestError, ValidationError } = require("../../utils/errors");
 const multer = require("multer");
 const path = require("path");
@@ -179,6 +180,11 @@ const placeInstantOrder = async (payload) => {
       `[orders] Instant order confirmation email failed for order ${order._id}: ${err.message}`,
     );
   });
+
+  // ── Google Sheets sync — non-blocking (Phase 18 / FR-SYS-04) ────────────
+  // Enqueued AFTER the order is persisted to MongoDB. A Sheets API failure
+  // (transient or permanent) never blocks or rolls back the order.
+  enqueueSheetSync(order);
 
   return order;
 };
