@@ -22,6 +22,10 @@
  *   6. Payment is NOT captured here. paymentState stays 'pending' and Phase 16
  *      layers authorize/capture on top, reading the payment-state field the
  *      PRD §14 schema already defines.
+ *
+ * Phase 19 — FR-CW-15: confirmation email deduplication.
+ *   sendNarcoticsOrderConfirmationEmailOnce uses an atomic findOneAndUpdate so
+ *   a retried request can never fire a second confirmation email for the same order.
  */
 
 const Product = require("../products/product.model");
@@ -95,7 +99,7 @@ const placeNarcoticsOrder = async ({
       "Prescription file is required for an order containing narcotics-flagged products",
     );
   }
-  
+
   if (requiresVerification && paymentMethod !== 'cod') {
     throw new BadRequestError("Narcotics orders can only be paid via Cash on Delivery.");
   }
@@ -149,10 +153,12 @@ const placeNarcoticsOrder = async ({
     prescriptionUrl: prescriptionFilename
       ? `/api/v1/admin/prescriptions/${prescriptionFilename}`
       : null,
+    // Phase 19: starts as false; flipped atomically to true when the email fires.
+    confirmationEmailSent: false,
   });
 
-  // ── Step 10: Confirmation email — non-blocking (rules.md §6) ─────────────
-  sendNarcoticsOrderConfirmationEmail(order).catch((err) => {
+  // ── Step 10: Confirmation email — non-blocking, dedup-guarded (FR-CW-15) ──
+  sendNarcoticsOrderConfirmationEmailOnce(order).catch((err) => {
     console.error(
       `[orders] Narcotics order confirmation email failed for order ${order._id}: ${err.message}`,
     );
@@ -161,7 +167,25 @@ const placeNarcoticsOrder = async ({
   return order;
 };
 
-// ─── Confirmation email ───────────────────────────────────────────────────────
+// ── Email deduplication wrapper (Phase 19 / FR-CW-15) ────────────────────────
+
+/**
+ * Atomically claim the confirmation-email send slot, then send once.
+ * See standardOrder.handler.js for full rationale.
+ */
+const sendNarcoticsOrderConfirmationEmailOnce = async (order) => {
+  const claimed = await Order.findOneAndUpdate(
+    { _id: order._id, confirmationEmailSent: false },
+    { $set: { confirmationEmailSent: true } },
+    { new: false }
+  );
+  if (!claimed) {
+    return; // Another caller already sent this email.
+  }
+  await sendNarcoticsOrderConfirmationEmail(order);
+};
+
+// ─── Confirmation email template ───────────────────────────────────────────────
 const sendNarcoticsOrderConfirmationEmail = async (order) => {
   const itemRows = order.items
     .map(
@@ -217,4 +241,4 @@ const sendNarcoticsOrderConfirmationEmail = async (order) => {
   });
 };
 
-module.exports = { placeNarcoticsOrder };
+module.exports = { placeNarcoticsOrder, sendNarcoticsOrderConfirmationEmailOnce };

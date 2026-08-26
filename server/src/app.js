@@ -36,6 +36,11 @@ const {
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 
+// Phase 19 — Weekly Report (admin trigger route + cron scheduler)
+const reportsRoutes = require('./modules/orders/reports.routes');
+const { scheduleWeeklyReport } = require('./jobs/weeklyReport.job');
+
+
 const path = require("path");
 
 // Load environment variables
@@ -108,6 +113,9 @@ app.use("/api/v1/admin/prescriptions", prescriptionRoutes);
 // Phase 13 — Admin Order Routes (auth-protected)
 app.use("/api/v1/admin/orders", adminOrderRoutes);
 
+// Phase 19 — Admin Reports Routes (auth-protected)
+app.use('/api/v1/admin/reports', reportsRoutes);
+
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)
 // caught here, never raw stack traces to clients
@@ -123,6 +131,8 @@ if (require.main === module) {
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
+    // Phase 19: register the weekly report cron job (skipped in test env).
+    scheduleWeeklyReport();
   });
 }
 

@@ -11,6 +11,10 @@
  *   3. Prescription files stored outside public routes (rules.md §3).
  *   4. Admin pricing endpoint enforces allow-list (only items + totals writable).
  *   5. Silent overwrite prevention: already-priced orders reject re-pricing.
+ *
+ * Phase 19 — FR-CW-15: confirmation email deduplication.
+ *   sendInstantOrderConfirmationEmailOnce uses an atomic findOneAndUpdate so a
+ *   retried request can never fire a second confirmation email for the same order.
  */
 
 const Order = require("./order.model");
@@ -172,10 +176,12 @@ const placeInstantOrder = async (payload) => {
     // Fix 1 — prescription files are ONLY accessible through the
     // authenticated admin route, never a public static URL (FR-SYS-02).
     prescriptionUrl: `/api/v1/admin/prescriptions/${prescriptionFilename}`,
+    // Phase 19: starts as false; flipped atomically to true when the email fires.
+    confirmationEmailSent: false,
   });
 
-  // Confirmation email — non-blocking
-  sendInstantOrderConfirmationEmail(order).catch((err) => {
+  // ── Confirmation email — non-blocking, dedup-guarded (FR-CW-15) ──────────
+  sendInstantOrderConfirmationEmailOnce(order).catch((err) => {
     console.error(
       `[orders] Instant order confirmation email failed for order ${order._id}: ${err.message}`,
     );
@@ -187,6 +193,24 @@ const placeInstantOrder = async (payload) => {
   enqueueSheetSync(order);
 
   return order;
+};
+
+// ── Email deduplication wrapper (Phase 19 / FR-CW-15) ────────────────────────
+
+/**
+ * Atomically claim the confirmation-email send slot, then send once.
+ * See standardOrder.handler.js for full rationale.
+ */
+const sendInstantOrderConfirmationEmailOnce = async (order) => {
+  const claimed = await Order.findOneAndUpdate(
+    { _id: order._id, confirmationEmailSent: false },
+    { $set: { confirmationEmailSent: true } },
+    { new: false }
+  );
+  if (!claimed) {
+    return; // Another caller already sent this email.
+  }
+  await sendInstantOrderConfirmationEmail(order);
 };
 
 // ── Email Template ────────────────────────────────────────────────────────────
@@ -240,4 +264,5 @@ module.exports = {
   prescriptionUpload,
   savePrescriptionToDisk,
   validatePrescriptionContent,
+  sendInstantOrderConfirmationEmailOnce,
 };

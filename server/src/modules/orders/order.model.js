@@ -118,6 +118,12 @@ const orderSchema = new mongoose.Schema(
     prescriptionUrl: { type: String }, // narcotics / instant orders (Phase 14/15)
     cancellation: { type: cancellationSchema },
     gatewayTransactionId: { type: String }, // card payments (Phase 16)
+    // Phase 19 — FR-CW-15: idempotency guard — set to true once the
+    // confirmation email has been sent. Checked before any email attempt so
+    // a retried handler call (e.g. client resends on timeout) never fires a
+    // duplicate. Toggled atomically via findByIdAndUpdate — never via order.save()
+    // so concurrent retries are serialised by MongoDB.
+    confirmationEmailSent: { type: Boolean, default: false },
   },
   {
     timestamps: true,
