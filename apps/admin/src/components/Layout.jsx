@@ -1,6 +1,26 @@
 import React from "react";
 
+/**
+ * Layout — Phase 23/24
+ *
+ * Sidebar nav items:
+ *   - Overview, Products, Categories, Orders (all admins)
+ *   - Cities, Settings, Activity Logs (all admins)
+ *   - Admin Users (super_admin only — UI hides tab; backend enforces separately)
+ */
 function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
+  const isSuperAdmin = adminUser?.role === "super_admin";
+
+  const navItem = (tab, label) => (
+    <div
+      key={tab}
+      className={`nav-item ${activeTab === tab ? "active" : ""}`}
+      onClick={() => onTabChange(tab)}
+    >
+      {label}
+    </div>
+  );
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -8,38 +28,16 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
           <span>💊</span> Medikart Portal
         </div>
         <nav className="sidebar-nav">
-          <div
-            className={`nav-item ${activeTab === "overview" ? "active" : ""}`}
-            onClick={() => onTabChange("overview")}
-          >
-            Overview
-          </div>
-          <div
-            className={`nav-item ${activeTab === "products" ? "active" : ""}`}
-            onClick={() => onTabChange("products")}
-          >
-            Products
-          </div>
-          <div
-            className={`nav-item ${activeTab === "categories" ? "active" : ""}`}
-            onClick={() => onTabChange("categories")}
-          >
-            Categories
-          </div>
-          <div
-            className={`nav-item ${activeTab === "orders" ? "active" : ""}`}
-            onClick={() => onTabChange("orders")}
-          >
-            Orders
-          </div>
-          {adminUser && adminUser.role === "super_admin" && (
-            <div
-              className={`nav-item ${activeTab === "users" ? "active" : ""}`}
-              onClick={() => onTabChange("users")}
-            >
-              Staff Management
-            </div>
-          )}
+          {navItem("overview", "Overview")}
+          {navItem("products", "Products")}
+          {navItem("categories", "Categories")}
+          {navItem("orders", "Orders")}
+          {navItem("cities", "Cities")}
+          {navItem("settings", "Settings")}
+          {navItem("activityLogs", "Activity Logs")}
+          {/* Admin Users — UI only shown to Super Admin.
+              Backend also enforces this via requireSuperAdmin middleware (Phase 20). */}
+          {isSuperAdmin && navItem("adminUsers", "Admin Users")}
         </nav>
         <div className="sidebar-footer">
           <button className="logout-btn" onClick={onLogout}>

@@ -1,5 +1,5 @@
 /**
- * Settings service — Phase 8.
+ * Settings service — Phase 8 (storewide discount) + Phase 24 (page content).
  *
  * Manages the singleton Settings document.
  * getStorewideDiscount() is the function discount.service.js callers use
@@ -38,4 +38,35 @@ const setStorewideDiscount = async (discountData) => {
   return settings;
 };
 
-module.exports = { getStorewideDiscount, setStorewideDiscount };
+/**
+ * Get About / Contact page content (Phase 24).
+ * Returns the content fields from the singleton Settings document.
+ */
+const getPageContent = async () => {
+  const settings = await Settings.findOne().select("aboutText contactEmail contactPhone");
+  return {
+    aboutText: settings?.aboutText ?? "",
+    contactEmail: settings?.contactEmail ?? "",
+    contactPhone: settings?.contactPhone ?? "",
+  };
+};
+
+/**
+ * Set About / Contact page content (Phase 24).
+ * @param {{ aboutText?: string, contactEmail?: string, contactPhone?: string }} contentData
+ */
+const setPageContent = async (contentData) => {
+  const settings = await Settings.findOneAndUpdate(
+    {},
+    { $set: contentData },
+    { new: true, upsert: true, runValidators: true }
+  );
+  return {
+    aboutText: settings.aboutText ?? "",
+    contactEmail: settings.contactEmail ?? "",
+    contactPhone: settings.contactPhone ?? "",
+  };
+};
+
+module.exports = { getStorewideDiscount, setStorewideDiscount, getPageContent, setPageContent };
+

@@ -1,13 +1,12 @@
 /**
- * Settings model — Phase 8 (minimal placeholder).
+ * Settings model — Phase 8 (storewide discount) + Phase 24 (page content).
  *
  * A singleton document that holds application-wide configuration.
- * Only `storewideDiscount` is used in this phase. The rest of the Settings
- * module (Phase 24) will add fields to this same document — no schema migration
- * needed later because Mongoose handles sparse additions gracefully.
- *
  * Singleton pattern: there is always exactly one Settings document.
  * The service layer enforces this via findOneAndUpdate with upsert.
+ *
+ * No DB migration needed for Phase 24 additions — Mongoose handles sparse
+ * additions gracefully on the existing singleton document.
  */
 
 const mongoose = require("mongoose");
@@ -26,9 +25,26 @@ const settingsSchema = new mongoose.Schema(
       active: { type: Boolean, default: false },
     },
 
-    // Phase 24 will add: storeName, logoUrl, contactEmail, etc.
+    // Phase 24 — About / Contact page content.
+    // Stored on the same singleton document (no new collection, no migration).
+    aboutText: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    contactEmail: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    contactPhone: {
+      type: String,
+      default: "",
+      trim: true,
+    },
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model("Settings", settingsSchema);
+

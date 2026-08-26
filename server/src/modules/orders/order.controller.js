@@ -141,6 +141,27 @@ const getOrders = async (req, res, next) => {
   }
 };
 
+/**
+ * GET /api/v1/admin/orders/stats
+ *
+ * Returns aggregated dashboard counts for the Overview screen.
+ * Phase 23 gap fix — this is a new endpoint, previously missing.
+ *
+ * Response shape:
+ *   { status, data: { todayOrders, totalOrders, narcoticsPending, pricingPending } }
+ */
+const getOrderStats = async (req, res, next) => {
+  try {
+    const stats = await orderService.getOrderStats();
+    res.status(200).json({
+      status: "success",
+      data: stats,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getOrderById = async (req, res, next) => {
   try {
     const order = await orderService.getOrderById(req.params.id);
@@ -198,6 +219,7 @@ module.exports = {
   reviewNarcoticsOrder,
   placeInstantOrder,
   getOrders,
+  getOrderStats,
   getOrderById,
   priceInstantOrder,
   cancelOrder,

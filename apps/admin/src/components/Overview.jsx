@@ -4,10 +4,11 @@ function Overview({ token }) {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
 
   const [stats, setStats] = useState({
+    todayOrders: 0,
+    totalOrders: 0,
     totalProducts: 0,
     narcoticsPending: 0,
     pricingPending: 0,
-    totalOrders: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,31 +24,24 @@ function Overview({ token }) {
 
       const headers = { Authorization: `Bearer ${token}` };
 
-      // 1. Fetch total products (with a high limit because the API doesn't return a direct total/count metadata)
+      // 1. GET /admin/orders/stats — single DB aggregation for all order counts.
+      //    This endpoint was added as a Phase 23 gap fix (was previously missing).
+      //    Returns: { todayOrders, totalOrders, narcoticsPending, pricingPending }
+      const resStats = await fetch(`${apiUrl}/admin/orders/stats`, { headers });
+      if (!resStats.ok) throw new Error(`Stats endpoint returned ${resStats.status}`);
+      const dataStats = await resStats.json();
+
+      // 2. Fetch total products (API doesn't return a direct count; fetch with high limit)
       const resProducts = await fetch(`${apiUrl}/admin/products?limit=1000`, { headers });
       const dataProducts = await resProducts.json();
       const productCount = dataProducts.data?.products?.length || 0;
 
-      // 2. Fetch narcotics orders pending verification
-      const resNarcotics = await fetch(`${apiUrl}/admin/orders?status=pending_verification&limit=1`, { headers });
-      const dataNarcotics = await resNarcotics.json();
-      const narcoticsCount = dataNarcotics.data?.total || 0;
-
-      // 3. Fetch orders awaiting pharmacist pricing
-      const resPricing = await fetch(`${apiUrl}/admin/orders?status=awaiting-pharmacist-pricing&limit=1`, { headers });
-      const dataPricing = await resPricing.json();
-      const pricingCount = dataPricing.data?.total || 0;
-
-      // 4. Fetch total orders count
-      const resTotalOrders = await fetch(`${apiUrl}/admin/orders?limit=1`, { headers });
-      const dataTotalOrders = await resTotalOrders.json();
-      const totalOrdersCount = dataTotalOrders.data?.total || 0;
-
       setStats({
+        todayOrders: dataStats.data?.todayOrders ?? 0,
+        totalOrders: dataStats.data?.totalOrders ?? 0,
+        narcoticsPending: dataStats.data?.narcoticsPending ?? 0,
+        pricingPending: dataStats.data?.pricingPending ?? 0,
         totalProducts: productCount,
-        narcoticsPending: narcoticsCount,
-        pricingPending: pricingCount,
-        totalOrders: totalOrdersCount,
       });
     } catch (err) {
       setError("Failed to fetch dashboard statistics: " + err.message);
@@ -67,13 +61,10 @@ function Overview({ token }) {
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      {/* Backend Gap Warnings */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.0rem" }}>
-        <div className="alert alert-danger" style={{ margin: 0 }}>
-          <strong>⚠️ Date Filter Gap:</strong> Today's order count cannot be queried from the backend. The <code>/admin/orders</code> endpoint strips all unknown query parameters and does not support date filtering.
-        </div>
+      {/* Informational note — product count still uses limit=1000 approach */}
+      <div style={{ marginBottom: "1.5rem" }}>
         <div className="alert alert-success" style={{ margin: 0, background: "#e0f2fe", color: "#0369a1", borderColor: "#bae6fd" }}>
-          <strong>ℹ️ Product Count Gap:</strong> The product API doesn't return a total count in the response metadata (only returning the page results). We fetch with a high limit (1000) to gauge the current catalog size.
+          <strong>ℹ️ Product Count Note:</strong> The product API doesn't return a total count in metadata (only page results). Fetched with limit=1000 to gauge catalog size.
         </div>
       </div>
 
@@ -84,22 +75,22 @@ function Overview({ token }) {
       ) : (
         <>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
-            
-            {/* Today's Orders (Gap Card) */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #ef4444" }}>
+
+            {/* Today's Orders — NOW LIVE via GET /admin/orders/stats */}
+            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #2563eb" }}>
               <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 600, textTransform: "uppercase" }}>
                 Today's Orders
               </div>
               <div style={{ fontSize: "2rem", fontWeight: 700, color: "#1e293b", margin: "0.5rem 0" }}>
-                GAP
+                {stats.todayOrders}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "#ef4444", fontWeight: 500 }}>
-                API endpoint missing date range filter
+              <div style={{ fontSize: "0.75rem", color: "#64748b" }}>
+                Orders placed since midnight PKT
               </div>
             </div>
 
             {/* Total Orders */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #2563eb" }}>
+            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #0891b2" }}>
               <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 600, textTransform: "uppercase" }}>
                 Total Orders (All Time)
               </div>
@@ -107,7 +98,7 @@ function Overview({ token }) {
                 {stats.totalOrders}
               </div>
               <div style={{ fontSize: "0.75rem", color: "#64748b" }}>
-                Cumulative order counts in database
+                Cumulative order count in database
               </div>
             </div>
 
@@ -162,7 +153,7 @@ function Overview({ token }) {
                   {stats.narcoticsPending} pending review
                 </span>
               </div>
-              
+
               <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 1rem", background: "#f5f3ff", borderRadius: "6px", border: "1px solid #ede9fe" }}>
                 <span style={{ color: "#6d28d9", fontWeight: 600 }}>Unpriced Instant Orders</span>
                 <span className="badge" style={{ background: "#ede9fe", color: "#6d28d9", padding: "0.25rem 0.75rem", fontSize: "0.85rem", fontWeight: 600 }}>

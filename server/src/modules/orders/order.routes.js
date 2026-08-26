@@ -63,6 +63,11 @@ adminOrderRoutes.get(
   orderController.getOrders,
 );
 
+// GET /api/v1/admin/orders/stats — dashboard aggregation counts (Phase 23 gap fix).
+// IMPORTANT: must be mounted BEFORE /:id so the literal "stats" is not
+// treated as a MongoDB ObjectId parameter.
+adminOrderRoutes.get("/stats", orderController.getOrderStats);
+
 adminOrderRoutes.get(
   "/:id",
   validateParams(orderIdParamsSchema),

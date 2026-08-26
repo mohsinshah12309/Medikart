@@ -1,6 +1,6 @@
 /**
- * Settings validation — Phase 8.
- * Zod strict: only discount fields accepted on this endpoint.
+ * Settings validation — Phase 8 (storewide discount) + Phase 24 (page content).
+ * Zod strict schemas per rules.md §3: explicit allow-list only.
  */
 
 const { z } = require("zod");
@@ -16,4 +16,14 @@ const storewideDiscountSchema = z
   })
   .strict();
 
-module.exports = { storewideDiscountSchema };
+// PUT /api/v1/admin/settings/content — Phase 24
+// All fields optional so callers can PATCH just what they need.
+const pageContentSchema = z
+  .object({
+    aboutText: z.string().trim().optional(),
+    contactEmail: z.string().email("Invalid email format").trim().optional().or(z.literal("")),
+    contactPhone: z.string().trim().optional(),
+  })
+  .strict();
+
+module.exports = { storewideDiscountSchema, pageContentSchema };

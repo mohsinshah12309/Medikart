@@ -5,6 +5,10 @@ import Products from "./components/Products";
 import Overview from "./components/Overview";
 import Categories from "./components/Categories";
 import Orders from "./components/Orders";
+import Cities from "./components/Cities";
+import Settings from "./components/Settings";
+import AdminUsers from "./components/AdminUsers";
+import ActivityLogs from "./components/ActivityLogs";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -42,15 +46,26 @@ function App() {
         return <Categories token={token} />;
       case "orders":
         return <Orders token={token} />;
+      case "cities":
+        return <Cities token={token} />;
+      case "settings":
+        return <Settings token={token} />;
+      case "adminUsers":
+        // Extra guard in App — if somehow a non-super-admin reaches this tab
+        // (e.g. stale localStorage), they still see nothing useful.
+        // The backend is the real guard (requireSuperAdmin middleware, Phase 20).
+        return adminUser?.role === "super_admin"
+          ? <AdminUsers token={token} adminUser={adminUser} />
+          : <div style={{ padding: "2rem", color: "#64748b" }}>Access denied.</div>;
+      case "activityLogs":
+        return <ActivityLogs token={token} />;
       default:
         return (
           <div>
             <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#0f172a", marginBottom: "1rem" }}>
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Screen
             </h2>
-            <p style={{ color: "#64748b" }}>
-              This screen is under construction.
-            </p>
+            <p style={{ color: "#64748b" }}>This screen is under construction.</p>
           </div>
         );
     }

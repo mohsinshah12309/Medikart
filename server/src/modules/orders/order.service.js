@@ -51,6 +51,55 @@ const getOrders = async ({ type, status, page = 1, limit = 20 } = {}) => {
 };
 
 /**
+ * Get dashboard stats for the Overview screen (Phase 23 gap fix).
+ *
+ * Uses a single $facet aggregation — one DB round-trip, no client-side counting.
+ *
+ * "Today" is defined as midnight PKT (UTC+5:00) to now, which is equivalent to
+ * midnight UTC − 5 hours. This is correct for Medikart's Pakistan operation.
+ *
+ * @returns {{ todayOrders, totalOrders, narcoticsPending, pricingPending }}
+ */
+const getOrderStats = async () => {
+  // PKT is UTC+5. Midnight PKT = yesterday 19:00 UTC (i.e. now − ms_since_midnight_PKT).
+  const now = new Date();
+  // Shift now by +5h to get "current PKT time", then floor to midnight, then shift back.
+  const PKT_OFFSET_MS = 5 * 60 * 60 * 1000;
+  const nowPKT = new Date(now.getTime() + PKT_OFFSET_MS);
+  const midnightPKT = new Date(
+    Date.UTC(nowPKT.getUTCFullYear(), nowPKT.getUTCMonth(), nowPKT.getUTCDate())
+  );
+  const todayStartUTC = new Date(midnightPKT.getTime() - PKT_OFFSET_MS);
+
+  const [result] = await Order.aggregate([
+    {
+      $facet: {
+        todayOrders: [
+          { $match: { createdAt: { $gte: todayStartUTC } } },
+          { $count: "count" },
+        ],
+        totalOrders: [{ $count: "count" }],
+        narcoticsPending: [
+          { $match: { status: "pending_verification" } },
+          { $count: "count" },
+        ],
+        pricingPending: [
+          { $match: { status: "awaiting-pharmacist-pricing" } },
+          { $count: "count" },
+        ],
+      },
+    },
+  ]);
+
+  return {
+    todayOrders: result.todayOrders[0]?.count ?? 0,
+    totalOrders: result.totalOrders[0]?.count ?? 0,
+    narcoticsPending: result.narcoticsPending[0]?.count ?? 0,
+    pricingPending: result.pricingPending[0]?.count ?? 0,
+  };
+};
+
+/**
  * Get a single order by MongoDB ID (admin).
  */
 const getOrderById = async (orderId) => {
@@ -402,6 +451,7 @@ const sendOrderCancellationEmail = async (order) => {
 module.exports = {
   placeOrder,
   getOrders,
+  getOrderStats,
   getOrderById,
   priceInstantOrder,
   reviewNarcoticsOrder,

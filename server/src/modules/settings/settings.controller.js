@@ -1,6 +1,6 @@
 /**
- * Settings controller — Phase 8.
- * Thin layer for the storewide discount endpoint.
+ * Settings controller — Phase 8 (storewide discount) + Phase 24 (page content).
+ * Thin layer per rules.md §2: read request, call service, shape response.
  */
 
 const settingsService = require("./settings.service");
@@ -25,4 +25,24 @@ const getStorewideDiscount = async (req, res, next) => {
   }
 };
 
-module.exports = { setStorewideDiscount, getStorewideDiscount };
+/** GET /api/v1/admin/settings/content — Phase 24 */
+const getPageContent = async (req, res, next) => {
+  try {
+    const content = await settingsService.getPageContent();
+    res.status(200).json({ status: "success", data: content });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/** PUT /api/v1/admin/settings/content — Phase 24 */
+const setPageContent = async (req, res, next) => {
+  try {
+    const content = await settingsService.setPageContent(req.body);
+    res.status(200).json({ status: "success", data: content });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { setStorewideDiscount, getStorewideDiscount, getPageContent, setPageContent };
