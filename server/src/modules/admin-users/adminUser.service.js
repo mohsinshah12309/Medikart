@@ -16,6 +16,7 @@
  *   - Inactive accounts are treated identically to "not found" — no leakage.
  */
 
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -156,12 +157,55 @@ const updateAdminUser = async (id, data, actor) => {
   const willBeInactiveOrDemoted = (data.active === false) || (data.role && data.role !== "super_admin");
 
   if (isTargetActiveSuperAdmin && willBeInactiveOrDemoted) {
-    const activeSuperAdminCount = await AdminUser.countDocuments({
-      role: "super_admin",
-      active: true,
-    });
-    if (activeSuperAdminCount <= 1) {
-      throw new BadRequestError("Cannot demote or deactivate the last remaining active Super Admin");
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+      // Lock all active super admins by updating their updatedAt timestamp.
+      // This serializes concurrent demotions / deletions of super admins.
+      await AdminUser.updateMany(
+        { role: "super_admin", active: true },
+        { $set: { updatedAt: new Date() } }
+      ).session(session);
+
+      const activeSuperAdminCount = await AdminUser.countDocuments({
+        role: "super_admin",
+        active: true,
+      }).session(session);
+
+      if (activeSuperAdminCount <= 1) {
+        throw new BadRequestError("Cannot demote or deactivate the last remaining active Super Admin");
+      }
+
+      const before = sanitizeUser(user);
+
+      // Apply updates
+      if (data.name !== undefined) user.name = data.name;
+      if (data.email !== undefined) user.email = data.email;
+      if (data.role !== undefined) user.role = data.role;
+      if (data.permissions !== undefined) user.permissions = data.permissions;
+      if (data.active !== undefined) user.active = data.active;
+
+      await user.save({ session });
+
+      const after = sanitizeUser(user);
+
+      await session.commitTransaction();
+
+      await activityLogService.logActivity({
+        actor,
+        action: "admin_user_updated",
+        entityType: "admin_user",
+        entityId: user._id,
+        before,
+        after,
+      });
+
+      return after;
+    } catch (err) {
+      await session.abortTransaction();
+      throw err;
+    } finally {
+      await session.endSession();
     }
   }
 
@@ -203,12 +247,44 @@ const deleteAdminUser = async (id, actor) => {
 
   // Safeguard: Cannot delete the last active super admin
   if (user.role === "super_admin" && user.active) {
-    const activeSuperAdminCount = await AdminUser.countDocuments({
-      role: "super_admin",
-      active: true,
-    });
-    if (activeSuperAdminCount <= 1) {
-      throw new BadRequestError("Cannot delete the last remaining active Super Admin");
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+      await AdminUser.updateMany(
+        { role: "super_admin", active: true },
+        { $set: { updatedAt: new Date() } }
+      ).session(session);
+
+      const activeSuperAdminCount = await AdminUser.countDocuments({
+        role: "super_admin",
+        active: true,
+      }).session(session);
+
+      if (activeSuperAdminCount <= 1) {
+        throw new BadRequestError("Cannot delete the last remaining active Super Admin");
+      }
+
+      const before = sanitizeUser(user);
+
+      await AdminUser.findByIdAndDelete(id).session(session);
+
+      await session.commitTransaction();
+
+      await activityLogService.logActivity({
+        actor,
+        action: "admin_user_deleted",
+        entityType: "admin_user",
+        entityId: user._id,
+        before,
+        after: null,
+      });
+
+      return before;
+    } catch (err) {
+      await session.abortTransaction();
+      throw err;
+    } finally {
+      await session.endSession();
     }
   }
 

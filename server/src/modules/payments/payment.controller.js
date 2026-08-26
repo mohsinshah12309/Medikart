@@ -40,23 +40,31 @@ const kuickpayWebhook = async (req, res, next) => {
       return res.status(400).json({ error: 'transactionId is required' });
     }
 
-    const order = await Order.findOne({ gatewayTransactionId: transactionId });
-    if (!order) {
-      throw new NotFoundError('Order not found for transaction ID');
-    }
-
     // DO NOT trust the payload status, verify independently!
     const { status } = await paymentService.verifyTransaction(transactionId);
 
-    if (status === 'paid') {
-      order.paymentState = 'paid';
-      await order.save();
-    } else if (status === 'failed') {
-      order.paymentState = 'failed';
-      await order.save();
-    } else {
-      // If verification returns something else like 'pending', keep it pending
-      console.log(`Transaction ${transactionId} status verified as ${status}`);
+    if (status !== 'paid' && status !== 'failed') {
+      console.log(`Transaction ${transactionId} status verified as ${status}. Skipping update.`);
+      return res.status(200).json({ received: true });
+    }
+
+    // Atomically update the order ONLY if it is still in a pending state.
+    // This makes the webhook idempotent and safe against concurrent duplicate deliveries.
+    const order = await Order.findOneAndUpdate(
+      { gatewayTransactionId: transactionId, paymentState: 'pending' },
+      { $set: { paymentState: status } },
+      { new: true }
+    );
+
+    if (!order) {
+      // Check if the order exists at all.
+      const exists = await Order.exists({ gatewayTransactionId: transactionId });
+      if (!exists) {
+        throw new NotFoundError('Order not found for transaction ID');
+      }
+      // If it exists but is not pending, it means another request already processed it.
+      // Return success (200 OK) for idempotency.
+      return res.status(200).json({ received: true });
     }
 
     res.status(200).json({ received: true });

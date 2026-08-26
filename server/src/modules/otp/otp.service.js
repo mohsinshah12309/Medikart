@@ -174,8 +174,7 @@ const verifyOtp = async (email, code) => {
 
   // 2. Hard 10-minute expiry check
   if (otpDoc.expiresAt < new Date()) {
-    otpDoc.invalidated = true;
-    await otpDoc.save();
+    await Otp.updateOne({ _id: otpDoc._id }, { $set: { invalidated: true } });
     throw new BadRequestError("OTP has expired. Please request a new code.");
   }
 
@@ -188,8 +187,7 @@ const verifyOtp = async (email, code) => {
 
   // 4. Attempt cap check (max 4 attempts per NFR-SEC-03)
   if (otpDoc.attempts >= 4) {
-    otpDoc.invalidated = true;
-    await otpDoc.save();
+    await Otp.updateOne({ _id: otpDoc._id }, { $set: { invalidated: true } });
     throw new BadRequestError(
       "Maximum verification attempts exceeded. Please request a new code.",
     );
@@ -199,13 +197,18 @@ const verifyOtp = async (email, code) => {
   const isMatch = await bcrypt.compare(code, otpDoc.codeHash);
 
   if (!isMatch) {
-    otpDoc.attempts += 1;
-    if (otpDoc.attempts >= 4) {
-      otpDoc.invalidated = true;
-    }
-    await otpDoc.save();
+    const updatedDoc = await Otp.findOneAndUpdate(
+      { _id: otpDoc._id, verified: false, invalidated: false, attempts: { $lt: 4 } },
+      { $inc: { attempts: 1 } },
+      { new: true }
+    );
 
-    if (otpDoc.attempts >= 4) {
+    if (!updatedDoc) {
+      throw new BadRequestError("OTP expired or invalid. Please request a new code.");
+    }
+
+    if (updatedDoc.attempts >= 4) {
+      await Otp.updateOne({ _id: otpDoc._id }, { $set: { invalidated: true } });
       throw new BadRequestError(
         "Maximum verification attempts exceeded. Please request a new code.",
       );
@@ -213,9 +216,17 @@ const verifyOtp = async (email, code) => {
     throw new BadRequestError("Invalid verification code");
   }
 
-  // 6. On match: mark verified: true (single-use)
-  otpDoc.verified = true;
-  await otpDoc.save();
+  // 6. On match: atomically mark verified: true (single-use)
+  const updateResult = await Otp.updateOne(
+    { _id: otpDoc._id, verified: false, invalidated: false, attempts: { $lt: 4 } },
+    { $set: { verified: true } }
+  );
+
+  if (updateResult.modifiedCount === 0) {
+    throw new BadRequestError(
+      "This OTP has already been verified and used. Please request a new code.",
+    );
+  }
 
   return {
     verified: true,

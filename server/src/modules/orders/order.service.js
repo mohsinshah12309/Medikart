@@ -239,26 +239,30 @@ const cancelOrder = async (orderId, { reason, admin }) => {
     );
   }
 
-  const previousStatus = order.status;
-  order.status = "cancelled";
+  const refundStatus = order.paymentState === "paid" ? "refund_pending" : "not_applicable";
+  const cancellationData = {
+    reason,
+    cancelledBy: admin.id || admin._id || admin,
+    cancelledAt: new Date(),
+    refundStatus,
+  };
 
-  if (order.paymentState === "paid") {
-    order.cancellation = {
-      reason,
-      cancelledBy: admin.id || admin._id || admin,
-      cancelledAt: new Date(),
-      refundStatus: "refund_pending",
-    };
-  } else {
-    order.cancellation = {
-      reason,
-      cancelledBy: admin.id || admin._id || admin,
-      cancelledAt: new Date(),
-      refundStatus: "not_applicable",
-    };
+  const updatedOrder = await Order.findOneAndUpdate(
+    { _id: orderId, status: { $in: ["pending", "packed"] } },
+    {
+      $set: {
+        status: "cancelled",
+        cancellation: cancellationData,
+      },
+    },
+    { new: true }
+  );
+
+  if (!updatedOrder) {
+    throw new BadRequestError(
+      "Cannot cancel order. It may have already been cancelled or processed."
+    );
   }
-
-  await order.save();
 
   logActivity({
     actor: {
@@ -268,18 +272,18 @@ const cancelOrder = async (orderId, { reason, admin }) => {
     },
     action: "order_cancelled",
     entityType: "order",
-    entityId: order._id,
-    before: { status: previousStatus },
+    entityId: updatedOrder._id,
+    before: { status: order.status },
     after: { status: "cancelled" },
   });
 
-  sendOrderCancellationEmail(order).catch((err) => {
+  sendOrderCancellationEmail(updatedOrder).catch((err) => {
     console.error(
-      `[orders] Cancellation email failed for order ${order._id}: ${err.message}`
+      `[orders] Cancellation email failed for order ${updatedOrder._id}: ${err.message}`
     );
   });
 
-  return order;
+  return updatedOrder;
 };
 
 /**
@@ -289,21 +293,28 @@ const cancelOrder = async (orderId, { reason, admin }) => {
  * @param {object} admin - authenticated admin user
  */
 const refundOrder = async (orderId, admin) => {
-  const order = await Order.findById(orderId);
-  if (!order) throw new NotFoundError("Order not found");
+  const updatedOrder = await Order.findOneAndUpdate(
+    { _id: orderId, "cancellation.refundStatus": "refund_pending" },
+    {
+      $set: {
+        "cancellation.refundStatus": "refunded",
+        "cancellation.refundedBy": admin.id || admin._id || admin,
+        "cancellation.refundedAt": new Date(),
+        paymentState: "refunded",
+      },
+    },
+    { new: true }
+  );
 
-  if (!order.cancellation || order.cancellation.refundStatus !== "refund_pending") {
+  if (!updatedOrder) {
+    const existing = await Order.findById(orderId);
+    if (!existing) {
+      throw new NotFoundError("Order not found");
+    }
     throw new BadRequestError(
       "Only orders with a refundStatus of 'refund_pending' can be marked as refunded."
     );
   }
-
-  order.cancellation.refundStatus = "refunded";
-  order.cancellation.refundedBy = admin.id || admin._id || admin;
-  order.cancellation.refundedAt = new Date();
-  order.paymentState = "refunded";
-
-  await order.save();
 
   logActivity({
     actor: {
@@ -313,12 +324,12 @@ const refundOrder = async (orderId, admin) => {
     },
     action: "refund_marked_complete",
     entityType: "order",
-    entityId: order._id,
+    entityId: updatedOrder._id,
     before: { refundStatus: "refund_pending" },
     after: { refundStatus: "refunded" },
   });
 
-  return order;
+  return updatedOrder;
 };
 
 /**

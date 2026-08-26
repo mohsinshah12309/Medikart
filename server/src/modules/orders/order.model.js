@@ -135,6 +135,8 @@ orderSchema.index({ type: 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ "customer.email": 1 });
 orderSchema.index({ createdAt: -1 });
+orderSchema.index({ gatewayTransactionId: 1 }, { unique: true, sparse: true });
+
 
 // Compliance guard (Phase 15 / PRD §12, §13.3): a rejected narcotics order can
 // NEVER reach delivered — regardless of which code path attempts the save.
