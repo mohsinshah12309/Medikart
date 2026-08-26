@@ -1,5 +1,5 @@
 /**
- * phase21SecurityHardening.test.js — Phase 21 security unit tests.
+ * adminSecurityHardening.test.js — Admin security unit tests.
  */
 
 jest.setTimeout(60000);
@@ -101,7 +101,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe("Phase 21 — Security Hardening, Audit Integrity & Admin Management", () => {
+describe("Admin Security Hardening, Audit Integrity & Admin Management", () => {
   
   describe("AUTHORIZATION BOUNDARIES", () => {
     test("1. unauthenticated admin-management request → 401", async () => {

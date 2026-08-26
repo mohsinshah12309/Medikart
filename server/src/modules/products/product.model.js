@@ -26,11 +26,13 @@ const productImageSchema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
+    genericName: { type: String, default: "" },
     description: { type: String, default: "" },
     price: { type: Number, required: true, min: 0 },
     sku: { type: String, required: true, trim: true, unique: true },
     categoryIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     isNarcotic: { type: Boolean, default: false },
+    requiresPrescription: { type: Boolean, default: false },
     stockStatus: {
       type: String,
       enum: ["in_stock", "out_of_stock"],

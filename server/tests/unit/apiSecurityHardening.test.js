@@ -1,5 +1,5 @@
 /**
- * phase22ApiSecurity.test.js — Phase 22 API Security, Rate Limiting & Abuse Protection tests.
+ * apiSecurityHardening.test.js — API Security, Rate Limiting & Abuse Protection tests.
  */
 
 jest.setTimeout(60000);
@@ -109,7 +109,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe("Phase 22 — API Security, Rate Limiting & Abuse Protection", () => {
+describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
   
   // ── RATE LIMITING TESTS ───────────────────────────────────────────────────
   describe("Rate Limiting", () => {
@@ -214,6 +214,89 @@ describe("Phase 22 — API Security, Rate Limiting & Abuse Protection", () => {
         message: "Too many attempts. Please try again in 15 minutes."
       });
       expect(res.headers["x-powered-by"]).toBeUndefined();
+    });
+
+    test("8. two different admins from the same IP get independent counters", async () => {
+      const superAdminUser2 = await AdminUser.create({
+        name: "Second Super Admin",
+        email: "super2@test.com",
+        role: "super_admin",
+        permissions: ["products", "orders", "narcotics_approval", "reports", "settings"],
+        passwordHash: "$2a$12$dummyhashformanytests",
+        active: true,
+      });
+
+      const superAdminToken2 = jwt.sign(
+        { sub: superAdminUser2._id.toString(), role: "super_admin", email: superAdminUser2.email },
+        jwtSecret,
+        { expiresIn: "1h" }
+      );
+
+      // Admin 1 (superAdminToken) from IP 1.1.1.1 hits /api/v1/admin/users 20 times (adminLimiter limit is 20)
+      for (let i = 0; i < 20; i++) {
+        const res = await request(app)
+          .get("/api/v1/admin/users")
+          .set("Authorization", `Bearer ${superAdminToken}`)
+          .set("x-forwarded-for", "1.1.1.1");
+        expect(res.status).not.toBe(429);
+      }
+
+      // 21st request for Admin 1 gets 429
+      const res1Blocked = await request(app)
+        .get("/api/v1/admin/users")
+        .set("Authorization", `Bearer ${superAdminToken}`)
+        .set("x-forwarded-for", "1.1.1.1");
+      expect(res1Blocked.status).toBe(429);
+
+      // Admin 2 (superAdminToken2) from the same IP 1.1.1.1 hits /api/v1/admin/users
+      // Since they have a different admin ID, their counter should be independent and they succeed (200)
+      const res2Succeed = await request(app)
+        .get("/api/v1/admin/users")
+        .set("Authorization", `Bearer ${superAdminToken2}`)
+        .set("x-forwarded-for", "1.1.1.1");
+      expect(res2Succeed.status).toBe(200);
+    });
+
+    test("9. the same admin from two different IPs shares one counter", async () => {
+      // Using superAdminToken (fresh counter due to beforeEach)
+      // Limit is 20. Make 10 requests from IP 2.2.2.2 and 10 requests from IP 3.3.3.3
+      for (let i = 0; i < 10; i++) {
+        const res = await request(app)
+          .get("/api/v1/admin/users")
+          .set("Authorization", `Bearer ${superAdminToken}`)
+          .set("x-forwarded-for", "2.2.2.2");
+        expect(res.status).not.toBe(429);
+      }
+
+      for (let i = 0; i < 10; i++) {
+        const res = await request(app)
+          .get("/api/v1/admin/users")
+          .set("Authorization", `Bearer ${superAdminToken}`)
+          .set("x-forwarded-for", "3.3.3.3");
+        expect(res.status).not.toBe(429);
+      }
+
+      // 21st request from either IP should get 429
+      const resBlocked = await request(app)
+        .get("/api/v1/admin/users")
+        .set("Authorization", `Bearer ${superAdminToken}`)
+        .set("x-forwarded-for", "3.3.3.3");
+      expect(resBlocked.status).toBe(429);
+    });
+
+    test("10. rate-limited request sets a reasonable Retry-After header", async () => {
+      for (let i = 0; i < 5; i++) {
+        await request(app).post("/api/v1/auth/admin/login").send({});
+      }
+
+      const res = await request(app).post("/api/v1/auth/admin/login").send({});
+      expect(res.status).toBe(429);
+      expect(res.headers["retry-after"]).toBeDefined();
+      
+      const retryAfter = parseInt(res.headers["retry-after"], 10);
+      expect(Number.isInteger(retryAfter)).toBe(true);
+      expect(retryAfter).toBeGreaterThan(0);
+      expect(retryAfter).toBeLessThanOrEqual(15 * 60);
     });
   });
 
@@ -503,7 +586,7 @@ describe("Phase 22 — API Security, Rate Limiting & Abuse Protection", () => {
       expect(res.status).not.toBe(401);
     });
 
-    test("28. existing Phase 20 tests remain intact (demote last super admin safeguard)", async () => {
+    test("28. existing Admin User Management tests remain intact (demote last super admin safeguard)", async () => {
       // Demoting the last remaining active Super Admin is rejected
       const res = await request(app)
         .put(`/api/v1/admin/users/${superAdminUser._id}`)
@@ -514,7 +597,7 @@ describe("Phase 22 — API Security, Rate Limiting & Abuse Protection", () => {
       expect(res.body.message).toMatch(/(cannot deactivate or demote|cannot demote or deactivate|demote or deactivate)/i);
     });
 
-    test("29. existing Phase 21 tests remain intact (JWT secret check on start)", async () => {
+    test("29. existing Admin Auth tests remain intact (JWT secret check on start)", async () => {
       const originalSecret = process.env.JWT_SECRET;
       delete process.env.JWT_SECRET;
 

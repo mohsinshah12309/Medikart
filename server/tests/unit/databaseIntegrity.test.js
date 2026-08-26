@@ -1,7 +1,7 @@
 /**
- * phase23DatabaseIntegrity.test.js
+ * databaseIntegrity.test.js
  *
- * Comprehensive database-integrity, transaction, and concurrency tests for Medikart (Phase 23).
+ * Comprehensive database-integrity, transaction, and concurrency tests for Medikart.
  */
 
 jest.setTimeout(60000);
@@ -31,7 +31,7 @@ jest.mock("../../src/modules/integrations/sheetsSyncQueue", () => ({
   enqueueSheetSync: jest.fn(),
 }));
 
-describe("Phase 23 — Database Integrity, Concurrency & Transaction Safety", () => {
+describe("Database Integrity, Concurrency & Transaction Safety", () => {
   let actorAdmin;
 
   beforeAll(async () => {
@@ -124,6 +124,9 @@ describe("Phase 23 — Database Integrity, Concurrency & Transaction Safety", ()
   // ── SUPER ADMIN ─────────────────────────────────────────────────────────────
 
   test("3. Concurrent last-Super-Admin deactivation protected", async () => {
+    // Demote actor admin to regular admin so SA 1 and SA 2 are the only active super admins in the DB
+    await AdminUser.findByIdAndUpdate(actorAdmin.id, { role: "admin" });
+
     const admin1 = await AdminUser.create({
       name: "SA 1",
       email: "sa1@test-integrity.com",
@@ -160,6 +163,9 @@ describe("Phase 23 — Database Integrity, Concurrency & Transaction Safety", ()
   });
 
   test("4. Concurrent last-Super-Admin deletion protected", async () => {
+    // Demote actor admin to regular admin so SA 1 and SA 2 are the only active super admins in the DB
+    await AdminUser.findByIdAndUpdate(actorAdmin.id, { role: "admin" });
+
     const admin1 = await AdminUser.create({
       name: "SA 1",
       email: "sa1@test-integrity.com",
@@ -194,6 +200,9 @@ describe("Phase 23 — Database Integrity, Concurrency & Transaction Safety", ()
   });
 
   test("5. Concurrent demotion protected", async () => {
+    // Demote actor admin to regular admin so SA 1 and SA 2 are the only active super admins in the DB
+    await AdminUser.findByIdAndUpdate(actorAdmin.id, { role: "admin" });
+
     const admin1 = await AdminUser.create({
       name: "SA 1",
       email: "sa1@test-integrity.com",
@@ -322,6 +331,9 @@ describe("Phase 23 — Database Integrity, Concurrency & Transaction Safety", ()
     const finalOrder = await Order.findById(order._id);
     expect(finalOrder.cancellation.refundStatus).toBe("refunded");
     expect(finalOrder.paymentState).toBe("refunded");
+
+    // Wait for fire-and-forget logActivity
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Verify only 1 Activity Log created
     const logs = await ActivityLog.find({ entityId: order._id, action: "refund_marked_complete" });
@@ -556,6 +568,9 @@ describe("Phase 23 — Database Integrity, Concurrency & Transaction Safety", ()
     ];
 
     await Promise.allSettled(attempts);
+
+    // Wait for fire-and-forget logActivity
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     const logs = await ActivityLog.find({ entityId: order._id, action: "refund_marked_complete" });
     // Should only have exactly 1 audit log despite concurrent attempts

@@ -1,5 +1,5 @@
 /**
- * phase24ProductionReadiness.test.js
+ * productionReadiness.test.js
  *
  * Unit tests covering production config audit, safe error handling, health checks,
  * graceful shutdown lifecycle, and core security/business regressions.
@@ -90,7 +90,7 @@ afterAll(async () => {
   }
 });
 
-describe("Phase 24 — Production Readiness & Hardening", () => {
+describe("Production Readiness & Hardening", () => {
 
   describe("1. Environment & Config Validation", () => {
     const originalEnv = { ...process.env };

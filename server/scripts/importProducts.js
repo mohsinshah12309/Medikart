@@ -80,8 +80,8 @@ function validateInputFile(filePath) {
 }
 
 /** Main Import Execution */
-async function importProducts() {
-  const inputArg = process.argv[2] || "D:/Mohsin/Downloads/Sample_Item_List_With_Errors.xlsx";
+async function importProducts(filePathParam) {
+  const inputArg = filePathParam || process.argv[2] || "D:/Mohsin/Downloads/Sample_Item_List_With_Errors.xlsx";
 
   console.log("\n══════════════════════════════════════════════════════");
   console.log("   Phase 9 — Bulk Excel Product Import");
@@ -93,11 +93,16 @@ async function importProducts() {
     console.log(`📂 Processing file: ${filePath}`);
   } catch (err) {
     console.error(`❌ File Validation Error: ${err.message}`);
+    if (process.env.NODE_ENV === "test") {
+      throw err;
+    }
     process.exit(1);
   }
 
   // Connect to Database
-  await connectDB();
+  if (mongoose.connection.readyState === 0) {
+    await connectDB();
+  }
 
   // Ensure default categories exist in DB so standard categories are recognized
   for (const cat of DEFAULT_CATEGORIES) {
@@ -127,8 +132,11 @@ async function importProducts() {
     workbook = xlsx.readFile(filePath);
   } catch (err) {
     console.error(`❌ Failed to parse Excel file: ${err.message}`);
-    await mongoose.disconnect();
-    process.exit(1);
+    if (process.env.NODE_ENV !== "test") {
+      await mongoose.disconnect();
+      process.exit(1);
+    }
+    throw err;
   }
 
   const sheetName = workbook.SheetNames[0];
@@ -217,6 +225,7 @@ async function importProducts() {
     // Build Product data
     const productData = {
       name: itemNameStr,
+      genericName: genericName ? String(genericName).trim() : "",
       description: genericName ? `Generic: ${genericName}${manufacturer ? ` | Manufacturer: ${manufacturer}` : ""}` : (manufacturer ? `Manufacturer: ${manufacturer}` : ""),
       price: retailValueNum,
       sku,
@@ -255,11 +264,15 @@ async function importProducts() {
   }
   console.log("══════════════════════════════════════════════════════\n");
 
-  await mongoose.disconnect();
+  if (process.env.NODE_ENV !== "test") {
+    await mongoose.disconnect();
 
-  if (errors.length > 0 && importedCount === 0) {
-    process.exit(1);
+    if (errors.length > 0 && importedCount === 0) {
+      process.exit(1);
+    }
   }
+
+  return { importedCount, errors };
 }
 
 if (require.main === module) {

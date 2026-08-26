@@ -21,11 +21,16 @@ function validateEnv() {
       "changeme",
       "development-secret",
       "development",
-      "replace_with_strong_random_secret"
+      "replace_with_strong_random_secret",
     ];
 
-    if (weakSecrets.includes(secret.trim().toLowerCase()) || secret.trim().length < 32) {
-      throw new Error("JWT_SECRET is insecure. Must be at least 32 characters and cannot be a default fallback secret.");
+    if (
+      weakSecrets.includes(secret.trim().toLowerCase()) ||
+      secret.trim().length < 32
+    ) {
+      throw new Error(
+        "JWT_SECRET is insecure. Must be at least 32 characters and cannot be a default fallback secret.",
+      );
     }
   }
 
@@ -47,7 +52,8 @@ function validateEnv() {
     "KUICKPAY_API_KEY",
     "GOOGLE_SHEETS_CLIENT_EMAIL",
     "GOOGLE_SHEETS_PRIVATE_KEY",
-    "GOOGLE_SHEETS_SHEET_ID"
+    "GOOGLE_SHEETS_SHEET_ID",
+    "GROQ_API_KEY",
   ];
 
   const missing = [];
@@ -58,7 +64,9 @@ function validateEnv() {
   }
 
   if (missing.length > 0) {
-    throw new Error(`Missing critical production environment variables: ${missing.join(", ")}`);
+    throw new Error(
+      `Missing critical production environment variables: ${missing.join(", ")}`,
+    );
   }
 }
 

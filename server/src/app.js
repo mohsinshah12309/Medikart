@@ -4,6 +4,9 @@ const helmet = require("helmet");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
+// Load environment variables immediately before importing local modules
+dotenv.config();
+
 const { connectDB } = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./middleware/auth");
@@ -46,12 +49,14 @@ const adminUserManagementRoutes = require("./modules/admin-users/adminUserManage
 const reportsRoutes = require('./modules/orders/reports.routes');
 const { scheduleWeeklyReport } = require('./jobs/weeklyReport.job');
 
+// Phase 22 — Chatbot Routes
+const chatbotRoutes = require("./modules/chatbot/chatbot.routes");
+
 
 const path = require("path");
 const { validateEnv } = require("./config/env");
 
-// Load environment variables
-dotenv.config();
+
 
 // Validate config
 try {
@@ -179,6 +184,7 @@ app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", publicOrderRoutes);
 app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/chatbot", chatbotRoutes);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route
