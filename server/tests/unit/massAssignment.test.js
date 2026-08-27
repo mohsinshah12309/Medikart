@@ -20,6 +20,8 @@ const Category = require("../../src/modules/categories/category.model");
 const City = require("../../src/modules/cities/city.model");
 const Otp = require("../../src/modules/otp/otp.model");
 const otpService = require("../../src/modules/otp/otp.service");
+const Settings = require("../../src/modules/settings/settings.model");
+const { setStorewideDiscount } = require("../../src/modules/settings/settings.service");
 
 // Mock SMTP send
 jest.mock("../../src/integrations/smtp", () => ({
@@ -46,6 +48,9 @@ beforeAll(async () => {
   await Category.deleteMany({ slug: "mass-assign-cat" });
   await City.deleteMany({ slug: "mass-assign-city" });
   await Otp.deleteMany({ email: "mass-assign@test.com" });
+  await Settings.deleteMany({});
+
+  await setStorewideDiscount({ value: 5, active: true });
 
   testCity = await City.create({
     name: "Lahore",
@@ -78,6 +83,7 @@ afterAll(async () => {
     await Product.deleteOne({ _id: testProduct._id });
   }
   await Otp.deleteMany({ email: "mass-assign@test.com" });
+  await Settings.deleteMany({});
   await mongoose.connection.close();
 }, 90000);
 
