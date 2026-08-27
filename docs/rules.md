@@ -94,17 +94,19 @@ These four rules are the ones covered by dedicated unit tests per `phases.md` (P
 - **Narcotics verification gate** (Section 12, PRD): a product's `isNarcotic` flag is a
   data-driven boolean, not a browsable category. A cart/order snapshots its
   `requiresVerification` value at submission time — a flag changed *after* an order is placed
-  never retroactively alters that order. Card payment on a narcotics order is authorized only,
-  never captured until an admin approves the prescription.
+  never retroactively alters that order. Narcotics-flagged orders are restricted to Cash on Delivery only;
+  card payment is never offered or accepted for a narcotics order, as the payment gateway does not
+  support deferred capture (PRD Amendment v3.3).
 - **Order cancellation & refund** (Section 13.5 / FR-AD-39 / FR-SYS-10): only orders at Pending
   or Packed status are cancellable through this flow — Shipped orders need a different
   post-fulfillment process, not this one. The reversal branches strictly on `paymentState`: COD
-  → nothing to reverse; authorized-only → void; captured → refund via the gateway using the
-  stored `gatewayTransactionId`. Never a manual, out-of-band refund. Exactly one cancellation
-  email, distinct from the order-confirmation email.
+  → nothing to reverse; card-paid → status set to Cancelled and cancellation.refundStatus set to
+  `refund_pending` (no gateway refund or void API call is made, since the gateway does not support it).
+  An administrator later marks the order refunded once the manual bank-transfer refund is completed.
+  Exactly one cancellation email, distinct from the order-confirmation email, is sent.
 - **Payment gateway abstraction**: all provider-specific code lives in
-  `payments/providers/habibMetro.provider.js`, behind the shared `payment.service.js` interface
-  (`charge()`, `authorize()`, `void()`, `refund()`). No other module ever imports the provider
+  `payments/providers/kuickpay.provider.js`, behind the shared `payment.service.js` interface
+  (`initiateCharge()`, `verifyTransaction()`). No other module ever imports the provider
   file directly — this is what keeps the gateway swappable and keeps Phase 16/17 isolated from
   everything downstream of them.
 

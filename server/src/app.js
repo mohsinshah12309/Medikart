@@ -13,6 +13,7 @@ const auth = require("./middleware/auth");
 const requireSuperAdmin = require("./middleware/requireSuperAdmin");
 const crypto = require("crypto");
 const { createRateLimiter } = require("./middleware/rateLimiter");
+const { ForbiddenError } = require("./utils/errors");
 
 // Phase 4 — CRUD Routes
 const productRoutes = require("./modules/products/product.routes");
@@ -118,7 +119,7 @@ const corsOptions = {
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new ForbiddenError("Not allowed by CORS"));
     }
   },
   credentials: true,
@@ -192,7 +193,7 @@ app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
-app.use("/api/v1/chatbot", expensiveLimiter, chatbotRoutes);
+app.use("/api/v1/chatbot", chatbotRoutes);
 app.use("/api/v1", storefrontLimiter, storefrontRoutes);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────

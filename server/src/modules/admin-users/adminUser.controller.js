@@ -83,8 +83,74 @@ const deleteAdminUser = async (req, res, next) => {
   }
 };
 
+const verify2FA = async (req, res, next) => {
+  try {
+    const result = await adminUserService.verify2FA(req.body);
+    res.status(200).json({
+      status: "success",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const setup2FA = async (req, res, next) => {
+  try {
+    const result = await adminUserService.setup2FA(req.admin.id);
+    res.status(200).json({
+      status: "success",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const confirm2FA = async (req, res, next) => {
+  try {
+    const result = await adminUserService.confirm2FA(req.admin.id, req.body);
+    res.status(200).json({
+      status: "success",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const disable2FA = async (req, res, next) => {
+  try {
+    const result = await adminUserService.disable2FA(req.admin.id, req.body);
+    res.status(200).json({
+      status: "success",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const reset2FA = async (req, res, next) => {
+  try {
+    const user = await adminUserService.reset2FA(req.params.id, req.admin);
+    res.status(200).json({
+      status: "success",
+      message: "2FA has been successfully reset",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   login,
+  verify2FA,
+  setup2FA,
+  confirm2FA,
+  disable2FA,
+  reset2FA,
   getAdminUsers,
   createAdminUser,
   updateAdminUser,

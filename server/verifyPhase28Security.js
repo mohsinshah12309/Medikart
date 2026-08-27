@@ -99,9 +99,17 @@ async function runSecurityAudit() {
     // Connect to database to seed OTP & get a product
     await mongoose.connect(process.env.MONGODB_URI);
     const productsRes = await request(app).get("/api/v1/products");
-    const testProduct = (productsRes.body.data?.products || [])[0];
+    let testProduct = (productsRes.body.data?.products || [])[0];
+    let createdDummyProduct = false;
     if (!testProduct) {
-      throw new Error('No active product found to run smuggling test.');
+      testProduct = await mongoose.model("Product").create({
+        name: "E2E Test Product",
+        sku: "SKU-E2E-TEST",
+        price: 150,
+        active: true,
+        stockStatus: "in_stock"
+      });
+      createdDummyProduct = true;
     }
     
     await seedOtp();
@@ -151,6 +159,9 @@ async function runSecurityAudit() {
     console.error('\n❌ E2E Security Hardening Verification failed:', err.message);
     process.exit(1);
   } finally {
+    try {
+      await mongoose.model("Product").deleteMany({ sku: "SKU-E2E-TEST" });
+    } catch (e) {}
     await mongoose.connection.close();
   }
 }

@@ -56,9 +56,26 @@ const adminUserIdParamsSchema = z.object({
   id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid admin user ID format"),
 });
 
+const verify2FASchema = z.object({
+  code: z.string().length(6, "Code must be exactly 6 digits"),
+  tempToken: z.string().min(1, "tempToken is required"),
+}).strict();
+
+const confirm2FASchema = z.object({
+  code: z.string().length(6, "Code must be exactly 6 digits"),
+  setupToken: z.string().min(1, "setupToken is required"),
+}).strict();
+
+const disable2FASchema = z.object({
+  code: z.string().length(6, "Code must be exactly 6 digits"),
+}).strict();
+
 module.exports = {
   loginSchema,
   createAdminUserSchema,
   updateAdminUserSchema,
   adminUserIdParamsSchema,
+  verify2FASchema,
+  confirm2FASchema,
+  disable2FASchema,
 };

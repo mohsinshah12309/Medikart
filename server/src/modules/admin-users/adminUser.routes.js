@@ -19,7 +19,13 @@ const router = express.Router();
 const adminUserController = require("./adminUser.controller");
 const passwordResetController = require("./passwordReset.controller");
 const { validate } = require("../../middleware/validate");
-const { loginSchema } = require("./adminUser.validation");
+const auth = require("../../middleware/auth");
+const {
+  loginSchema,
+  verify2FASchema,
+  confirm2FASchema,
+  disable2FASchema,
+} = require("./adminUser.validation");
 const {
   forgotPasswordSchema,
   resetPasswordSchema,
@@ -27,6 +33,18 @@ const {
 
 // POST /api/v1/auth/admin/login — Phase 5
 router.post("/login", validate(loginSchema), adminUserController.login);
+
+// POST /api/v1/auth/admin/verify-2fa — Phase 28
+router.post("/verify-2fa", validate(verify2FASchema), adminUserController.verify2FA);
+
+// GET /api/v1/auth/admin/2fa/setup — Phase 28 (auth required)
+router.get("/2fa/setup", auth, adminUserController.setup2FA);
+
+// POST /api/v1/auth/admin/2fa/confirm — Phase 28 (auth required)
+router.post("/2fa/confirm", auth, validate(confirm2FASchema), adminUserController.confirm2FA);
+
+// POST /api/v1/auth/admin/2fa/disable — Phase 28 (auth required)
+router.post("/2fa/disable", auth, validate(disable2FASchema), adminUserController.disable2FA);
 
 // POST /api/v1/auth/admin/forgot-password — Phase 6
 router.post(

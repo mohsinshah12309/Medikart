@@ -39,4 +39,11 @@ router.delete(
   adminUserController.deleteAdminUser
 );
 
+// POST /api/v1/admin/users/:id/reset-2fa — reset 2FA settings for an admin user
+router.post(
+  "/:id/reset-2fa",
+  validateParams(adminUserIdParamsSchema),
+  adminUserController.reset2FA
+);
+
 module.exports = router;

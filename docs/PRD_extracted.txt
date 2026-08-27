@@ -1151,11 +1151,10 @@ WhatsApp Business number.
 Page 36 of 44
 Medikart — Product Requirements Document
 AC-24: Cancelling a Pending or Packed COD order marks it Cancelled with no payment action needed.
-AC-25: Cancelling a Pending or Packed card order that was only authorized (narcotics, unapproved) voids the
-hold — no money is ever captured.
-AC-26: Cancelling a Pending or Packed card order that was already captured triggers a refund via the gateway
-using the original transaction reference.
+AC-25: [REMOVED - Case no longer occurs per PRD Amendment v3.3]
+AC-26: Cancelling a Pending or Packed card-paid order marks it Refund Pending; an admin can mark it Refunded once the manual refund is processed — no gateway refund call is made, since the gateway does not support one (revised per PRD Amendment v3.3).
 AC-27: The customer receives exactly one cancellation email, distinct from the original order-confirmation
+AC-32: A cart containing a Narcotics-flagged product offers Cash on Delivery only; the card/online payment option is not shown, and a direct API request attempting to set a non-COD payment method on such a cart is rejected (added per PRD Amendment v3.3).
 email.
 AC-28: An admin can upload a second and third image to a product and choose which one displays as the
 primary/cover image in listings.
