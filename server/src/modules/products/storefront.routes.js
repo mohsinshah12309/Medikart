@@ -157,4 +157,33 @@ router.get("/delivery-charge", async (req, res, next) => {
   }
 });
 
+// GET /api/v1/cities - Public listing of active cities
+router.get("/cities", async (req, res, next) => {
+  try {
+    const { getAllCities } = require("../cities/city.service");
+    const cities = await getAllCities({ active: true });
+    res.status(200).json({
+      status: "success",
+      results: cities.length,
+      data: { cities },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/v1/content - Public read-only page content for About/Contact pages
+router.get("/content", async (req, res, next) => {
+  try {
+    const { getPageContent } = require("../settings/settings.service");
+    const content = await getPageContent();
+    res.status(200).json({
+      status: "success",
+      data: content,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

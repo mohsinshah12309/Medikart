@@ -68,9 +68,11 @@ const resetIpRequestLog = () => {
 const requestOtp = async (email, ip) => {
   const normalizedEmail = email.trim().toLowerCase();
 
+  const bypassLimits = process.env.NODE_ENV === "test" && process.env.ENABLE_OTP_LIMITS_IN_TESTS !== "true";
+
   // 1. Per-IP rate limiting FIRST (NFR-SEC-03) — prevents email rotation
   //    from a single IP from bypassing the per-email cap.
-  if (process.env.NODE_ENV !== "test" && isIpRateLimited(ip)) {
+  if (!bypassLimits && isIpRateLimited(ip)) {
     throw new BadRequestError(
       "Too many OTP requests from this device. Please wait 15 minutes before trying again.",
     );
@@ -83,7 +85,7 @@ const requestOtp = async (email, ip) => {
     createdAt: { $gte: fifteenMinsAgo },
   });
 
-  if (process.env.NODE_ENV !== "test" && recentRequests >= 3) {
+  if (!bypassLimits && recentRequests >= 3) {
     throw new BadRequestError(
       "Too many OTP requests for this email. Please wait 15 minutes before trying again.",
     );

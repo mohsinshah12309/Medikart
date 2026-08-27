@@ -64,3 +64,58 @@ export async function placeStandardOrder(payload) {
     body: JSON.stringify(payload),
   });
 }
+
+export async function getCities() {
+  return fetchApi('/cities', { cache: 'no-store' });
+}
+
+export async function getContent() {
+  return fetchApi('/content', { cache: 'no-store' });
+}
+
+export async function placeInstantOrder(formData) {
+  const url = `${API_URL}/orders/instant`;
+  const res = await fetch(url, {
+    method: 'POST',
+    body: formData,
+  });
+  if (!res.ok) {
+    let errorMsg = `API request failed with status ${res.status}`;
+    try {
+      const errBody = await res.json();
+      errorMsg = errBody.message || errBody.error || errorMsg;
+    } catch (_) {}
+    throw new Error(errorMsg);
+  }
+  return res.json();
+}
+
+export async function placeNarcoticsOrder(formData) {
+  const url = `${API_URL}/orders/narcotics`;
+  const res = await fetch(url, {
+    method: 'POST',
+    body: formData,
+  });
+  if (!res.ok) {
+    let errorMsg = `API request failed with status ${res.status}`;
+    try {
+      const errBody = await res.json();
+      errorMsg = errBody.message || errBody.error || errorMsg;
+    } catch (_) {}
+    throw new Error(errorMsg);
+  }
+  return res.json();
+}
+
+export async function initiatePayment(orderId) {
+  return fetchApi(`/orders/${orderId}/payment/initiate`, {
+    method: 'POST',
+  });
+}
+
+export async function sendChatbotMessage(symptoms, conversationId) {
+  return fetchApi('/chatbot', {
+    method: 'POST',
+    body: JSON.stringify({ symptoms, conversationId }),
+  });
+}

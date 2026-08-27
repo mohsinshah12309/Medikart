@@ -567,15 +567,20 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
   describe("Regressions", () => {
     
     test("26. existing OTP security behavior remains intact", async () => {
-      // request OTP limit: same email > 3 requests in 15 mins is blocked at service level
-      // We use different IPs for the first 3 requests so we hit the email limit instead of the IP limit
-      await otpService.requestOtp("client@test.com", "192.168.1.10");
-      await otpService.requestOtp("client@test.com", "192.168.1.11");
-      await otpService.requestOtp("client@test.com", "192.168.1.12");
+      process.env.ENABLE_OTP_LIMITS_IN_TESTS = "true";
+      try {
+        // request OTP limit: same email > 3 requests in 15 mins is blocked at service level
+        // We use different IPs for the first 3 requests so we hit the email limit instead of the IP limit
+        await otpService.requestOtp("client@test.com", "192.168.1.10");
+        await otpService.requestOtp("client@test.com", "192.168.1.11");
+        await otpService.requestOtp("client@test.com", "192.168.1.12");
 
-      await expect(otpService.requestOtp("client@test.com", "192.168.1.13")).rejects.toThrow(
-        "Too many OTP requests for this email. Please wait 15 minutes before trying again."
-      );
+        await expect(otpService.requestOtp("client@test.com", "192.168.1.13")).rejects.toThrow(
+          "Too many OTP requests for this email. Please wait 15 minutes before trying again."
+        );
+      } finally {
+        delete process.env.ENABLE_OTP_LIMITS_IN_TESTS;
+      }
     });
 
     test("27. existing authentication tests remain intact (JWT signature verification works)", async () => {

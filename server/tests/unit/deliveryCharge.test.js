@@ -27,7 +27,7 @@ beforeAll(async () => {
     throw new Error("MONGODB_URI environment variable is not defined");
   }
   await mongoose.connect(mongoUri);
-  await City.deleteMany({});
+  await City.deleteMany({ name: { $in: ["Lahore", "Old City", "Multan"] } });
 
   // Configured active city (Lahore -> 250) and an inactive city.
   await City.create({
@@ -39,7 +39,7 @@ beforeAll(async () => {
 }, 15000);
 
 afterAll(async () => {
-  await City.deleteMany({});
+  await City.deleteMany({ name: { $in: ["Lahore", "Old City", "Multan"] } });
   await mongoose.connection.close();
 }, 15000);
 

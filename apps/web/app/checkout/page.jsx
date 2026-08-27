@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../../components/CartProvider';
-import { getDeliveryCharge, requestOtp, verifyOtp, placeStandardOrder } from '../../lib/api';
+import { getDeliveryCharge, requestOtp, verifyOtp, placeStandardOrder, getCities, placeNarcoticsOrder, initiatePayment } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -22,6 +22,8 @@ const CITIES = [
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart, isLoaded } = useCart();
   const router = useRouter();
+
+  const hasNarcotics = cart.some(item => item.isNarcotic);
 
   // Form states
   const [customer, setCustomer] = useState({
@@ -45,6 +47,32 @@ export default function CheckoutPage() {
   // Order submission states
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  const [citiesList, setCitiesList] = useState(CITIES);
+  const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [prescriptionFile, setPrescriptionFile] = useState(null);
+
+  // Force COD if cart has narcotics
+  useEffect(() => {
+    if (hasNarcotics) {
+      setPaymentMethod('cod');
+    }
+  }, [hasNarcotics]);
+
+  // Load active cities
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const res = await getCities();
+        if (res && res.data && res.data.cities) {
+          setCitiesList(res.data.cities.map(c => c.name));
+        }
+      } catch (err) {
+        console.error("Failed to load cities:", err);
+      }
+    }
+    loadCities();
+  }, []);
 
   // Fetch delivery charge whenever city changes
   useEffect(() => {
@@ -134,32 +162,79 @@ export default function CheckoutPage() {
       setErrorMsg("Please request and verify the OTP code first.");
       return;
     }
+    if (hasNarcotics && !prescriptionFile) {
+      setErrorMsg("Prescription upload is required for narcotics items.");
+      return;
+    }
 
     setErrorMsg('');
     setSubmitting(true);
 
     try {
-      // Map cart to checkout items payload (only productId and quantity - never trust client price/delivery charge)
-      const payload = {
-        customer,
-        items: cart.map(item => ({
+      let orderId;
+      if (hasNarcotics) {
+        // Multipart/form-data for narcotics order
+        const formData = new FormData();
+        formData.append('customer', JSON.stringify(customer));
+        formData.append('items', JSON.stringify(cart.map(item => ({
           productId: item.productId,
           quantity: item.quantity
-        })),
-        paymentMethod: 'cod',
-        otp: {
+        }))));
+        formData.append('paymentMethod', 'cod');
+        formData.append('otp', JSON.stringify({
           email: customer.email,
           code: otpCode
-        }
-      };
+        }));
+        formData.append('prescription', prescriptionFile);
 
-      const res = await placeStandardOrder(payload);
-      if (res && res.status !== 'fail') {
-        const orderId = res._id || res.data?.order?._id;
-        clearCart();
-        router.push(`/order-confirmation/${orderId}`);
+        const res = await placeNarcoticsOrder(formData);
+        if (res && res.status !== 'fail') {
+          orderId = res._id || res.data?.order?._id;
+        } else {
+          throw new Error(res.message || "Failed to place order.");
+        }
       } else {
-        throw new Error(res.message || "Failed to place order.");
+        // Standard JSON payload
+        const payload = {
+          customer,
+          items: cart.map(item => ({
+            productId: item.productId,
+            quantity: item.quantity
+          })),
+          paymentMethod,
+          otp: {
+            email: customer.email,
+            code: otpCode
+          }
+        };
+
+        const res = await placeStandardOrder(payload);
+        if (res && res.status !== 'fail') {
+          orderId = res._id || res.data?.order?._id;
+        } else {
+          throw new Error(res.message || "Failed to place order.");
+        }
+      }
+
+      if (orderId) {
+        clearCart();
+        
+        if (paymentMethod === 'card' && !hasNarcotics) {
+          try {
+            const payRes = await initiatePayment(orderId);
+            if (payRes && payRes.redirectUrl) {
+              window.location.href = payRes.redirectUrl;
+              return;
+            }
+          } catch (payErr) {
+            console.error("Payment initiation failed:", payErr);
+            setErrorMsg(`Order created successfully but payment failed to initiate: ${payErr.message}. Admin will contact you.`);
+            router.push(`/order-confirmation/${orderId}?paymentFailed=true`);
+            return;
+          }
+        }
+        
+        router.push(`/order-confirmation/${orderId}`);
       }
     } catch (err) {
       setErrorMsg(err.message || "An error occurred while submitting your order.");
@@ -269,7 +344,7 @@ export default function CheckoutPage() {
                 disabled={otpVerified || submitting}
                 className="border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 bg-white"
               >
-                {CITIES.map(c => (
+                {citiesList.map(c => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
@@ -307,16 +382,34 @@ export default function CheckoutPage() {
             </div>
           )}
 
-          {/* Payment Method - COD Only */}
+          {/* Prescription Upload for Narcotics */}
+          {hasNarcotics && (
+            <div className="border-t border-gray-150 pt-4 flex flex-col gap-2">
+              <h3 className="text-xs font-semibold text-gray-700">Prescription Upload (Required)</h3>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/jpg,application/pdf"
+                required
+                onChange={(e) => setPrescriptionFile(e.target.files[0])}
+                disabled={submitting}
+                className="border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500 w-full"
+              />
+              <span className="text-xs text-purple-700 italic">Please upload a valid image or PDF copy of your prescription.</span>
+            </div>
+          )}
+
+          {/* Payment Method selection */}
           <div className="border-t border-gray-150 pt-4 flex flex-col gap-2">
             <h3 className="text-xs font-semibold text-gray-700">Payment Method</h3>
+            
             <label className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="cod"
-                defaultChecked
-                disabled
+                checked={paymentMethod === 'cod'}
+                onChange={() => setPaymentMethod('cod')}
+                disabled={submitting}
                 className="text-green-600 focus:ring-green-500"
               />
               <div>
@@ -324,6 +417,24 @@ export default function CheckoutPage() {
                 <span className="text-xs text-gray-500 block mt-0.5">Pay in cash when your order is delivered to your doorstep.</span>
               </div>
             </label>
+
+            {!hasNarcotics && (
+              <label className="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-lg cursor-pointer">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="card"
+                  checked={paymentMethod === 'card'}
+                  onChange={() => setPaymentMethod('card')}
+                  disabled={submitting}
+                  className="text-green-600 focus:ring-green-500"
+                />
+                <div>
+                  <span className="text-sm font-bold text-gray-900 block">Card / Online Payment (Kuickpay)</span>
+                  <span className="text-xs text-gray-500 block mt-0.5">Pay securely online using Habib Metro hosted checkout.</span>
+                </div>
+              </label>
+            )}
           </div>
 
           <button
@@ -337,7 +448,7 @@ export default function CheckoutPage() {
                 : 'bg-green-600 hover:bg-green-700 text-white'
             }`}
           >
-            {submitting ? 'Submitting Order...' : 'Place COD Order'}
+            {submitting ? 'Submitting Order...' : paymentMethod === 'card' ? 'Pay Online & Place Order' : 'Place COD Order'}
           </button>
         </form>
 

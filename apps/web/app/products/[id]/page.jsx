@@ -126,11 +126,8 @@ export default async function ProductDetailPage({ params }) {
           )}
 
           {/* Checkout controls */}
-          {product.isNarcotic ? (
-            <NarcoticsBlock />
-          ) : (
-            <AddToCartButton product={product} />
-          )}
+          <AddToCartButton product={product} />
+          {product.isNarcotic && <NarcoticsBlock />}
         </div>
       </div>
     </div>

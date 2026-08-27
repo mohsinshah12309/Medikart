@@ -58,7 +58,7 @@ export default function CartPage() {
                   
                   {item.isNarcotic && (
                     <span className="inline-block bg-purple-100 text-purple-700 text-[9px] font-bold px-1.5 py-0.5 rounded mt-1">
-                      Rx Only - Cannot Checkout
+                      Rx Only - Prescription Required
                     </span>
                   )}
                 </div>
@@ -108,27 +108,18 @@ export default function CartPage() {
             </div>
 
             {hasNarcotics && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-xs text-red-800">
-                🚨 Your cart contains a prescription-only (Narcotics) item. Standard checkout is disabled until you remove it.
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 text-xs text-purple-800">
+                📝 Your cart contains prescription-only (Rx) items. A prescription upload is required at checkout.
               </div>
             )}
 
             <div className="mt-4">
-              {hasNarcotics ? (
-                <button
-                  disabled
-                  className="w-full py-3 bg-gray-200 text-gray-400 font-semibold text-sm rounded-lg cursor-not-allowed text-center"
-                >
-                  Remove Rx Items to Checkout
-                </button>
-              ) : (
-                <Link
-                  href="/checkout"
-                  className="w-full inline-block text-center py-3 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm"
-                >
-                  Proceed to Checkout
-                </Link>
-              )}
+              <Link
+                href="/checkout"
+                className="w-full inline-block text-center py-3 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm"
+              >
+                Proceed to Checkout
+              </Link>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ require(path.join(serverNodeModules, "dotenv")).config({
   path: path.join(__dirname, "server", ".env"),
 });
 
-const BACKEND_URL = 'http://localhost:5000/api/v1';
+const BACKEND_URL = 'http://127.0.0.1:5000/api/v1';
 const ADMIN_EMAIL = 'alishahmohsin938@gmail.com';
 const ADMIN_PASS = 'medikart@03314170744Abdullah';
 const TEST_EMAIL = 'teste2e@example.com';
