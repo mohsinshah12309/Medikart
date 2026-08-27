@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "jest tests/unit --verbose",
-    "test:all": "jest --verbose"
+    "test": "jest --selectProjects unit --verbose",
+    "test:all": "jest --selectProjects unit integration --verbose --forceExit"
   },
   "keywords": [
     "medikart",
