@@ -9,6 +9,7 @@ import Cities from "./components/Cities";
 import Settings from "./components/Settings";
 import AdminUsers from "./components/AdminUsers";
 import ActivityLogs from "./components/ActivityLogs";
+import Messages from "./components/Messages";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -59,6 +60,8 @@ function App() {
           : <div style={{ padding: "2rem", color: "#64748b" }}>Access denied.</div>;
       case "activityLogs":
         return <ActivityLogs token={token} />;
+      case "messages":
+        return <Messages token={token} />;
       default:
         return (
           <div>

@@ -119,10 +119,9 @@ export default async function RootLayout({ children }) {
           <footer className="bg-[#031418]/65 border-t border-teal-950/60 py-10 mt-12 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-teal-950/40">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">💊</span>
-                  <span className="font-extrabold text-slate-100 tracking-tight">Medikart Pakistan</span>
-                </div>
+                <Link href="/">
+                  <InteractiveLogo />
+                </Link>
                 <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
                   <Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link>
                   <Link href="/instant-order" className="hover:text-emerald-400 transition-colors">Instant Order</Link>

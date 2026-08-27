@@ -111,7 +111,7 @@ export default async function Home({ searchParams }) {
             <h2 className="font-bold text-slate-250 text-xs tracking-wider uppercase mb-4 flex items-center gap-2">
               <span className="text-emerald-400">📁</span> Categories
             </h2>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 max-h-[calc(100vh-240px)] overflow-y-auto pr-1.5 scrollbar-thin">
               <Link
                 href="/"
                 className={`px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group border-l-3 ${

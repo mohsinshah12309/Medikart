@@ -119,3 +119,10 @@ export async function sendChatbotMessage(symptoms, conversationId) {
     body: JSON.stringify({ symptoms, conversationId }),
   });
 }
+
+export async function sendContactMessage(payload) {
+  return fetchApi('/contact-messages', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}

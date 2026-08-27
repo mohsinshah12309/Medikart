@@ -56,6 +56,8 @@ const chatbotRoutes = require("./modules/chatbot/chatbot.routes");
 // Phase 25 — Storefront Public Routes
 const storefrontRoutes = require("./modules/products/storefront.routes");
 
+const contactController = require("./modules/contact-messages/contactMessage.controller");
+
 const path = require("path");
 const { validateEnv } = require("./config/env");
 
@@ -195,6 +197,7 @@ app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
 app.use("/api/v1/chatbot", chatbotRoutes);
 app.use("/api/v1", storefrontLimiter, storefrontRoutes);
+app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route
@@ -228,6 +231,9 @@ app.use('/api/v1/admin/reports', expensiveLimiter, reportsRoutes);
 
 // Phase 20 — Admin Account Management (Super Admin)
 app.use("/api/v1/admin/users", adminLimiter, requireSuperAdmin, adminUserManagementRoutes);
+
+// Admin contact messages route
+app.get("/api/v1/admin/contact-messages", adminLimiter, contactController.getMessages);
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)

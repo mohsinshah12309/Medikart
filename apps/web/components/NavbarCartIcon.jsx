@@ -8,7 +8,7 @@ export default function NavbarCartIcon() {
   const { cartCount, isLoaded } = useCart();
 
   return (
-    <Link href="/cart" className="relative p-2 text-gray-700 hover:text-green-600 transition-colors flex items-center">
+    <Link href="/cart" className="relative p-2 text-slate-350 hover:text-emerald-400 transition-colors flex items-center">
       <span className="text-xl">🛒</span>
       <span className="ml-1 text-sm font-semibold hidden sm:inline">Cart</span>
       {isLoaded && cartCount > 0 && (

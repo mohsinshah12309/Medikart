@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { getContent } from '../../lib/api';
+import { getContent, sendContactMessage } from '../../lib/api';
 
 export default function ContactPage() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     async function loadContent() {
@@ -25,11 +27,20 @@ export default function ContactPage() {
     loadContent();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
-    setTimeout(() => setSubmitted(false), 5000);
+    setErrorMsg('');
+    setSubmitting(true);
+    try {
+      await sendContactMessage(formData);
+      setSubmitted(true);
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      setErrorMsg(err.message || "Failed to submit message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const defaultEmail = "support@medikart.pk";
@@ -38,91 +49,101 @@ export default function ContactPage() {
   return (
     <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
       {/* Left Column: Contact Details */}
-      <div className="bg-white p-8 rounded-xl border border-gray-150 shadow-sm flex flex-col gap-6">
-        <h1 className="text-2xl font-extrabold text-gray-950 border-b border-gray-100 pb-4">Contact Us</h1>
+      <div className="bg-[#0a232a]/45 p-8 rounded-3xl border border-teal-955/65 shadow-2xl backdrop-blur-md flex flex-col gap-6 relative overflow-hidden">
+        <h1 className="text-2xl font-extrabold text-slate-100 border-b border-teal-950/60 pb-4">Contact Us</h1>
         
-        <p className="text-sm text-gray-600 leading-relaxed">
+        <p className="text-sm text-slate-400 leading-relaxed">
           Have queries about your order, prescriptions, or available items? Reach out to our customer care team.
         </p>
 
         {loading ? (
-          <div className="text-gray-500 text-sm">Loading details...</div>
+          <div className="text-slate-500 text-sm">Loading details...</div>
         ) : (
           <div className="flex flex-col gap-4 text-sm mt-2">
             <div className="flex flex-col gap-1">
-              <span className="text-xs uppercase tracking-wider font-semibold text-gray-400">Business Email</span>
-              <a href={`mailto:${content?.contactEmail || defaultEmail}`} className="font-semibold text-green-600 hover:text-green-700 transition-colors">
+              <span className="text-xs uppercase tracking-wider font-semibold text-slate-500">Business Email</span>
+              <a href={`mailto:${content?.contactEmail || defaultEmail}`} className="font-bold text-emerald-450 hover:text-emerald-350 transition-colors">
                 {content?.contactEmail || defaultEmail}
               </a>
             </div>
 
             <div className="flex flex-col gap-1">
-              <span className="text-xs uppercase tracking-wider font-semibold text-gray-400">Business Phone</span>
-              <a href={`tel:${content?.contactPhone || defaultPhone}`} className="font-semibold text-gray-900">
+              <span className="text-xs uppercase tracking-wider font-semibold text-slate-500">Business Phone</span>
+              <a href={`tel:${content?.contactPhone || defaultPhone}`} className="font-bold text-slate-200">
                 {content?.contactPhone || defaultPhone}
               </a>
             </div>
 
             <div className="flex flex-col gap-1 mt-2">
-              <span className="text-xs uppercase tracking-wider font-semibold text-gray-400">Operating Hours</span>
-              <span className="text-gray-700">Monday — Saturday: 9:00 AM — 9:00 PM</span>
+              <span className="text-xs uppercase tracking-wider font-semibold text-slate-500">Operating Hours</span>
+              <span className="text-slate-300 font-medium">Monday — Saturday: 9:00 AM — 9:00 PM</span>
             </div>
           </div>
         )}
       </div>
 
       {/* Right Column: Contact Form */}
-      <div className="bg-white p-8 rounded-xl border border-gray-150 shadow-sm flex flex-col gap-4">
-        <h2 className="text-xl font-bold text-gray-950">Send a Message</h2>
+      <div className="bg-[#0a232a]/45 p-8 rounded-3xl border border-teal-955/65 shadow-2xl backdrop-blur-md flex flex-col gap-4 relative overflow-hidden">
+        <h2 className="text-xl font-bold text-slate-200">Send a Message</h2>
         
         {submitted && (
-          <div className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-lg text-xs font-semibold">
+          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 p-4 rounded-xl text-xs font-semibold">
             ✓ Message sent successfully! Our team will contact you shortly.
+          </div>
+        )}
+
+        {errorMsg && (
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-xs font-semibold">
+            ⚠️ {errorMsg}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="name" className="text-xs font-semibold text-gray-700">Full Name</label>
+            <label htmlFor="name" className="text-xs font-semibold text-slate-400">Full Name</label>
             <input
               type="text"
               required
+              disabled={submitting}
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
               placeholder="Your Name"
-              className="border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-xs font-semibold text-gray-700">Email Address</label>
+            <label htmlFor="email" className="text-xs font-semibold text-slate-400">Email Address</label>
             <input
               type="email"
               required
+              disabled={submitting}
               value={formData.email}
               onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
               placeholder="name@example.com"
-              className="border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="message" className="text-xs font-semibold text-gray-700">Message</label>
+            <label htmlFor="message" className="text-xs font-semibold text-slate-400">Message</label>
             <textarea
               required
               rows={4}
+              disabled={submitting}
               value={formData.message}
               onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
               placeholder="How can we help you?"
-              className="border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500 placeholder:text-slate-650"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm rounded-lg transition-colors shadow-sm"
+            disabled={submitting}
+            className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-[#04151a] font-extrabold text-sm rounded-xl transition-all shadow-md active:scale-[0.98] cursor-pointer"
           >
-            Submit Message
+            {submitting ? 'Submitting...' : 'Submit Message'}
           </button>
         </form>
       </div>

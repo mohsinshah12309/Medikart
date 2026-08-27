@@ -39,13 +39,28 @@ const getAllProducts = async (req, res, next) => {
       categoryId,
     };
 
+    const Product = require("./product.model");
+    const countQuery = {};
+    if (filters.active !== undefined) countQuery.active = filters.active;
+    if (filters.isNarcotic !== undefined) countQuery.isNarcotic = filters.isNarcotic;
+    if (filters.stockStatus) countQuery.stockStatus = filters.stockStatus;
+    if (filters.categoryId) countQuery.categoryIds = filters.categoryId;
+
+    const totalCount = await Product.countDocuments(countQuery);
+
     const products = await productService.getAllProducts(filters, page, limit);
+    
+    const p = parseInt(page, 10) || 1;
+    const l = parseInt(limit, 10) || 20;
+
     res.status(200).json({
       status: "success",
       results: products.length,
       pagination: {
-        page,
-        limit,
+        page: p,
+        limit: l,
+        total: totalCount,
+        pages: Math.ceil(totalCount / l),
       },
       data: { products },
     });
