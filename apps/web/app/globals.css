@@ -1,14 +1,75 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #f0fdf4;
-  --color-primary-100: #dcfce7;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-  --color-primary-700: #15803d;
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-500: #0d9488;
+  --color-primary-600: #0f766e;
+  --color-primary-700: #115e59;
+  
+  --color-secondary-50: #f5f3ff;
+  --color-secondary-500: #8b5cf6;
+  --color-secondary-600: #7c3aed;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; box-shadow: 0 0 15px rgba(13, 148, 136, 0.4); }
+    50% { opacity: 1; box-shadow: 0 0 25px rgba(13, 148, 136, 0.8); }
+  }
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 body {
-  background-color: #f9fafb;
+  background-color: #fafafa;
   color: #111827;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Medical tech specific patterns */
+.tech-grid {
+  background-size: 30px 30px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+/* Custom interactive active scales */
+.interactive-scale {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.interactive-scale:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+.interactive-scale:active {
+  transform: translateY(0px) scale(0.98);
 }

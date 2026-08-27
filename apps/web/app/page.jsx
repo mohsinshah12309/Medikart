@@ -29,7 +29,7 @@ export async function generateMetadata({ searchParams }) {
 }
 
 export default async function Home({ searchParams }) {
-  const resolvedParams = await searchParams; // Next 14 handles searchParams as a promise or object, let's handle safely
+  const resolvedParams = await searchParams; // Next 14/15 handles searchParams as a promise or object, let's handle safely
   const queryParams = {
     search: resolvedParams?.search || '',
     categoryId: resolvedParams?.category || '',
@@ -68,47 +68,80 @@ export default async function Home({ searchParams }) {
     : '';
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Banner / Header */}
-      <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-6 md:p-10 text-white shadow-sm">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-2">Welcome to Medikart</h1>
-        <p className="text-sm md:text-base text-green-50 opacity-90 max-w-xl">
-          Your trusted pharmacy partner. Order standard medicines online with Cash on Delivery.
-        </p>
+    <div className="flex flex-col gap-8">
+      {/* Premium Hero Banner / Header */}
+      <div className="relative overflow-hidden bg-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-xl border border-slate-800">
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(13,148,136,0.25),rgba(99,102,241,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-grid-slate-700/[0.05] bg-[size:20px_20px]" />
+        
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-2xl flex flex-col gap-4">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20 w-fit animate-pulse">
+            <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+            Licensed Pharmacy Partner
+          </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-white via-slate-100 to-teal-300 bg-clip-text text-transparent">
+            Your Gateway to Health & Wellness
+          </h1>
+          <p className="text-sm md:text-base text-slate-350 leading-relaxed max-w-lg">
+            Browse and order authentic prescription and OTC medicines online. Standardized Cash on Delivery across Pakistan.
+          </p>
+          <div className="flex items-center gap-4 mt-2">
+            <Link 
+              href="/instant-order" 
+              className="px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-teal-900/20 hover:shadow-teal-500/20 hover:scale-[1.03] active:scale-[0.98]"
+            >
+              Upload Prescription
+            </Link>
+            <a 
+              href="#store-catalog" 
+              className="px-5 py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-semibold text-sm rounded-xl transition-all border border-slate-700/60"
+            >
+              Browse Catalog
+            </a>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+      <div id="store-catalog" className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         {/* Sidebar Filter */}
-        <aside className="lg:col-span-1 bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col gap-4">
+        <aside className="lg:col-span-1 bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-gray-200/50 shadow-sm flex flex-col gap-5 sticky top-20">
           <div>
-            <h2 className="font-bold text-gray-950 text-base mb-3">Categories</h2>
-            <div className="flex flex-col gap-1">
+            <h2 className="font-bold text-gray-900 text-sm tracking-wide uppercase mb-4 flex items-center gap-2">
+              <span className="text-teal-600">📁</span> Categories
+            </h2>
+            <div className="flex flex-col gap-1.5">
               <Link
                 href="/"
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-between group ${
                   !queryParams.categoryId
-                    ? 'bg-green-50 text-green-700'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-teal-50/65 text-teal-700 border-l-4 border-teal-600 shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent'
                 }`}
               >
-                All Products
+                <span>All Products</span>
+                <span className="text-xs text-gray-400 group-hover:translate-x-0.5 transition-transform">→</span>
               </Link>
               {categories.map((cat) => (
                 <Link
                   key={cat._id}
                   href={`/?category=${cat._id}${queryParams.search ? `&search=${queryParams.search}` : ''}`}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-between group ${
                     queryParams.categoryId === cat._id
-                      ? 'bg-green-50 text-green-700'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'bg-teal-50/65 text-teal-700 border-l-4 border-teal-600 shadow-sm'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent'
                   }`}
                 >
-                  {cat.name}
-                  {cat.isNarcotic && (
-                    <span className="ml-2 text-[9px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-bold uppercase">
-                      Rx
-                    </span>
-                  )}
+                  <span className="truncate pr-2">{cat.name}</span>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {cat.isNarcotic && (
+                      <span className="text-[9px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                        Rx
+                      </span>
+                    )}
+                    <span className="text-xs text-gray-400 group-hover:translate-x-0.5 transition-transform">→</span>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -119,55 +152,57 @@ export default async function Home({ searchParams }) {
         <div className="lg:col-span-3 flex flex-col gap-6">
           {/* Search bar & active filters info */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <form action="/" method="GET" className="flex w-full max-w-md">
+            <form action="/" method="GET" className="flex w-full max-w-md relative">
               {queryParams.categoryId && (
                 <input type="hidden" name="category" value={queryParams.categoryId} />
               )}
-              <input
-                type="text"
-                name="search"
-                defaultValue={queryParams.search}
-                placeholder="Search medicines, generic names..."
-                className="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-green-500"
-              />
-              <button
-                type="submit"
-                className="bg-green-600 hover:bg-green-700 text-white font-medium text-sm px-6 py-2 rounded-r-lg transition-colors"
-              >
-                Search
-              </button>
+              <div className="flex w-full items-center bg-white border border-gray-200 rounded-2xl shadow-sm focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/10 transition-all overflow-hidden p-1">
+                <input
+                  type="text"
+                  name="search"
+                  defaultValue={queryParams.search}
+                  placeholder="Search medicines, generic names..."
+                  className="w-full bg-transparent px-4 py-2.5 text-sm outline-none text-gray-900 placeholder:text-gray-400"
+                />
+                <button
+                  type="submit"
+                  className="bg-teal-600 hover:bg-teal-500 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all shadow-md shadow-teal-900/10 active:scale-[0.97]"
+                >
+                  Search
+                </button>
+              </div>
             </form>
 
             {/* Selected category/search status */}
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 self-center">
               {queryParams.search && (
                 <span>
-                  Search results for &ldquo;<strong>{queryParams.search}</strong>&rdquo;
+                  Results for &ldquo;<strong className="text-slate-800">{queryParams.search}</strong>&rdquo;
                 </span>
               )}
               {queryParams.categoryId && (
                 <span>
                   {queryParams.search ? ' in ' : ''}
-                  Category: <strong>{activeCategoryName}</strong>
+                  Category: <strong className="text-slate-800">{activeCategoryName}</strong>
                 </span>
               )}
             </div>
           </div>
 
           {errorMsg ? (
-            <div className="bg-red-50 border border-red-200 text-red-800 p-4 rounded-lg text-sm text-center">
+            <div className="bg-red-50/70 border border-red-200/60 text-red-800 p-5 rounded-2xl text-sm text-center">
               {errorMsg}
             </div>
           ) : products.length === 0 ? (
-            <div className="bg-white border border-gray-150 p-12 text-center rounded-xl shadow-sm">
-              <span className="text-4xl">🔍</span>
-              <h3 className="font-bold text-gray-900 text-lg mt-3">No products found</h3>
-              <p className="text-gray-500 text-sm mt-1">
-                Try searching for something else or browse another category.
+            <div className="bg-white/70 backdrop-blur-md border border-gray-200/50 p-16 text-center rounded-3xl shadow-sm">
+              <span className="text-5xl block animate-bounce mb-4">🔍</span>
+              <h3 className="font-extrabold text-gray-900 text-lg">No products found</h3>
+              <p className="text-gray-500 text-sm mt-1 max-w-sm mx-auto">
+                We couldn't find matches for your search. Try adjusting terms or browsing another category.
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 animate-fade-in-up">
               {products.map((prod) => (
                 <ProductCard key={prod._id} product={prod} />
               ))}

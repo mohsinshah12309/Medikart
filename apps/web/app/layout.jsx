@@ -6,8 +6,8 @@ import NavbarCartIcon from '../components/NavbarCartIcon';
 import ChatbotWidget from '../components/ChatbotWidget';
 
 export const metadata = {
-  title: 'Medikart Storefront',
-  description: 'Order medicines online in Pakistan',
+  title: 'Medikart - Authentic Online Pharmacy',
+  description: 'Your trusted healthcare partner. Order authentic medicines online with Cash on Delivery.',
 };
 
 export default async function RootLayout({ children }) {
@@ -70,26 +70,29 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
+      <body className="min-h-screen flex flex-col bg-[#fafafa] text-gray-900 tech-grid relative overflow-x-hidden font-sans">
         <CartProvider>
-          <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">
+          {/* Glassmorphic Navigation Bar */}
+          <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-200/60 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] transition-all">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <Link href="/" className="text-2xl font-bold text-green-600 flex items-center gap-2">
-                  <span className="text-3xl">💊</span>
-                  <span>Medikart</span>
+              <div className="flex items-center gap-8">
+                <Link href="/" className="flex items-center gap-2.5 group">
+                  <span className="text-3xl transition-transform group-hover:rotate-12 duration-300">💊</span>
+                  <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-teal-600 via-teal-500 to-indigo-600 bg-clip-text text-transparent">
+                    Medikart
+                  </span>
                 </Link>
-                <nav className="hidden md:flex gap-4">
-                  <Link href="/" className="text-sm font-medium text-gray-700 hover:text-green-600">
+                <nav className="hidden md:flex items-center gap-6">
+                  <Link href="/" className="text-sm font-semibold text-gray-600 hover:text-teal-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-500 hover:after:w-full after:transition-all">
                     Home
                   </Link>
-                  <Link href="/instant-order" className="text-sm font-medium text-gray-700 hover:text-green-600">
+                  <Link href="/instant-order" className="text-sm font-semibold text-gray-600 hover:text-teal-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-500 hover:after:w-full after:transition-all">
                     Instant Order
                   </Link>
-                  <Link href="/about" className="text-sm font-medium text-gray-700 hover:text-green-600">
+                  <Link href="/about" className="text-sm font-semibold text-gray-600 hover:text-teal-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-500 hover:after:w-full after:transition-all">
                     About
                   </Link>
-                  <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-green-600">
+                  <Link href="/contact" className="text-sm font-semibold text-gray-600 hover:text-teal-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-500 hover:after:w-full after:transition-all">
                     Contact
                   </Link>
                 </nav>
@@ -101,24 +104,46 @@ export default async function RootLayout({ children }) {
             </div>
           </header>
 
-          <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+          {/* Main App Page Wrapper */}
+          <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full animate-fade-in-up">
             {children}
           </main>
 
-          <footer className="bg-white border-t border-gray-100 py-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
-              <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved.</p>
-              <p className="mt-2 text-xs">Standard Cash on Delivery and Sandbox Card Payments. Narcotics compliance active.</p>
+          {/* Premium Tech-Inspired Footer */}
+          <footer className="bg-white border-t border-gray-200/60 py-10 mt-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">💊</span>
+                  <span className="font-bold text-gray-900 tracking-tight">Medikart Pakistan</span>
+                </div>
+                <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+                  <Link href="/" className="hover:text-teal-600 transition-colors">Home</Link>
+                  <Link href="/instant-order" className="hover:text-teal-600 transition-colors">Instant Order</Link>
+                  <Link href="/about" className="hover:text-teal-600 transition-colors">About Us</Link>
+                  <Link href="/contact" className="hover:text-teal-600 transition-colors">Contact Support</Link>
+                </div>
+              </div>
+              <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+                <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved. Built with integrity.</p>
+                <div className="flex gap-4">
+                  <span>Standard Cash on Delivery</span>
+                  <span>•</span>
+                  <span>Sandbox Card Payments</span>
+                  <span>•</span>
+                  <span className="text-indigo-500 font-medium">Narcotics Compliance Active</span>
+                </div>
+              </div>
             </div>
           </footer>
 
-          {/* Floating WhatsApp chat link */}
+          {/* Floating WhatsApp chat link with pulse glow */}
           {cleanPhone && (
             <a
               href={`https://wa.me/${cleanPhone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-xl transition-all hover:scale-105 flex items-center justify-center h-14 w-14"
+              className="fixed bottom-6 left-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-4 shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center h-14 w-14 hover:shadow-emerald-500/30"
               title="Chat on WhatsApp"
             >
               <svg viewBox="0 0 24 24" className="w-7 h-7 fill-current">

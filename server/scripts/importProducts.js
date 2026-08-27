@@ -27,6 +27,20 @@ const DEFAULT_CATEGORIES = [
   { name: "Medicines", slug: "medicines" },
   { name: "Vitamins", slug: "vitamins" },
   { name: "Milk & Powder", slug: "milk-powder" },
+  { name: "Herbal", slug: "herbal" },
+  { name: "Flat Items", slug: "flat-items" },
+  { name: "Consumer", slug: "consumer" },
+  { name: "Fridge Items", slug: "fridge-items" },
+  { name: "Surgical", slug: "surgical" },
+  { name: "Dermatology", slug: "dermatology" },
+  { name: "Diagnostics", slug: "diagnostics" },
+  { name: "Diapers & Napkins", slug: "diapers-napkins" },
+  { name: "Patient Supports", slug: "patient-supports" },
+  { name: "General Items", slug: "general-items" },
+  { name: "Beverages", slug: "beverages" },
+  { name: "Nutraceuticals", slug: "nutraceuticals" },
+  { name: "Nutra", slug: "nutra" },
+  { name: "Surgical Furniture", slug: "surgical-furniture" },
 ];
 
 /** Slugify helper for SKU generation */
