@@ -43,29 +43,31 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     throw new BadRequestError('OTP email must match the customer email');
   }
 
-  // ── Step 1: Fetch products from DB (never trust client prices) ─────────────
   const productIds = items.map((i) => i.productId);
-  const products = await Product.find({
-    _id: { $in: productIds },
-    active: true,
-  }).populate('categoryIds', 'name slug discount');
 
-  // ── Step 2: Validate existence and stock for every requested item ──────────
+  // ── Steps 1 + 4 + storewide discount: all three are independent DB reads.
+  // Run them in parallel (one Atlas round-trip instead of three sequential ones)
+  // to reduce latency under burst load. OTP verify must still run after we know
+  // the product list (so narcotics can be detected), but discount and delivery
+  // charge have no dependency on each other or on the OTP result.
+  const [products, storewidePercent, deliveryCharge] = await Promise.all([
+    Product.find({ _id: { $in: productIds }, active: true })
+      .populate('categoryIds', 'name slug discount'),
+    getStorewideDiscount(),
+    getDeliveryCharge(customer.city),
+  ]);
+
+  // ── Validate existence and stock for every requested item ──────────────────
   for (const item of items) {
     const product = products.find((p) => p._id.toString() === item.productId);
-    if (!product) {
-      throw new NotFoundError(`Product not found: ${item.productId}`);
-    }
+    if (!product) throw new NotFoundError(`Product not found: ${item.productId}`);
     if (product.stockStatus === 'out_of_stock') {
-      throw new BadRequestError(
-        `Product "${product.name}" is currently out of stock`
-      );
+      throw new BadRequestError(`Product "${product.name}" is currently out of stock`);
     }
   }
 
-  // ── Step 3: Verify OTP (FR-CW-09) ──────────────────────────────────────────
-  // Must succeed before any order document is created. We validate the cart
-  // first so a failed stock check does not unnecessarily consume an OTP.
+  // ── Verify OTP (FR-CW-09) — runs after product fetch so narcotics can be ──
+  // detected before consuming an OTP attempt on a doomed request.
   await otpService.verifyOtp(otp.email, otp.code);
 
   const requiresVerification = products.some((product) => product.isNarcotic === true);
@@ -73,15 +75,9 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     throw new BadRequestError("This order contains items that require a prescription. Narcotics items cannot be purchased through standard checkout.");
   }
 
-  // ── Step 4: Fetch storewide discount once (discount.service is pure) ───────
-  const storewidePercent = await getStorewideDiscount();
-
-  // ── Step 5: Build order items with server-computed effective prices ─────────
-  // Prices are snapshotted at order time — a later discount change does not
-  // alter existing order line items.
+  // ── Build order items with server-computed effective prices ─────────────────
   const orderItems = items.map((item) => {
     const product = products.find((p) => p._id.toString() === item.productId);
-    // Use first category for discount precedence lookup (product > category > storewide)
     const category = product.categoryIds?.[0] ?? null;
     const { effectivePrice } = getEffectivePrice(product, category, storewidePercent);
     return {
@@ -92,14 +88,13 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     };
   });
 
-  // ── Step 6: Compute totals server-side (rules.md §1) ──────────────────────
+  // ── Compute totals server-side (rules.md §1) ────────────────────────────────
   const subtotal = round2(
     orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
   );
-  const deliveryCharge = await getDeliveryCharge(customer.city); // FR-CW-11
   const total = round2(subtotal + deliveryCharge);
 
-  // ── Step 7: Save order ─────────────────────────────────────────────────────
+  // ── Save order ──────────────────────────────────────────────────────────────
   const order = await Order.create({
     type: 'standard',
     customer,
@@ -108,26 +103,18 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     paymentMethod,
     paymentState: 'pending',
     status: 'pending',
-    // Snapshot the source product state at submission time. Phase 15 owns the
-    // prescription gate and verification workflow; this phase only persists it.
     requiresVerification,
-    // Phase 19: starts as false; flipped atomically to true when the email fires.
     confirmationEmailSent: false,
   });
 
-  // ── Step 8: Confirmation email — non-blocking, dedup-guarded (FR-CW-15) ───
-  // sendOrderConfirmationEmailOnce uses an atomic findOneAndUpdate so a retried
-  // HTTP request (client re-POST on timeout) can never fire a second email for
-  // the same order document.
+  // ── Confirmation email — non-blocking, dedup-guarded (FR-CW-15) ─────────────
   sendOrderConfirmationEmailOnce(order).catch((err) => {
     console.error(
       `[orders] Confirmation email failed for order ${order._id}: ${err.message}`
     );
   });
 
-  // ── Step 9: Google Sheets sync — non-blocking (Phase 18 / FR-SYS-03) ──────
-  // Enqueued AFTER the order is persisted to MongoDB. A Sheets API failure
-  // (transient or permanent) never blocks or rolls back the order.
+  // ── Google Sheets sync — non-blocking (Phase 18 / FR-SYS-03) ───────────────
   enqueueSheetSync(order);
 
   return order;
