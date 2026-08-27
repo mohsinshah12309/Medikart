@@ -5,6 +5,12 @@ frontend consumes it. Admin dashboard comes before the customer storefront, sinc
 to manage the catalog before the storefront has anything real to show. Phases are kept small on
 purpose — each one should be shippable and testable in isolation, not a multi-week bucket.
 
+> **Addenda:** three items below (dark theme design system, Messages inbox, and the Habib
+> Metro/Kuickpay confirmed-answers reference) were added or changed after the original phase plan
+> was written. They're tracked explicitly in **Addendum A, B, and C** at the end of this document
+> rather than silently folded into the phase text above, so it's clear what was originally scoped
+> versus what was added or superseded later, and when.
+
 **Database note (applies throughout Phases 1–29):** all local development, and all testing during
 this build, runs against a **MongoDB Atlas Free (M0) tier** cluster — free, zero risk, fine for
 non-production data. The switch to the **Flex tier** (paid, with backups) happens once, deliberately,
@@ -240,7 +246,8 @@ hosted checkout (card data never touches our server — PCI-DSS SAQ-A), server-t
 a backup status-check API, but **no authorize/capture support** and **no refund/void API**. Two
 PRD assumptions this phase originally relied on no longer hold — see PRD v3.3 Amendment for the
 full rationale. The practical effect: this phase is actually simpler than originally planned, since
-there's no deferred-capture logic to build at all._
+there's no deferred-capture logic to build at all. See **Addendum C** for the full formalized
+answer sheet from the bank._
 
 - `payments/providers/kuickpay.provider.js` behind the existing abstracted `payment.service.js` interface.
 - Card payment is **charge-immediately only** — there is no authorize-then-capture step, because the
@@ -409,6 +416,8 @@ see its status and payment state update correctly.
 Activity Logs.
 
 - Wired to Phases 6, 7, 8, 20.
+- **See Addendum B** — a Messages inbox module (contact-form submissions) was added to this phase's
+  scope after the fact; it's tracked there rather than in this original text.
 
 **Test Case for Phase 24:** A Super Admin creates a new Admin from the UI, edits their module access,
 and confirms in Activity Logs that the change was recorded. Editing the About page text in Settings
@@ -421,6 +430,8 @@ and confirming it's ready for the storefront to display (Phase 26).
 **Goal:** Next.js storefront — browsing, product detail, cart, checkout (Standard order, Phase 13).
 
 - Server-rendered product/category pages; discount badge display (Phase 8); multi-image gallery on the product page (Phase 10).
+- **See Addendum A** — the visual design system referenced here (colors, typography) was superseded
+  by an approved dark-theme redesign after this phase was originally built.
 
 **Test Case for Phase 25:** A full manual walkthrough as a guest: search a product, see its correct
 discounted price if one applies, browse its multiple images, add to cart, complete checkout with OTP
@@ -515,3 +526,65 @@ valid.
 **Test Case for Phase 31:** The client, unaided, successfully flags a product as Narcotics, applies a
 storewide discount, uploads a second image to a product, cancels a test order and confirms the refund
 path, and processes one full order from Pending to Delivered in the live dashboard.
+
+---
+
+## Addendum A — Design System Supersession (approved change)
+
+**Status:** Approved by user and client, post Phase 25/26.
+
+The original `docs/design.md` (light background, `#16a34a` green primary, white surfaces) was
+superseded by a full dark-theme redesign:
+
+- **Theme:** Midnight Teal & Mint Green — dark storefront and admin dashboard.
+- Frosted-glass form treatment on Cart, Checkout, Instant Order, Contact, and About pages.
+- Interactive animated capsule/pill logo in header and footer.
+- Draggable WebGL 3D product viewer on the product detail page.
+- Admin dashboard CSS brought in line with the same theme.
+
+`docs/design.md` should be treated as historical/superseded unless and until it is rewritten to
+document the dark theme as the current source of truth. Any future design work should reference the
+live implementation, not the original light-theme spec.
+
+---
+
+## Addendum B — Additional Feature: Messages Inbox (approved addition)
+
+**Status:** Approved by user and client. Not part of the original phase plan.
+
+A "Messages" module was added to the Admin Dashboard (Phase 24 scope) with real backend persistence:
+customer submissions from the storefront's Contact form (Phase 26) are saved server-side and surfaced
+in a dedicated Messages tab in the admin dashboard, rather than only being emailed out.
+
+This is scope beyond the original PRD/phases.md and is recorded here so it's tracked deliberately —
+not something to be treated as a phases.md gap or an unexplained discrepancy in future audits.
+
+---
+
+## Addendum C — Habib Metro / Kuickpay: Confirmed Answers (Aug 2026)
+
+**Status:** Reference document. Formalizes what's already summarized inline in Phase 16.
+
+Confirmed by the bank in their Aug 2026 integration questionnaire response:
+
+- **Checkout model:** Hosted checkout — card data never touches the Medikart server directly
+  (PCI-DSS SAQ-A scope, the lightest self-assessment tier).
+- **Confirmation model:** Server-to-server webhook notification, backed by a status-check API that
+  must be called to independently confirm any webhook result before trusting it. The bank did not
+  clearly confirm an HMAC/signature mechanism on the webhook itself — so the webhook payload alone is
+  never trusted; the status-check API call is mandatory on every notification.
+- **Authorize/capture:** Not supported. Card payments are charge-immediately only. This is why
+  narcotics carts (the only case that would have needed a held/deferred charge) are restricted to
+  COD-only (Phase 15.1) — there was never a case left that needed authorize/capture.
+- **Refund/void API:** Not supported. Refunds cannot be automated through the gateway. Phase 17's
+  manual refund-tracking workflow (`refund_pending` → admin manually transfers funds outside the
+  system → admin marks `refunded`) exists specifically because of this limitation, not as a
+  simplification.
+
+**On sandbox certification (general expectation, not bank-confirmed specifics):** payment gateway
+integrations of this kind typically involve the bank's technical/compliance team reviewing the
+integration before production credentials are issued — checking webhook handling, confirming no raw
+card data ever reaches your server, and running test transactions against their sandbox. The exact
+certification process and checklist for this integration has not yet been confirmed directly by
+Habib Metro/Kuickpay as of this writing — this should be confirmed directly with the bank contact
+before Phase 30 deployment planning finalizes a timeline.

@@ -4,12 +4,61 @@ This document outlines the professional design system, user experience guideline
 
 The goal is to ensure the storefront and admin dashboards are visually polished, intuitive, accessible, and feel highly premium and interactive rather than "vibe-coded."
 
+> **Design revision notice (approved 2026-08-28):** The canonical theme has been updated to the **Midnight Teal & Mint Green** dark redesign, explicitly approved by the client. All active implementation work targets this dark theme. The original light palette (Section 1.1.1) is preserved for reference only.
+
 ---
 
 ## 1. Visual Identity & Design System
 
-### 1.1 Color Palette
-Our color strategy utilizes a clean, medical-adjacent aesthetic featuring supportive warm grays and vivid interactive greens.
+### 1.1 Color Palette — **CANONICAL (Approved Dark Theme: Midnight Teal & Mint Green)**
+
+> **This is the approved, active design.** The client and project team explicitly signed off on the Midnight Teal & Mint Green dark theme. All new components, screens, and UI work must conform to this palette.
+
+| Role | HEX | CSS Variable / Tailwind | Application |
+| :--- | :--- | :--- | :--- |
+| **Background (Deep Dark)** | `#0a1628` | `--color-bg` / `bg-[#0a1628]` | Root page background, sidebar base |
+| **Surface (Dark Card)** | `#0f2035` | `--color-surface` / `bg-[#0f2035]` | Cards, panels, modal backgrounds |
+| **Surface Elevated** | `#162845` | `--color-surface-elevated` / `bg-[#162845]` | Elevated cards, dropdowns, nav drawers |
+| **Primary (Mint Green)** | `#00d4aa` | `--color-primary` / `text-[#00d4aa]` | Main CTA buttons, active states, highlights, brand accents |
+| **Primary Hover** | `#00b894` | `--color-primary-hover` | Hover/pressed states on Mint Green elements |
+| **Primary Glow** | `rgba(0,212,170,0.15)` | `--color-primary-glow` | Glow rings, focus outlines, badge backgrounds |
+| **Teal Accent** | `#14b8a6` | `--color-teal` / `text-teal-500` | Secondary interactive elements, links, icon accents |
+| **Text Primary** | `#e2e8f0` | `--color-text-primary` / `text-slate-200` | Primary body text, headings on dark surfaces |
+| **Text Secondary** | `#94a3b8` | `--color-text-secondary` / `text-slate-400` | Subtext, labels, inactive tabs, metadata |
+| **Text Muted** | `#64748b` | `--color-text-muted` / `text-slate-500` | Timestamps, placeholders, disabled text |
+| **Border Subtle** | `rgba(255,255,255,0.08)` | `--color-border` | Card borders, dividers on dark backgrounds |
+| **Border Active** | `rgba(0,212,170,0.4)` | `--color-border-active` | Focus rings, selected states |
+| **Alert/Warning** | `#f59e0b` | `--color-warning` / `text-amber-400` | Narcotics warnings, prescription-pending states |
+| **Destructive/Error** | `#ef4444` | `--color-error` / `text-red-400` | Invalid inputs, checkout errors, critical alerts |
+| **Success** | `#10b981` | `--color-success` / `text-emerald-400` | Confirmed orders, positive status badges |
+
+#### Tailwind Config Extension
+
+```js
+// tailwind.config.js — dark theme extension
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          bg:       '#0a1628',
+          surface:  '#0f2035',
+          elevated: '#162845',
+          mint:     '#00d4aa',
+          'mint-hover': '#00b894',
+          teal:     '#14b8a6',
+        },
+      },
+    },
+  },
+};
+```
+
+---
+
+### 1.1.1 Legacy Light Palette (Reference Only — Not Active)
+
+> The following was the original light-mode palette. **It is no longer the target design.** Preserved here for historical reference and as a rollback baseline only.
 
 | Role | HEX | Tailwind Class | Application |
 | :--- | :--- | :--- | :--- |
