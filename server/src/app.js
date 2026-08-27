@@ -154,6 +154,12 @@ const expensiveLimiter = createRateLimiter({
   message: "Rate limit exceeded for resource-heavy operations. Please wait.",
 });
 
+const storefrontLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests. Please try again in 15 minutes.",
+});
+
 // Public static serving for uploaded PRODUCT images & the placeholder asset ONLY.
 // Prescriptions are NEVER served statically — they are only reachable through
 // the authenticated admin route GET /api/v1/admin/prescriptions/:filename
@@ -184,10 +190,10 @@ const paymentRoutes = require("./modules/payments/payment.routes");
 // Mounted BEFORE the auth middleware so public endpoints are never blocked.
 app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);
-app.use("/api/v1/orders", publicOrderRoutes);
-app.use("/api/v1/payments", paymentRoutes);
-app.use("/api/v1/chatbot", chatbotRoutes);
-app.use("/api/v1", storefrontRoutes);
+app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
+app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
+app.use("/api/v1/chatbot", expensiveLimiter, chatbotRoutes);
+app.use("/api/v1", storefrontLimiter, storefrontRoutes);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route

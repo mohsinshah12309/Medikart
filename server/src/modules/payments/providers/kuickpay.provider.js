@@ -6,8 +6,15 @@ const config = {
   apiKey: process.env.KUICKPAY_API_KEY,
 };
 
+const isMockMode = () => {
+  if (process.env.PAYMENTS_MOCK_MODE === 'true') return true;
+  if (process.env.PAYMENTS_MOCK_MODE === 'false') return false;
+  if (process.env.NODE_ENV === 'test') return true;
+  return !config.baseUrl || config.baseUrl.includes('example') || config.baseUrl.includes('invalid');
+};
+
 const initiateCharge = async (order) => {
-  if (!config.baseUrl || config.baseUrl.includes('example') || config.baseUrl.includes('invalid')) {
+  if (isMockMode()) {
     const mockTxnId = `TXN-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
     return {
       redirectUrl: `http://127.0.0.1:3000/order-confirmation/${order._id.toString()}?status=success&transactionId=${mockTxnId}`,
@@ -35,7 +42,7 @@ const initiateCharge = async (order) => {
 };
 
 const verifyTransaction = async (transactionId) => {
-  if (!config.baseUrl || config.baseUrl.includes('example') || config.baseUrl.includes('invalid')) {
+  if (isMockMode()) {
     return {
       status: 'paid'
     };

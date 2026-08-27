@@ -74,6 +74,13 @@ export default function CheckoutPage() {
     loadCities();
   }, []);
 
+  // Sync selected city if not in citiesList
+  useEffect(() => {
+    if (citiesList.length > 0 && !citiesList.includes(customer.city)) {
+      setCustomer(prev => ({ ...prev, city: citiesList[0] }));
+    }
+  }, [citiesList, customer.city]);
+
   // Fetch delivery charge whenever city changes
   useEffect(() => {
     if (!customer.city) return;
