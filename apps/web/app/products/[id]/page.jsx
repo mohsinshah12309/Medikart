@@ -93,7 +93,7 @@ export default async function ProductDetailPage({ params }) {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Left Column - Gallery */}
         <div>
-          <ProductGallery images={product.images} />
+          <ProductGallery images={product.images} productName={product.name} />
         </div>
 
         {/* Right Column - Product details */}
