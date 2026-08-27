@@ -1,16 +1,26 @@
 /**
  * Unit tests for Image Processor — Phase 10.
+ *
+ * The valid-image test generates a real PNG buffer in-memory using Sharp
+ * so no external file path is needed — the test is fully self-contained
+ * and portable across any machine/CI environment.
  */
 
-const fs = require("fs");
-const path = require("path");
 const { processProductImage } = require("../../src/integrations/imageProcessor");
+const sharp = require("sharp");
 
 describe("imageProcessor — content validation & WebP conversion", () => {
-  const sampleImagePath = "D:/Projects/testing/Acefer (50Mg5Ml) 120Ml Syrup.png";
+  /** Generate a minimal valid 200×200 green PNG buffer for use as test input. */
+  async function makeTestPng() {
+    return sharp({
+      create: { width: 200, height: 200, channels: 3, background: { r: 0, g: 180, b: 120 } },
+    })
+      .png()
+      .toBuffer();
+  }
 
   test("successfully processes a real image file into compressed WebP", async () => {
-    const rawBuffer = fs.readFileSync(sampleImagePath);
+    const rawBuffer = await makeTestPng();
     const result = await processProductImage(rawBuffer);
 
     expect(result).toBeDefined();
