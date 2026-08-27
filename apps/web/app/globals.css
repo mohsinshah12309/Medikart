@@ -11,56 +11,81 @@
   --color-secondary-500: #8b5cf6;
   --color-secondary-600: #7c3aed;
   
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in-up: fade-in-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-orbit-rotate: orbit-rotate 20s linear infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-6px); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.6; box-shadow: 0 0 15px rgba(13, 148, 136, 0.4); }
-    50% { opacity: 1; box-shadow: 0 0 25px rgba(13, 148, 136, 0.8); }
+    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(20, 184, 166, 0.35); }
+    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(20, 184, 166, 0.65); }
   }
   @keyframes fade-in-up {
     from {
       opacity: 0;
-      transform: translateY(15px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+  @keyframes orbit-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 }
 
 body {
-  background-color: #fafafa;
-  color: #111827;
+  background-color: #070a13;
+  color: #f1f5f9;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-y: scroll;
 }
 
-/* Glassmorphism helpers */
+/* Custom Webkit scrollbar for sleek dark look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 999px;
+  border: 2px solid #090d16;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0d9488;
+}
+
+/* Glassmorphism helpers for dark med-tech cards */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.glass-panel-dark {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Medical tech specific patterns */
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(20, 184, 166, 0.25);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(20, 184, 166, 0.05);
+}
+
+/* Medical tech specific patterns (adapted for dark background) */
 .tech-grid {
-  background-size: 30px 30px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
 }
 
 /* Custom interactive active scales */

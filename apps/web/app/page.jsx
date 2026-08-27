@@ -70,33 +70,33 @@ export default async function Home({ searchParams }) {
   return (
     <div className="flex flex-col gap-8">
       {/* Premium Hero Banner / Header */}
-      <div className="relative overflow-hidden bg-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-xl border border-slate-800">
+      <div className="relative overflow-hidden bg-[#0d1527]/50 rounded-3xl p-8 md:p-12 text-white shadow-2xl border border-slate-800/80 backdrop-blur-md">
         {/* Animated Gradient Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(13,148,136,0.25),rgba(99,102,241,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-grid-slate-700/[0.05] bg-[size:20px_20px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(13,148,136,0.22),rgba(99,102,241,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-grid-slate-700/[0.04] bg-[size:24px_24px]" />
         
         {/* Hero Content */}
         <div className="relative z-10 max-w-2xl flex flex-col gap-4">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20 w-fit animate-pulse">
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/10 text-teal-300 border border-teal-500/20 w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse shadow-[0_0_8px_#14b8a6]" />
             Licensed Pharmacy Partner
           </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-white via-slate-100 to-teal-300 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-slate-100 via-slate-100 to-teal-300 bg-clip-text text-transparent">
             Your Gateway to Health & Wellness
           </h1>
-          <p className="text-sm md:text-base text-slate-350 leading-relaxed max-w-lg">
+          <p className="text-sm md:text-base text-slate-400 leading-relaxed max-w-lg">
             Browse and order authentic prescription and OTC medicines online. Standardized Cash on Delivery across Pakistan.
           </p>
           <div className="flex items-center gap-4 mt-2">
             <Link 
               href="/instant-order" 
-              className="px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-teal-900/20 hover:shadow-teal-500/20 hover:scale-[1.03] active:scale-[0.98]"
+              className="px-5 py-2.5 bg-teal-600 hover:bg-teal-550 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-teal-900/20 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               Upload Prescription
             </Link>
             <a 
               href="#store-catalog" 
-              className="px-5 py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-semibold text-sm rounded-xl transition-all border border-slate-700/60"
+              className="px-5 py-2.5 bg-slate-900/60 hover:bg-slate-900 text-slate-300 hover:text-white font-semibold text-sm rounded-xl transition-all border border-slate-800/80 cursor-pointer"
             >
               Browse Catalog
             </a>
@@ -106,41 +106,41 @@ export default async function Home({ searchParams }) {
 
       <div id="store-catalog" className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         {/* Sidebar Filter */}
-        <aside className="lg:col-span-1 bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-gray-200/50 shadow-sm flex flex-col gap-5 sticky top-20">
+        <aside className="lg:col-span-1 bg-[#090d16]/45 backdrop-blur-md p-5 rounded-2xl border border-slate-800/50 shadow-sm flex flex-col gap-5 sticky top-20">
           <div>
-            <h2 className="font-bold text-gray-900 text-sm tracking-wide uppercase mb-4 flex items-center gap-2">
-              <span className="text-teal-600">📁</span> Categories
+            <h2 className="font-bold text-slate-200 text-xs tracking-wider uppercase mb-4 flex items-center gap-2">
+              <span className="text-teal-400">📁</span> Categories
             </h2>
             <div className="flex flex-col gap-1.5">
               <Link
                 href="/"
-                className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-between group ${
+                className={`px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group border-l-3 ${
                   !queryParams.categoryId
-                    ? 'bg-teal-50/65 text-teal-700 border-l-4 border-teal-600 shadow-sm'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent'
+                    ? 'bg-teal-500/10 text-teal-300 border-teal-500 shadow-sm'
+                    : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-100 border-transparent'
                 }`}
               >
                 <span>All Products</span>
-                <span className="text-xs text-gray-400 group-hover:translate-x-0.5 transition-transform">→</span>
+                <span className="text-xs text-slate-500 group-hover:translate-x-0.5 transition-transform">→</span>
               </Link>
               {categories.map((cat) => (
                 <Link
                   key={cat._id}
                   href={`/?category=${cat._id}${queryParams.search ? `&search=${queryParams.search}` : ''}`}
-                  className={`px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-between group ${
+                  className={`px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group border-l-3 ${
                     queryParams.categoryId === cat._id
-                      ? 'bg-teal-50/65 text-teal-700 border-l-4 border-teal-600 shadow-sm'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent'
+                      ? 'bg-teal-500/10 text-teal-300 border-teal-500 shadow-sm'
+                      : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-100 border-transparent'
                   }`}
                 >
                   <span className="truncate pr-2">{cat.name}</span>
                   <div className="flex items-center gap-1.5 shrink-0">
                     {cat.isNarcotic && (
-                      <span className="text-[9px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                      <span className="text-[9px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
                         Rx
                       </span>
                     )}
-                    <span className="text-xs text-gray-400 group-hover:translate-x-0.5 transition-transform">→</span>
+                    <span className="text-xs text-slate-500 group-hover:translate-x-0.5 transition-transform">→</span>
                   </div>
                 </Link>
               ))}
@@ -156,17 +156,17 @@ export default async function Home({ searchParams }) {
               {queryParams.categoryId && (
                 <input type="hidden" name="category" value={queryParams.categoryId} />
               )}
-              <div className="flex w-full items-center bg-white border border-gray-200 rounded-2xl shadow-sm focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/10 transition-all overflow-hidden p-1">
+              <div className="flex w-full items-center bg-slate-900/40 border border-slate-800 rounded-2xl shadow-sm focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/10 transition-all overflow-hidden p-1.5">
                 <input
                   type="text"
                   name="search"
                   defaultValue={queryParams.search}
                   placeholder="Search medicines, generic names..."
-                  className="w-full bg-transparent px-4 py-2.5 text-sm outline-none text-gray-900 placeholder:text-gray-400"
+                  className="w-full bg-transparent px-4 py-2 text-sm outline-none text-slate-150 placeholder:text-slate-500"
                 />
                 <button
                   type="submit"
-                  className="bg-teal-600 hover:bg-teal-500 text-white font-semibold text-sm px-6 py-2.5 rounded-xl transition-all shadow-md shadow-teal-900/10 active:scale-[0.97]"
+                  className="bg-teal-650 hover:bg-teal-600 text-white font-semibold text-sm px-6 py-2 rounded-xl transition-all shadow-md shadow-teal-900/10 active:scale-[0.97] cursor-pointer"
                 >
                   Search
                 </button>
@@ -174,30 +174,30 @@ export default async function Home({ searchParams }) {
             </form>
 
             {/* Selected category/search status */}
-            <div className="text-sm text-gray-500 self-center">
+            <div className="text-sm text-slate-400 self-center">
               {queryParams.search && (
                 <span>
-                  Results for &ldquo;<strong className="text-slate-800">{queryParams.search}</strong>&rdquo;
+                  Results for &ldquo;<strong className="text-slate-200">{queryParams.search}</strong>&rdquo;
                 </span>
               )}
               {queryParams.categoryId && (
                 <span>
                   {queryParams.search ? ' in ' : ''}
-                  Category: <strong className="text-slate-800">{activeCategoryName}</strong>
+                  Category: <strong className="text-slate-200">{activeCategoryName}</strong>
                 </span>
               )}
             </div>
           </div>
 
           {errorMsg ? (
-            <div className="bg-red-50/70 border border-red-200/60 text-red-800 p-5 rounded-2xl text-sm text-center">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-5 rounded-2xl text-sm text-center">
               {errorMsg}
             </div>
           ) : products.length === 0 ? (
-            <div className="bg-white/70 backdrop-blur-md border border-gray-200/50 p-16 text-center rounded-3xl shadow-sm">
+            <div className="bg-slate-900/20 border border-slate-800/40 p-16 text-center rounded-3xl shadow-sm">
               <span className="text-5xl block animate-bounce mb-4">🔍</span>
-              <h3 className="font-extrabold text-gray-900 text-lg">No products found</h3>
-              <p className="text-gray-500 text-sm mt-1 max-w-sm mx-auto">
+              <h3 className="font-extrabold text-slate-200 text-lg">No products found</h3>
+              <p className="text-slate-450 text-sm mt-1 max-w-sm mx-auto">
                 We couldn't find matches for your search. Try adjusting terms or browsing another category.
               </p>
             </div>

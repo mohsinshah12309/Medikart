@@ -27,8 +27,8 @@ export default function ProductGallery({
           onClick={() => setViewMode("2d")}
           className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
             viewMode === "2d"
-              ? 'bg-teal-550/15 border-teal-500/30 text-teal-700 font-semibold'
-              : 'border-gray-200 bg-white text-gray-500 hover:bg-gray-50'
+              ? 'bg-teal-500/10 border-teal-500/30 text-teal-400 font-semibold'
+              : 'border-slate-800/80 bg-slate-900/30 text-slate-400 hover:bg-slate-900/60 hover:text-slate-200'
           }`}
         >
           📸 Photo View
@@ -38,8 +38,8 @@ export default function ProductGallery({
           onClick={() => setViewMode("3d")}
           className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
             viewMode === "3d"
-              ? 'bg-teal-550/15 border-teal-500/30 text-teal-700 font-semibold'
-              : 'border-gray-200 bg-white text-gray-500 hover:bg-gray-50'
+              ? 'bg-teal-500/10 border-teal-500/30 text-teal-400 font-semibold'
+              : 'border-slate-800/80 bg-slate-900/30 text-slate-400 hover:bg-slate-900/60 hover:text-slate-200'
           }`}
         >
           🌐 3D Interactive View
@@ -48,7 +48,7 @@ export default function ProductGallery({
 
       {/* Active Display Panel */}
       {viewMode === "3d" ? (
-        <div className="aspect-square bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex items-center justify-center relative shadow-sm">
+        <div className="aspect-square bg-slate-950 border border-slate-800/80 rounded-2xl overflow-hidden flex items-center justify-center relative shadow-inner">
           <Product3DViewer 
             productName={productName} 
             imageUrl={getFullUrl(activeImage)} 
@@ -57,7 +57,7 @@ export default function ProductGallery({
       ) : (
         <>
           {/* Active 2D Image */}
-          <div className="aspect-square bg-[#f8fafc]/50 border border-gray-200/50 rounded-2xl p-6 flex items-center justify-center relative overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.02)]">
+          <div className="aspect-square bg-slate-950/20 border border-slate-800/60 rounded-2xl p-6 flex items-center justify-center relative overflow-hidden shadow-inner">
             <img
               src={getFullUrl(activeImage)}
               alt={productName}
@@ -77,8 +77,8 @@ export default function ProductGallery({
                   <button
                     key={img._id || index}
                     onClick={() => setActiveImage(img.path)}
-                    className={`w-16 h-16 flex-shrink-0 border rounded-xl p-1 bg-white hover:border-teal-500/60 transition-colors ${
-                      isSelected ? 'border-teal-600 ring-2 ring-teal-500/10' : 'border-gray-200'
+                    className={`w-16 h-16 flex-shrink-0 border rounded-xl p-1 bg-slate-900/35 hover:border-teal-500/60 transition-colors ${
+                      isSelected ? 'border-teal-650 ring-2 ring-teal-500/10' : 'border-slate-800/80'
                     }`}
                   >
                     <img
