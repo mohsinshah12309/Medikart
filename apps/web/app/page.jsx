@@ -29,7 +29,7 @@ export async function generateMetadata({ searchParams }) {
 }
 
 export default async function Home({ searchParams }) {
-  const resolvedParams = await searchParams; // Next 14/15 handles searchParams as a promise or object, let's handle safely
+  const resolvedParams = await searchParams;
   const queryParams = {
     search: resolvedParams?.search || '',
     categoryId: resolvedParams?.category || '',
@@ -69,34 +69,34 @@ export default async function Home({ searchParams }) {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Premium Hero Banner / Header */}
-      <div className="relative overflow-hidden bg-[#0d1527]/50 rounded-3xl p-8 md:p-12 text-white shadow-2xl border border-slate-800/80 backdrop-blur-md">
-        {/* Animated Gradient Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(13,148,136,0.22),rgba(99,102,241,0.08),transparent_50%)]" />
-        <div className="absolute inset-0 bg-grid-slate-700/[0.04] bg-[size:24px_24px]" />
+      {/* Rich Colored Clinical Hero Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-teal-850 via-teal-950 to-emerald-950 rounded-3xl p-8 md:p-12 text-white shadow-xl border border-teal-700/35 backdrop-blur-md">
+        {/* Soft Background Accents */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_120%,rgba(16,185,129,0.25),rgba(20,184,166,0.12),transparent_50%)]" />
+        <div className="absolute inset-0 bg-grid-slate-100/[0.015] bg-[size:24px_24px]" />
         
         {/* Hero Content */}
         <div className="relative z-10 max-w-2xl flex flex-col gap-4">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/10 text-teal-300 border border-teal-500/20 w-fit">
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse shadow-[0_0_8px_#14b8a6]" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-450/20 w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
             Licensed Pharmacy Partner
           </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-slate-100 via-slate-100 to-teal-300 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-white via-white to-emerald-305 bg-clip-text text-transparent">
             Your Gateway to Health & Wellness
           </h1>
-          <p className="text-sm md:text-base text-slate-400 leading-relaxed max-w-lg">
+          <p className="text-sm md:text-base text-slate-205/90 leading-relaxed max-w-lg">
             Browse and order authentic prescription and OTC medicines online. Standardized Cash on Delivery across Pakistan.
           </p>
           <div className="flex items-center gap-4 mt-2">
             <Link 
               href="/instant-order" 
-              className="px-5 py-2.5 bg-teal-600 hover:bg-teal-550 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-teal-900/20 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-[#04151a] font-extrabold text-sm rounded-xl transition-all shadow-md shadow-emerald-500/10 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               Upload Prescription
             </Link>
             <a 
               href="#store-catalog" 
-              className="px-5 py-2.5 bg-slate-900/60 hover:bg-slate-900 text-slate-300 hover:text-white font-semibold text-sm rounded-xl transition-all border border-slate-800/80 cursor-pointer"
+              className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-slate-100 font-semibold text-sm rounded-xl transition-all border border-white/20 cursor-pointer"
             >
               Browse Catalog
             </a>
@@ -106,18 +106,18 @@ export default async function Home({ searchParams }) {
 
       <div id="store-catalog" className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         {/* Sidebar Filter */}
-        <aside className="lg:col-span-1 bg-[#090d16]/45 backdrop-blur-md p-5 rounded-2xl border border-slate-800/50 shadow-sm flex flex-col gap-5 sticky top-20">
+        <aside className="lg:col-span-1 bg-[#0a232a]/45 backdrop-blur-md p-5 rounded-2xl border border-teal-950/60 shadow-md flex flex-col gap-5 sticky top-20">
           <div>
-            <h2 className="font-bold text-slate-200 text-xs tracking-wider uppercase mb-4 flex items-center gap-2">
-              <span className="text-teal-400">📁</span> Categories
+            <h2 className="font-bold text-slate-250 text-xs tracking-wider uppercase mb-4 flex items-center gap-2">
+              <span className="text-emerald-400">📁</span> Categories
             </h2>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1">
               <Link
                 href="/"
                 className={`px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group border-l-3 ${
                   !queryParams.categoryId
                     ? 'bg-teal-500/10 text-teal-300 border-teal-500 shadow-sm'
-                    : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-100 border-transparent'
+                    : 'text-slate-400 hover:bg-teal-950/40 hover:text-slate-150 border-transparent'
                 }`}
               >
                 <span>All Products</span>
@@ -130,7 +130,7 @@ export default async function Home({ searchParams }) {
                   className={`px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-between group border-l-3 ${
                     queryParams.categoryId === cat._id
                       ? 'bg-teal-500/10 text-teal-300 border-teal-500 shadow-sm'
-                      : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-100 border-transparent'
+                      : 'text-slate-400 hover:bg-teal-950/40 hover:text-slate-150 border-transparent'
                   }`}
                 >
                   <span className="truncate pr-2">{cat.name}</span>
@@ -156,7 +156,7 @@ export default async function Home({ searchParams }) {
               {queryParams.categoryId && (
                 <input type="hidden" name="category" value={queryParams.categoryId} />
               )}
-              <div className="flex w-full items-center bg-slate-900/40 border border-slate-800 rounded-2xl shadow-sm focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/10 transition-all overflow-hidden p-1.5">
+              <div className="flex w-full items-center bg-slate-950/30 border border-teal-950/80 rounded-2xl shadow-sm focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-500/10 transition-all overflow-hidden p-1.5">
                 <input
                   type="text"
                   name="search"
@@ -166,7 +166,7 @@ export default async function Home({ searchParams }) {
                 />
                 <button
                   type="submit"
-                  className="bg-teal-650 hover:bg-teal-600 text-white font-semibold text-sm px-6 py-2 rounded-xl transition-all shadow-md shadow-teal-900/10 active:scale-[0.97] cursor-pointer"
+                  className="bg-teal-600 hover:bg-teal-500 text-white font-semibold text-sm px-6 py-2 rounded-xl transition-all shadow-md shadow-teal-900/10 active:scale-[0.97] cursor-pointer"
                 >
                   Search
                 </button>
@@ -194,10 +194,10 @@ export default async function Home({ searchParams }) {
               {errorMsg}
             </div>
           ) : products.length === 0 ? (
-            <div className="bg-slate-900/20 border border-slate-800/40 p-16 text-center rounded-3xl shadow-sm">
+            <div className="bg-teal-950/10 border border-teal-900/20 p-16 text-center rounded-3xl shadow-sm">
               <span className="text-5xl block animate-bounce mb-4">🔍</span>
               <h3 className="font-extrabold text-slate-200 text-lg">No products found</h3>
-              <p className="text-slate-450 text-sm mt-1 max-w-sm mx-auto">
+              <p className="text-slate-400 text-sm mt-1 max-w-sm mx-auto">
                 We couldn't find matches for your search. Try adjusting terms or browsing another category.
               </p>
             </div>

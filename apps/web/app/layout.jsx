@@ -71,16 +71,16 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#070a13] text-slate-100 tech-grid relative overflow-x-hidden font-sans">
+      <body className="min-h-screen flex flex-col bg-[#04151a] text-slate-100 tech-grid relative overflow-x-hidden font-sans">
         
-        {/* Glowing Background Blur Orbs (Ambient Lighting) */}
-        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-teal-500/8 blur-[120px] rounded-full pointer-events-none z-0" />
-        <div className="absolute top-[30%] left-0 w-[450px] h-[450px] bg-indigo-500/6 blur-[130px] rounded-full pointer-events-none z-0" />
-        <div className="absolute bottom-0 right-[20%] w-[500px] h-[500px] bg-teal-500/5 blur-[140px] rounded-full pointer-events-none z-0" />
+        {/* Soft Clinical Ambient Glow Orbs */}
+        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-teal-500/7 blur-[115px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-[30%] left-0 w-[450px] h-[450px] bg-emerald-500/5 blur-[125px] rounded-full pointer-events-none z-0" />
+        <div className="absolute bottom-0 right-[20%] w-[500px] h-[500px] bg-teal-500/5 blur-[135px] rounded-full pointer-events-none z-0" />
 
         <CartProvider>
-          {/* Frosted Dark Glass Navigation Bar */}
-          <header className="sticky top-0 z-50 bg-[#090d16]/75 backdrop-blur-lg border-b border-slate-800/60 shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all">
+          {/* Frosted Deep Teal-Slate Navigation Bar */}
+          <header className="sticky top-0 z-50 bg-[#051c22]/75 backdrop-blur-lg border-b border-teal-950/60 shadow-[0_4px_30px_rgba(0,0,0,0.45)] transition-all">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
               <div className="flex items-center gap-8">
                 {/* Custom Interactive Logo */}
@@ -89,16 +89,16 @@ export default async function RootLayout({ children }) {
                 </Link>
                 
                 <nav className="hidden md:flex items-center gap-6">
-                  <Link href="/" className="text-sm font-semibold text-slate-300 hover:text-teal-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-400 hover:after:w-full after:transition-all">
+                  <Link href="/" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
                     Home
                   </Link>
-                  <Link href="/instant-order" className="text-sm font-semibold text-slate-300 hover:text-teal-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-400 hover:after:w-full after:transition-all">
+                  <Link href="/instant-order" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
                     Instant Order
                   </Link>
-                  <Link href="/about" className="text-sm font-semibold text-slate-300 hover:text-teal-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-400 hover:after:w-full after:transition-all">
+                  <Link href="/about" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
                     About
                   </Link>
-                  <Link href="/contact" className="text-sm font-semibold text-slate-300 hover:text-teal-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-400 hover:after:w-full after:transition-all">
+                  <Link href="/contact" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
                     Contact
                   </Link>
                 </nav>
@@ -115,35 +115,35 @@ export default async function RootLayout({ children }) {
             {children}
           </main>
 
-          {/* Premium Dark Tech Footer */}
-          <footer className="bg-[#090d16]/50 border-t border-slate-800/50 py-10 mt-12 relative z-10">
+          {/* Clean Dark-Teal Clinical Footer */}
+          <footer className="bg-[#031418]/65 border-t border-teal-950/60 py-10 mt-12 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800/40">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-teal-950/40">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">💊</span>
-                  <span className="font-bold text-slate-100 tracking-tight">Medikart Pakistan</span>
+                  <span className="font-extrabold text-slate-100 tracking-tight">Medikart Pakistan</span>
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-                  <Link href="/" className="hover:text-teal-400 transition-colors">Home</Link>
-                  <Link href="/instant-order" className="hover:text-teal-400 transition-colors">Instant Order</Link>
-                  <Link href="/about" className="hover:text-teal-400 transition-colors">About Us</Link>
-                  <Link href="/contact" className="hover:text-teal-400 transition-colors">Contact Support</Link>
+                  <Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link>
+                  <Link href="/instant-order" className="hover:text-emerald-400 transition-colors">Instant Order</Link>
+                  <Link href="/about" className="hover:text-emerald-400 transition-colors">About Us</Link>
+                  <Link href="/contact" className="hover:text-emerald-400 transition-colors">Contact Support</Link>
                 </div>
               </div>
               <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-                <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved. Built for wellness.</p>
+                <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved. Your partner in clinical care.</p>
                 <div className="flex gap-4">
                   <span>Standard Cash on Delivery</span>
                   <span>•</span>
                   <span>Sandbox Card Payments</span>
                   <span>•</span>
-                  <span className="text-indigo-400 font-medium">Narcotics Compliance Active</span>
+                  <span className="text-emerald-400 font-semibold">Narcotics Compliance Active</span>
                 </div>
               </div>
             </div>
           </footer>
 
-          {/* Floating WhatsApp chat link with pulse glow */}
+          {/* Floating WhatsApp chat link */}
           {cleanPhone && (
             <a
               href={`https://wa.me/${cleanPhone}`}
