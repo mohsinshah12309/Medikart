@@ -5,6 +5,28 @@ import NarcoticsBlock from '../../../components/NarcoticsBlock';
 import AddToCartButton from '../../../components/AddToCartButton';
 import Link from 'next/link';
 
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const productId = resolvedParams.id;
+  try {
+    const res = await getProduct(productId);
+    if (res && res.data && res.data.product) {
+      const product = res.data.product;
+      const genericStr = product.genericName ? ` (${product.genericName})` : '';
+      return {
+        title: `${product.name}${genericStr} | Medikart`,
+        description: product.description || `Buy ${product.name} online at Medikart. In stock and available.`,
+      };
+    }
+  } catch (err) {
+    console.error("Failed to load product metadata:", err);
+  }
+  return {
+    title: 'Product Details | Medikart',
+    description: 'View product details on Medikart.',
+  };
+}
+
 export default async function ProductDetailPage({ params }) {
   const resolvedParams = await params;
   const productId = resolvedParams.id;
@@ -43,8 +65,27 @@ export default async function ProductDetailPage({ params }) {
     return typeof num === 'number' ? num.toFixed(2) : num;
   };
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    'name': product.name,
+    'image': product.coverImage ? `http://localhost:3000${product.coverImage}` : undefined,
+    'description': product.description || `Buy ${product.name} online at Medikart.`,
+    'sku': product.sku,
+    'offers': {
+      '@type': 'Offer',
+      'price': product.effectivePrice || product.price,
+      'priceCurrency': 'PKR',
+      'availability': product.stockStatus === 'in_stock' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    },
+  };
+
   return (
     <div className="flex flex-col gap-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link href="/" className="inline-flex items-center text-sm font-medium text-green-600 hover:text-green-700 transition-colors">
         ← Back to Shop
       </Link>

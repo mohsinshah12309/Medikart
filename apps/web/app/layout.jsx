@@ -11,24 +11,65 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // Fetch settings content to get WhatsApp contact number
+  // Fetch settings content to get contact and about details dynamically
   let contactPhone = '923001234567';
+  let contactEmail = 'support@medikart.pk';
+  let aboutText = 'Medikart is Pakistan\'s leading online pharmacy.';
   try {
     const res = await fetch('http://127.0.0.1:5000/api/v1/content', { cache: 'no-store' });
     if (res.ok) {
       const body = await res.json();
-      if (body?.data?.contactPhone) {
-        contactPhone = body.data.contactPhone;
+      if (body?.data) {
+        if (body.data.contactPhone) contactPhone = body.data.contactPhone;
+        if (body.data.contactEmail) contactEmail = body.data.contactEmail;
+        if (body.data.aboutText) aboutText = body.data.aboutText;
       }
     }
   } catch (err) {
-    console.error("Failed to fetch contact phone for layout WhatsApp link:", err);
+    console.error("Failed to fetch contact details for layout:", err);
   }
 
   const cleanPhone = contactPhone.replace(/[^0-9]/g, '');
 
+  const orgJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    'name': 'Medikart',
+    'url': 'http://localhost:3000',
+    'logo': 'http://localhost:3000/uploads/placeholder.webp',
+    'contactPoint': {
+      '@type': 'ContactPoint',
+      'telephone': contactPhone,
+      'contactType': 'customer service'
+    }
+  };
+
+  const businessJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    'name': 'Medikart',
+    'description': aboutText,
+    'telephone': contactPhone,
+    'email': contactEmail,
+    'address': {
+      '@type': 'PostalAddress',
+      'addressLocality': 'Lahore',
+      'addressCountry': 'PK'
+    }
+  };
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
         <CartProvider>
           <header className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm">

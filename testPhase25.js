@@ -30,6 +30,18 @@ async function runE2ETest() {
   console.log('=== Starting Phase 25 E2E Walkthrough Test ===\n');
 
   try {
+    // Seed active cities in DB for E2E consistency
+    console.log("[INFO] Restoring Lahore and Karachi in database...");
+    const mongoose = require(path.join(serverNodeModules, "mongoose"));
+    await mongoose.connect(process.env.MONGODB_URI);
+    
+    const City = require(path.join(__dirname, "server", "src", "modules", "cities", "city.model"));
+    await City.findOneAndUpdate({ name: 'Lahore' }, { name: 'Lahore', deliveryCharge: 250, active: true }, { upsert: true });
+    await City.findOneAndUpdate({ name: 'Karachi' }, { name: 'Karachi', deliveryCharge: 150, active: true }, { upsert: true });
+    
+    await mongoose.connection.close();
+    console.log("[INFO] Cities seeded.");
+
     // 1. Search/browse products (Storefront view)
     const browseUrl = `${BACKEND_URL}/products`;
     const browseRes = await fetch(browseUrl);

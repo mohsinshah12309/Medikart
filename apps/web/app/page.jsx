@@ -3,6 +3,31 @@ import { getProducts, getCategories } from '../lib/api';
 import ProductCard from '../components/ProductCard';
 import Link from 'next/link';
 
+export async function generateMetadata({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const categoryId = resolvedParams?.category;
+  if (categoryId) {
+    try {
+      const categoriesRes = await getCategories();
+      if (categoriesRes && categoriesRes.data) {
+        const category = categoriesRes.data.categories.find(c => c._id === categoryId);
+        if (category) {
+          return {
+            title: `${category.name} | Medikart`,
+            description: `Browse authentic ${category.name} medicines and products online at Medikart. Cash on delivery available.`,
+          };
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load category metadata:", err);
+    }
+  }
+  return {
+    title: 'Medikart - Online Pharmacy & Storefront',
+    description: 'Your trusted online pharmacy. Buy authentic medicines with standard cash on delivery.',
+  };
+}
+
 export default async function Home({ searchParams }) {
   const resolvedParams = await searchParams; // Next 14 handles searchParams as a promise or object, let's handle safely
   const queryParams = {
