@@ -37,14 +37,22 @@ function AdminUsers({ token, adminUser }) {
   const [deleteId, setDeleteId] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
-  const AVAILABLE_PERMISSIONS = [
-    "view_orders", "manage_orders",
-    "view_products", "manage_products",
-    "view_categories", "manage_categories",
-    "view_cities", "manage_cities",
-    "view_settings", "manage_settings",
-    "view_activity_logs",
+  // Each permission with human-readable label, icon, and description
+  const PERMISSION_META = [
+    { key: "view_orders",       icon: "📋", label: "View Orders",      desc: "Read order list & details" },
+    { key: "manage_orders",     icon: "✏️",  label: "Manage Orders",    desc: "Update order status & info" },
+    { key: "view_products",     icon: "💊", label: "View Products",    desc: "Browse the product catalog" },
+    { key: "manage_products",   icon: "📦", label: "Manage Products",  desc: "Create, edit & delete products" },
+    { key: "view_categories",   icon: "🗂️", label: "View Categories",  desc: "Browse product categories" },
+    { key: "manage_categories", icon: "🏷️", label: "Manage Categories", desc: "Create & edit categories" },
+    { key: "view_cities",       icon: "🏙️", label: "View Cities",      desc: "Browse delivery cities" },
+    { key: "manage_cities",     icon: "🗺️", label: "Manage Cities",    desc: "Add & edit cities/delivery charges" },
+    { key: "view_settings",     icon: "⚙️", label: "View Settings",    desc: "Read store-wide settings" },
+    { key: "manage_settings",   icon: "🔧", label: "Manage Settings",  desc: "Edit discounts, content & settings" },
+    { key: "view_activity_logs", icon: "📜", label: "Activity Logs",   desc: "View admin audit trail" },
   ];
+
+  const AVAILABLE_PERMISSIONS = PERMISSION_META.map(p => p.key);
 
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
 
@@ -82,6 +90,9 @@ function AdminUsers({ token, adminUser }) {
     }
   };
 
+  const selectAll = (form, setForm) => setForm({ ...form, permissions: [...AVAILABLE_PERMISSIONS] });
+  const clearAll  = (form, setForm) => setForm({ ...form, permissions: [] });
+
   const handleCreate = async (e) => {
     e.preventDefault();
     setCreating(true);
@@ -98,7 +109,7 @@ function AdminUsers({ token, adminUser }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Create failed");
-      flash(`Admin user created. Temporary password: ${data.data?.temporaryPassword || "(check server logs)"}`);
+      flash(`✅ Admin created successfully.\nTemporary password: ${data.data?.temporaryPassword || "(check server logs)"}`);
       setShowCreate(false);
       setCreateForm({ name: "", email: "", role: "admin", permissions: [] });
       fetchUsers();
@@ -162,22 +173,96 @@ function AdminUsers({ token, adminUser }) {
     }
   };
 
+  // ── Permission toggle grid with dark-theme aware styles ──────────────────────
   const PermissionCheckboxes = ({ form, setForm }) => (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.5rem" }}>
-      {AVAILABLE_PERMISSIONS.map((perm) => (
-        <label key={perm} style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.8rem",
-          background: form.permissions?.includes(perm) ? "#dbeafe" : "#f1f5f9",
-          padding: "0.2rem 0.5rem", borderRadius: "4px", cursor: "pointer" }}>
-          <input
-            type="checkbox"
-            checked={form.permissions?.includes(perm) || false}
-            onChange={() => togglePermission(perm, form, setForm)}
-          />
-          {perm.replace(/_/g, " ")}
-        </label>
-      ))}
+    <div>
+      {/* Quick actions */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
+        <button
+          type="button"
+          onClick={() => selectAll(form, setForm)}
+          style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem", borderRadius: "6px",
+            background: "rgba(16,185,129,0.15)", color: "#34d399", border: "1px solid rgba(16,185,129,0.3)",
+            cursor: "pointer", fontWeight: 600 }}
+        >
+          ✅ Select All
+        </button>
+        <button
+          type="button"
+          onClick={() => clearAll(form, setForm)}
+          style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem", borderRadius: "6px",
+            background: "rgba(239,68,68,0.1)", color: "#f87171", border: "1px solid rgba(239,68,68,0.25)",
+            cursor: "pointer", fontWeight: 600 }}
+        >
+          ✕ Clear All
+        </button>
+        <span style={{ fontSize: "0.7rem", color: "#64748b", alignSelf: "center" }}>
+          {form.permissions?.length || 0} / {AVAILABLE_PERMISSIONS.length} selected
+        </span>
+      </div>
+
+      {/* Permission cards grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: "0.5rem" }}>
+        {PERMISSION_META.map(({ key, icon, label, desc }) => {
+          const active = form.permissions?.includes(key);
+          return (
+            <label
+              key={key}
+              style={{
+                display: "flex", alignItems: "flex-start", gap: "0.5rem",
+                padding: "0.6rem 0.75rem", borderRadius: "10px", cursor: "pointer",
+                background: active ? "rgba(13,148,136,0.18)" : "rgba(15,23,42,0.35)",
+                border: active ? "1px solid rgba(45,212,191,0.45)" : "1px solid rgba(45,212,191,0.1)",
+                transition: "all 0.15s ease",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={active || false}
+                onChange={() => togglePermission(key, form, setForm)}
+                style={{ marginTop: "2px", accentColor: "#2dd4bf", width: "14px", height: "14px", flexShrink: 0 }}
+              />
+              <div>
+                <div style={{ fontSize: "0.78rem", fontWeight: 600, color: active ? "#5eead4" : "#94a3b8" }}>
+                  {icon} {label}
+                </div>
+                <div style={{ fontSize: "0.67rem", color: "#64748b", marginTop: "1px" }}>{desc}</div>
+              </div>
+            </label>
+          );
+        })}
+      </div>
     </div>
   );
+
+  // ── Compact permission badge display in table ─────────────────────────────────
+  const PermissionBadges = ({ permissions }) => {
+    if (!permissions?.length) return <span style={{ color: "#475569", fontSize: "0.75rem" }}>No permissions</span>;
+    const displayed = permissions.slice(0, 2);
+    const rest = permissions.length - 2;
+    return (
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem" }}>
+        {displayed.map(p => {
+          const meta = PERMISSION_META.find(m => m.key === p);
+          return (
+            <span key={p} style={{
+              fontSize: "0.65rem", padding: "0.15rem 0.45rem", borderRadius: "6px",
+              background: "rgba(45,212,191,0.12)", color: "#2dd4bf",
+              border: "1px solid rgba(45,212,191,0.2)", fontWeight: 600,
+            }}>
+              {meta?.icon} {meta?.label || p.replace(/_/g, " ")}
+            </span>
+          );
+        })}
+        {rest > 0 && (
+          <span style={{ fontSize: "0.65rem", padding: "0.15rem 0.4rem", borderRadius: "6px",
+            background: "rgba(100,116,139,0.15)", color: "#94a3b8", border: "1px solid rgba(100,116,139,0.2)" }}>
+            +{rest} more
+          </span>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -188,23 +273,31 @@ function AdminUsers({ token, adminUser }) {
         </button>
       </div>
 
-      <div className="alert" style={{ background: "#fffbeb", borderColor: "#fef3c7", color: "#92400e", marginBottom: "1rem" }}>
+      {/* Super Admin notice */}
+      <div style={{
+        background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.25)",
+        borderRadius: "10px", padding: "0.85rem 1.1rem", marginBottom: "1.25rem",
+        color: "#fbbf24", fontSize: "0.82rem", lineHeight: 1.5,
+      }}>
         <strong>🔒 Super Admin only.</strong> This screen is visible only to Super Admins in the UI.
-        The backend API enforces the same restriction server-side (Phase 20 <code>requireSuperAdmin</code> middleware) —
+        The backend API enforces the same restriction server-side (Phase 20 <code style={{ background: "rgba(251,191,36,0.1)", padding: "0 4px", borderRadius: "3px" }}>requireSuperAdmin</code> middleware) —
         a regular admin's token will be rejected even if they call the API directly.
       </div>
 
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error   && <div className="alert alert-danger">{error}</div>}
       {success && <div className="alert alert-success" style={{ whiteSpace: "pre-wrap" }}>{success}</div>}
 
       {/* Create Form */}
       {showCreate && (
         <div className="card" style={{ padding: "1.5rem", marginBottom: "1.5rem" }}>
-          <h3 style={{ margin: "0 0 1rem 0", fontSize: "1rem", fontWeight: 700 }}>Create New Admin User</h3>
+          <h3 style={{ margin: "0 0 1.25rem 0", fontSize: "1rem", fontWeight: 700, color: "#f1f5f9" }}>
+            ➕ Create New Admin User
+          </h3>
           <form onSubmit={handleCreate}>
+            {/* Name + Email row */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
               <div>
-                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.25rem" }}>Full Name *</label>
+                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.3rem", color: "#94a3b8" }}>Full Name *</label>
                 <input
                   className="form-control"
                   value={createForm.name}
@@ -214,7 +307,7 @@ function AdminUsers({ token, adminUser }) {
                 />
               </div>
               <div>
-                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.25rem" }}>Email *</label>
+                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.3rem", color: "#94a3b8" }}>Email *</label>
                 <input
                   type="email"
                   className="form-control"
@@ -225,23 +318,37 @@ function AdminUsers({ token, adminUser }) {
                 />
               </div>
             </div>
-            <div style={{ marginBottom: "1rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.25rem" }}>Role</label>
+
+            {/* Role selector */}
+            <div style={{ marginBottom: "1.25rem" }}>
+              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.3rem", color: "#94a3b8" }}>Role</label>
               <select
                 className="form-control"
                 value={createForm.role}
                 onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
-                style={{ maxWidth: "160px" }}
+                style={{ maxWidth: "180px" }}
               >
                 <option value="admin">Admin</option>
                 <option value="super_admin">Super Admin</option>
               </select>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginTop: "0.3rem" }}>
+                {createForm.role === "super_admin"
+                  ? "⚠️ Super Admins have full access — permissions below are ignored."
+                  : "Regular Admins are limited to the modules you select below."}
+              </p>
             </div>
-            <div style={{ marginBottom: "1rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.25rem" }}>Module Permissions</label>
-              <PermissionCheckboxes form={createForm} setForm={setCreateForm} />
-            </div>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
+
+            {/* Module Permissions */}
+            {createForm.role === "admin" && (
+              <div style={{ marginBottom: "1.25rem" }}>
+                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.5rem", color: "#94a3b8" }}>
+                  Module Permissions
+                </label>
+                <PermissionCheckboxes form={createForm} setForm={setCreateForm} />
+              </div>
+            )}
+
+            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
               <button type="submit" className="btn btn-primary" disabled={creating}>
                 {creating ? "Creating..." : "Create Admin"}
               </button>
@@ -254,7 +361,7 @@ function AdminUsers({ token, adminUser }) {
       {/* Delete Confirm */}
       {deleteId && (
         <div className="alert alert-danger" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span>Delete this admin user? This cannot be undone.</span>
+          <span>⚠️ Delete this admin user? This cannot be undone.</span>
           <div style={{ display: "flex", gap: "0.5rem" }}>
             <button className="btn btn-danger btn-sm" disabled={deleting} onClick={() => handleDelete(deleteId)}>
               {deleting ? "Deleting..." : "Yes, Delete"}
@@ -283,7 +390,9 @@ function AdminUsers({ token, adminUser }) {
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan={6} style={{ textAlign: "center", color: "#64748b", padding: "2rem" }}>No admin users found.</td>
+                  <td colSpan={6} style={{ textAlign: "center", color: "#64748b", padding: "2rem" }}>
+                    No admin users found.
+                  </td>
                 </tr>
               ) : users.map((user) => (
                 <tr key={user._id}>
@@ -330,8 +439,14 @@ function AdminUsers({ token, adminUser }) {
                           <option value="false">Inactive</option>
                         </select>
                       </td>
-                      <td>
-                        <PermissionCheckboxes form={editForm} setForm={setEditForm} />
+                      <td style={{ minWidth: "320px" }}>
+                        {editForm.role === "super_admin" ? (
+                          <span style={{ fontSize: "0.75rem", color: "#fbbf24" }}>
+                            ✦ Full access — Super Admins bypass permissions
+                          </span>
+                        ) : (
+                          <PermissionCheckboxes form={editForm} setForm={setEditForm} />
+                        )}
                       </td>
                       <td>
                         <div style={{ display: "flex", gap: "0.4rem" }}>
@@ -344,32 +459,35 @@ function AdminUsers({ token, adminUser }) {
                     </>
                   ) : (
                     <>
-                      <td style={{ fontWeight: 600 }}>{user.name}</td>
-                      <td style={{ color: "#64748b" }}>{user.email}</td>
+                      <td style={{ fontWeight: 600, color: "#f1f5f9" }}>{user.name}</td>
+                      <td style={{ color: "#94a3b8", fontSize: "0.85rem" }}>{user.email}</td>
                       <td>
                         <span style={{
-                          display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "9999px",
-                          fontSize: "0.75rem", fontWeight: 600,
-                          background: user.role === "super_admin" ? "#fef3c7" : "#dbeafe",
-                          color: user.role === "super_admin" ? "#92400e" : "#1e40af",
+                          display: "inline-block", padding: "0.2rem 0.7rem", borderRadius: "9999px",
+                          fontSize: "0.72rem", fontWeight: 700,
+                          background: user.role === "super_admin" ? "rgba(251,191,36,0.15)" : "rgba(45,212,191,0.12)",
+                          color: user.role === "super_admin" ? "#fbbf24" : "#2dd4bf",
+                          border: `1px solid ${user.role === "super_admin" ? "rgba(251,191,36,0.3)" : "rgba(45,212,191,0.25)"}`,
                         }}>
-                          {user.role === "super_admin" ? "Super Admin" : "Admin"}
+                          {user.role === "super_admin" ? "⭐ Super Admin" : "👤 Admin"}
                         </span>
                       </td>
                       <td>
                         <span style={{
                           display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "9999px",
-                          fontSize: "0.75rem", fontWeight: 600,
-                          background: user.active ? "#d1fae5" : "#fee2e2",
-                          color: user.active ? "#065f46" : "#991b1b",
+                          fontSize: "0.72rem", fontWeight: 700,
+                          background: user.active ? "rgba(16,185,129,0.12)" : "rgba(239,68,68,0.1)",
+                          color: user.active ? "#34d399" : "#f87171",
+                          border: `1px solid ${user.active ? "rgba(16,185,129,0.25)" : "rgba(239,68,68,0.2)"}`,
                         }}>
-                          {user.active ? "Active" : "Inactive"}
+                          {user.active ? "● Active" : "○ Inactive"}
                         </span>
                       </td>
                       <td>
-                        <div style={{ fontSize: "0.75rem", color: "#64748b" }}>
-                          {user.permissions?.length ? user.permissions.join(", ") : "—"}
-                        </div>
+                        {user.role === "super_admin"
+                          ? <span style={{ fontSize: "0.72rem", color: "#fbbf24" }}>✦ Full access</span>
+                          : <PermissionBadges permissions={user.permissions} />
+                        }
                       </td>
                       <td>
                         <div style={{ display: "flex", gap: "0.4rem" }}>
