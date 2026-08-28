@@ -7,14 +7,14 @@
 
 jest.setTimeout(60000);
 
-require("dotenv").config({ path: require("path").join(__dirname, "../../../.env") });
+require("dotenv").config({ path: require("path").join(__dirname, "../../.env") });
 
 const mongoose = require("mongoose");
 const request = require("supertest");
-const app = require("../../../src/app");
-const AdminUser = require("../../../src/modules/admin-users/adminUser.model");
-const Product = require("../../../src/modules/products/product.model");
-const Order = require("../../../src/modules/orders/order.model");
+const app = require("../../src/app");
+const AdminUser = require("../../src/modules/admin-users/adminUser.model");
+const Product = require("../../src/modules/products/product.model");
+const Order = require("../../src/modules/orders/order.model");
 
 beforeAll(async () => {
   const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/medikart_test";
@@ -33,7 +33,7 @@ describe("Phase 25 E2E Validation Workflows", () => {
   test("System Health - API is running and ready for end-to-end integration", async () => {
     const res = await request(app).get("/health");
     expect(res.status).toBe(200);
-    expect(res.text).toBe("OK");
+    expect(res.body.status).toBe("ok");
   });
 
   // Adding basic coverage assertions to satisfy Step 19

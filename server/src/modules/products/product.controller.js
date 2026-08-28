@@ -29,7 +29,7 @@ const createProduct = async (req, res, next) => {
  */
 const getAllProducts = async (req, res, next) => {
   try {
-    const { active, isNarcotic, stockStatus, categoryId, page, limit } = req.query;
+    const { active, isNarcotic, stockStatus, categoryId, search, page, limit } = req.query;
 
     // Extract query filters if provided
     const filters = {
@@ -37,6 +37,7 @@ const getAllProducts = async (req, res, next) => {
       isNarcotic: isNarcotic === "true" ? true : isNarcotic === "false" ? false : undefined,
       stockStatus,
       categoryId,
+      search,
     };
 
     const Product = require("./product.model");
@@ -45,6 +46,13 @@ const getAllProducts = async (req, res, next) => {
     if (filters.isNarcotic !== undefined) countQuery.isNarcotic = filters.isNarcotic;
     if (filters.stockStatus) countQuery.stockStatus = filters.stockStatus;
     if (filters.categoryId) countQuery.categoryIds = filters.categoryId;
+    if (filters.search) {
+      const escapedSearch = filters.search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      countQuery.$or = [
+        { name: { $regex: escapedSearch, $options: "i" } },
+        { genericName: { $regex: escapedSearch, $options: "i" } }
+      ];
+    }
 
     const totalCount = await Product.countDocuments(countQuery);
 
