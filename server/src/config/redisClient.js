@@ -15,11 +15,26 @@
 class InMemoryRedisStub {
   constructor() {
     this._store = new Map(); // key → Map<member, score>
+    this._kvStore = new Map(); // key → string (for GET/SET cache)
   }
 
   _getSet(key) {
     if (!this._store.has(key)) this._store.set(key, new Map());
     return this._store.get(key);
+  }
+
+  async get(key) {
+    return this._kvStore.get(key) || null;
+  }
+
+  async set(key, value, mode, duration) {
+    this._kvStore.set(key, String(value));
+    return "OK";
+  }
+
+  async del(key) {
+    this._kvStore.delete(key);
+    return 1;
   }
 
   async zremrangebyscore(key, min, max) {
@@ -53,6 +68,7 @@ class InMemoryRedisStub {
 
   async flushdb() {
     this._store.clear();
+    this._kvStore.clear();
     return "OK";
   }
 
@@ -84,7 +100,7 @@ class InMemoryRedisStub {
 }
 
 // ─── Choose backend ───────────────────────────────────────────────────────────
-const isTest = process.env.NODE_ENV === "test";
+const isTest = process.env.NODE_ENV === "test" && process.env.USE_REAL_REDIS !== "true";
 
 let redisClient;
 

@@ -11,6 +11,7 @@
 
 const Product = require("./product.model");
 const { NotFoundError } = require("../../utils/errors");
+const redisClient = require("../../config/redisClient");
 
 /**
  * Create a new product
@@ -103,6 +104,13 @@ const updateProduct = async (productId, updateData) => {
     throw new NotFoundError("Product not found");
   }
 
+  // Invalidate cache
+  try {
+    await redisClient.del(`cache:storefront:product:${productId}`);
+  } catch (err) {
+    console.error("[Cache] Invalidation error on update:", err.message);
+  }
+
   return product;
 };
 
@@ -114,6 +122,13 @@ const deleteProduct = async (productId) => {
 
   if (!product) {
     throw new NotFoundError("Product not found");
+  }
+
+  // Invalidate cache
+  try {
+    await redisClient.del(`cache:storefront:product:${productId}`);
+  } catch (err) {
+    console.error("[Cache] Invalidation error on delete:", err.message);
   }
 
   return product;

@@ -5,6 +5,7 @@ const Category = require("../categories/category.model");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getDeliveryCharge } = require("../cities/city.service");
+const redisClient = require("../../config/redisClient");
 
 // Helper: attach coverImage and fallback placeholder if no images exist
 const PLACEHOLDER_PATH = "/uploads/placeholder.webp";
@@ -27,6 +28,27 @@ const formatProductWithImages = (productDoc) => {
 router.get("/products", async (req, res, next) => {
   try {
     const { search, categoryId, page = 1, limit = 20 } = req.query;
+    const p = parseInt(page, 10) || 1;
+    const l = parseInt(limit, 10) || 20;
+
+    // Cache check (bypassable for load testing)
+    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:page:${p}:limit:${l}`;
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (err) {
+      console.error("[Cache] Read error:", err.message);
+    }
+
+    if (cached) {
+      console.log(`[Cache HIT] key=${cacheKey}`);
+      const data = JSON.parse(cached);
+      return res.status(200).json(data);
+    }
+    console.log(`[Cache MISS] key=${cacheKey}`);
+
     const query = { active: true };
 
     if (search) {
@@ -41,8 +63,6 @@ router.get("/products", async (req, res, next) => {
       query.categoryIds = categoryId;
     }
 
-    const p = parseInt(page, 10) || 1;
-    const l = parseInt(limit, 10) || 20;
     const skip = (p - 1) * l;
 
     const products = await Product.find(query)
@@ -72,7 +92,7 @@ router.get("/products", async (req, res, next) => {
 
     const totalCount = await Product.countDocuments(query);
 
-    res.status(200).json({
+    const responseBody = {
       status: "success",
       results: formattedProducts.length,
       pagination: {
@@ -82,7 +102,15 @@ router.get("/products", async (req, res, next) => {
         pages: Math.ceil(totalCount / l),
       },
       data: { products: formattedProducts },
-    });
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+    } catch (err) {
+      console.error("[Cache] Write error:", err.message);
+    }
+
+    res.status(200).json(responseBody);
   } catch (error) {
     next(error);
   }
@@ -91,6 +119,23 @@ router.get("/products", async (req, res, next) => {
 // GET /api/v1/products/:id - Public detail
 router.get("/products/:id", async (req, res, next) => {
   try {
+    const cacheKey = `cache:storefront:product:${req.params.id}`;
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (err) {
+      console.error("[Cache] Read error:", err.message);
+    }
+
+    if (cached) {
+      console.log(`[Cache HIT] key=${cacheKey}`);
+      const data = JSON.parse(cached);
+      return res.status(200).json(data);
+    }
+    console.log(`[Cache MISS] key=${cacheKey}`);
+
     const product = await Product.findOne({ _id: req.params.id, active: true })
       .populate("categoryIds", "name slug discount active");
 
@@ -107,7 +152,7 @@ router.get("/products/:id", async (req, res, next) => {
       storewidePercent
     );
 
-    res.status(200).json({
+    const responseBody = {
       status: "success",
       data: {
         product: {
@@ -117,7 +162,15 @@ router.get("/products/:id", async (req, res, next) => {
           discountPercent,
         }
       },
-    });
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+    } catch (err) {
+      console.error("[Cache] Write error:", err.message);
+    }
+
+    res.status(200).json(responseBody);
   } catch (error) {
     next(error);
   }
