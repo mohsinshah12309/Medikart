@@ -10,6 +10,10 @@ function Products({ token }) {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
+  // Filters State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
+
   // Modals Visibility
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -30,6 +34,7 @@ function Products({ token }) {
     isNarcotic: false,
     stockStatus: "in_stock",
   });
+  const [formFiles, setFormFiles] = useState([]); // Selected files when adding a product
 
   // Form States — Discount Edit
   const [discountData, setDiscountData] = useState({
@@ -46,10 +51,24 @@ function Products({ token }) {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    fetchProducts();
+  }, [selectedCategoryFilter]);
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${apiUrl}/admin/products?limit=100`, {
+      let queryParams = [];
+      queryParams.push("limit=100");
+      if (searchQuery) {
+        queryParams.push(`search=${encodeURIComponent(searchQuery)}`);
+      }
+      if (selectedCategoryFilter) {
+        queryParams.push(`categoryId=${selectedCategoryFilter}`);
+      }
+
+      const queryString = queryParams.length ? `?${queryParams.join("&")}` : "";
+      const res = await fetch(`${apiUrl}/admin/products${queryString}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -87,6 +106,7 @@ function Products({ token }) {
       isNarcotic: false,
       stockStatus: "in_stock",
     });
+    setFormFiles([]); // Reset files
     setIsProductModalOpen(true);
   };
 
@@ -102,6 +122,7 @@ function Products({ token }) {
       isNarcotic: !!product.isNarcotic,
       stockStatus: product.stockStatus || "in_stock",
     });
+    setFormFiles([]); // Reset files
     setIsProductModalOpen(true);
   };
 
@@ -142,8 +163,31 @@ function Products({ token }) {
         throw new Error(data.message || `Failed to ${isEditMode ? "update" : "create"} product`);
       }
 
+      // If in create mode and we have selected images, upload them
+      const newProductId = data._id;
+      if (!isEditMode && newProductId && formFiles.length > 0) {
+        const imageFormData = new FormData();
+        formFiles.forEach((file) => {
+          imageFormData.append("images", file);
+        });
+
+        const imgRes = await fetch(`${apiUrl}/admin/products/${newProductId}/images`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: imageFormData,
+        });
+
+        const imgData = await imgRes.json();
+        if (!imgRes.ok) {
+          throw new Error(imgData.message || "Product created, but image upload failed.");
+        }
+      }
+
       setSuccessMsg(`Product successfully ${isEditMode ? "updated" : "created"}!`);
       setIsProductModalOpen(false);
+      setFormFiles([]);
       fetchProducts();
     } catch (err) {
       setError(err.message);
@@ -345,6 +389,28 @@ function Products({ token }) {
     return primary ? primary.path : product.images[0].path;
   };
 
+  const handleClearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategoryFilter("");
+    setProducts([]);
+    const fetchCleared = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${apiUrl}/admin/products?limit=100`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Failed to fetch products");
+        setProducts(data.data.products || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCleared();
+  };
+
   return (
     <div>
       <div className="page-header">
@@ -356,6 +422,64 @@ function Products({ token }) {
 
       {error && <div className="alert alert-danger">{error}</div>}
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
+
+      {/* Search and Category Filter Toolbar */}
+      <div className="card" style={{ padding: "1rem", marginBottom: "1rem" }}>
+        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
+          {/* Search form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              fetchProducts();
+            }}
+            style={{ display: "flex", gap: "0.5rem", flex: 1, minWidth: "280px" }}
+          >
+            <input
+              type="text"
+              placeholder="Search product by name..."
+              className="form-control"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ margin: 0 }}
+            />
+            <button type="submit" className="btn btn-primary" style={{ minWidth: "80px" }}>
+              Search
+            </button>
+          </form>
+
+          {/* Category Filter */}
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <label htmlFor="cat-filter" style={{ fontWeight: 600, whiteSpace: "nowrap", margin: 0, color: "#475569" }}>
+              Filter by Category:
+            </label>
+            <select
+              id="cat-filter"
+              className="form-control"
+              value={selectedCategoryFilter}
+              onChange={(e) => setSelectedCategoryFilter(e.target.value)}
+              style={{ margin: 0, minWidth: "180px" }}
+            >
+              <option value="">All Categories</option>
+              {categories.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Clear Filters */}
+          {(searchQuery || selectedCategoryFilter) && (
+            <button
+              onClick={handleClearFilters}
+              className="btn btn-secondary"
+              style={{ padding: "0.4rem 1rem" }}
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+      </div>
 
       <div className="card">
         {loading ? (
@@ -534,6 +658,24 @@ function Products({ token }) {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />
                 </div>
+                {!isEditMode && (
+                  <div className="form-group">
+                    <label htmlFor="prod-files">Product Pictures (Optional)</label>
+                    <input
+                      id="prod-files"
+                      type="file"
+                      className="form-control"
+                      multiple
+                      accept="image/*"
+                      onChange={(e) => setFormFiles(Array.from(e.target.files))}
+                    />
+                    {formFiles.length > 0 && (
+                      <p style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "0.25rem" }}>
+                        Selected {formFiles.length} file(s)
+                      </p>
+                    )}
+                  </div>
+                )}
                 <div className="form-group">
                   <div className="switch-group">
                     <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#334155" }}>
