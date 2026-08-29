@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
+
 function Products({ token }) {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
 
@@ -34,7 +36,7 @@ function Products({ token }) {
     isNarcotic: false,
     stockStatus: "in_stock",
   });
-  const [formFiles, setFormFiles] = useState([]); // Selected files when adding a product
+  const [formFiles, setFormFiles] = useState([]);
 
   // Form States — Discount Edit
   const [discountData, setDiscountData] = useState({
@@ -106,7 +108,7 @@ function Products({ token }) {
       isNarcotic: false,
       stockStatus: "in_stock",
     });
-    setFormFiles([]); // Reset files
+    setFormFiles([]);
     setIsProductModalOpen(true);
   };
 
@@ -122,7 +124,7 @@ function Products({ token }) {
       isNarcotic: !!product.isNarcotic,
       stockStatus: product.stockStatus || "in_stock",
     });
-    setFormFiles([]); // Reset files
+    setFormFiles([]);
     setIsProductModalOpen(true);
   };
 
@@ -163,7 +165,6 @@ function Products({ token }) {
         throw new Error(data.message || `Failed to ${isEditMode ? "update" : "create"} product`);
       }
 
-      // If in create mode and we have selected images, upload them
       const newProductId = data._id;
       if (!isEditMode && newProductId && formFiles.length > 0) {
         const imageFormData = new FormData();
@@ -240,7 +241,6 @@ function Products({ token }) {
     }
   };
 
-  // Discount Modal Handlers
   const handleOpenDiscountModal = (product) => {
     setSelectedProduct(product);
     setDiscountData({
@@ -279,7 +279,6 @@ function Products({ token }) {
     }
   };
 
-  // Image Modal Handlers
   const handleOpenImageModal = (product) => {
     setSelectedProduct(product);
     setSelectedFiles([]);
@@ -315,7 +314,6 @@ function Products({ token }) {
       if (!res.ok) throw new Error(data.message || "Failed to upload images");
 
       setSuccessMsg("Images uploaded successfully.");
-      // Refresh current product images in the modal
       const refreshedProduct = data.data.product || await fetchSingleProduct(selectedProduct._id);
       setSelectedProduct(refreshedProduct);
       setSelectedFiles([]);
@@ -389,6 +387,12 @@ function Products({ token }) {
     return primary ? primary.path : product.images[0].path;
   };
 
+  const formatPrice = (price) => {
+    const num = typeof price === "number" ? price : parseFloat(price || 0);
+    if (isNaN(num)) return "0.00 PKR";
+    return `${num.toLocaleString("en-PK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PKR`;
+  };
+
   const handleClearFilters = () => {
     setSearchQuery("");
     setSelectedCategoryFilter("");
@@ -424,15 +428,15 @@ function Products({ token }) {
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
 
       {/* Search and Category Filter Toolbar */}
-      <div className="card" style={{ padding: "1rem", marginBottom: "1rem" }}>
-        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
+      <div className="toolbar-card">
+        <div className="toolbar-container">
           {/* Search form */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
               fetchProducts();
             }}
-            style={{ display: "flex", gap: "0.5rem", flex: 1, minWidth: "280px" }}
+            className="search-box-form"
           >
             <input
               type="text"
@@ -442,14 +446,14 @@ function Products({ token }) {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{ margin: 0 }}
             />
-            <button type="submit" className="btn btn-primary" style={{ minWidth: "80px" }}>
+            <button type="submit" className="btn btn-primary">
               Search
             </button>
           </form>
 
           {/* Category Filter */}
-          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-            <label htmlFor="cat-filter" style={{ fontWeight: 600, whiteSpace: "nowrap", margin: 0, color: "#475569" }}>
+          <div className="filter-controls-group">
+            <label htmlFor="cat-filter" className="filter-label-text">
               Filter by Category:
             </label>
             <select
@@ -457,7 +461,7 @@ function Products({ token }) {
               className="form-control"
               value={selectedCategoryFilter}
               onChange={(e) => setSelectedCategoryFilter(e.target.value)}
-              style={{ margin: 0, minWidth: "180px" }}
+              style={{ margin: 0, minWidth: "170px" }}
             >
               <option value="">All Categories</option>
               {categories.map((c) => (
@@ -466,39 +470,39 @@ function Products({ token }) {
                 </option>
               ))}
             </select>
-          </div>
 
-          {/* Clear Filters */}
-          {(searchQuery || selectedCategoryFilter) && (
-            <button
-              onClick={handleClearFilters}
-              className="btn btn-secondary"
-              style={{ padding: "0.4rem 1rem" }}
-            >
-              Clear Filters
-            </button>
-          )}
+            {/* Clear Filters */}
+            {(searchQuery || selectedCategoryFilter) && (
+              <button
+                onClick={handleClearFilters}
+                className="btn btn-secondary"
+                style={{ padding: "0.4rem 0.85rem" }}
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="card">
         {loading ? (
-          <div style={{ padding: "2rem", textAlign: "center" }}>Loading products...</div>
+          <div style={{ padding: "2rem", textAlign: "center", color: "#94a3b8" }}>Loading products...</div>
         ) : products.length === 0 ? (
-          <div style={{ padding: "2rem", textAlign: "center" }}>No products found. Add some to get started.</div>
+          <div style={{ padding: "2rem", textAlign: "center", color: "#94a3b8" }}>No products found. Add some to get started.</div>
         ) : (
           <div className="table-responsive">
             <table>
               <thead>
                 <tr>
-                  <th>Preview</th>
-                  <th>Name</th>
-                  <th>SKU</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>Narcotics</th>
-                  <th>Discount</th>
-                  <th>Actions</th>
+                  <th className="th-preview">Preview</th>
+                  <th className="th-name">Name</th>
+                  <th className="th-sku">SKU</th>
+                  <th className="th-category">Category</th>
+                  <th className="th-price">Price</th>
+                  <th className="th-narcotics">Narcotics</th>
+                  <th className="th-discount">Discount</th>
+                  <th className="th-actions">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -509,22 +513,27 @@ function Products({ token }) {
                     ? cover.startsWith("http")
                       ? cover
                       : `${baseUploadUrl}${cover}`
-                    : `${baseUploadUrl}/uploads/placeholder.webp`;
+                    : FALLBACK_IMAGE;
 
                   return (
                     <tr key={product._id}>
-                      <td>
-                        <img
-                          src={coverUrl}
-                          alt={product.name}
-                          style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "4px" }}
-                        />
+                      <td className="td-center">
+                        <div className="product-img-wrapper">
+                          <img
+                            src={coverUrl}
+                            alt=""
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = FALLBACK_IMAGE;
+                            }}
+                          />
+                        </div>
                       </td>
-                      <td style={{ fontWeight: 600 }}>{product.name}</td>
-                      <td><code>{product.sku}</code></td>
+                      <td className="product-name-cell">{product.name}</td>
+                      <td><span className="product-sku-code">{product.sku}</span></td>
                       <td>{getCategoryName(product)}</td>
-                      <td>{product.price} PKR</td>
-                      <td>
+                      <td className="product-price-cell">{formatPrice(product.price)}</td>
+                      <td className="td-center">
                         <span
                           className={`badge ${product.isNarcotic ? "badge-narcotic" : "badge-secondary"}`}
                           style={{ cursor: "pointer" }}
@@ -534,41 +543,37 @@ function Products({ token }) {
                           {product.isNarcotic ? "Narcotic ⚠️" : "Safe"}
                         </span>
                       </td>
-                      <td>
+                      <td className="td-center">
                         {product.discount?.active ? (
                           <span className="badge badge-discount">
                             {product.discount.value}% Off
                           </span>
                         ) : (
-                          <span style={{ color: "#94a3b8", fontSize: "0.85rem" }}>None</span>
+                          <span style={{ color: "#64748b", fontSize: "0.85rem" }}>None</span>
                         )}
                       </td>
-                      <td>
-                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <td className="td-right">
+                        <div className="action-buttons-flex">
                           <button
-                            className="btn btn-secondary"
-                            style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                            className="btn btn-secondary btn-action-sm"
                             onClick={() => handleOpenEditModal(product)}
                           >
                             Edit
                           </button>
                           <button
-                            className="btn btn-secondary"
-                            style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                            className="btn btn-secondary btn-action-sm"
                             onClick={() => handleOpenImageModal(product)}
                           >
                             Images ({product.images?.length || 0})
                           </button>
                           <button
-                            className="btn btn-secondary"
-                            style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                            className="btn btn-secondary btn-action-sm"
                             onClick={() => handleOpenDiscountModal(product)}
                           >
                             Discount
                           </button>
                           <button
-                            className="btn btn-danger"
-                            style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                            className="btn btn-danger btn-action-sm"
                             onClick={() => handleDeleteProduct(product._id)}
                           >
                             Delete
@@ -616,7 +621,7 @@ function Products({ token }) {
                     value={formData.sku}
                     onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
                     required
-                    disabled={isEditMode} // Usually SKU is immutable on edit
+                    disabled={isEditMode}
                   />
                 </div>
                 <div className="form-group">
@@ -678,7 +683,7 @@ function Products({ token }) {
                 )}
                 <div className="form-group">
                   <div className="switch-group">
-                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#334155" }}>
+                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#cbd5e1" }}>
                       Narcotics Warning / Gate Required
                     </span>
                     <label className="switch">
@@ -733,7 +738,7 @@ function Products({ token }) {
                     <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0 0 0.5rem 0" }}>
                       Selected Files:
                     </p>
-                    <ul style={{ margin: 0, paddingLeft: "1.25rem", fontSize: "0.85rem", color: "#334155" }}>
+                    <ul style={{ margin: 0, paddingLeft: "1.25rem", fontSize: "0.85rem", color: "#cbd5e1" }}>
                       {selectedFiles.map((f, i) => (
                         <li key={i}>{f.name} ({(f.size / 1024).toFixed(1)} KB)</li>
                       ))}
@@ -749,10 +754,10 @@ function Products({ token }) {
                 </button>
               </form>
 
-              <hr style={{ margin: "1.5rem 0", border: "0", borderTop: "1px solid #e2e8f0" }} />
+              <hr style={{ margin: "1.5rem 0", border: "0", borderTop: "1px solid rgba(20, 184, 166, 0.15)" }} />
 
               {/* Uploaded Images List */}
-              <label style={{ display: "block", marginBottom: "0.75rem", fontWeight: 600, fontSize: "0.9rem" }}>
+              <label style={{ display: "block", marginBottom: "0.75rem", fontWeight: 600, fontSize: "0.9rem", color: "#cbd5e1" }}>
                 Current Product Images
               </label>
               {!selectedProduct.images || selectedProduct.images.length === 0 ? (
@@ -767,7 +772,14 @@ function Products({ token }) {
 
                     return (
                       <div className="image-preview-card" key={img._id}>
-                        <img src={imgUrl} alt="Product" />
+                        <img 
+                          src={imgUrl} 
+                          alt="Product" 
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = FALLBACK_IMAGE;
+                          }}
+                        />
                         <div className="image-preview-actions">
                           {img.isPrimary ? (
                             <span className="image-badge-primary">Cover</span>
@@ -804,12 +816,12 @@ function Products({ token }) {
         </div>
       )}
 
-      {/* --- MANAGE DISCOUNT MODAL --- */}
+      {/* --- EDIT DISCOUNT MODAL --- */}
       {isDiscountModalOpen && selectedProduct && (
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
-              <h3>Set Product Discount for {selectedProduct.name}</h3>
+              <h3>Manage Discount for {selectedProduct.name}</h3>
               <button className="modal-close" onClick={() => setIsDiscountModalOpen(false)}>
                 &times;
               </button>
@@ -817,12 +829,13 @@ function Products({ token }) {
             <form onSubmit={handleDiscountSubmit}>
               <div className="modal-body">
                 <div className="form-group">
-                  <label htmlFor="disc-value">Percentage Discount (%)</label>
+                  <label htmlFor="disc-val">Discount Percentage (%)</label>
                   <input
-                    id="disc-value"
+                    id="disc-val"
                     type="number"
                     min="0"
                     max="100"
+                    step="0.1"
                     className="form-control"
                     value={discountData.value}
                     onChange={(e) => setDiscountData({ ...discountData, value: e.target.value })}
@@ -831,7 +844,7 @@ function Products({ token }) {
                 </div>
                 <div className="form-group">
                   <div className="switch-group">
-                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#334155" }}>
+                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#cbd5e1" }}>
                       Activate Discount
                     </span>
                     <label className="switch">
