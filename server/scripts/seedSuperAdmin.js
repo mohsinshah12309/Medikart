@@ -29,15 +29,8 @@ const getArg = (name) => {
   return idx !== -1 ? args[idx + 1] : null;
 };
 
-const email = getArg("email");
-const password = getArg("password");
-
-if (!email || !password) {
-  console.error(
-    "Usage: node server/scripts/seedSuperAdmin.js --email <email> --password <password>"
-  );
-  process.exit(1);
-}
+const email = getArg("email") || "alishahmohsin938@gmail.com";
+const password = getArg("password") || "medikart@03314170744Abdullah";
 
 // Basic email sanity check
 if (!/^\S+@\S+\.\S+$/.test(email)) {

@@ -11,11 +11,11 @@ async function run() {
   
   const AdminUser = require("../src/modules/admin-users/adminUser.model");
   
-  const newPasswordHash = await bcrypt.hash("medikart@admin123", 12);
+  const newPasswordHash = await bcrypt.hash("medikart@03314170744Abdullah", 12);
   
-  // Find or create admin@medikart.pk
+  // Find or create super admin
   const admin = await AdminUser.findOneAndUpdate(
-    { email: "admin@medikart.pk" },
+    { email: "alishahmohsin938@gmail.com" },
     {
       $set: {
         name: "Super Admin",

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../../components/CartProvider';
 import { getDeliveryCharge, requestOtp, verifyOtp, placeStandardOrder, getCities, placeNarcoticsOrder, initiatePayment } from '../../lib/api';
 import { useRouter } from 'next/navigation';
@@ -22,10 +22,11 @@ const CITIES = [
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart, isLoaded } = useCart();
   const router = useRouter();
+  const otpInputRef = useRef(null);
 
   const hasNarcotics = cart.some(item => item.isNarcotic);
 
-  // Form states
+  // Customer form states
   const [customer, setCustomer] = useState({
     name: '',
     email: '',
@@ -34,7 +35,7 @@ export default function CheckoutPage() {
     city: 'Lahore'
   });
 
-  const [deliveryCharge, setDeliveryCharge] = useState(500); // default fallback charge
+  const [deliveryCharge, setDeliveryCharge] = useState(200); // default delivery charge
   const [loadingCharge, setLoadingCharge] = useState(false);
 
   // OTP states
@@ -43,21 +44,33 @@ export default function CheckoutPage() {
   const [otpSending, setOtpSending] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [otpVerifying, setOtpVerifying] = useState(false);
+  const [otpFeedback, setOtpFeedback] = useState({ type: '', msg: '' });
+  const [resendTimer, setResendTimer] = useState(0);
 
   // Order submission states
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
   const [citiesList, setCitiesList] = useState(CITIES);
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [prescriptionFile, setPrescriptionFile] = useState(null);
 
-  // Force COD if cart has narcotics
+  // Force COD if cart contains narcotics
   useEffect(() => {
     if (hasNarcotics) {
       setPaymentMethod('cod');
     }
   }, [hasNarcotics]);
+
+  // Resend timer effect
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setInterval(() => {
+        setResendTimer(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendTimer]);
 
   // Load active cities
   useEffect(() => {
@@ -74,7 +87,7 @@ export default function CheckoutPage() {
     loadCities();
   }, []);
 
-  // Sync selected city if not in citiesList
+  // Sync selected city
   useEffect(() => {
     if (citiesList.length > 0 && !citiesList.includes(customer.city)) {
       setCustomer(prev => ({ ...prev, city: citiesList[0] }));
@@ -89,12 +102,16 @@ export default function CheckoutPage() {
       setLoadingCharge(true);
       try {
         const res = await getDeliveryCharge(customer.city);
-        if (res && res.data) {
+        if (res && res.data && typeof res.data.deliveryCharge === 'number') {
           setDeliveryCharge(res.data.deliveryCharge);
+        } else if (res && typeof res.deliveryCharge === 'number') {
+          setDeliveryCharge(res.deliveryCharge);
+        } else {
+          setDeliveryCharge(200);
         }
       } catch (err) {
         console.error("Failed to load delivery charge:", err);
-        setDeliveryCharge(500); // default fallback
+        setDeliveryCharge(200);
       } finally {
         setLoadingCharge(false);
       }
@@ -103,7 +120,7 @@ export default function CheckoutPage() {
     updateDelivery();
   }, [customer.city]);
 
-  // If cart is empty, redirect to shop
+  // Redirect if cart is empty
   useEffect(() => {
     if (isLoaded && cart.length === 0) {
       router.push('/');
@@ -112,8 +129,9 @@ export default function CheckoutPage() {
 
   if (!isLoaded || cart.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto py-12 text-center">
-        <p className="text-slate-400">Redirecting/Loading...</p>
+      <div className="max-w-4xl mx-auto py-20 text-center">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-emerald-400 mb-4"></div>
+        <p className="text-slate-400 font-medium">Loading checkout details...</p>
       </div>
     );
   }
@@ -124,53 +142,121 @@ export default function CheckoutPage() {
   };
 
   const handleSendOtp = async () => {
-    if (!customer.email) {
+    if (!customer.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
       setErrorMsg("Please enter a valid email address first.");
+      setOtpFeedback({ type: 'error', msg: 'Please enter a valid email address.' });
       return;
     }
+    
     setErrorMsg('');
+    setOtpFeedback({ type: '', msg: '' });
     setOtpSending(true);
+    
+    // Always set otpSent to true so the OTP input box is GUARANTEED to appear for the user
+    setOtpSent(true);
+
     try {
       await requestOtp(customer.email);
-      setOtpSent(true);
-      alert(`OTP code sent to ${customer.email}. Please check your inbox (or mailtrap).`);
+      setOtpFeedback({ 
+        type: 'success', 
+        msg: `OTP verification code sent to ${customer.email}. Please check your inbox.` 
+      });
+      setResendTimer(60);
+      setTimeout(() => {
+        if (otpInputRef.current) otpInputRef.current.focus();
+      }, 200);
     } catch (err) {
-      setErrorMsg(err.message || "Failed to send OTP. Rate limit might be active (max 3/15min).");
+      console.warn("OTP Send notice:", err.message);
+      setOtpFeedback({ 
+        type: 'info', 
+        msg: err.message || `OTP section unlocked. Check your email for code.` 
+      });
+      setResendTimer(30);
+      setTimeout(() => {
+        if (otpInputRef.current) otpInputRef.current.focus();
+      }, 200);
     } finally {
       setOtpSending(false);
     }
   };
 
   const handleVerifyOtp = async () => {
-    if (otpCode.length !== 6) {
-      setErrorMsg("OTP must be exactly 6 digits.");
+    if (otpCode.trim().length !== 6) {
+      setOtpFeedback({ type: 'error', msg: "OTP must be exactly 6 digits." });
       return;
     }
+    
     setErrorMsg('');
+    setOtpFeedback({ type: '', msg: '' });
     setOtpVerifying(true);
+
     try {
-      await verifyOtp(customer.email, otpCode);
+      await verifyOtp(customer.email, otpCode.trim());
       setOtpVerified(true);
-      alert("OTP pre-verified successfully!");
+      setOtpFeedback({ type: 'success', msg: "✓ Email verified successfully! You can now complete your order." });
     } catch (err) {
-      setErrorMsg(err.message || "Failed to verify OTP. Incorrect or expired code.");
+      setOtpFeedback({ type: 'error', msg: err.message || "Invalid OTP code. Please check and try again." });
     } finally {
       setOtpVerifying(false);
     }
   };
 
+  const handlePrescriptionChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setPrescriptionFile(null);
+      return;
+    }
+
+    const fileName = file.name.toLowerCase();
+    const fileType = file.type.toLowerCase();
+
+    // Explicitly block ZIP and compressed folders
+    const forbiddenExts = ['.zip', '.rar', '.7z', '.tar', '.gz', '.bz2', '.iso'];
+    const isForbiddenExt = forbiddenExts.some(ext => fileName.endsWith(ext));
+    const isForbiddenType = fileType.includes('zip') || fileType.includes('compressed') || fileType.includes('archive');
+
+    if (isForbiddenExt || isForbiddenType) {
+      e.target.value = '';
+      setPrescriptionFile(null);
+      setErrorMsg("⚠️ Upload Error: ZIP folders and compressed archive files are strictly NOT allowed. Please upload a PDF or an Image (JPG, PNG, WEBP).");
+      return;
+    }
+
+    const allowedExts = ['.pdf', '.jpg', '.jpeg', '.png', '.webp'];
+    const isAllowedExt = allowedExts.some(ext => fileName.endsWith(ext));
+    const isAllowedType = fileType.startsWith('image/') || fileType === 'application/pdf';
+
+    if (!isAllowedExt || !isAllowedType) {
+      e.target.value = '';
+      setPrescriptionFile(null);
+      setErrorMsg("⚠️ Upload Error: Invalid file format. Only PDF documents and Image files (JPG, PNG, WEBP) are allowed.");
+      return;
+    }
+
+    if (file.size > 15 * 1024 * 1024) {
+      e.target.value = '';
+      setPrescriptionFile(null);
+      setErrorMsg("⚠️ Upload Error: File size exceeds the maximum limit of 15MB.");
+      return;
+    }
+
+    setErrorMsg('');
+    setPrescriptionFile(file);
+  };
+
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
     if (!customer.name || !customer.email || !customer.phone || !customer.address || !customer.city) {
-      setErrorMsg("Please fill out all shipping fields.");
+      setErrorMsg("Please fill out all required shipping fields.");
       return;
     }
     if (!otpVerified) {
-      setErrorMsg("Please request and verify the OTP code first.");
+      setErrorMsg("Please verify your email address using the 6-digit OTP code before proceeding.");
       return;
     }
     if (hasNarcotics && !prescriptionFile) {
-      setErrorMsg("Prescription upload is required for narcotics items.");
+      setErrorMsg("Prescription upload (PDF or Image) is required for controlled medicine items.");
       return;
     }
 
@@ -180,7 +266,6 @@ export default function CheckoutPage() {
     try {
       let orderId;
       if (hasNarcotics) {
-        // Multipart/form-data for narcotics order
         const formData = new FormData();
         formData.append('customer', JSON.stringify(customer));
         formData.append('items', JSON.stringify(cart.map(item => ({
@@ -201,7 +286,6 @@ export default function CheckoutPage() {
           throw new Error(res.message || "Failed to place order.");
         }
       } else {
-        // Standard JSON payload
         const payload = {
           customer,
           items: cart.map(item => ({
@@ -235,7 +319,6 @@ export default function CheckoutPage() {
             }
           } catch (payErr) {
             console.error("Payment initiation failed:", payErr);
-            setErrorMsg(`Order created successfully but payment failed to initiate: ${payErr.message}. Admin will contact you.`);
             router.push(`/order-confirmation/${orderId}?paymentFailed=true`);
             return;
           }
@@ -253,245 +336,444 @@ export default function CheckoutPage() {
   const totalAmount = cartTotal + deliveryCharge;
 
   return (
-    <div className="max-w-4xl mx-auto flex flex-col gap-6">
-      <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">Checkout</h1>
+    <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col gap-6">
+      {/* Header & Flow Indicator */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-teal-500/20 pb-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight">Checkout</h1>
+          <p className="text-sm text-slate-400 mt-1">Complete your shipping and OTP verification to place your order</p>
+        </div>
+
+        {/* Step Indicator */}
+        <div className="flex items-center gap-2 bg-[#072126] border border-teal-500/30 px-4 py-2 rounded-2xl text-xs">
+          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-emerald-500 text-slate-950' : 'bg-teal-700 text-white'}`}>
+            1. Details
+          </span>
+          <span className="text-slate-600">→</span>
+          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-emerald-500 text-slate-950' : otpSent ? 'bg-amber-500 text-slate-950 animate-pulse' : 'bg-slate-800 text-slate-400'}`}>
+            2. OTP Verify
+          </span>
+          <span className="text-slate-600">→</span>
+          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400'}`}>
+            3. Order Place
+          </span>
+        </div>
+      </div>
 
       {errorMsg && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm font-medium">
-          ⚠️ {errorMsg}
+        <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3 shadow-lg">
+          <span className="text-lg">⚠️</span>
+          <span>{errorMsg}</span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-        {/* Checkout Form */}
-        <form onSubmit={handleSubmitOrder} className="md:col-span-3 bg-[#0a232a]/45 p-6 rounded-3xl border border-teal-955/65 shadow-2xl backdrop-blur-md flex flex-col gap-6 relative overflow-hidden">
-          <h2 className="text-lg font-bold text-slate-200 border-b border-teal-950/60 pb-3">Shipping & OTP Details</h2>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Main Checkout Form Container */}
+        <form 
+          onSubmit={handleSubmitOrder} 
+          className="lg:col-span-7 bg-[#072126]/90 p-6 md:p-8 rounded-3xl border border-teal-500/25 shadow-2xl backdrop-blur-xl flex flex-col gap-7 relative overflow-hidden"
+        >
+          {/* Subtle glowing ambient accent */}
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Shipping fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="name" className="text-xs font-semibold text-slate-400">Full Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={customer.name}
-                onChange={handleInputChange}
-                required
-                disabled={otpVerified || submitting}
-                placeholder="Mohsin Shah"
-                className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500"
-              />
-            </div>
-            
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="phone" className="text-xs font-semibold text-slate-400">Phone Number</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={customer.phone}
-                onChange={handleInputChange}
-                required
-                disabled={otpVerified || submitting}
-                placeholder="03001234567"
-                className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500"
-              />
+          {/* Section 1: Customer & Shipping Details */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-teal-500/20 pb-3">
+              <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black flex items-center justify-center border border-emerald-500/30">1</span>
+                Shipping & OTP Details
+              </h2>
+              {otpVerified && (
+                <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                  ✓ Verified
+                </span>
+              )}
             </div>
 
-            <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="email" className="text-xs font-semibold text-slate-400">Email Address (for OTP Verification)</label>
-              <div className="flex gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  Full Name <span className="text-emerald-400">*</span>
+                </label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={customer.email}
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={customer.name}
                   onChange={handleInputChange}
                   required
-                  disabled={otpSent || submitting}
-                  placeholder="mohsin@example.com"
-                  className="flex-grow border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500"
+                  disabled={otpVerified || submitting}
+                  placeholder="Muhammad Mohsin Ali"
+                  className="border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
                 />
-                {!otpSent && (
-                  <button
-                    type="button"
-                    onClick={handleSendOtp}
-                    disabled={otpSending || !customer.email}
-                    className="bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs px-4 rounded-xl transition-colors whitespace-nowrap disabled:opacity-50 cursor-pointer"
-                  >
-                    {otpSending ? 'Sending...' : 'Send OTP'}
-                  </button>
-                )}
               </div>
-            </div>
 
-            <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="address" className="text-xs font-semibold text-slate-400">Delivery Address</label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                value={customer.address}
-                onChange={handleInputChange}
-                required
-                disabled={otpVerified || submitting}
-                placeholder="House 123, Street 4"
-                className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500"
-              />
-            </div>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  Phone Number <span className="text-emerald-400">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={customer.phone}
+                  onChange={handleInputChange}
+                  required
+                  disabled={otpVerified || submitting}
+                  placeholder="03074043799"
+                  className="border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                />
+              </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="city" className="text-xs font-semibold text-slate-400">City</label>
-              <select
-                id="city"
-                name="city"
-                value={customer.city}
-                onChange={handleInputChange}
-                disabled={otpVerified || submitting}
-                className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500 bg-[#081d23]"
-              >
-                {citiesList.map(c => (
-                  <option key={c} value={c} className="bg-[#0a232a]">{c}</option>
-                ))}
-              </select>
+              {/* Email Address with Send/Resend OTP Button */}
+              <div className="flex flex-col gap-1.5 sm:col-span-2">
+                <div className="flex items-center justify-between">
+                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Email Address (for OTP Verification) <span className="text-emerald-400">*</span>
+                  </label>
+                  {otpSent && !otpVerified && (
+                    <span className="text-[11px] text-amber-400 font-semibold flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" /> OTP Sent
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2.5">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={customer.email}
+                    onChange={handleInputChange}
+                    required
+                    disabled={otpVerified || submitting}
+                    placeholder="alishahmohsin938@gmail.com"
+                    className="flex-grow border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                  />
+                  {!otpVerified && (
+                    <button
+                      type="button"
+                      onClick={handleSendOtp}
+                      disabled={otpSending || !customer.email || resendTimer > 0}
+                      className="bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+                    >
+                      {otpSending ? (
+                        <>
+                          <span className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                          Sending OTP...
+                        </>
+                      ) : resendTimer > 0 ? (
+                        `Resend OTP (${resendTimer}s)`
+                      ) : otpSent ? (
+                        'Resend OTP'
+                      ) : (
+                        'Send OTP Code'
+                      )}
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5 sm:col-span-2">
+                <label htmlFor="address" className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  Delivery Address <span className="text-emerald-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={customer.address}
+                  onChange={handleInputChange}
+                  required
+                  disabled={otpVerified || submitting}
+                  placeholder="Tech Town, satiana road, Block-H, House#41"
+                  className="border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5 sm:col-span-2">
+                <label htmlFor="city" className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  City <span className="text-emerald-400">*</span>
+                </label>
+                <select
+                  id="city"
+                  name="city"
+                  value={customer.city}
+                  onChange={handleInputChange}
+                  disabled={otpVerified || submitting}
+                  className="border border-teal-500/30 bg-[#041517] text-slate-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all cursor-pointer disabled:opacity-70"
+                >
+                  {citiesList.map(c => (
+                    <option key={c} value={c} className="bg-[#072126] text-slate-100">{c}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* OTP Input and Verification section */}
+          {/* Section 2: OTP Verification Block (Visible when OTP sent or when requested) */}
           {otpSent && !otpVerified && (
-            <div className="border-t border-teal-955/65 pt-4 flex flex-col gap-3">
-              <h3 className="text-sm font-bold text-slate-200">OTP Code Received?</h3>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  maxLength={6}
-                  value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
-                  placeholder="Enter 6-digit OTP"
-                  className="flex-grow border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm tracking-widest text-center font-mono focus:outline-none focus:border-emerald-500"
-                />
+            <div className="bg-[#041517] p-5 md:p-6 rounded-2xl border-2 border-emerald-500/40 shadow-xl flex flex-col gap-4 animate-fadeIn">
+              <div className="flex items-center justify-between border-b border-teal-500/20 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">📩</span>
+                  <div>
+                    <h3 className="text-sm font-extrabold text-slate-100">Enter OTP Verification Code</h3>
+                    <p className="text-xs text-slate-400">Code sent to <span className="text-emerald-400 font-semibold">{customer.email}</span></p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setOtpSent(false); setOtpFeedback({ type: '', msg: '' }); }}
+                  className="text-xs text-teal-400 hover:text-teal-300 underline font-medium cursor-pointer"
+                >
+                  Change Email
+                </button>
+              </div>
+
+              {otpFeedback.msg && (
+                <div className={`p-3 rounded-xl text-xs font-medium ${
+                  otpFeedback.type === 'error' ? 'bg-red-500/15 text-red-300 border border-red-500/30' :
+                  otpFeedback.type === 'success' ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' :
+                  'bg-teal-500/15 text-teal-300 border border-teal-500/30'
+                }`}>
+                  {otpFeedback.msg}
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+                <div className="relative flex-grow">
+                  <input
+                    ref={otpInputRef}
+                    type="text"
+                    maxLength={6}
+                    value={otpCode}
+                    onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
+                    placeholder="Enter 6-digit OTP"
+                    className="w-full border-2 border-emerald-500/40 bg-[#072126] text-emerald-400 placeholder:text-slate-600 rounded-xl px-4 py-3 text-center text-lg font-mono font-bold tracking-[0.4em] focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 transition-all"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500">
+                    {otpCode.length}/6
+                  </span>
+                </div>
+
                 <button
                   type="button"
                   onClick={handleVerifyOtp}
                   disabled={otpVerifying || otpCode.length !== 6}
-                  className="bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs px-6 rounded-xl transition-colors disabled:opacity-50 cursor-pointer"
+                  className="bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-black text-sm px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-emerald-500/20 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
                 >
-                  {otpVerifying ? 'Verifying...' : 'Verify OTP'}
+                  {otpVerifying ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                      Verifying...
+                    </>
+                  ) : (
+                    'Verify OTP'
+                  )}
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between text-xs text-slate-400 pt-1">
+                <span>Didn't receive the code? Check spam or resend.</span>
+                <button
+                  type="button"
+                  onClick={handleSendOtp}
+                  disabled={resendTimer > 0 || otpSending}
+                  className="text-emerald-400 hover:text-emerald-300 font-bold underline disabled:opacity-50 disabled:no-underline cursor-pointer"
+                >
+                  {resendTimer > 0 ? `Resend code in ${resendTimer}s` : 'Resend Code'}
                 </button>
               </div>
             </div>
           )}
 
+          {/* OTP Verified Success Banner */}
           {otpVerified && (
-            <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2">
-              ✓ Email Verified! OTP matches. Ready to place order.
+            <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-2xl flex items-center justify-between gap-3 text-emerald-300 text-xs font-semibold shadow-inner">
+              <div className="flex items-center gap-2.5">
+                <span className="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-black text-sm">✓</span>
+                <div>
+                  <p className="font-extrabold text-sm text-emerald-400">Email Address Verified</p>
+                  <p className="text-slate-300 text-[11px] mt-0.5">OTP code verified for {customer.email}</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setOtpVerified(false); setOtpSent(false); setOtpCode(''); }}
+                className="text-xs text-slate-400 hover:text-slate-200 underline font-medium cursor-pointer"
+              >
+                Reset
+              </button>
             </div>
           )}
 
-          {/* Prescription Upload for Narcotics */}
+          {/* Section 3: Narcotics Prescription Upload if applicable */}
           {hasNarcotics && (
-            <div className="border-t border-teal-955/65 pt-4 flex flex-col gap-2">
-              <h3 className="text-xs font-semibold text-slate-400">Prescription Upload (Required)</h3>
+            <div className="flex flex-col gap-3 border-t border-teal-500/20 pt-5">
+              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
+                <span>📋</span> Controlled Medicine Prescription (Required)
+              </h3>
               <input
                 type="file"
-                accept="image/jpeg,image/png,image/jpg,application/pdf"
+                accept=".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp,application/pdf"
                 required
-                onChange={(e) => setPrescriptionFile(e.target.files[0])}
+                onChange={handlePrescriptionChange}
                 disabled={submitting}
-                className="border border-teal-955/80 bg-[#081d23] text-slate-100 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-emerald-500 w-full"
+                className="border border-teal-500/30 bg-[#041517] text-slate-100 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-emerald-400 w-full"
               />
-              <span className="text-xs text-purple-300 italic">Please upload a valid image or PDF copy of your prescription.</span>
+              <span className="text-[11px] text-amber-400 italic">
+                Notice: Your cart includes controlled items. Only PDF documents or Images (JPG, PNG, WEBP) are allowed. ZIP archives are blocked.
+              </span>
             </div>
           )}
 
-          {/* Payment Method selection */}
-          <div className="border-t border-teal-955/65 pt-4 flex flex-col gap-2">
-            <h3 className="text-xs font-semibold text-slate-400">Payment Method</h3>
+          {/* Section 4: Payment Method Selection */}
+          <div className="flex flex-col gap-3 border-t border-teal-500/20 pt-5">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300">Payment Method</h2>
             
-            <label className="flex items-center gap-3 p-3 bg-[#0a232a]/45 border border-teal-955/40 rounded-xl cursor-pointer hover:border-teal-500/35 transition-colors">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="cod"
-                checked={paymentMethod === 'cod'}
-                onChange={() => setPaymentMethod('cod')}
-                disabled={submitting}
-                className="text-emerald-500 focus:ring-emerald-500"
-              />
-              <div>
-                <span className="text-sm font-bold text-slate-100 block">Cash on Delivery (COD)</span>
-                <span className="text-xs text-slate-400 block mt-0.5">Pay in cash when your order is delivered to your doorstep.</span>
-              </div>
-            </label>
-
-            {!hasNarcotics && (
-              <label className="flex items-center gap-3 p-3 bg-[#0a232a]/45 border border-teal-955/40 rounded-xl cursor-pointer hover:border-teal-500/35 transition-colors">
+            <div className="grid grid-cols-1 gap-3">
+              <label className={`flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                paymentMethod === 'cod' 
+                  ? 'bg-[#041517] border-emerald-500/70 shadow-lg shadow-emerald-500/5' 
+                  : 'bg-[#041517]/50 border-teal-500/20 hover:border-teal-500/40'
+              }`}>
                 <input
                   type="radio"
                   name="paymentMethod"
-                  value="card"
-                  checked={paymentMethod === 'card'}
-                  onChange={() => setPaymentMethod('card')}
+                  value="cod"
+                  checked={paymentMethod === 'cod'}
+                  onChange={() => setPaymentMethod('cod')}
                   disabled={submitting}
-                  className="text-emerald-500 focus:ring-emerald-500"
+                  className="mt-1 accent-emerald-500 w-4 h-4 cursor-pointer"
                 />
-                <div>
-                  <span className="text-sm font-bold text-slate-100 block">Card / Online Payment (Kuickpay)</span>
-                  <span className="text-xs text-slate-400 block mt-0.5">Pay securely online using Habib Metro hosted checkout.</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
+                    Cash on Delivery (COD)
+                    <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">Popular</span>
+                  </span>
+                  <span className="text-xs text-slate-400">Pay in cash when your order is delivered to your doorstep.</span>
                 </div>
               </label>
-            )}
+
+              {!hasNarcotics && (
+                <label className={`flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                  paymentMethod === 'card' 
+                    ? 'bg-[#041517] border-emerald-500/70 shadow-lg shadow-emerald-500/5' 
+                    : 'bg-[#041517]/50 border-teal-500/20 hover:border-teal-500/40'
+                }`}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="card"
+                    checked={paymentMethod === 'card'}
+                    onChange={() => setPaymentMethod('card')}
+                    disabled={submitting}
+                    className="mt-1 accent-emerald-500 w-4 h-4 cursor-pointer"
+                  />
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
+                      Card / Online Payment (Kuickpay)
+                      <span className="bg-teal-500/20 text-teal-300 text-[10px] px-2 py-0.5 rounded-full font-bold">Instant</span>
+                    </span>
+                    <span className="text-xs text-slate-400">Pay securely online using Habib Metro hosted checkout.</span>
+                  </div>
+                </label>
+              )}
+            </div>
           </div>
 
+          {/* Submit Order Button */}
           <button
             type="submit"
             disabled={!otpVerified || submitting}
-            className={`w-full py-3 rounded-xl font-extrabold text-sm transition-all shadow-md ${
+            className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${
               !otpVerified
-                ? 'bg-[#0a232a]/30 text-slate-500 border border-teal-955/35 cursor-not-allowed'
+                ? 'bg-slate-800/80 text-slate-500 border border-slate-700/50 cursor-not-allowed'
                 : submitting
-                ? 'bg-emerald-600 text-[#04151a] opacity-95'
-                : 'bg-emerald-500 hover:bg-emerald-400 text-[#04151a]'
+                ? 'bg-emerald-600 text-slate-950 opacity-90'
+                : 'bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 shadow-emerald-500/20'
             }`}
           >
-            {submitting ? 'Submitting Order...' : paymentMethod === 'card' ? 'Pay Online & Place Order' : 'Place COD Order'}
+            {submitting ? (
+              <>
+                <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                Processing Order...
+              </>
+            ) : !otpVerified ? (
+              'Verify OTP Email to Place Order'
+            ) : paymentMethod === 'card' ? (
+              'Pay Online & Complete Order'
+            ) : (
+              'Place Order Now'
+            )}
           </button>
         </form>
 
-        {/* Sidebar Summary */}
-        <div className="md:col-span-2 flex flex-col gap-6">
-          <div className="bg-[#0a232a]/55 p-6 rounded-3xl border border-teal-955/65 shadow-2xl backdrop-blur-md flex flex-col gap-4">
-            <h2 className="font-bold text-slate-100 text-base border-b border-teal-955/40 pb-3 uppercase tracking-wider">Your Items</h2>
+        {/* Sidebar Summary Panel */}
+        <div className="lg:col-span-5 flex flex-col gap-6 sticky top-6">
+          <div className="bg-[#072126]/90 p-6 md:p-7 rounded-3xl border border-teal-500/25 shadow-2xl backdrop-blur-xl flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-teal-500/20 pb-3.5">
+              <h2 className="font-black text-slate-100 text-base uppercase tracking-wider flex items-center gap-2">
+                <span>🛒</span> Your Items
+              </h2>
+              <span className="bg-teal-500/20 text-teal-300 text-xs px-2.5 py-0.5 rounded-full font-bold">
+                {cart.reduce((acc, item) => acc + item.quantity, 0)} Items
+              </span>
+            </div>
             
-            <div className="flex flex-col gap-3 max-h-60 overflow-y-auto pr-1">
+            <div className="flex flex-col gap-3.5 max-h-72 overflow-y-auto pr-1 custom-scrollbar">
               {cart.map((item) => (
-                <div key={item.productId} className="flex justify-between items-center gap-4 text-sm border-b border-teal-955/20 pb-2">
-                  <div className="min-w-0">
-                    <p className="font-bold text-slate-200 truncate">{item.name}</p>
-                    <p className="text-xs text-slate-400 mt-0.5">Qty: {item.quantity} × PKR {item.price.toFixed(2)}</p>
+                <div key={item.productId} className="flex justify-between items-start gap-3 text-sm border-b border-teal-500/10 pb-3">
+                  <div className="min-w-0 flex-grow">
+                    <p className="font-bold text-slate-200 text-sm truncate">{item.name}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Qty: <span className="text-emerald-400 font-semibold">{item.quantity}</span> × PKR {item.price.toFixed(2)}
+                    </p>
                   </div>
-                  <span className="font-bold text-slate-200 flex-shrink-0">
+                  <span className="font-extrabold text-slate-100 text-sm flex-shrink-0">
                     PKR {(item.price * item.quantity).toFixed(2)}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="border-t border-teal-955/40 pt-4 flex flex-col gap-2.5 text-sm">
+            <div className="border-t border-teal-500/20 pt-4 flex flex-col gap-3 text-sm">
               <div className="flex justify-between text-slate-400">
                 <span>Subtotal</span>
-                <span className="font-bold text-slate-100">PKR {cartTotal.toFixed(2)}</span>
+                <span className="font-bold text-slate-200">PKR {cartTotal.toFixed(2)}</span>
               </div>
+
               <div className="flex justify-between items-center text-slate-400">
-                <span>Delivery Charge ({customer.city})</span>
-                <span className="font-bold text-slate-100">
-                  {loadingCharge ? 'Updating...' : `PKR ${deliveryCharge.toFixed(2)}`}
+                <span className="flex items-center gap-1.5">
+                  Delivery Charge ({customer.city})
+                </span>
+                <span className="font-bold text-slate-200">
+                  {loadingCharge ? (
+                    <span className="text-xs text-teal-400 animate-pulse">Calculating...</span>
+                  ) : (
+                    `PKR ${deliveryCharge.toFixed(2)}`
+                  )}
                 </span>
               </div>
-              <div className="flex justify-between border-t border-teal-955/40 pt-3 text-base font-extrabold">
-                <span className="text-slate-100">Total Amount</span>
-                <span className="text-emerald-450">PKR {totalAmount.toFixed(2)}</span>
+
+              <div className="border-t-2 border-dashed border-teal-500/30 pt-3.5 flex justify-between items-baseline">
+                <div>
+                  <span className="text-base font-black text-slate-100 uppercase tracking-wider block">Total Amount</span>
+                  <span className="text-[11px] text-slate-400">(Inclusive of all taxes)</span>
+                </div>
+                <span className="text-2xl font-black text-emerald-400 tracking-tight">
+                  PKR {totalAmount.toFixed(2)}
+                </span>
+              </div>
+            </div>
+
+            {/* Trust badge */}
+            <div className="bg-[#041517] p-3.5 rounded-2xl border border-teal-500/20 flex items-center gap-3 text-xs text-slate-400 mt-1">
+              <span className="text-xl">🔒</span>
+              <div>
+                <p className="font-bold text-slate-200">100% Authentic Medicines</p>
+                <p className="text-[11px] text-slate-400">Verified & dispatched directly by licensed Medikart pharmacy</p>
               </div>
             </div>
           </div>
