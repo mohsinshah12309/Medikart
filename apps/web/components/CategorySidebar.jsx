@@ -3,7 +3,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-export default function CategorySidebar({ categories = [], activeCategoryId = '', searchQuery = '' }) {
+export default function CategorySidebar({
+  categories = [],
+  activeCategoryId = '',
+  searchQuery = '',
+  onSelectCategory = null,
+}) {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState('');
 
@@ -13,12 +18,22 @@ export default function CategorySidebar({ categories = [], activeCategoryId = ''
     c.name.toLowerCase().includes(categoryFilter.toLowerCase())
   );
 
+  const handleCategoryClick = (e, catId, isMobile) => {
+    if (onSelectCategory) {
+      e.preventDefault();
+      onSelectCategory(catId);
+    }
+    if (isMobile) {
+      setMobileDrawerOpen(false);
+    }
+  };
+
   const renderCategoryList = (isMobile = false) => (
     <div className="flex flex-col gap-1 overflow-y-auto pr-1">
       <Link
         href={searchQuery ? `/?search=${encodeURIComponent(searchQuery)}` : '/'}
-        onClick={() => isMobile && setMobileDrawerOpen(false)}
-        className={`px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group border-l-4 ${
+        onClick={(e) => handleCategoryClick(e, '', isMobile)}
+        className={`px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group border-l-4 cursor-pointer ${
           !activeCategoryId
             ? 'bg-yellow-100/80 text-slate-950 border-yellow-500 shadow-xs'
             : 'text-slate-600 hover:bg-yellow-50/50 hover:text-slate-950 border-transparent'
@@ -39,8 +54,8 @@ export default function CategorySidebar({ categories = [], activeCategoryId = ''
           <Link
             key={cat._id}
             href={href}
-            onClick={() => isMobile && setMobileDrawerOpen(false)}
-            className={`px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group border-l-4 ${
+            onClick={(e) => handleCategoryClick(e, cat._id, isMobile)}
+            className={`px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group border-l-4 cursor-pointer ${
               isActive
                 ? 'bg-yellow-100/80 text-slate-950 border-yellow-500 shadow-xs'
                 : 'text-slate-600 hover:bg-yellow-50/50 hover:text-slate-950 border-transparent'

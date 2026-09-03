@@ -114,6 +114,12 @@ const updateProduct = async (productId, updateData) => {
   // Invalidate cache
   try {
     await redisClient.del(`cache:storefront:product:${productId}`);
+    if (typeof redisClient.keys === "function") {
+      const productKeys = await redisClient.keys("cache:storefront:products:*");
+      if (productKeys && productKeys.length > 0) {
+        await redisClient.del(...productKeys);
+      }
+    }
   } catch (err) {
     console.error("[Cache] Invalidation error on update:", err.message);
   }
@@ -134,6 +140,12 @@ const deleteProduct = async (productId) => {
   // Invalidate cache
   try {
     await redisClient.del(`cache:storefront:product:${productId}`);
+    if (typeof redisClient.keys === "function") {
+      const productKeys = await redisClient.keys("cache:storefront:products:*");
+      if (productKeys && productKeys.length > 0) {
+        await redisClient.del(...productKeys);
+      }
+    }
   } catch (err) {
     console.error("[Cache] Invalidation error on delete:", err.message);
   }

@@ -98,8 +98,8 @@ const getProductById = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   try {
     const product = await productService.updateProduct(req.params.id, req.body);
-    // Return only the updated ID
-    res.status(200).json({ _id: product._id });
+    // Return both _id (for test compatibility) and product data
+    res.status(200).json({ _id: product._id, status: "success", data: { product } });
   } catch (error) {
     next(error);
   }

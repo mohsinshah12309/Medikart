@@ -35,6 +35,7 @@ function Products({ token }) {
     categoryId: "",
     isNarcotic: false,
     stockStatus: "in_stock",
+    active: true,
   });
   const [formFiles, setFormFiles] = useState([]);
 
@@ -107,6 +108,7 @@ function Products({ token }) {
       categoryId: categories[0]?._id || "",
       isNarcotic: false,
       stockStatus: "in_stock",
+      active: true,
     });
     setFormFiles([]);
     setIsProductModalOpen(true);
@@ -123,6 +125,7 @@ function Products({ token }) {
       categoryId: product.categoryIds?.[0]?._id || product.categoryIds?.[0] || "",
       isNarcotic: !!product.isNarcotic,
       stockStatus: product.stockStatus || "in_stock",
+      active: product.active !== false,
     });
     setFormFiles([]);
     setIsProductModalOpen(true);
@@ -141,6 +144,7 @@ function Products({ token }) {
       categoryIds: formData.categoryId ? [formData.categoryId] : [],
       isNarcotic: formData.isNarcotic,
       stockStatus: formData.stockStatus,
+      active: formData.active !== false,
     };
 
     try {
@@ -237,6 +241,41 @@ function Products({ token }) {
       setSuccessMsg(`Narcotics status for ${product.name} updated to ${newNarcoticState ? "ON" : "OFF"}`);
       fetchProducts();
     } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleToggleActive = async (product) => {
+    setError("");
+    setSuccessMsg("");
+    const newActiveState = product.active === false ? true : false;
+
+    // Optimistic UI update
+    setProducts((prev) =>
+      prev.map((p) => (p._id === product._id ? { ...p, active: newActiveState } : p))
+    );
+
+    try {
+      const res = await fetch(`${apiUrl}/admin/products/${product._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ active: newActiveState }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to toggle product status");
+
+      setSuccessMsg(
+        `Product "${product.name}" is now ${newActiveState ? "ENABLED (visible on storefront)" : "DISABLED (hidden from storefront)"}.`
+      );
+    } catch (err) {
+      // Revert optimistic update on failure
+      setProducts((prev) =>
+        prev.map((p) => (p._id === product._id ? { ...p, active: product.active } : p))
+      );
       setError(err.message);
     }
   };
@@ -500,6 +539,7 @@ function Products({ token }) {
                   <th className="th-sku">SKU</th>
                   <th className="th-category">Category</th>
                   <th className="th-price">Price</th>
+                  <th className="th-status" style={{ textAlign: "center" }}>Status</th>
                   <th className="th-narcotics">Narcotics</th>
                   <th className="th-discount">Discount</th>
                   <th className="th-actions">Actions</th>
@@ -516,7 +556,7 @@ function Products({ token }) {
                     : FALLBACK_IMAGE;
 
                   return (
-                    <tr key={product._id}>
+                    <tr key={product._id} style={product.active === false ? { opacity: 0.7, backgroundColor: "#fef2f2/20" } : {}}>
                       <td className="td-center">
                         <div className="product-img-wrapper">
                           <img
@@ -529,10 +569,41 @@ function Products({ token }) {
                           />
                         </div>
                       </td>
-                      <td className="product-name-cell">{product.name}</td>
+                      <td className="product-name-cell">
+                        {product.name}
+                        {product.active === false && (
+                          <span style={{ display: "block", fontSize: "0.7rem", color: "#e11d48", fontWeight: 700 }}>
+                            (Hidden on Storefront)
+                          </span>
+                        )}
+                      </td>
                       <td><span className="product-sku-code">{product.sku}</span></td>
                       <td>{getCategoryName(product)}</td>
                       <td className="product-price-cell">{formatPrice(product.price)}</td>
+                      <td className="td-center">
+                        <button
+                          type="button"
+                          onClick={() => handleToggleActive(product)}
+                          title={product.active !== false ? "Click to disable product (hide from storefront)" : "Click to enable product (show on storefront)"}
+                          style={{
+                            padding: "0.25rem 0.65rem",
+                            fontSize: "0.75rem",
+                            fontWeight: 800,
+                            borderRadius: "9999px",
+                            border: product.active !== false ? "1px solid #86efac" : "1px solid #fca5a5",
+                            backgroundColor: product.active !== false ? "#f0fdf4" : "#fef2f2",
+                            color: product.active !== false ? "#166534" : "#991b1b",
+                            cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            transition: "all 0.15s ease"
+                          }}
+                        >
+                          <span style={{ fontSize: "0.6rem" }}>{product.active !== false ? "●" : "○"}</span>
+                          {product.active !== false ? "Active" : "Disabled"}
+                        </button>
+                      </td>
                       <td className="td-center">
                         <span
                           className={`badge ${product.isNarcotic ? "badge-narcotic" : "badge-secondary"}`}
@@ -554,6 +625,19 @@ function Products({ token }) {
                       </td>
                       <td className="td-right">
                         <div className="action-buttons-flex">
+                          <button
+                            type="button"
+                            className="btn btn-action-sm"
+                            style={
+                              product.active !== false
+                                ? { backgroundColor: "#fff1f2", color: "#e11d48", borderColor: "#fecdd3", fontWeight: 700 }
+                                : { backgroundColor: "#fef9c3", color: "#854d0e", borderColor: "#fde047", fontWeight: 700 }
+                            }
+                            onClick={() => handleToggleActive(product)}
+                            title={product.active !== false ? "Disable product from storefront" : "Enable product on storefront"}
+                          >
+                            {product.active !== false ? "Disable" : "Enable"}
+                          </button>
                           <button
                             className="btn btn-secondary btn-action-sm"
                             onClick={() => handleOpenEditModal(product)}
@@ -682,8 +766,30 @@ function Products({ token }) {
                   </div>
                 )}
                 <div className="form-group">
+                  <div className="switch-group" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.75rem 1rem", backgroundColor: "#f8fafc", borderRadius: "0.75rem", border: "1px solid #e2e8f0" }}>
+                    <div>
+                      <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "#0f172a", display: "block" }}>
+                        Storefront Visibility (Product Status)
+                      </span>
+                      <span style={{ fontSize: "0.8rem", color: "#64748b" }}>
+                        {formData.active !== false
+                          ? "Enabled — Visible in storefront catalog and search."
+                          : "Disabled — Hidden from storefront catalog and search."}
+                      </span>
+                    </div>
+                    <label className="switch">
+                      <input
+                        type="checkbox"
+                        checked={formData.active !== false}
+                        onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                      />
+                      <span className="slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div className="form-group">
                   <div className="switch-group">
-                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#cbd5e1" }}>
+                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#475569" }}>
                       Narcotics Warning / Gate Required
                     </span>
                     <label className="switch">
