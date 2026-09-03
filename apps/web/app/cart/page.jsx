@@ -20,14 +20,14 @@ export default function CartPage() {
 
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
-      <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">Shopping Cart</h1>
+      <h1 className="text-2xl font-black text-slate-900 tracking-tight">Shopping Cart</h1>
 
       {cart.length === 0 ? (
-        <div className="bg-[#0a232a]/45 rounded-3xl border border-teal-955/65 p-12 text-center shadow-2xl backdrop-blur-md">
+        <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-lg">
           <span className="text-5xl block animate-bounce mb-4">🛒</span>
-          <h2 className="text-lg font-bold text-slate-200 mt-4">Your cart is empty</h2>
-          <p className="text-slate-450 text-sm mt-1">Browse our products and add them to your cart.</p>
-          <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold text-sm rounded-xl transition-all shadow-md active:scale-[0.98]">
+          <h2 className="text-lg font-bold text-slate-900 mt-4">Your cart is empty</h2>
+          <p className="text-slate-600 text-sm mt-1">Browse our products and add them to your cart.</p>
+          <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm active:scale-[0.98]">
             Start Shopping
           </Link>
         </div>
@@ -36,11 +36,12 @@ export default function CartPage() {
           {/* Cart items list */}
           <div className="md:col-span-2 flex flex-col gap-4">
             {cart.map((item) => (
-              <div key={item.productId} className="bg-[#0a232a]/45 rounded-2xl border border-teal-955/65 p-4 shadow-xl backdrop-blur-md flex gap-4 items-center relative group">
-                <div className="w-16 h-16 bg-slate-950/15 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-teal-955/40">
+              <div key={item.productId} className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400/80 transition-colors">
+                <div className="w-16 h-16 bg-slate-50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-slate-100">
                   <img
                     src={item.coverImage?.startsWith('http') ? item.coverImage : `http://localhost:5000${item.coverImage}`}
                     alt={item.name}
+                    loading="lazy"
                     className="max-h-full max-w-full object-contain"
                     onError={(e) => {
                       e.target.src = "http://localhost:5000/uploads/placeholder.webp";
@@ -49,35 +50,35 @@ export default function CartPage() {
                 </div>
 
                 <div className="flex-grow min-w-0">
-                  <Link href={`/products/${item.productId}`} className="font-bold text-sm text-slate-100 hover:text-emerald-450 line-clamp-1 transition-colors">
+                  <Link href={`/products/${item.productId}`} className="font-bold text-sm text-slate-900 hover:text-yellow-600 line-clamp-1 transition-colors">
                     {item.name}
                   </Link>
-                  <p className="text-xs text-slate-400 mt-0.5 font-semibold">
+                  <p className="text-xs text-slate-500 mt-0.5 font-bold">
                     PKR {item.price.toFixed(2)}
                   </p>
                   
                   {item.isNarcotic && (
-                    <span className="inline-block bg-purple-500/10 text-purple-300 text-[9px] font-bold px-1.5 py-0.5 rounded border border-purple-500/20 mt-1 uppercase tracking-wider">
+                    <span className="inline-block bg-amber-100 text-amber-900 text-[9px] font-black px-1.5 py-0.5 rounded border border-amber-300 mt-1 uppercase tracking-wider">
                       Rx Only - Prescription Required
                     </span>
                   )}
                 </div>
 
                 {/* Quantity Controls */}
-                <div className="flex items-center border border-teal-955/50 rounded-xl bg-slate-950/20">
+                <div className="flex items-center border border-slate-300 rounded-xl bg-slate-50">
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                    className="px-2.5 py-1 text-slate-400 hover:text-slate-100 transition-colors text-sm font-bold disabled:opacity-30"
+                    className="px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 rounded-l-xl transition-colors text-sm font-bold disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity <= 1}
                   >
                     -
                   </button>
-                  <span className="px-2 py-1 text-xs font-bold w-7 text-center select-none text-slate-200">
+                  <span className="px-2 py-1 text-xs font-black w-7 text-center select-none text-slate-900">
                     {item.quantity}
                   </span>
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                    className="px-2.5 py-1 text-slate-400 hover:text-slate-100 transition-colors text-sm font-bold disabled:opacity-30"
+                    className="px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 rounded-r-xl transition-colors text-sm font-bold disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity >= 99}
                   >
                     +
@@ -87,7 +88,7 @@ export default function CartPage() {
                 {/* Remove Button */}
                 <button
                   onClick={() => removeFromCart(item.productId)}
-                  className="text-slate-500 hover:text-rose-450 p-2 text-sm transition-colors cursor-pointer"
+                  className="text-slate-400 hover:text-red-600 p-2 text-sm transition-colors cursor-pointer"
                   title="Remove item"
                 >
                   ✕
@@ -97,19 +98,19 @@ export default function CartPage() {
           </div>
 
           {/* Cart Summary */}
-          <div className="bg-[#0a232a]/55 rounded-2xl border border-teal-955/65 p-6 shadow-2xl backdrop-blur-md flex flex-col gap-4 h-fit">
-            <h3 className="font-extrabold text-slate-100 text-base border-b border-teal-950/60 pb-3 uppercase tracking-wider">Order Summary</h3>
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-md flex flex-col gap-4 h-fit">
+            <h3 className="font-black text-slate-900 text-base border-b border-slate-200 pb-3 uppercase tracking-wider">Order Summary</h3>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-400 font-medium">Subtotal</span>
-              <span className="font-bold text-slate-100">PKR {cartTotal.toFixed(2)}</span>
+              <span className="text-slate-600 font-medium">Subtotal</span>
+              <span className="font-black text-slate-950">PKR {cartTotal.toFixed(2)}</span>
             </div>
             
-            <div className="text-xs text-slate-500 italic mt-1 leading-relaxed border-t border-teal-950/60 pt-3">
+            <div className="text-xs text-slate-500 italic mt-1 leading-relaxed border-t border-slate-200 pt-3">
               * Delivery charges and taxes will be computed during checkout based on your city.
             </div>
 
             {hasNarcotics && (
-              <div className="bg-purple-950/25 border border-purple-500/20 rounded-xl p-3.5 text-xs text-purple-300 leading-relaxed">
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-900 leading-relaxed font-medium">
                 📝 Your cart contains prescription-only (Rx) items. A prescription upload is required at checkout.
               </div>
             )}
@@ -117,7 +118,7 @@ export default function CartPage() {
             <div className="mt-4">
               <Link
                 href="/checkout"
-                className="w-full inline-block text-center py-3 bg-emerald-500 hover:bg-emerald-400 text-[#04151a] font-extrabold text-sm rounded-xl transition-all shadow-md shadow-emerald-500/5 active:scale-[0.98]"
+                className="w-full inline-block text-center py-3.5 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm hover:shadow-md border border-yellow-500/50 active:scale-[0.98]"
               >
                 Proceed to Checkout
               </Link>

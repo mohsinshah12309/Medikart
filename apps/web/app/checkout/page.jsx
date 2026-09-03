@@ -5,6 +5,7 @@ import { useCart } from '../../components/CartProvider';
 import { getDeliveryCharge, requestOtp, verifyOtp, placeStandardOrder, getCities, placeNarcoticsOrder, initiatePayment } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import CardFlip3D from '../../components/3d/CardFlip3D';
 
 const CITIES = [
   'Lahore',
@@ -34,6 +35,15 @@ export default function CheckoutPage() {
     address: '',
     city: 'Lahore'
   });
+
+  // 3D Card details for interactive preview
+  const [cardDetails, setCardDetails] = useState({
+    number: '',
+    holder: '',
+    expiry: '',
+    cvv: '',
+  });
+  const [isCardFlipped, setIsCardFlipped] = useState(false);
 
   const [deliveryCharge, setDeliveryCharge] = useState(200); // default delivery charge
   const [loadingCharge, setLoadingCharge] = useState(false);
@@ -338,30 +348,30 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col gap-6">
       {/* Header & Flow Indicator */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-teal-500/20 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight">Checkout</h1>
-          <p className="text-sm text-slate-400 mt-1">Complete your shipping and OTP verification to place your order</p>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Checkout</h1>
+          <p className="text-sm text-slate-500 mt-1">Complete your shipping and OTP verification to place your order</p>
         </div>
 
         {/* Step Indicator */}
-        <div className="flex items-center gap-2 bg-[#072126] border border-teal-500/30 px-4 py-2 rounded-2xl text-xs">
-          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-emerald-500 text-slate-950' : 'bg-teal-700 text-white'}`}>
+        <div className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-2xl text-xs shadow-xs">
+          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-green-600 text-white' : 'bg-yellow-400 text-slate-950'}`}>
             1. Details
           </span>
-          <span className="text-slate-600">→</span>
-          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-emerald-500 text-slate-950' : otpSent ? 'bg-amber-500 text-slate-950 animate-pulse' : 'bg-slate-800 text-slate-400'}`}>
+          <span className="text-slate-400">→</span>
+          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-green-600 text-white' : otpSent ? 'bg-yellow-400 text-slate-950 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
             2. OTP Verify
           </span>
-          <span className="text-slate-600">→</span>
-          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-400'}`}>
+          <span className="text-slate-400">→</span>
+          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-yellow-400 text-slate-950' : 'bg-slate-100 text-slate-500'}`}>
             3. Order Place
           </span>
         </div>
       </div>
 
       {errorMsg && (
-        <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3 shadow-lg">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3 shadow-xs">
           <span className="text-lg">⚠️</span>
           <span>{errorMsg}</span>
         </div>
@@ -371,20 +381,20 @@ export default function CheckoutPage() {
         {/* Main Checkout Form Container */}
         <form 
           onSubmit={handleSubmitOrder} 
-          className="lg:col-span-7 bg-[#072126]/90 p-6 md:p-8 rounded-3xl border border-teal-500/25 shadow-2xl backdrop-blur-xl flex flex-col gap-7 relative overflow-hidden"
+          className="lg:col-span-7 bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-xl flex flex-col gap-7 relative overflow-hidden"
         >
-          {/* Subtle glowing ambient accent */}
-          <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Subtle warm ambient accent */}
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-yellow-300/15 rounded-full blur-3xl pointer-events-none" />
 
           {/* Section 1: Customer & Shipping Details */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between border-b border-teal-500/20 pb-3">
-              <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black flex items-center justify-center border border-emerald-500/30">1</span>
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-yellow-400 text-slate-950 text-xs font-black flex items-center justify-center border border-yellow-500/40">1</span>
                 Shipping & OTP Details
               </h2>
               {otpVerified && (
-                <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                <span className="bg-green-50 border border-green-200 text-green-700 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
                   ✓ Verified
                 </span>
               )}
@@ -392,8 +402,8 @@ export default function CheckoutPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  Full Name <span className="text-emerald-400">*</span>
+                <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -404,13 +414,13 @@ export default function CheckoutPage() {
                   required
                   disabled={otpVerified || submitting}
                   placeholder="Muhammad Mohsin Ali"
-                  className="border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                  className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  Phone Number <span className="text-emerald-400">*</span>
+                <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Phone Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -421,19 +431,19 @@ export default function CheckoutPage() {
                   required
                   disabled={otpVerified || submitting}
                   placeholder="03074043799"
-                  className="border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                  className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                 />
               </div>
 
               {/* Email Address with Send/Resend OTP Button */}
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <div className="flex items-center justify-between">
-                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Email Address (for OTP Verification) <span className="text-emerald-400">*</span>
+                  <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    Email Address (for OTP Verification) <span className="text-red-500">*</span>
                   </label>
                   {otpSent && !otpVerified && (
-                    <span className="text-[11px] text-amber-400 font-semibold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" /> OTP Sent
+                    <span className="text-[11px] text-amber-600 font-semibold flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" /> OTP Sent
                     </span>
                   )}
                 </div>
@@ -448,14 +458,14 @@ export default function CheckoutPage() {
                     required
                     disabled={otpVerified || submitting}
                     placeholder="alishahmohsin938@gmail.com"
-                    className="flex-grow border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                    className="flex-grow border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                   />
                   {!otpVerified && (
                     <button
                       type="button"
                       onClick={handleSendOtp}
                       disabled={otpSending || !customer.email || resendTimer > 0}
-                      className="bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-md hover:shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+                      className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-xs border border-yellow-500/40 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
                     >
                       {otpSending ? (
                         <>
@@ -475,8 +485,8 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="address" className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  Delivery Address <span className="text-emerald-400">*</span>
+                <label htmlFor="address" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Delivery Address <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -487,13 +497,13 @@ export default function CheckoutPage() {
                   required
                   disabled={otpVerified || submitting}
                   placeholder="Tech Town, satiana road, Block-H, House#41"
-                  className="border border-teal-500/30 bg-[#041517] text-slate-100 placeholder:text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all disabled:opacity-70"
+                  className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="city" className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  City <span className="text-emerald-400">*</span>
+                <label htmlFor="city" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  City <span className="text-red-500">*</span>
                 </label>
                 <select
                   id="city"
@@ -501,10 +511,10 @@ export default function CheckoutPage() {
                   value={customer.city}
                   onChange={handleInputChange}
                   disabled={otpVerified || submitting}
-                  className="border border-teal-500/30 bg-[#041517] text-slate-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 transition-all cursor-pointer disabled:opacity-70"
+                  className="border border-slate-300 bg-white text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all cursor-pointer disabled:opacity-70"
                 >
                   {citiesList.map(c => (
-                    <option key={c} value={c} className="bg-[#072126] text-slate-100">{c}</option>
+                    <option key={c} value={c} className="bg-white text-slate-900">{c}</option>
                   ))}
                 </select>
               </div>
@@ -513,19 +523,19 @@ export default function CheckoutPage() {
 
           {/* Section 2: OTP Verification Block (Visible when OTP sent or when requested) */}
           {otpSent && !otpVerified && (
-            <div className="bg-[#041517] p-5 md:p-6 rounded-2xl border-2 border-emerald-500/40 shadow-xl flex flex-col gap-4 animate-fadeIn">
-              <div className="flex items-center justify-between border-b border-teal-500/20 pb-3">
+            <div className="bg-yellow-50/50 p-5 md:p-6 rounded-2xl border-2 border-yellow-400/60 shadow-md flex flex-col gap-4 animate-fadeIn">
+              <div className="flex items-center justify-between border-b border-yellow-200 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xl">📩</span>
                   <div>
-                    <h3 className="text-sm font-extrabold text-slate-100">Enter OTP Verification Code</h3>
-                    <p className="text-xs text-slate-400">Code sent to <span className="text-emerald-400 font-semibold">{customer.email}</span></p>
+                    <h3 className="text-sm font-black text-slate-900">Enter OTP Verification Code</h3>
+                    <p className="text-xs text-slate-600">Code sent to <span className="text-slate-950 font-bold">{customer.email}</span></p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => { setOtpSent(false); setOtpFeedback({ type: '', msg: '' }); }}
-                  className="text-xs text-teal-400 hover:text-teal-300 underline font-medium cursor-pointer"
+                  className="text-xs text-yellow-700 hover:text-yellow-800 underline font-bold cursor-pointer"
                 >
                   Change Email
                 </button>
@@ -533,9 +543,9 @@ export default function CheckoutPage() {
 
               {otpFeedback.msg && (
                 <div className={`p-3 rounded-xl text-xs font-medium ${
-                  otpFeedback.type === 'error' ? 'bg-red-500/15 text-red-300 border border-red-500/30' :
-                  otpFeedback.type === 'success' ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' :
-                  'bg-teal-500/15 text-teal-300 border border-teal-500/30'
+                  otpFeedback.type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' :
+                  otpFeedback.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' :
+                  'bg-yellow-100 text-yellow-900 border border-yellow-300'
                 }`}>
                   {otpFeedback.msg}
                 </div>
@@ -550,9 +560,9 @@ export default function CheckoutPage() {
                     value={otpCode}
                     onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
                     placeholder="Enter 6-digit OTP"
-                    className="w-full border-2 border-emerald-500/40 bg-[#072126] text-emerald-400 placeholder:text-slate-600 rounded-xl px-4 py-3 text-center text-lg font-mono font-bold tracking-[0.4em] focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 transition-all"
+                    className="w-full border-2 border-yellow-400/80 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-center text-lg font-mono font-bold tracking-[0.4em] focus:outline-none focus:border-yellow-500 focus:ring-4 focus:ring-yellow-400/20 transition-all"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400">
                     {otpCode.length}/6
                   </span>
                 </div>
@@ -561,7 +571,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={handleVerifyOtp}
                   disabled={otpVerifying || otpCode.length !== 6}
-                  className="bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-black text-sm px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-emerald-500/20 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
+                  className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm px-6 py-3 rounded-xl transition-all shadow-sm border border-yellow-500/50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   {otpVerifying ? (
                     <>
@@ -574,13 +584,13 @@ export default function CheckoutPage() {
                 </button>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-400 pt-1">
+              <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
                 <span>Didn't receive the code? Check spam or resend.</span>
                 <button
                   type="button"
                   onClick={handleSendOtp}
                   disabled={resendTimer > 0 || otpSending}
-                  className="text-emerald-400 hover:text-emerald-300 font-bold underline disabled:opacity-50 disabled:no-underline cursor-pointer"
+                  className="text-yellow-700 hover:text-yellow-800 font-bold underline disabled:opacity-50 disabled:no-underline cursor-pointer"
                 >
                   {resendTimer > 0 ? `Resend code in ${resendTimer}s` : 'Resend Code'}
                 </button>
@@ -590,18 +600,18 @@ export default function CheckoutPage() {
 
           {/* OTP Verified Success Banner */}
           {otpVerified && (
-            <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-2xl flex items-center justify-between gap-3 text-emerald-300 text-xs font-semibold shadow-inner">
+            <div className="bg-green-50 border border-green-200 p-4 rounded-2xl flex items-center justify-between gap-3 text-green-800 text-xs font-semibold shadow-xs">
               <div className="flex items-center gap-2.5">
-                <span className="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-black text-sm">✓</span>
+                <span className="w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center font-black text-sm">✓</span>
                 <div>
-                  <p className="font-extrabold text-sm text-emerald-400">Email Address Verified</p>
-                  <p className="text-slate-300 text-[11px] mt-0.5">OTP code verified for {customer.email}</p>
+                  <p className="font-extrabold text-sm text-green-900">Email Address Verified</p>
+                  <p className="text-green-700 text-[11px] mt-0.5">OTP code verified for {customer.email}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => { setOtpVerified(false); setOtpSent(false); setOtpCode(''); }}
-                className="text-xs text-slate-400 hover:text-slate-200 underline font-medium cursor-pointer"
+                className="text-xs text-slate-500 hover:text-slate-800 underline font-medium cursor-pointer"
               >
                 Reset
               </button>
@@ -610,8 +620,8 @@ export default function CheckoutPage() {
 
           {/* Section 3: Narcotics Prescription Upload if applicable */}
           {hasNarcotics && (
-            <div className="flex flex-col gap-3 border-t border-teal-500/20 pt-5">
-              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
+            <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 bg-amber-50/50 p-4 rounded-2xl border border-amber-200">
+              <h3 className="text-sm font-bold text-amber-950 flex items-center gap-2">
                 <span>📋</span> Controlled Medicine Prescription (Required)
               </h3>
               <input
@@ -620,23 +630,23 @@ export default function CheckoutPage() {
                 required
                 onChange={handlePrescriptionChange}
                 disabled={submitting}
-                className="border border-teal-500/30 bg-[#041517] text-slate-100 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-emerald-400 w-full"
+                className="border border-slate-300 bg-white text-slate-900 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-yellow-500 w-full"
               />
-              <span className="text-[11px] text-amber-400 italic">
+              <span className="text-[11px] text-amber-800 italic">
                 Notice: Your cart includes controlled items. Only PDF documents or Images (JPG, PNG, WEBP) are allowed. ZIP archives are blocked.
               </span>
             </div>
           )}
 
           {/* Section 4: Payment Method Selection */}
-          <div className="flex flex-col gap-3 border-t border-teal-500/20 pt-5">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-300">Payment Method</h2>
+          <div className="flex flex-col gap-3 border-t border-slate-200 pt-5">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700">Payment Method</h2>
             
             <div className="grid grid-cols-1 gap-3">
               <label className={`flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
                 paymentMethod === 'cod' 
-                  ? 'bg-[#041517] border-emerald-500/70 shadow-lg shadow-emerald-500/5' 
-                  : 'bg-[#041517]/50 border-teal-500/20 hover:border-teal-500/40'
+                  ? 'bg-yellow-50/40 border-yellow-500 shadow-sm' 
+                  : 'bg-white border-slate-200 hover:border-slate-300'
               }`}>
                 <input
                   type="radio"
@@ -645,22 +655,22 @@ export default function CheckoutPage() {
                   checked={paymentMethod === 'cod'}
                   onChange={() => setPaymentMethod('cod')}
                   disabled={submitting}
-                  className="mt-1 accent-emerald-500 w-4 h-4 cursor-pointer"
+                  className="mt-1 accent-yellow-500 w-4 h-4 cursor-pointer"
                 />
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
+                  <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                     Cash on Delivery (COD)
-                    <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold">Popular</span>
+                    <span className="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">Popular</span>
                   </span>
-                  <span className="text-xs text-slate-400">Pay in cash when your order is delivered to your doorstep.</span>
+                  <span className="text-xs text-slate-500">Pay in cash when your order is delivered to your doorstep.</span>
                 </div>
               </label>
 
               {!hasNarcotics && (
                 <label className={`flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
                   paymentMethod === 'card' 
-                    ? 'bg-[#041517] border-emerald-500/70 shadow-lg shadow-emerald-500/5' 
-                    : 'bg-[#041517]/50 border-teal-500/20 hover:border-teal-500/40'
+                    ? 'bg-yellow-50/40 border-yellow-500 shadow-sm' 
+                    : 'bg-white border-slate-200 hover:border-slate-300'
                 }`}>
                   <input
                     type="radio"
@@ -669,30 +679,118 @@ export default function CheckoutPage() {
                     checked={paymentMethod === 'card'}
                     onChange={() => setPaymentMethod('card')}
                     disabled={submitting}
-                    className="mt-1 accent-emerald-500 w-4 h-4 cursor-pointer"
+                    className="mt-1 accent-yellow-500 w-4 h-4 cursor-pointer"
                   />
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-extrabold text-slate-100 flex items-center gap-2">
+                    <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                       Card / Online Payment (Kuickpay)
-                      <span className="bg-teal-500/20 text-teal-300 text-[10px] px-2 py-0.5 rounded-full font-bold">Instant</span>
+                      <span className="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">3D Interactive</span>
                     </span>
-                    <span className="text-xs text-slate-400">Pay securely online using Habib Metro hosted checkout.</span>
+                    <span className="text-xs text-slate-500">Pay securely online using Habib Metro hosted checkout.</span>
                   </div>
                 </label>
               )}
             </div>
+
+            {/* 3D Interactive Card Flip UI for online payment */}
+            {paymentMethod === 'card' && !hasNarcotics && (
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col gap-4 mt-1 animate-fadeIn">
+                <div className="text-center">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center justify-center gap-1.5">
+                    <span>💳</span> 3D Interactive Card Preview
+                  </h3>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Interactive 3D card animation from design.md. Focusing CVV flips to security back.
+                  </p>
+                </div>
+
+                {/* 3D Realistic Flipping Card */}
+                <CardFlip3D
+                  cardNumber={cardDetails.number}
+                  cardHolder={cardDetails.holder}
+                  cardExpiry={cardDetails.expiry}
+                  cardCvv={cardDetails.cvv}
+                  isFlipped={isCardFlipped}
+                  onFlipToggle={() => setIsCardFlipped(!isCardFlipped)}
+                />
+
+                {/* Card input helper fields */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
+                  <div className="sm:col-span-2">
+                    <label className="text-[11px] font-bold text-slate-700 block mb-1">Card Number</label>
+                    <input
+                      type="text"
+                      maxLength={19}
+                      value={cardDetails.number}
+                      onFocus={() => setIsCardFlipped(false)}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, '').slice(0, 16);
+                        setCardDetails(prev => ({ ...prev, number: v }));
+                      }}
+                      placeholder="•••• •••• •••• ••••"
+                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="text-[11px] font-bold text-slate-700 block mb-1">Cardholder Name</label>
+                    <input
+                      type="text"
+                      value={cardDetails.holder}
+                      onFocus={() => setIsCardFlipped(false)}
+                      onChange={(e) => setCardDetails(prev => ({ ...prev, holder: e.target.value.toUpperCase() }))}
+                      placeholder="MUHAMMAD MOHSIN"
+                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold text-slate-700 block mb-1">Expiration (MM/YY)</label>
+                    <input
+                      type="text"
+                      maxLength={5}
+                      value={cardDetails.expiry}
+                      onFocus={() => setIsCardFlipped(false)}
+                      onChange={(e) => {
+                        let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+                        if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+                        setCardDetails(prev => ({ ...prev, expiry: v }));
+                      }}
+                      placeholder="12/28"
+                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold text-slate-700 block mb-1">CVV / Security Code</label>
+                    <input
+                      type="password"
+                      maxLength={4}
+                      value={cardDetails.cvv}
+                      onFocus={() => setIsCardFlipped(true)}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, '').slice(0, 4);
+                        setCardDetails(prev => ({ ...prev, cvv: v }));
+                      }}
+                      placeholder="•••"
+                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Submit Order Button */}
           <button
             type="submit"
             disabled={!otpVerified || submitting}
-            className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${
+            className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border ${
               !otpVerified
-                ? 'bg-slate-800/80 text-slate-500 border border-slate-700/50 cursor-not-allowed'
+                ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
                 : submitting
-                ? 'bg-emerald-600 text-slate-950 opacity-90'
-                : 'bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 shadow-emerald-500/20'
+                ? 'bg-yellow-500 text-slate-950 opacity-90 border-yellow-500'
+                : 'bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 border-yellow-500/50 shadow-yellow-400/20 active:scale-[0.98]'
             }`}
           >
             {submitting ? (
@@ -712,68 +810,68 @@ export default function CheckoutPage() {
 
         {/* Sidebar Summary Panel */}
         <div className="lg:col-span-5 flex flex-col gap-6 sticky top-6">
-          <div className="bg-[#072126]/90 p-6 md:p-7 rounded-3xl border border-teal-500/25 shadow-2xl backdrop-blur-xl flex flex-col gap-5">
-            <div className="flex items-center justify-between border-b border-teal-500/20 pb-3.5">
-              <h2 className="font-black text-slate-100 text-base uppercase tracking-wider flex items-center gap-2">
+          <div className="bg-white p-6 md:p-7 rounded-3xl border border-slate-200 shadow-xl flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3.5">
+              <h2 className="font-black text-slate-900 text-base uppercase tracking-wider flex items-center gap-2">
                 <span>🛒</span> Your Items
               </h2>
-              <span className="bg-teal-500/20 text-teal-300 text-xs px-2.5 py-0.5 rounded-full font-bold">
+              <span className="bg-yellow-400 text-slate-950 text-xs px-2.5 py-0.5 rounded-full font-black">
                 {cart.reduce((acc, item) => acc + item.quantity, 0)} Items
               </span>
             </div>
             
             <div className="flex flex-col gap-3.5 max-h-72 overflow-y-auto pr-1 custom-scrollbar">
               {cart.map((item) => (
-                <div key={item.productId} className="flex justify-between items-start gap-3 text-sm border-b border-teal-500/10 pb-3">
+                <div key={item.productId} className="flex justify-between items-start gap-3 text-sm border-b border-slate-100 pb-3">
                   <div className="min-w-0 flex-grow">
-                    <p className="font-bold text-slate-200 text-sm truncate">{item.name}</p>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Qty: <span className="text-emerald-400 font-semibold">{item.quantity}</span> × PKR {item.price.toFixed(2)}
+                    <p className="font-bold text-slate-800 text-sm truncate">{item.name}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Qty: <span className="text-slate-900 font-bold">{item.quantity}</span> × PKR {item.price.toFixed(2)}
                     </p>
                   </div>
-                  <span className="font-extrabold text-slate-100 text-sm flex-shrink-0">
+                  <span className="font-black text-slate-950 text-sm flex-shrink-0">
                     PKR {(item.price * item.quantity).toFixed(2)}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="border-t border-teal-500/20 pt-4 flex flex-col gap-3 text-sm">
-              <div className="flex justify-between text-slate-400">
+            <div className="border-t border-slate-200 pt-4 flex flex-col gap-3 text-sm">
+              <div className="flex justify-between text-slate-600">
                 <span>Subtotal</span>
-                <span className="font-bold text-slate-200">PKR {cartTotal.toFixed(2)}</span>
+                <span className="font-bold text-slate-900">PKR {cartTotal.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between items-center text-slate-400">
+              <div className="flex justify-between items-center text-slate-600">
                 <span className="flex items-center gap-1.5">
                   Delivery Charge ({customer.city})
                 </span>
-                <span className="font-bold text-slate-200">
+                <span className="font-bold text-slate-900">
                   {loadingCharge ? (
-                    <span className="text-xs text-teal-400 animate-pulse">Calculating...</span>
+                    <span className="text-xs text-yellow-600 animate-pulse">Calculating...</span>
                   ) : (
                     `PKR ${deliveryCharge.toFixed(2)}`
                   )}
                 </span>
               </div>
 
-              <div className="border-t-2 border-dashed border-teal-500/30 pt-3.5 flex justify-between items-baseline">
+              <div className="border-t-2 border-dashed border-slate-200 pt-3.5 flex justify-between items-baseline">
                 <div>
-                  <span className="text-base font-black text-slate-100 uppercase tracking-wider block">Total Amount</span>
-                  <span className="text-[11px] text-slate-400">(Inclusive of all taxes)</span>
+                  <span className="text-base font-black text-slate-900 uppercase tracking-wider block">Total Amount</span>
+                  <span className="text-[11px] text-slate-500">(Inclusive of all taxes)</span>
                 </div>
-                <span className="text-2xl font-black text-emerald-400 tracking-tight">
+                <span className="text-2xl font-black text-slate-950 tracking-tight">
                   PKR {totalAmount.toFixed(2)}
                 </span>
               </div>
             </div>
 
             {/* Trust badge */}
-            <div className="bg-[#041517] p-3.5 rounded-2xl border border-teal-500/20 flex items-center gap-3 text-xs text-slate-400 mt-1">
+            <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 flex items-center gap-3 text-xs text-slate-600 mt-1">
               <span className="text-xl">🔒</span>
               <div>
-                <p className="font-bold text-slate-200">100% Authentic Medicines</p>
-                <p className="text-[11px] text-slate-400">Verified & dispatched directly by licensed Medikart pharmacy</p>
+                <p className="font-bold text-slate-900">100% Authentic Medicines</p>
+                <p className="text-[11px] text-slate-500">Verified & dispatched directly by licensed Medikart pharmacy</p>
               </div>
             </div>
           </div>

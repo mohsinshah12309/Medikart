@@ -3,8 +3,13 @@ import './globals.css';
 import { CartProvider } from '../components/CartProvider';
 import Link from 'next/link';
 import NavbarCartIcon from '../components/NavbarCartIcon';
-import ChatbotWidget from '../components/ChatbotWidget';
 import InteractiveLogo from '../components/InteractiveLogo';
+import dynamic from 'next/dynamic';
+
+// Code-split Chatbot widget so it does not block initial main thread hydration
+const ChatbotWidget = dynamic(() => import('../components/ChatbotWidget'), {
+  ssr: false,
+});
 
 export const metadata = {
   title: 'Medikart - Authentic Online Pharmacy',
@@ -71,34 +76,33 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#04151a] text-slate-100 tech-grid relative overflow-x-hidden font-sans">
+      <body className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 tech-grid relative overflow-x-hidden font-sans">
         
-        {/* Soft Clinical Ambient Glow Orbs */}
-        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-teal-500/7 blur-[115px] rounded-full pointer-events-none z-0" />
-        <div className="absolute top-[30%] left-0 w-[450px] h-[450px] bg-emerald-500/5 blur-[125px] rounded-full pointer-events-none z-0" />
-        <div className="absolute bottom-0 right-[20%] w-[500px] h-[500px] bg-teal-500/5 blur-[135px] rounded-full pointer-events-none z-0" />
+        {/* Soft Ambient Yellow Highlights */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-300/10 blur-[130px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-[35%] left-0 w-[450px] h-[450px] bg-amber-200/15 blur-[140px] rounded-full pointer-events-none z-0" />
 
         <CartProvider>
-          {/* Frosted Deep Teal-Slate Navigation Bar */}
-          <header className="sticky top-0 z-50 bg-[#051c22]/75 backdrop-blur-lg border-b border-teal-950/60 shadow-[0_4px_30px_rgba(0,0,0,0.45)] transition-all">
+          {/* Crisp White Frosted Navigation Bar with Yellow Accent Highlights */}
+          <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
               <div className="flex items-center gap-8">
                 {/* Custom Interactive Logo */}
-                <Link href="/">
+                <Link href="/" className="flex items-center">
                   <InteractiveLogo />
                 </Link>
                 
-                <nav className="hidden md:flex items-center gap-6">
-                  <Link href="/" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
+                <nav className="hidden md:flex items-center gap-7">
+                  <Link href="/" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
                     Home
                   </Link>
-                  <Link href="/instant-order" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
+                  <Link href="/instant-order" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
                     Instant Order
                   </Link>
-                  <Link href="/about" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
+                  <Link href="/about" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
                     About
                   </Link>
-                  <Link href="/contact" className="text-sm font-semibold text-slate-300 hover:text-emerald-400 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-emerald-400 hover:after:w-full after:transition-all">
+                  <Link href="/contact" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
                     Contact
                   </Link>
                 </nav>
@@ -115,49 +119,49 @@ export default async function RootLayout({ children }) {
             {children}
           </main>
 
-          {/* Clean Dark-Teal Clinical Footer */}
-          <footer className="bg-[#031418]/65 border-t border-teal-950/60 py-10 mt-12 relative z-10">
+          {/* Clean White Clinical Footer with Yellow Accent Highlights */}
+          <footer className="bg-white border-t border-slate-200 py-10 mt-12 relative z-10 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-teal-950/40">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-200">
                 <Link href="/">
                   <InteractiveLogo />
                 </Link>
-                <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-                  <Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link>
-                  <Link href="/instant-order" className="hover:text-emerald-400 transition-colors">Instant Order</Link>
-                  <Link href="/about" className="hover:text-emerald-400 transition-colors">About Us</Link>
-                  <Link href="/contact" className="hover:text-emerald-400 transition-colors">Contact Support</Link>
+                <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-600 font-medium">
+                  <Link href="/" className="hover:text-yellow-600 transition-colors">Home</Link>
+                  <Link href="/instant-order" className="hover:text-yellow-600 transition-colors">Instant Order</Link>
+                  <Link href="/about" className="hover:text-yellow-600 transition-colors">About Us</Link>
+                  <Link href="/contact" className="hover:text-yellow-600 transition-colors">Contact Support</Link>
                 </div>
               </div>
               <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-                <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved. Your partner in clinical care.</p>
-                <div className="flex gap-4">
-                  <span>Standard Cash on Delivery</span>
+                <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved. Your trusted healthcare partner.</p>
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-semibold">
+                  <span className="text-slate-700">Cash on Delivery</span>
                   <span>•</span>
-                  <span>Sandbox Card Payments</span>
+                  <span className="text-slate-700">Online Card Payments</span>
                   <span>•</span>
-                  <span className="text-emerald-400 font-semibold">Narcotics Compliance Active</span>
+                  <span className="text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full font-bold">Narcotics Compliance Active</span>
                 </div>
               </div>
             </div>
           </footer>
 
-          {/* Floating WhatsApp chat link */}
+          {/* Floating WhatsApp chat link (positioned bottom-left so it never overlaps chatbot on right) */}
           {cleanPhone && (
             <a
               href={`https://wa.me/${cleanPhone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="fixed bottom-6 left-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-4 shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center h-14 w-14 hover:shadow-emerald-500/20"
+              className="fixed bottom-5 left-4 sm:left-6 z-30 bg-[#25D366] hover:bg-[#1faa53] text-white rounded-full p-3 sm:p-3.5 shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14"
               title="Chat on WhatsApp"
             >
-              <svg viewBox="0 0 24 24" className="w-7 h-7 fill-current">
+              <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7 fill-current">
                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.5-5.729-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.63-1.019-5.101-2.871-6.958C16.598 1.932 14.12 1.9 11.487 1.9c-5.437 0-9.862 4.421-9.865 9.866-.001 1.702.464 3.367 1.346 4.887l-.988 3.606 3.69-.968zm13.111-5.613c-.262-.13-1.551-.765-1.792-.852-.24-.087-.416-.13-.591.13-.175.26-.677.852-.83 1.026-.153.174-.306.195-.568.065-.262-.13-1.107-.408-2.109-1.302-.78-.696-1.307-1.555-1.46-1.816-.153-.26-.017-.401.114-.53.118-.117.262-.305.393-.457.13-.152.175-.26.262-.435.087-.174.044-.326-.021-.456-.066-.13-.591-1.424-.81-1.947-.213-.512-.446-.442-.614-.45l-.523-.007c-.18 0-.472.067-.719.336-.247.269-.942.921-.942 2.247 0 1.326.964 2.607 1.098 2.78 1.35 1.794 3.01 2.656 5.443 3.619 1.139.449 2.052.484 2.825.369.863-.128 2.656-1.087 3.028-2.087.372-.999.372-1.854.262-2.036-.109-.18-.306-.267-.568-.397z"/>
               </svg>
             </a>
           )}
 
-          {/* Floating AI Chatbot Widget */}
+          {/* Floating AI Chatbot Widget (bottom-right) */}
           <ChatbotWidget />
         </CartProvider>
       </body>

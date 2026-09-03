@@ -211,8 +211,8 @@ function AdminUsers({ token, adminUser }) {
               style={{
                 display: "flex", alignItems: "flex-start", gap: "0.5rem",
                 padding: "0.6rem 0.75rem", borderRadius: "10px", cursor: "pointer",
-                background: active ? "rgba(13,148,136,0.18)" : "rgba(15,23,42,0.35)",
-                border: active ? "1px solid rgba(45,212,191,0.45)" : "1px solid rgba(45,212,191,0.1)",
+                background: active ? "#fef9c3" : "#f8fafc",
+                border: active ? "1px solid #facc15" : "1px solid #e2e8f0",
                 transition: "all 0.15s ease",
               }}
             >
@@ -220,10 +220,10 @@ function AdminUsers({ token, adminUser }) {
                 type="checkbox"
                 checked={active || false}
                 onChange={() => togglePermission(key, form, setForm)}
-                style={{ marginTop: "2px", accentColor: "#2dd4bf", width: "14px", height: "14px", flexShrink: 0 }}
+                style={{ marginTop: "2px", accentColor: "#eab308", width: "14px", height: "14px", flexShrink: 0 }}
               />
               <div>
-                <div style={{ fontSize: "0.78rem", fontWeight: 600, color: active ? "#5eead4" : "#94a3b8" }}>
+                <div style={{ fontSize: "0.78rem", fontWeight: 700, color: active ? "#854d0e" : "#334155" }}>
                   {icon} {label}
                 </div>
                 <div style={{ fontSize: "0.67rem", color: "#64748b", marginTop: "1px" }}>{desc}</div>

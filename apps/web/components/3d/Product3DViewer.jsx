@@ -38,28 +38,28 @@ export default function Product3DViewer({ productName = "Product Showcase", imag
     renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
-    // 3D Glass Pedestal Base
+    // 3D Glass Pedestal Base (Light Studio Chrome)
     const pedestalGeom = new THREE.CylinderGeometry(2, 2.3, 0.2, 32);
     const pedestalMat = new THREE.MeshPhysicalMaterial({
-      color: 0x0f172a, // Slate 900
-      metalness: 0.9,
-      roughness: 0.1,
+      color: 0xe2e8f0, // Slate 200 light chrome
+      metalness: 0.6,
+      roughness: 0.15,
       clearcoat: 1.0,
-      transmission: 0.75,
-      opacity: 0.85,
+      transmission: 0.5,
+      opacity: 0.9,
       transparent: true,
     });
     const pedestal = new THREE.Mesh(pedestalGeom, pedestalMat);
     pedestal.position.y = -1.4;
     scene.add(pedestal);
 
-    // 3D Floating Ring (Mint Teal Glow to match Medikart branding)
+    // 3D Floating Ring (Vivid Yellow Glow)
     const ringGeom = new THREE.TorusGeometry(1.7, 0.035, 16, 100);
     const ringMat = new THREE.MeshStandardMaterial({
-      color: 0x0d9488, // Teal 600
-      metalness: 1.0,
+      color: 0xeab308, // Yellow 500
+      metalness: 0.9,
       roughness: 0.1,
-      emissive: 0x0d9488,
+      emissive: 0xeab308,
       emissiveIntensity: 0.8,
     });
     const ring = new THREE.Mesh(ringGeom, ringMat);
@@ -72,10 +72,10 @@ export default function Product3DViewer({ productName = "Product Showcase", imag
     const geometry = new THREE.BoxGeometry(2.1, 2.1, 0.35, 8, 8, 8);
 
     const sideMat = new THREE.MeshPhysicalMaterial({
-      color: 0x1e293b, // Slate 800
-      metalness: 0.85,
-      roughness: 0.2,
-      clearcoat: 1.0,
+      color: 0xf1f5f9, // Slate 100
+      metalness: 0.3,
+      roughness: 0.3,
+      clearcoat: 0.8,
       wireframe: wireframe,
     });
 
@@ -115,9 +115,9 @@ export default function Product3DViewer({ productName = "Product Showcase", imag
       ];
     } else {
       const defaultMat = new THREE.MeshPhysicalMaterial({
-        color: 0x0d9488,
-        metalness: 0.7,
-        roughness: 0.2,
+        color: 0xfacc15,
+        metalness: 0.4,
+        roughness: 0.3,
         clearcoat: 1.0,
         wireframe: wireframe,
       });
@@ -232,30 +232,30 @@ export default function Product3DViewer({ productName = "Product Showcase", imag
         width: "100%",
         height: "100%",
         minHeight: "380px",
-        borderRadius: "24px",
+        borderRadius: "20px",
         overflow: "hidden",
-        background: "radial-gradient(circle at center, rgba(13, 148, 136, 0.1) 0%, rgba(15, 23, 42, 0.98) 100%)",
-        border: "1px solid rgba(255, 255, 255, 0.08)",
-        boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)",
+        background: "radial-gradient(circle at center, rgba(254, 240, 138, 0.3) 0%, rgba(241, 245, 249, 0.95) 100%)",
+        border: "1px solid rgba(226, 232, 240, 0.9)",
+        boxShadow: "inset 0 0 30px rgba(0,0,0,0.03)",
       }}
     >
       <div ref={containerRef} style={{ width: "100%", height: "100%", minHeight: "380px" }} />
 
       {/* Floating Header UI */}
-      <div className="absolute top-4.5 left-4.5 flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-xs font-semibold text-teal-400">
-        <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse shadow-[0_0_8px_#14b8a6]" />
+      <div className="absolute top-4 left-4 flex items-center gap-2 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-bold text-slate-800 shadow-sm">
+        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_8px_#eab308]" />
         3D Interactive View: {productName}
       </div>
 
       {/* Control Buttons */}
-      <div className="absolute bottom-4.5 right-4.5 flex gap-2 z-10">
+      <div className="absolute bottom-4 right-4 flex gap-2 z-10">
         <button
           type="button"
           onClick={() => setAutoRotate(!autoRotate)}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold backdrop-blur-md cursor-pointer transition-all border ${
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold backdrop-blur-md cursor-pointer transition-all border ${
             autoRotate 
-              ? "bg-teal-500/20 border-teal-500/40 text-teal-350 shadow-sm" 
-              : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
+              ? "bg-yellow-400 border-yellow-500 text-slate-950 shadow-sm" 
+              : "bg-white/90 border-slate-200 text-slate-700 hover:bg-slate-50"
           }`}
         >
           {autoRotate ? "Pause" : "Spin"}
@@ -263,17 +263,17 @@ export default function Product3DViewer({ productName = "Product Showcase", imag
         <button
           type="button"
           onClick={() => setWireframe(!wireframe)}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold backdrop-blur-md cursor-pointer transition-all border ${
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold backdrop-blur-md cursor-pointer transition-all border ${
             wireframe 
-              ? "bg-indigo-500/20 border-indigo-500/40 text-indigo-300 shadow-sm" 
-              : "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10"
+              ? "bg-slate-900 border-slate-900 text-white shadow-sm" 
+              : "bg-white/90 border-slate-200 text-slate-700 hover:bg-slate-50"
           }`}
         >
           {wireframe ? "Shaded" : "Wire"}
         </button>
       </div>
 
-      <div className="absolute bottom-4.5 left-4.5 text-[10px] text-slate-400 font-medium select-none pointer-events-none">
+      <div className="absolute bottom-4 left-4 text-[10px] text-slate-500 font-semibold select-none pointer-events-none bg-white/80 px-2.5 py-1 rounded-md border border-slate-200">
         Drag mouse to rotate package in 3D space
       </div>
     </div>

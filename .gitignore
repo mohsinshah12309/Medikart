@@ -35,3 +35,10 @@ yarn-error.log*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Redis dump and temporary scratch scripts
+dump.rdb
+server/dump.rdb
+screenshots/
+server/scratch/
+medikart/

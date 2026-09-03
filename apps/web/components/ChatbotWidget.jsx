@@ -59,52 +59,54 @@ export default function ChatbotWidget() {
       {/* Floating Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-green-600 hover:bg-green-700 text-white rounded-full p-4 shadow-xl transition-all hover:scale-105 flex items-center justify-center h-14 w-14"
+        className="fixed bottom-5 right-4 sm:right-6 z-40 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-full p-3 sm:p-3.5 shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14 border border-yellow-500/40"
         title="AI Symptom Assistant"
+        aria-label="Open AI Symptom Assistant"
       >
-        <span className="text-2xl">💬</span>
+        <span className="text-xl sm:text-2xl">💬</span>
       </button>
 
       {/* Chat Window Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 max-w-[90vw] h-[500px] z-50 bg-white border border-gray-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-w-[400px] h-[480px] max-h-[75vh] z-50 bg-white border border-slate-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           
           {/* Header */}
-          <div className="bg-green-600 text-white p-4 flex justify-between items-center flex-shrink-0">
-            <div className="flex items-center gap-2">
+          <div className="bg-yellow-400 text-slate-950 px-4 py-3.5 flex justify-between items-center flex-shrink-0 border-b border-yellow-500/30">
+            <div className="flex items-center gap-2.5">
               <span className="text-xl">🤖</span>
               <div>
-                <h3 className="font-bold text-sm leading-tight">Symptom Assistant</h3>
-                <span className="text-[10px] text-green-100 font-medium">OTC catalog suggestions</span>
+                <h3 className="font-extrabold text-sm leading-tight text-slate-950">Symptom Assistant</h3>
+                <span className="text-[10px] text-slate-800 font-semibold">OTC catalog suggestions</span>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white hover:text-green-100 font-bold text-lg p-1 transition-colors"
+              className="text-slate-950 hover:bg-yellow-500/50 rounded-lg p-1.5 font-bold text-sm transition-colors cursor-pointer"
+              aria-label="Close chat"
             >
               ✕
             </button>
           </div>
 
           {/* Warning Banner */}
-          <div className="bg-amber-50 border-b border-amber-100 px-4 py-2 text-[10px] text-amber-800 leading-normal flex-shrink-0">
+          <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-[10px] text-amber-900 leading-normal flex-shrink-0">
             <strong>Medical Disclaimer:</strong> Suggestions are informational only, not medical advice. Consult a doctor.
           </div>
 
           {/* Messages Body */}
-          <div className="flex-grow p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
+          <div className="flex-grow p-4 overflow-y-auto bg-slate-50 flex flex-col gap-3">
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex flex-col max-w-[80%] ${
+                className={`flex flex-col max-w-[85%] ${
                   msg.role === 'user' ? 'self-end items-end' : 'self-start items-start'
                 }`}
               >
                 <div
-                  className={`rounded-2xl px-4 py-2 text-xs leading-relaxed whitespace-pre-wrap ${
+                  className={`rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user'
-                      ? 'bg-green-600 text-white rounded-br-none shadow-sm'
-                      : 'bg-white text-gray-800 border border-gray-150 rounded-bl-none shadow-xs'
+                      ? 'bg-yellow-400 text-slate-950 font-medium rounded-br-none shadow-sm'
+                      : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none shadow-xs'
                   }`}
                 >
                   {msg.content}
@@ -112,11 +114,11 @@ export default function ChatbotWidget() {
               </div>
             ))}
             {loading && (
-              <div className="self-start max-w-[80%] flex flex-col items-start">
-                <div className="bg-white border border-gray-150 rounded-2xl rounded-bl-none px-4 py-2.5 text-xs text-gray-500 shadow-xs flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+              <div className="self-start max-w-[85%] flex flex-col items-start">
+                <div className="bg-white border border-slate-200 rounded-2xl rounded-bl-none px-4 py-2.5 text-xs text-slate-500 shadow-xs flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-bounce"></span>
+                  <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                  <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-bounce [animation-delay:0.4s]"></span>
                 </div>
               </div>
             )}
@@ -124,19 +126,19 @@ export default function ChatbotWidget() {
           </div>
 
           {/* Input Footer */}
-          <form onSubmit={handleSend} className="p-3 border-t border-gray-150 bg-white flex gap-2 flex-shrink-0">
+          <form onSubmit={handleSend} className="p-3 border-t border-slate-200 bg-white flex gap-2 flex-shrink-0">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Describe your symptoms (e.g. fever)..."
+              placeholder="Describe symptoms (e.g. fever)..."
               disabled={loading}
-              className="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-green-500 disabled:opacity-50"
+              className="flex-grow border border-slate-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 disabled:opacity-50 text-slate-900 placeholder:text-slate-400"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold text-xs px-4 rounded-lg transition-colors disabled:opacity-50"
+              className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-bold text-xs px-4 py-2 rounded-xl transition-colors disabled:opacity-40 cursor-pointer shadow-sm"
             >
               Send
             </button>

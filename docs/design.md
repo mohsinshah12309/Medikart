@@ -4,49 +4,51 @@ This document outlines the professional design system, user experience guideline
 
 The goal is to ensure the storefront and admin dashboards are visually polished, intuitive, accessible, and feel highly premium and interactive rather than "vibe-coded."
 
-> **Design revision notice (approved 2026-08-28):** The canonical theme has been updated to the **Midnight Teal & Mint Green** dark redesign, explicitly approved by the client. All active implementation work targets this dark theme. The original light palette (Section 1.1.1) is preserved for reference only.
+> **Design revision notice (approved 2026-09-03):** The canonical theme has been updated to the **White Background & Interactive Yellow Accent** redesign across both the customer storefront (`apps/web`) and admin dashboard (`apps/admin`). All active implementation work targets this white/yellow theme with dark neutral high-contrast text (WCAG AA/AAA compliant). The prior dark theme (Section 1.1.2) and initial green light palette (Section 1.1.3) are preserved as dated historical references.
 
 ---
 
 ## 1. Visual Identity & Design System
 
-### 1.1 Color Palette — **CANONICAL (Approved Dark Theme: Midnight Teal & Mint Green)**
+### 1.1 Color Palette — **CANONICAL (Approved White & Yellow Interactive Accent Theme)**
 
-> **This is the approved, active design.** The client and project team explicitly signed off on the Midnight Teal & Mint Green dark theme. All new components, screens, and UI work must conform to this palette.
+> **This is the approved, active design.** The client explicitly signed off on the White & Yellow redesign. All new components, screens, and UI work across `apps/web` and `apps/admin` must conform to this palette. Yellow is used strategically for interactive fills, primary CTAs, active highlights, badges, and icon accents; all readable text is dark neutral (`#0f172a` / `#475569`) to guarantee strict WCAG AA/AAA contrast ratios against white surfaces.
 
-| Role | HEX | CSS Variable / Tailwind | Application |
-| :--- | :--- | :--- | :--- |
-| **Background (Deep Dark)** | `#0a1628` | `--color-bg` / `bg-[#0a1628]` | Root page background, sidebar base |
-| **Surface (Dark Card)** | `#0f2035` | `--color-surface` / `bg-[#0f2035]` | Cards, panels, modal backgrounds |
-| **Surface Elevated** | `#162845` | `--color-surface-elevated` / `bg-[#162845]` | Elevated cards, dropdowns, nav drawers |
-| **Primary (Mint Green)** | `#00d4aa` | `--color-primary` / `text-[#00d4aa]` | Main CTA buttons, active states, highlights, brand accents |
-| **Primary Hover** | `#00b894` | `--color-primary-hover` | Hover/pressed states on Mint Green elements |
-| **Primary Glow** | `rgba(0,212,170,0.15)` | `--color-primary-glow` | Glow rings, focus outlines, badge backgrounds |
-| **Teal Accent** | `#14b8a6` | `--color-teal` / `text-teal-500` | Secondary interactive elements, links, icon accents |
-| **Text Primary** | `#e2e8f0` | `--color-text-primary` / `text-slate-200` | Primary body text, headings on dark surfaces |
-| **Text Secondary** | `#94a3b8` | `--color-text-secondary` / `text-slate-400` | Subtext, labels, inactive tabs, metadata |
-| **Text Muted** | `#64748b` | `--color-text-muted` / `text-slate-500` | Timestamps, placeholders, disabled text |
-| **Border Subtle** | `rgba(255,255,255,0.08)` | `--color-border` | Card borders, dividers on dark backgrounds |
-| **Border Active** | `rgba(0,212,170,0.4)` | `--color-border-active` | Focus rings, selected states |
-| **Alert/Warning** | `#f59e0b` | `--color-warning` / `text-amber-400` | Narcotics warnings, prescription-pending states |
-| **Destructive/Error** | `#ef4444` | `--color-error` / `text-red-400` | Invalid inputs, checkout errors, critical alerts |
-| **Success** | `#10b981` | `--color-success` / `text-emerald-400` | Confirmed orders, positive status badges |
+| Role | HEX | CSS Variable / Tailwind | Application | Contrast vs White / Base |
+| :--- | :--- | :--- | :--- | :--- |
+| **Page Background** | `#f8fafc` | `--color-bg` / `bg-slate-50` | Root background for web storefront and admin | N/A |
+| **Surface (Card / Panel)** | `#ffffff` | `--color-surface` / `bg-white` | Product cards, admin tables, modal dialogs, navigation bars | N/A |
+| **Surface Elevated** | `#ffffff` | `--color-surface-elevated` | Dropdown menus, floating search modals, tooltips | Soft shadow (`shadow-lg`) |
+| **Primary CTA (Vivid Yellow)** | `#eab308` | `--color-primary` / `bg-yellow-500` | Main CTA buttons, active state tabs, cart action badges | **9.31:1** with `#0f172a` text (AAA) |
+| **Primary Hover (Deep Amber)** | `#ca8a04` | `--color-primary-hover` / `bg-yellow-600` | Hover states on yellow buttons and active elements | **6.08:1** with `#0f172a` text (AA) |
+| **Primary Pressed / Active** | `#a16207` | `--color-primary-active` / `bg-yellow-700` | Click/pressed state on interactive controls | **4.55:1** with `#ffffff` text (AA) |
+| **Primary Light (Badge Tint)** | `#fef9c3` | `--color-primary-light` / `bg-yellow-100` | Badge backgrounds, highlighted table row tint | **6.38:1** with `#854d0e` text (AA) |
+| **Primary Glow / Focus Ring** | `rgba(234, 179, 8, 0.45)` | `--color-primary-glow` | Focus rings (`focus:ring-yellow-400`), card hover glows | WCAG 2.4.7 compliant |
+| **Text Primary** | `#0f172a` | `--color-text-primary` / `text-slate-900` | Core body text, H1-H3 headings, table headers | **17.85:1** on white (AAA) |
+| **Text Secondary** | `#475569` | `--color-text-secondary` / `text-slate-600` | Subtitles, field labels, metadata, inactive links | **7.58:1** on white (AAA) |
+| **Text Muted** | `#64748b` | `--color-text-muted` / `text-slate-500` | SKU labels, timestamps, placeholders | **4.76:1** on white (AA) |
+| **Border Subtle** | `#e2e8f0` | `--color-border` / `border-slate-200` | Card borders, table cell dividers, form outlines | Clean structural separation |
+| **Border Active / Focus** | `#eab308` | `--color-border-active` / `border-yellow-500` | Input focus outline, active card selection | High visibility |
+| **Alert / Warning** | `#b45309` | `--color-warning` / `text-amber-700` | Narcotics warnings, prescription verification notice | **5.02:1** on white (AA) |
+| **Destructive / Error** | `#dc2626` | `--color-error` / `text-red-600` | Form validation errors, order cancellation badges | **4.83:1** on white (AA) |
+| **Success** | `#15803d` | `--color-success` / `text-green-700` | Order confirmed badges, in-stock indicators | **5.02:1** on white (AA) |
 
 #### Tailwind Config Extension
 
 ```js
-// tailwind.config.js — dark theme extension
+// tailwind.config.js — white & yellow theme extension
 module.exports = {
   theme: {
     extend: {
       colors: {
         brand: {
-          bg:       '#0a1628',
-          surface:  '#0f2035',
-          elevated: '#162845',
-          mint:     '#00d4aa',
-          'mint-hover': '#00b894',
-          teal:     '#14b8a6',
+          bg:        '#f8fafc',
+          surface:   '#ffffff',
+          elevated:  '#ffffff',
+          yellow:    '#eab308',
+          'yellow-hover': '#ca8a04',
+          'yellow-light': '#fef9c3',
+          dark:      '#0f172a',
         },
       },
     },
@@ -56,7 +58,26 @@ module.exports = {
 
 ---
 
-### 1.1.1 Legacy Light Palette (Reference Only — Not Active)
+### 1.1.2 Historical Dark Palette (Archived Reference — 2026-08-28 to 2026-09-03)
+
+> The following was the previous Midnight Teal & Mint Green dark palette. Preserved here as an approved historical reference.
+
+| Role | HEX | CSS Variable / Tailwind | Application |
+| :--- | :--- | :--- | :--- |
+| **Background (Deep Dark)** | `#0a1628` | `--color-bg` / `bg-[#0a1628]` | Root page background, sidebar base |
+| **Surface (Dark Card)** | `#0f2035` | `--color-surface` / `bg-[#0f2035]` | Cards, panels, modal backgrounds |
+| **Surface Elevated** | `#162845` | `--color-surface-elevated` / `bg-[#162845]` | Elevated cards, dropdowns, nav drawers |
+| **Primary (Mint Green)** | `#00d4aa` | `--color-primary` / `text-[#00d4aa]` | Main CTA buttons, active states, highlights |
+| **Primary Hover** | `#00b894` | `--color-primary-hover` | Hover/pressed states on Mint Green elements |
+| **Primary Glow** | `rgba(0,212,170,0.15)` | `--color-primary-glow` | Glow rings, focus outlines, badge backgrounds |
+| **Teal Accent** | `#14b8a6` | `--color-teal` / `text-teal-500` | Secondary interactive elements, links |
+| **Text Primary** | `#e2e8f0` | `--color-text-primary` / `text-slate-200` | Primary body text, headings on dark surfaces |
+| **Text Secondary** | `#94a3b8` | `--color-text-secondary` / `text-slate-400` | Subtext, labels, inactive tabs |
+| **Text Muted** | `#64748b` | `--color-text-muted` / `text-slate-500` | Timestamps, placeholders, disabled text |
+
+---
+
+### 1.1.3 Historical Initial Light Palette (Archived Reference — Prior to 2026-08-28)
 
 > The following was the original light-mode palette. **It is no longer the target design.** Preserved here for historical reference and as a rollback baseline only.
 

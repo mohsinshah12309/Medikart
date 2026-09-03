@@ -1,15 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-500: #0d9488;
-  --color-primary-600: #0f766e;
-  --color-primary-700: #115e59;
-  
-  --color-secondary-50: #f5f3ff;
-  --color-secondary-500: #8b5cf6;
-  --color-secondary-600: #7c3aed;
+  --color-primary-50: #fefce8;
+  --color-primary-100: #fef9c3;
+  --color-primary-200: #fef08a;
+  --color-primary-300: #fde047;
+  --color-primary-400: #facc15;
+  --color-primary-500: #eab308;
+  --color-primary-600: #ca8a04;
+  --color-primary-700: #a16207;
+  --color-primary-800: #854d0e;
+  --color-primary-900: #713f12;
+
+  --color-brand-bg: #f8fafc;
+  --color-brand-surface: #ffffff;
+  --color-brand-elevated: #ffffff;
+  --color-brand-yellow: #eab308;
+  --color-brand-yellow-hover: #ca8a04;
+  --color-brand-yellow-light: #fef9c3;
+  --color-brand-dark: #0f172a;
   
   --animate-float: float 4s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -21,8 +30,8 @@
     50% { transform: translateY(-5px); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(16, 185, 129, 0.35); }
-    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(16, 185, 129, 0.65); }
+    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(234, 179, 8, 0.35); }
+    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(234, 179, 8, 0.65); }
   }
   @keyframes fade-in-up {
     from {
@@ -41,51 +50,52 @@
 }
 
 body {
-  background-color: #04151a;
-  color: #f1f5f9;
+  background-color: #f8fafc;
+  color: #0f172a;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-y: scroll;
 }
 
-/* Custom Webkit scrollbar for sleek Midnight Teal look */
+/* Custom Webkit scrollbar for crisp White & Yellow look */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #031014;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0e2930;
+  background: #cbd5e1;
   border-radius: 999px;
-  border: 2px solid #031014;
+  border: 2px solid #f1f5f9;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+  background: #eab308;
 }
 
-/* Glassmorphism helpers for frosted-teal card displays */
+/* Glassmorphism helpers for frosted-white card displays */
 .glass-panel {
-  background: rgba(10, 35, 42, 0.5);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(20, 184, 166, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
 }
 
 .glass-panel-hover {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .glass-panel-hover:hover {
-  background: rgba(10, 35, 42, 0.65);
-  border-color: rgba(16, 185, 129, 0.25);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.65), 0 0 20px rgba(16, 185, 129, 0.05);
+  background: #ffffff;
+  border-color: rgba(234, 179, 8, 0.45);
+  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08), 0 0 20px rgba(234, 179, 8, 0.12);
 }
 
 /* Soft medical layout grid lines */
 .tech-grid {
   background-size: 32px 32px;
-  background-image: linear-gradient(to right, rgba(20, 184, 166, 0.02) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(20, 184, 166, 0.02) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
 }
 
 /* Interactive scaling transitions */

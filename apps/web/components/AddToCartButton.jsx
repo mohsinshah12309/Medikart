@@ -48,12 +48,12 @@ export default function AddToCartButton({ product }) {
       <button
         onClick={handleAdd}
         disabled={isOutOfStock}
-        className={`w-full py-3 rounded-lg font-semibold text-sm transition-all shadow-sm ${
+        className={`w-full py-3.5 rounded-xl font-black text-sm tracking-wide transition-all shadow-sm active:scale-[0.98] cursor-pointer ${
           isOutOfStock
-            ? 'bg-gray-150 text-gray-400 cursor-not-allowed border border-gray-200'
+            ? 'bg-slate-150 text-slate-400 cursor-not-allowed border border-slate-200'
             : added
-            ? 'bg-green-700 text-white'
-            : 'bg-green-600 hover:bg-green-700 text-white'
+            ? 'bg-green-600 text-white shadow-green-500/20'
+            : 'bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 border border-yellow-500/50 shadow-yellow-500/10'
         }`}
       >
         {isOutOfStock ? 'Out of Stock' : added ? '✓ Added to Cart' : 'Add to Cart'}

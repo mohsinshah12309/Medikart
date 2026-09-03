@@ -46,11 +46,11 @@ export default async function ProductDetailPage({ params }) {
 
   if (errorMsg || !product) {
     return (
-      <div className="max-w-xl mx-auto my-12 text-center bg-[#0a232a]/45 p-8 rounded-2xl border border-teal-950/60 shadow-2xl">
+      <div className="max-w-xl mx-auto my-12 text-center bg-white p-8 rounded-2xl border border-slate-200 shadow-xl">
         <span className="text-4xl">⚠️</span>
-        <h2 className="text-xl font-bold text-slate-100 mt-4">Product Not Found</h2>
-        <p className="text-slate-450 text-sm mt-2">{errorMsg || "The product you requested could not be found or is inactive."}</p>
-        <Link href="/" className="inline-block mt-6 px-6 py-2 bg-teal-600 hover:bg-teal-500 text-white font-semibold text-sm rounded-xl transition-all">
+        <h2 className="text-xl font-extrabold text-slate-900 mt-4">Product Not Found</h2>
+        <p className="text-slate-600 text-sm mt-2">{errorMsg || "The product you requested could not be found or is inactive."}</p>
+        <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-bold text-sm rounded-xl transition-all shadow-sm">
           Back to Shop
         </Link>
       </div>
@@ -86,11 +86,11 @@ export default async function ProductDetailPage({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Link href="/" className="inline-flex items-center text-sm font-semibold text-emerald-450 hover:text-emerald-350 transition-colors">
+      <Link href="/" className="inline-flex items-center text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors">
         ← Back to Shop
       </Link>
 
-      <div className="bg-[#0a232a]/45 rounded-3xl border border-teal-955/60 shadow-2xl p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10 backdrop-blur-md relative overflow-hidden shadow-slate-950/30">
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10 relative overflow-hidden">
         {/* Left Column - Gallery */}
         <div>
           <ProductGallery images={product.images} productName={product.name} />
@@ -98,31 +98,31 @@ export default async function ProductDetailPage({ params }) {
 
         {/* Right Column - Product details */}
         <div className="flex flex-col">
-          <div className="border-b border-teal-950/60 pb-5">
-            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-100">{product.name}</h1>
+          <div className="border-b border-slate-200 pb-5">
+            <h1 className="text-2xl md:text-3xl font-black text-slate-900">{product.name}</h1>
             {product.genericName && (
-              <p className="text-sm text-slate-450 italic mt-1.5 font-medium">
+              <p className="text-sm text-slate-600 italic mt-1.5 font-medium">
                 Generic Name: {product.genericName}
               </p>
             )}
             
-            <div className="flex flex-wrap gap-2.5 mt-4.5">
+            <div className="flex flex-wrap gap-2.5 mt-4">
               {product.categoryIds?.map(cat => (
-                <span key={cat._id} className="bg-[#0c2f38]/60 text-slate-300 text-xs px-2.5 py-1 rounded-lg font-semibold border border-teal-900/30">
+                <span key={cat._id} className="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-bold border border-slate-200">
                   {cat.name}
                 </span>
               ))}
               
               <span className={`text-xs px-2.5 py-1 rounded-lg font-bold border ${
                 isOutOfStock 
-                  ? 'bg-red-500/10 text-red-300 border-red-500/20' 
-                  : 'bg-teal-500/10 text-teal-300 border-teal-500/20'
+                  ? 'bg-red-50 text-red-700 border-red-200' 
+                  : 'bg-green-50 text-green-700 border-green-200'
               }`}>
                 {isOutOfStock ? 'Out of Stock' : 'In Stock'}
               </span>
 
               {product.isNarcotic && (
-                <span className="bg-purple-500/10 text-purple-300 text-xs px-2.5 py-1 rounded-lg font-bold border border-purple-500/20">
+                <span className="bg-amber-100 text-amber-900 border border-amber-300 text-xs px-2.5 py-1 rounded-lg font-bold">
                   Rx ONLY
                 </span>
               )}
@@ -134,35 +134,35 @@ export default async function ProductDetailPage({ params }) {
             <div className="flex items-baseline gap-3">
               {hasDiscount ? (
                 <>
-                  <span className="text-3xl font-extrabold text-emerald-400">
+                  <span className="text-3xl font-black text-slate-950">
                     PKR {formatPrice(product.effectivePrice)}
                   </span>
-                  <span className="text-sm text-slate-500 line-through">
+                  <span className="text-sm text-slate-400 line-through font-medium">
                     PKR {formatPrice(product.price)}
                   </span>
-                  <span className="bg-rose-500/10 text-rose-350 text-xs font-bold px-2 py-0.5 rounded-lg border border-rose-500/20">
+                  <span className="bg-red-50 text-red-600 text-xs font-black px-2 py-0.5 rounded-lg border border-red-200">
                     -{product.discountPercent}% OFF
                   </span>
                 </>
               ) : (
-                <span className="text-3xl font-extrabold text-slate-150">
+                <span className="text-3xl font-black text-slate-950">
                   PKR {formatPrice(product.price)}
                 </span>
               )}
             </div>
             
             {hasDiscount && (
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-500 mt-1 font-medium">
                 Discount applied via {product.appliedDiscount} promotion.
               </p>
             )}
           </div>
 
-          {/* Description */}
+          {/* Description (H2 for sequential heading order) */}
           {product.description && (
-            <div className="border-t border-teal-950/60 pt-5 flex-grow mb-6">
-              <h3 className="font-bold text-slate-200 text-sm tracking-wide uppercase">Description</h3>
-              <p className="text-slate-355 text-sm mt-2 leading-relaxed whitespace-pre-line">
+            <div className="border-t border-slate-200 pt-5 flex-grow mb-6">
+              <h2 className="font-bold text-slate-900 text-sm tracking-wide uppercase">Description</h2>
+              <p className="text-slate-600 text-sm mt-2 leading-relaxed whitespace-pre-line">
                 {product.description}
               </p>
             </div>

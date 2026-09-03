@@ -1,7 +1,18 @@
 "use client";
 
 import React, { useState } from 'react';
-import Product3DViewer from './3d/Product3DViewer';
+import dynamic from 'next/dynamic';
+
+// Code split Three.js 3D viewer so it is only loaded on user request
+const Product3DViewer = dynamic(() => import('./3d/Product3DViewer'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-slate-500 bg-slate-50 aspect-square rounded-2xl">
+      <div className="w-9 h-9 border-3 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+      <span className="text-xs font-bold text-slate-700">Loading 3D Experience...</span>
+    </div>
+  ),
+});
 
 export default function ProductGallery({ 
   images = [], 
@@ -25,10 +36,10 @@ export default function ProductGallery({
         <button
           type="button"
           onClick={() => setViewMode("2d")}
-          className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+          className={`flex-1 py-2.5 rounded-xl text-xs font-black border transition-all cursor-pointer ${
             viewMode === "2d"
-              ? 'bg-teal-500/10 border-teal-500/35 text-teal-300 font-semibold'
-              : 'border-teal-950 bg-[#0a232a]/30 text-slate-400 hover:bg-[#0a232a]/60 hover:text-slate-200'
+              ? 'bg-yellow-400 border-yellow-500 text-slate-950 shadow-sm'
+              : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900'
           }`}
         >
           📸 Photo View
@@ -36,10 +47,10 @@ export default function ProductGallery({
         <button
           type="button"
           onClick={() => setViewMode("3d")}
-          className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+          className={`flex-1 py-2.5 rounded-xl text-xs font-black border transition-all cursor-pointer ${
             viewMode === "3d"
-              ? 'bg-teal-500/10 border-teal-500/35 text-teal-300 font-semibold'
-              : 'border-teal-950 bg-[#0a232a]/30 text-slate-400 hover:bg-[#0a232a]/60 hover:text-slate-200'
+              ? 'bg-yellow-400 border-yellow-500 text-slate-950 shadow-sm'
+              : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900'
           }`}
         >
           🌐 3D Interactive View
@@ -48,7 +59,7 @@ export default function ProductGallery({
 
       {/* Active Display Panel */}
       {viewMode === "3d" ? (
-        <div className="aspect-square bg-slate-950 border border-teal-950/80 rounded-2xl overflow-hidden flex items-center justify-center relative shadow-inner">
+        <div className="aspect-square bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center relative shadow-sm">
           <Product3DViewer 
             productName={productName} 
             imageUrl={getFullUrl(activeImage)} 
@@ -57,11 +68,12 @@ export default function ProductGallery({
       ) : (
         <>
           {/* Active 2D Image */}
-          <div className="aspect-square bg-slate-955/15 border border-teal-955/50 rounded-2xl p-6 flex items-center justify-center relative overflow-hidden shadow-inner">
+          <div className="aspect-square bg-white border border-slate-200 rounded-2xl p-6 flex items-center justify-center relative overflow-hidden shadow-sm">
             <img
               src={getFullUrl(activeImage)}
               alt={productName}
-              className="max-h-full max-w-full object-contain"
+              loading="eager"
+              className="max-h-full max-w-full object-contain transition-transform duration-300 hover:scale-105"
               onError={(e) => {
                 e.target.src = fallback;
               }}
@@ -77,13 +89,14 @@ export default function ProductGallery({
                   <button
                     key={img._id || index}
                     onClick={() => setActiveImage(img.path)}
-                    className={`w-16 h-16 flex-shrink-0 border rounded-xl p-1 bg-[#0a232a]/30 hover:border-teal-500/60 transition-colors ${
-                      isSelected ? 'border-teal-600 ring-2 ring-teal-500/10' : 'border-teal-955/60'
+                    className={`w-16 h-16 flex-shrink-0 border rounded-xl p-1.5 bg-white hover:border-yellow-400 transition-all cursor-pointer ${
+                      isSelected ? 'border-yellow-500 ring-2 ring-yellow-400/30' : 'border-slate-200'
                     }`}
                   >
                     <img
                       src={getFullUrl(img.path)}
                       alt={`Thumbnail ${index + 1}`}
+                      loading="lazy"
                       className="w-full h-full object-contain"
                       onError={(e) => {
                         e.target.src = fallback;

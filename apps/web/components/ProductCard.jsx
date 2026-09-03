@@ -22,31 +22,32 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <TiltCard3D className="bg-[#0a232a]/45 border border-teal-950/60 rounded-2xl overflow-hidden hover:shadow-[0_15px_30px_rgba(0,0,0,0.55)] hover:border-emerald-500/30 flex flex-col h-full relative group">
+    <TiltCard3D className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl hover:border-yellow-400/80 flex flex-col h-full relative group transition-all duration-300">
       {/* Product Image Link Container */}
-      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-slate-950/15 flex items-center justify-center p-5 overflow-hidden border-b border-teal-950/40">
+      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-slate-50/70 flex items-center justify-center p-5 overflow-hidden border-b border-slate-100">
         {/* Discount Badge */}
         {hasDiscount && (
-          <span className="absolute top-3 left-3 z-10 bg-rose-500/90 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg tracking-wider uppercase shadow-md shadow-rose-900/20">
+          <span className="absolute top-3 left-3 z-10 bg-red-600 text-white text-[10px] font-black px-2.5 py-1 rounded-lg tracking-wider uppercase shadow-sm">
             -{product.discountPercent}% OFF
           </span>
         )}
         
         {/* Narcotics Badge */}
         {product.isNarcotic && (
-          <span className="absolute top-3 right-3 z-10 bg-indigo-600/95 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg tracking-wider uppercase shadow-md shadow-indigo-900/20">
+          <span className="absolute top-3 right-3 z-10 bg-amber-100 text-amber-900 border border-amber-300/80 text-[10px] font-black px-2.5 py-1 rounded-lg tracking-wider uppercase shadow-xs">
             Rx ONLY
           </span>
         )}
 
         {/* 3D View Hover Badge */}
-        <span className="absolute bottom-3 right-3 z-10 bg-slate-955/80 backdrop-blur-md text-emerald-450 text-[8px] font-bold px-2.5 py-1 rounded-full tracking-wider uppercase border border-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <span className="absolute bottom-3 right-3 z-10 bg-slate-900/85 backdrop-blur-md text-yellow-400 text-[8px] font-bold px-2.5 py-1 rounded-full tracking-wider uppercase border border-yellow-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           🌐 3D View
         </span>
 
         <img
           src={getFullUrl(product.coverImage)}
           alt={product.name}
+          loading="lazy"
           className="max-h-[90%] max-w-[90%] object-contain transition-transform duration-300 group-hover:scale-105"
           onError={(e) => {
             e.target.src = "http://localhost:5000/uploads/placeholder.webp";
@@ -58,12 +59,12 @@ export default function ProductCard({ product }) {
       <div className="p-5 flex flex-col flex-grow">
         <div className="flex-grow">
           <Link href={`/products/${product._id}`} className="block">
-            <h3 className="font-bold text-slate-100 text-sm hover:text-emerald-400 line-clamp-2 min-h-[40px] mb-1.5 leading-snug transition-colors">
+            <h3 className="font-bold text-slate-900 text-sm hover:text-yellow-600 line-clamp-2 min-h-[40px] mb-1.5 leading-snug transition-colors">
               {product.name}
             </h3>
           </Link>
           {product.genericName && (
-            <p className="text-[11px] text-slate-450 font-medium italic mb-2 line-clamp-1">
+            <p className="text-[11px] text-slate-500 font-medium italic mb-2 line-clamp-1">
               {product.genericName}
             </p>
           )}
@@ -73,15 +74,15 @@ export default function ProductCard({ product }) {
         <div className="mt-3 flex items-baseline gap-2">
           {hasDiscount ? (
             <>
-              <span className="text-lg font-extrabold text-emerald-400">
+              <span className="text-lg font-black text-slate-950">
                 PKR {formatPrice(product.effectivePrice)}
               </span>
-              <span className="text-xs text-slate-500 line-through font-medium">
+              <span className="text-xs text-slate-400 line-through font-medium">
                 PKR {formatPrice(product.price)}
               </span>
             </>
           ) : (
-            <span className="text-lg font-extrabold text-slate-150">
+            <span className="text-lg font-black text-slate-950">
               PKR {formatPrice(product.price)}
             </span>
           )}
@@ -90,20 +91,20 @@ export default function ProductCard({ product }) {
         {/* Interactive CTA Buttons */}
         <div className="mt-4">
           {isOutOfStock ? (
-            <span className="w-full inline-block text-center bg-slate-800/80 text-slate-500 text-xs font-bold py-2.5 rounded-xl border border-slate-700/20 select-none">
+            <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-xs font-bold py-2.5 rounded-xl border border-slate-200 select-none">
               Out of Stock
             </span>
           ) : product.isNarcotic ? (
             <Link
               href={`/products/${product._id}`}
-              className="w-full inline-block text-center bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs font-bold py-2.5 rounded-xl border border-indigo-500/20 transition-colors"
+              className="w-full inline-block text-center bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold py-2.5 rounded-xl border border-amber-300 transition-colors"
             >
               Prescription Required
             </Link>
           ) : (
             <Link
               href={`/products/${product._id}`}
-              className="w-full inline-block text-center bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow-md shadow-teal-905/10 active:scale-[0.98]"
+              className="w-full inline-block text-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 text-xs font-extrabold py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md active:scale-[0.98] border border-yellow-500/40"
             >
               View Details
             </Link>
