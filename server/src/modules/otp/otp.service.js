@@ -15,6 +15,7 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const Otp = require("./otp.model");
 const smtp = require("../../integrations/smtp");
+const emailPrecheck = require("../../utils/emailPrecheck");
 const { BadRequestError } = require("../../utils/errors");
 
 /**
@@ -65,8 +66,31 @@ const resetIpRequestLog = () => {
  * @param {String} email
  * @param {String} [ip] - client IP for per-IP rate limiting (Fix 5)
  */
-const requestOtp = async (email, ip) => {
+const requestOtp = async (email, ip, options = {}) => {
   const normalizedEmail = email.trim().toLowerCase();
+
+  // 0. Email Pre-check Gate (Typo Suggestion + DNS MX Record Validation)
+  // Enforces lightweight pre-check BEFORE rate limiting and BEFORE OTP generation.
+  // This guarantees that typos and invalid domains with no MX records never consume
+  // the user's or IP's rate limit attempts.
+  const precheck = await emailPrecheck.validateEmailPrecheck(normalizedEmail, options);
+
+  if (precheck.needsConfirmation) {
+    return {
+      success: false,
+      needsConfirmation: true,
+      suggestion: precheck.suggestion,
+      suggestedDomain: precheck.suggestedDomain,
+      originalEmail: precheck.originalEmail,
+      message: precheck.message,
+    };
+  }
+
+  if (!precheck.valid) {
+    throw new BadRequestError(
+      precheck.message || "Invalid email address or unroutable domain."
+    );
+  }
 
   const bypassLimits = process.env.NODE_ENV === "test" && process.env.ENABLE_OTP_LIMITS_IN_TESTS !== "true";
 

@@ -157,8 +157,10 @@ export default function InstantOrderPage() {
     setFilePreviewUrl(null);
   };
 
-  const handleSendOtp = async () => {
-    if (!customer.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
+  const handleSendOtp = async (overrideSuggestion = false, emailToUse = null) => {
+    const isOverride = overrideSuggestion === true;
+    const targetEmail = (typeof emailToUse === 'string' ? emailToUse : customer.email || '').trim();
+    if (!targetEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(targetEmail)) {
       setErrorMsg("Please enter a valid email address first.");
       setOtpFeedback({ type: 'error', msg: 'Please enter a valid email address.' });
       return;
@@ -167,29 +169,35 @@ export default function InstantOrderPage() {
     setErrorMsg('');
     setOtpFeedback({ type: '', msg: '' });
     setOtpSending(true);
-    
-    // Always reveal OTP section immediately
-    setOtpSent(true);
 
     try {
-      await requestOtp(customer.email);
+      const res = await requestOtp(targetEmail, isOverride);
+      if (res && res.needsConfirmation) {
+        setOtpSent(false);
+        setOtpFeedback({
+          type: 'suggestion',
+          msg: res.message || `Did you mean ${res.suggestion}?`,
+          suggestion: res.suggestion,
+        });
+        return;
+      }
+
+      setOtpSent(true);
       setOtpFeedback({ 
         type: 'success', 
-        msg: `OTP verification code sent to ${customer.email}. Please check your inbox.` 
+        msg: `OTP verification code sent to ${targetEmail}. Please check your inbox.` 
       });
       setResendTimer(60);
       setTimeout(() => {
         if (otpInputRef.current) otpInputRef.current.focus();
       }, 200);
     } catch (err) {
+      console.warn("OTP Send error:", err.message);
+      setOtpSent(false);
       setOtpFeedback({ 
-        type: 'info', 
-        msg: err.message || `OTP section unlocked. Check your email for code.` 
+        type: 'error', 
+        msg: err.message || `Failed to send verification code. Please check your email address.` 
       });
-      setResendTimer(30);
-      setTimeout(() => {
-        if (otpInputRef.current) otpInputRef.current.focus();
-      }, 200);
     } finally {
       setOtpSending(false);
     }
@@ -460,7 +468,7 @@ export default function InstantOrderPage() {
                 {!otpVerified && (
                   <button
                     type="button"
-                    onClick={handleSendOtp}
+                    onClick={() => handleSendOtp()}
                     disabled={otpSending || !customer.email || resendTimer > 0}
                     className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-xs border border-yellow-500/40 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
                   >
@@ -468,6 +476,44 @@ export default function InstantOrderPage() {
                   </button>
                 )}
               </div>
+
+              {/* Pre-Check Typo Suggestion Banner */}
+              {otpFeedback.type === 'suggestion' && (
+                <div className="bg-amber-50 border border-amber-300 p-3.5 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-2xs mt-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-amber-700 text-sm">💡</span>
+                    <span className="text-amber-950 font-bold">
+                      Did you mean <span className="underline font-black text-slate-950">{otpFeedback.suggestion}</span>?
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCustomer(prev => ({ ...prev, email: otpFeedback.suggestion }));
+                        handleSendOtp(false, otpFeedback.suggestion);
+                      }}
+                      className="px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-lg transition-all shadow-2xs cursor-pointer text-xs"
+                    >
+                      Use {otpFeedback.suggestion}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSendOtp(true)}
+                      className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-lg border border-slate-300 transition-all cursor-pointer text-xs"
+                    >
+                      Send anyway
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Pre-Check Error Banner (e.g. Unroutable domain without MX records) */}
+              {otpFeedback.type === 'error' && !otpSent && (
+                <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-xs font-semibold mt-2">
+                  {otpFeedback.msg}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col gap-1.5 sm:col-span-2">

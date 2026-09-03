@@ -9,6 +9,7 @@ const { z } = require("zod");
 const requestOtpSchema = z
   .object({
     email: z.string().email("Valid email address is required").trim().toLowerCase(),
+    overrideSuggestion: z.boolean().optional(),
   })
   .strict();
 

@@ -44,10 +44,10 @@ export async function getDeliveryCharge(city) {
   return fetchApi(`/delivery-charge?city=${encodeURIComponent(city)}`, { cache: 'no-store' });
 }
 
-export async function requestOtp(email) {
+export async function requestOtp(email, overrideSuggestion = false) {
   return fetchApi('/otp/request', {
     method: 'POST',
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email, overrideSuggestion }),
   });
 }
 
