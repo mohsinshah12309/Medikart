@@ -27,10 +27,6 @@ export function CartProvider({ children }) {
   }, [cart, isLoaded]);
 
   const addToCart = (product, quantity = 1) => {
-    if (product.isNarcotic) {
-      alert("This item requires a prescription. Narcotics items cannot be purchased through standard checkout.");
-      return;
-    }
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.productId === product._id);
       if (existing) {
@@ -48,7 +44,7 @@ export function CartProvider({ children }) {
           price: product.effectivePrice !== undefined ? product.effectivePrice : product.price,
           quantity,
           coverImage: product.coverImage,
-          isNarcotic: product.isNarcotic,
+          isNarcotic: Boolean(product.isNarcotic),
         },
       ];
     });

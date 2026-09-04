@@ -213,6 +213,22 @@ const refundOrder = async (req, res, next) => {
   }
 };
 
+const updateOrderStatus = async (req, res, next) => {
+  try {
+    const order = await orderService.updateOrderStatus(req.params.id, {
+      status: req.body.status,
+      reason: req.body.reason,
+      admin: req.admin,
+    });
+    res.status(200).json({
+      status: "success",
+      data: { order },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   placeStandardOrder,
   placeNarcoticsOrder,
@@ -224,4 +240,5 @@ module.exports = {
   priceInstantOrder,
   cancelOrder,
   refundOrder,
+  updateOrderStatus,
 };

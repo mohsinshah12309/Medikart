@@ -32,7 +32,22 @@ export default function CartPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <>
+          {hasNarcotics && (
+            <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 flex items-start gap-3 shadow-xs">
+              <span className="text-2xl">🩺</span>
+              <div>
+                <h3 className="text-sm font-black text-amber-950">
+                  Prescription Required (Controlled / Rx Items in Cart)
+                </h3>
+                <p className="text-xs text-amber-900 mt-1 leading-relaxed">
+                  Your cart includes regulated prescription medicine. To complete your purchase, you must upload a doctor's prescription (PDF or Image) on the checkout page before OTP code generation.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Cart items list */}
           <div className="md:col-span-2 flex flex-col gap-4">
             {cart.map((item) => (
@@ -125,6 +140,7 @@ export default function CartPage() {
             </div>
           </div>
         </div>
+        </>
       )}
     </div>
   );

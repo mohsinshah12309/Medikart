@@ -11,11 +11,14 @@ function Orders({ token }) {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  // Filters State
+  // Filters & Search State
   const [filterType, setFilterType] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeSearch, setActiveSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
+  const [statusUpdatingId, setStatusUpdatingId] = useState(null);
 
   // Active Products for Pricing Dropdown
   const [products, setProducts] = useState([]);
@@ -34,11 +37,13 @@ function Orders({ token }) {
   // Cancel Modal States
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [cancelOrderId, setCancelOrderId] = useState(null);
+  const [cancelTargetOrder, setCancelTargetOrder] = useState(null);
   const [cancelReason, setCancelReason] = useState("");
+  const [cancelLoading, setCancelLoading] = useState(false);
 
   useEffect(() => {
     fetchOrders();
-  }, [filterType, filterStatus, page]);
+  }, [filterType, filterStatus, activeSearch, page]);
 
   useEffect(() => {
     fetchProducts();
@@ -52,6 +57,7 @@ function Orders({ token }) {
       let endpoint = `/admin/orders?page=${page}&limit=${limit}`;
       if (filterType) endpoint += `&type=${filterType}`;
       if (filterStatus) endpoint += `&status=${filterStatus}`;
+      if (activeSearch.trim()) endpoint += `&search=${encodeURIComponent(activeSearch.trim())}`;
 
       const data = await adminFetch(endpoint);
       setOrders(data.data?.orders || []);
@@ -60,6 +66,52 @@ function Orders({ token }) {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    setPage(1);
+    setActiveSearch(searchQuery.trim());
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setActiveSearch("");
+    setPage(1);
+  };
+
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    if (newStatus === "cancelled") {
+      handleOpenCancelModal(orderId);
+      return;
+    }
+
+    const confirmMsg = newStatus === "completed" || newStatus === "delivered" 
+      ? "Are you sure you want to mark this order as Completed / Delivered?" 
+      : `Change status of this order to "${newStatus}"?`;
+
+    if (!window.confirm(confirmMsg)) return;
+
+    setError("");
+    setSuccessMsg("");
+    setStatusUpdatingId(orderId);
+
+    try {
+      await adminFetch(`/admin/orders/${orderId}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      setSuccessMsg(`Order status successfully updated to "${newStatus}".`);
+      await fetchOrders();
+      if (selectedOrder && selectedOrder._id === orderId) {
+        setSelectedOrder((prev) => prev ? { ...prev, status: newStatus === "completed" ? "delivered" : newStatus } : null);
+      }
+    } catch (err) {
+      setError(err.message || "Failed to update order status");
+    } finally {
+      setStatusUpdatingId(null);
     }
   };
 
@@ -144,31 +196,51 @@ function Orders({ token }) {
   };
 
   // Cancel order trigger
-  const handleOpenCancelModal = (orderId) => {
-    setCancelOrderId(orderId);
+  const handleOpenCancelModal = (orderOrId) => {
+    let target = null;
+    let id = null;
+    if (orderOrId && typeof orderOrId === "object") {
+      target = orderOrId;
+      id = orderOrId._id;
+    } else {
+      id = orderOrId;
+      target = orders.find((o) => o._id === id) || (selectedOrder?._id === id ? selectedOrder : null);
+    }
+    setCancelOrderId(id);
+    setCancelTargetOrder(target);
     setCancelReason("");
     setIsCancelModalOpen(true);
   };
 
   const handleCancelSubmit = async (e) => {
     e.preventDefault();
+    if (!cancelReason.trim()) {
+      setError("Please provide a reason for cancelling the order.");
+      return;
+    }
+
     setError("");
     setSuccessMsg("");
+    setCancelLoading(true);
 
     try {
       await adminFetch(`/admin/orders/${cancelOrderId}/cancel`, {
         method: "PATCH",
-        body: JSON.stringify({ reason: cancelReason }),
+        body: JSON.stringify({ reason: cancelReason.trim() }),
       });
 
-      setSuccessMsg("Order cancelled successfully.");
+      setSuccessMsg("Order cancelled successfully and cancellation email dispatched to customer.");
       setIsCancelModalOpen(false);
+      setCancelTargetOrder(null);
+      setCancelReason("");
       fetchOrders();
       if (isDetailModalOpen) {
         handleCloseDetails();
       }
     } catch (err) {
       setError(err.message);
+    } finally {
+      setCancelLoading(false);
     }
   };
 
@@ -267,34 +339,98 @@ function Orders({ token }) {
   const handleResetFilters = () => {
     setFilterType("");
     setFilterStatus("");
+    setSearchQuery("");
+    setActiveSearch("");
     setPage(1);
   };
 
   return (
     <div>
-      <div className="page-header">
-        <h2 className="page-title">Manage Orders</h2>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <select className="form-control" style={{ width: "160px" }} value={filterType} onChange={(e) => { setFilterType(e.target.value); setPage(1); }}>
-            <option value="">All Types</option>
-            <option value="standard">Standard</option>
-            <option value="instant">Instant</option>
-            <option value="narcotics">Narcotics</option>
-          </select>
+      <div className="page-header" style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "stretch" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+          <h2 className="page-title" style={{ margin: 0 }}>Manage Orders</h2>
+          
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <select className="form-control" style={{ width: "150px" }} value={filterType} onChange={(e) => { setFilterType(e.target.value); setPage(1); }}>
+              <option value="">All Types</option>
+              <option value="standard">Standard</option>
+              <option value="instant">Instant</option>
+              <option value="narcotics">Narcotics</option>
+            </select>
 
-          <select className="form-control" style={{ width: "180px" }} value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}>
-            <option value="">All Statuses</option>
-            <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
-            <option value="pending_verification">Pending Verification</option>
-            <option value="pending">Pending Fulfillment</option>
-            <option value="packed">Packed</option>
-            <option value="shipped">Shipped</option>
-            <option value="delivered">Delivered</option>
-            <option value="rejected">Rejected</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
+            <select className="form-control" style={{ width: "170px" }} value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}>
+              <option value="">All Statuses</option>
+              <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
+              <option value="pending_verification">Pending Verification</option>
+              <option value="pending">Pending Fulfillment</option>
+              <option value="packed">Packed</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered / Completed</option>
+              <option value="rejected">Rejected</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
         </div>
+
+        {/* Search Toolbar */}
+        <form onSubmit={handleSearchSubmit} style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+          <div style={{ position: "relative", flex: 1, maxWidth: "480px" }}>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Customer Name, Order ID, Email, Phone..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ width: "100%", paddingRight: searchQuery ? "2.5rem" : "0.75rem" }}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={handleClearSearch}
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#94a3b8",
+                  fontSize: "1.1rem",
+                  lineHeight: 1,
+                  padding: "2px 6px",
+                }}
+                title="Clear search"
+              >
+                &times;
+              </button>
+            )}
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+            <span>🔍</span>
+            <span>Search</span>
+          </button>
+          {activeSearch && (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleClearSearch}
+              style={{ padding: "0.5rem 0.85rem", fontSize: "0.875rem" }}
+            >
+              Reset Search
+            </button>
+          )}
+        </form>
       </div>
+
+      {activeSearch && (
+        <div style={{ marginBottom: "1rem", fontSize: "0.875rem", color: "#475569", background: "#f1f5f9", padding: "0.5rem 0.75rem", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span>Showing results for search: <strong>"{activeSearch}"</strong></span>
+          <button onClick={handleClearSearch} style={{ background: "none", border: "none", color: "#0284c7", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem" }}>
+            Clear Search Filter
+          </button>
+        </div>
+      )}
 
       {error && <div className="alert alert-danger">{error}</div>}
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
@@ -310,18 +446,18 @@ function Orders({ token }) {
             <span style={{ fontSize: "2.5rem" }}>📦</span>
             <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: "#0f172a" }}>No Orders Found</h3>
             <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem", maxWidth: "400px" }}>
-              {filterType || filterStatus 
-                ? "There are no orders matching your selected filter criteria." 
+              {filterType || filterStatus || activeSearch
+                ? "There are no orders matching your selected search or filter criteria." 
                 : "No customer orders have been placed in the system yet."}
             </p>
-            {(filterType || filterStatus) && (
+            {(filterType || filterStatus || activeSearch) && (
               <button
                 type="button"
                 className="btn btn-secondary"
                 style={{ marginTop: "0.5rem", fontSize: "0.85rem", padding: "0.4rem 0.85rem" }}
                 onClick={handleResetFilters}
               >
-                Reset All Filters
+                Reset All Filters & Search
               </button>
             )}
           </div>
@@ -334,9 +470,9 @@ function Orders({ token }) {
                   <th>Customer Name</th>
                   <th>Type</th>
                   <th>Total</th>
-                  <th>Payment Method</th>
-                  <th>Payment State</th>
+                  <th>Payment</th>
                   <th>Status</th>
+                  <th style={{ minWidth: "170px" }}>Change State</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -344,7 +480,10 @@ function Orders({ token }) {
                 {orders.map((order) => (
                   <tr key={order._id}>
                     <td><code style={{ fontSize: "0.85rem" }}>{order._id}</code></td>
-                    <td style={{ fontWeight: 600 }}>{order.customer?.name}</td>
+                    <td>
+                      <div style={{ fontWeight: 600 }}>{order.customer?.name}</div>
+                      <div style={{ fontSize: "0.75rem", color: "#64748b" }}>{order.customer?.phone}</div>
+                    </td>
                     <td style={{ textTransform: "capitalize" }}>{order.type}</td>
                     <td>
                       {order.totals?.total !== undefined ? (
@@ -353,21 +492,58 @@ function Orders({ token }) {
                         <span style={{ color: "#94a3b8" }}>Pending Pricing</span>
                       )}
                     </td>
-                    <td style={{ textTransform: "uppercase" }}>{order.paymentMethod}</td>
-                    <td style={{ textTransform: "capitalize" }}>{order.paymentState}</td>
+                    <td>
+                      <div style={{ textTransform: "uppercase", fontSize: "0.8rem", fontWeight: 600 }}>{order.paymentMethod}</div>
+                      <div style={{ textTransform: "capitalize", fontSize: "0.75rem", color: order.paymentState === "paid" ? "#16a34a" : "#64748b" }}>
+                        {order.paymentState}
+                      </div>
+                    </td>
                     <td>
                       <span className={`badge ${getStatusBadgeClass(order.status)}`}>
                         {order.status}
                       </span>
                     </td>
                     <td>
-                      <div style={{ display: "flex", gap: "0.5rem" }}>
+                      {/* State update dropdown for active fulfillments */}
+                      {order.status === "awaiting-pharmacist-pricing" ? (
+                        <span style={{ fontSize: "0.8rem", color: "#8b5cf6", fontStyle: "italic" }}>Price Items First</span>
+                      ) : order.status === "pending_verification" ? (
+                        <span style={{ fontSize: "0.8rem", color: "#059669", fontStyle: "italic" }}>Verify Prescription</span>
+                      ) : order.status === "cancelled" ? (
+                        <span style={{ fontSize: "0.8rem", color: "#dc2626", fontWeight: 600 }}>Cancelled</span>
+                      ) : order.status === "rejected" ? (
+                        <span style={{ fontSize: "0.8rem", color: "#dc2626", fontWeight: 600 }}>Rejected</span>
+                      ) : (
+                        <select
+                          className="form-control"
+                          style={{
+                            fontSize: "0.8rem",
+                            padding: "0.25rem 0.4rem",
+                            height: "auto",
+                            borderColor: order.status === "delivered" ? "#16a34a" : "#cbd5e1",
+                            background: order.status === "delivered" ? "#f0fdf4" : "white",
+                            fontWeight: 600,
+                          }}
+                          value={order.status}
+                          disabled={statusUpdatingId === order._id}
+                          onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="packed">Packed</option>
+                          <option value="shipped">Shipped</option>
+                          <option value="delivered">Completed / Delivered</option>
+                          <option value="cancelled">Cancel Order...</option>
+                        </select>
+                      )}
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
                         <button
                           className="btn btn-secondary"
                           style={{ padding: "0.25rem 0.5rem", fontSize: "0.85rem" }}
                           onClick={() => handleOpenDetails(order)}
                         >
-                          View Details
+                          Details
                         </button>
 
                         {/* Instant order pharmacist pricing */}
@@ -473,7 +649,30 @@ function Orders({ token }) {
                   <p style={{ margin: "0.25rem 0" }}><strong>Type:</strong> <span style={{ textTransform: "capitalize" }}>{selectedOrder.type}</span></p>
                   <p style={{ margin: "0.25rem 0" }}><strong>Payment Method:</strong> <span style={{ textTransform: "uppercase" }}>{selectedOrder.paymentMethod}</span></p>
                   <p style={{ margin: "0.25rem 0" }}><strong>Payment State:</strong> <span style={{ textTransform: "capitalize" }}>{selectedOrder.paymentState}</span></p>
-                  <p style={{ margin: "0.25rem 0" }}><strong>Order Status:</strong> {selectedOrder.status}</p>
+                  <p style={{ margin: "0.25rem 0" }}><strong>Order Status:</strong> <span className={`badge ${getStatusBadgeClass(selectedOrder.status)}`} style={{ marginLeft: "0.25rem" }}>{selectedOrder.status}</span></p>
+                  
+                  {/* Status update widget inside modal */}
+                  {!["awaiting-pharmacist-pricing", "pending_verification", "cancelled", "rejected"].includes(selectedOrder.status) && (
+                    <div style={{ marginTop: "0.75rem", padding: "0.6rem", background: "#f8fafc", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
+                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#475569", textTransform: "uppercase", display: "block", marginBottom: "0.35rem" }}>
+                        Update Order State:
+                      </label>
+                      <select
+                        className="form-control"
+                        style={{ fontSize: "0.85rem", padding: "0.35rem 0.5rem" }}
+                        value={selectedOrder.status}
+                        disabled={statusUpdatingId === selectedOrder._id}
+                        onChange={(e) => handleUpdateOrderStatus(selectedOrder._id, e.target.value)}
+                      >
+                        <option value="pending">Pending Fulfillment</option>
+                        <option value="packed">Packed</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Completed / Delivered</option>
+                        <option value="cancelled">Cancel Order...</option>
+                      </select>
+                    </div>
+                  )}
+
                   {selectedOrder.cancellation && (
                     <div style={{ background: "#fee2e2", padding: "0.5rem", borderRadius: "4px", marginTop: "0.5rem" }}>
                       <p style={{ margin: "0.125rem 0", color: "#991b1b" }}><strong>Cancelled Reason:</strong> {selectedOrder.cancellation.reason || "N/A"}</p>
@@ -710,33 +909,150 @@ function Orders({ token }) {
       {/* Cancellation Reason Modal */}
       {isCancelModalOpen && (
         <div className="modal-overlay">
-          <div className="modal-content" style={{ maxWidth: "500px" }}>
+          <div className="modal-content" style={{ maxWidth: "560px" }}>
             <div className="modal-header">
-              <h3>Cancel Order</h3>
-              <button className="modal-close" onClick={() => setIsCancelModalOpen(false)}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ fontSize: "1.25rem" }}>⚠️</span>
+                <h3 style={{ margin: 0, color: "#dc2626" }}>Cancel Order</h3>
+              </div>
+              <button
+                className="modal-close"
+                onClick={() => !cancelLoading && setIsCancelModalOpen(false)}
+                disabled={cancelLoading}
+              >
                 &times;
               </button>
             </div>
             <form onSubmit={handleCancelSubmit}>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label>Cancellation Reason</label>
+              <div className="modal-body" style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                {cancelTargetOrder && (
+                  <div
+                    style={{
+                      background: "#fef2f2",
+                      border: "1px solid #fee2e2",
+                      borderRadius: "8px",
+                      padding: "0.85rem 1rem",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.35rem" }}>
+                      <span style={{ fontWeight: 600, color: "#991b1b" }}>
+                        Order #{cancelTargetOrder._id.slice(-6).toUpperCase()}
+                      </span>
+                      <span style={{ color: "#7f1d1d", textTransform: "capitalize" }}>
+                        Status: <strong>{cancelTargetOrder.status}</strong>
+                      </span>
+                    </div>
+                    <div style={{ color: "#475569", fontSize: "0.82rem", lineHeight: "1.4" }}>
+                      <div>
+                        <strong>Customer:</strong>{" "}
+                        {cancelTargetOrder.shippingAddress?.fullName || cancelTargetOrder.userId?.name || "Customer"}
+                      </div>
+                      <div>
+                        <strong>Email:</strong>{" "}
+                        {cancelTargetOrder.shippingAddress?.email || cancelTargetOrder.userId?.email || "N/A"}
+                      </div>
+                      <div>
+                        <strong>Payment:</strong>{" "}
+                        {cancelTargetOrder.paymentMethod === "online" ? "💳 Online Prepaid" : "💵 Cash on Delivery"} (
+                        {cancelTargetOrder.paymentStatus || "pending"})
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div
+                  style={{
+                    background: "#eff6ff",
+                    border: "1px solid #dbeafe",
+                    borderRadius: "8px",
+                    padding: "0.75rem 1rem",
+                    fontSize: "0.82rem",
+                    color: "#1e40af",
+                    display: "flex",
+                    gap: "0.5rem",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <span style={{ fontSize: "1rem" }}>✉️</span>
+                  <div>
+                    <strong>Customer Notification Note:</strong> An official cancellation email will be immediately sent to
+                    the customer containing this cancellation note, refund guidance (if prepaid), and support contact info.
+                  </div>
+                </div>
+
+                <div className="form-group" style={{ marginBottom: "0" }}>
+                  <label style={{ fontWeight: 600, marginBottom: "0.4rem", display: "block", fontSize: "0.875rem" }}>
+                    Select Quick Reason Preset:
+                  </label>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.75rem" }}>
+                    {[
+                      "Prescription invalid or unreadable",
+                      "Medicine out of stock / unavailable",
+                      "Customer requested cancellation",
+                      "Delivery address unreachable",
+                      "Narcotics verification rejected",
+                      "Duplicate order placed by customer",
+                    ].map((preset) => (
+                      <button
+                        type="button"
+                        key={preset}
+                        className="btn"
+                        style={{
+                          fontSize: "0.75rem",
+                          padding: "0.3rem 0.6rem",
+                          background: cancelReason === preset ? "#fee2e2" : "#f1f5f9",
+                          color: cancelReason === preset ? "#991b1b" : "#334155",
+                          border: cancelReason === preset ? "1px solid #ef4444" : "1px solid #cbd5e1",
+                          borderRadius: "16px",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                        }}
+                        onClick={() => setCancelReason(preset)}
+                      >
+                        {preset}
+                      </button>
+                    ))}
+                  </div>
+
+                  <label style={{ fontWeight: 600, marginBottom: "0.35rem", display: "block", fontSize: "0.875rem" }}>
+                    Cancellation Reason / Note to Customer <span style={{ color: "#ef4444" }}>*</span>
+                  </label>
                   <textarea
                     className="form-control"
                     rows="3"
                     required
                     value={cancelReason}
                     onChange={(e) => setCancelReason(e.target.value)}
-                    placeholder="Enter reason for cancelling this order..."
+                    placeholder="Enter clear, polite details for the customer regarding why this order is being cancelled..."
+                    disabled={cancelLoading}
+                    style={{ width: "100%", borderRadius: "6px", padding: "0.5rem", border: "1px solid #cbd5e1", fontSize: "0.875rem" }}
                   />
                 </div>
               </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setIsCancelModalOpen(false)}>
-                  Cancel
+              <div className="modal-footer" style={{ marginTop: "1rem" }}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setIsCancelModalOpen(false)}
+                  disabled={cancelLoading}
+                >
+                  Close
                 </button>
-                <button type="submit" className="btn btn-danger">
-                  Cancel Order
+                <button
+                  type="submit"
+                  className="btn btn-danger"
+                  disabled={cancelLoading || !cancelReason.trim()}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+                >
+                  {cancelLoading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Cancelling & Sending Email...
+                    </>
+                  ) : (
+                    "Confirm Cancellation"
+                  )}
                 </button>
               </div>
             </form>

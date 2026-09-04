@@ -5,6 +5,7 @@
  * Phase 15 (narcotics) will add its own handler branch.
  */
 
+const mongoose = require("mongoose");
 const { placeStandardOrder } = require("./standardOrder.handler");
 const { placeInstantOrder } = require("./instantOrder.handler");
 const { placeNarcoticsOrder } = require("./narcoticsOrder.handler");
@@ -34,12 +35,27 @@ const placeOrder = async (type, payload) => {
 };
 
 /**
- * Get a paginated, optionally filtered list of orders (admin).
+ * Get a paginated, optionally filtered and searched list of orders (admin).
  */
-const getOrders = async ({ type, status, page = 1, limit = 20 } = {}) => {
+const getOrders = async ({ type, status, search, page = 1, limit = 20 } = {}) => {
   const query = {};
   if (type) query.type = type;
   if (status) query.status = status;
+
+  if (search && search.trim()) {
+    const term = search.trim();
+    const isObjectId = mongoose.Types.ObjectId.isValid(term) && term.length === 24;
+    const searchConditions = [
+      { "customer.name": { $regex: term, $options: "i" } },
+      { "customer.email": { $regex: term, $options: "i" } },
+      { "customer.phone": { $regex: term, $options: "i" } },
+      { "customer.city": { $regex: term, $options: "i" } },
+    ];
+    if (isObjectId) {
+      searchConditions.unshift({ _id: new mongoose.Types.ObjectId(term) });
+    }
+    query.$or = searchConditions;
+  }
 
   const skip = (page - 1) * limit;
   const [orders, total] = await Promise.all([
@@ -282,22 +298,29 @@ const cancelOrder = async (orderId, { reason, admin }) => {
   if (!order) throw new NotFoundError("Order not found");
 
   const currentStatus = order.status ? order.status.toLowerCase() : "";
-  if (currentStatus !== "pending" && currentStatus !== "packed") {
+  const allowedStatuses = [
+    "pending",
+    "packed",
+    "pending_verification",
+    "awaiting-pharmacist-pricing",
+  ];
+
+  if (!allowedStatuses.includes(currentStatus)) {
     throw new BadRequestError(
-      `Cannot cancel order in "${order.status}" status. Only Pending or Packed orders can be cancelled.`
+      `Cannot cancel order in "${order.status}" status. Only orders in Pending or Packed (or awaiting verification/pricing) status can be cancelled.`
     );
   }
 
   const refundStatus = order.paymentState === "paid" ? "refund_pending" : "not_applicable";
   const cancellationData = {
-    reason,
+    reason: reason || "Cancelled by pharmacy administration.",
     cancelledBy: admin.id || admin._id || admin,
     cancelledAt: new Date(),
     refundStatus,
   };
 
   const updatedOrder = await Order.findOneAndUpdate(
-    { _id: orderId, status: { $in: ["pending", "packed"] } },
+    { _id: orderId, status: { $in: allowedStatuses } },
     {
       $set: {
         status: "cancelled",
@@ -313,7 +336,7 @@ const cancelOrder = async (orderId, { reason, admin }) => {
     );
   }
 
-  logActivity({
+  await logActivity({
     actor: {
       id: admin.id || admin._id || admin,
       email: admin.email,
@@ -323,14 +346,17 @@ const cancelOrder = async (orderId, { reason, admin }) => {
     entityType: "order",
     entityId: updatedOrder._id,
     before: { status: order.status },
-    after: { status: "cancelled" },
+    after: { status: "cancelled", cancellationReason: cancellationData.reason },
   });
 
-  sendOrderCancellationEmail(updatedOrder).catch((err) => {
+  // Send cancellation email with admin reason note to customer
+  try {
+    await sendOrderCancellationEmail(updatedOrder);
+  } catch (err) {
     console.error(
       `[orders] Cancellation email failed for order ${updatedOrder._id}: ${err.message}`
     );
-  });
+  }
 
   return updatedOrder;
 };
@@ -365,7 +391,7 @@ const refundOrder = async (orderId, admin) => {
     );
   }
 
-  logActivity({
+  await logActivity({
     actor: {
       id: admin.id || admin._id || admin,
       email: admin.email,
@@ -382,70 +408,164 @@ const refundOrder = async (orderId, admin) => {
 };
 
 /**
- * Sends a cancellation email to the customer.
+ * Sends a detailed cancellation email with admin reason note to the customer.
  *
  * @param {object} order
  */
 const sendOrderCancellationEmail = async (order) => {
   const isRefundPending = order.cancellation?.refundStatus === "refund_pending";
+  const reasonNote = order.cancellation?.reason || "Cancelled by store administration.";
+  const orderTotal = order.totals?.total !== undefined ? order.totals.total : 0;
   
   let refundNoteHtml = "";
   let refundNoteText = "";
 
   if (isRefundPending) {
-    refundNoteHtml = `<p><strong>Refund Notice:</strong> Since your order was paid online, your refund of <strong>PKR ${order.totals.total.toFixed(2)}</strong> has been initiated and will be processed manually to your account within <strong>3-5 business days</strong>.</p>`;
-    refundNoteText = ` Since your order was paid online, your refund of PKR ${order.totals.total.toFixed(2)} has been initiated and will be processed manually to your account within 3-5 business days.`;
+    refundNoteHtml = `
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #3b82f6;border-radius:8px;padding:12px 16px;margin:16px 0;">
+        <strong style="color:#1e40af;font-size:13px;display:block;margin-bottom:4px;">💳 Refund Notice:</strong>
+        <span style="color:#1e3a8a;font-size:13px;line-height:1.5;">Since your order was paid online, your refund of <strong>PKR ${orderTotal.toFixed(2)}</strong> has been initiated and will be processed manually to your account within <strong>3-5 business days</strong>.</span>
+      </div>`;
+    refundNoteText = ` Since your order was paid online, your refund of PKR ${orderTotal.toFixed(2)} has been initiated and will be processed within 3-5 business days.`;
   } else {
-    refundNoteHtml = `<p>No payment reversal is required for this order.</p>`;
+    refundNoteHtml = `
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #94a3b8;border-radius:8px;padding:12px 16px;margin:16px 0;">
+        <span style="color:#475569;font-size:13px;">Since this was a Cash on Delivery (COD) order, no payment was deducted or charged.</span>
+      </div>`;
+    refundNoteText = " Since this was a Cash on Delivery order, no payment was deducted.";
   }
 
-  const itemRows = order.items
+  const itemRows = (order.items || [])
     .map(
       (i) => `<tr>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;">${i.name}</td>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:center;">${i.quantity}</td>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;">PKR ${i.price.toFixed(2)}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#1e293b;">${i.name}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-size:13px;color:#475569;">${i.quantity}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:right;font-size:13px;font-weight:bold;color:#0f172a;">PKR ${i.price ? i.price.toFixed(2) : "0.00"}</td>
       </tr>`
     )
     .join("");
 
-  const html = `
-    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-      <h2 style="color:#dc2626;">Order Cancelled — Medikart</h2>
-      <p>Hello ${order.customer.name},</p>
-      <p>We regret to inform you that your order has been cancelled.</p>
-      <p><strong>Order ID:</strong> ${order._id}</p>
-      ${order.cancellation?.reason ? `<p><strong>Reason for cancellation:</strong> ${order.cancellation.reason}</p>` : ""}
-      ${refundNoteHtml}
-      <h3 style="margin-top:20px;border-bottom:2px solid #e5e7eb;padding-bottom:4px;">Cancelled Items</h3>
-      <table style="width:100%;border-collapse:collapse;margin:16px 0;">
-        <thead>
-          <tr style="background:#f3f4f6;">
-            <th style="padding:8px 12px;text-align:left;">Product</th>
-            <th style="padding:8px 12px;text-align:center;">Qty</th>
-            <th style="padding:8px 12px;text-align:right;">Price</th>
-          </tr>
-        </thead>
-        <tbody>${itemRows}</tbody>
-      </table>
-      <table style="width:100%;margin-top:8px;">
-        <tr style="font-weight:bold;font-size:1.05em;">
-          <td style="padding:8px 12px;">Total Refundable Amount</td>
-          <td style="padding:8px 12px;text-align:right;">PKR ${order.totals.total.toFixed(2)}</td>
+  const itemsTableHtml = order.items && order.items.length > 0 ? `
+    <h3 style="margin-top:24px;margin-bottom:8px;font-size:14px;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px;">Cancelled Items</h3>
+    <table style="width:100%;border-collapse:collapse;margin:8px 0 16px 0;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
+      <thead>
+        <tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0;">
+          <th style="padding:10px 12px;text-align:left;font-size:12px;color:#475569;">Item</th>
+          <th style="padding:10px 12px;text-align:center;font-size:12px;color:#475569;">Qty</th>
+          <th style="padding:10px 12px;text-align:right;font-size:12px;color:#475569;">Price</th>
         </tr>
-      </table>
-      <hr style="margin:16px 0;">
-      <p style="color:#6b7280;font-size:0.875em;">
-        If you have any questions regarding this cancellation or your refund, please reply directly to this email or contact support.
+      </thead>
+      <tbody>${itemRows}</tbody>
+    </table>
+    ${order.totals?.total !== undefined ? `
+    <table style="width:100%;margin-top:4px;">
+      <tr style="font-weight:bold;font-size:14px;color:#0f172a;">
+        <td style="padding:4px 0;">Order Total Amount</td>
+        <td style="padding:4px 0;text-align:right;font-size:16px;">PKR ${orderTotal.toFixed(2)}</td>
+      </tr>
+    </table>` : ''}
+  ` : '';
+
+  const html = `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;">
+      <!-- Header with branding -->
+      <div style="border-bottom:2px solid #fef08a;padding-bottom:16px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+        <h1 style="color:#0f172a;font-size:22px;margin:0;font-weight:900;">Medikart</h1>
+        <span style="background:#fee2e2;color:#991b1b;font-size:11px;font-weight:bold;padding:3px 8px;border-radius:999px;text-transform:uppercase;margin-left:auto;">Order Cancelled</span>
+      </div>
+
+      <p style="font-size:15px;color:#1e293b;margin:0 0 12px 0;">Hello <strong>${order.customer.name}</strong>,</p>
+      <p style="font-size:14px;color:#475569;margin:0 0 16px 0;line-height:1.6;">
+        We regret to inform you that your order <strong>#${order._id}</strong> has been cancelled by our pharmacy team.
       </p>
+
+      <!-- Prominent Reason Note Box -->
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:10px;padding:14px 18px;margin:18px 0;">
+        <strong style="color:#92400e;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">📝 Reason for Cancellation:</strong>
+        <div style="color:#78350f;font-size:14px;line-height:1.5;font-weight:600;">
+          ${reasonNote}
+        </div>
+      </div>
+
+      ${refundNoteHtml}
+
+      ${itemsTableHtml}
+
+      <hr style="border:none;border-top:1px solid #e2e8f0;margin:24px 0 16px 0;">
+
+      <!-- Support Footer -->
+      <div style="font-size:12px;color:#64748b;line-height:1.6;">
+        <p style="margin:0 0 6px 0;">If you have any questions or require assistance reordering, please reach out to us:</p>
+        <p style="margin:0;">
+          ✉️ Email: <a href="mailto:medikart.com@gmail.com" style="color:#0284c7;text-decoration:none;">medikart.com@gmail.com</a> | 
+          💬 WhatsApp: <a href="https://wa.me/923314170744" style="color:#16a34a;text-decoration:none;">03314170744</a>
+        </p>
+      </div>
     </div>`;
 
   await smtp.sendEmail({
     to: order.customer.email,
     subject: `Order Cancelled — Medikart (#${order._id})`,
     html,
-    text: `Your order #${order._id} has been cancelled.${order.cancellation?.reason ? ` Reason: ${order.cancellation.reason}.` : ""}${refundNoteText} Total Amount: PKR ${order.totals.total.toFixed(2)}.`,
+    text: `Hello ${order.customer.name},\n\nYour order #${order._id} has been cancelled.\nReason: ${reasonNote}\n${refundNoteText}\n\nIf you have any questions, please contact us at medikart.com@gmail.com or WhatsApp: 03314170744.\n\nTeam Medikart`,
   });
+};
+
+/**
+ * Admin updates order status (pending, packed, shipped, delivered/completed, cancelled).
+ *
+ * @param {string} orderId
+ * @param {object} options
+ * @param {string} options.status - target status
+ * @param {string} [options.reason] - reason if cancelling
+ * @param {object} options.admin - authenticated admin user
+ */
+const updateOrderStatus = async (orderId, { status, reason, admin }) => {
+  let targetStatus = status.toLowerCase();
+  if (targetStatus === "completed") {
+    targetStatus = "delivered";
+  }
+
+  // If cancelling, route through cancellation workflow with email & refund tracking
+  if (targetStatus === "cancelled") {
+    return cancelOrder(orderId, { reason, admin });
+  }
+
+  const order = await Order.findById(orderId);
+  if (!order) throw new NotFoundError("Order not found");
+
+  if (order.status === "cancelled") {
+    throw new BadRequestError("Cannot change status of a cancelled order.");
+  }
+
+  if (order.status === "awaiting-pharmacist-pricing" && (targetStatus === "delivered" || targetStatus === "shipped" || targetStatus === "packed")) {
+    throw new BadRequestError("Instant order must be priced before updating fulfillment status.");
+  }
+
+  const previousStatus = order.status;
+  order.status = targetStatus;
+
+  // If delivered and COD, mark paymentState as paid
+  if (targetStatus === "delivered" && order.paymentMethod === "cod" && order.paymentState !== "paid") {
+    order.paymentState = "paid";
+  }
+
+  await order.save();
+
+  await logActivity({
+    actor: {
+      id: admin?.id || admin?._id || admin,
+      email: admin?.email,
+      role: admin?.role,
+    },
+    action: "order_status_updated",
+    entityType: "order",
+    entityId: order._id,
+    before: { status: previousStatus },
+    after: { status: order.status, paymentState: order.paymentState },
+  });
+
+  return order;
 };
 
 module.exports = {
@@ -457,4 +577,5 @@ module.exports = {
   reviewNarcoticsOrder,
   cancelOrder,
   refundOrder,
+  updateOrderStatus,
 };

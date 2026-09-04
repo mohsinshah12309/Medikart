@@ -27,6 +27,7 @@ const {
   orderIdParamsSchema,
   narcoticsVerificationSchema,
   cancelOrderSchema,
+  updateOrderStatusSchema,
 } = require("./order.validation");
 const orderController = require("./order.controller");
 
@@ -96,6 +97,14 @@ adminOrderRoutes.patch(
   validateParams(orderIdParamsSchema),
   validate(cancelOrderSchema),
   orderController.cancelOrder,
+);
+
+// PATCH /api/v1/admin/orders/:id/status — update order fulfillment status (pending, packed, shipped, delivered/completed, cancelled)
+adminOrderRoutes.patch(
+  "/:id/status",
+  validateParams(orderIdParamsSchema),
+  validate(updateOrderStatusSchema),
+  orderController.updateOrderStatus,
 );
 
 // PATCH /api/v1/admin/orders/:id/refund — complete manual refund (Phase 17)

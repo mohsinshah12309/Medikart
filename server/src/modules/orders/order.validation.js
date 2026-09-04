@@ -147,6 +147,7 @@ const narcoticsVerificationSchema = z.object({
 
 // GET /api/v1/admin/orders — admin list with optional filters
 const adminOrderQuerySchema = z.object({
+  search: z.string().trim().optional(),
   type: z.enum(["standard", "instant", "narcotics"]).optional(),
   status: z
     .enum([
@@ -174,6 +175,19 @@ const cancelOrderSchema = z.object({
   reason: z.string().trim().optional(),
 });
 
+// PATCH /api/v1/admin/orders/:id/status
+const updateOrderStatusSchema = z.object({
+  status: z.enum([
+    "pending",
+    "packed",
+    "shipped",
+    "delivered",
+    "completed",
+    "cancelled",
+  ]),
+  reason: z.string().trim().optional(),
+});
+
 module.exports = {
   placeStandardOrderSchema,
   placeInstantOrderSchema,
@@ -183,4 +197,5 @@ module.exports = {
   adminOrderQuerySchema,
   orderIdParamsSchema,
   cancelOrderSchema,
+  updateOrderStatusSchema,
 };

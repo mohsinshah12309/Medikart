@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getCities, requestOtp, verifyOtp, placeInstantOrder } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
 
 const DEFAULT_CITIES = ['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan', 'Peshawar', 'Quetta', 'Gujranwala', 'Sialkot'];
 
@@ -37,6 +38,8 @@ export default function InstantOrderPage() {
 
   // Submission states
   const [submitting, setSubmitting] = useState(false);
+  const [confirmedOrderId, setConfirmedOrderId] = useState(null);
+  const [placedOrderSummary, setPlacedOrderSummary] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [citiesList, setCitiesList] = useState(DEFAULT_CITIES);
 
@@ -243,6 +246,7 @@ export default function InstantOrderPage() {
     setSubmitting(true);
 
     try {
+      const startTime = Date.now();
       const formData = new FormData();
       formData.append('customer', JSON.stringify(customer));
       formData.append('paymentMethod', 'cod');
@@ -254,9 +258,22 @@ export default function InstantOrderPage() {
       formData.append('prescription', prescriptionFile);
 
       const res = await placeInstantOrder(formData);
+
+      // Ensure placing animation displays for at least 1000ms
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 1000) {
+        await new Promise((r) => setTimeout(r, 1000 - elapsed));
+      }
+
       if (res && res.status !== 'fail') {
         const orderId = res._id || res.data?.order?._id;
-        router.push(`/order-confirmation/${orderId}`);
+        setPlacedOrderSummary({
+          total: "Awaiting Pharmacist Pricing",
+          customer: { ...customer },
+          paymentMethod: 'cod',
+          type: 'instant',
+        });
+        setConfirmedOrderId(orderId);
       } else {
         throw new Error(res.message || "Failed to place instant order.");
       }
@@ -266,6 +283,22 @@ export default function InstantOrderPage() {
       setSubmitting(false);
     }
   };
+
+  // If order was just placed, render the full Order Confirmed Card directly on screen!
+  if (confirmedOrderId) {
+    return (
+      <div className="max-w-2xl mx-auto my-8 px-4">
+        <OrderConfirmedCard
+          orderId={confirmedOrderId}
+          customer={placedOrderSummary?.customer || customer}
+          total={placedOrderSummary?.total || "Awaiting Pharmacist Pricing"}
+          paymentMethod="cod"
+          orderType="instant"
+          onContinueShopping={() => router.push('/')}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
@@ -647,6 +680,23 @@ export default function InstantOrderPage() {
           )}
         </button>
       </form>
+
+      {/* Animated Placing Overlay */}
+      <OrderPlacingOverlay
+        isPlacing={submitting}
+        orderType="instant"
+      />
+
+      {/* Order Confirmed Success Modal Card */}
+      <OrderConfirmedModal
+        isOpen={!!confirmedOrderId}
+        orderId={confirmedOrderId}
+        customer={placedOrderSummary?.customer || customer}
+        total={placedOrderSummary?.total || "Awaiting Pharmacist Pricing"}
+        paymentMethod="cod"
+        orderType="instant"
+        onClose={() => router.push('/')}
+      />
     </div>
   );
 }

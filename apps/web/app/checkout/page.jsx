@@ -6,6 +6,7 @@ import { getDeliveryCharge, requestOtp, verifyOtp, placeStandardOrder, getCities
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CardFlip3D from '../../components/3d/CardFlip3D';
+import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
 
 const CITIES = [
   'Lahore',
@@ -59,10 +60,13 @@ export default function CheckoutPage() {
 
   // Order submission states
   const [submitting, setSubmitting] = useState(false);
+  const [confirmedOrderId, setConfirmedOrderId] = useState(null);
+  const [placedOrderSummary, setPlacedOrderSummary] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [citiesList, setCitiesList] = useState(CITIES);
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [prescriptionFile, setPrescriptionFile] = useState(null);
+  const [prescriptionPreviewUrl, setPrescriptionPreviewUrl] = useState(null);
 
   // Force COD if cart contains narcotics
   useEffect(() => {
@@ -130,12 +134,28 @@ export default function CheckoutPage() {
     updateDelivery();
   }, [customer.city]);
 
-  // Redirect if cart is empty
+  // Redirect if cart is empty and order not just confirmed
   useEffect(() => {
-    if (isLoaded && cart.length === 0) {
+    if (isLoaded && cart.length === 0 && !confirmedOrderId) {
       router.push('/');
     }
-  }, [cart, isLoaded, router]);
+  }, [cart, isLoaded, confirmedOrderId, router]);
+
+  // If order was just placed, show the full Order Confirmed Card right on screen!
+  if (confirmedOrderId) {
+    return (
+      <div className="max-w-2xl mx-auto my-8 px-4">
+        <OrderConfirmedCard
+          orderId={confirmedOrderId}
+          customer={placedOrderSummary?.customer || customer}
+          total={placedOrderSummary?.total || totalAmount}
+          paymentMethod={placedOrderSummary?.paymentMethod || paymentMethod}
+          orderType={placedOrderSummary?.type || (hasNarcotics ? "narcotics" : "standard")}
+          onContinueShopping={() => router.push('/')}
+        />
+      </div>
+    );
+  }
 
   if (!isLoaded || cart.length === 0) {
     return (
@@ -152,6 +172,12 @@ export default function CheckoutPage() {
   };
 
   const handleSendOtp = async (overrideSuggestion = false, emailToUse = null) => {
+    if (hasNarcotics && !prescriptionFile) {
+      setErrorMsg("⚠️ Prescription Required: Your cart contains Rx/Controlled medicine items. You must upload a valid doctor's prescription (PDF or Image) before requesting an OTP verification code.");
+      setOtpFeedback({ type: 'error', msg: 'Prescription document is required above before requesting OTP.' });
+      return;
+    }
+
     const isOverride = overrideSuggestion === true;
     const targetEmail = (typeof emailToUse === 'string' ? emailToUse : customer.email || '').trim();
     if (!targetEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(targetEmail)) {
@@ -222,6 +248,7 @@ export default function CheckoutPage() {
     const file = e.target.files?.[0];
     if (!file) {
       setPrescriptionFile(null);
+      setPrescriptionPreviewUrl(null);
       return;
     }
 
@@ -236,6 +263,7 @@ export default function CheckoutPage() {
     if (isForbiddenExt || isForbiddenType) {
       e.target.value = '';
       setPrescriptionFile(null);
+      setPrescriptionPreviewUrl(null);
       setErrorMsg("⚠️ Upload Error: ZIP folders and compressed archive files are strictly NOT allowed. Please upload a PDF or an Image (JPG, PNG, WEBP).");
       return;
     }
@@ -247,6 +275,7 @@ export default function CheckoutPage() {
     if (!isAllowedExt || !isAllowedType) {
       e.target.value = '';
       setPrescriptionFile(null);
+      setPrescriptionPreviewUrl(null);
       setErrorMsg("⚠️ Upload Error: Invalid file format. Only PDF documents and Image files (JPG, PNG, WEBP) are allowed.");
       return;
     }
@@ -254,12 +283,18 @@ export default function CheckoutPage() {
     if (file.size > 15 * 1024 * 1024) {
       e.target.value = '';
       setPrescriptionFile(null);
+      setPrescriptionPreviewUrl(null);
       setErrorMsg("⚠️ Upload Error: File size exceeds the maximum limit of 15MB.");
       return;
     }
 
     setErrorMsg('');
     setPrescriptionFile(file);
+    if (fileType.startsWith('image/')) {
+      setPrescriptionPreviewUrl(URL.createObjectURL(file));
+    } else {
+      setPrescriptionPreviewUrl(null);
+    }
   };
 
   const handleSubmitOrder = async (e) => {
@@ -281,6 +316,7 @@ export default function CheckoutPage() {
     setSubmitting(true);
 
     try {
+      const startTime = Date.now();
       let orderId;
       if (hasNarcotics) {
         const formData = new FormData();
@@ -324,7 +360,20 @@ export default function CheckoutPage() {
         }
       }
 
+      // Ensure placing animation displays for at least 1000ms
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 1000) {
+        await new Promise((r) => setTimeout(r, 1000 - elapsed));
+      }
+
       if (orderId) {
+        setPlacedOrderSummary({
+          total: totalAmount,
+          customer: { ...customer },
+          paymentMethod,
+          type: hasNarcotics ? 'narcotics' : 'standard',
+        });
+        setConfirmedOrderId(orderId);
         clearCart();
         
         if (paymentMethod === 'card' && !hasNarcotics) {
@@ -340,8 +389,6 @@ export default function CheckoutPage() {
             return;
           }
         }
-        
-        router.push(`/order-confirmation/${orderId}`);
       }
     } catch (err) {
       setErrorMsg(err.message || "An error occurred while submitting your order.");
@@ -362,17 +409,25 @@ export default function CheckoutPage() {
         </div>
 
         {/* Step Indicator */}
-        <div className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-2xl text-xs shadow-xs">
-          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-green-600 text-white' : 'bg-yellow-400 text-slate-950'}`}>
-            1. Details
+        <div className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-2xl text-xs shadow-xs overflow-x-auto">
+          {hasNarcotics && (
+            <>
+              <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${prescriptionFile ? 'bg-green-600 text-white' : 'bg-yellow-400 text-slate-950 animate-pulse'}`}>
+                1. Upload Rx
+              </span>
+              <span className="text-slate-400">→</span>
+            </>
+          )}
+          <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${otpVerified ? 'bg-green-600 text-white' : (!hasNarcotics || prescriptionFile) ? 'bg-yellow-400 text-slate-950' : 'bg-slate-100 text-slate-500'}`}>
+            {hasNarcotics ? '2. Details & OTP' : '1. Details'}
           </span>
           <span className="text-slate-400">→</span>
-          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-green-600 text-white' : otpSent ? 'bg-yellow-400 text-slate-950 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
-            2. OTP Verify
+          <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${otpVerified ? 'bg-green-600 text-white' : otpSent ? 'bg-yellow-400 text-slate-950 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
+            {hasNarcotics ? '3. OTP Verify' : '2. OTP Verify'}
           </span>
           <span className="text-slate-400">→</span>
-          <span className={`px-2.5 py-1 rounded-full font-bold ${otpVerified ? 'bg-yellow-400 text-slate-950' : 'bg-slate-100 text-slate-500'}`}>
-            3. Order Place
+          <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${otpVerified ? 'bg-yellow-400 text-slate-950' : 'bg-slate-100 text-slate-500'}`}>
+            {hasNarcotics ? '4. Place Order' : '3. Place Order'}
           </span>
         </div>
       </div>
@@ -408,11 +463,96 @@ export default function CheckoutPage() {
           {/* Subtle warm ambient accent */}
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-yellow-300/15 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Section 1: Customer & Shipping Details */}
+          {/* Mandatory Prescription Upload Section for Controlled/Rx Medicines */}
+          {hasNarcotics && (
+            <div className="bg-amber-50/80 border-2 border-amber-300 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+              <div className="flex items-center justify-between border-b border-amber-200 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-8 h-8 rounded-full bg-amber-500 text-white text-sm font-black flex items-center justify-center shadow-xs">
+                    🩺
+                  </span>
+                  <div>
+                    <h2 className="text-base font-black text-amber-950">
+                      Step 1: Upload Doctor's Prescription <span className="text-red-600">*</span>
+                    </h2>
+                    <p className="text-xs text-amber-900 mt-0.5">
+                      Mandatory for Rx medicines before OTP verification
+                    </p>
+                  </div>
+                </div>
+                {prescriptionFile && (
+                  <span className="bg-green-100 border border-green-300 text-green-800 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1 shadow-2xs">
+                    ✓ Uploaded
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <input
+                  type="file"
+                  id="prescriptionUpload"
+                  accept=".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp,application/pdf"
+                  onChange={handlePrescriptionChange}
+                  disabled={submitting}
+                  className="hidden"
+                />
+
+                {!prescriptionFile ? (
+                  <label
+                    htmlFor="prescriptionUpload"
+                    className="border-2 border-dashed border-amber-300 hover:border-amber-500 bg-white/90 hover:bg-white rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all text-center gap-2 group shadow-2xs"
+                  >
+                    <span className="text-3xl group-hover:scale-110 transition-transform">📄</span>
+                    <span className="text-xs font-black text-amber-950">
+                      Click to Browse or Drag & Drop Prescription (PDF, JPG, PNG, WEBP)
+                    </span>
+                    <span className="text-[11px] text-amber-800">
+                      Max size: 15MB • Upload required before OTP verification
+                    </span>
+                  </label>
+                ) : (
+                  <div className="bg-white border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-xs">
+                    <div className="flex items-center gap-3 min-w-0">
+                      {prescriptionPreviewUrl ? (
+                        <img
+                          src={prescriptionPreviewUrl}
+                          alt="Prescription preview"
+                          className="w-14 h-14 rounded-xl object-cover border border-amber-200 shrink-0"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0">
+                          📑
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-xs font-black text-slate-900 truncate">
+                          {prescriptionFile.name}
+                        </p>
+                        <p className="text-[11px] text-green-700 font-bold mt-0.5">
+                          ✓ {(prescriptionFile.size / 1024).toFixed(1)} KB • Ready for review
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { setPrescriptionFile(null); setPrescriptionPreviewUrl(null); }}
+                      className="px-3 py-1.5 text-xs text-red-600 hover:text-red-800 hover:bg-red-50 font-bold rounded-xl border border-red-200 transition-colors shrink-0 cursor-pointer"
+                    >
+                      Replace File
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Section: Customer & Shipping Details */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
               <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-7 h-7 rounded-full bg-yellow-400 text-slate-950 text-xs font-black flex items-center justify-center border border-yellow-500/40">1</span>
+                <span className="w-7 h-7 rounded-full bg-yellow-400 text-slate-950 text-xs font-black flex items-center justify-center border border-yellow-500/40">
+                  {hasNarcotics ? "2" : "1"}
+                </span>
                 Shipping & OTP Details
               </h2>
               {otpVerified && (
@@ -678,26 +818,6 @@ export default function CheckoutPage() {
             </div>
           )}
 
-          {/* Section 3: Narcotics Prescription Upload if applicable */}
-          {hasNarcotics && (
-            <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 bg-amber-50/50 p-4 rounded-2xl border border-amber-200">
-              <h3 className="text-sm font-bold text-amber-950 flex items-center gap-2">
-                <span>📋</span> Controlled Medicine Prescription (Required)
-              </h3>
-              <input
-                type="file"
-                accept=".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp,application/pdf"
-                required
-                onChange={handlePrescriptionChange}
-                disabled={submitting}
-                className="border border-slate-300 bg-white text-slate-900 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-yellow-500 w-full"
-              />
-              <span className="text-[11px] text-amber-800 italic">
-                Notice: Your cart includes controlled items. Only PDF documents or Images (JPG, PNG, WEBP) are allowed. ZIP archives are blocked.
-              </span>
-            </div>
-          )}
-
           {/* Section 4: Payment Method Selection */}
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-5">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700">Payment Method</h2>
@@ -937,6 +1057,23 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
+
+      {/* Animated Placing Overlay */}
+      <OrderPlacingOverlay
+        isPlacing={submitting}
+        orderType={hasNarcotics ? "narcotics" : "standard"}
+      />
+
+      {/* Order Confirmed Success Modal Card */}
+      <OrderConfirmedModal
+        isOpen={!!confirmedOrderId}
+        orderId={confirmedOrderId}
+        customer={placedOrderSummary?.customer || customer}
+        total={placedOrderSummary?.total || totalAmount}
+        paymentMethod={placedOrderSummary?.paymentMethod || paymentMethod}
+        orderType={placedOrderSummary?.type || "standard"}
+        onClose={() => router.push('/')}
+      />
     </div>
   );
 }
