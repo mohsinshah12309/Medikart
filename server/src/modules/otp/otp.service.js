@@ -185,13 +185,13 @@ const requestOtp = async (email, ip, options = {}) => {
  * @param {String} email
  * @param {String} code
  */
-const verifyOtp = async (email, code) => {
+const verifyOtp = async (email, code, options = {}) => {
   const normalizedEmail = email.trim().toLowerCase();
+  const consume = options.consume !== false; // Default is true (single-use consumption)
 
-  // 1. Find the most recent active OTP document for this email
+  // 1. Find the most recent OTP document for this email
   const otpDoc = await Otp.findOne({
     email: normalizedEmail,
-    invalidated: false,
   }).sort({ createdAt: -1 });
 
   if (!otpDoc) {
@@ -200,17 +200,22 @@ const verifyOtp = async (email, code) => {
     );
   }
 
-  // 2. Hard 10-minute expiry check
+  // 2. If already invalidated:
+  if (otpDoc.invalidated) {
+    if (otpDoc.verified) {
+      throw new BadRequestError(
+        "This OTP has already been verified and used. Please request a new code.",
+      );
+    }
+    throw new BadRequestError(
+      "OTP expired or invalid. Please request a new code.",
+    );
+  }
+
+  // 3. Hard 10-minute expiry check
   if (otpDoc.expiresAt < new Date()) {
     await Otp.updateOne({ _id: otpDoc._id }, { $set: { invalidated: true } });
     throw new BadRequestError("OTP has expired. Please request a new code.");
-  }
-
-  // 3. Single-use check: if already verified, reject immediately
-  if (otpDoc.verified) {
-    throw new BadRequestError(
-      "This OTP has already been verified and used. Please request a new code.",
-    );
   }
 
   // 4. Attempt cap check (max 4 attempts per NFR-SEC-03)
@@ -226,7 +231,7 @@ const verifyOtp = async (email, code) => {
 
   if (!isMatch) {
     const updatedDoc = await Otp.findOneAndUpdate(
-      { _id: otpDoc._id, verified: false, invalidated: false, attempts: { $lt: 4 } },
+      { _id: otpDoc._id, invalidated: false, attempts: { $lt: 4 } },
       { $inc: { attempts: 1 } },
       { new: true }
     );
@@ -244,13 +249,18 @@ const verifyOtp = async (email, code) => {
     throw new BadRequestError("Invalid verification code");
   }
 
-  // 6. On match: atomically mark verified: true (single-use)
+  // 6. On match: mark verified, and atomically invalidate if consuming
+  const updateFields = { verified: true };
+  if (consume) {
+    updateFields.invalidated = true;
+  }
+
   const updateResult = await Otp.updateOne(
-    { _id: otpDoc._id, verified: false, invalidated: false, attempts: { $lt: 4 } },
-    { $set: { verified: true } }
+    { _id: otpDoc._id, invalidated: false, attempts: { $lt: 4 } },
+    { $set: updateFields }
   );
 
-  if (updateResult.modifiedCount === 0) {
+  if (consume && updateResult.modifiedCount === 0) {
     throw new BadRequestError(
       "This OTP has already been verified and used. Please request a new code.",
     );

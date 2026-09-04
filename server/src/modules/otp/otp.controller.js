@@ -27,7 +27,7 @@ const requestOtp = async (req, res, next) => {
  */
 const verifyOtp = async (req, res, next) => {
   try {
-    const result = await otpService.verifyOtp(req.body.email, req.body.code);
+    const result = await otpService.verifyOtp(req.body.email, req.body.code, { consume: false });
     res.status(200).json(result);
   } catch (error) {
     next(error);
