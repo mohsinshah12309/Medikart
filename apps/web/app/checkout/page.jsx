@@ -378,9 +378,24 @@ export default function CheckoutPage() {
       </div>
 
       {errorMsg && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3 shadow-xs">
-          <span className="text-lg">⚠️</span>
-          <span>{errorMsg}</span>
+        <div className="bg-red-50 border border-red-200 text-red-800 px-5 py-4 rounded-2xl text-sm font-medium flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-3">
+            <span className="text-xl shrink-0">⚠️</span>
+            <div>
+              <p className="font-bold text-red-900">{errorMsg}</p>
+              <p className="text-xs text-red-700 mt-0.5">
+                If your network disconnected after submitting, please verify before ordering again to avoid duplicate orders.
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://wa.me/923001234567?text=Hi%20Medikart,%20I%20had%20an%20issue%20during%20checkout"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 text-xs bg-red-100 hover:bg-red-200 text-red-900 font-bold px-3 py-1.5 rounded-xl border border-red-300 transition-colors text-center"
+          >
+            Need Help? WhatsApp Support →
+          </a>
         </div>
       )}
 

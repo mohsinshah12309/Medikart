@@ -15,11 +15,11 @@ export default function ProductCard({ product }) {
   };
 
   const getFullUrl = (path) => {
-    const fallback = "http://localhost:5000/uploads/placeholder.webp";
+    const fallback = "/uploads/placeholder.webp";
     if (!path || path === "/images/placeholder-product.png") {
       return fallback;
     }
-    return path.startsWith('http') ? path : `http://localhost:5000${path}`;
+    return path.startsWith('http') || path.startsWith('/') ? path : `http://localhost:5000${path}`;
   };
 
   const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
@@ -56,7 +56,7 @@ export default function ProductCard({ product }) {
             loading="lazy"
             className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
             onError={() => {
-              setImgSrc("http://localhost:5000/uploads/placeholder.webp");
+              setImgSrc("/uploads/placeholder.webp");
             }}
           />
         </div>

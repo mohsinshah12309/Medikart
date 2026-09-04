@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 function Orders({ token }) {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
@@ -48,17 +49,11 @@ function Orders({ token }) {
       setLoading(true);
       setError("");
 
-      let url = `${apiUrl}/admin/orders?page=${page}&limit=${limit}`;
-      if (filterType) url += `&type=${filterType}`;
-      if (filterStatus) url += `&status=${filterStatus}`;
+      let endpoint = `/admin/orders?page=${page}&limit=${limit}`;
+      if (filterType) endpoint += `&type=${filterType}`;
+      if (filterStatus) endpoint += `&status=${filterStatus}`;
 
-      const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to fetch orders");
-
+      const data = await adminFetch(endpoint);
       setOrders(data.data?.orders || []);
       setTotal(data.data?.total || 0);
     } catch (err) {
@@ -70,13 +65,8 @@ function Orders({ token }) {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${apiUrl}/admin/products?limit=100`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setProducts(data.data?.products || []);
-      }
+      const data = await adminFetch("/admin/products?limit=100");
+      setProducts(data.data?.products || []);
     } catch (err) {
       console.error("Failed to load products for dropdown:", err.message);
     }
@@ -138,17 +128,10 @@ function Orders({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/orders/${orderId}/verification`, {
+      await adminFetch(`/admin/orders/${orderId}/verification`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ decision }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to submit narcotics review");
 
       setSuccessMsg(`Narcotics order has been successfully ${decision}!`);
       fetchOrders();
@@ -173,17 +156,10 @@ function Orders({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/orders/${cancelOrderId}/cancel`, {
+      await adminFetch(`/admin/orders/${cancelOrderId}/cancel`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ reason: cancelReason }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to cancel order");
 
       setSuccessMsg("Order cancelled successfully.");
       setIsCancelModalOpen(false);
@@ -204,15 +180,9 @@ function Orders({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/orders/${orderId}/refund`, {
+      await adminFetch(`/admin/orders/${orderId}/refund`, {
         method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to process refund status update");
 
       setSuccessMsg("Order payment marked refunded.");
       fetchOrders();
@@ -259,17 +229,10 @@ function Orders({ token }) {
     }
 
     try {
-      const res = await fetch(`${apiUrl}/admin/orders/${pricingOrderId}/items`, {
+      await adminFetch(`/admin/orders/${pricingOrderId}/items`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ items: pricingItems }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to submit pricing");
 
       setSuccessMsg("Instant order priced successfully.");
       setIsPricingModalOpen(false);
@@ -301,19 +264,25 @@ function Orders({ token }) {
     return s === "pending" || s === "packed";
   };
 
+  const handleResetFilters = () => {
+    setFilterType("");
+    setFilterStatus("");
+    setPage(1);
+  };
+
   return (
     <div>
       <div className="page-header">
         <h2 className="page-title">Manage Orders</h2>
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          <select className="form-control" style={{ width: "160px" }} value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+          <select className="form-control" style={{ width: "160px" }} value={filterType} onChange={(e) => { setFilterType(e.target.value); setPage(1); }}>
             <option value="">All Types</option>
             <option value="standard">Standard</option>
             <option value="instant">Instant</option>
             <option value="narcotics">Narcotics</option>
           </select>
 
-          <select className="form-control" style={{ width: "180px" }} value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+          <select className="form-control" style={{ width: "180px" }} value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setPage(1); }}>
             <option value="">All Statuses</option>
             <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
             <option value="pending_verification">Pending Verification</option>
@@ -332,9 +301,30 @@ function Orders({ token }) {
 
       <div className="card">
         {loading ? (
-          <div style={{ padding: "2rem", textAlign: "center" }}>Loading orders...</div>
+          <div style={{ padding: "3rem 2rem", textAlign: "center", color: "#64748b" }}>
+            <div style={{ display: "inline-block", width: "24px", height: "24px", border: "3px solid #eab308", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite", marginBottom: "0.5rem" }} />
+            <p style={{ margin: 0, fontWeight: 600, fontSize: "0.875rem" }}>Loading orders...</p>
+          </div>
         ) : orders.length === 0 ? (
-          <div style={{ padding: "2rem", textAlign: "center" }}>No orders found matching the filters.</div>
+          <div style={{ padding: "4rem 2rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
+            <span style={{ fontSize: "2.5rem" }}>📦</span>
+            <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: "#0f172a" }}>No Orders Found</h3>
+            <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem", maxWidth: "400px" }}>
+              {filterType || filterStatus 
+                ? "There are no orders matching your selected filter criteria." 
+                : "No customer orders have been placed in the system yet."}
+            </p>
+            {(filterType || filterStatus) && (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                style={{ marginTop: "0.5rem", fontSize: "0.85rem", padding: "0.4rem 0.85rem" }}
+                onClick={handleResetFilters}
+              >
+                Reset All Filters
+              </button>
+            )}
+          </div>
         ) : (
           <div className="table-responsive">
             <table>

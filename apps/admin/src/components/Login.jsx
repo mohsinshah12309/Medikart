@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Login({ onLoginSuccess }) {
+function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -47,6 +47,11 @@ function Login({ onLoginSuccess }) {
     <div className="auth-container">
       <div className="auth-card">
         <h2>Medikart Staff Login</h2>
+        {sessionExpiredMessage && (
+          <div className="alert alert-warning" style={{ background: "#fef9c3", color: "#854d0e", border: "1px solid #fde047" }}>
+            ⏱️ {sessionExpiredMessage}
+          </div>
+        )}
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">

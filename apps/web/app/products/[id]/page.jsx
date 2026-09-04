@@ -4,6 +4,7 @@ import ProductGallery from '../../../components/ProductGallery';
 import NarcoticsBlock from '../../../components/NarcoticsBlock';
 import AddToCartButton from '../../../components/AddToCartButton';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
@@ -32,29 +33,18 @@ export default async function ProductDetailPage({ params }) {
   const productId = resolvedParams.id;
   
   let product = null;
-  let errorMsg = null;
 
   try {
     const res = await getProduct(productId);
-    if (res && res.data) {
+    if (res && res.data && res.data.product) {
       product = res.data.product;
     }
   } catch (err) {
-    console.error("Failed to load product detail:", err);
-    errorMsg = err.message || "Failed to load product details.";
+    console.error("Failed to load product detail:", err.message);
   }
 
-  if (errorMsg || !product) {
-    return (
-      <div className="max-w-xl mx-auto my-12 text-center bg-white p-8 rounded-2xl border border-slate-200 shadow-xl">
-        <span className="text-4xl">⚠️</span>
-        <h2 className="text-xl font-extrabold text-slate-900 mt-4">Product Not Found</h2>
-        <p className="text-slate-600 text-sm mt-2">{errorMsg || "The product you requested could not be found or is inactive."}</p>
-        <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-bold text-sm rounded-xl transition-all shadow-sm">
-          Back to Shop
-        </Link>
-      </div>
-    );
+  if (!product) {
+    notFound();
   }
 
   const hasDiscount = product.discountPercent > 0;

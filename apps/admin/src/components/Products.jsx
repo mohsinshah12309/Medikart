@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
 
@@ -79,11 +80,7 @@ function Products({ token }) {
       }
 
       const queryString = queryParams.length ? `?${queryParams.join("&")}` : "";
-      const res = await fetch(`${apiUrl}/admin/products${queryString}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to fetch products");
+      const data = await adminFetch(`/admin/products${queryString}`);
       setProducts(data.data?.products || []);
       setTotal(data.pagination?.total || 0);
       setPages(data.pagination?.pages || 1);
@@ -96,11 +93,7 @@ function Products({ token }) {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${apiUrl}/admin/categories`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to fetch categories");
+      const data = await adminFetch("/admin/categories");
       setCategories(data.data.categories || []);
     } catch (err) {
       console.error("Error fetching categories:", err.message);
@@ -540,9 +533,40 @@ function Products({ token }) {
 
       <div className="card">
         {loading ? (
-          <div style={{ padding: "2rem", textAlign: "center", color: "#94a3b8" }}>Loading products...</div>
+          <div style={{ padding: "3rem 2rem", textAlign: "center", color: "#64748b" }}>
+            <div style={{ display: "inline-block", width: "24px", height: "24px", border: "3px solid #eab308", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite", marginBottom: "0.5rem" }} />
+            <p style={{ margin: 0, fontWeight: 600, fontSize: "0.875rem" }}>Loading products catalog...</p>
+          </div>
         ) : products.length === 0 ? (
-          <div style={{ padding: "2rem", textAlign: "center", color: "#94a3b8" }}>No products found. Add some to get started.</div>
+          <div style={{ padding: "4rem 2rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
+            <span style={{ fontSize: "2.5rem" }}>💊</span>
+            <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: 700, color: "#0f172a" }}>No Products Found</h3>
+            <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem", maxWidth: "400px" }}>
+              {searchQuery || selectedCategoryFilter 
+                ? "No products match your current search or category filter." 
+                : "No products exist in the catalog yet."}
+            </p>
+            <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+              {(searchQuery || selectedCategoryFilter) && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  style={{ fontSize: "0.85rem", padding: "0.4rem 0.85rem" }}
+                  onClick={handleClearFilters}
+                >
+                  Clear Filters
+                </button>
+              )}
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ fontSize: "0.85rem", padding: "0.4rem 0.85rem" }}
+                onClick={handleOpenCreateModal}
+              >
+                + Add New Product
+              </button>
+            </div>
+          </div>
         ) : (
           <div className="table-responsive">
             <table>

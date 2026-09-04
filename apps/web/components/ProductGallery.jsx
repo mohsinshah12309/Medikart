@@ -18,7 +18,7 @@ const Product3DViewer = dynamic(() => import('./3d/Product3DViewer'), {
 export default function ProductGallery({ 
   images = [], 
   productName = "Product Showcase",
-  fallback = "http://localhost:5000/uploads/placeholder.webp" 
+  fallback = "/uploads/placeholder.webp" 
 }) {
   const [activeImage, setActiveImage] = useState(images[0]?.path || fallback);
   const [viewMode, setViewMode] = useState("2d"); // "2d" or "3d"
@@ -28,7 +28,7 @@ export default function ProductGallery({
     if (!path || path === "/images/placeholder-product.png" || imgError) {
       return fallback;
     }
-    return path.startsWith('http') ? path : `http://localhost:5000${path}`;
+    return path.startsWith('http') || path.startsWith('/') ? path : `http://localhost:5000${path}`;
   };
 
   return (

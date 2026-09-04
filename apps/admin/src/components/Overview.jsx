@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 function Overview({ token }) {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
@@ -22,16 +23,11 @@ function Overview({ token }) {
       setLoading(true);
       setError("");
 
-      const headers = { Authorization: `Bearer ${token}` };
-
       // 1. GET /admin/orders/stats — single DB aggregation for all order counts.
-      const resStats = await fetch(`${apiUrl}/admin/orders/stats`, { headers });
-      if (!resStats.ok) throw new Error(`Stats endpoint returned ${resStats.status}`);
-      const dataStats = await resStats.json();
+      const dataStats = await adminFetch("/admin/orders/stats");
 
-      // 2. Fetch total products using the new pagination total field (limit=1)
-      const resProducts = await fetch(`${apiUrl}/admin/products?limit=1`, { headers });
-      const dataProducts = await resProducts.json();
+      // 2. Fetch total products using the pagination total field (limit=1)
+      const dataProducts = await adminFetch("/admin/products?limit=1");
       const productCount = dataProducts.pagination?.total || 0;
 
       setStats({

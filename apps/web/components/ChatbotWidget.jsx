@@ -47,7 +47,7 @@ export default function ChatbotWidget() {
       console.error("Chatbot error:", err);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `⚠️ Failed to get reply: ${err.message || 'Server connection issue'}. Please try again.`
+        content: `⚠️ I'm having trouble connecting to the symptom assistant right now. Please try asking again in a moment, or speak directly with our licensed pharmacist on WhatsApp: +92 300 1234567.`
       }]);
     } finally {
       setLoading(false);

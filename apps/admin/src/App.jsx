@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import Products from "./components/Products";
@@ -10,6 +10,7 @@ import Settings from "./components/Settings";
 import AdminUsers from "./components/AdminUsers";
 import ActivityLogs from "./components/ActivityLogs";
 import Messages from "./components/Messages";
+import { SESSION_EXPIRED_EVENT } from "./apiClient";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -18,12 +19,26 @@ function App() {
     return saved ? JSON.parse(saved) : null;
   });
   const [activeTab, setActiveTab] = useState("overview");
+  const [sessionExpiredMsg, setSessionExpiredMsg] = useState("");
+
+  useEffect(() => {
+    const handleExpired = (e) => {
+      const msg = e?.detail?.message || "Your session has expired. Please sign in again.";
+      setToken("");
+      setAdminUser(null);
+      setSessionExpiredMsg(msg);
+    };
+
+    window.addEventListener(SESSION_EXPIRED_EVENT, handleExpired);
+    return () => window.removeEventListener(SESSION_EXPIRED_EVENT, handleExpired);
+  }, []);
 
   const handleLogin = (newToken, user) => {
     localStorage.setItem("admin_token", newToken);
     localStorage.setItem("admin_user", JSON.stringify(user));
     setToken(newToken);
     setAdminUser(user);
+    setSessionExpiredMsg("");
   };
 
   const handleLogout = () => {
@@ -31,10 +46,11 @@ function App() {
     localStorage.removeItem("admin_user");
     setToken("");
     setAdminUser(null);
+    setSessionExpiredMsg("");
   };
 
   if (!token) {
-    return <Login onLoginSuccess={handleLogin} />;
+    return <Login onLoginSuccess={handleLogin} sessionExpiredMessage={sessionExpiredMsg} />;
   }
 
   const renderContent = () => {
