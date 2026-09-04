@@ -18,8 +18,8 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
-  let contactPhone = '923001234567';
-  let contactEmail = 'support@medikart.pk';
+  let contactPhone = '923314170744';
+  let contactEmail = 'medikart.com@gmail.com';
   let aboutText = 'Medikart is Pakistan\'s leading online pharmacy.';
   try {
     const res = await fetch('http://127.0.0.1:5000/api/v1/content', { cache: 'no-store' });

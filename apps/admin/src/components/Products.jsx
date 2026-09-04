@@ -767,6 +767,7 @@ function Products({ token }) {
                     className="form-control"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="e.g. Panadol Extra 500mg (200 Tablets)"
                     required
                   />
                 </div>
@@ -778,6 +779,7 @@ function Products({ token }) {
                     className="form-control"
                     value={formData.sku}
                     onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
+                    placeholder="e.g. MED-PAN-500"
                     required
                     disabled={isEditMode}
                   />
@@ -792,6 +794,7 @@ function Products({ token }) {
                     className="form-control"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    placeholder="e.g. 450.00"
                     required
                   />
                 </div>
@@ -819,6 +822,7 @@ function Products({ token }) {
                     rows="3"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    placeholder="Provide dosage form, active generic ingredients, packaging, and directions..."
                   />
                 </div>
                 {!isEditMode && (

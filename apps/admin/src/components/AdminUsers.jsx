@@ -279,9 +279,7 @@ function AdminUsers({ token, adminUser }) {
         borderRadius: "10px", padding: "0.85rem 1.1rem", marginBottom: "1.25rem",
         color: "#fbbf24", fontSize: "0.82rem", lineHeight: 1.5,
       }}>
-        <strong>🔒 Super Admin only.</strong> This screen is visible only to Super Admins in the UI.
-        The backend API enforces the same restriction server-side (Phase 20 <code style={{ background: "rgba(251,191,36,0.1)", padding: "0 4px", borderRadius: "3px" }}>requireSuperAdmin</code> middleware) —
-        a regular admin's token will be rejected even if they call the API directly.
+        <strong>🔒 Super Admin Access Only.</strong> This user management console and permission controls are restricted exclusively to Super Administrators.
       </div>
 
       {error   && <div className="alert alert-danger">{error}</div>}
@@ -303,7 +301,7 @@ function AdminUsers({ token, adminUser }) {
                   value={createForm.name}
                   onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
                   required
-                  placeholder="Jane Smith"
+                  placeholder="e.g. Sarah Khan"
                 />
               </div>
               <div>
@@ -314,7 +312,7 @@ function AdminUsers({ token, adminUser }) {
                   value={createForm.email}
                   onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
                   required
-                  placeholder="jane@medikart.pk"
+                  placeholder="admin@medikart.pk"
                 />
               </div>
             </div>

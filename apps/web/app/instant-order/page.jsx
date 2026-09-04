@@ -426,7 +426,7 @@ export default function InstantOrderPage() {
                 onChange={handleInputChange}
                 required
                 disabled={otpVerified || submitting}
-                placeholder="Muhammad Mohsin Ali"
+                placeholder="e.g. Ali Ahmed"
                 className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
               />
             </div>
@@ -443,7 +443,7 @@ export default function InstantOrderPage() {
                 onChange={handleInputChange}
                 required
                 disabled={otpVerified || submitting}
-                placeholder="03074043799"
+                placeholder="e.g. 03314170744"
                 className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
               />
             </div>
@@ -462,7 +462,7 @@ export default function InstantOrderPage() {
                   onChange={handleInputChange}
                   required
                   disabled={otpVerified || submitting}
-                  placeholder="alishahmohsin938@gmail.com"
+                  placeholder="customer@example.com"
                   className="flex-grow border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                 />
                 {!otpVerified && (
@@ -528,7 +528,7 @@ export default function InstantOrderPage() {
                 onChange={handleInputChange}
                 required
                 disabled={otpVerified || submitting}
-                placeholder="Tech Town, satiana road, Block-H, House#41"
+                placeholder="e.g. House #12, Street 4, Sector F-7, Islamabad"
                 className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
               />
             </div>

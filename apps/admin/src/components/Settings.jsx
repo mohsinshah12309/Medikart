@@ -133,8 +133,7 @@ function Settings({ token }) {
           🏷️ Storewide Discount
         </h3>
         <p style={{ color: "#64748b", fontSize: "0.875rem", marginBottom: "1.5rem" }}>
-          Applied as a fallback when no product or category discount is active.
-          Wired to <code>GET/PUT /api/v1/admin/settings/discount</code> (Phase 8).
+          Applied as a fallback discount across all catalog products when no specific product or category discount is active.
         </p>
         {discountLoading ? (
           <div style={{ color: "#64748b" }}>Loading discount settings...</div>
@@ -183,8 +182,7 @@ function Settings({ token }) {
           📄 About & Contact Page Content
         </h3>
         <p style={{ color: "#64748b", fontSize: "0.875rem", marginBottom: "1.5rem" }}>
-          Content for the public About and Contact pages.
-          Wired to <code>GET/PUT /api/v1/admin/settings/content</code> (Phase 24 — new endpoint).
+          Manage the public business information, pharmacy credentials, and support channels displayed on the About and Contact pages.
         </p>
         {contentLoading ? (
           <div style={{ color: "#64748b" }}>Loading content settings...</div>
@@ -200,7 +198,7 @@ function Settings({ token }) {
                   rows={5}
                   value={aboutText}
                   onChange={(e) => setAboutText(e.target.value)}
-                  placeholder="Write about Medikart — mission, values, history..."
+                  placeholder="Write about Medikart — mission, values, clinical licensing, and history..."
                   style={{ resize: "vertical", fontFamily: "inherit" }}
                 />
               </div>
@@ -213,7 +211,7 @@ function Settings({ token }) {
                   className="form-control"
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
-                  placeholder="support@medikart.pk"
+                  placeholder="medikart.com@gmail.com"
                   style={{ maxWidth: "320px" }}
                 />
               </div>
@@ -226,7 +224,7 @@ function Settings({ token }) {
                   className="form-control"
                   value={contactPhone}
                   onChange={(e) => setContactPhone(e.target.value)}
-                  placeholder="+92 300 0000000"
+                  placeholder="+92 331 4170744"
                   style={{ maxWidth: "220px" }}
                 />
               </div>

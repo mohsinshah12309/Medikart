@@ -80,7 +80,7 @@ function ActivityLogs({ token }) {
       </div>
 
       <div style={{ color: "#64748b", fontSize: "0.875rem", marginBottom: "1.5rem" }}>
-        Read-only audit trail. Wired to <code>GET /api/v1/admin/activity-logs</code> (Phase 11).
+        Comprehensive audit trail tracking all administrative actions, inventory edits, and order updates.
         {pagination.total > 0 && ` Showing ${logs.length} of ${pagination.total} entries.`}
       </div>
 

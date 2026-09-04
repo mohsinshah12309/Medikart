@@ -73,8 +73,8 @@ export default function ContactPage() {
     }
   };
 
-  const defaultEmail = "support@medikart.pk";
-  const defaultPhone = "+92 300 1234567";
+  const defaultEmail = "medikart.com@gmail.com";
+  const defaultPhone = "+92 331 4170744";
 
   return (
     <div className="max-w-5xl mx-auto flex flex-col gap-8 pb-16">
@@ -152,7 +152,7 @@ export default function ContactPage() {
                   Connect immediately with on-duty pharmacists for urgent prescription queries.
                 </p>
                 <a
-                  href="https://wa.me/923001234567?text=Hi%20Medikart%20Support,%20I%20have%20a%20query%20about%20an%20order."
+                  href="https://wa.me/923314170744?text=Hi%20Medikart%20Support,%20I%20have%20a%20query%20about%20an%20order."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#25D366] hover:bg-[#1faa53] text-white text-xs font-black rounded-xl transition-all shadow-xs cursor-pointer active:scale-[0.98]"
@@ -165,7 +165,7 @@ export default function ContactPage() {
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2 text-xs">
                 <div>
                   <span className="font-bold text-slate-700 block">🕒 Operating Hours</span>
-                  <span className="text-slate-600 font-normal">Monday — Saturday: 9:00 AM — 9:00 PM (PKT)</span>
+                  <span className="text-slate-600 font-normal">Monday — Sunday: 12:00 AM — 12:00 PM (PKT)</span>
                 </div>
                 <div className="border-t border-slate-200 pt-2 mt-1">
                   <span className="font-bold text-slate-700 block">📍 Central Pharmacy Hub</span>
@@ -236,7 +236,7 @@ export default function ContactPage() {
                   setFormData(prev => ({ ...prev, name: e.target.value }));
                   if (formErrors.name) setFormErrors(prev => ({ ...prev, name: null }));
                 }}
-                placeholder="Muhammad Mohsin Ali"
+                placeholder="e.g. Ali Ahmed"
                 className={`border bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all ${
                   formErrors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-300'
                 }`}
@@ -261,7 +261,7 @@ export default function ContactPage() {
                   setFormData(prev => ({ ...prev, email: e.target.value }));
                   if (formErrors.email) setFormErrors(prev => ({ ...prev, email: null }));
                 }}
-                placeholder="alishahmohsin938@gmail.com"
+                placeholder="customer@example.com"
                 className={`border bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all ${
                   formErrors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-300'
                 }`}
@@ -286,7 +286,7 @@ export default function ContactPage() {
                   setFormData(prev => ({ ...prev, message: e.target.value }));
                   if (formErrors.message) setFormErrors(prev => ({ ...prev, message: null }));
                 }}
-                placeholder="Please describe how our pharmacy team can assist you..."
+                placeholder="Please describe how our pharmacy team can assist you (e.g., order tracking, prescription verification)..."
                 className={`border bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all ${
                   formErrors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-300'
                 }`}
