@@ -281,7 +281,7 @@ describe("Production Readiness & Hardening", () => {
       const Category = require("../../src/modules/categories/category.model");
       const City = require("../../src/modules/cities/city.model");
 
-      const email = "customer@test-ready.com";
+      const email = "customer@gmail.com";
       await Otp.deleteMany({ email });
 
       const otpResult = await otpService.requestOtp(email, "1.2.3.4");

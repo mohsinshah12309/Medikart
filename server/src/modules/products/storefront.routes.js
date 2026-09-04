@@ -27,12 +27,12 @@ const formatProductWithImages = (productDoc) => {
 // GET /api/v1/products - Public listing/browsing
 router.get("/products", async (req, res, next) => {
   try {
-    const { search, categoryId, page = 1, limit = 20 } = req.query;
+    const { search, categoryId, isNarcotic, page = 1, limit = 20 } = req.query;
     const p = parseInt(page, 10) || 1;
     const l = parseInt(limit, 10) || 20;
 
     // Cache check (bypassable for load testing)
-    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:page:${p}:limit:${l}`;
+    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}`;
     let cached = null;
     try {
       if (req.query.bypassCache !== "true") {
@@ -63,15 +63,22 @@ router.get("/products", async (req, res, next) => {
       query.categoryIds = categoryId;
     }
 
+    if (isNarcotic !== undefined) {
+      query.isNarcotic = isNarcotic === "true";
+    }
+
     const skip = (p - 1) * l;
 
-    const products = await Product.find(query)
-      .populate("categoryIds", "name slug discount active")
-      .sort({ name: 1 })
-      .skip(skip)
-      .limit(l);
-
-    const storewidePercent = await getStorewideDiscount();
+    // Parallelize independent DB reads (Product.find, storewide discount, countDocuments)
+    const [products, storewidePercent, totalCount] = await Promise.all([
+      Product.find(query)
+        .populate("categoryIds", "name slug discount active")
+        .sort({ name: 1 })
+        .skip(skip)
+        .limit(l),
+      getStorewideDiscount(),
+      Product.countDocuments(query),
+    ]);
 
     const formattedProducts = products.map((prod) => {
       const formatted = formatProductWithImages(prod);
@@ -89,8 +96,6 @@ router.get("/products", async (req, res, next) => {
         discountPercent,
       };
     });
-
-    const totalCount = await Product.countDocuments(query);
 
     const responseBody = {
       status: "success",
@@ -136,15 +141,17 @@ router.get("/products/:id", async (req, res, next) => {
     }
     console.log(`[Cache MISS] key=${cacheKey}`);
 
-    const product = await Product.findOne({ _id: req.params.id, active: true })
-      .populate("categoryIds", "name slug discount active");
+    const [product, storewidePercent] = await Promise.all([
+      Product.findOne({ _id: req.params.id, active: true })
+        .populate("categoryIds", "name slug discount active"),
+      getStorewideDiscount(),
+    ]);
 
     if (!product) {
       return res.status(404).json({ status: "fail", message: "Product not found" });
     }
 
     const formatted = formatProductWithImages(product);
-    const storewidePercent = await getStorewideDiscount();
     const category = formatted.categoryIds?.[0] ?? null;
     const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
       formatted,
@@ -176,15 +183,39 @@ router.get("/products/:id", async (req, res, next) => {
   }
 });
 
-// GET /api/v1/categories - Public category listing
+// GET /api/v1/categories - Public category listing with Redis caching
 router.get("/categories", async (req, res, next) => {
   try {
+    const cacheKey = "cache:storefront:categories";
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (err) {
+      console.error("[Cache] Read error:", err.message);
+    }
+
+    if (cached) {
+      console.log(`[Cache HIT] key=${cacheKey}`);
+      return res.status(200).json(JSON.parse(cached));
+    }
+    console.log(`[Cache MISS] key=${cacheKey}`);
+
     const categories = await Category.find({ active: true }).sort({ name: 1 });
-    res.status(200).json({
+    const responseBody = {
       status: "success",
       results: categories.length,
       data: { categories },
-    });
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+    } catch (err) {
+      console.error("[Cache] Write error:", err.message);
+    }
+
+    res.status(200).json(responseBody);
   } catch (error) {
     next(error);
   }
@@ -210,30 +241,78 @@ router.get("/delivery-charge", async (req, res, next) => {
   }
 });
 
-// GET /api/v1/cities - Public listing of active cities
+// GET /api/v1/cities - Public listing of active cities with Redis caching
 router.get("/cities", async (req, res, next) => {
   try {
+    const cacheKey = "cache:storefront:cities";
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (err) {
+      console.error("[Cache] Read error:", err.message);
+    }
+
+    if (cached) {
+      console.log(`[Cache HIT] key=${cacheKey}`);
+      return res.status(200).json(JSON.parse(cached));
+    }
+    console.log(`[Cache MISS] key=${cacheKey}`);
+
     const { getAllCities } = require("../cities/city.service");
     const cities = await getAllCities({ active: true });
-    res.status(200).json({
+    const responseBody = {
       status: "success",
       results: cities.length,
       data: { cities },
-    });
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+    } catch (err) {
+      console.error("[Cache] Write error:", err.message);
+    }
+
+    res.status(200).json(responseBody);
   } catch (error) {
     next(error);
   }
 });
 
-// GET /api/v1/content - Public read-only page content for About/Contact pages
+// GET /api/v1/content - Public read-only page content for About/Contact pages with Redis caching
 router.get("/content", async (req, res, next) => {
   try {
+    const cacheKey = "cache:storefront:content";
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (err) {
+      console.error("[Cache] Read error:", err.message);
+    }
+
+    if (cached) {
+      console.log(`[Cache HIT] key=${cacheKey}`);
+      return res.status(200).json(JSON.parse(cached));
+    }
+    console.log(`[Cache MISS] key=${cacheKey}`);
+
     const { getPageContent } = require("../settings/settings.service");
     const content = await getPageContent();
-    res.status(200).json({
+    const responseBody = {
       status: "success",
       data: content,
-    });
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+    } catch (err) {
+      console.error("[Cache] Write error:", err.message);
+    }
+
+    res.status(200).json(responseBody);
   } catch (error) {
     next(error);
   }

@@ -10,6 +10,21 @@
 
 const Category = require("./category.model");
 const { NotFoundError } = require("../../utils/errors");
+const redisClient = require("../../config/redisClient");
+
+const invalidateCategoryCache = async () => {
+  try {
+    await redisClient.del("cache:storefront:categories");
+    if (typeof redisClient.keys === "function") {
+      const productKeys = await redisClient.keys("cache:storefront:products:*");
+      if (productKeys && productKeys.length > 0) {
+        await redisClient.del(...productKeys);
+      }
+    }
+  } catch (err) {
+    console.error("[Cache] Category invalidation error:", err.message);
+  }
+};
 
 /**
  * Create a new category
@@ -17,6 +32,7 @@ const { NotFoundError } = require("../../utils/errors");
 const createCategory = async (categoryData) => {
   const category = new Category(categoryData);
   await category.save();
+  await invalidateCategoryCache();
   return category;
 };
 
@@ -74,6 +90,7 @@ const updateCategory = async (categoryId, updateData) => {
     throw new NotFoundError("Category not found");
   }
 
+  await invalidateCategoryCache();
   return category;
 };
 
@@ -87,6 +104,7 @@ const deleteCategory = async (categoryId) => {
     throw new NotFoundError("Category not found");
   }
 
+  await invalidateCategoryCache();
   return category;
 };
 
@@ -96,4 +114,5 @@ module.exports = {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  invalidateCategoryCache,
 };

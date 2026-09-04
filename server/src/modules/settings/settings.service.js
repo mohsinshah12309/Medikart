@@ -7,6 +7,21 @@
  */
 
 const Settings = require("./settings.model");
+const redisClient = require("../../config/redisClient");
+
+const invalidateSettingsCache = async () => {
+  try {
+    await redisClient.del("cache:storefront:content");
+    if (typeof redisClient.keys === "function") {
+      const productKeys = await redisClient.keys("cache:storefront:products:*");
+      if (productKeys && productKeys.length > 0) {
+        await redisClient.del(...productKeys);
+      }
+    }
+  } catch (err) {
+    console.error("[Cache] Settings invalidation error:", err.message);
+  }
+};
 
 /**
  * Get the active storewide discount percentage.
@@ -35,6 +50,7 @@ const setStorewideDiscount = async (discountData) => {
     { $set: { storewideDiscount: discountData } },
     { new: true, upsert: true, runValidators: true }
   );
+  await invalidateSettingsCache();
   return settings;
 };
 
@@ -61,6 +77,7 @@ const setPageContent = async (contentData) => {
     { $set: contentData },
     { new: true, upsert: true, runValidators: true }
   );
+  await invalidateSettingsCache();
   return {
     aboutText: settings.aboutText ?? "",
     contactEmail: settings.contactEmail ?? "",
@@ -68,5 +85,11 @@ const setPageContent = async (contentData) => {
   };
 };
 
-module.exports = { getStorewideDiscount, setStorewideDiscount, getPageContent, setPageContent };
+module.exports = {
+  getStorewideDiscount,
+  setStorewideDiscount,
+  getPageContent,
+  setPageContent,
+  invalidateSettingsCache,
+};
 

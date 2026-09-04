@@ -32,9 +32,19 @@ class InMemoryRedisStub {
     return "OK";
   }
 
-  async del(key) {
-    this._kvStore.delete(key);
-    return 1;
+  async del(...keys) {
+    let count = 0;
+    const flatKeys = keys.flat();
+    for (const k of flatKeys) {
+      if (this._kvStore.delete(k)) count++;
+    }
+    return count;
+  }
+
+  async keys(pattern) {
+    if (!pattern || pattern === "*") return [...this._kvStore.keys()];
+    const regex = new RegExp("^" + pattern.replace(/\*/g, ".*") + "$");
+    return [...this._kvStore.keys()].filter(k => regex.test(k));
   }
 
   async zremrangebyscore(key, min, max) {

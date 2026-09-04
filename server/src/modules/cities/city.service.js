@@ -21,6 +21,15 @@
 
 const City = require("./city.model");
 const { NotFoundError } = require("../../utils/errors");
+const redisClient = require("../../config/redisClient");
+
+const invalidateCityCache = async () => {
+  try {
+    await redisClient.del("cache:storefront:cities");
+  } catch (err) {
+    console.error("[Cache] City invalidation error:", err.message);
+  }
+};
 
 /** Fallback charge when a city is not configured or not active (FR-CW-11) */
 const DEFAULT_DELIVERY_CHARGE = 500; // PKR
@@ -64,6 +73,7 @@ const getDeliveryCharge = async (cityName) => {
 const createCity = async (cityData) => {
   const city = new City(cityData);
   await city.save();
+  await invalidateCityCache();
   return city;
 };
 
@@ -86,12 +96,14 @@ const updateCity = async (cityId, updateData) => {
     { new: true, runValidators: true },
   );
   if (!city) throw new NotFoundError("City not found");
+  await invalidateCityCache();
   return city;
 };
 
 const deleteCity = async (cityId) => {
   const city = await City.findByIdAndDelete(cityId);
   if (!city) throw new NotFoundError("City not found");
+  await invalidateCityCache();
   return city;
 };
 
@@ -102,5 +114,6 @@ module.exports = {
   getCityById,
   updateCity,
   deleteCity,
+  invalidateCityCache,
   DEFAULT_DELIVERY_CHARGE, // exported for tests/config reference
 };

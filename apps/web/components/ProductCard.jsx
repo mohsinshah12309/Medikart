@@ -1,7 +1,8 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import TiltCard3D from './3d/TiltCard3D';
 
 export default function ProductCard({ product }) {
@@ -20,6 +21,8 @@ export default function ProductCard({ product }) {
     }
     return path.startsWith('http') ? path : `http://localhost:5000${path}`;
   };
+
+  const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
 
   return (
     <TiltCard3D className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl hover:border-yellow-400/80 flex flex-col h-full relative group transition-all duration-300">
@@ -44,15 +47,19 @@ export default function ProductCard({ product }) {
           🌐 3D View
         </span>
 
-        <img
-          src={getFullUrl(product.coverImage)}
-          alt={product.name}
-          loading="lazy"
-          className="max-h-[90%] max-w-[90%] object-contain transition-transform duration-300 group-hover:scale-105"
-          onError={(e) => {
-            e.target.src = "http://localhost:5000/uploads/placeholder.webp";
-          }}
-        />
+        <div className="relative w-full h-full flex items-center justify-center">
+          <Image
+            src={imgSrc}
+            alt={product.name || 'Product Image'}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            loading="lazy"
+            className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+            onError={() => {
+              setImgSrc("http://localhost:5000/uploads/placeholder.webp");
+            }}
+          />
+        </div>
       </Link>
 
       {/* Product Details Section */}

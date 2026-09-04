@@ -49,20 +49,28 @@ function Products({ token }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadingImages, setUploadingImages] = useState(false);
 
+  // Pagination State
+  const [page, setPage] = useState(1);
+  const [limit] = useState(20);
+  const [total, setTotal] = useState(0);
+  const [pages, setPages] = useState(1);
+
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(1);
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    fetchProducts();
+    setPage(1);
+    fetchProducts(1);
   }, [selectedCategoryFilter]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (pageOverride = page) => {
     try {
       setLoading(true);
       let queryParams = [];
-      queryParams.push("limit=100");
+      queryParams.push(`page=${pageOverride}`);
+      queryParams.push(`limit=${limit}`);
       if (searchQuery) {
         queryParams.push(`search=${encodeURIComponent(searchQuery)}`);
       }
@@ -76,7 +84,9 @@ function Products({ token }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to fetch products");
-      setProducts(data.data.products || []);
+      setProducts(data.data?.products || []);
+      setTotal(data.pagination?.total || 0);
+      setPages(data.pagination?.pages || 1);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -435,16 +445,19 @@ function Products({ token }) {
   const handleClearFilters = () => {
     setSearchQuery("");
     setSelectedCategoryFilter("");
+    setPage(1);
     setProducts([]);
     const fetchCleared = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${apiUrl}/admin/products?limit=100`, {
+        const res = await fetch(`${apiUrl}/admin/products?page=1&limit=${limit}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Failed to fetch products");
-        setProducts(data.data.products || []);
+        setProducts(data.data?.products || []);
+        setTotal(data.pagination?.total || 0);
+        setPages(data.pagination?.pages || 1);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -473,7 +486,8 @@ function Products({ token }) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              fetchProducts();
+              setPage(1);
+              fetchProducts(1);
             }}
             className="search-box-form"
           >
@@ -671,6 +685,42 @@ function Products({ token }) {
             </table>
           </div>
         )}
+      </div>
+
+      {/* Pagination Controls */}
+      <div style={{ marginTop: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+        <span style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 600 }}>
+          Showing {products.length} of {total.toLocaleString()} products (Page {page} of {pages})
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <button
+            className="btn btn-secondary"
+            style={{ padding: "0.3rem 0.7rem", fontSize: "0.85rem" }}
+            disabled={page <= 1}
+            onClick={() => {
+              const prev = page - 1;
+              setPage(prev);
+              fetchProducts(prev);
+            }}
+          >
+            ← Previous
+          </button>
+          <span style={{ padding: "0 0.5rem", fontSize: "0.85rem", fontWeight: 700, color: "#334155" }}>
+            {page} / {pages}
+          </span>
+          <button
+            className="btn btn-secondary"
+            style={{ padding: "0.3rem 0.7rem", fontSize: "0.85rem" }}
+            disabled={page >= pages}
+            onClick={() => {
+              const next = page + 1;
+              setPage(next);
+              fetchProducts(next);
+            }}
+          >
+            Next →
+          </button>
+        </div>
       </div>
 
       {/* --- ADD / EDIT PRODUCT MODAL --- */}

@@ -55,9 +55,15 @@ const productSchema = new mongoose.Schema(
   },
 );
 
-// Indexes for fields we already know will be searched/filtered (NFR-PERF-04).
-// name: text index for keyword search. (sku already gets a unique index from
-// the `unique: true` on the sku field — no duplicate declaration here.)
+// Indexes for fields searched/filtered (NFR-PERF-04).
 productSchema.index({ name: "text" });
+productSchema.index({ isNarcotic: 1 });
+productSchema.index({ active: 1 });
+productSchema.index({ categoryIds: 1 });
+productSchema.index({ genericName: 1 });
+productSchema.index({ active: 1, name: 1 });
+productSchema.index({ active: 1, categoryIds: 1 });
+productSchema.index({ active: 1, isNarcotic: 1 });
 
 module.exports = mongoose.model("Product", productSchema);
+

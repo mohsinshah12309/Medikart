@@ -54,9 +54,10 @@ const getAllProducts = async (req, res, next) => {
       ];
     }
 
-    const totalCount = await Product.countDocuments(countQuery);
-
-    const products = await productService.getAllProducts(filters, page, limit);
+    const [totalCount, products] = await Promise.all([
+      Product.countDocuments(countQuery),
+      productService.getAllProducts(filters, page, limit),
+    ]);
     
     const p = parseInt(page, 10) || 1;
     const l = parseInt(limit, 10) || 20;

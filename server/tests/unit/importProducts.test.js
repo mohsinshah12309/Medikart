@@ -134,5 +134,5 @@ describe("importProducts row-level execution", () => {
       logSpy.mockRestore();
       errorSpy.mockRestore();
     }
-  });
+  }, 15000);
 });

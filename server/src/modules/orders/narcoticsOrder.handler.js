@@ -61,12 +61,16 @@ const placeNarcoticsOrder = async ({
     throw new BadRequestError("OTP email must match the customer email");
   }
 
-  // ── Step 1: Fetch products from DB (never trust client prices) ─────────────
+  // ── Step 1: Fetch products, storewide discount, and delivery charge concurrently ──
   const productIds = items.map((i) => i.productId);
-  const products = await Product.find({
-    _id: { $in: productIds },
-    active: true,
-  }).populate("categoryIds", "name slug discount");
+  const [products, storewidePercent, deliveryCharge] = await Promise.all([
+    Product.find({
+      _id: { $in: productIds },
+      active: true,
+    }).populate("categoryIds", "name slug discount"),
+    getStorewideDiscount(),
+    getDeliveryCharge(customer.city),
+  ]);
 
   // ── Step 2: Validate existence and stock for EVERY item ────────────────────
   for (const item of items) {
@@ -108,10 +112,7 @@ const placeNarcoticsOrder = async ({
   // Must succeed before any order document is created.
   await otpService.verifyOtp(otp.email, otp.code);
 
-  // ── Step 6: Fetch storewide discount once (discount.service is pure) ───────
-  const storewidePercent = await getStorewideDiscount();
-
-  // ── Step 7: Build order items with server-computed effective prices ─────────
+  // ── Step 6: Build order items with server-computed effective prices ─────────
   const orderItems = items.map((item) => {
     const product = products.find((p) => p._id.toString() === item.productId);
     const category = product.categoryIds?.[0] ?? null;
@@ -128,11 +129,10 @@ const placeNarcoticsOrder = async ({
     };
   });
 
-  // ── Step 8: Compute totals server-side (rules.md §1) ──────────────────────
+  // ── Step 7: Compute totals server-side (rules.md §1) ──────────────────────
   const subtotal = round2(
     orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
   );
-  const deliveryCharge = await getDeliveryCharge(customer.city); // FR-CW-11
   const total = round2(subtotal + deliveryCharge);
 
   // ── Step 9: Save order — status pending_verification, NOT pending ──────────

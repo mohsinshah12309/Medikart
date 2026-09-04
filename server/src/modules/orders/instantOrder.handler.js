@@ -144,11 +144,11 @@ const placeInstantOrder = async (payload) => {
     throw new BadRequestError("OTP email must match the customer email");
   }
 
-  // Verify OTP (FR-CW-09)
-  await otpService.verifyOtp(otp.email, otp.code);
-
-  // Get delivery charge (server-side only)
-  const deliveryCharge = await getDeliveryCharge(customer.city);
+  // Verify OTP (FR-CW-09) and fetch delivery charge concurrently
+  const [, deliveryCharge] = await Promise.all([
+    otpService.verifyOtp(otp.email, otp.code),
+    getDeliveryCharge(customer.city),
+  ]);
 
   // ── SNAPSHOT (FR-AD-16) ───────────────────────────────────────────────
   // An instant order is submitted WITHOUT product selection (items: []), so

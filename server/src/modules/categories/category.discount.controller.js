@@ -5,6 +5,7 @@
 
 const Category = require("./category.model");
 const { NotFoundError } = require("../../utils/errors");
+const { invalidateCategoryCache } = require("./category.service");
 
 const setCategoryDiscount = async (req, res, next) => {
   try {
@@ -17,6 +18,8 @@ const setCategoryDiscount = async (req, res, next) => {
     );
 
     if (!category) throw new NotFoundError("Category not found");
+
+    await invalidateCategoryCache();
 
     res.status(200).json({
       status: "success",
