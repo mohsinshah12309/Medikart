@@ -37,15 +37,49 @@ const placeOrder = async (type, payload) => {
 /**
  * Get a paginated, optionally filtered and searched list of orders (admin).
  */
-const getOrders = async ({ type, status, search, page = 1, limit = 20 } = {}) => {
+const getOrders = async ({
+  type,
+  status,
+  search,
+  startDate,
+  endDate,
+  pharmacyId,
+  page = 1,
+  limit = 20,
+} = {}) => {
   const query = {};
   if (type) query.type = type;
   if (status) query.status = status;
+  if (pharmacyId) {
+    if (pharmacyId === "assigned") {
+      query.assignedPharmacyId = { $exists: true, $ne: null };
+    } else if (pharmacyId === "unassigned") {
+      query.$or = [
+        { assignedPharmacyId: { $exists: false } },
+        { assignedPharmacyId: null },
+      ];
+    } else if (mongoose.Types.ObjectId.isValid(pharmacyId)) {
+      query.assignedPharmacyId = new mongoose.Types.ObjectId(pharmacyId);
+    }
+  }
+
+  if (startDate || endDate) {
+    query.createdAt = {};
+    if (startDate) {
+      query.createdAt.$gte = new Date(startDate);
+    }
+    if (endDate) {
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999);
+      query.createdAt.$lte = end;
+    }
+  }
 
   if (search && search.trim()) {
     const term = search.trim();
     const isObjectId = mongoose.Types.ObjectId.isValid(term) && term.length === 24;
     const searchConditions = [
+      { orderCode: { $regex: term, $options: "i" } },
       { "customer.name": { $regex: term, $options: "i" } },
       { "customer.email": { $regex: term, $options: "i" } },
       { "customer.phone": { $regex: term, $options: "i" } },
@@ -59,7 +93,11 @@ const getOrders = async ({ type, status, search, page = 1, limit = 20 } = {}) =>
 
   const skip = (page - 1) * limit;
   const [orders, total] = await Promise.all([
-    Order.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+    Order.find(query)
+      .populate("assignedPharmacyId", "name code phone address")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit),
     Order.countDocuments(query),
   ]);
 
@@ -116,10 +154,16 @@ const getOrderStats = async () => {
 };
 
 /**
- * Get a single order by MongoDB ID (admin).
+ * Get a single order by MongoDB ID or orderCode.
  */
-const getOrderById = async (orderId) => {
-  const order = await Order.findById(orderId);
+const getOrderById = async (orderIdOrCode) => {
+  let query = {};
+  if (mongoose.Types.ObjectId.isValid(orderIdOrCode)) {
+    query = { $or: [{ _id: orderIdOrCode }, { orderCode: orderIdOrCode }] };
+  } else {
+    query = { orderCode: orderIdOrCode };
+  }
+  const order = await Order.findOne(query);
   if (!order) throw new NotFoundError("Order not found");
   return order;
 };
@@ -307,7 +351,7 @@ const cancelOrder = async (orderId, { reason, admin }) => {
 
   if (!allowedStatuses.includes(currentStatus)) {
     throw new BadRequestError(
-      `Cannot cancel order in "${order.status}" status. Only orders in Pending or Packed (or awaiting verification/pricing) status can be cancelled.`
+      `Cannot cancel order in "${order.status}" status. Only Pending or Packed orders can be cancelled (or orders awaiting verification/pricing).`
     );
   }
 
@@ -568,6 +612,33 @@ const updateOrderStatus = async (orderId, { status, reason, admin }) => {
   return order;
 };
 
+/**
+ * Assign or reassign an order to a fulfillment pharmacy
+ */
+const assignPharmacy = async (orderId, pharmacyId, admin) => {
+  const order = await Order.findById(orderId);
+  if (!order) throw new NotFoundError("Order not found");
+
+  const previousPharmacy = order.assignedPharmacyId;
+  order.assignedPharmacyId = pharmacyId ? new mongoose.Types.ObjectId(pharmacyId) : null;
+  await order.save();
+
+  await logActivity({
+    actor: {
+      id: admin?.id || admin?._id || admin,
+      email: admin?.email,
+      role: admin?.role,
+    },
+    action: "order_pharmacy_assigned",
+    entityType: "order",
+    entityId: order._id,
+    before: { assignedPharmacyId: previousPharmacy },
+    after: { assignedPharmacyId: order.assignedPharmacyId },
+  });
+
+  return Order.findById(orderId).populate("assignedPharmacyId", "name code phone address");
+};
+
 module.exports = {
   placeOrder,
   getOrders,
@@ -578,4 +649,5 @@ module.exports = {
   cancelOrder,
   refundOrder,
   updateOrderStatus,
+  assignPharmacy,
 };

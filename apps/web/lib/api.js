@@ -126,3 +126,12 @@ export async function sendContactMessage(payload) {
     body: JSON.stringify(payload),
   });
 }
+
+export async function getBanners(placement) {
+  const query = placement ? `?placement=${placement}` : '';
+  return fetchApi(`/banners${query}`, { next: { revalidate: 60 } });
+}
+
+export async function getConditions() {
+  return fetchApi('/conditions', { next: { revalidate: 60 } });
+}

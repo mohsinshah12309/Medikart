@@ -10,6 +10,9 @@ import Settings from "./components/Settings";
 import AdminUsers from "./components/AdminUsers";
 import ActivityLogs from "./components/ActivityLogs";
 import Messages from "./components/Messages";
+import Banners from "./components/Banners";
+import Conditions from "./components/Conditions";
+import Pharmacies from "./components/Pharmacies";
 import { SESSION_EXPIRED_EVENT } from "./apiClient";
 
 function App() {
@@ -19,7 +22,17 @@ function App() {
     return saved ? JSON.parse(saved) : null;
   });
   const [activeTab, setActiveTab] = useState("overview");
+  const [initialOrderFilter, setInitialOrderFilter] = useState(null);
   const [sessionExpiredMsg, setSessionExpiredMsg] = useState("");
+
+  const handleNavigateToOrders = (filter = null) => {
+    setInitialOrderFilter(filter ? { ...filter, _ts: Date.now() } : null);
+    setActiveTab("orders");
+  };
+
+  const handleNavigateToProducts = () => {
+    setActiveTab("products");
+  };
 
   useEffect(() => {
     const handleExpired = (e) => {
@@ -56,13 +69,25 @@ function App() {
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
-        return <Overview token={token} />;
+        return (
+          <Overview
+            token={token}
+            onNavigateToOrders={handleNavigateToOrders}
+            onNavigateToProducts={handleNavigateToProducts}
+          />
+        );
       case "products":
         return <Products token={token} />;
       case "categories":
         return <Categories token={token} />;
+      case "conditions":
+        return <Conditions token={token} />;
+      case "banners":
+        return <Banners token={token} />;
       case "orders":
-        return <Orders token={token} />;
+        return <Orders token={token} initialFilter={initialOrderFilter} />;
+      case "pharmacies":
+        return <Pharmacies token={token} onNavigateToOrders={handleNavigateToOrders} />;
       case "cities":
         return <Cities token={token} />;
       case "settings":

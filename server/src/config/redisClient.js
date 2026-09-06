@@ -111,24 +111,77 @@ class InMemoryRedisStub {
 
 // ─── Choose backend ───────────────────────────────────────────────────────────
 const isTest = process.env.NODE_ENV === "test" && process.env.USE_REAL_REDIS !== "true";
+const forceInMemory = process.env.USE_IN_MEMORY_REDIS === "true";
 
 let redisClient;
 
-if (isTest) {
+if (isTest || forceInMemory) {
   redisClient = new InMemoryRedisStub();
 } else {
   const Redis = require("ioredis");
-  redisClient = new Redis(process.env.REDIS_URL || "redis://127.0.0.1:6379", {
-    maxRetriesPerRequest: 3,
+  const inMemoryFallback = new InMemoryRedisStub();
+  let isConnected = false;
+  let loggedNoticeOnce = false;
+
+  const realClient = new Redis(process.env.REDIS_URL || "redis://127.0.0.1:6379", {
+    maxRetriesPerRequest: 1,
     enableOfflineQueue: false,
+    retryStrategy(times) {
+      if (times >= 2) {
+        if (!loggedNoticeOnce) {
+          console.warn("[Redis] Notice: No local Redis service found at 127.0.0.1:6379. Operating seamlessly with built-in in-memory cache & rate limiter.");
+          loggedNoticeOnce = true;
+        }
+        return null; // Stop reconnecting and spamming errors
+      }
+      return 500;
+    },
   });
 
-  redisClient.on("connect", () => {
+  realClient.on("connect", () => {
+    isConnected = true;
     console.log("[Redis] Connected successfully.");
   });
 
-  redisClient.on("error", (err) => {
-    console.error("[Redis] Connection error:", err.message);
+  realClient.on("error", (err) => {
+    if (!loggedNoticeOnce && !isConnected) {
+      console.warn(`[Redis] Notice: Local Redis server not reachable (${err.code || err.message || "ECONNREFUSED"}). Using built-in in-memory store.`);
+      loggedNoticeOnce = true;
+    }
+  });
+
+  redisClient = new Proxy(realClient, {
+    get(target, prop) {
+      if (prop === "isFallback") return !isConnected;
+      if (typeof target[prop] === "function") {
+        return function (...args) {
+          if (!isConnected) {
+            if (typeof inMemoryFallback[prop] === "function") {
+              return inMemoryFallback[prop](...args);
+            }
+            return Promise.resolve(null);
+          }
+          try {
+            const res = target[prop](...args);
+            if (res && typeof res.catch === "function") {
+              return res.catch((err) => {
+                if (typeof inMemoryFallback[prop] === "function") {
+                  return inMemoryFallback[prop](...args);
+                }
+                return null;
+              });
+            }
+            return res;
+          } catch (err) {
+            if (typeof inMemoryFallback[prop] === "function") {
+              return inMemoryFallback[prop](...args);
+            }
+            return null;
+          }
+        };
+      }
+      return target[prop];
+    },
   });
 }
 

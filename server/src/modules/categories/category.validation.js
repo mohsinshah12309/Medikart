@@ -65,7 +65,7 @@ const listCategoriesQuerySchema = z.object({
   active: z.enum(["true", "false"]).optional(),
   isNarcotic: z.enum(["true", "false"]).optional(),
   page: z.coerce.number().int().min(1, "Page must be at least 1").optional().default(1),
-  limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(100, "Limit cannot exceed 100").optional().default(20),
+  limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(250, "Limit cannot exceed 250").optional().default(100),
 });
 
 module.exports = {

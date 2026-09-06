@@ -192,6 +192,27 @@ function Categories({ token }) {
     }
   };
 
+  const handleToggleCategoryActive = async (category) => {
+    try {
+      const res = await fetch(`${apiUrl}/admin/categories/${category._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          active: !category.active,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to update category status");
+      setSuccessMsg(`Category "${category.name}" is now ${!category.active ? "Active" : "Disabled"}.`);
+      fetchCategories();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div>
       <div className="page-header">
@@ -244,13 +265,22 @@ function Categories({ token }) {
                       )}
                     </td>
                     <td>
-                      {category.active ? (
-                        <span className="badge badge-discount" style={{ background: "#e2e8f0", color: "#475569" }}>
-                          Active
-                        </span>
-                      ) : (
-                        <span className="badge badge-prescription">Inactive</span>
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleToggleCategoryActive(category)}
+                        style={{
+                          padding: "0.25rem 0.6rem",
+                          borderRadius: "6px",
+                          fontSize: "0.75rem",
+                          fontWeight: 600,
+                          border: "none",
+                          cursor: "pointer",
+                          background: category.active ? "#dcfce7" : "#fee2e2",
+                          color: category.active ? "#166534" : "#991b1b",
+                        }}
+                      >
+                        {category.active ? "✓ Active" : "✕ Disabled"}
+                      </button>
                     </td>
                     <td>
                       <div style={{ display: "flex", gap: "0.5rem" }}>

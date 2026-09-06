@@ -123,12 +123,49 @@ const orderSchema = new mongoose.Schema(
     // a retried handler call (e.g. client resends on timeout) never fires a
     // duplicate. Toggled atomically via findByIdAndUpdate — never via order.save()
     // so concurrent retries are serialised by MongoDB.
+    orderCode: { type: String, unique: true, sparse: true, index: true },
+    assignedPharmacyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Pharmacy",
+      index: true,
+      default: null,
+    },
     confirmationEmailSent: { type: Boolean, default: false },
   },
   {
     timestamps: true,
   },
 );
+
+// Collision-safe human-readable order code generator (e.g. MK-7X9B2K)
+const crypto = require("crypto");
+
+function generateOrderCode() {
+  const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+  let code = "MK-";
+  for (let i = 0; i < 6; i++) {
+    const randIdx = crypto.randomInt(0, chars.length);
+    code += chars[randIdx];
+  }
+  return code;
+}
+
+orderSchema.pre("validate", async function (next) {
+  if (!this.orderCode) {
+    let unique = false;
+    let attempts = 0;
+    while (!unique && attempts < 10) {
+      const code = generateOrderCode();
+      const existing = await mongoose.models.Order?.findOne({ orderCode: code });
+      if (!existing) {
+        this.orderCode = code;
+        unique = true;
+      }
+      attempts++;
+    }
+  }
+  next();
+});
 
 // Indexes for admin list filtering (NFR-PERF-04)
 orderSchema.index({ type: 1 });
@@ -173,4 +210,7 @@ orderSchema.pre("findOneAndUpdate", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
+Order.generateOrderCode = generateOrderCode;
+
+module.exports = Order;

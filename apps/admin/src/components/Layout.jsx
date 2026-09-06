@@ -74,7 +74,10 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
           {navItem("overview", "📊 Overview")}
           {navItem("products", "💊 Products")}
           {navItem("categories", "📁 Categories")}
+          {navItem("conditions", "🩺 Conditions")}
+          {navItem("banners", "🖼️ Banners")}
           {navItem("orders", "📦 Orders")}
+          {navItem("pharmacies", "🏥 Pharmacies")}
           {navItem("cities", "📍 Cities")}
           {navItem("settings", "⚙️ Settings")}
           {navItem("activityLogs", "📋 Activity Logs")}

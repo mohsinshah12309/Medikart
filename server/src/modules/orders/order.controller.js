@@ -174,6 +174,38 @@ const getOrderById = async (req, res, next) => {
   }
 };
 
+const getPublicOrder = async (req, res, next) => {
+  try {
+    const order = await orderService.getOrderById(req.params.id);
+    res.status(200).json({
+      status: "success",
+      data: {
+        order: {
+          _id: order._id,
+          orderCode: order.orderCode,
+          type: order.type,
+          status: order.status,
+          paymentMethod: order.paymentMethod,
+          paymentState: order.paymentState,
+          customer: {
+            name: order.customer?.name,
+            phone: order.customer?.phone,
+            city: order.customer?.city,
+            address: order.customer?.address,
+          },
+          items: order.items || [],
+          totals: order.totals || {},
+          prescriptionUrl: order.prescriptionUrl || null,
+          branchDescription: order.branchDescription || null,
+          createdAt: order.createdAt,
+        },
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const priceInstantOrder = async (req, res, next) => {
   try {
     const order = await orderService.priceInstantOrder(req.params.id, req.body);
@@ -229,6 +261,22 @@ const updateOrderStatus = async (req, res, next) => {
   }
 };
 
+const assignPharmacy = async (req, res, next) => {
+  try {
+    const order = await orderService.assignPharmacy(
+      req.params.id,
+      req.body.pharmacyId,
+      req.admin
+    );
+    res.status(200).json({
+      status: "success",
+      data: { order },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   placeStandardOrder,
   placeNarcoticsOrder,
@@ -237,8 +285,10 @@ module.exports = {
   getOrders,
   getOrderStats,
   getOrderById,
+  getPublicOrder,
   priceInstantOrder,
   cancelOrder,
   refundOrder,
   updateOrderStatus,
+  assignPharmacy,
 };

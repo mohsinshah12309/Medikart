@@ -17,6 +17,7 @@ const categorySchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     slug: { type: String, required: true, trim: true, unique: true },
+    imageUrl: { type: String, trim: true, default: "" },
     isNarcotic: { type: Boolean, default: false },
     discount: {
       value: { type: Number, min: 0, max: 100 },

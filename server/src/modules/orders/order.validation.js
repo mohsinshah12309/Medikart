@@ -161,6 +161,9 @@ const adminOrderQuerySchema = z.object({
       "cancelled",
     ])
     .optional(),
+  startDate: z.string().trim().optional(),
+  endDate: z.string().trim().optional(),
+  pharmacyId: z.string().trim().optional(),
   page: z.coerce.number().int().min(1).optional().default(1),
   limit: z.coerce.number().int().min(1).max(100).optional().default(20),
 });

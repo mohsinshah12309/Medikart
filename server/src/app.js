@@ -56,6 +56,13 @@ const chatbotRoutes = require("./modules/chatbot/chatbot.routes");
 // Phase 25 — Storefront Public Routes
 const storefrontRoutes = require("./modules/products/storefront.routes");
 
+// Banners, Conditions, Pharmacies modules
+const bannerRoutes = require("./modules/banners/banner.routes");
+const bannerController = require("./modules/banners/banner.controller");
+const conditionRoutes = require("./modules/conditions/condition.routes");
+const conditionController = require("./modules/conditions/condition.controller");
+const pharmacyRoutes = require("./modules/pharmacies/pharmacy.routes");
+
 const contactController = require("./modules/contact-messages/contactMessage.controller");
 
 const path = require("path");
@@ -118,6 +125,15 @@ const corsOptions = {
       return callback(null, true);
     }
 
+    // Allow Cloudflare and local tunneling domains
+    if (
+      origin.endsWith(".trycloudflare.com") ||
+      origin.endsWith(".loca.lt") ||
+      origin.endsWith(".ngrok-free.app")
+    ) {
+      return callback(null, true);
+    }
+
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
@@ -133,42 +149,49 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 
 // 5. Rate Limiters Setup (Phase 22 / Step 2)
+// Generous in development / test environments to prevent locking out developer workflows
+const isProd = process.env.NODE_ENV === "production";
+
 const authLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: isProd ? 15 : 10000,
   message: "Too many attempts. Please try again in 15 minutes.",
 });
 
 const otpLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: isProd ? 10 : 10000,
   message: "Too many OTP attempts. Please wait 15 minutes.",
 });
 
 const adminLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: isProd ? 2000 : 10000,
   message: "Too many administrative operations. Please try again in 15 minutes.",
 });
 
 const expensiveLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 30,
+  max: isProd ? 2000 : 10000,
   message: "Rate limit exceeded for resource-heavy operations. Please wait.",
 });
 
 const storefrontLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: isProd ? 1000 : 10000,
   message: "Too many requests. Please try again in 15 minutes.",
 });
 
-// Public static serving for uploaded PRODUCT images & the placeholder asset ONLY.
+// Public static serving for uploaded PRODUCT & BANNER images & the placeholder asset ONLY.
 // Prescriptions are NEVER served statically — they are only reachable through
 // the authenticated admin route GET /api/v1/admin/prescriptions/:filename
 // (Fix 1 — FR-SYS-02 / PRD §15.3 / §17.7).
 const productsUploadsDir = path.join(__dirname, "../uploads/products");
 app.use("/uploads/products", express.static(productsUploadsDir));
+
+const bannersUploadsDir = path.join(__dirname, "../uploads/banners");
+app.use("/uploads/banners", express.static(bannersUploadsDir));
+app.use("/banners", express.static(bannersUploadsDir));
 
 // Placeholder asset is outside the products dir — serve it explicitly.
 const placeholderPath = path.join(__dirname, "../uploads/placeholder.webp");
@@ -196,6 +219,9 @@ app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
 app.use("/api/v1/chatbot", chatbotRoutes);
+app.get("/api/v1/banners", storefrontLimiter, bannerController.getPublicBanners);
+app.get("/api/v1/conditions", storefrontLimiter, conditionController.getPublicConditions);
+app.get("/api/v1/conditions/:idOrSlug", storefrontLimiter, conditionController.getPublicConditionDetail);
 app.use("/api/v1", storefrontLimiter, storefrontRoutes);
 app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
 
@@ -219,6 +245,11 @@ app.use("/api/v1/admin/settings", settingsRoutes);
 
 // Phase 11 — Activity Logs (auth-protected)
 app.use("/api/v1/admin/activity-logs", expensiveLimiter, activityLogRoutes);
+
+// Banners, Conditions, Pharmacies CRUD (auth-protected)
+app.use("/api/v1/admin/banners", expensiveLimiter, bannerRoutes);
+app.use("/api/v1/admin/conditions", expensiveLimiter, conditionRoutes);
+app.use("/api/v1/admin/pharmacies", expensiveLimiter, pharmacyRoutes);
 
 // Fix 1 — Authenticated prescription access (mounted AFTER auth middleware)
 app.use("/api/v1/admin/prescriptions", prescriptionRoutes);
@@ -249,12 +280,20 @@ if (require.main === module) {
   // never crashes the process — a failed connection is logged clearly and
   // GET /health reports "database": "disconnected" until the DB is reachable.
   connectDB().finally(() => {
-    server = app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+    server = app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server is running on port ${PORT} (0.0.0.0)`);
     });
     // Phase 19: register the weekly report cron job (skipped in test env).
     scheduleWeeklyReport();
     setupGracefulShutdown();
+
+    process.on("unhandledRejection", (reason) => {
+      console.error("[Server] Unhandled Promise Rejection:", reason);
+    });
+
+    process.on("uncaughtException", (err) => {
+      console.error("[Server] Uncaught Exception:", err);
+    });
   });
 }
 

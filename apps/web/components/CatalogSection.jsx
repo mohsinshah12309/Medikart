@@ -245,13 +245,13 @@ export default function CatalogSection({
               </button>
             </div>
           ) : loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 animate-pulse">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col gap-4">
-                  <div className="aspect-square bg-slate-100 rounded-xl w-full" />
-                  <div className="h-4 bg-slate-200 rounded w-3/4" />
-                  <div className="h-3 bg-slate-100 rounded w-1/2" />
-                  <div className="h-8 bg-slate-100 rounded-xl mt-auto w-full" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5 animate-pulse">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="bg-white border border-slate-200 rounded-xl p-2.5 flex flex-col gap-2">
+                  <div className="aspect-square bg-slate-100 rounded-lg w-full" />
+                  <div className="h-3 bg-slate-200 rounded w-3/4" />
+                  <div className="h-2.5 bg-slate-100 rounded w-1/2" />
+                  <div className="h-7 bg-slate-100 rounded-lg mt-auto w-full" />
                 </div>
               ))}
             </div>
@@ -310,7 +310,7 @@ export default function CatalogSection({
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5">
                 {products.map((prod) => (
                   <ProductCard key={prod._id} product={prod} />
                 ))}

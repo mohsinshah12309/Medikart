@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { adminFetch } from "../apiClient";
 
-function Overview({ token }) {
+function Overview({ token, onNavigateToOrders, onNavigateToProducts }) {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
 
   const [stats, setStats] = useState({
@@ -64,9 +64,32 @@ function Overview({ token }) {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
 
             {/* Today's Orders */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #eab308", background: "#ffffff" }}>
-              <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                Today's Orders
+            <div
+              className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "today", filterStatus: "", filterType: "" })}
+              style={{
+                padding: "1.5rem",
+                borderLeft: "5px solid #eab308",
+                background: "#ffffff",
+                cursor: "pointer",
+                transition: "transform 0.15s ease, box-shadow 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "none";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                  Today's Orders
+                </div>
+                <span style={{ fontSize: "0.75rem", color: "#ca8a04", fontWeight: 700 }}>Open →</span>
               </div>
               <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#0f172a", margin: "0.5rem 0" }}>
                 {stats.todayOrders}
@@ -77,9 +100,32 @@ function Overview({ token }) {
             </div>
 
             {/* Total Orders */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #facc15", background: "#ffffff" }}>
-              <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                Total Orders (All Time)
+            <div
+              className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterStatus: "", filterType: "" })}
+              style={{
+                padding: "1.5rem",
+                borderLeft: "5px solid #facc15",
+                background: "#ffffff",
+                cursor: "pointer",
+                transition: "transform 0.15s ease, box-shadow 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "none";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                  Total Orders (All Time)
+                </div>
+                <span style={{ fontSize: "0.75rem", color: "#ca8a04", fontWeight: 700 }}>Open →</span>
               </div>
               <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#0f172a", margin: "0.5rem 0" }}>
                 {stats.totalOrders}
@@ -90,9 +136,32 @@ function Overview({ token }) {
             </div>
 
             {/* Total Products */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #0f172a", background: "#ffffff" }}>
-              <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                Total Products
+            <div
+              className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigateToProducts && onNavigateToProducts()}
+              style={{
+                padding: "1.5rem",
+                borderLeft: "5px solid #0f172a",
+                background: "#ffffff",
+                cursor: "pointer",
+                transition: "transform 0.15s ease, box-shadow 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "none";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                  Total Products
+                </div>
+                <span style={{ fontSize: "0.75rem", color: "#0f172a", fontWeight: 700 }}>Manage →</span>
               </div>
               <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#0f172a", margin: "0.5rem 0" }}>
                 {stats.totalProducts}
@@ -103,9 +172,32 @@ function Overview({ token }) {
             </div>
 
             {/* Narcotics Needing Review */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #d97706", background: "#ffffff" }}>
-              <div style={{ color: "#854d0e", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                Narcotics Verification
+            <div
+              className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigateToOrders && onNavigateToOrders({ filterStatus: "pending_verification", dateFilter: "all" })}
+              style={{
+                padding: "1.5rem",
+                borderLeft: "5px solid #d97706",
+                background: "#ffffff",
+                cursor: "pointer",
+                transition: "transform 0.15s ease, box-shadow 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "none";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ color: "#854d0e", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                  Narcotics Verification
+                </div>
+                <span style={{ fontSize: "0.75rem", color: "#b45309", fontWeight: 700 }}>Review →</span>
               </div>
               <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#b45309", margin: "0.5rem 0" }}>
                 {stats.narcoticsPending}
@@ -116,9 +208,32 @@ function Overview({ token }) {
             </div>
 
             {/* Instant Orders Needing Pricing */}
-            <div className="card" style={{ padding: "1.5rem", borderLeft: "5px solid #ca8a04", background: "#ffffff" }}>
-              <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                Awaiting Pharmacist Pricing
+            <div
+              className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigateToOrders && onNavigateToOrders({ filterStatus: "awaiting-pharmacist-pricing", dateFilter: "all" })}
+              style={{
+                padding: "1.5rem",
+                borderLeft: "5px solid #ca8a04",
+                background: "#ffffff",
+                cursor: "pointer",
+                transition: "transform 0.15s ease, box-shadow 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "none";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ color: "#854d0e", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                  Awaiting Pharmacist Pricing
+                </div>
+                <span style={{ fontSize: "0.75rem", color: "#ca8a04", fontWeight: 700 }}>Price Now →</span>
               </div>
               <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#854d0e", margin: "0.5rem 0" }}>
                 {stats.pricingPending}

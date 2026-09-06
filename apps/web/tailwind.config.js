@@ -6,6 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ['var(--font-heading)', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        body: ['var(--font-body)', 'Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['var(--font-body)', 'Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
       colors: {
         primary: {
           50: '#fefce8',

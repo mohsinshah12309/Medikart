@@ -1,229 +1,646 @@
-# Medikart UI/UX & Interaction Design Specifications
+# 🏥 Medikart — Complete Design System & UI/UX Specification
 
-This document outlines the professional design system, user experience guidelines, and animation specifications for **Medikart**. These specifications draw inspiration from modern design systems (Google Stitch/Material Design 3), UI/UX resources (Craftwork.design, Figma Design Systems), and Framer-grade smooth micro-interactions.
-
-The goal is to ensure the storefront and admin dashboards are visually polished, intuitive, accessible, and feel highly premium and interactive rather than "vibe-coded."
-
-> **Design revision notice (approved 2026-09-03):** The canonical theme has been updated to the **White Background & Interactive Yellow Accent** redesign across both the customer storefront (`apps/web`) and admin dashboard (`apps/admin`). All active implementation work targets this white/yellow theme with dark neutral high-contrast text (WCAG AA/AAA compliant). The prior dark theme (Section 1.1.2) and initial green light palette (Section 1.1.3) are preserved as dated historical references.
+> **Version:** 2.0 — Premium White & Golden Yellow  
+> **Platform:** Next.js 14 Storefront + Vite/React Admin Dashboard + Express Backend  
+> **Design Philosophy:** *"Clinical Authority with Warm Human Care"*
 
 ---
 
-## 1. Visual Identity & Design System
+## Table of Contents
 
-### 1.1 Color Palette — **CANONICAL (Approved White & Yellow Interactive Accent Theme)**
+1. [Brand Identity & Philosophy](#1-brand-identity--philosophy)
+2. [Color System](#2-color-system)
+3. [Typography](#3-typography)
+4. [Iconography](#4-iconography)
+5. [Layout & Grid System](#5-layout--grid-system)
+6. [Component Library — Storefront](#6-component-library--storefront)
+7. [Component Library — Admin Panel](#7-component-library--admin-panel)
+8. [Micro-Interactions & Motion Design](#8-micro-interactions--motion-design)
+9. [Mobile-First & Responsive Strategy](#9-mobile-first--responsive-strategy)
+10. [3D & Interactive Elements](#10-3d--interactive-elements)
+11. [Accessibility (WCAG 2.2 AA/AAA)](#11-accessibility-wcag-22-aaaaa)
+12. [Implementation Roadmap](#12-implementation-roadmap)
 
-> **This is the approved, active design.** The client explicitly signed off on the White & Yellow redesign. All new components, screens, and UI work across `apps/web` and `apps/admin` must conform to this palette. Yellow is used strategically for interactive fills, primary CTAs, active highlights, badges, and icon accents; all readable text is dark neutral (`#0f172a` / `#475569`) to guarantee strict WCAG AA/AAA contrast ratios against white surfaces.
+---
 
-| Role | HEX | CSS Variable / Tailwind | Application | Contrast vs White / Base |
-| :--- | :--- | :--- | :--- | :--- |
-| **Page Background** | `#f8fafc` | `--color-bg` / `bg-slate-50` | Root background for web storefront and admin | N/A |
-| **Surface (Card / Panel)** | `#ffffff` | `--color-surface` / `bg-white` | Product cards, admin tables, modal dialogs, navigation bars | N/A |
-| **Surface Elevated** | `#ffffff` | `--color-surface-elevated` | Dropdown menus, floating search modals, tooltips | Soft shadow (`shadow-lg`) |
-| **Primary CTA (Vivid Yellow)** | `#eab308` | `--color-primary` / `bg-yellow-500` | Main CTA buttons, active state tabs, cart action badges | **9.31:1** with `#0f172a` text (AAA) |
-| **Primary Hover (Deep Amber)** | `#ca8a04` | `--color-primary-hover` / `bg-yellow-600` | Hover states on yellow buttons and active elements | **6.08:1** with `#0f172a` text (AA) |
-| **Primary Pressed / Active** | `#a16207` | `--color-primary-active` / `bg-yellow-700` | Click/pressed state on interactive controls | **4.55:1** with `#ffffff` text (AA) |
-| **Primary Light (Badge Tint)** | `#fef9c3` | `--color-primary-light` / `bg-yellow-100` | Badge backgrounds, highlighted table row tint | **6.38:1** with `#854d0e` text (AA) |
-| **Primary Glow / Focus Ring** | `rgba(234, 179, 8, 0.45)` | `--color-primary-glow` | Focus rings (`focus:ring-yellow-400`), card hover glows | WCAG 2.4.7 compliant |
-| **Text Primary** | `#0f172a` | `--color-text-primary` / `text-slate-900` | Core body text, H1-H3 headings, table headers | **17.85:1** on white (AAA) |
-| **Text Secondary** | `#475569` | `--color-text-secondary` / `text-slate-600` | Subtitles, field labels, metadata, inactive links | **7.58:1** on white (AAA) |
-| **Text Muted** | `#64748b` | `--color-text-muted` / `text-slate-500` | SKU labels, timestamps, placeholders | **4.76:1** on white (AA) |
-| **Border Subtle** | `#e2e8f0` | `--color-border` / `border-slate-200` | Card borders, table cell dividers, form outlines | Clean structural separation |
-| **Border Active / Focus** | `#eab308` | `--color-border-active` / `border-yellow-500` | Input focus outline, active card selection | High visibility |
-| **Alert / Warning** | `#b45309` | `--color-warning` / `text-amber-700` | Narcotics warnings, prescription verification notice | **5.02:1** on white (AA) |
-| **Destructive / Error** | `#dc2626` | `--color-error` / `text-red-600` | Form validation errors, order cancellation badges | **4.83:1** on white (AA) |
-| **Success** | `#15803d` | `--color-success` / `text-green-700` | Order confirmed badges, in-stock indicators | **5.02:1** on white (AA) |
+## 1. Brand Identity & Philosophy
 
-#### Tailwind Config Extension
+### Brand Promise
+Medikart is Pakistan's premium digital pharmacy — projecting **certified pharmaceutical trust** while making the experience of ordering medicine **comforting, fast, and stress-free**.
 
-```js
-// tailwind.config.js — white & yellow theme extension
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          bg:        '#f8fafc',
-          surface:   '#ffffff',
-          elevated:  '#ffffff',
-          yellow:    '#eab308',
-          'yellow-hover': '#ca8a04',
-          'yellow-light': '#fef9c3',
-          dark:      '#0f172a',
-        },
-      },
-    },
-  },
-};
+### Design Pillars
+
+| Pillar | Principle | Expression |
+|:---|:---|:---|
+| **🔬 Clinical Authority** | Licensed, regulated, trustworthy | Deep slate text, regulatory seals, clean whitespace, structured layouts |
+| **☀️ Warm Human Care** | Approachable, optimistic, healing | Golden yellow accents, soft gradients, friendly typography, smooth animations |
+| **⚡ Effortless Speed** | Fast discovery, minimal friction | Prominent search, instant filters, smart autocomplete, 1-tap reorder |
+| **🛡️ Safety First** | Narcotics compliance, Rx gating | Clear prescription badges, verification flows, dosage clarity |
+
+### Brand Personality
+- **Voice:** Professional yet warm. Like a trusted family pharmacist who greets you by name.
+- **Tone:** Reassuring, clear, never clinical-cold. Uses plain language over medical jargon in UI copy.
+- **Visual Feel:** Clean medical white spaces energized by warm golden sunlight accents — like a modern pharmacy bathed in morning light.
+
+### Logo System
+The Medikart logo is a **procedural CSS capsule** — no external raster files required:
+- **Top Half:** Vivid yellow gradient (`from-yellow-300 to-yellow-500`) with white specular shine
+- **Bottom Half:** Deep slate gradient (`from-slate-700 to-slate-900`) with white shine
+- **Behavior:** Continuous float animation; splits open on hover with floating medical `+` crosses
+- **Wordmark:** "Medikart" in slate-900, punctuated with an animated yellow dot (`.`)
+
+---
+
+## 2. Color System
+
+### Why Yellow?
+Yellow radiates optimism, warmth, vital energy, and wellness. Leading pharmacy innovators like **GoodRx** and **Capsule** broke the cold clinical "hospital blue" tradition with warm, uplifting tones. For Medikart, yellow symbolizes the dawn of better health.
+
+> [!IMPORTANT]
+> **The Cardinal Accessibility Rule:** NEVER use yellow text on white, and NEVER use white text on yellow. Both fail WCAG contrast standards catastrophically. Always pair yellow backgrounds with dark charcoal (`#0f172a`) text.
+
+### Primary Brand Palette
+
+| Role | Name | Hex | Swatch | Usage |
+|:---|:---|:---|:---|:---|
+| **Page Canvas** | Clean Alabaster | `#f8fafc` | 🟦 | Root background for all pages — subtle cool-gray tint separating sections from pure white cards |
+| **Surface / Cards** | Pure Medical White | `#ffffff` | ⬜ | Cards, modals, inputs, table rows, elevated panels |
+| **Primary CTA** | Vivid Golden Sun | `#eab308` | 🟡 | Primary buttons, active tabs, highlights, logo accent, rating stars |
+| **Primary Hover** | Deep Amber | `#ca8a04` | 🟠 | Hover state on all primary interactive elements |
+| **Primary Pressed** | Burnt Amber | `#a16207` | 🟤 | Active/pressed state feedback |
+| **Primary Light Tint** | Morning Sunlight | `#fef9c3` | 🌕 | Badge backgrounds, featured card highlights, active row tints, banner fills |
+| **Primary Ultra-Light** | Warm Cream | `#fefce8` | 🌤️ | Subtle section backgrounds, hover row fills, tooltip backgrounds |
+| **Primary Glow** | Amber Halo | `rgba(234,179,8,0.45)` | ✨ | Focus rings, card hover glow halos, pulse animations |
+
+### Text Hierarchy
+
+| Role | Name | Hex | Contrast on White | Usage |
+|:---|:---|:---|:---|:---|
+| **Text Primary** | Deep Midnight Slate | `#0f172a` | **17.85:1** (AAA ✅) | Headlines, body text, button labels on yellow |
+| **Text Secondary** | Cool Slate | `#475569` | **7.58:1** (AAA ✅) | Subtitles, dosages, field labels, metadata |
+| **Text Muted** | Slate Gray | `#64748b` | **4.76:1** (AA ✅) | Timestamps, SKUs, placeholders, tertiary info |
+
+### Structural Neutrals
+
+| Role | Hex | Usage |
+|:---|:---|:---|
+| **Border Subtle** | `#e2e8f0` | Card borders, dividers, input borders (resting) |
+| **Border Focus** | `#eab308` | Input focus rings, active card outlines |
+| **Background Hover** | `#f1f5f9` | Table row hover, sidebar item hover |
+| **Scrollbar Track** | `#f1f5f9` | Custom scrollbar track |
+| **Scrollbar Thumb** | `#cbd5e1` → `#eab308` on hover | Scrollbar thumb with yellow hover accent |
+
+### Semantic & Clinical Accents
+
+| Role | Name | Background | Text/Icon | Usage |
+|:---|:---|:---|:---|:---|
+| **Success / In Stock** | Clinical Emerald | `#dcfce7` | `#166534` | "In Stock", "Verified", "Order Confirmed" badges |
+| **Prescription / Rx** | Narcotics Amber | `#fef3c7` | `#92400e` | "Rx Required", "Prescription Needed" badges |
+| **Error / Danger** | Alert Ruby | `#fee2e2` | `#991b1b` | Form errors, "Expired", "Out of Stock", cancellation |
+| **Info / Authority** | Medical Blue | `#dbeafe` | `#1e40af` | Doctor badges, license seals, regulatory notices |
+| **WhatsApp** | Brand Green | — | `#25D366` | Floating WhatsApp CTA button |
+| **Destructive Action** | Vivid Red | — | `#dc2626` / `#ef4444` | Delete buttons, cancel order CTAs |
+
+### Gradient Compositions
+
+```css
+/* Hero Banner — Warm sunrise feel */
+background: linear-gradient(135deg, #ffffff 0%, rgba(254,249,195,0.4) 50%, rgba(254,243,199,0.5) 100%);
+
+/* Primary CTA Button — Golden depth */
+background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+
+/* Card Hover Glow — Ambient warmth */
+box-shadow: 0 0 0 1px rgba(234,179,8,0.15), 0 8px 25px -5px rgba(234,179,8,0.12);
+
+/* Glass Panel — Frosted medical white */
+background: rgba(255, 255, 255, 0.88);
+backdrop-filter: blur(14px);
+border: 1px solid rgba(226, 232, 240, 0.85);
+
+/* Credit Card Front — Premium golden foil */
+background: linear-gradient(135deg, #f59e0b, #facc15, #fde047);
 ```
 
 ---
 
-### 1.1.2 Historical Dark Palette (Archived Reference — 2026-08-28 to 2026-09-03)
+## 3. Typography
 
-> The following was the previous Midnight Teal & Mint Green dark palette. Preserved here as an approved historical reference.
+### Philosophy
+Pharmacy sites demand **instant legibility**. Users may be unwell, stressed, or elderly. Typefaces must feature open apertures, distinct letterforms (especially `1` vs `l` vs `I`, and `0` vs `O`), and robust number sets for dosage figures.
 
-| Role | HEX | CSS Variable / Tailwind | Application |
-| :--- | :--- | :--- | :--- |
-| **Background (Deep Dark)** | `#0a1628` | `--color-bg` / `bg-[#0a1628]` | Root page background, sidebar base |
-| **Surface (Dark Card)** | `#0f2035` | `--color-surface` / `bg-[#0f2035]` | Cards, panels, modal backgrounds |
-| **Surface Elevated** | `#162845` | `--color-surface-elevated` / `bg-[#162845]` | Elevated cards, dropdowns, nav drawers |
-| **Primary (Mint Green)** | `#00d4aa` | `--color-primary` / `text-[#00d4aa]` | Main CTA buttons, active states, highlights |
-| **Primary Hover** | `#00b894` | `--color-primary-hover` | Hover/pressed states on Mint Green elements |
-| **Primary Glow** | `rgba(0,212,170,0.15)` | `--color-primary-glow` | Glow rings, focus outlines, badge backgrounds |
-| **Teal Accent** | `#14b8a6` | `--color-teal` / `text-teal-500` | Secondary interactive elements, links |
-| **Text Primary** | `#e2e8f0` | `--color-text-primary` / `text-slate-200` | Primary body text, headings on dark surfaces |
-| **Text Secondary** | `#94a3b8` | `--color-text-secondary` / `text-slate-400` | Subtext, labels, inactive tabs |
-| **Text Muted** | `#64748b` | `--color-text-muted` / `text-slate-500` | Timestamps, placeholders, disabled text |
+### Font Stack
 
----
+| Role | Font | Weights | Fallback Stack |
+|:---|:---|:---|:---|
+| **Headings** | **Plus Jakarta Sans** | 600 SemiBold, 700 Bold | `system-ui, -apple-system, sans-serif` |
+| **Body & UI** | **Inter** | 400 Regular, 500 Medium | `ui-sans-serif, system-ui, Segoe UI, Roboto, sans-serif` |
+| **Monospace** | **JetBrains Mono** | 400 Regular, 500 Medium | `ui-monospace, SFMono-Regular, Menlo, Consolas, monospace` |
 
-### 1.1.3 Historical Initial Light Palette (Archived Reference — Prior to 2026-08-28)
+> [!TIP]
+> Enable OpenType features for Inter: `font-feature-settings: "cv02", "cv03", "cv04", "cv11"` — this activates contextual alternates optimized for UI readability and distinct numeral rendering.
 
-> The following was the original light-mode palette. **It is no longer the target design.** Preserved here for historical reference and as a rollback baseline only.
+### Type Scale
 
-| Role | HEX | Tailwind Class | Application |
-| :--- | :--- | :--- | :--- |
-| **Primary (Brand Green)** | `#16a34a` | `bg-primary-600` / `text-primary-600` | Main CTA buttons, active states, brand headers, highlights |
-| **Primary Light** | `#dcfce7` | `bg-primary-100` | Badges, success alerts backgrounds, button hover backgrounds |
-| **Primary Dark** | `#15803d` | `text-primary-700` | Hover states, primary headings |
-| **Background Gray** | `#f9fafb` | `bg-gray-50` | Default page background |
-| **Surface White** | `#ffffff` | `bg-white` | Cards, panels, navigation bars, dropdowns |
-| **Secondary Gray** | `#6b7280` | `text-gray-500` | Subtext, labels, inactive tabs |
-| **Dark Neutral** | `#111827` | `text-gray-900` | Core body text, title headers |
-| **Alert/Warning** | `#f59e0b` | `bg-amber-500` / `text-amber-700` | Narcotics warnings, prescription verification pending states |
-| **Destructive/Error** | `#ef4444` | `bg-red-500` / `text-red-600` | Invalid field entries, checkout errors |
+| Level | Size | Weight | Line Height | Letter Spacing | Usage |
+|:---|:---|:---|:---|:---|:---|
+| **Display** | `2.25rem` (36px) | Bold 700 | 1.2 | `-0.025em` | Hero headlines |
+| **H1** | `1.875rem` (30px) | Bold 700 | 1.3 | `-0.02em` | Page titles |
+| **H2** | `1.5rem` (24px) | SemiBold 600 | 1.35 | `-0.015em` | Section headers |
+| **H3** | `1.25rem` (20px) | SemiBold 600 | 1.4 | `-0.01em` | Card titles, modal headers |
+| **Body Large** | `1rem` (16px) | Regular 400 | 1.6 | `0` | Primary body copy |
+| **Body** | `0.875rem` (14px) | Regular 400 | 1.5 | `0` | Secondary content, descriptions |
+| **Caption** | `0.75rem` (12px) | Medium 500 | 1.4 | `0.01em` | Badges, timestamps, dosage labels |
+| **Overline** | `0.625rem` (10px) | SemiBold 600 | 1.2 | `0.08em` | Uppercase category tags, section labels |
 
-### 1.2 Typography Hierarchy
-We leverage a highly readable, system-ui sans-serif typeface scale to present dense medical catalog information cleanly.
+### Medicine-Specific Typography Rules
 
-*   **Page Title (H1):** `text-3xl font-extrabold tracking-tight text-gray-900` (e.g., product page header)
-*   **Section Heading (H2):** `text-xl font-bold text-gray-900` (e.g., checkout sections, related products)
-*   **Card Title (H3):** `text-base font-semibold text-gray-800 hover:text-primary-700` (e.g., product card item name)
-*   **Primary Body:** `text-sm font-normal text-gray-600 leading-relaxed`
-*   **Supporting Label:** `text-xs font-medium text-gray-500` (e.g., SKU, categories, metadata)
-
-### 1.3 Layout & Grid
-*   **Storefront Container:** Max width `1280px` (`max-w-7xl px-4 sm:px-6 lg:px-8`) centered with `mx-auto`.
-*   **Product Grid:** Responsive flex-grid dynamically scaling cards:
-    *   Mobile: 1 column
-    *   Tablet (sm/md): 2 columns
-    *   Small Desktop (lg): 3 columns
-    *   Large Desktop (xl): 4 columns
-    *   *Tailwind utility: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6`*
+- **Drug Names:** Always render brand name in **SemiBold** and generic/salt name in *italic Regular* muted slate
+- **Dosage Strength:** Display in **Medium weight**, muted slate (`#475569`), directly under brand title — e.g., `Paracetamol 500mg`
+- **Pricing:** Current price in **Bold**, PKR symbol in Regular, struck-through MRP in muted with `line-through`
+- **SKU Codes:** Always `font-mono` in muted slate — e.g., `MED-PAN-500`
+- **Minimum Font Size:** Never below `12px` for any user-visible text. Critical disclaimers minimum `12px`.
 
 ---
 
-## 2. Interactive Flows & Animation Specifications
+## 4. Iconography
 
-All animations should be executed using **Framer Motion** (for React/Next.js) or standard hardware-accelerated **CSS Transitions/Transforms** using ease-in-out bezier curves (`cubic-bezier(0.4, 0, 0.2, 1)`).
+### Strategy: Unicode Emoji-First + Inline SVG Accents
 
-### 2.1 Admin Login & 2FA Flow
-To convey security, precision, and confidence, the Admin login flow transitions seamlessly from credentials input to two-factor authentication.
+Medikart uses a **zero-dependency icon system** — no external icon library bundles required.
 
-```mermaid
-graph TD
-    A[Credential Entry] -->|Click Login| B{Verify Credentials}
-    B -->|Success| C[2FA Card Slides Up]
-    B -->|Failure| D[Shake Animation & Red Ring]
-    C -->|Enter OTP| E{Verify OTP}
-    E -->|Success| F[MFA Fade-Out / Dashboard Scale-In]
-    E -->|Failure| G[MFA Code Field Shakes]
+| Layer | Technology | Examples | When to Use |
+|:---|:---|:---|:---|
+| **Primary** | Unicode Emoji | 🛒 💊 📦 🔍 ⚙️ 🏥 🩺 📋 💬 🎉 | Navigation, section headers, status labels, quick visual cues |
+| **Structural** | Inline SVG | WhatsApp logo, EMV chip, contactless waves | Brand-specific icons, payment visuals, complex shapes |
+| **Decorative** | CSS Shapes | Capsule pill, badge circles, progress dots | Logo, loading states, status indicators |
+
+### Key Icon Mappings
+
+| Context | Icon | Usage Location |
+|:---|:---|:---|
+| Cart | 🛒 | Navbar, empty cart state, cart badge |
+| Search | 🔍 | Search bar, filter triggers |
+| Products | 💊 | Admin nav, product cards |
+| Orders | 📦 | Admin nav, order tracking |
+| Prescription | 🩺 | Rx badges, narcotics alerts |
+| Categories | 📁 | Admin nav, sidebar |
+| Settings | ⚙️ | Admin nav |
+| WhatsApp | SVG Logo | Floating CTA, order confirmation |
+| Celebration | 🎉 ✨ | Order confirmed overlay |
+| Warning | ⚠️ | Dosage alerts, narcotics warnings |
+| AI Assistant | 🤖 | Chatbot header |
+| Location | 📍 | City selection, delivery info |
+| Clock | 🕒 | Operating hours, OTP countdown |
+
+---
+
+## 5. Layout & Grid System
+
+### Page Shell Structure
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  HEADER — Sticky, glass-blur, white/90 backdrop         │
+│  ┌─ Logo ─┬─ Nav Links ─┬─ Search ─┬─ Cart Icon ─┐     │
+│  └────────┴─────────────┴──────────┴─────────────┘     │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  MAIN CONTENT — bg-[#f8fafc] with tech-grid overlay     │
+│                                                         │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │  White cards float above the alabaster canvas    │   │
+│  │  with subtle borders and hover glow effects     │   │
+│  └─────────────────────────────────────────────────┘   │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│  FOOTER — Clean white, nav links, compliance badges     │
+├─────────────────────────────────────────────────────────┤
+│  FLOATING OVERLAYS:                                     │
+│  └─ Bottom-Left: WhatsApp FAB (#25D366)                 │
+│  └─ Bottom-Right: AI Chatbot FAB (Yellow)               │
+└─────────────────────────────────────────────────────────┘
 ```
 
-*   **Success Input Transition (Credentials to 2FA):**
-    *   *Interaction:* On submitting valid credentials, the Username/Password card fades out (`opacity: 0`) and scales down (`scale: 0.95`). Simultaneously, the 2FA input card slides in from the bottom (`translateY(20px) -> translateY(0)`) and fades in (`opacity: 1`).
-    *   *Timing:* `350ms`, easing: `cubic-bezier(0.16, 1, 0.3, 1)` (Ultra-smooth ease-out).
-*   **Login Failure / Validation Error:**
-    *   *Interaction:* The entire login card triggers a horizontal shake animation (`translateX(-10px) -> translateX(10px) -> translateX(0)`) while input borders flash crimson red (`border-red-500`).
-    *   *Timing:* `400ms`, total of 4 shakes.
-*   **OTP Verification Entrance:**
-    *   *Interaction:* The 6 input digits appear in individual boxes. As the user types, each digit pops slightly (`scale: 1.05`) with a pulsing green indicator underneath.
-*   **Successful Login Entrance to Dashboard:**
-    *   *Interaction:* The login window collapses, and the Admin Dashboard container fades in (`opacity: 1`) and scales up (`scale: 0.98 -> 1`), while sidebar links slide in one by one from the left with a `50ms` stagger delay.
+### Spacing Scale (8px Base Unit)
 
----
+| Token | Value | Usage |
+|:---|:---|:---|
+| `space-1` | `4px` | Tight inline gaps, badge padding |
+| `space-2` | `8px` | Icon-to-text gaps, compact padding |
+| `space-3` | `12px` | Form field internal padding |
+| `space-4` | `16px` | Card padding, standard gaps |
+| `space-5` | `20px` | Section internal padding |
+| `space-6` | `24px` | Card-to-card gaps, section margins |
+| `space-8` | `32px` | Major section spacing |
+| `space-10` | `40px` | Page-level vertical rhythm |
+| `space-12` | `48px` | Hero section padding |
+| `space-16` | `64px` | Between major page sections |
 
-### 2.2 Storefront Catalog & Product Card Hover States
-A premium catalog experience uses micro-feedback to make elements feel tactile and reactive to user presence.
+### Border Radius Scale
 
-*   **Product Card Elevation:**
-    *   *Default:* Bordered box, flat shadow (`shadow-sm`, border color `border-gray-100`).
-    *   *Hover State:* Scale up by 2% (`scale: 1.02`), translate vertically upward by `4px` (`translateY(-4px)`), and increase drop shadow depth (`shadow-md`).
-    *   *Timing:* `250ms`, easing: `ease-out`.
-*   **Add-to-Cart Confirmation Animation ("Flying Item"):**
-    *   *Interaction:* When clicking "Add to Cart", a miniature preview bubble of the product image is cloned at the button position. It rises and scales down, following a parabolic path towards the cart icon in the navigation bar.
-    *   *Cart Icon Pulse:* Upon the bubble's arrival, the cart bag icon triggers a scale pulse (`scale: 1.2 -> 0.9 -> 1.0`) and the cart count badge flashes green.
-    *   *Timing:* Flying bubble: `600ms`. Cart Pulse: `300ms`.
+| Token | Value | Usage |
+|:---|:---|:---|
+| `rounded-sm` | `6px` | Badges, small tags, inline pills |
+| `rounded-md` | `8px` | Input fields, buttons |
+| `rounded-lg` | `12px` | Cards, modals, dropdowns |
+| `rounded-xl` | `16px` | Featured cards, hero sections |
+| `rounded-2xl` | `20px` | Hero banner, promotional cards |
+| `rounded-3xl` | `24px` | Main hero container |
+| `rounded-full` | `9999px` | Pill badges, avatar circles, FABs |
 
----
+### Shadow Scale
 
-### 2.3 Checkout & Payment Animations
+```css
+/* Resting card */
+shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
 
-The payment step requires the highest level of feedback to reassure customers that their transaction is safe and progressing.
+/* Hovered card — warm amber lift */
+shadow-card-hover: 0 0 0 1px rgba(234,179,8,0.15),
+                   0 8px 25px -5px rgba(234,179,8,0.12);
 
-#### 2.3.1 Online Card Payment Flow
-For card checkouts, we mimic a real-world card interaction.
+/* Modal / Elevated panel */
+shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08),
+           0 8px 10px -6px rgba(0,0,0,0.04);
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant CardUI
-    participant Server
-    User->>CardUI: Enters Card Number
-    CardUI->>CardUI: Flips to Front (Card Brand Detected)
-    User->>CardUI: Enters CVV Code
-    CardUI->>CardUI: Flips to Back (CVV Field Focused)
-    User->>CardUI: Clicks "Pay Now"
-    CardUI->>Server: Process Transaction
-    Server-->>CardUI: Returns Success
-    CardUI->>CardUI: Circle Spinner morphs to green tick
+/* Floating FAB buttons */
+shadow-fab: 0 4px 14px rgba(0,0,0,0.15);
+
+/* Primary button glow */
+shadow-yellow: 0 4px 14px rgba(234,179,8,0.35);
 ```
 
-*   **Interactive Card Flip:**
-    *   *Interaction:* A 3D realistic card widget floats above the form. Focusing on Card Number or Holder Name shows the front. Focusing on CVV triggers a 180-degree flip (`rotateY(180deg)`) to show the card's back.
-    *   *Timing:* `500ms`, 3D perspective enabled (`perspective: 1000px`).
-*   **Processing Payment Overlay:**
-    *   *Interaction:* Clicks "Pay Now" -> Form disables -> Full-screen dark blur overlay (`backdrop-blur-sm bg-black/30`) fades in. A circular spinner rotates, accompanied by dynamic text: "Securing connection..." -> "Authorizing funds..." -> "Success!"
-*   **Success Resolution:**
-    *   *Interaction:* The circular spinner morphs organically into a checkmark (`svg dasharray offset animation`), the overlay fades, and the page redirects with a slide-left transition to the Order Confirmation page.
+---
 
-#### 2.3.2 Cash on Delivery (COD) Flow
-COD checkout should feel physical and grounded, celebrating the order placement without the security-heavy feel of credit card processing.
+## 6. Component Library — Storefront
 
-*   **Order Placement Animation (The Delivery Box):**
-    *   *Interaction:* Upon clicking "Place COD Order", a stylized 2D flat vector shipping box drops down into view, folds its flaps shut, and a green checkmark stamp slams down onto the top of the box.
-    *   *Timing:* Box drop: `400ms` (with bounce). Flap fold: `200ms`. Stamp slam: `150ms`.
-*   **Success Delivery Banner:**
-    *   *Interaction:* On the confirmation screen, a stylized delivery truck drives into the viewport from the left, decelerates, and displays the estimated arrival date above the truck bed.
+### 6.1 Header / Navigation Bar
+- **Container:** `sticky top-0 z-50`, `bg-white/90 backdrop-blur-md`, `border-b border-slate-200`
+- **Logo:** Interactive CSS capsule with float animation + "Medikart" wordmark
+- **Nav Links:** `Home`, `Instant Order`, `About`, `Contact` — each with animated yellow underline bar on hover (2px height, scales from center on `hover`)
+- **Cart Icon:** 🛒 with floating yellow badge counter (pulsing `animate-pulse-glow` when items are added)
+
+### 6.2 Hero Banner
+- **Container:** `rounded-3xl`, warm sunrise gradient, `border border-slate-200`
+- **Trust Badge:** Pulsing amber dot + "Licensed Pharmacy Partner" in uppercase caption
+- **Headline:** Display size, "Your Gateway to Health & Wellness"
+- **Dual CTAs:**
+  - Primary: "Upload Prescription" — golden gradient button with upload icon
+  - Secondary: "Browse Catalog" — white outline button with arrow
+
+### 6.3 Product Card (with 3D Tilt)
+```
+┌──────────────────────────┐
+│  ┌─────────────────────┐ │ ← TiltCard3D wrapper (perspective, rotateX/Y on cursor)
+│  │   Product Image      │ │
+│  │  ┌──────┐  ┌──────┐  │ │ ← Overlay badges (top corners)
+│  │  │-15%  │  │Rx ONLY│  │ │
+│  │  │ OFF  │  │      │  │ │
+│  │  └──────┘  └──────┘  │ │
+│  └─────────────────────┘ │
+│                          │
+│  PARACETAMOL 500MG       │ ← Overline: generic salt, uppercase, muted
+│  Panadol Advance         │ ← Title: SemiBold, 2-line clamp
+│  Strip of 24 Tablets     │ ← Subtitle: Regular, muted
+│                          │
+│  PKR 850  ̶P̶K̶R̶ ̶1̶,̶1̶0̶0̶     │ ← Pricing: Bold current + struck MRP
+│  ┌─────────┐             │
+│  │Save 22% │             │ ← Honey yellow savings pill badge
+│  └─────────┘             │
+│                          │
+│  ┌──────────────────────┐│
+│  │   🛒 View Details    ││ ← Yellow CTA button (full-width)
+│  └──────────────────────┘│
+└──────────────────────────┘
+```
+
+**Badge Variants:**
+- **Discount:** Red background `#fee2e2`, text `#991b1b` — "-15% OFF"
+- **Narcotics/Rx:** Amber background `#fef3c7`, text `#92400e` — "🩺 Rx ONLY"
+- **Out of Stock:** Slate disabled state — button becomes "Out of Stock" in gray
+- **3D Available:** "🌐 3D View" badge appears on hover
+
+### 6.4 Category Sidebar
+- **Desktop:** Sticky left panel, white card, category list with Rx indicator tags
+- **Mobile:** Full slide-out drawer triggered by hamburger button
+- **Active State:** Yellow left border accent + `bg-yellow-50` tint
+- **Search:** Inline filter input (visible when >8 categories)
+
+### 6.5 Cart Page
+- **Empty State:** Floating 🛒 emoji with gentle bob animation + "Your cart is waiting" + "Start Shopping" yellow CTA
+- **Narcotics Alert:** Amber banner — "Items marked 🩺 require a valid prescription upload at checkout"
+- **Item Rows:** Thumbnail (64px) + title + dosage + quantity stepper (`-` `[count]` `+`) + line total + remove `✕`
+- **Summary Card:** Sticky sidebar with subtotal, delivery charge, total, "Proceed to Checkout" button
+
+### 6.6 Checkout Flow
+
+```
+┌─ STEP 1: Customer Details ──────────────────────────┐
+│  Full Name, Email, Phone, Delivery Address, City    │
+│  (City dropdown with dynamic delivery charges)      │
+└─────────────────────────────────────────────────────┘
+          ↓
+┌─ STEP 2: Prescription Upload (if Rx items) ─────────┐
+│  Drag-and-drop zone with camera/file upload         │
+│  Supported: JPG, PNG, PDF (no ZIP/archive)          │
+│  Preview thumbnail with ✓ validation indicator      │
+└─────────────────────────────────────────────────────┘
+          ↓
+┌─ STEP 3: Payment Method ────────────────────────────┐
+│  Toggle: 💵 Cash on Delivery │ 💳 Online Card       │
+│  (Card option renders interactive CardFlip3D)       │
+└─────────────────────────────────────────────────────┘
+          ↓
+┌─ STEP 4: OTP Verification ──────────────────────────┐
+│  6-digit input, 60-second countdown timer           │
+│  "Request OTP" → "Verify & Place Order"             │
+└─────────────────────────────────────────────────────┘
+          ↓
+┌─ ORDER CONFIRMED OVERLAY ───────────────────────────┐
+│  🎉 ✨ Celebration animation                        │
+│  Animated checkmark ring (green → gold)             │
+│  Order Reference ID (copyable, monospace)           │
+│  📦 WhatsApp tracking CTA                           │
+│  4-step fulfillment pipeline tracker                │
+└─────────────────────────────────────────────────────┘
+```
+
+### 6.7 Order Confirmation Page
+- **Hero:** Celebration badge with confetti particles
+- **Order Card:** White elevated card with order reference (monospace, copyable), items summary, payment method, delivery estimate
+- **Pipeline Tracker:** 4-step horizontal progress — `1. Placed` → `2. Verification` → `3. Packing` → `4. Dispatched` — active step glows yellow
+- **WhatsApp CTA:** Pre-filled message with order details for instant support
+
+### 6.8 About & Contact Pages
+- **About:** Hero card + dynamic mission content from backend + 3 trust pillar cards (Authenticity, Logistics, Rx Compliance) + animated metric counters
+- **Contact:** 2-column layout — left: pharmacy details, hours (`Monday — Sunday: 12:00 AM — 12:00 PM PKT`), WhatsApp link; right: interactive message form
+
+### 6.9 AI Chatbot Widget
+- **Trigger:** Floating yellow FAB at bottom-right with 💬 icon
+- **Panel:** Slide-up dialog with header `🤖 Symptom Assistant`, medical disclaimer banner, conversational stream, and input
+- **Behavior:** Suggests only safe OTC catalog items; never prescribes
+
+### 6.10 Footer
+- **Layout:** Clean white background, 3-column grid
+- **Content:** Navigation links, compliance badges ("Cash on Delivery", "Online Payments", "Narcotics Compliance Active"), copyright
+- **Trust Seals:** Pharmacy license, HIPAA-compliant data handling, 256-bit SSL encryption
 
 ---
 
-## 3. General UX Micro-Feedback Patterns
+## 7. Component Library — Admin Panel
 
-### 3.1 Skeleton Screen Loaders
-Avoid full-page loading spinners. Use skeleton loaders to keep users engaged and reduce perceived loading times.
-*   *Interaction:* Gray placeholder blocks (`bg-gray-200`) match the geometric shapes of text lines, product images, and buttons. A subtle left-to-right gradient sweep (`shimmer effect`) animations across the skeletons.
-*   *Timing:* Shimmer loop: `1.5s` infinite, linear.
+### 7.1 Admin Shell Layout
+```
+┌──────────────────────────────────────────────────────┐
+│ SIDEBAR (240px fixed)     │  HEADER BAR              │
+│ ┌──────────────────────┐  │  ┌────────────────────┐  │
+│ │ 💊 Medikart. Admin   │  │  │ Welcome, Admin     │  │
+│ ├──────────────────────┤  │  │ [Logout]           │  │
+│ │ 📊 Overview          │  │  └────────────────────┘  │
+│ │ 💊 Products          │  ├──────────────────────────┤
+│ │ 📁 Categories        │  │                          │
+│ │ 📦 Orders        ←●  │  │  MAIN CONTENT AREA      │
+│ │ 📍 Cities            │  │                          │
+│ │ ⚙️ Settings          │  │  White cards on          │
+│ │ 📋 Activity Logs     │  │  #f8fafc canvas          │
+│ │ 💬 Messages          │  │                          │
+│ │ 👤 Admin Users       │  │                          │
+│ ├──────────────────────┤  │                          │
+│ │ v2.0 • Staff Role    │  │                          │
+│ └──────────────────────┘  │                          │
+└──────────────────────────────────────────────────────┘
+```
 
-### 3.2 Action Toast Notifications
-*   *Interaction:* Add-to-cart or error events pop up a toast in the top-right corner (or bottom-center on mobile).
-*   *Entrance:* Slide in from the right (`translateX(100%) -> translateX(0)`) with an elastic overshoot.
-*   *Exit:* Auto-fades (`opacity: 0`) and slides up (`translateY(-20px)`) after 4 seconds of inactivity.
+- **Sidebar:** White background, `border-right: 1px solid #e2e8f0`
+- **Active Nav Item:** Yellow left border (`4px #facc15`) + `bg-yellow-50` tint
+- **Mobile:** Sidebar collapses into slide-over drawer with backdrop blur
+- **Logo:** Micro CSS capsule (13×24px, top yellow / bottom slate) + "Medikart." wordmark
+
+### 7.2 Overview Dashboard
+- **KPI Stat Cards:** 4-column grid, each with colored left border accent:
+  - Today's Orders: `#eab308` (yellow)
+  - Total Products: `#0f172a` (slate)
+  - Narcotics Pending: `#ef4444` (red)
+  - Instant Pricing Pending: `#854d0e` (amber)
+
+### 7.3 Data Tables
+- **Header Row:** `bg-[#f8fafc]`, uppercase `text-xs font-semibold`, slate text
+- **Body Rows:** White background, `border-b border-slate-100`
+- **Hover State:** `bg-[#fefce8]` (warm cream tint)
+- **Badges in Tables:**
+  - Narcotic: `bg-[#fef3c7] text-[#92400e]` — "🩺 Narcotic"
+  - Prescription: `bg-[#fee2e2] text-[#991b1b]` — "Rx Required"
+  - Discount Active: `bg-[#dcfce7] text-[#166534]` — "15% Off"
+  - Status Chips: Pending (amber), Confirmed (blue), Delivered (green), Cancelled (red)
+
+### 7.4 Buttons
+
+| Variant | Background | Text | Border | Hover | Usage |
+|:---|:---|:---|:---|:---|:---|
+| **Primary** | `#facc15` | `#0f172a` | none | `#eab308` | Main actions: Save, Create, Submit |
+| **Secondary** | `#f1f5f9` | `#334155` | `#e2e8f0` | `#e2e8f0` bg | Cancel, Close, Back |
+| **Danger** | `#dc2626` | `#ffffff` | none | `#b91c1c` | Delete, Cancel Order |
+| **Outline** | transparent | `#0f172a` | `#e2e8f0` | `#f8fafc` bg | Secondary actions |
+| **Ghost** | transparent | `#64748b` | none | `#f1f5f9` bg | Tertiary actions, icon-only |
+
+### 7.5 Modals
+- **Overlay:** `bg-black/50 backdrop-blur-sm`
+- **Content:** White card, `rounded-xl`, `max-width: 560px`, `shadow-xl`
+- **Header:** Title + `×` close button, `border-b border-slate-100`
+- **Footer:** Right-aligned action buttons with `gap-3`
+
+### 7.6 Order Cancellation Modal (Enhanced)
+```
+┌─────────────────────────────────────────────┐
+│ ⚠️ Cancel Order                          ✕ │
+├─────────────────────────────────────────────┤
+│ ┌─────────────────────────────────────────┐ │
+│ │ Order #A1B2C3        Status: pending    │ │ ← Red-tinted info card
+│ │ Customer: Ali Ahmed                     │ │
+│ │ Email: customer@example.com             │ │
+│ │ Payment: 💵 Cash on Delivery (pending)  │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ ┌─────────────────────────────────────────┐ │
+│ │ ✉️ Customer will receive a cancellation │ │ ← Blue info callout
+│ │    email with this reason note.         │ │
+│ └─────────────────────────────────────────┘ │
+│                                             │
+│ Quick Reason Presets:                       │
+│ [Prescription invalid] [Out of stock]       │ ← Pill-shaped chips
+│ [Customer requested] [Address unreachable]  │
+│ [Narcotics rejected] [Duplicate order]      │
+│                                             │
+│ Cancellation Reason / Note to Customer *    │
+│ ┌─────────────────────────────────────────┐ │
+│ │ Enter clear, polite details...          │ │ ← Required textarea
+│ └─────────────────────────────────────────┘ │
+├─────────────────────────────────────────────┤
+│                    [Close] [Confirm Cancel] │
+└─────────────────────────────────────────────┘
+```
 
 ---
 
-## 4. Accessibility & Responsive Guidelines (WCAG 2.1)
+## 8. Micro-Interactions & Motion Design
 
-*   **Contrast Ratio:** Standard body text matches a minimum ratio of `4.5:1` against white backgrounds (achieved with Tailwind `text-gray-600` and `text-gray-900`).
-*   **Focus Ring Indicators:** Focus states (`:focus-visible`) must be visible, utilizing a clear ring offset (`ring-2 ring-primary-500 ring-offset-2`).
-*   **Reduced Motion:** Support users with motion sensitivities. All transitions and animations must check for the media query and scale down to static transitions:
-    ```css
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-    ```
+Healthcare micro-interactions must prioritize **calm, clarity, and precision** — never playful distraction.
+
+### Animation Tokens
+
+```css
+/* Durations */
+--duration-fast:    150ms;   /* Button feedback, badge appearance */
+--duration-normal:  250ms;   /* Card transitions, hover effects */
+--duration-smooth:  400ms;   /* Page transitions, modal open/close */
+--duration-float:   4000ms;  /* Continuous ambient animations */
+
+/* Easings */
+--ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);   /* Bouncy entrance */
+--ease-smooth:      cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth transition */
+--ease-decelerate:  cubic-bezier(0, 0, 0.2, 1);           /* Entering elements */
+```
+
+### Key Interactions
+
+| Trigger | Animation | Timing | Details |
+|:---|:---|:---|:---|
+| **Add to Cart** | Button depresses → checkmark morph → quantity stepper appears | 200ms ease-out | Scale to `0.97`, icon rotates to ✓, then expands to `- 1 +` stepper |
+| **Card Hover** | Lift + warm glow | 250ms smooth | `translateY(-2px) scale(1.008)` + amber box-shadow bloom |
+| **3D Card Tilt** | Perspective rotation + specular glare | Real-time on cursor | `rotateX/Y` ±8° max + radial gradient glare following cursor position |
+| **Prescription Upload** | Golden progress ring → green checkmark | 300ms per step | Pulsing amber ring during upload → clean green ✓ on success |
+| **OTP Countdown** | Circular countdown timer | 60s linear | Yellow ring depleting clockwise, number ticking down |
+| **Order Confirmed** | Fireworks → checkmark ring → card slide-up | 600ms staggered | Golden particle burst → green ring draw → confirmation card slides in |
+| **Logo Float** | Continuous vertical bob | 4s ease-in-out | `translateY(-4px)` infinite, capsule splits on hover |
+| **Logo Hover** | Capsule split + crosses | 400ms spring | Rotates 180°, halves separate, `+` crosses float outward |
+| **Nav Link Hover** | Yellow underline scales from center | 200ms ease | `scaleX(0) → scaleX(1)` yellow bar, `transform-origin: center` |
+| **Scrollbar Hover** | Thumb turns yellow | 150ms | `#cbd5e1` → `#eab308` on scrollbar thumb hover |
+| **Form Error** | Gentle horizontal shake | 300ms | 3–4px nudge left-right with inline amber/red helper text |
+| **Pulse Glow** | Ambient yellow shadow pulse | 2.5s infinite | `box-shadow` oscillates between `rgba(234,179,8,0.35)` and `0.65` |
+| **Fade In Up** | Entry animation | 450ms decelerate | `translateY(12px) opacity(0)` → `translateY(0) opacity(1)` |
+
+---
+
+## 9. Mobile-First & Responsive Strategy
+
+> Over 72% of pharmacy orders in Pakistan originate from mobile devices.
+
+### Breakpoints
+
+| Name | Width | Layout Changes |
+|:---|:---|:---|
+| **Mobile** | `< 640px` | Single column, bottom nav, full-width cards, drawer menus |
+| **Tablet** | `640px – 1023px` | 2-column grids, sidebar collapses to toggle |
+| **Desktop** | `≥ 1024px` | Full sidebar, 3-4 column product grids, sticky panels |
+
+### Mobile-Specific Patterns
+
+1. **Sticky Bottom Navigation Bar (Storefront)**
+   ```
+   ┌──────┬──────┬──────┬──────┬──────┐
+   │ 🏠   │ 📁   │ 🩺   │ 📦   │ 🛒   │
+   │ Home │ Shop │ Rx   │Track │ Cart │
+   └──────┴──────┴──────┴──────┴──────┘
+   ```
+   - Center "Rx Upload" button uses prominent yellow FAB elevation
+   - Active tab: yellow icon + yellow dot indicator
+
+2. **Bottom Sheet Drawers** — Drug facts, dosage guides, and substitute lists open as iOS-style bottom sheets instead of full-page navigations
+
+3. **Touch-Optimized Controls** — Minimum touch target `44px × 44px` for all interactive elements
+
+4. **Admin Mobile Sidebar** — Converts to slide-over drawer with backdrop blur at `< 1024px`
+
+---
+
+## 10. 3D & Interactive Elements
+
+### 10.1 Product 3D Viewer (`Product3DViewer.jsx`)
+- **Engine:** Three.js WebGLRenderer
+- **Scene:** Chrome pedestal cylinder base (slate-200, `MeshPhysicalMaterial` with 0.5 transmission) + glowing yellow floating torus ring (`0xeab308` with emissive glow) + 3D product box with texture-mapped product images
+- **Controls:** Mouse drag/pan rotation, wireframe toggle, auto-rotation toggle
+- **Lighting:** Ambient + directional + point lights for pharmaceutical product showcase
+
+### 10.2 TiltCard3D Wrapper (`TiltCard3D.jsx`)
+- **Behavior:** Tracks cursor position relative to card center
+- **Transform:** `rotateX(±8°) rotateY(±8°) scale3d(1.015, 1.015, 1.015)`
+- **Glare:** Radial gradient specular overlay following cursor, simulating light reflection
+- **Reset:** Smoothly animates back to flat on mouse leave (300ms spring easing)
+
+### 10.3 CardFlip3D — Interactive Payment Card (`CardFlip3D.jsx`)
+- **Front Face:** Golden gradient (`amber-500 → yellow-400 → yellow-300`), EMV chip, contactless icon, formatted card number, cardholder name, expiry
+- **Back Face:** Dark slate gradient (`slate-800 → slate-900`), magnetic stripe, signature strip, CVV box
+- **Trigger:** Auto-flips 180° on Y-axis when user focuses on CVV input field
+- **Perspective:** `1000px`, `transform-style: preserve-3d`
+
+---
+
+## 11. Accessibility (WCAG 2.2 AA/AAA)
+
+### Contrast Compliance Matrix
+
+| Combination | Ratio | Grade | ✅/❌ |
+|:---|:---|:---|:---|
+| `#0f172a` text on `#ffffff` white | **17.85:1** | AAA | ✅ |
+| `#0f172a` text on `#facc15` yellow button | **12.4:1** | AAA | ✅ |
+| `#0f172a` text on `#eab308` yellow button | **9.31:1** | AAA | ✅ |
+| `#0f172a` text on `#fef9c3` light yellow | **16.2:1** | AAA | ✅ |
+| `#475569` text on `#ffffff` white | **7.58:1** | AAA | ✅ |
+| `#64748b` text on `#ffffff` white | **4.76:1** | AA | ✅ |
+| `#92400e` text on `#fef3c7` amber badge | **7.1:1** | AAA | ✅ |
+| `#ffffff` text on `#eab308` yellow | **1.48:1** | FAIL | ❌ NEVER USE |
+| `#eab308` text on `#ffffff` white | **1.48:1** | FAIL | ❌ NEVER USE |
+
+### Accessibility Guidelines
+
+1. **Focus States:** Double-ring focus indicator on all interactive elements: `ring-2 ring-amber-500 ring-offset-2`
+2. **Keyboard Navigation:** All modals trap focus; Escape key closes; Tab order follows logical reading flow
+3. **Screen Reader Labels:** Medical dosages use ARIA labels: `<span aria-label="500 milligrams">500 mg</span>`
+4. **Font Scaling:** All layouts use `rem`/`em` units — supports browser font scaling up to 200% without layout breakage
+5. **Reduced Motion:** Respect `prefers-reduced-motion: reduce` — disable float, tilt, 3D animations; keep only essential transitions
+6. **Color Independence:** Never convey information through color alone — always pair with icons, text labels, or patterns
+7. **Non-Text Contrast (SC 1.4.11):** Yellow buttons against white must include a 1px boundary (`#D97706` or shadow) to meet the 3:1 graphical element standard
+8. **Touch Targets:** Minimum `44px × 44px` for all buttons, links, and form controls on mobile
+
+---
+
+## 12. Implementation Roadmap
+
+### Phase 1: Typography & Font Loading
+- [ ] Install `Plus Jakarta Sans` and `Inter` via `next/font/google`
+- [ ] Configure font variables in Tailwind config
+- [ ] Apply type scale across all components
+- [ ] Enable OpenType features for Inter
+
+### Phase 2: Color Token Migration
+- [ ] Audit and consolidate all hardcoded color values
+- [ ] Map to design system tokens in `tailwind.config.js` and `index.css`
+- [ ] Verify WCAG contrast compliance for every text/background combination
+
+### Phase 3: Component Refinement
+- [ ] Standardize all product cards to the spec above
+- [ ] Implement consistent badge system (Rx, OTC, Discount, Stock)
+- [ ] Unify button variants across storefront and admin
+- [ ] Polish modal system with consistent header/body/footer patterns
+
+### Phase 4: Motion & Interaction Polish
+- [ ] Implement animation token system (durations, easings)
+- [ ] Add `prefers-reduced-motion` media query fallbacks
+- [ ] Polish card hover, 3D tilt, and cart add animations
+- [ ] Add order confirmed celebration sequence
+
+### Phase 5: Mobile Optimization
+- [ ] Implement sticky bottom navigation for storefront mobile
+- [ ] Convert admin sidebar to responsive drawer
+- [ ] Add bottom sheet drawers for product details on mobile
+- [ ] Audit all touch targets for 44px minimum
+
+### Phase 6: Accessibility Audit
+- [ ] Run automated WCAG audit (axe-core / Lighthouse)
+- [ ] Manual keyboard navigation testing across all flows
+- [ ] Screen reader testing (NVDA / VoiceOver) for checkout flow
+- [ ] Verify font scaling to 200% across all page layouts
+
+---
+
+> **This design system is a living document.** Update it as Medikart evolves. Every component, color, and interaction should trace back to the core philosophy: *Clinical Authority with Warm Human Care*.

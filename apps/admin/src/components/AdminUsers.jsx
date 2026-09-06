@@ -50,6 +50,7 @@ function AdminUsers({ token, adminUser }) {
     { key: "view_settings",     icon: "⚙️", label: "View Settings",    desc: "Read store-wide settings" },
     { key: "manage_settings",   icon: "🔧", label: "Manage Settings",  desc: "Edit discounts, content & settings" },
     { key: "view_activity_logs", icon: "📜", label: "Activity Logs",   desc: "View admin audit trail" },
+    { key: "view_messages",      icon: "💬", label: "View Messages",   desc: "Read customer contact inquiries" },
   ];
 
   const AVAILABLE_PERMISSIONS = PERMISSION_META.map(p => p.key);

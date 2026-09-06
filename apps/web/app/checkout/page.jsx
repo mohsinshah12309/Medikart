@@ -334,7 +334,7 @@ export default function CheckoutPage() {
 
         const res = await placeNarcoticsOrder(formData);
         if (res && res.status !== 'fail') {
-          orderId = res._id || res.data?.order?._id;
+          orderId = res.data?.order?.orderCode || res._id || res.data?.order?._id;
         } else {
           throw new Error(res.message || "Failed to place order.");
         }
@@ -354,7 +354,7 @@ export default function CheckoutPage() {
 
         const res = await placeStandardOrder(payload);
         if (res && res.status !== 'fail') {
-          orderId = res._id || res.data?.order?._id;
+          orderId = res.data?.order?.orderCode || res._id || res.data?.order?._id;
         } else {
           throw new Error(res.message || "Failed to place order.");
         }

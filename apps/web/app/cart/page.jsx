@@ -24,7 +24,7 @@ export default function CartPage() {
 
       {cart.length === 0 ? (
         <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-lg">
-          <span className="text-5xl block animate-bounce mb-4">🛒</span>
+          <span className="text-5xl block animate-float mb-4">🛒</span>
           <h2 className="text-lg font-bold text-slate-900 mt-4">Your cart is empty</h2>
           <p className="text-slate-600 text-sm mt-1">Browse our products and add them to your cart.</p>
           <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm active:scale-[0.98]">

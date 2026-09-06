@@ -55,6 +55,9 @@ publicOrderRoutes.post(
   paymentController.initiatePayment
 );
 
+// Public Order Status & Invoice route (Phase 24 / FR-CW-18)
+publicOrderRoutes.get("/:id", orderController.getPublicOrder);
+
 // ── Admin routes (mounted behind auth in app.js) ──────────────────────────────
 const adminOrderRoutes = express.Router();
 
@@ -105,6 +108,13 @@ adminOrderRoutes.patch(
   validateParams(orderIdParamsSchema),
   validate(updateOrderStatusSchema),
   orderController.updateOrderStatus,
+);
+
+// PATCH /api/v1/admin/orders/:id/pharmacy — assign order to pharmacy
+adminOrderRoutes.patch(
+  "/:id/pharmacy",
+  validateParams(orderIdParamsSchema),
+  orderController.assignPharmacy,
 );
 
 // PATCH /api/v1/admin/orders/:id/refund — complete manual refund (Phase 17)

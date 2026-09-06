@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("./product.model");
 const Category = require("../categories/category.model");
+const Condition = require("../conditions/condition.model");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getDeliveryCharge } = require("../cities/city.service");
@@ -27,12 +28,12 @@ const formatProductWithImages = (productDoc) => {
 // GET /api/v1/products - Public listing/browsing
 router.get("/products", async (req, res, next) => {
   try {
-    const { search, categoryId, isNarcotic, page = 1, limit = 20 } = req.query;
+    const { search, categoryId, condition, isNarcotic, page = 1, limit = 20 } = req.query;
     const p = parseInt(page, 10) || 1;
     const l = parseInt(limit, 10) || 20;
 
     // Cache check (bypassable for load testing)
-    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}`;
+    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}`;
     let cached = null;
     try {
       if (req.query.bypassCache !== "true") {
@@ -49,7 +50,14 @@ router.get("/products", async (req, res, next) => {
     }
     console.log(`[Cache MISS] key=${cacheKey}`);
 
-    const query = { active: true };
+    // Load active category IDs to filter out products in disabled categories
+    const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
+    const activeCategoryIds = activeCategories.map((c) => c._id);
+
+    const query = {
+      active: true,
+      categoryIds: { $in: activeCategoryIds },
+    };
 
     if (search) {
       const escapedSearch = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -61,6 +69,30 @@ router.get("/products", async (req, res, next) => {
 
     if (categoryId) {
       query.categoryIds = categoryId;
+    }
+
+    if (condition) {
+      // Look up condition by slug or ID
+      const condDoc = await Condition.findOne({
+        $or: [
+          { slug: condition },
+          ...(condition.match(/^[0-9a-fA-F]{24}$/) ? [{ _id: condition }] : []),
+        ],
+        active: true,
+      }).lean();
+
+      if (condDoc) {
+        const condOr = [];
+        if (condDoc.linkedCategoryIds && condDoc.linkedCategoryIds.length > 0) {
+          condOr.push({ categoryIds: { $in: condDoc.linkedCategoryIds } });
+        }
+        if (condDoc.linkedProductIds && condDoc.linkedProductIds.length > 0) {
+          condOr.push({ _id: { $in: condDoc.linkedProductIds } });
+        }
+        if (condOr.length > 0) {
+          query.$or = query.$or ? { $and: [{ $or: query.$or }, { $or: condOr }] } : condOr;
+        }
+      }
     }
 
     if (isNarcotic !== undefined) {

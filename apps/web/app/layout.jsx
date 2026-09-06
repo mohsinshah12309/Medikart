@@ -5,10 +5,31 @@ import Link from 'next/link';
 import NavbarCartIcon from '../components/NavbarCartIcon';
 import InteractiveLogo from '../components/InteractiveLogo';
 import dynamic from 'next/dynamic';
+import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 
 // Code-split Chatbot widget so it does not block initial main thread hydration
 const ChatbotWidget = dynamic(() => import('../components/ChatbotWidget'), {
   ssr: false,
+});
+
+// Code-split Mobile Bottom Nav (client-side only — uses usePathname)
+const MobileBottomNav = dynamic(() => import('../components/MobileBottomNav'), {
+  ssr: false,
+});
+
+// Design System Typography — Plus Jakarta Sans for headings, Inter for body/UI
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-heading',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-body',
+  display: 'swap',
 });
 
 export const metadata = {
@@ -65,7 +86,7 @@ export default async function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -76,7 +97,7 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 tech-grid relative overflow-x-hidden font-sans">
+      <body className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 tech-grid relative overflow-x-hidden font-body pb-16 md:pb-0">
         
         {/* Soft Ambient Yellow Highlights */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-300/10 blur-[130px] rounded-full pointer-events-none z-0" />
@@ -142,6 +163,17 @@ export default async function RootLayout({ children }) {
                   <span>•</span>
                   <span className="text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full font-bold">Narcotics Compliance Active</span>
                 </div>
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-3 text-[11px]">
+                  <span className="inline-flex items-center gap-1 text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full font-semibold">
+                    🔐 256-Bit SSL Encrypted
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full font-semibold border border-blue-100">
+                    🏥 DRAP Licensed Pharmacy
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-semibold border border-emerald-100">
+                    🛡️ Secure Patient Data
+                  </span>
+                </div>
               </div>
             </div>
           </footer>
@@ -152,7 +184,7 @@ export default async function RootLayout({ children }) {
               href={`https://wa.me/${cleanPhone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="fixed bottom-5 left-4 sm:left-6 z-30 bg-[#25D366] hover:bg-[#1faa53] text-white rounded-full p-3 sm:p-3.5 shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14"
+              className="fixed bottom-20 md:bottom-5 left-4 sm:left-6 z-30 bg-[#25D366] hover:bg-[#1faa53] text-white rounded-full p-3 sm:p-3.5 shadow-lg hover:shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14"
               title="Chat on WhatsApp"
             >
               <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7 fill-current">
@@ -163,6 +195,9 @@ export default async function RootLayout({ children }) {
 
           {/* Floating AI Chatbot Widget (bottom-right) */}
           <ChatbotWidget />
+
+          {/* Mobile Bottom Navigation Bar */}
+          <MobileBottomNav />
         </CartProvider>
       </body>
     </html>
