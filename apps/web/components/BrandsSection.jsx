@@ -139,20 +139,23 @@ const CATALOG_TOP_BRANDS = [
 
 export default function BrandsSection() {
   const scrollRef = useRef(null);
+  const [slideDirection, setSlideDirection] = useState('ltr');
+  const [isPaused, setIsPaused] = useState(false);
 
-  const handleScroll = (direction) => {
-    if (scrollRef.current) {
-      const offset = direction === 'left' ? -340 : 340;
-      scrollRef.current.scrollBy({ left: offset, behavior: 'smooth' });
-    }
+  const toggleDirection = (dir) => {
+    setSlideDirection(dir);
+    setIsPaused(false);
   };
 
+  // Duplicate items array for continuous seamless infinite loop
+  const displayBrands = [...CATALOG_TOP_BRANDS, ...CATALOG_TOP_BRANDS];
+
   return (
-    <section className="my-8 md:my-10 select-none" aria-label="Brands Available on Medikart">
+    <section className="my-8 md:my-10 select-none overflow-hidden" aria-label="Brands Available on Medikart">
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-yellow-400/30 text-yellow-700 font-black text-xs">
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-amber-400/30 text-amber-800 font-black text-xs">
               ★
             </span>
             <h2 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">
@@ -164,69 +167,85 @@ export default function BrandsSection() {
           </p>
         </div>
 
-        {/* Scroll Navigation Controls */}
+        {/* Direction Controls */}
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => handleScroll('left')}
-            className="w-8 h-8 rounded-full border border-yellow-500/40 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-900 flex items-center justify-center text-sm font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
-            aria-label="Scroll brands left"
+            onClick={() => toggleDirection('ltr')}
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === 'ltr' ? 'btn-amber-gradient text-slate-900' : 'bg-white border border-amber-200 text-slate-700'
+            }`}
+            aria-label="Slide brands left to right"
+            title="Slide brands left to right"
           >
             ‹
           </button>
           <button
             type="button"
-            onClick={() => handleScroll('right')}
-            className="w-8 h-8 rounded-full border border-yellow-500/40 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-900 flex items-center justify-center text-sm font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
-            aria-label="Scroll brands right"
+            onClick={() => toggleDirection('rtl')}
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === 'rtl' ? 'btn-amber-gradient text-slate-900' : 'bg-white border border-amber-200 text-slate-700'
+            }`}
+            aria-label="Slide brands right to left"
+            title="Slide brands right to left"
           >
             ›
           </button>
         </div>
       </div>
 
-      {/* Brand Cards Carousel */}
+      {/* Auto-Sliding Brand Cards Track (Continuous Left-to-Right loop, Pauses on Hover) */}
       <div
-        ref={scrollRef}
-        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto scrollbar-none pb-3 pt-1 -mx-1 px-1 snap-x snap-mandatory scroll-smooth"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="relative w-full overflow-hidden pb-3 pt-1 group"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
       >
-        {CATALOG_TOP_BRANDS.map((brand) => (
-          <Link
-            key={brand.name}
-            href={`/?search=${encodeURIComponent(brand.query)}#catalog`}
-            className="snap-start shrink-0 w-36 sm:w-40 bg-white hover:bg-yellow-50/50 rounded-2xl border border-slate-200/90 hover:border-yellow-400 p-3.5 flex flex-col items-center justify-between text-center transition-all duration-200 hover:shadow-md hover:-translate-y-1 group cursor-pointer"
-          >
-            {/* Clean Monogram Brand Shield */}
-            <div
-              className="w-16 h-14 rounded-2xl flex items-center justify-center font-black text-xs sm:text-sm tracking-wider transition-all duration-200 group-hover:scale-105 shadow-2xs border border-slate-100"
-              style={{
-                backgroundColor: brand.bgColor,
-                color: brand.themeColor,
-              }}
+        <div
+          ref={scrollRef}
+          className={`flex items-stretch gap-3 sm:gap-4 ${
+            slideDirection === 'ltr' ? 'animate-slide-ltr' : 'animate-slide-rtl'
+          }`}
+          style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+        >
+          {displayBrands.map((brand, idx) => (
+            <Link
+              key={`${brand.name}-${idx}`}
+              href={`/?search=${encodeURIComponent(brand.query)}#store-catalog`}
+              className="shrink-0 w-36 sm:w-40 bg-white hover:bg-amber-50/50 rounded-2xl border border-[#F3EFE6] hover:border-amber-400 p-3.5 flex flex-col items-center justify-between text-center transition-all duration-200 hover:shadow-warm-card hover:-translate-y-1 group/card cursor-pointer"
             >
-              {brand.shortCode}
-            </div>
+              {/* Clean Monogram Brand Shield */}
+              <div
+                className="w-16 h-14 rounded-2xl flex items-center justify-center font-black text-xs sm:text-sm tracking-wider transition-all duration-200 group-hover/card:scale-105 shadow-2xs border border-slate-100"
+                style={{
+                  backgroundColor: brand.bgColor,
+                  color: brand.themeColor,
+                }}
+              >
+                {brand.shortCode}
+              </div>
 
-            {/* Brand Title & Real Catalog Count */}
-            <div className="mt-2.5 w-full">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-yellow-700 transition-colors">
-                {brand.badge}
+              {/* Brand Title & Real Catalog Count */}
+              <div className="mt-2.5 w-full">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover/card:text-amber-700 transition-colors">
+                  {brand.badge}
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-slate-800 truncate mt-0.5 group-hover/card:text-slate-950">
+                  {brand.name}
+                </h3>
+                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                  {brand.productCount}
+                </p>
+              </div>
+
+              {/* Explore Link */}
+              <span className="mt-2 text-[10px] font-bold text-slate-600 group-hover/card:text-amber-700 group-hover/card:underline flex items-center gap-0.5">
+                Explore Products →
               </span>
-              <h3 className="text-xs sm:text-sm font-black text-slate-800 truncate mt-0.5 group-hover:text-slate-950">
-                {brand.name}
-              </h3>
-              <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
-                {brand.productCount}
-              </p>
-            </div>
-
-            {/* Explore Link */}
-            <span className="mt-2 text-[10px] font-bold text-slate-600 group-hover:text-yellow-700 group-hover:underline flex items-center gap-0.5">
-              Explore Products →
-            </span>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

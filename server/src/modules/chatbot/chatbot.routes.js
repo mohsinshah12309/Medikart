@@ -8,7 +8,7 @@ const { createRateLimiter } = require("../../middleware/rateLimiter");
 
 const chatbotLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: process.env.NODE_ENV === "test" ? 5 : 60,
   message: "Too many chatbot requests. Please try again in 15 minutes.",
 });
 
