@@ -31,16 +31,15 @@ const DEFAULT_CATEGORIES = [
   { name: "Flat Items", slug: "flat-items" },
   { name: "Consumer", slug: "consumer" },
   { name: "Fridge Items", slug: "fridge-items" },
-  { name: "Surgical", slug: "surgical" },
+  { name: "Surgical Items", slug: "surgical-items" },
   { name: "Dermatology", slug: "dermatology" },
   { name: "Diagnostics", slug: "diagnostics" },
   { name: "Diapers & Napkins", slug: "diapers-napkins" },
   { name: "Patient Supports", slug: "patient-supports" },
   { name: "General Items", slug: "general-items" },
   { name: "Beverages", slug: "beverages" },
-  { name: "Nutraceuticals", slug: "nutraceuticals" },
-  { name: "Nutra", slug: "nutra" },
-  { name: "Surgical Furniture", slug: "surgical-furniture" },
+  { name: "Nutraceutical", slug: "nutraceutical" },
+  { name: "OTC (Over the Counter)", slug: "otc" },
 ];
 
 /** Slugify helper for SKU generation */
@@ -138,6 +137,19 @@ async function importProducts(filePathParam) {
   for (const cat of allCategories) {
     categoryMap.set(cat.name.trim().toLowerCase(), cat._id);
     categoryMap.set(cat.slug.trim().toLowerCase(), cat._id);
+  }
+
+  // Aliases for merged categories
+  if (categoryMap.has("nutraceutical")) {
+    const nutraId = categoryMap.get("nutraceutical");
+    categoryMap.set("nutra", nutraId);
+    categoryMap.set("nutraceuticals", nutraId);
+  }
+  if (categoryMap.has("surgical-items")) {
+    const surgId = categoryMap.get("surgical-items");
+    categoryMap.set("surgical", surgId);
+    categoryMap.set("surgical furniture", surgId);
+    categoryMap.set("surgical-furniture", surgId);
   }
 
   // Parse Excel file safely

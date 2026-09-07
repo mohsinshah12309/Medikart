@@ -23,6 +23,8 @@ import {
 export default function CategoryQuickLinks({ categories: initialCategories = [], onSelectCategory }) {
   const scrollRef = useRef(null);
   const [categories, setCategories] = useState(initialCategories);
+  const [slideDirection, setSlideDirection] = useState("ltr");
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     if (initialCategories.length > 0) {
@@ -42,14 +44,20 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
 
   if (!categories || categories.length === 0) return null;
 
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = 320;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
+  const toggleDirection = (dir) => {
+    setSlideDirection(dir);
+    setIsPaused(false);
+  };
+
+  const handleItemClick = (catId, e) => {
+    if (e) e.preventDefault();
+    if (onSelectCategory) {
+      onSelectCategory(catId);
+    } else {
+      window.dispatchEvent(new CustomEvent("select-category", { detail: catId }));
     }
+    const el = document.getElementById("store-catalog") || document.getElementById("catalog");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const renderCategoryIcon = (name = "") => {
@@ -90,8 +98,11 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
     return <Pill className="w-8 h-8 text-amber-600" />;
   };
 
+  // Duplicate items array for seamless continuous infinite marquee
+  const displayCategories = [...categories, ...categories];
+
   return (
-    <div className="flex flex-col gap-3 py-2 select-none">
+    <div className="flex flex-col gap-3 py-2 select-none overflow-hidden">
       {/* Header with Navigation Controls */}
       <div className="flex items-center justify-between">
         <div>
@@ -105,69 +116,78 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => scroll("left")}
-            aria-label="Previous Categories"
-            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            onClick={() => toggleDirection("ltr")}
+            aria-label="Slide Left to Right"
+            title="Slide Left to Right"
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === "ltr" ? "btn-amber-gradient text-slate-900" : "bg-white border border-amber-200 text-slate-700"
+            }`}
           >
             ‹
           </button>
           <button
             type="button"
-            onClick={() => scroll("right")}
-            aria-label="Next Categories"
-            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            onClick={() => toggleDirection("rtl")}
+            aria-label="Slide Right to Left"
+            title="Slide Right to Left"
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === "rtl" ? "btn-amber-gradient text-slate-900" : "bg-white border border-amber-200 text-slate-700"
+            }`}
           >
             ›
           </button>
         </div>
       </div>
 
-      {/* Horizontal Scrollable Categories Container */}
+      {/* Auto-Sliding Categories Track (Continuous Left-to-Right loop, Pauses on Hover) */}
       <div
-        ref={scrollRef}
-        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto scrollbar-none pb-3 pt-1 scroll-smooth"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        className="relative w-full overflow-hidden pb-3 pt-1 group"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
       >
-        {categories.map((cat) => {
-          const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-          const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.jpg` : null);
+        <div
+          ref={scrollRef}
+          className={`flex items-stretch gap-3 sm:gap-4 ${
+            slideDirection === "ltr" ? "animate-slide-ltr" : "animate-slide-rtl"
+          }`}
+          style={{ animationPlayState: isPaused ? "paused" : "running" }}
+        >
+          {displayCategories.map((cat, idx) => {
+            const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.jpg` : null);
 
-          return (
-            <a
-              key={cat._id}
-              href="#store-catalog"
-              onClick={(e) => {
-                if (onSelectCategory) {
-                  e.preventDefault();
-                  onSelectCategory(cat._id);
-                  const el = document.getElementById("store-catalog");
-                  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }}
-              className="flex-shrink-0 w-28 sm:w-32 md:w-36 bg-white border border-[#F3EFE6] hover:border-amber-300 rounded-2xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-2xs hover:shadow-warm-card transition-all hover:-translate-y-1 group cursor-pointer"
-            >
-              {/* Dvago Commercial Photography Box */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center relative overflow-hidden group-hover:border-yellow-300 transition-all duration-200">
-                {imgSrc ? (
-                  <Image
-                    src={imgSrc}
-                    alt={cat.name}
-                    fill
-                    sizes="80px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                ) : (
-                  renderCategoryIcon(cat.name)
-                )}
-              </div>
+            return (
+              <a
+                key={`${cat._id}-${idx}`}
+                href="#store-catalog"
+                onClick={(e) => handleItemClick(cat._id, e)}
+                className="flex-shrink-0 w-28 sm:w-32 md:w-36 bg-white border border-[#F3EFE6] hover:border-amber-300 rounded-2xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-2xs hover:shadow-warm-card transition-all hover:-translate-y-1 group/card cursor-pointer"
+              >
+                {/* Commercial Photography Box */}
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center relative overflow-hidden group-hover/card:border-yellow-300 transition-all duration-200">
+                  {imgSrc ? (
+                    <Image
+                      src={imgSrc}
+                      alt={cat.name}
+                      fill
+                      sizes="80px"
+                      className="object-cover transition-transform duration-300 group-hover/card:scale-110"
+                    />
+                  ) : (
+                    renderCategoryIcon(cat.name)
+                  )}
+                </div>
 
-              {/* Category Name */}
-              <span className="text-xs font-bold text-slate-800 text-center line-clamp-2 min-h-[32px] flex items-center justify-center group-hover:text-yellow-700 transition-colors leading-tight">
-                {cat.name}
-              </span>
-            </a>
-          );
-        })}
+                {/* Category Name */}
+                <span className="text-xs font-bold text-slate-800 text-center line-clamp-2 min-h-[32px] flex items-center justify-center group-hover/card:text-yellow-700 transition-colors leading-tight">
+                  {cat.name}
+                </span>
+              </a>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

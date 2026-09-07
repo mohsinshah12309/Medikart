@@ -4,6 +4,7 @@ import { CartProvider } from '../components/CartProvider';
 import Link from 'next/link';
 import NavbarCartIcon from '../components/NavbarCartIcon';
 import InteractiveLogo from '../components/InteractiveLogo';
+import HeaderNav from '../components/HeaderNav';
 import dynamic from 'next/dynamic';
 import { Plus_Jakarta_Sans, Inter, Caveat } from 'next/font/google';
 
@@ -49,18 +50,31 @@ export default async function RootLayout({ children }) {
   let contactPhone = '923314170744';
   let contactEmail = 'medikart.com@gmail.com';
   let aboutText = 'Medikart is Pakistan\'s leading online pharmacy.';
+  let categories = [];
+
   try {
-    const res = await fetch('http://127.0.0.1:5000/api/v1/content', { cache: 'no-store' });
-    if (res.ok) {
-      const body = await res.json();
+    const [contentRes, catRes] = await Promise.all([
+      fetch('http://127.0.0.1:5000/api/v1/content', { cache: 'no-store' }).catch(() => null),
+      fetch('http://127.0.0.1:5000/api/v1/categories', { cache: 'no-store' }).catch(() => null),
+    ]);
+
+    if (contentRes && contentRes.ok) {
+      const body = await contentRes.json();
       if (body?.data) {
         if (body.data.contactPhone) contactPhone = body.data.contactPhone;
         if (body.data.contactEmail) contactEmail = body.data.contactEmail;
         if (body.data.aboutText) aboutText = body.data.aboutText;
       }
     }
+
+    if (catRes && catRes.ok) {
+      const catBody = await catRes.json();
+      if (catBody?.data?.categories) {
+        categories = catBody.data.categories;
+      }
+    }
   } catch (err) {
-    console.error("Failed to fetch contact details for layout:", err);
+    console.error("Failed to fetch layout content or categories:", err);
   }
 
   const cleanPhone = contactPhone.replace(/[^0-9]/g, '');
@@ -120,20 +134,8 @@ export default async function RootLayout({ children }) {
                   <InteractiveLogo />
                 </Link>
                 
-                <nav className="hidden md:flex items-center gap-7">
-                  <Link href="/" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
-                    Home
-                  </Link>
-                  <Link href="/instant-order" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
-                    Instant Order
-                  </Link>
-                  <Link href="/about" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
-                    About
-                  </Link>
-                  <Link href="/contact" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
-                    Contact
-                  </Link>
-                </nav>
+                {/* Header Navigation: Home | Instant Order | Categories ▾ | About | Contact */}
+                <HeaderNav initialCategories={categories} />
               </div>
 
               <div className="flex items-center gap-4">

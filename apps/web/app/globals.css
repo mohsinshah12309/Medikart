@@ -208,3 +208,52 @@ button:focus-visible {
   font-family: var(--font-script), 'Caveat', cursive;
 }
 
+/* Automatic Left-to-Right Continuous Carousel Slider */
+@keyframes slide-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes slide-rtl {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-slide-ltr {
+  display: flex;
+  width: max-content;
+  animation: slide-ltr 38s linear infinite;
+  will-change: transform;
+}
+
+.animate-slide-rtl {
+  display: flex;
+  width: max-content;
+  animation: slide-rtl 38s linear infinite;
+  will-change: transform;
+}
+
+.animate-slide-ltr:hover,
+.animate-slide-ltr:focus-within,
+.animate-slide-ltr:active,
+.animate-slide-rtl:hover,
+.animate-slide-rtl:focus-within,
+.animate-slide-rtl:active {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 640px) {
+  .animate-slide-ltr,
+  .animate-slide-rtl {
+    animation-duration: 28s;
+  }
+}
+

@@ -31,6 +31,8 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
   const [conditions, setConditions] = useState(
     initialConditions.length > 0 ? initialConditions : FALLBACK_CONDITIONS
   );
+  const [slideDirection, setSlideDirection] = useState("ltr");
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     if (initialConditions.length > 0) {
@@ -48,14 +50,20 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
     }
   }, [initialConditions]);
 
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = 320;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
+  const toggleDirection = (dir) => {
+    setSlideDirection(dir);
+    setIsPaused(false);
+  };
+
+  const handleItemClick = (slug, e) => {
+    if (e) e.preventDefault();
+    if (onSelectCondition) {
+      onSelectCondition(slug);
+    } else {
+      window.dispatchEvent(new CustomEvent("select-condition", { detail: slug }));
     }
+    const el = document.getElementById("store-catalog") || document.getElementById("catalog");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const renderConditionIcon = (slugOrName = "") => {
@@ -87,8 +95,10 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
     return <Activity className="w-9 h-9 text-amber-600" />;
   };
 
+  const displayConditions = [...conditions, ...conditions];
+
   return (
-    <div className="flex flex-col gap-3 py-2 select-none">
+    <div className="flex flex-col gap-3 py-2 select-none overflow-hidden">
       {/* Header with Navigation Controls */}
       <div className="flex items-center justify-between">
         <div>
@@ -102,69 +112,78 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => scroll("left")}
-            aria-label="Previous Conditions"
-            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            onClick={() => toggleDirection("ltr")}
+            aria-label="Slide Left to Right"
+            title="Slide Left to Right"
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === "ltr" ? "btn-amber-gradient text-slate-900" : "bg-white border border-amber-200 text-slate-700"
+            }`}
           >
             ‹
           </button>
           <button
             type="button"
-            onClick={() => scroll("right")}
-            aria-label="Next Conditions"
-            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
+            onClick={() => toggleDirection("rtl")}
+            aria-label="Slide Right to Left"
+            title="Slide Right to Left"
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === "rtl" ? "btn-amber-gradient text-slate-900" : "bg-white border border-amber-200 text-slate-700"
+            }`}
           >
             ›
           </button>
         </div>
       </div>
 
-      {/* Horizontal Scrollable Condition Cards */}
+      {/* Auto-Sliding Conditions Track (Continuous Left-to-Right loop, Pauses on Hover) */}
       <div
-        ref={scrollRef}
-        className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scrollbar-none pb-3 pt-2 scroll-smooth"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        className="relative w-full overflow-hidden pb-3 pt-2 group"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
       >
-        {conditions.map((item) => {
-          const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.jpg` : null);
-          return (
-            <a
-              key={item._id || item.slug}
-              href="#store-catalog"
-              onClick={(e) => {
-                if (onSelectCondition) {
-                  e.preventDefault();
-                  onSelectCondition(item.slug);
-                  const el = document.getElementById("store-catalog");
-                  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }}
-              className="flex-shrink-0 w-28 sm:w-32 md:w-36 flex flex-col items-center group cursor-pointer transition-transform duration-200 hover:-translate-y-1"
-            >
-              {/* Top Circular Photo Container */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-[#F3EFE6] shadow-xs flex items-center justify-center relative overflow-hidden -mb-3 z-10 group-hover:scale-105 group-hover:border-amber-400 group-hover:shadow-md transition-all duration-200">
-                {imgSrc ? (
-                  <Image
-                    src={imgSrc}
-                    alt={item.name}
-                    fill
-                    sizes="96px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                ) : (
-                  renderConditionIcon(item.slug || item.name)
-                )}
-              </div>
+        <div
+          ref={scrollRef}
+          className={`flex items-stretch gap-4 sm:gap-5 ${
+            slideDirection === "ltr" ? "animate-slide-ltr" : "animate-slide-rtl"
+          }`}
+          style={{ animationPlayState: isPaused ? "paused" : "running" }}
+        >
+          {displayConditions.map((item, idx) => {
+            const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.jpg` : null);
+            return (
+              <a
+                key={`${item._id || item.slug}-${idx}`}
+                href="#store-catalog"
+                onClick={(e) => handleItemClick(item.slug, e)}
+                className="flex-shrink-0 w-28 sm:w-32 md:w-36 flex flex-col items-center group/card cursor-pointer transition-transform duration-200 hover:-translate-y-1"
+              >
+                {/* Top Circular Photo Container */}
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-[#F3EFE6] shadow-xs flex items-center justify-center relative overflow-hidden -mb-3 z-10 group-hover/card:scale-105 group-hover/card:border-amber-400 group-hover/card:shadow-md transition-all duration-200">
+                  {imgSrc ? (
+                    <Image
+                      src={imgSrc}
+                      alt={item.name}
+                      fill
+                      sizes="96px"
+                      className="object-cover transition-transform duration-300 group-hover/card:scale-110"
+                    />
+                  ) : (
+                    renderConditionIcon(item.slug || item.name)
+                  )}
+                </div>
 
-              {/* Bottom Card Label */}
-              <div className="w-full pt-5 pb-2.5 px-2 bg-white rounded-2xl shadow-2xs text-center flex flex-col items-center justify-center border border-[#F3EFE6] group-hover:border-amber-400 group-hover:shadow-xs transition-all">
-                <span className="text-xs sm:text-[13px] font-extrabold text-slate-800 line-clamp-2 min-h-[32px] flex items-center justify-center leading-tight group-hover:text-amber-700 transition-colors">
-                  {item.name}
-                </span>
-              </div>
-            </a>
-          );
-        })}
+                {/* Bottom Card Base */}
+                <div className="w-full bg-white border border-[#F3EFE6] rounded-2xl pt-5 pb-3 px-2 flex flex-col items-center justify-center shadow-2xs group-hover/card:shadow-warm-card group-hover/card:border-amber-300 transition-all duration-200 min-h-[70px]">
+                  <span className="text-xs font-bold text-slate-800 text-center line-clamp-2 leading-tight group-hover/card:text-amber-700 transition-colors">
+                    {item.name}
+                  </span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

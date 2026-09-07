@@ -34,9 +34,21 @@ export default function CatalogSection({
       fetchCatalog(s, c, p);
     };
 
+    const handleCategoryCustomEvent = (e) => {
+      if (e.detail !== undefined) {
+        setActiveCategoryId(e.detail);
+        setCurrentPage(1);
+        fetchCatalog(search, e.detail, 1);
+      }
+    };
+
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+    window.addEventListener('select-category', handleCategoryCustomEvent);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('select-category', handleCategoryCustomEvent);
+    };
+  }, [search]);
 
   // Fetch catalog data asynchronously without a full page reload
   const fetchCatalog = async (searchQuery, categoryId, pageNum) => {
