@@ -722,6 +722,48 @@ function Orders({ token, initialFilter }) {
         </div>
       )}
 
+      {/* Active Search Banner */}
+      {activeSearch && (
+        <div
+          style={{
+            background: "#fefce8",
+            border: "1px solid #fef08a",
+            borderRadius: "8px",
+            padding: "0.5rem 0.75rem",
+            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontSize: "0.85rem",
+            color: "#854d0e",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span>🔍</span>
+            <span>
+              <strong>Active Search Filter:</strong> Showing results matching &ldquo;{activeSearch}&rdquo;
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={handleClearSearch}
+            style={{
+              background: "#fef08a",
+              border: "1px solid #fde047",
+              borderRadius: "4px",
+              padding: "0.15rem 0.5rem",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              color: "#713f12",
+              cursor: "pointer",
+            }}
+            title="Clear search to show standard queue"
+          >
+            Clear Search ✕
+          </button>
+        </div>
+      )}
+
       {/* Filter & Search Bar */}
       <div className="filter-bar" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", marginBottom: "1rem" }}>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -859,9 +901,55 @@ function Orders({ token, initialFilter }) {
                       </select>
                     </td>
                     <td>
-                      <span className={`badge ${getStatusBadgeClass(order.status)}`}>
-                        {order.status}
-                      </span>
+                      <select
+                        className="form-control"
+                        style={{
+                          fontSize: "0.75rem",
+                          padding: "0.2rem 0.4rem",
+                          width: "auto",
+                          minWidth: "125px",
+                          fontWeight: 700,
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          background:
+                            order.status === "delivered" ? "#f0fdf4" :
+                            order.status === "shipped" ? "#eff6ff" :
+                            order.status === "packed" ? "#fefce8" :
+                            order.status === "cancelled" ? "#fef2f2" :
+                            order.status === "awaiting-pharmacist-pricing" ? "#faf5ff" :
+                            order.status === "pending_verification" ? "#fffbeb" : "#f8fafc",
+                          borderColor:
+                            order.status === "delivered" ? "#86efac" :
+                            order.status === "shipped" ? "#93c5fd" :
+                            order.status === "packed" ? "#fde047" :
+                            order.status === "cancelled" ? "#fca5a5" :
+                            order.status === "awaiting-pharmacist-pricing" ? "#d8b4fe" :
+                            order.status === "pending_verification" ? "#fde68a" : "#cbd5e1",
+                          color:
+                            order.status === "delivered" ? "#166534" :
+                            order.status === "shipped" ? "#1e40af" :
+                            order.status === "packed" ? "#854d0e" :
+                            order.status === "cancelled" ? "#991b1b" :
+                            order.status === "awaiting-pharmacist-pricing" ? "#6b21a8" :
+                            order.status === "pending_verification" ? "#92400e" : "#0f172a",
+                        }}
+                        value={order.status}
+                        disabled={statusUpdatingId === order._id}
+                        onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
+                        title="Change order status"
+                      >
+                        {order.status === "awaiting-pharmacist-pricing" && (
+                          <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
+                        )}
+                        {order.status === "pending_verification" && (
+                          <option value="pending_verification">Pending Verification</option>
+                        )}
+                        <option value="pending">Pending</option>
+                        <option value="packed">Packed</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered / Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
                     </td>
                     <td>
                       {order.status === "pending" && (
@@ -989,7 +1077,58 @@ function Orders({ token, initialFilter }) {
                   <h4 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>Order Details</h4>
                   <p style={{ margin: "0.2rem 0", fontSize: "0.85rem" }}><strong>Type:</strong> <span style={{ textTransform: "capitalize", fontWeight: 600 }}>{selectedOrder.type}</span></p>
                   <p style={{ margin: "0.2rem 0", fontSize: "0.85rem" }}><strong>Payment:</strong> <span style={{ textTransform: "uppercase" }}>{selectedOrder.paymentMethod}</span> ({selectedOrder.paymentState})</p>
-                  <p style={{ margin: "0.2rem 0", fontSize: "0.85rem" }}><strong>Status:</strong> <span className={`badge ${getStatusBadgeClass(selectedOrder.status)}`}>{selectedOrder.status}</span></p>
+                  <div style={{ margin: "0.4rem 0", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <strong style={{ fontSize: "0.85rem" }}>Change Status:</strong>
+                    <select
+                      className="form-control"
+                      style={{
+                        fontSize: "0.8rem",
+                        padding: "0.25rem 0.5rem",
+                        width: "auto",
+                        minWidth: "140px",
+                        fontWeight: 700,
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        background:
+                          selectedOrder.status === "delivered" ? "#f0fdf4" :
+                          selectedOrder.status === "shipped" ? "#eff6ff" :
+                          selectedOrder.status === "packed" ? "#fefce8" :
+                          selectedOrder.status === "cancelled" ? "#fef2f2" :
+                          selectedOrder.status === "awaiting-pharmacist-pricing" ? "#faf5ff" :
+                          selectedOrder.status === "pending_verification" ? "#fffbeb" : "#f8fafc",
+                        borderColor:
+                          selectedOrder.status === "delivered" ? "#86efac" :
+                          selectedOrder.status === "shipped" ? "#93c5fd" :
+                          selectedOrder.status === "packed" ? "#fde047" :
+                          selectedOrder.status === "cancelled" ? "#fca5a5" :
+                          selectedOrder.status === "awaiting-pharmacist-pricing" ? "#d8b4fe" :
+                          selectedOrder.status === "pending_verification" ? "#fde68a" : "#cbd5e1",
+                        color:
+                          selectedOrder.status === "delivered" ? "#166534" :
+                          selectedOrder.status === "shipped" ? "#1e40af" :
+                          selectedOrder.status === "packed" ? "#854d0e" :
+                          selectedOrder.status === "cancelled" ? "#991b1b" :
+                          selectedOrder.status === "awaiting-pharmacist-pricing" ? "#6b21a8" :
+                          selectedOrder.status === "pending_verification" ? "#92400e" : "#0f172a",
+                      }}
+                      value={selectedOrder.status}
+                      disabled={statusUpdatingId === selectedOrder._id}
+                      onChange={(e) => handleUpdateOrderStatus(selectedOrder._id, e.target.value)}
+                      title="Update order status directly"
+                    >
+                      {selectedOrder.status === "awaiting-pharmacist-pricing" && (
+                        <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
+                      )}
+                      {selectedOrder.status === "pending_verification" && (
+                        <option value="pending_verification">Pending Verification</option>
+                      )}
+                      <option value="pending">Pending</option>
+                      <option value="packed">Packed</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivered">Delivered / Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 

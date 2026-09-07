@@ -107,7 +107,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
             type="button"
             onClick={() => scroll("left")}
             aria-label="Previous Categories"
-            className="w-8 h-8 rounded-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer border border-yellow-500/40"
+            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
             ‹
           </button>
@@ -115,7 +115,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
             type="button"
             onClick={() => scroll("right")}
             aria-label="Next Categories"
-            className="w-8 h-8 rounded-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer border border-yellow-500/40"
+            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
             ›
           </button>
@@ -144,7 +144,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
                   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
               }}
-              className="flex-shrink-0 w-28 sm:w-32 md:w-36 bg-white border border-slate-200/90 hover:border-yellow-400 rounded-2xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-2xs hover:shadow-md transition-all hover:-translate-y-1 group cursor-pointer"
+              className="flex-shrink-0 w-28 sm:w-32 md:w-36 bg-white border border-[#F3EFE6] hover:border-amber-300 rounded-2xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-2xs hover:shadow-warm-card transition-all hover:-translate-y-1 group cursor-pointer"
             >
               {/* Dvago Commercial Photography Box */}
               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center relative overflow-hidden group-hover:border-yellow-300 transition-all duration-200">

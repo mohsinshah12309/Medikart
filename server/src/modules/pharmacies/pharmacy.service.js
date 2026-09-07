@@ -62,12 +62,14 @@ const getPharmacyReports = async ({ pharmacyId, startDate, endDate } = {}) => {
   if (startDate || endDate) {
     match.createdAt = {};
     if (startDate) {
-      match.createdAt.$gte = new Date(startDate);
+      match.createdAt.$gte = /^\d{4}-\d{2}-\d{2}$/.test(startDate)
+        ? new Date(`${startDate}T00:00:00+05:00`)
+        : new Date(startDate);
     }
     if (endDate) {
-      const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999);
-      match.createdAt.$lte = end;
+      match.createdAt.$lte = /^\d{4}-\d{2}-\d{2}$/.test(endDate)
+        ? new Date(`${endDate}T23:59:59.999+05:00`)
+        : new Date(endDate);
     }
   }
 

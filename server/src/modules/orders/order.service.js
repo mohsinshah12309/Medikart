@@ -10,6 +10,7 @@ const { placeStandardOrder } = require("./standardOrder.handler");
 const { placeInstantOrder } = require("./instantOrder.handler");
 const { placeNarcoticsOrder } = require("./narcoticsOrder.handler");
 const Order = require("./order.model");
+const Pharmacy = require("../pharmacies/pharmacy.model");
 const Product = require("../products/product.model");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getStorewideDiscount } = require("../settings/settings.service");
@@ -63,32 +64,40 @@ const getOrders = async ({
     }
   }
 
-  if (startDate || endDate) {
-    query.createdAt = {};
-    if (startDate) {
-      query.createdAt.$gte = new Date(startDate);
-    }
-    if (endDate) {
-      const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999);
-      query.createdAt.$lte = end;
-    }
-  }
+  const rawTerm = search ? search.trim() : "";
+  const cleanTerm = rawTerm.replace(/^#/, "").trim();
+  const isObjectId = mongoose.Types.ObjectId.isValid(cleanTerm) && cleanTerm.length === 24;
+  const isOrderCode = cleanTerm.toUpperCase().startsWith("MK-");
 
-  if (search && search.trim()) {
-    const term = search.trim();
-    const isObjectId = mongoose.Types.ObjectId.isValid(term) && term.length === 24;
+  if (cleanTerm) {
     const searchConditions = [
-      { orderCode: { $regex: term, $options: "i" } },
-      { "customer.name": { $regex: term, $options: "i" } },
-      { "customer.email": { $regex: term, $options: "i" } },
-      { "customer.phone": { $regex: term, $options: "i" } },
-      { "customer.city": { $regex: term, $options: "i" } },
+      { orderCode: { $regex: cleanTerm, $options: "i" } },
+      { "customer.name": { $regex: cleanTerm, $options: "i" } },
+      { "customer.email": { $regex: cleanTerm, $options: "i" } },
+      { "customer.phone": { $regex: cleanTerm, $options: "i" } },
+      { "customer.city": { $regex: cleanTerm, $options: "i" } },
     ];
     if (isObjectId) {
-      searchConditions.unshift({ _id: new mongoose.Types.ObjectId(term) });
+      searchConditions.unshift({ _id: new mongoose.Types.ObjectId(cleanTerm) });
     }
     query.$or = searchConditions;
+  }
+
+  // Date Filtering:
+  // If user searched for a specific Order ID or Order Code, bypass date restrictions to find the exact order.
+  // Otherwise parse PKT midnight (+05:00) so UTC+5 orders placed today match accurately.
+  if ((startDate || endDate) && !isObjectId && !isOrderCode) {
+    query.createdAt = {};
+    if (startDate) {
+      query.createdAt.$gte = /^\d{4}-\d{2}-\d{2}$/.test(startDate)
+        ? new Date(`${startDate}T00:00:00+05:00`)
+        : new Date(startDate);
+    }
+    if (endDate) {
+      query.createdAt.$lte = /^\d{4}-\d{2}-\d{2}$/.test(endDate)
+        ? new Date(`${endDate}T23:59:59.999+05:00`)
+        : new Date(endDate);
+    }
   }
 
   const skip = (page - 1) * limit;

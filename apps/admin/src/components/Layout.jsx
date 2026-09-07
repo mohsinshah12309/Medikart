@@ -33,32 +33,79 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
       />
 
       <aside className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
-        <div className="sidebar-brand">
-          {/* Brand capsule (Vivid Yellow & Dark Slate) */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '13px',
-            height: '24px',
-            borderRadius: '9999px',
-            overflow: 'hidden',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)',
-            border: '1px solid #eab308'
-          }}>
-            <div style={{ height: '50%', background: '#facc15' }} />
-            <div style={{ height: '50%', background: '#0f172a' }} />
+        <div className="sidebar-brand" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {/* Official Medikart Shopping Cart Icon */}
+          <div style={{ width: '36px', height: '32px', flexShrink: 0 }}>
+            <svg viewBox="0 0 100 90" fill="none" style={{ width: '100%', height: '100%' }}>
+              <defs>
+                <linearGradient id="adminCartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F59E0B" />
+                  <stop offset="50%" stopColor="#FBBF24" />
+                  <stop offset="100%" stopColor="#FACC15" />
+                </linearGradient>
+                <linearGradient id="adminCapsuleY" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F59E0B" />
+                  <stop offset="100%" stopColor="#FCD34D" />
+                </linearGradient>
+              </defs>
+              {/* Motion Streaks */}
+              <rect x="6" y="24" width="22" height="7" rx="3.5" fill="#FBBF24" />
+              <rect x="0" y="36" width="25" height="7" rx="3.5" fill="#FBBF24" />
+              <rect x="8" y="48" width="18" height="6.5" rx="3.25" fill="#FBBF24" />
+              {/* Capsule */}
+              <g transform="translate(52, 24) rotate(32)">
+                <path d="M-7,-18 C-7,-24 7,-24 7,-18 L7,0 L-7,0 Z" fill="url(#adminCapsuleY)" />
+                <path d="M-7,0 L7,0 L7,16 C7,22 -7,22 -7,16 Z" fill="#FFFFFF" />
+              </g>
+              {/* Basket */}
+              <path
+                d="M 28 20 C 34 20, 36 28, 41 33 C 45 28, 52 24, 60 27 C 66 22, 73 25, 78 31 C 81 35, 80 43, 75 51 C 71 58, 66 64, 46 64 C 32 64, 28 54, 26 44 C 24 35, 18 20, 28 20 Z"
+                fill="url(#adminCartGrad)"
+              />
+              {/* Medical Cross */}
+              <rect x="47.5" y="35" width="9" height="20" rx="3.5" fill="#FFFFFF" />
+              <rect x="42" y="40.5" width="20" height="9" rx="3.5" fill="#FFFFFF" />
+              {/* Wheels */}
+              <circle cx="38" cy="74" r="8" fill="#F59E0B" />
+              <circle cx="38" cy="74" r="3.5" fill="#FEF3C7" />
+              <circle cx="62" cy="74" r="8" fill="#F59E0B" />
+              <circle cx="62" cy="74" r="3.5" fill="#FEF3C7" />
+            </svg>
           </div>
-          <span style={{
-            fontWeight: 900,
-            fontSize: '1.25rem',
-            color: '#0f172a',
-            letterSpacing: '-0.025em'
-          }}>
-            Medikart<span style={{ color: '#eab308' }}>.</span>
-          </span>
-          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', marginLeft: '-2px', marginTop: '2px' }}>
-            Admin
-          </span>
+
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+            <span style={{
+              fontWeight: 900,
+              fontSize: '1.25rem',
+              color: '#1E293B',
+              letterSpacing: '-0.025em',
+              display: 'flex',
+              alignItems: 'baseline'
+            }}>
+              med
+              <span style={{ position: 'relative', display: 'inline-block' }}>
+                ı
+                <svg viewBox="0 0 24 24" style={{ position: 'absolute', top: '-6px', left: '0px', width: '10px', height: '10px' }} fill="#10B981">
+                  <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM17.5 9.5C16.5 13.5 13 16.5 9 17.5C8.5 17.5 8 17 8.5 16.5C12.5 12.5 15.5 9 16.5 8C17 7.5 17.5 8 17.5 9.5Z" />
+                </svg>
+              </span>
+              kart
+            </span>
+            <span style={{
+              fontSize: '0.6875rem',
+              fontWeight: 800,
+              color: '#B45309',
+              background: '#FEF3C7',
+              padding: '2px 6px',
+              borderRadius: '9999px',
+              border: '1px solid #FDE68A',
+              marginLeft: '4px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}>
+              Admin
+            </span>
+          </div>
 
           {/* Mobile drawer close button */}
           <button 

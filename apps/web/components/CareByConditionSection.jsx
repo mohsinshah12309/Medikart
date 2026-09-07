@@ -104,7 +104,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
             type="button"
             onClick={() => scroll("left")}
             aria-label="Previous Conditions"
-            className="w-8 h-8 rounded-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer border border-yellow-500/40"
+            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
             ‹
           </button>
@@ -112,7 +112,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
             type="button"
             onClick={() => scroll("right")}
             aria-label="Next Conditions"
-            className="w-8 h-8 rounded-full bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer border border-yellow-500/40"
+            className="w-8 h-8 rounded-full btn-amber-gradient text-slate-900 font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
             ›
           </button>
@@ -141,8 +141,8 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
               }}
               className="flex-shrink-0 w-28 sm:w-32 md:w-36 flex flex-col items-center group cursor-pointer transition-transform duration-200 hover:-translate-y-1"
             >
-              {/* Top Circular Photo Container (Dvago signature look) */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-slate-200/80 shadow-xs flex items-center justify-center relative overflow-hidden -mb-3 z-10 group-hover:scale-105 group-hover:border-yellow-400 group-hover:shadow-md transition-all duration-200">
+              {/* Top Circular Photo Container */}
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-[#F3EFE6] shadow-xs flex items-center justify-center relative overflow-hidden -mb-3 z-10 group-hover:scale-105 group-hover:border-amber-400 group-hover:shadow-md transition-all duration-200">
                 {imgSrc ? (
                   <Image
                     src={imgSrc}
@@ -157,8 +157,8 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
               </div>
 
               {/* Bottom Card Label */}
-              <div className="w-full pt-5 pb-2.5 px-2 bg-white rounded-2xl shadow-2xs text-center flex flex-col items-center justify-center border border-slate-200/90 group-hover:border-yellow-400 group-hover:shadow-xs transition-all">
-                <span className="text-xs sm:text-[13px] font-extrabold text-slate-800 line-clamp-2 min-h-[32px] flex items-center justify-center leading-tight group-hover:text-yellow-700 transition-colors">
+              <div className="w-full pt-5 pb-2.5 px-2 bg-white rounded-2xl shadow-2xs text-center flex flex-col items-center justify-center border border-[#F3EFE6] group-hover:border-amber-400 group-hover:shadow-xs transition-all">
+                <span className="text-xs sm:text-[13px] font-extrabold text-slate-800 line-clamp-2 min-h-[32px] flex items-center justify-center leading-tight group-hover:text-amber-700 transition-colors">
                   {item.name}
                 </span>
               </div>

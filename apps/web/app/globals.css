@@ -6,19 +6,24 @@
   --color-primary-200: #fef08a;
   --color-primary-300: #fde047;
   --color-primary-400: #facc15;
-  --color-primary-500: #eab308;
-  --color-primary-600: #ca8a04;
-  --color-primary-700: #a16207;
+  --color-primary-500: #f59e0b;
+  --color-primary-600: #d97706;
+  --color-primary-700: #b45309;
   --color-primary-800: #854d0e;
   --color-primary-900: #713f12;
 
-  --color-brand-bg: #f8fafc;
+  --color-brand-bg: #FAF8F5;
   --color-brand-surface: #ffffff;
   --color-brand-elevated: #ffffff;
-  --color-brand-yellow: #eab308;
-  --color-brand-yellow-hover: #ca8a04;
+  --color-brand-amber: #f59e0b;
+  --color-brand-gold: #fbbf24;
+  --color-brand-yellow: #facc15;
+  --color-brand-yellow-hover: #d97706;
   --color-brand-yellow-light: #fef9c3;
-  --color-brand-dark: #0f172a;
+  --color-brand-navy: #1e293b;
+  --color-brand-slate: #475569;
+  --color-brand-green: #10b981;
+  --color-brand-script: #d97706;
   
   --animate-float: float 4s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -30,8 +35,8 @@
     50% { transform: translateY(-5px); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(234, 179, 8, 0.35); }
-    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(234, 179, 8, 0.65); }
+    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(245, 158, 11, 0.35); }
+    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(245, 158, 11, 0.65); }
   }
   @keyframes fade-in-up {
     from {
@@ -50,8 +55,8 @@
 }
 
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: #FAF8F5;
+  color: #1e293b;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-y: scroll;
 }
@@ -145,3 +150,61 @@ button:focus-visible {
     transition: none !important;
   }
 }
+
+/* ─── Medikart Canonical Brand Design Utilities (2026 Revision) ───────────── */
+.btn-amber-gradient {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FACC15 100%);
+  color: #1E293B;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.btn-amber-gradient:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+  filter: brightness(1.02);
+}
+.btn-amber-gradient:active {
+  transform: translateY(0.5px);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.card-warm {
+  background: #ffffff;
+  border: 1px solid #F3EFE6;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-warm:hover {
+  border-color: #FEF3C7;
+  box-shadow: 0 14px 30px -5px rgba(245, 158, 11, 0.12), 0 10px 12px -6px rgba(0, 0, 0, 0.04);
+}
+
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  background: #FEF9C3;
+  color: #1E293B;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border: 1px solid #FEF08A;
+  transition: all 0.2s ease;
+}
+.trust-badge:hover {
+  background: #FEF08A;
+  transform: translateY(-1px);
+}
+
+.font-script {
+  font-family: var(--font-script), 'Caveat', cursive;
+}
+

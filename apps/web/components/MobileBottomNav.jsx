@@ -24,7 +24,7 @@ export default function MobileBottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-[#F3EFE6] shadow-[0_-2px_12px_rgba(245,158,11,0.08)] md:hidden">
       <div className="flex items-end justify-around px-2 h-16">
         {tabs.map((tab) => {
           const active = isActive(tab.href);
@@ -41,14 +41,14 @@ export default function MobileBottomNav() {
                     w-14 h-14 rounded-full flex items-center justify-center text-xl
                     shadow-lg transition-all duration-200
                     ${active
-                      ? "bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-yellow-300/40 scale-110"
-                      : "bg-gradient-to-br from-yellow-400 to-amber-500 shadow-amber-200/30 hover:scale-105"
+                      ? "bg-gradient-to-br from-amber-400 via-amber-500 to-yellow-400 shadow-amber-400/40 scale-110"
+                      : "bg-gradient-to-br from-amber-400 to-yellow-500 shadow-amber-300/30 hover:scale-105"
                     }
                   `}
                 >
                   <span className="text-2xl">{tab.icon}</span>
                 </div>
-                <span className={`text-[10px] mt-1 font-semibold ${active ? "text-yellow-600" : "text-slate-500"}`}>
+                <span className={`text-[10px] mt-1 font-bold ${active ? "text-amber-700" : "text-slate-500"}`}>
                   {tab.label}
                 </span>
               </Link>
@@ -66,16 +66,16 @@ export default function MobileBottomNav() {
                   {tab.icon}
                 </span>
                 {tab.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] flex items-center justify-center bg-yellow-500 text-[10px] font-bold text-slate-900 rounded-full px-1 shadow-sm">
+                  <span className="absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] flex items-center justify-center bg-amber-500 text-[10px] font-bold text-slate-900 rounded-full px-1 shadow-sm">
                     {tab.badge > 99 ? "99+" : tab.badge}
                   </span>
                 )}
               </div>
-              <span className={`text-[10px] mt-1 font-semibold ${active ? "text-yellow-600" : "text-slate-500"}`}>
+              <span className={`text-[10px] mt-1 font-bold ${active ? "text-amber-700" : "text-slate-500"}`}>
                 {tab.label}
               </span>
               {active && (
-                <span className="absolute bottom-0 w-5 h-[3px] bg-yellow-500 rounded-full" />
+                <span className="absolute bottom-0 w-5 h-[3px] bg-amber-500 rounded-full" />
               )}
             </Link>
           );

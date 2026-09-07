@@ -25,9 +25,9 @@ export default function ProductCard({ product }) {
   const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
 
   return (
-    <TiltCard3D className="bg-white border border-slate-200/90 rounded-xl overflow-hidden hover:shadow-lg hover:border-yellow-400 flex flex-col h-full relative group transition-all duration-200">
+    <TiltCard3D className="bg-white border border-[#F3EFE6] rounded-2xl overflow-hidden hover:shadow-warm-card hover:border-amber-300 flex flex-col h-full relative group transition-all duration-200">
       {/* Product Image Link Container */}
-      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-slate-50/60 flex items-center justify-center p-2.5 overflow-hidden border-b border-slate-100">
+      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-[#F3EFE6]">
         {/* Discount Badge */}
         {hasDiscount && (
           <span className="absolute top-1.5 left-1.5 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md tracking-wider uppercase shadow-xs">
@@ -119,20 +119,20 @@ export default function ProductCard({ product }) {
           {/* Interactive CTA Buttons */}
           <div className="mt-2.5">
             {isOutOfStock ? (
-              <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-lg border border-slate-200 select-none">
+              <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-full border border-slate-200 select-none">
                 Out of Stock
               </span>
             ) : product.isNarcotic ? (
               <Link
                 href={`/products/${product._id}`}
-                className="w-full inline-block text-center bg-amber-50 hover:bg-amber-100 text-amber-900 text-[10px] sm:text-xs font-bold py-1.5 rounded-lg border border-amber-300 transition-colors"
+                className="w-full inline-block text-center bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] sm:text-xs font-bold py-1.5 rounded-full border border-amber-300 transition-colors"
               >
                 Rx Required
               </Link>
             ) : (
               <Link
                 href={`/products/${product._id}`}
-                className="w-full inline-block text-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 text-[10px] sm:text-xs font-bold py-1.5 rounded-lg transition-all shadow-2xs hover:shadow-xs border border-yellow-500/40"
+                className="btn-amber-gradient w-full text-[10px] sm:text-xs py-1.5 shadow-xs"
               >
                 View Details
               </Link>

@@ -42,12 +42,72 @@ Medikart is Pakistan's premium digital pharmacy — projecting **certified pharm
 - **Tone:** Reassuring, clear, never clinical-cold. Uses plain language over medical jargon in UI copy.
 - **Visual Feel:** Clean medical white spaces energized by warm golden sunlight accents — like a modern pharmacy bathed in morning light.
 
-### Logo System
-The Medikart logo is a **procedural CSS capsule** — no external raster files required:
+### Logo System (Historical v2.0)
+The Medikart logo was initially prototyped as a procedural CSS capsule:
 - **Top Half:** Vivid yellow gradient (`from-yellow-300 to-yellow-500`) with white specular shine
 - **Bottom Half:** Deep slate gradient (`from-slate-700 to-slate-900`) with white shine
-- **Behavior:** Continuous float animation; splits open on hover with floating medical `+` crosses
 - **Wordmark:** "Medikart" in slate-900, punctuated with an animated yellow dot (`.`)
+
+---
+
+## 1.1 Official Brand Identity & Canonical Tokens (2026 Master Revision)
+
+> [!IMPORTANT]
+> **Superseding Specification:** This section defines the official, client-approved brand identity extracted directly from master vector assets and marketing compositions (`media_1788806774980.jpg`, `media_1788806774988.jpg`, and `media_1788806774974.jpg`). It supersedes earlier provisional tokens while preserving historical references.
+
+### 1. Master Logo Anatomy
+The official Medikart logo is composed of three harmonious elements:
+1. **Dynamic Shopping Cart Icon**:
+   - High-velocity shopping cart moving swiftly to the right, trailed by three rounded motion streaks.
+   - **Glossy Medical Capsule**: An angled white and golden-yellow capsule resting inside the basket, with subtle specular highlight.
+   - **Certified Medical Cross**: A bold white embossed cross (`+`) centered on the front face of the cart.
+   - **Cart Wheels**: Two golden amber circular wheels (`#F59E0B` to `#FBBF24`).
+2. **Rounded Wordmark**:
+   - Lowercase bold, friendly sans-serif typography (`medikart`).
+   - **Leaf Accent**: The dot of the letter `i` is replaced by an organic, upward-tilted green leaf (`#10B981`), symbolizing natural wellness, vitality, and purity.
+3. **Official Tagline**:
+   - Primary: `"Medicines. Delivered Fast."` (Storefront Nav, Admin Shell, Social Mockups)
+   - Localized / Hero Variant: `"Medicines. Nearest to you."` (Surfacing immediate proximity and local pharmacy dispatch)
+
+### 2. Canonical Color Tokens
+
+| Token Name | Hex / CSS Value | Description & WCAG Contrast |
+|:---|:---|:---|
+| `--color-brand-gradient` | `linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FACC15 100%)` | Primary interactive gradient for CTA buttons, cart highlights, active indicators |
+| `--color-brand-amber` | `#F59E0B` | Deep warm amber base (4.5:1+ contrast on cream) |
+| `--color-brand-gold` | `#FBBF24` | Vivid golden yellow center tone |
+| `--color-brand-yellow` | `#FACC15` | Bright warm sunlight accent |
+| `--color-brand-bg` | `#FAF8F5` | Warm cream/off-white page canvas (eliminates harsh clinical blue-gray glare) |
+| `--color-brand-surface` | `#FFFFFF` | Elevated cards, dialogs, drawers, dropdowns |
+| `--color-brand-border` | `#F3EFE6` | Soft warm border separating cards from cream canvas |
+| `--color-brand-border-amber`| `#FEF3C7` | Amber-tinted active/featured card border |
+| `--color-brand-badge-bg` | `#FEF9C3` | Soft pastel yellow circle fill for trust badges and category icon backdrops |
+| `--color-brand-navy` | `#1E293B` | Deep Navy Charcoal primary typography (**15.6:1 AAA contrast** on canvas) |
+| `--color-brand-slate` | `#475569` | Secondary descriptive text (**7.2:1 AAA contrast**) |
+| `--color-brand-muted` | `#64748b` | Tertiary metadata, placeholders, inactive tabs (**4.6:1 AA contrast**) |
+| `--color-brand-green` | `#10B981` | Leaf green accent on "i", DRAP verified badges, stock confirmations |
+| `--color-brand-script` | `#D97706` | Warm honey-amber handwritten script annotations |
+
+### 3. Typography Hierarchy & Pairings
+- **Headings**: `Plus Jakarta Sans` (`font-extrabold`, tracking-tight, `#1E293B`)
+- **Body & UI**: `Inter` / `system-ui` (400 regular, 500 medium, 600 semi-bold, `#475569`)
+- **Editorial Script Annotations**: `Caveat` (`font-semibold`, 22px–28px, italic feel, `#D97706`)
+  - `"Same medicines. Faster delivery."` (Hero right annotation)
+  - `"Trusted pharmacies. Real people. ♡"` (Category strip annotation)
+  - `"Health made easier. ♡"` (Social highlights annotation)
+
+### 4. Corner Radius & Elevation Tokens
+- **Pills & Buttons**: `border-radius: 9999px` (`rounded-full`) — used for all primary CTAs, city selectors, and status chips.
+- **Cards & Surfaces**: `border-radius: 20px` to `24px` (`rounded-2xl` / `rounded-3xl`) — generous organic rounding.
+- **Amber Glow Shadow**: `box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35)` — applied to primary CTA buttons on hover.
+- **Warm Card Shadow**: `box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)`
+
+### 5. Four Core Trust Badges
+Presented as soft cream/yellow circular pills with icons and bold labels:
+1. ⚡ **Fast Delivery**: Rapid order dispatch and hyper-local rider routing.
+2. 📍 **Nearest Pharmacies**: Connected directly to licensed local pharmacies in your city.
+3. 🛡️ **Trusted & Genuine**: 100% authentic medicines sourced from licensed distributors.
+4. ❤️ **Better Health**: Dedicated patient wellness and pharmacist guidance.
 
 ---
 

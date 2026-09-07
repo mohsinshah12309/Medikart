@@ -132,7 +132,9 @@ export default function CatalogSection({
   const activeCategoryName = activeCategoryObj ? activeCategoryObj.name : '';
 
   return (
-    <div id="store-catalog" className="grid grid-cols-1 md:grid-cols-4 gap-6 lg:gap-8 items-start">
+    <div id="store-catalog" className="grid grid-cols-1 md:grid-cols-4 gap-6 lg:gap-8 items-start scroll-mt-24">
+      {/* Invisible anchor target for #catalog */}
+      <span id="catalog" className="sr-only" />
       {/* Responsive Categories Side Bar */}
       <CategorySidebar
         categories={categories}

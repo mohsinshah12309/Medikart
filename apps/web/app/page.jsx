@@ -2,6 +2,7 @@ import React from 'react';
 import { getProducts, getCategories, getBanners, getConditions } from '../lib/api';
 import CatalogSection from '../components/CatalogSection';
 import HeroBannerCarousel from '../components/HeroBannerCarousel';
+import OfficialHeroSection from '../components/OfficialHeroSection';
 import CategoryQuickLinks from '../components/CategoryQuickLinks';
 import CareByConditionSection from '../components/CareByConditionSection';
 import MidPagePromoBanners from '../components/MidPagePromoBanners';
@@ -86,8 +87,13 @@ export default async function Home({ searchParams }) {
 
   return (
     <div className="flex flex-col gap-6 sm:gap-8">
-      {/* 1. Auto-Rotating Homepage Hero Banner Carousel */}
-      <HeroBannerCarousel initialBanners={heroBanners} />
+      {/* 1. Official Master Brand Hero Section (matching Image 3) */}
+      <OfficialHeroSection initialCity="Lahore" />
+
+      {/* 2. Secondary Promotional Hero Banners (if configured in Admin) */}
+      {heroBanners && heroBanners.length > 0 && (
+        <HeroBannerCarousel initialBanners={heroBanners} />
+      )}
 
       {/* 2. Horizontal Category Quick-Links Scroller (matching reference design) */}
       <CategoryQuickLinks categories={categories} />

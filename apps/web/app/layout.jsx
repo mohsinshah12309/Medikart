@@ -5,7 +5,7 @@ import Link from 'next/link';
 import NavbarCartIcon from '../components/NavbarCartIcon';
 import InteractiveLogo from '../components/InteractiveLogo';
 import dynamic from 'next/dynamic';
-import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
+import { Plus_Jakarta_Sans, Inter, Caveat } from 'next/font/google';
 
 // Code-split Chatbot widget so it does not block initial main thread hydration
 const ChatbotWidget = dynamic(() => import('../components/ChatbotWidget'), {
@@ -17,18 +17,25 @@ const MobileBottomNav = dynamic(() => import('../components/MobileBottomNav'), {
   ssr: false,
 });
 
-// Design System Typography — Plus Jakarta Sans for headings, Inter for body/UI
+// Design System Typography — Plus Jakarta Sans for headings, Inter for body/UI, Caveat for annotations
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['600', '700'],
+  weight: ['600', '700', '800'],
   variable: '--font-heading',
   display: 'swap',
 });
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-body',
+  display: 'swap',
+});
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-script',
   display: 'swap',
 });
 
@@ -86,7 +93,7 @@ export default async function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${inter.variable}`}>
+    <html lang="en" className={`${plusJakarta.variable} ${inter.variable} ${caveat.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -97,33 +104,33 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 tech-grid relative overflow-x-hidden font-body pb-16 md:pb-0">
+      <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-slate-900 tech-grid relative overflow-x-hidden font-body pb-16 md:pb-0">
         
-        {/* Soft Ambient Yellow Highlights */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-300/10 blur-[130px] rounded-full pointer-events-none z-0" />
-        <div className="absolute top-[35%] left-0 w-[450px] h-[450px] bg-amber-200/15 blur-[140px] rounded-full pointer-events-none z-0" />
+        {/* Soft Ambient Warm Amber Highlights */}
+        <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-amber-200/25 blur-[140px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-[35%] left-0 w-[500px] h-[500px] bg-yellow-200/20 blur-[150px] rounded-full pointer-events-none z-0" />
 
         <CartProvider>
-          {/* Crisp White Frosted Navigation Bar with Yellow Accent Highlights */}
-          <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          {/* Warm Frosted Navigation Bar with Amber Accent Highlights */}
+          <header className="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#F3EFE6] shadow-sm transition-all">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
               <div className="flex items-center gap-8">
-                {/* Custom Interactive Logo */}
+                {/* Official Interactive Logo */}
                 <Link href="/" className="flex items-center">
                   <InteractiveLogo />
                 </Link>
                 
                 <nav className="hidden md:flex items-center gap-7">
-                  <Link href="/" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
+                  <Link href="/" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
                     Home
                   </Link>
-                  <Link href="/instant-order" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
+                  <Link href="/instant-order" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
                     Instant Order
                   </Link>
-                  <Link href="/about" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
+                  <Link href="/about" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
                     About
                   </Link>
-                  <Link href="/contact" className="text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-20px] after:left-0 after:w-0 after:h-[2px] after:bg-yellow-500 hover:after:w-full after:transition-all">
+                  <Link href="/contact" className="text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all">
                     Contact
                   </Link>
                 </nav>
@@ -140,18 +147,18 @@ export default async function RootLayout({ children }) {
             {children}
           </main>
 
-          {/* Clean White Clinical Footer with Yellow Accent Highlights */}
-          <footer className="bg-white border-t border-slate-200 py-10 mt-12 relative z-10 shadow-sm">
+          {/* Warm Clinical Footer with Amber Accents */}
+          <footer className="bg-white border-t border-[#F3EFE6] py-10 mt-12 relative z-10 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-200">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#F3EFE6]">
                 <Link href="/">
                   <InteractiveLogo />
                 </Link>
                 <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-600 font-medium">
-                  <Link href="/" className="hover:text-yellow-600 transition-colors">Home</Link>
-                  <Link href="/instant-order" className="hover:text-yellow-600 transition-colors">Instant Order</Link>
-                  <Link href="/about" className="hover:text-yellow-600 transition-colors">About Us</Link>
-                  <Link href="/contact" className="hover:text-yellow-600 transition-colors">Contact Support</Link>
+                  <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
+                  <Link href="/instant-order" className="hover:text-amber-600 transition-colors">Instant Order</Link>
+                  <Link href="/about" className="hover:text-amber-600 transition-colors">About Us</Link>
+                  <Link href="/contact" className="hover:text-amber-600 transition-colors">Contact Support</Link>
                 </div>
               </div>
               <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
