@@ -5,30 +5,43 @@ import Link from 'next/link';
 
 export default function Error({ error, reset }) {
   useEffect(() => {
+    // Log to internal client console only; never expose sensitive error stacks directly in UI
     console.error('Storefront Application Error Boundary caught:', error);
   }, [error]);
 
+  const isDev = process.env.NODE_ENV === 'development';
+
   return (
     <div className="min-h-[60vh] flex items-center justify-center py-12 px-4">
-      <div className="max-w-xl w-full bg-white rounded-3xl border border-slate-200 shadow-xl p-8 md:p-10 text-center relative overflow-hidden">
-        {/* Ambient Glow */}
-        <div className="absolute -top-20 -right-20 w-48 h-48 bg-red-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-yellow-400/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-xl w-full bg-white rounded-3xl border border-[#F3EFE6] shadow-warm-card p-8 md:p-10 text-center relative overflow-hidden">
+        {/* Ambient Warm Amber Glow */}
+        <div className="absolute -top-20 -right-20 w-48 h-48 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-yellow-400/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center gap-5">
-          <div className="w-16 h-16 rounded-2xl bg-red-50 border border-red-200 text-red-600 flex items-center justify-center text-3xl shadow-2xs">
+          <div className="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-3xl shadow-2xs">
             ⚠️
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight font-heading">
               Something Went Wrong
             </h2>
             <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">
-              {error?.message && !error.message.includes('fetch failed') && !error.message.includes('status 500')
-                ? error.message
-                : 'We experienced an unexpected network or server communication issue. Please check your connection and retry.'}
+              We encountered an unexpected issue while loading this page. Please try refreshing or return to the homepage. If the problem persists, our support team is available on WhatsApp to assist you.
             </p>
+
+            {/* Developer debug info: strictly hidden in production to prevent information disclosure */}
+            {isDev && error?.message && (
+              <details className="mt-3 text-left bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 max-w-md mx-auto">
+                <summary className="cursor-pointer font-bold text-amber-800 select-none">
+                  Developer Debug Details (Development Only)
+                </summary>
+                <div className="mt-2 font-mono text-[11px] text-red-600 bg-red-50 p-2 rounded-lg break-all">
+                  {error.message}
+                </div>
+              </details>
+            )}
           </div>
 
           {/* Action Buttons */}
@@ -36,13 +49,13 @@ export default function Error({ error, reset }) {
             <button
               type="button"
               onClick={() => reset()}
-              className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm hover:shadow-md active:scale-[0.98] border border-yellow-500/50 cursor-pointer flex items-center gap-2"
+              className="btn-amber-gradient px-6 py-2.5 text-sm font-black shadow-amber-glow flex items-center gap-2 cursor-pointer"
             >
               🔄 Try Again
             </button>
             <Link
               href="/"
-              className="px-6 py-3 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-800 font-bold text-sm rounded-xl transition-all border border-slate-300 shadow-2xs"
+              className="px-6 py-2.5 bg-white hover:bg-amber-50/50 active:bg-amber-100/50 text-slate-800 font-bold text-sm rounded-full transition-all border border-amber-300 shadow-2xs"
             >
               ← Return to Home
             </Link>

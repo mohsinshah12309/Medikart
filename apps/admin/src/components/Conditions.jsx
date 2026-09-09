@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function Conditions({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
   const headers = {
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",

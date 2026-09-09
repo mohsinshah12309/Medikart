@@ -9,7 +9,7 @@ import React, { useState, useEffect } from "react";
  *   DELETE /api/v1/admin/cities/:id
  */
 function Cities({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);

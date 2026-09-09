@@ -193,7 +193,10 @@ export default function InteractiveLogo({
             <span>ı</span>
             <svg 
               viewBox="0 0 24 24" 
-              className="absolute -top-1.5 left-[1px] w-3 h-3 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12"
+              width="12"
+              height="12"
+              style={{ width: 12, height: 12 }}
+              className="absolute -top-1.5 left-[1px] transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12"
               fill="#10B981"
             >
               <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM17.5 9.5C16.5 13.5 13 16.5 9 17.5C8.5 17.5 8 17 8.5 16.5C12.5 12.5 15.5 9 16.5 8C17 7.5 17.5 8 17.5 9.5Z" />

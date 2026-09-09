@@ -5,6 +5,8 @@ import Link from 'next/link';
 import NavbarCartIcon from '../components/NavbarCartIcon';
 import InteractiveLogo from '../components/InteractiveLogo';
 import HeaderNav from '../components/HeaderNav';
+import DvagoSearchBar from '../components/DvagoSearchBar';
+import HomeOnlyBanners from '../components/HomeOnlyBanners';
 import dynamic from 'next/dynamic';
 import { Plus_Jakarta_Sans, Inter, Caveat } from 'next/font/google';
 
@@ -125,24 +127,34 @@ export default async function RootLayout({ children }) {
         <div className="absolute top-[35%] left-0 w-[500px] h-[500px] bg-yellow-200/20 blur-[150px] rounded-full pointer-events-none z-0" />
 
         <CartProvider>
-          {/* Warm Frosted Navigation Bar with Amber Accent Highlights */}
-          <header className="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-[#F3EFE6] shadow-sm transition-all">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-              <div className="flex items-center gap-8">
+          {/* Main Brand Sticky Header */}
+          <header className="sticky top-0 z-40 bg-[#FAF8F5]/98 backdrop-blur-md border-b border-[#F3EFE6] shadow-xs transition-all">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
                 {/* Official Interactive Logo */}
-                <Link href="/" className="flex items-center">
+                <Link href="/" className="flex items-center flex-shrink-0">
                   <InteractiveLogo />
                 </Link>
-                
-                {/* Header Navigation: Home | Instant Order | Categories ▾ | About | Contact */}
-                <HeaderNav initialCategories={categories} />
+
+                {/* Dvago Top Search Bar with Continuously Cycling Animated Placeholder */}
+                <DvagoSearchBar className="hidden md:flex flex-1 max-w-sm lg:max-w-md" />
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0">
+                {/* Header Navigation: Home | Instant Order | Categories ▾ | About | Contact */}
+                <HeaderNav initialCategories={categories} />
                 <NavbarCartIcon />
               </div>
             </div>
+
+            {/* Mobile Search Bar Row (visible on small mobile screens) */}
+            <div className="md:hidden px-4 pb-2.5 pt-0.5">
+              <DvagoSearchBar className="w-full" />
+            </div>
           </header>
+
+          {/* Non-Sticky Home-Only Category Sub-Navbar & Anti-Fraud Announcement Ticker (Scrolls away with page) */}
+          <HomeOnlyBanners categories={categories} contactPhone={contactPhone} />
 
           {/* Main App Page Wrapper */}
           <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full animate-fade-in-up z-10">

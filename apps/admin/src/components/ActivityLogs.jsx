@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
  * Supports filtering by entityType and pagination.
  */
 function ActivityLogs({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const [logs, setLogs] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1, limit: 20, pages: 1 });

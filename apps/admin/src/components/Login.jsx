@@ -11,7 +11,7 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
     setError("");
     setLoading(true);
 
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+    const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
     try {
       const res = await fetch(`${apiUrl}/auth/admin/login`, {

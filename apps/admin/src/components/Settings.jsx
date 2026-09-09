@@ -14,7 +14,7 @@ import React, { useState, useEffect } from "react";
  * of Phase 24 — it was not previously existing.
  */
 function Settings({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
 
   // Discount state

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { adminFetch } from "../apiClient";
 
 function Overview({ token, onNavigateToOrders, onNavigateToProducts }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const [stats, setStats] = useState({
     todayOrders: 0,

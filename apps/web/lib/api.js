@@ -1,4 +1,6 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const API_URL = typeof window !== 'undefined'
+  ? (process.env.NEXT_PUBLIC_API_URL || '/api/v1')
+  : (process.env.INTERNAL_API_URL || 'http://localhost:5000/api/v1');
 
 export async function fetchApi(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;

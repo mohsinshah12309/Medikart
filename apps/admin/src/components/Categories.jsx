@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function Categories({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   // List State
   const [categories, setCategories] = useState([]);

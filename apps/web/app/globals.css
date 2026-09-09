@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../components";
+@source "../app";
 
 @theme {
   --color-primary-50: #fefce8;
@@ -254,6 +256,35 @@ button:focus-visible {
   .animate-slide-ltr,
   .animate-slide-rtl {
     animation-duration: 28s;
+  }
+}
+
+/* ─── Continuous Left-to-Right Security Announcement Ticker ─── */
+@keyframes ticker-ltr {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.animate-ticker-ltr {
+  display: flex;
+  width: max-content;
+  animation: ticker-ltr 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker-ltr:hover,
+.animate-ticker-ltr:focus-within,
+.animate-ticker-ltr:active {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 768px) {
+  .animate-ticker-ltr {
+    animation-duration: 32s;
   }
 }
 

@@ -7,6 +7,8 @@ import CategoryQuickLinks from '../components/CategoryQuickLinks';
 import CareByConditionSection from '../components/CareByConditionSection';
 import MidPagePromoBanners from '../components/MidPagePromoBanners';
 import BrandsSection from '../components/BrandsSection';
+import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanners';
+import BlogsSection from '../components/BlogsSection';
 
 export async function generateMetadata({ searchParams }) {
   const resolvedParams = await searchParams;
@@ -95,19 +97,25 @@ export default async function Home({ searchParams }) {
         <HeroBannerCarousel initialBanners={heroBanners} />
       )}
 
-      {/* 2. Horizontal Category Quick-Links Scroller (matching reference design) */}
+      {/* 2.5. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
+      <NutritionRefreshmentBanners />
+
+      {/* 3. Horizontal Category Quick-Links Scroller (matching reference design) */}
       <CategoryQuickLinks categories={categories} />
 
-      {/* 3. Care By Condition Section (matching reference design) */}
+      {/* 4. Care By Condition Section (matching reference design) */}
       <CareByConditionSection initialConditions={conditions} />
 
-      {/* 4. Mid-Page Promotional Banner Blocks */}
+      {/* 5. Mid-Page Promotional Banner Blocks */}
       <MidPagePromoBanners initialBanners={midBanners} />
 
-      {/* 5. Top Pharmaceutical Brands Section */}
+      {/* 6. Top Pharmaceutical Brands Section */}
       <BrandsSection />
 
-      {/* 6. Client-Side In-Place High-Density Product Catalog */}
+      {/* 7. Health & Wellness Blogs Slider (Matching Dvago Screenshot) */}
+      <BlogsSection />
+
+      {/* 8. Client-Side In-Place High-Density Product Catalog */}
       <CatalogSection
         initialProducts={products}
         initialPagination={pagination}

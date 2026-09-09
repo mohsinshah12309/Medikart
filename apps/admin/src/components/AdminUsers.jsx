@@ -16,7 +16,7 @@ import React, { useState, useEffect } from "react";
  *   DELETE /api/v1/admin/users/:id
  */
 function AdminUsers({ token, adminUser }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1";
+  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
