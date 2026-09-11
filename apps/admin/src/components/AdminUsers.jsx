@@ -19,18 +19,19 @@ function AdminUsers({ token, adminUser }) {
   const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const [users, setUsers] = useState([]);
+  const [pharmacies, setPharmacies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   // Create form
   const [showCreate, setShowCreate] = useState(false);
-  const [createForm, setCreateForm] = useState({ name: "", email: "", role: "admin", permissions: [] });
+  const [createForm, setCreateForm] = useState({ name: "", email: "", role: "admin", assignedPharmacyId: "", permissions: [] });
   const [creating, setCreating] = useState(false);
 
   // Edit state
   const [editId, setEditId] = useState(null);
-  const [editForm, setEditForm] = useState({ name: "", email: "", role: "admin", active: true, permissions: [] });
+  const [editForm, setEditForm] = useState({ name: "", email: "", role: "admin", assignedPharmacyId: "", active: true, permissions: [] });
   const [saving, setSaving] = useState(false);
 
   // Delete state
@@ -59,6 +60,7 @@ function AdminUsers({ token, adminUser }) {
 
   useEffect(() => {
     fetchUsers();
+    fetchPharmacies();
   }, []);
 
   const flash = (msg, isError = false) => {
@@ -82,6 +84,18 @@ function AdminUsers({ token, adminUser }) {
     }
   };
 
+  const fetchPharmacies = async () => {
+    try {
+      const res = await fetch(`${apiUrl}/admin/pharmacies`, { headers });
+      const data = await res.json();
+      if (res.ok) {
+        setPharmacies(data.data?.pharmacies || []);
+      }
+    } catch (err) {
+      console.error("fetchPharmacies error:", err);
+    }
+  };
+
   const togglePermission = (perm, form, setForm) => {
     const current = form.permissions || [];
     if (current.includes(perm)) {
@@ -98,21 +112,25 @@ function AdminUsers({ token, adminUser }) {
     e.preventDefault();
     setCreating(true);
     try {
+      const payload = {
+        name: createForm.name.trim(),
+        email: createForm.email.trim().toLowerCase(),
+        role: createForm.role,
+        permissions: createForm.permissions,
+      };
+      if (createForm.assignedPharmacyId) {
+        payload.assignedPharmacyId = createForm.assignedPharmacyId;
+      }
       const res = await fetch(`${apiUrl}/admin/users`, {
         method: "POST",
         headers,
-        body: JSON.stringify({
-          name: createForm.name.trim(),
-          email: createForm.email.trim().toLowerCase(),
-          role: createForm.role,
-          permissions: createForm.permissions,
-        }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Create failed");
       flash(`✅ Admin created successfully.\nTemporary password: ${data.data?.temporaryPassword || "(check server logs)"}`);
       setShowCreate(false);
-      setCreateForm({ name: "", email: "", role: "admin", permissions: [] });
+      setCreateForm({ name: "", email: "", role: "admin", assignedPharmacyId: "", permissions: [] });
       fetchUsers();
     } catch (err) {
       flash(err.message, true);
@@ -127,6 +145,7 @@ function AdminUsers({ token, adminUser }) {
       name: user.name,
       email: user.email,
       role: user.role,
+      assignedPharmacyId: user.assignedPharmacyId?._id || user.assignedPharmacyId || "",
       active: user.active,
       permissions: user.permissions || [],
     });
@@ -142,6 +161,7 @@ function AdminUsers({ token, adminUser }) {
           name: editForm.name.trim(),
           email: editForm.email.trim().toLowerCase(),
           role: editForm.role,
+          assignedPharmacyId: editForm.assignedPharmacyId || null,
           active: editForm.active,
           permissions: editForm.permissions,
         }),
@@ -318,23 +338,49 @@ function AdminUsers({ token, adminUser }) {
               </div>
             </div>
 
-            {/* Role selector */}
-            <div style={{ marginBottom: "1.25rem" }}>
-              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.3rem", color: "#94a3b8" }}>Role</label>
-              <select
-                className="form-control"
-                value={createForm.role}
-                onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
-                style={{ maxWidth: "180px" }}
-              >
-                <option value="admin">Admin</option>
-                <option value="super_admin">Super Admin</option>
-              </select>
-              <p style={{ fontSize: "0.72rem", color: "#64748b", marginTop: "0.3rem" }}>
-                {createForm.role === "super_admin"
-                  ? "⚠️ Super Admins have full access — permissions below are ignored."
-                  : "Regular Admins are limited to the modules you select below."}
-              </p>
+            {/* Role & Pharmacy assignment row */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.25rem" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.3rem", color: "#94a3b8" }}>Role</label>
+                <select
+                  className="form-control"
+                  value={createForm.role}
+                  onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
+                >
+                  <option value="admin">Admin</option>
+                  <option value="super_admin">Super Admin</option>
+                </select>
+                <p style={{ fontSize: "0.72rem", color: "#64748b", marginTop: "0.3rem" }}>
+                  {createForm.role === "super_admin"
+                    ? "⚠️ Super Admins have global access across all pharmacies."
+                    : "Regular Admins can be assigned to a specific pharmacy or granted global access."}
+                </p>
+              </div>
+
+              {createForm.role === "admin" && (
+                <div>
+                  <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.3rem", color: "#94a3b8" }}>
+                    🏥 Assigned Pharmacy Scope
+                  </label>
+                  <select
+                    className="form-control"
+                    value={createForm.assignedPharmacyId}
+                    onChange={(e) => setCreateForm({ ...createForm, assignedPharmacyId: e.target.value })}
+                  >
+                    <option value="">🌐 Global Access (All Pharmacies)</option>
+                    {pharmacies.map((pharmacy) => (
+                      <option key={pharmacy._id} value={pharmacy._id}>
+                        {pharmacy.name} ({pharmacy.city || "Branch"}) - {pharmacy.code || "Code"}
+                      </option>
+                    ))}
+                  </select>
+                  <p style={{ fontSize: "0.72rem", color: "#64748b", marginTop: "0.3rem" }}>
+                    {createForm.assignedPharmacyId
+                      ? "🔒 Admin will ONLY see and update orders for this specific pharmacy."
+                      : "🌐 Unassigned admin has access to view all pharmacy orders."}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Module Permissions */}
@@ -381,6 +427,7 @@ function AdminUsers({ token, adminUser }) {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Assigned Pharmacy</th>
                 <th>Status</th>
                 <th>Permissions</th>
                 <th>Actions</th>
@@ -389,7 +436,7 @@ function AdminUsers({ token, adminUser }) {
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan={6} style={{ textAlign: "center", color: "#64748b", padding: "2rem" }}>
+                  <td colSpan={7} style={{ textAlign: "center", color: "#64748b", padding: "2rem" }}>
                     No admin users found.
                   </td>
                 </tr>
@@ -402,7 +449,7 @@ function AdminUsers({ token, adminUser }) {
                           className="form-control"
                           value={editForm.name}
                           onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                          style={{ maxWidth: "160px" }}
+                          style={{ maxWidth: "150px" }}
                         />
                       </td>
                       <td>
@@ -411,7 +458,7 @@ function AdminUsers({ token, adminUser }) {
                           className="form-control"
                           value={editForm.email}
                           onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                          style={{ maxWidth: "200px" }}
+                          style={{ maxWidth: "180px" }}
                         />
                       </td>
                       <td>
@@ -419,7 +466,7 @@ function AdminUsers({ token, adminUser }) {
                           className="form-control"
                           value={editForm.role}
                           onChange={(e) => setEditForm({ ...editForm, role: e.target.value })}
-                          style={{ maxWidth: "130px" }}
+                          style={{ maxWidth: "120px" }}
                           disabled={user._id === adminUser?._id}
                         >
                           <option value="admin">Admin</option>
@@ -427,18 +474,37 @@ function AdminUsers({ token, adminUser }) {
                         </select>
                       </td>
                       <td>
+                        {editForm.role === "super_admin" ? (
+                          <span style={{ fontSize: "0.75rem", color: "#fbbf24" }}>🌐 Global Access</span>
+                        ) : (
+                          <select
+                            className="form-control"
+                            value={editForm.assignedPharmacyId || ""}
+                            onChange={(e) => setEditForm({ ...editForm, assignedPharmacyId: e.target.value })}
+                            style={{ maxWidth: "190px", fontSize: "0.78rem" }}
+                          >
+                            <option value="">🌐 All Pharmacies</option>
+                            {pharmacies.map((pharmacy) => (
+                              <option key={pharmacy._id} value={pharmacy._id}>
+                                {pharmacy.name} ({pharmacy.city || "Branch"})
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </td>
+                      <td>
                         <select
                           className="form-control"
                           value={editForm.active ? "true" : "false"}
                           onChange={(e) => setEditForm({ ...editForm, active: e.target.value === "true" })}
-                          style={{ maxWidth: "100px" }}
+                          style={{ maxWidth: "90px" }}
                           disabled={user._id === adminUser?._id}
                         >
                           <option value="true">Active</option>
                           <option value="false">Inactive</option>
                         </select>
                       </td>
-                      <td style={{ minWidth: "320px" }}>
+                      <td style={{ minWidth: "280px" }}>
                         {editForm.role === "super_admin" ? (
                           <span style={{ fontSize: "0.75rem", color: "#fbbf24" }}>
                             ✦ Full access — Super Admins bypass permissions
@@ -470,6 +536,36 @@ function AdminUsers({ token, adminUser }) {
                         }}>
                           {user.role === "super_admin" ? "⭐ Super Admin" : "👤 Admin"}
                         </span>
+                      </td>
+                      <td>
+                        {user.role === "super_admin" ? (
+                          <span style={{
+                            display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "9999px",
+                            fontSize: "0.72rem", fontWeight: 700,
+                            background: "rgba(251,191,36,0.12)", color: "#fbbf24",
+                            border: "1px solid rgba(251,191,36,0.25)"
+                          }}>
+                            🌐 All Pharmacies
+                          </span>
+                        ) : user.assignedPharmacyId ? (
+                          <span style={{
+                            display: "inline-flex", alignItems: "center", gap: "4px", padding: "0.2rem 0.6rem", borderRadius: "9999px",
+                            fontSize: "0.72rem", fontWeight: 700,
+                            background: "rgba(59,130,246,0.12)", color: "#3b82f6",
+                            border: "1px solid rgba(59,130,246,0.25)"
+                          }}>
+                            🏥 {typeof user.assignedPharmacyId === "object" ? `${user.assignedPharmacyId.name} (${user.assignedPharmacyId.city || "Branch"})` : "Assigned Pharmacy"}
+                          </span>
+                        ) : (
+                          <span style={{
+                            display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "9999px",
+                            fontSize: "0.72rem", fontWeight: 600,
+                            background: "rgba(100,116,139,0.12)", color: "#94a3b8",
+                            border: "1px solid rgba(100,116,139,0.2)"
+                          }}>
+                            🌐 Global (All)
+                          </span>
+                        )}
                       </td>
                       <td>
                         <span style={{

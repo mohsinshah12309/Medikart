@@ -85,7 +85,7 @@ function App() {
       case "banners":
         return <Banners token={token} />;
       case "orders":
-        return <Orders token={token} initialFilter={initialOrderFilter} />;
+        return <Orders token={token} adminUser={adminUser} initialFilter={initialOrderFilter} />;
       case "pharmacies":
         return <Pharmacies token={token} onNavigateToOrders={handleNavigateToOrders} />;
       case "cities":

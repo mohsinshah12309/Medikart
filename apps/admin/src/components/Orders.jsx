@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function Orders({ token, initialFilter }) {
+function Orders({ token, adminUser, initialFilter }) {
   const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
+
+  // Role scoping
+  const isScopedAdmin = adminUser?.role !== "super_admin" && !!adminUser?.assignedPharmacyId;
+  const scopedPharmacyId = adminUser?.assignedPharmacyId;
 
   // List State
   const [orders, setOrders] = useState([]);
@@ -18,7 +22,7 @@ function Orders({ token, initialFilter }) {
   const [startDate, setStartDate] = useState(initialFilter?.startDate || "");
   const [endDate, setEndDate] = useState(initialFilter?.endDate || "");
   const [filterPharmacyId, setFilterPharmacyId] = useState(
-    initialFilter?.pharmacyId || initialFilter?.filterPharmacyId || ""
+    isScopedAdmin ? scopedPharmacyId : (initialFilter?.pharmacyId || initialFilter?.filterPharmacyId || "")
   );
 
   // Pagination
@@ -575,6 +579,8 @@ function Orders({ token, initialFilter }) {
     "Duplicate order placed by customer.",
   ];
 
+  const scopedPharmacy = pharmacies.find((p) => String(p._id) === String(scopedPharmacyId));
+
   return (
     <div>
       {/* Top Header */}
@@ -591,6 +597,31 @@ function Orders({ token, initialFilter }) {
         </button>
       </div>
 
+      {/* Scoped Pharmacy Admin Notice */}
+      {isScopedAdmin && (
+        <div
+          style={{
+            background: "#f0fdf4",
+            border: "1px solid #bbf7d0",
+            borderLeft: "4px solid #16a34a",
+            borderRadius: "8px",
+            padding: "0.6rem 0.9rem",
+            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.6rem",
+            fontSize: "0.85rem",
+            color: "#166534",
+            fontWeight: 600,
+          }}
+        >
+          <span>🏥</span>
+          <span>
+            <strong>Assigned Pharmacy Scope:</strong> You are viewing and managing orders specifically assigned to <strong>{scopedPharmacy ? `${scopedPharmacy.name} (${scopedPharmacy.city || "Branch"})` : "your designated pharmacy"}</strong>.
+          </span>
+        </div>
+      )}
+
       {/* Date Filter Toolbar */}
       <div style={{ background: "white", padding: "0.75rem 1rem", borderRadius: "10px", border: "1px solid #e2e8f0", marginBottom: "1rem", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.4rem" }}>
@@ -600,7 +631,7 @@ function Orders({ token, initialFilter }) {
             { key: "yesterday", label: "Yesterday" },
             { key: "7days", label: "Last 7 Days" },
             { key: "month", label: "This Month" },
-            { key: "all", label: "All Orders" },
+            { key: "all", label: "All History" },
             { key: "custom", label: "Custom Range" },
           ].map((item) => (
             <button
@@ -611,14 +642,15 @@ function Orders({ token, initialFilter }) {
                 setPage(1);
               }}
               style={{
-                padding: "0.3rem 0.65rem",
+                border: "1px solid",
+                borderColor: dateFilter === item.key ? "#facc15" : "#e2e8f0",
+                background: dateFilter === item.key ? "#fef9c3" : "#ffffff",
+                color: dateFilter === item.key ? "#854d0e" : "#475569",
+                fontWeight: dateFilter === item.key ? 700 : 500,
                 borderRadius: "6px",
-                border: "1px solid #cbd5e1",
-                fontSize: "0.8rem",
-                fontWeight: 600,
+                padding: "0.25rem 0.6rem",
+                fontSize: "0.75rem",
                 cursor: "pointer",
-                background: dateFilter === item.key ? "#eab308" : "#f8fafc",
-                color: dateFilter === item.key ? "#0f172a" : "#475569",
               }}
             >
               {item.label}
@@ -626,7 +658,7 @@ function Orders({ token, initialFilter }) {
           ))}
 
           {dateFilter === "custom" && (
-            <div style={{ display: "flex", gap: "0.3rem", alignItems: "center", marginLeft: "0.3rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginLeft: "0.5rem" }}>
               <input
                 type="date"
                 className="form-control"
@@ -646,31 +678,48 @@ function Orders({ token, initialFilter }) {
           )}
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Branch:</span>
-          <select
-            className="form-control"
-            style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem" }}
-            value={filterPharmacyId}
-            onChange={(e) => {
-              setFilterPharmacyId(e.target.value);
-              setPage(1);
-            }}
-          >
-            <option value="">All Branches</option>
-            <option value="assigned">Assigned to Any Branch</option>
-            <option value="unassigned">Unassigned Orders</option>
-            {pharmacies.map((ph) => (
-              <option key={ph._id} value={ph._id}>
-                {ph.name} ({ph.code})
-              </option>
-            ))}
-          </select>
-        </div>
+        {isScopedAdmin ? (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            padding: "0.25rem 0.6rem",
+            borderRadius: "6px",
+            background: "#f0fdf4",
+            border: "1px solid #bbf7d0",
+            fontSize: "0.8rem",
+            fontWeight: 700,
+            color: "#166534"
+          }}>
+            <span>🏥 Branch: {scopedPharmacy ? `${scopedPharmacy.name} (${scopedPharmacy.city || "Branch"})` : "Assigned Branch"}</span>
+          </div>
+        ) : (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Branch:</span>
+            <select
+              className="form-control"
+              style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem" }}
+              value={filterPharmacyId}
+              onChange={(e) => {
+                setFilterPharmacyId(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="">All Branches</option>
+              <option value="assigned">Assigned to Any Branch</option>
+              <option value="unassigned">Unassigned Orders</option>
+              {pharmacies.map((ph) => (
+                <option key={ph._id} value={ph._id}>
+                  {ph.name} ({ph.code})
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {/* Active Branch Filter Banner */}
-      {filterPharmacyId && (
+      {!isScopedAdmin && filterPharmacyId && (
         <div
           style={{
             background: "#eff6ff",
@@ -886,19 +935,37 @@ function Orders({ token, initialFilter }) {
                       )}
                     </td>
                     <td>
-                      <select
-                        className="form-control"
-                        style={{ fontSize: "0.75rem", padding: "0.2rem 0.4rem", width: "auto" }}
-                        value={typeof order.assignedPharmacyId === "object" ? order.assignedPharmacyId?._id || "" : order.assignedPharmacyId || ""}
-                        onChange={(e) => handleAssignPharmacy(order._id, e.target.value)}
-                      >
-                        <option value="">Unassigned</option>
-                        {pharmacies.map((ph) => (
-                          <option key={ph._id} value={ph._id}>
-                            {ph.code} - {ph.name}
-                          </option>
-                        ))}
-                      </select>
+                      {isScopedAdmin ? (
+                        <span style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          fontSize: "0.75rem",
+                          fontWeight: 700,
+                          padding: "0.2rem 0.5rem",
+                          borderRadius: "6px",
+                          background: "#eff6ff",
+                          color: "#1e40af",
+                          border: "1px solid #bfdbfe",
+                          whiteSpace: "nowrap",
+                        }}>
+                          🏥 {typeof order.assignedPharmacyId === "object" ? `${order.assignedPharmacyId?.code || "Branch"} - ${order.assignedPharmacyId?.name}` : (scopedPharmacy ? `${scopedPharmacy.code || "Branch"} - ${scopedPharmacy.name}` : "Assigned Branch")}
+                        </span>
+                      ) : (
+                        <select
+                          className="form-control"
+                          style={{ fontSize: "0.75rem", padding: "0.2rem 0.4rem", width: "auto" }}
+                          value={typeof order.assignedPharmacyId === "object" ? order.assignedPharmacyId?._id || "" : order.assignedPharmacyId || ""}
+                          onChange={(e) => handleAssignPharmacy(order._id, e.target.value)}
+                        >
+                          <option value="">Unassigned</option>
+                          {pharmacies.map((ph) => (
+                            <option key={ph._id} value={ph._id}>
+                              {ph.code} - {ph.name}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </td>
                     <td>
                       <select

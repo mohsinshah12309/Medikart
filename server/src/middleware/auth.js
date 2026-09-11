@@ -50,6 +50,7 @@ const auth = async (req, res, next) => {
       id: adminUser._id.toString(),
       role: adminUser.role,
       email: adminUser.email,
+      assignedPharmacyId: adminUser.assignedPharmacyId ? adminUser.assignedPharmacyId.toString() : null,
     };
 
     next();

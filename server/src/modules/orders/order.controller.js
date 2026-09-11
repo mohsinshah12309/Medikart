@@ -131,7 +131,7 @@ const placeInstantOrder = async (req, res, next) => {
 
 const getOrders = async (req, res, next) => {
   try {
-    const result = await orderService.getOrders(req.query);
+    const result = await orderService.getOrders(req.query, req.admin);
     res.status(200).json({
       status: "success",
       data: result,
@@ -152,7 +152,7 @@ const getOrders = async (req, res, next) => {
  */
 const getOrderStats = async (req, res, next) => {
   try {
-    const stats = await orderService.getOrderStats();
+    const stats = await orderService.getOrderStats(req.admin);
     res.status(200).json({
       status: "success",
       data: stats,
@@ -164,7 +164,7 @@ const getOrderStats = async (req, res, next) => {
 
 const getOrderById = async (req, res, next) => {
   try {
-    const order = await orderService.getOrderById(req.params.id);
+    const order = await orderService.getOrderById(req.params.id, req.admin);
     res.status(200).json({
       status: "success",
       data: { order },
@@ -208,7 +208,7 @@ const getPublicOrder = async (req, res, next) => {
 
 const priceInstantOrder = async (req, res, next) => {
   try {
-    const order = await orderService.priceInstantOrder(req.params.id, req.body);
+    const order = await orderService.priceInstantOrder(req.params.id, req.body, req.admin);
     res.status(200).json({
       status: "success",
       data: { order },

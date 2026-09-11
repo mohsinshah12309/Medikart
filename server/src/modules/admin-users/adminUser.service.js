@@ -98,6 +98,7 @@ const login = async ({ email, password }) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      assignedPharmacyId: user.assignedPharmacyId ? user.assignedPharmacyId.toString() : null,
     },
   };
 };
@@ -114,7 +115,7 @@ const sanitizeUser = (user) => {
  * Get all admin users (select: -passwordHash by default anyway).
  */
 const getAdminUsers = async () => {
-  const users = await AdminUser.find({});
+  const users = await AdminUser.find({}).populate("assignedPharmacyId", "name code city address");
   return users.map(sanitizeUser);
 };
 
@@ -123,7 +124,7 @@ const getAdminUsers = async () => {
  * Assigns role/permissions, sets a random password, and fires the password reset email flow.
  */
 const createAdminUser = async (data, actor) => {
-  const { name, email, role, permissions } = data;
+  const { name, email, role, permissions, assignedPharmacyId } = data;
 
   // Generate a random temporary password
   const tempPassword = crypto.randomBytes(32).toString("hex");
@@ -134,9 +135,14 @@ const createAdminUser = async (data, actor) => {
     email,
     role,
     permissions,
+    assignedPharmacyId: assignedPharmacyId && mongoose.Types.ObjectId.isValid(assignedPharmacyId)
+      ? new mongoose.Types.ObjectId(assignedPharmacyId)
+      : null,
     passwordHash,
     active: true,
   });
+
+  await user.populate("assignedPharmacyId", "name code city address");
 
   // Re-use the forgot-password service to trigger the reset token email pattern
   await forgotPassword(email);
@@ -197,9 +203,15 @@ const updateAdminUser = async (id, data, actor) => {
       if (data.email !== undefined) user.email = data.email;
       if (data.role !== undefined) user.role = data.role;
       if (data.permissions !== undefined) user.permissions = data.permissions;
+      if (data.assignedPharmacyId !== undefined) {
+        user.assignedPharmacyId = data.assignedPharmacyId && mongoose.Types.ObjectId.isValid(data.assignedPharmacyId)
+          ? new mongoose.Types.ObjectId(data.assignedPharmacyId)
+          : null;
+      }
       if (data.active !== undefined) user.active = data.active;
 
       await user.save({ session });
+      await user.populate("assignedPharmacyId", "name code city address");
 
       const after = sanitizeUser(user);
 
@@ -230,9 +242,15 @@ const updateAdminUser = async (id, data, actor) => {
   if (data.email !== undefined) user.email = data.email;
   if (data.role !== undefined) user.role = data.role;
   if (data.permissions !== undefined) user.permissions = data.permissions;
+  if (data.assignedPharmacyId !== undefined) {
+    user.assignedPharmacyId = data.assignedPharmacyId && mongoose.Types.ObjectId.isValid(data.assignedPharmacyId)
+      ? new mongoose.Types.ObjectId(data.assignedPharmacyId)
+      : null;
+  }
   if (data.active !== undefined) user.active = data.active;
 
   await user.save();
+  await user.populate("assignedPharmacyId", "name code city address");
 
   const after = sanitizeUser(user);
 
@@ -371,6 +389,7 @@ const verify2FA = async ({ code, tempToken }) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      assignedPharmacyId: user.assignedPharmacyId ? user.assignedPharmacyId.toString() : null,
     },
   };
 };

@@ -36,6 +36,11 @@ const createAdminUserSchema = z
     role: z.enum(["super_admin", "admin"], {
       invalid_type_error: "Role must be super_admin or admin",
     }).default("admin"),
+    assignedPharmacyId: z.union([
+      z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid pharmacy ID format"),
+      z.literal(""),
+      z.null(),
+    ]).optional(),
     permissions: z.array(z.string()).default([]),
   })
   .strict();
@@ -46,6 +51,11 @@ const updateAdminUserSchema = z
     name: z.string().min(1, "Name must not be empty").trim().optional(),
     email: z.string().email("Invalid email format").toLowerCase().trim().optional(),
     role: z.enum(["super_admin", "admin"]).optional(),
+    assignedPharmacyId: z.union([
+      z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid pharmacy ID format"),
+      z.literal(""),
+      z.null(),
+    ]).optional(),
     permissions: z.array(z.string()).optional(),
     active: z.boolean().optional(),
   })

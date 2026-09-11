@@ -38,20 +38,27 @@ const placeOrder = async (type, payload) => {
 /**
  * Get a paginated, optionally filtered and searched list of orders (admin).
  */
-const getOrders = async ({
-  type,
-  status,
-  search,
-  startDate,
-  endDate,
-  pharmacyId,
-  page = 1,
-  limit = 20,
-} = {}) => {
+const getOrders = async (
+  {
+    type,
+    status,
+    search,
+    startDate,
+    endDate,
+    pharmacyId,
+    page = 1,
+    limit = 20,
+  } = {},
+  admin = null
+) => {
   const query = {};
   if (type) query.type = type;
   if (status) query.status = status;
-  if (pharmacyId) {
+
+  // Enforce role-based pharmacy scoping
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    query.assignedPharmacyId = new mongoose.Types.ObjectId(admin.assignedPharmacyId);
+  } else if (pharmacyId) {
     if (pharmacyId === "assigned") {
       query.assignedPharmacyId = { $exists: true, $ne: null };
     } else if (pharmacyId === "unassigned") {
@@ -123,7 +130,7 @@ const getOrders = async ({
  *
  * @returns {{ todayOrders, totalOrders, narcoticsPending, pricingPending }}
  */
-const getOrderStats = async () => {
+const getOrderStats = async (admin = null) => {
   // PKT is UTC+5. Midnight PKT = yesterday 19:00 UTC (i.e. now − ms_since_midnight_PKT).
   const now = new Date();
   // Shift now by +5h to get "current PKT time", then floor to midnight, then shift back.
@@ -134,19 +141,27 @@ const getOrderStats = async () => {
   );
   const todayStartUTC = new Date(midnightPKT.getTime() - PKT_OFFSET_MS);
 
+  const pharmacyMatch =
+    admin && admin.role !== "super_admin" && admin.assignedPharmacyId
+      ? [{ $match: { assignedPharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) } }]
+      : [];
+
   const [result] = await Order.aggregate([
     {
       $facet: {
         todayOrders: [
+          ...pharmacyMatch,
           { $match: { createdAt: { $gte: todayStartUTC } } },
           { $count: "count" },
         ],
-        totalOrders: [{ $count: "count" }],
+        totalOrders: [...pharmacyMatch, { $count: "count" }],
         narcoticsPending: [
+          ...pharmacyMatch,
           { $match: { status: "pending_verification" } },
           { $count: "count" },
         ],
         pricingPending: [
+          ...pharmacyMatch,
           { $match: { status: "awaiting-pharmacist-pricing" } },
           { $count: "count" },
         ],
@@ -165,15 +180,25 @@ const getOrderStats = async () => {
 /**
  * Get a single order by MongoDB ID or orderCode.
  */
-const getOrderById = async (orderIdOrCode) => {
+const getOrderById = async (orderIdOrCode, admin = null) => {
   let query = {};
   if (mongoose.Types.ObjectId.isValid(orderIdOrCode)) {
     query = { $or: [{ _id: orderIdOrCode }, { orderCode: orderIdOrCode }] };
   } else {
     query = { orderCode: orderIdOrCode };
   }
-  const order = await Order.findOne(query);
+  const order = await Order.findOne(query).populate("assignedPharmacyId", "name code phone address city");
   if (!order) throw new NotFoundError("Order not found");
+
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    const assignedId = order.assignedPharmacyId?._id
+      ? order.assignedPharmacyId._id.toString()
+      : order.assignedPharmacyId?.toString();
+    if (assignedId !== admin.assignedPharmacyId.toString()) {
+      throw new ForbiddenError("Access denied: You can only view orders assigned to your pharmacy.");
+    }
+  }
+
   return order;
 };
 
@@ -187,10 +212,17 @@ const getOrderById = async (orderIdOrCode) => {
  *   4. Validates product existence and active status.
  *   5. Moves order from awaiting-pharmacist-pricing → pending on success.
  */
-const priceInstantOrder = async (orderId, { items }) => {
+const priceInstantOrder = async (orderId, { items }, admin = null) => {
   // Step 1: Load order and validate it's awaiting pricing
   const order = await Order.findById(orderId);
   if (!order) throw new NotFoundError("Order not found");
+
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    const assignedId = order.assignedPharmacyId?.toString();
+    if (assignedId !== admin.assignedPharmacyId.toString()) {
+      throw new ForbiddenError("Access denied: You can only price orders assigned to your pharmacy.");
+    }
+  }
 
   if (order.type !== "instant") {
     throw new BadRequestError(
@@ -298,6 +330,13 @@ const reviewNarcoticsOrder = async (orderId, decision, reviewer) => {
   const order = await Order.findById(orderId);
   if (!order) throw new NotFoundError("Order not found");
 
+  if (reviewer && reviewer.role !== "super_admin" && reviewer.assignedPharmacyId) {
+    const assignedId = order.assignedPharmacyId?.toString();
+    if (assignedId !== reviewer.assignedPharmacyId.toString()) {
+      throw new ForbiddenError("Access denied: You can only review orders assigned to your pharmacy.");
+    }
+  }
+
   // Step 2: The order must actually be awaiting verification.
   if (order.status !== "pending_verification") {
     throw new ForbiddenError(
@@ -349,6 +388,13 @@ const reviewNarcoticsOrder = async (orderId, decision, reviewer) => {
 const cancelOrder = async (orderId, { reason, admin }) => {
   const order = await Order.findById(orderId);
   if (!order) throw new NotFoundError("Order not found");
+
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    const assignedId = order.assignedPharmacyId?.toString();
+    if (assignedId !== admin.assignedPharmacyId.toString()) {
+      throw new ForbiddenError("Access denied: You can only cancel orders assigned to your pharmacy.");
+    }
+  }
 
   const currentStatus = order.status ? order.status.toLowerCase() : "";
   const allowedStatuses = [
@@ -587,6 +633,13 @@ const updateOrderStatus = async (orderId, { status, reason, admin }) => {
   const order = await Order.findById(orderId);
   if (!order) throw new NotFoundError("Order not found");
 
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    const assignedId = order.assignedPharmacyId?.toString();
+    if (assignedId !== admin.assignedPharmacyId.toString()) {
+      throw new ForbiddenError("Access denied: You can only update orders assigned to your pharmacy.");
+    }
+  }
+
   if (order.status === "cancelled") {
     throw new BadRequestError("Cannot change status of a cancelled order.");
   }
@@ -627,6 +680,10 @@ const updateOrderStatus = async (orderId, { status, reason, admin }) => {
 const assignPharmacy = async (orderId, pharmacyId, admin) => {
   const order = await Order.findById(orderId);
   if (!order) throw new NotFoundError("Order not found");
+
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    throw new ForbiddenError("Access denied: Only Super Admins can assign or reassign pharmacies.");
+  }
 
   const previousPharmacy = order.assignedPharmacyId;
   order.assignedPharmacyId = pharmacyId ? new mongoose.Types.ObjectId(pharmacyId) : null;

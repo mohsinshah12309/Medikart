@@ -65,6 +65,12 @@ const adminUserSchema = new mongoose.Schema(
       select: false,
     },
 
+    assignedPharmacyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Pharmacy",
+      default: null,
+    },
+
     active: {
       type: Boolean,
       default: true,
