@@ -15,7 +15,7 @@ export default function BlogsSection() {
 
   const handleScroll = (direction) => {
     if (scrollContainerRef.current) {
-      const scrollAmount = direction === "left" ? -460 : 460;
+      const scrollAmount = direction === "left" ? -420 : 420;
       scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -67,33 +67,33 @@ export default function BlogsSection() {
           </div>
         </div>
 
-        {/* ─── Horizontal Continuous Sliding Track with Enlarged Thumbnails ─── */}
+        {/* ─── Horizontal Continuous Sliding Track with Perfectly Positioned Cards ─── */}
         <div
           ref={scrollContainerRef}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          className="relative w-full overflow-x-auto scrollbar-none py-2"
+          className="relative w-full overflow-x-auto scrollbar-none py-2 px-1"
         >
           <div
             className={`flex items-center gap-5 sm:gap-6 ${
-              !isPaused ? "animate-slide-ltr" : ""
+              !isPaused ? "animate-slide-rtl" : ""
             }`}
             style={{ width: "max-content" }}
           >
-            {/* Seamless Dual Loop */}
+            {/* Seamless Dual Loop starting from 0% */}
             {[...featuredBlogs, ...featuredBlogs].map((blog, idx) => (
               <Link
                 key={`${blog.id}-${idx}`}
                 href={`/blogs/${blog.slug}`}
-                className="group flex items-center gap-4 p-3.5 sm:p-4 rounded-3xl bg-white hover:bg-amber-50/40 border border-slate-200 hover:border-amber-400 shadow-3xs hover:shadow-warm-card transition-all cursor-pointer w-[360px] sm:w-[440px] md:w-[470px] flex-shrink-0"
+                className="group flex items-center gap-4 p-3.5 sm:p-4 rounded-3xl bg-white hover:bg-amber-50/40 border border-slate-200 hover:border-amber-400 shadow-3xs hover:shadow-warm-card transition-all cursor-pointer w-[340px] sm:w-[400px] md:w-[440px] flex-shrink-0"
               >
                 {/* Enlarged Photographic Thumbnail */}
-                <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden flex-shrink-0 border-2 border-slate-100 group-hover:border-amber-400 shadow-sm transition-all transform group-hover:scale-105 bg-slate-50">
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0 border-2 border-slate-100 group-hover:border-amber-400 shadow-sm transition-all transform group-hover:scale-105 bg-slate-50">
                   <Image
                     src={blog.image}
                     alt={blog.title}
                     fill
-                    sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, 144px"
+                    sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>

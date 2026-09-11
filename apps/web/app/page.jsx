@@ -8,6 +8,7 @@ import CareByConditionSection from '../components/CareByConditionSection';
 import MidPagePromoBanners from '../components/MidPagePromoBanners';
 import BrandsSection from '../components/BrandsSection';
 import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanners';
+import BlogsSection from '../components/BlogsSection';
 import RightBlogSidebar from '../components/RightBlogSidebar';
 
 export async function generateMetadata({ searchParams }) {
@@ -155,7 +156,10 @@ export default async function Home({ searchParams }) {
         {/* 7. Top Pharmaceutical Brands Section */}
         <BrandsSection />
 
-        {/* 8. Client-Side In-Place High-Density Product Catalog */}
+        {/* 8. Health & Wellness Blogs Slider (Fixed Position & Continuous Animation) */}
+        <BlogsSection />
+
+        {/* 9. Client-Side In-Place High-Density Product Catalog */}
         <CatalogSection
           initialProducts={products}
           initialPagination={pagination}
