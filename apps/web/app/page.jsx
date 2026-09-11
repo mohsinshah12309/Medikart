@@ -89,24 +89,24 @@ export default async function Home({ searchParams }) {
 
   return (
     <div className="flex flex-col gap-6 sm:gap-8">
-      {/* 1. Official Master Brand Hero Section (matching Image 3) */}
+      {/* 1. Care By Condition Section (Prominently placed at the top) */}
+      <CareByConditionSection initialConditions={conditions} />
+
+      {/* 2. Official Master Brand Hero Section */}
       <OfficialHeroSection initialCity="Lahore" categories={categories} />
 
-      {/* 2. Secondary Promotional Hero Banners (if configured in Admin) */}
+      {/* 3. Secondary Promotional Hero Banners (if configured in Admin) */}
       {heroBanners && heroBanners.length > 0 && (
         <HeroBannerCarousel initialBanners={heroBanners} />
       )}
 
-      {/* 2.5. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
+      {/* 4. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
       <NutritionRefreshmentBanners />
 
-      {/* 3. Horizontal Category Quick-Links Scroller (matching reference design) */}
+      {/* 5. Horizontal Category Quick-Links Scroller */}
       <CategoryQuickLinks categories={categories} />
 
-      {/* 4. Care By Condition Section (matching reference design) */}
-      <CareByConditionSection initialConditions={conditions} />
-
-      {/* 5. Mid-Page Promotional Banner Blocks */}
+      {/* 6. Mid-Page Promotional Banner Blocks */}
       <MidPagePromoBanners initialBanners={midBanners} />
 
       {/* 6. Top Pharmaceutical Brands Section */}
