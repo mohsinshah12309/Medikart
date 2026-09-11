@@ -385,7 +385,7 @@ export default function CategorySubBar({ categories = [] }) {
       className="w-full bg-white border-b border-[#F3EFE6] relative z-30 select-none transition-all"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* Horizontal Category Sub-Navbar */}
         <nav
           aria-label="Healthcare Department navigation"

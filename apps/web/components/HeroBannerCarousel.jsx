@@ -135,7 +135,7 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
   const renderSlideContent = (slide) => {
     if (!slide) return null;
     return (
-      <div className="relative w-full h-full min-h-[340px] sm:min-h-[380px] lg:min-h-[410px] bg-gradient-to-r from-amber-300 via-yellow-400 to-yellow-300 text-slate-900 rounded-3xl overflow-hidden shadow-md flex items-center border border-yellow-400/90">
+      <div className="relative w-full h-full min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px] bg-gradient-to-r from-amber-300 via-yellow-400 to-yellow-300 text-slate-900 rounded-3xl overflow-hidden shadow-md flex items-center border border-yellow-400/90">
         {/* Background ambient lighting */}
         <div className="absolute top-0 right-1/3 w-80 h-80 bg-white/30 blur-[70px] rounded-full pointer-events-none z-0" />
         <div className="absolute bottom-0 left-10 w-64 h-64 bg-amber-500/20 blur-[60px] rounded-full pointer-events-none z-0" />

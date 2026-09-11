@@ -141,12 +141,12 @@ export default async function Home({ searchParams }) {
       <section className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
           {/* Left: Hero Banner Carousel (8 cols on lg/xl) */}
-          <div className="lg:col-span-8 flex flex-col min-h-[340px] sm:min-h-[380px] lg:min-h-[410px]">
+          <div className="lg:col-span-8 flex flex-col min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px]">
             <HeroBannerCarousel initialBanners={heroBanners} />
           </div>
 
           {/* Right: Health & Wellness Blogs Sidebar (4 cols on lg/xl, placed exactly in right-hand sidebar) */}
-          <div className="lg:col-span-4 flex flex-col min-h-[340px] sm:min-h-[380px] lg:min-h-[410px]">
+          <div className="lg:col-span-4 flex flex-col min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px]">
             <HeroBlogSidebar />
           </div>
         </div>

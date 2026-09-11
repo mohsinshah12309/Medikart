@@ -124,7 +124,7 @@ export default async function RootLayout({ children }) {
         <CartProvider>
           {/* Main Brand Sticky Header */}
           <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
+            <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-18 sm:h-20 flex items-center justify-between gap-4">
               <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
                 {/* Official Interactive Logo */}
                 <Link href="/" className="flex items-center flex-shrink-0">
@@ -152,13 +152,13 @@ export default async function RootLayout({ children }) {
           <HomeOnlyBanners categories={categories} />
 
           {/* Main App Page Wrapper */}
-          <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full animate-fade-in-up z-10">
+          <main className="flex-grow max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-6 sm:py-8 w-full animate-fade-in-up z-10">
             {children}
           </main>
 
           {/* Warm Clinical Footer with Amber Accents */}
           <footer className="bg-white border-t border-[#F3EFE6] py-10 mt-12 relative z-10 shadow-sm">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#F3EFE6]">
                 <Link href="/">
                   <InteractiveLogo />
