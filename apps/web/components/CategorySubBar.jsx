@@ -6,6 +6,12 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, ChevronRight, Pill, ArrowRight, Sparkles } from "lucide-react";
 
+import {
+  triggerCatalogSearch,
+  triggerCategorySelect,
+  scrollToCatalog,
+} from "../lib/catalogEvents";
+
 // Canonical Multi-Level Healthcare Departments & Nested Subcategories (Dvago Architecture)
 const DEPARTMENTS = [
   {
@@ -22,12 +28,12 @@ const DEPARTMENTS = [
         icon: "℞",
         description: "Certified prescription drugs dispensed under licensed pharmacist supervision.",
         nested: [
-          { name: "Antibiotics & Anti-Infectives", query: "Antibiotics" },
-          { name: "Cardiovascular & Blood Pressure", query: "Blood Pressure" },
-          { name: "Diabetes Management (Oral)", query: "Diabetes" },
-          { name: "Pain Relief & Anti-Inflammatory", query: "Pain Relief" },
-          { name: "Gastrointestinal & Acidity", query: "Acidity" },
-          { name: "Neurology & Mental Health", query: "Neurology" },
+          { name: "Antibiotics & Anti-Infectives", query: "Augmentin" },
+          { name: "Cardiovascular & Blood Pressure", query: "Capoten" },
+          { name: "Diabetes Management (Oral)", query: "Glucophage" },
+          { name: "Pain Relief & Anti-Inflammatory", query: "Panadol" },
+          { name: "Gastrointestinal & Acidity", query: "Gaviscon" },
+          { name: "Neurology & Mental Health", query: "Lexotanil" },
         ],
       },
       {
@@ -85,8 +91,8 @@ const DEPARTMENTS = [
         icon: "🥛",
         description: "Certified infant formulas, stage 1-3 growing up milk, and nutritious cereals.",
         nested: [
-          { name: "Stage 1 Formula (0-6 Months)", query: "Lactogen 1" },
-          { name: "Stage 2 Formula (6-12 Months)", query: "BF-2" },
+          { name: "Stage 1 Formula (0-6 Months)", query: "Lactogen" },
+          { name: "Stage 2 Formula (6-12 Months)", query: "Formula" },
           { name: "Stage 3 Growing-Up Milk (1-3 Yrs)", query: "Pediasure" },
           { name: "Lactose-Free & Special Formula", query: "Lactose Free" },
           { name: "Baby Cereals & Purees", query: "Cerelac" },
@@ -122,8 +128,8 @@ const DEPARTMENTS = [
         nested: [
           { name: "Multivitamins (Men & Women)", query: "Multivitamins" },
           { name: "Vitamin C & Immunity Boosters", query: "Vitamin C" },
-          { name: "Vitamin D3 & Calcium Tablets", query: "Calcium D3" },
-          { name: "B-Complex & Energy Formulations", query: "Surbex Z" },
+          { name: "Vitamin D3 & Calcium Tablets", query: "Calcium" },
+          { name: "B-Complex & Energy Formulations", query: "Surbex" },
         ],
       },
       {
@@ -135,7 +141,7 @@ const DEPARTMENTS = [
         nested: [
           { name: "Omega-3 & Deep Sea Fish Oil", query: "Fish Oil" },
           { name: "Collagen Peptides & Biotin Plus", query: "Collagen" },
-          { name: "Joint Support & Glucosamine", query: "Joint Support" },
+          { name: "Joint Support & Glucosamine", query: "Glucosamine" },
           { name: "Liver & Detox Supplements", query: "Nutraceutical" },
         ],
       },
@@ -155,8 +161,8 @@ const DEPARTMENTS = [
         icon: "💧",
         description: "Rapid dehydration recovery, WHO-standard ORS, and refreshing electrolyte drinks.",
         nested: [
-          { name: "ORS & Rehydration Sachets", query: "Peditral ORS" },
-          { name: "Sports & Hydration Drinks", query: "Gatorade" },
+          { name: "ORS & Rehydration Sachets", query: "ORS" },
+          { name: "Sports & Hydration Drinks", query: "Hydration" },
           { name: "Dextrose Glucose Energy Powders", query: "Glucose" },
         ],
       },
@@ -168,8 +174,8 @@ const DEPARTMENTS = [
         description: "Meal replacement nutritional shakes, sugar substitutes, and organic herbal teas.",
         nested: [
           { name: "Nutritional Shakes & Ensure", query: "Ensure" },
-          { name: "Sugar-Free Sweeteners & Stevia", query: "Canderel" },
-          { name: "Green Teas & Herbal Infusions", query: "Green Tea" },
+          { name: "Sugar-Free Sweeteners & Stevia", query: "Sweetener" },
+          { name: "Green Teas & Herbal Infusions", query: "Tea" },
         ],
       },
     ],
@@ -189,7 +195,7 @@ const DEPARTMENTS = [
         description: "Accurate digital blood pressure monitors, glucometers, and infrared thermometers.",
         nested: [
           { name: "Digital Blood Pressure Monitors", query: "BP Monitor" },
-          { name: "Blood Glucose Meters & Strips", query: "Glucometer Strips" },
+          { name: "Blood Glucose Meters & Strips", query: "Glucometer" },
           { name: "Infrared Forehead Thermometers", query: "Thermometer" },
           { name: "Compressor & Mesh Nebulizers", query: "Nebulizer" },
         ],
@@ -202,9 +208,9 @@ const DEPARTMENTS = [
         description: "Foldable wheelchairs, orthopaedic knee braces, walkers, and lumbar belts.",
         nested: [
           { name: "Foldable Wheelchairs & Walkers", query: "Wheelchair" },
-          { name: "Knee Braces & Ankle Supports", query: "Knee Brace" },
-          { name: "Cervical Collars & Lumbar Belts", query: "Lumbar Belt" },
-          { name: "Anti-Bedsore Air Mattresses", query: "Air Mattress" },
+          { name: "Knee Braces & Ankle Supports", query: "Knee" },
+          { name: "Cervical Collars & Lumbar Belts", query: "Belt" },
+          { name: "Anti-Bedsore Air Mattresses", query: "Mattress" },
         ],
       },
       {
@@ -214,9 +220,9 @@ const DEPARTMENTS = [
         icon: "🩹",
         description: "Sterile disposable syringes, surgical gloves, IV cannulas, and dressing gauze.",
         nested: [
-          { name: "Disposable Syringes & Needles", query: "Syringes" },
-          { name: "Sterile Surgical Latex Gloves", query: "Surgical Gloves" },
-          { name: "Bandages, Cotton Rolls & Gauze", query: "Bandages" },
+          { name: "Disposable Syringes & Needles", query: "Syringe" },
+          { name: "Sterile Surgical Latex Gloves", query: "Gloves" },
+          { name: "Bandages, Cotton Rolls & Gauze", query: "Bandage" },
         ],
       },
     ],
@@ -237,8 +243,8 @@ const DEPARTMENTS = [
         nested: [
           { name: "Medicated Sunscreens (SPF 50-100)", query: "Sunblock" },
           { name: "Acne Solutions & Face Washes", query: "Acne" },
-          { name: "Moisturizers & Ceramide Lotions", query: "Moisturizer" },
-          { name: "Medicated Anti-Dandruff Shampoos", query: "Anti Dandruff" },
+          { name: "Moisturizers & Ceramide Lotions", query: "Lotion" },
+          { name: "Medicated Anti-Dandruff Shampoos", query: "Shampoo" },
         ],
       },
       {
@@ -248,7 +254,7 @@ const DEPARTMENTS = [
         icon: "🪥",
         description: "Medicated toothpastes for sensitivity, antiseptic mouthwashes, and germ-defense soaps.",
         nested: [
-          { name: "Toothpastes for Sensitive Teeth", query: "Sensodyne" },
+          { name: "Toothpastes for Sensitive Teeth", query: "Toothpaste" },
           { name: "Antibacterial Mouthwashes", query: "Mouthwash" },
           { name: "Antiseptic Hand Sanitizers & Soaps", query: "Sanitizer" },
         ],
@@ -270,8 +276,8 @@ const DEPARTMENTS = [
         description: "Instant relief for headache, fever, cough, acidity, heartburn, and common colds.",
         nested: [
           { name: "Fever, Headache & Migraine", query: "Panadol" },
-          { name: "Cough, Cold & Flu Relief Syrups", query: "Cough Syrup" },
-          { name: "Antacids & Fast Heartburn Relief", query: "Gaviscon" },
+          { name: "Cough, Cold & Flu Relief Syrups", query: "Cough" },
+          { name: "Antacids & Fast Heartburn Relief", query: "Antacid" },
           { name: "Anti-Allergy & Antihistamines", query: "Allergy" },
         ],
       },
@@ -304,9 +310,24 @@ export default function CategorySubBar({ categories = [] }) {
     categories.forEach((cat) => {
       const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       if (slug) map[slug] = cat;
+      if (cat.name) {
+        map[cat.name.toLowerCase()] = cat;
+      }
     });
     return map;
   }, [categories]);
+
+  const findCategory = (slugOrName) => {
+    if (!slugOrName) return null;
+    if (categoryBySlug[slugOrName]) return categoryBySlug[slugOrName];
+    const lower = slugOrName.toLowerCase();
+    return categories.find(
+      (c) =>
+        c.slug === lower ||
+        c.name?.toLowerCase().includes(lower) ||
+        lower.includes(c.name?.toLowerCase() || "")
+    ) || null;
+  };
 
   // Reset active subcategory when changing departments
   const handleMouseEnterDept = (deptId) => {
@@ -325,30 +346,37 @@ export default function CategorySubBar({ categories = [] }) {
     if (e) e.preventDefault();
     setActiveDeptId(null);
 
-    if (pathname === "/") {
-      window.dispatchEvent(new CustomEvent("select-category", { detail: catId }));
-      const el = document.getElementById("store-catalog") || document.getElementById("catalog");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
+    triggerCategorySelect(catId, true);
+    scrollToCatalog();
+
+    if (pathname !== "/") {
       router.push(`/?category=${catId}#store-catalog`);
+    } else {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("search");
+      if (catId) {
+        url.searchParams.set("category", catId);
+      } else {
+        url.searchParams.delete("category");
+      }
+      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 
-  const handleNestedSearchClick = (query, e) => {
+  const handleNestedSearchClick = (query, catId, e) => {
     if (e) e.preventDefault();
     setActiveDeptId(null);
 
-    if (pathname === "/") {
-      const inputEl = document.getElementById("catalog-search-input");
-      if (inputEl) {
-        inputEl.value = query;
-        inputEl.dispatchEvent(new Event("input", { bubbles: true }));
-      }
-      const el = document.getElementById("store-catalog") || document.getElementById("catalog");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    triggerCatalogSearch(query, "");
+    scrollToCatalog();
+
+    if (pathname !== "/") {
       router.push(`/?search=${encodeURIComponent(query)}#store-catalog`);
     } else {
-      router.push(`/?search=${encodeURIComponent(query)}#store-catalog`);
+      const url = new URL(window.location.href);
+      url.searchParams.set("search", query);
+      url.searchParams.delete("category");
+      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 
@@ -365,6 +393,7 @@ export default function CategorySubBar({ categories = [] }) {
         >
           {DEPARTMENTS.map((dept) => {
             const isOpen = activeDeptId === dept.id;
+            const primaryCat = findCategory(dept.primarySlug) || findCategory(dept.shortName) || findCategory(dept.name);
 
             return (
               <div
@@ -374,10 +403,12 @@ export default function CategorySubBar({ categories = [] }) {
               >
                 <button
                   type="button"
-                  onClick={() => {
-                    const primaryCat = categoryBySlug[dept.primarySlug];
-                    if (primaryCat) handleCategorySelect(primaryCat._id);
-                    else setActiveDeptId(isOpen ? null : dept.id);
+                  onClick={(e) => {
+                    if (primaryCat) {
+                      handleCategorySelect(primaryCat._id, e);
+                    } else {
+                      setActiveDeptId(isOpen ? null : dept.id);
+                    }
                   }}
                   aria-expanded={isOpen}
                   className={`group inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 rounded-xl text-xs sm:text-[13px] font-semibold transition-all cursor-pointer ${
@@ -411,14 +442,15 @@ export default function CategorySubBar({ categories = [] }) {
           onMouseLeave={handleMouseLeave}
         >
           {/* Top Amber Brand Accent Strip */}
-          <div className="h-1 w-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400" />
+          <div className="h-1 w-full bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300" />
 
           {(() => {
             const currentDept = DEPARTMENTS.find((d) => d.id === activeDeptId);
             if (!currentDept) return null;
 
             const activeSub = currentDept.subcategories[activeSubIndex] || currentDept.subcategories[0];
-            const primaryCat = categoryBySlug[currentDept.primarySlug];
+            const primaryCat = findCategory(currentDept.primarySlug) || findCategory(currentDept.shortName) || findCategory(currentDept.name);
+            const activeSubCat = findCategory(activeSub?.slug) || findCategory(activeSub?.name);
 
             return (
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -459,7 +491,7 @@ export default function CategorySubBar({ categories = [] }) {
 
                     {currentDept.subcategories.map((sub, idx) => {
                       const isSelected = activeSubIndex === idx;
-                      const catObj = categoryBySlug[sub.slug];
+                      const catObj = findCategory(sub.slug) || findCategory(sub.name);
 
                       return (
                         <div
@@ -517,10 +549,10 @@ export default function CategorySubBar({ categories = [] }) {
                             {activeSub.description}
                           </p>
                         </div>
-                        {categoryBySlug[activeSub.slug] && (
+                        {activeSubCat && (
                           <button
                             type="button"
-                            onClick={(e) => handleCategorySelect(categoryBySlug[activeSub.slug]._id, e)}
+                            onClick={(e) => handleCategorySelect(activeSubCat._id, e)}
                             className="btn-amber-gradient px-3 py-1.5 rounded-xl text-xs font-bold shadow-xs whitespace-nowrap hidden sm:inline-flex"
                           >
                             Explore &rarr;
@@ -533,7 +565,7 @@ export default function CategorySubBar({ categories = [] }) {
                         {activeSub.nested.map((item, idx) => (
                           <div
                             key={idx}
-                            onClick={(e) => handleNestedSearchClick(item.query, e)}
+                            onClick={(e) => handleNestedSearchClick(item.query, activeSubCat?._id, e)}
                             className="group p-3 rounded-xl bg-white border border-slate-200/80 hover:border-amber-300 hover:bg-amber-50/50 shadow-3xs hover:shadow-2xs transition-all cursor-pointer select-none text-left flex items-center justify-between"
                           >
                             <div className="min-w-0 pr-2">

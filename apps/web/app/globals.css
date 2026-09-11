@@ -7,20 +7,20 @@
   --color-primary-100: #fef9c3;
   --color-primary-200: #fef08a;
   --color-primary-300: #fde047;
-  --color-primary-400: #facc15;
-  --color-primary-500: #f59e0b;
-  --color-primary-600: #d97706;
-  --color-primary-700: #b45309;
-  --color-primary-800: #854d0e;
-  --color-primary-900: #713f12;
+  --color-primary-400: #fed604;
+  --color-primary-500: #ffcb05;
+  --color-primary-600: #f8ba03;
+  --color-primary-700: #d49500;
+  --color-primary-800: #a37200;
+  --color-primary-900: #714f00;
 
-  --color-brand-bg: #FAF8F5;
+  --color-brand-bg: #ffffff;
   --color-brand-surface: #ffffff;
   --color-brand-elevated: #ffffff;
-  --color-brand-amber: #f59e0b;
-  --color-brand-gold: #fbbf24;
-  --color-brand-yellow: #facc15;
-  --color-brand-yellow-hover: #d97706;
+  --color-brand-amber: #f8ba03;
+  --color-brand-gold: #fdc804;
+  --color-brand-yellow: #ffcb05;
+  --color-brand-yellow-hover: #e5a800;
   --color-brand-yellow-light: #fef9c3;
   --color-brand-navy: #1e293b;
   --color-brand-slate: #475569;
@@ -37,8 +37,8 @@
     50% { transform: translateY(-5px); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(245, 158, 11, 0.35); }
-    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(245, 158, 11, 0.65); }
+    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(248, 186, 3, 0.35); }
+    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(248, 186, 3, 0.65); }
   }
   @keyframes fade-in-up {
     from {
@@ -47,7 +47,6 @@
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
   @keyframes orbit-rotate {
@@ -57,7 +56,7 @@
 }
 
 body {
-  background-color: #FAF8F5;
+  background-color: #ffffff;
   color: #1e293b;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-y: scroll;
@@ -77,7 +76,7 @@ body {
   border: 2px solid #f1f5f9;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #eab308;
+  background: #ffcb05;
 }
 
 /* Glassmorphism helpers for frosted-white card displays */
@@ -94,15 +93,13 @@ body {
 }
 .glass-panel-hover:hover {
   background: #ffffff;
-  border-color: rgba(234, 179, 8, 0.45);
-  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08), 0 0 20px rgba(234, 179, 8, 0.12);
+  border-color: rgba(255, 203, 5, 0.45);
+  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08), 0 0 20px rgba(255, 203, 5, 0.15);
 }
 
-/* Soft medical layout grid lines */
+/* Plain clean white background */
 .tech-grid {
-  background-size: 32px 32px;
-  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  background-color: #ffffff;
 }
 
 /* Interactive scaling transitions */
@@ -119,7 +116,7 @@ body {
 /* ─── Accessibility: Focus States ─────────────────────────────────────────── */
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #eab308;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ffcb05;
   border-radius: 4px;
 }
 
@@ -127,13 +124,13 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: none;
-  border-color: #eab308;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #eab308;
+  border-color: #ffcb05;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ffcb05;
 }
 
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #eab308;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ffcb05;
 }
 
 /* ─── Accessibility: Reduced Motion ───────────────────────────────────────── */
@@ -155,25 +152,26 @@ button:focus-visible {
 
 /* ─── Medikart Canonical Brand Design Utilities (2026 Revision) ───────────── */
 .btn-amber-gradient {
-  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FACC15 100%);
+  background: linear-gradient(135deg, #F8BA03 0%, #FFCB05 60%, #FED604 100%);
   color: #1E293B;
-  font-weight: 700;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(248, 186, 3, 0.35);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid rgba(248, 186, 3, 0.35);
 }
 .btn-amber-gradient:hover {
   transform: translateY(-1.5px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+  background: linear-gradient(135deg, #FFCB05 0%, #FED604 60%, #FFF066 100%);
+  box-shadow: 0 6px 20px rgba(248, 186, 3, 0.45);
   filter: brightness(1.02);
 }
 .btn-amber-gradient:active {
   transform: translateY(0.5px);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 2px 8px rgba(248, 186, 3, 0.3);
 }
 
 .card-warm {

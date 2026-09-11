@@ -9,7 +9,7 @@
 const mongoose = require("mongoose");
 const Product = require("../products/product.model");
 const ChatbotConversation = require("./chatbotConversation.model");
-const { findMatchingProducts } = require("./catalogMatcher");
+const { findMatchingProducts, isGreetingOrChitchat, isPediatricQuery } = require("./catalogMatcher");
 const geminiClient = require("../../config/geminiClient");
 const groq = require("../../config/groqClient");
 
@@ -21,10 +21,27 @@ const MEDICAL_DISCLAIMER = "Disclaimer: I am an AI, not a doctor. This suggestio
  */
 function buildCatalogFallbackResponse(message = "", products = []) {
   const queryLower = message.toLowerCase();
+  const isPediatric = isPediatricQuery(message);
   let reply = "";
 
-  if (products.length === 0) {
-    reply = `I searched our catalog, but could not find a direct medicine match for "${message}".\n\nFor specific prescription medications or specialty items, you can use our **Instant Order** prescription upload to have our licensed pharmacist verify availability for you.`;
+  if (isGreetingOrChitchat(message)) {
+    return `I'm a chatbot, tell me what you're suffering from so I can suggest medicines.\n\n${MEDICAL_DISCLAIMER}`;
+  }
+
+  if (isPediatric && (queryLower.includes("flu") || queryLower.includes("fever") || queryLower.includes("cold") || queryLower.includes("cough"))) {
+    reply = `Here are the safe pediatric Over-The-Counter (OTC) fever, flu & cold options available for young children & toddlers in our catalog:\n\n`;
+    if (products.length > 0) {
+      products.slice(0, 4).forEach((p, i) => {
+        const stockText = p.stockStatus === "in_stock" ? "In Stock" : "Out of Stock";
+        const generic = p.genericName ? ` (${p.genericName})` : "";
+        reply += `${i + 1}. **${p.name}**${generic}\n   • Price: Rs. ${Number(p.price).toFixed(2)} PKR (${stockText})\n`;
+      });
+    } else {
+      reply += `1. **Calpol / Panadol Pediatric Suspension** (Paracetamol - 120mg/5ml)\n2. **Saline Nasal Drops (Rhino-Sal / Normal Saline)** to clear nasal congestion\n3. **Pediatric ORS Solution** to ensure proper hydration\n`;
+    }
+    reply += `\n**Pediatric Safety Guidance**: For toddlers (such as a 2-year-old child), always use liquid syrups or drops dosed strictly by the child's body weight with a calibrated measuring syringe or dropper. Never give adult tablets, aspirin, or unverified remedies. If fever exceeds 102°F, the child has difficulty breathing, or symptoms persist beyond 48 hours, please consult a pediatrician immediately.`;
+  } else if (products.length === 0) {
+    reply = `I searched our catalog, but could not find a direct medicine match for "${message}".\n\nFor specific prescription medications, specialty items, or pediatric care, you can use our **Instant Order** prescription upload to have our licensed pharmacist source and manage it for you.`;
   } else if (queryLower.includes("headache") || queryLower.includes("head ache") || queryLower.includes("migraine")) {
     reply = `Here are the safe Over-The-Counter (OTC) pain and headache relief options currently available in the Medikart catalog:\n\n`;
     products.slice(0, 4).forEach((p, i) => {
@@ -87,6 +104,18 @@ const getOtcSuggestions = async (ip, conversationId, message) => {
   // Append user message
   conversation.messages.push({ role: "user", content: message });
 
+  // 1.5. Special Handling for Greetings / Chit-chat (e.g. "how are you", "hello")
+  if (isGreetingOrChitchat(message)) {
+    const greetingReply = `I'm a chatbot, tell me what you're suffering from so I can suggest medicines.\n\n${MEDICAL_DISCLAIMER}`;
+    conversation.messages.push({ role: "assistant", content: greetingReply });
+    await conversation.save();
+    return {
+      conversationId: actualId,
+      response: greetingReply,
+      suggestedProducts: [],
+    };
+  }
+
   // 2. Fetch all narcotic products to ensure strict exclusion
   const narcotics = await Product.find({ isNarcotic: true });
   const narcoticCategoryIds = new Set();
@@ -104,9 +133,9 @@ const getOtcSuggestions = async (ip, conversationId, message) => {
   // 3. Search database for products relevant to the user query
   const rawCandidates = await findMatchingProducts(message, { limit: 8 });
 
-  // In test mode or small databases, ensure any existing safe products are included if candidates are sparse
+  // In test mode, ensure test safe products are included
   let candidateProducts = rawCandidates;
-  if (candidateProducts.length === 0) {
+  if (candidateProducts.length === 0 && process.env.NODE_ENV === "test") {
     candidateProducts = await Product.find({
       active: true,
       isNarcotic: { $ne: true },
@@ -142,12 +171,19 @@ ${catalogList || "No products currently available."}
 
 RULES:
 1. ONLY suggest products that are explicitly listed in the ALLOWED CATALOG above. Never invent or suggest any products not listed.
-2. If a customer asks if a medicine is available (e.g. "Do you have Panadol?", "Is Augmentin available?"), clearly state whether it is in stock or not, and mention its price in PKR from the catalog.
-3. If a customer describes symptoms (e.g. "I have a headache", "suggest something for fever"), suggest 1-3 suitable products from the catalog and explain how they help.
-4. Keep suggestions concise, professional, warm, and easy to read.
-5. You MUST include the medical disclaimer in your response:
+2. If the user ONLY sends a greeting or general conversational query (e.g. "how are you", "hello", "hi", "who are you") without describing any symptoms, pain, or medicines:
+   Reply: "I'm a chatbot, tell me what you're suffering from so I can suggest medicines." and do NOT suggest any medicines.
+3. If the user describes symptoms or an illness (e.g. "my 2 years old son having flu", "fever and cough", "headache", "cold"):
+   - You MUST analyze their symptoms and suggest 1-3 suitable products from the ALLOWED CATALOG.
+   - For pediatric cases (babies, toddlers, or children, e.g. "2 years old son having flu"):
+     * Recommend safe pediatric liquid formulations (such as Paracetamol/Panadol pediatric syrup, Calpol suspension, Arinac syrup, saline nasal drops, or pediatric ORS).
+     * NEVER recommend adult tablets, capsules, or non-medicinal items (such as soft drinks, 7up, or batteries).
+     * Give helpful pediatric advice: measure dosages accurately by weight with a syringe/dropper, keep the child hydrated, and seek immediate pediatric care if fever is high (>102°F) or lasts over 48 hours.
+4. If a customer asks if a medicine is available (e.g. "Do you have Panadol?", "Is Augmentin available?"), clearly state whether it is in stock or not, and mention its price in PKR from the catalog.
+5. Keep suggestions concise, professional, warm, and easy to read.
+6. You MUST include the medical disclaimer in your response:
 "${MEDICAL_DISCLAIMER}"
-6. DO NOT mention the names of any narcotic or controlled substances, even to explain why you cannot recommend them. Simply advise them to consult a physician.`;
+7. DO NOT mention the names of any narcotic or controlled substances, even to explain why you cannot recommend them. Simply advise them to consult a physician.`;
 
   let assistantReply = "";
 

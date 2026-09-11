@@ -17,6 +17,11 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+import {
+  triggerCategorySelect,
+  scrollToCatalog,
+} from "../lib/catalogEvents";
+
 export default function HeaderNav({ initialCategories = [] }) {
   const [categories, setCategories] = useState(initialCategories);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -68,14 +73,20 @@ export default function HeaderNav({ initialCategories = [] }) {
     setIsDropdownOpen(false);
     setIsMobileMenuOpen(false);
 
-    if (pathname === "/") {
-      window.dispatchEvent(new CustomEvent("select-category", { detail: catId }));
-      const el = document.getElementById("store-catalog") || document.getElementById("catalog");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    } else {
+    triggerCategorySelect(catId, true);
+    scrollToCatalog();
+
+    if (pathname !== "/") {
       router.push(`/?category=${catId}#store-catalog`);
+    } else {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("search");
+      if (catId) {
+        url.searchParams.set("category", catId);
+      } else {
+        url.searchParams.delete("category");
+      }
+      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 
@@ -136,7 +147,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                   >
                     <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200/90 overflow-hidden">
                       {/* Top Accent Gradient Line */}
-                      <div className="h-1.5 w-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400" />
+                      <div className="h-1.5 w-full bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300" />
 
                       {/* Header Strip inside Dropdown */}
                       <div className="px-6 py-3.5 bg-[#FAF8F5] border-b border-amber-100 flex items-center justify-between">

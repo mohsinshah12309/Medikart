@@ -5,23 +5,28 @@ import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { ArrowRight, Sparkles } from "lucide-react";
 
+import {
+  triggerCategorySelect,
+  scrollToCatalog,
+} from "../lib/catalogEvents";
+
 export default function NutritionRefreshmentBanners() {
   const router = useRouter();
   const pathname = usePathname();
 
   const handleBannerClick = (type) => {
-    const targetQuery = type === "baby" ? "milk-powder" : "beverages";
+    const targetCatId = type === "baby" ? "6a9073f030ff9f1a1d0f231f" : "6a9073f230ff9f1a1d0f2340";
 
-    if (pathname === "/") {
-      window.dispatchEvent(
-        new CustomEvent("select-category", {
-          detail: type === "baby" ? "6a9073f030ff9f1a1d0f231f" : "6a9073f230ff9f1a1d0f2340",
-        })
-      );
-      const el = document.getElementById("store-catalog") || document.getElementById("catalog");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    triggerCategorySelect(targetCatId, true);
+    scrollToCatalog();
+
+    if (pathname !== "/") {
+      router.push(`/?category=${targetCatId}#store-catalog`);
     } else {
-      router.push(`/?category=${targetQuery}#store-catalog`);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("search");
+      url.searchParams.set("category", targetCatId);
+      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 

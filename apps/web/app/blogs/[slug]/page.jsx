@@ -200,16 +200,16 @@ export default async function BlogPostPage({ params }) {
                 className="group p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-emerald-300 shadow-3xs transition-all text-left flex flex-col justify-between"
               >
                 <div>
-                  <div className="relative h-32 w-full rounded-xl overflow-hidden mb-2.5 bg-slate-100">
+                  <div className="relative h-40 sm:h-44 w-full rounded-2xl overflow-hidden mb-3 bg-slate-100">
                     <Image
                       src={rel.image}
                       alt={rel.title}
                       fill
-                      sizes="280px"
+                      sizes="(max-width: 640px) 100vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform"
                     />
                   </div>
-                  <h4 className="text-xs font-bold text-slate-800 group-hover:text-emerald-800 line-clamp-2 leading-snug">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-emerald-800 line-clamp-2 leading-snug">
                     {rel.title}
                   </h4>
                 </div>

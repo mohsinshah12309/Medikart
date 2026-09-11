@@ -37,7 +37,7 @@ body {
   border: 1px solid #f1f5f9;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #eab308;
+  background: #FFCB05;
 }
 
 #root {
@@ -136,9 +136,9 @@ body {
 
 .nav-item.active {
   color: #1e293b;
-  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FACC15 100%);
+  background: linear-gradient(135deg, #F8BA03 0%, #FFCB05 60%, #FED604 100%);
   font-weight: 800;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 14px rgba(248, 186, 3, 0.35);
 }
 
 .sidebar-footer {
@@ -313,8 +313,8 @@ body {
 
 .form-control:focus {
   outline: none;
-  border-color: #eab308;
-  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+  border-color: #FFCB05;
+  box-shadow: 0 0 0 3px rgba(255, 203, 5, 0.25);
 }
 
 .btn {
@@ -333,18 +333,18 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FACC15 100%);
+  background: linear-gradient(135deg, #F8BA03 0%, #FFCB05 60%, #FED604 100%);
   color: #1E293B;
   font-weight: 800;
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  border: 1px solid rgba(248, 186, 3, 0.4);
+  box-shadow: 0 4px 14px rgba(248, 186, 3, 0.35);
   border-radius: 9999px;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%);
+  background: linear-gradient(135deg, #FFCB05 0%, #FED604 55%, #FFF066 100%);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+  box-shadow: 0 6px 18px rgba(248, 186, 3, 0.45);
 }
 
 .btn-secondary {
@@ -720,7 +720,7 @@ tr:hover td {
 }
 
 input:checked + .slider {
-  background-color: #facc15;
+  background-color: #FFCB05;
 }
 
 input:checked + .slider:before {
@@ -740,7 +740,7 @@ input:checked + .slider:before {
 }
 
 .image-upload-zone:hover {
-  border-color: #eab308;
+  border-color: #FFCB05;
   color: #0f172a;
   background: #fefce8;
 }

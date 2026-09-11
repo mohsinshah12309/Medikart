@@ -101,7 +101,7 @@ export default function ChatbotWidget() {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-300 hover:from-amber-600 hover:via-amber-500 hover:to-yellow-400 text-slate-950 rounded-full shadow-[0_8px_25px_rgba(245,158,11,0.45)] hover:shadow-[0_12px_32px_rgba(245,158,11,0.65)] ring-4 ring-amber-200/60 transition-all hover:scale-110 active:scale-95 flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 cursor-pointer border border-amber-300"
+          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-300 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-200 text-slate-950 rounded-full shadow-[0_8px_25px_rgba(248,186,3,0.45)] hover:shadow-[0_12px_32px_rgba(248,186,3,0.65)] ring-4 ring-amber-200/60 transition-all hover:scale-110 active:scale-95 flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 cursor-pointer border border-amber-300"
           title="Medikart AI Medicine Assistant"
           aria-label="Open AI Medicine Assistant"
         >
@@ -126,7 +126,7 @@ export default function ChatbotWidget() {
         <div className="fixed bottom-22 sm:bottom-26 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[440px] h-[520px] max-h-[80vh] z-50 bg-[#FAF8F5] border border-amber-200/90 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 select-none">
           
           {/* Header */}
-          <div className="bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">
+          <div className="bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full bg-white/90 shadow-xs flex items-center justify-center text-lg">
                 🤖
@@ -168,7 +168,7 @@ export default function ChatbotWidget() {
                 <div
                   className={`rounded-2xl px-4 py-3 text-xs leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-semibold rounded-br-none shadow-xs'
+                      ? 'bg-gradient-to-r from-amber-300 to-[#FFCB05] text-slate-950 font-semibold rounded-br-none shadow-xs'
                       : 'bg-white text-slate-800 border border-amber-100/90 rounded-bl-none shadow-xs'
                   }`}
                 >

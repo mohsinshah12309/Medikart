@@ -1,9 +1,16 @@
 'use client';
 
-import React, { useState, useEffect, useTransition } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
 import CategorySidebar from './CategorySidebar';
+import {
+  CATALOG_EVENTS,
+  triggerCatalogSearch,
+  triggerCategorySelect,
+  triggerFilterReset,
+  scrollToCatalog,
+} from '../lib/catalogEvents';
 
 export default function CatalogSection({
   initialProducts = [],
@@ -21,37 +28,13 @@ export default function CatalogSection({
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // Keep state in sync with URL search params if user navigates back/forward
-  useEffect(() => {
-    const handlePopState = () => {
-      const params = new URLSearchParams(window.location.search);
-      const s = params.get('search') || '';
-      const c = params.get('category') || '';
-      const p = parseInt(params.get('page'), 10) || 1;
-      setSearch(s);
-      setActiveCategoryId(c);
-      setCurrentPage(p);
-      fetchCatalog(s, c, p);
-    };
+  const searchRef = useRef(search);
+  const categoryIdRef = useRef(activeCategoryId);
+  searchRef.current = search;
+  categoryIdRef.current = activeCategoryId;
 
-    const handleCategoryCustomEvent = (e) => {
-      if (e.detail !== undefined) {
-        setActiveCategoryId(e.detail);
-        setCurrentPage(1);
-        fetchCatalog(search, e.detail, 1);
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    window.addEventListener('select-category', handleCategoryCustomEvent);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('select-category', handleCategoryCustomEvent);
-    };
-  }, [search]);
-
-  // Fetch catalog data asynchronously without a full page reload
-  const fetchCatalog = async (searchQuery, categoryId, pageNum) => {
+  // Fetch catalog data asynchronously without full page reload
+  const fetchCatalog = async (searchQuery, categoryId, pageNum = 1) => {
     setLoading(true);
     setErrorMsg(null);
 
@@ -82,12 +65,12 @@ export default function CatalogSection({
       setProducts(fetchedProducts);
       setPagination(fetchedPagination);
 
-      // Smoothly update browser URL without triggering full page reload
+      // Smoothly update browser URL
       const urlParams = new URLSearchParams();
       if (searchQuery) urlParams.append('search', searchQuery);
       if (categoryId) urlParams.append('category', categoryId);
       if (pageNum > 1) urlParams.append('page', pageNum);
-      const newUrl = urlParams.toString() ? `/?${urlParams.toString()}` : '/';
+      const newUrl = urlParams.toString() ? `/?${urlParams.toString()}#store-catalog` : '/#store-catalog';
       window.history.pushState({}, '', newUrl);
     } catch (err) {
       console.error('Catalog fetch failed:', err);
@@ -96,6 +79,82 @@ export default function CatalogSection({
       setLoading(false);
     }
   };
+
+  // Keep state in sync with URL search params and CustomEvents
+  useEffect(() => {
+    // Initial sync from browser URL if query params exist on client load
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('search');
+      const c = params.get('category');
+      const p = parseInt(params.get('page'), 10);
+      if (s !== null || c !== null || !isNaN(p)) {
+        const initialS = s || '';
+        const initialC = c || '';
+        const initialP = p || 1;
+        setSearch(initialS);
+        setActiveCategoryId(initialC);
+        setCurrentPage(initialP);
+        fetchCatalog(initialS, initialC, initialP);
+      }
+    }
+
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('search') || '';
+      const c = params.get('category') || '';
+      const p = parseInt(params.get('page'), 10) || 1;
+      setSearch(s);
+      setActiveCategoryId(c);
+      setCurrentPage(p);
+      fetchCatalog(s, c, p);
+    };
+
+    const handleSearchCustomEvent = (e) => {
+      const query = e.detail?.search !== undefined ? e.detail.search : (typeof e.detail === 'string' ? e.detail : '');
+      const catId = e.detail?.categoryId !== undefined ? e.detail.categoryId : '';
+      setSearch(query);
+      if (catId) setActiveCategoryId(catId);
+      setCurrentPage(1);
+      fetchCatalog(query, catId || (query ? '' : categoryIdRef.current), 1);
+    };
+
+    const handleCategoryCustomEvent = (e) => {
+      const catId = typeof e.detail === 'object' ? (e.detail?.categoryId ?? '') : (e.detail ?? '');
+      const resetSearch = typeof e.detail === 'object' ? (e.detail?.resetSearch ?? true) : true;
+      
+      const newSearch = resetSearch ? '' : searchRef.current;
+      if (resetSearch) {
+        setSearch('');
+      }
+      setActiveCategoryId(catId);
+      setCurrentPage(1);
+      fetchCatalog(newSearch, catId, 1);
+    };
+
+    const handleResetCustomEvent = () => {
+      setSearch('');
+      setActiveCategoryId('');
+      setCurrentPage(1);
+      fetchCatalog('', '', 1);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener(CATALOG_EVENTS.SEARCH, handleSearchCustomEvent);
+    window.addEventListener('catalog-search', handleSearchCustomEvent);
+    window.addEventListener(CATALOG_EVENTS.SELECT_CATEGORY, handleCategoryCustomEvent);
+    window.addEventListener('select-category', handleCategoryCustomEvent);
+    window.addEventListener(CATALOG_EVENTS.RESET_FILTERS, handleResetCustomEvent);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener(CATALOG_EVENTS.SEARCH, handleSearchCustomEvent);
+      window.removeEventListener('catalog-search', handleSearchCustomEvent);
+      window.removeEventListener(CATALOG_EVENTS.SELECT_CATEGORY, handleCategoryCustomEvent);
+      window.removeEventListener('select-category', handleCategoryCustomEvent);
+      window.removeEventListener(CATALOG_EVENTS.RESET_FILTERS, handleResetCustomEvent);
+    };
+  }, []);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -106,18 +165,22 @@ export default function CatalogSection({
   const handleClearSearch = () => {
     setSearch('');
     setCurrentPage(1);
+    triggerCatalogSearch('');
     fetchCatalog('', activeCategoryId, 1);
   };
 
   const handleSelectCategory = (catId) => {
     setActiveCategoryId(catId);
+    setSearch('');
     setCurrentPage(1);
-    fetchCatalog(search, catId, 1);
+    triggerCategorySelect(catId, true);
+    fetchCatalog('', catId, 1);
   };
 
   const handleClearCategory = () => {
     setActiveCategoryId('');
     setCurrentPage(1);
+    triggerCategorySelect('', false);
     fetchCatalog(search, '', 1);
   };
 
@@ -125,6 +188,7 @@ export default function CatalogSection({
     setSearch('');
     setActiveCategoryId('');
     setCurrentPage(1);
+    triggerFilterReset();
     fetchCatalog('', '', 1);
   };
 
@@ -164,6 +228,7 @@ export default function CatalogSection({
               <div className="flex w-full items-center bg-white border border-slate-300 rounded-2xl shadow-xs focus-within:border-yellow-500 focus-within:ring-2 focus-within:ring-yellow-400/20 transition-all overflow-hidden p-1.5">
                 <span className="pl-3 text-slate-400 text-base">🔍</span>
                 <input
+                  id="catalog-search-input"
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -270,19 +335,52 @@ export default function CatalogSection({
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="bg-white border border-slate-200 p-12 md:p-16 text-center rounded-3xl shadow-sm flex flex-col items-center gap-5">
+            <div className="bg-white border border-slate-200 p-8 sm:p-12 text-center rounded-3xl shadow-sm flex flex-col items-center gap-6">
               <span className="text-5xl block animate-bounce">🔍</span>
               <div>
-                <h3 className="font-extrabold text-slate-900 text-lg">No Products Found</h3>
-                <p className="text-slate-600 text-sm mt-1 max-w-md mx-auto leading-relaxed">
+                <h3 className="font-extrabold text-slate-900 text-xl">No Products Found</h3>
+                <p className="text-slate-600 text-sm mt-1.5 max-w-md mx-auto leading-relaxed">
                   {search 
                     ? <>We couldn&apos;t find any medicine matching &ldquo;<span className="font-bold text-slate-900">{search}</span>&rdquo;{activeCategoryId ? ` in ${activeCategoryName}` : ''}.</>
                     : <>No products are currently available in this category.</>}
                 </p>
               </div>
 
+              {/* Instant Order Callout */}
+              <div className="w-full max-w-xl bg-gradient-to-br from-amber-500/10 via-yellow-400/15 to-amber-500/5 border-2 border-dashed border-amber-300 rounded-2xl p-6 sm:p-7 text-left flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-xs">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-tr from-amber-500 to-yellow-400 rounded-2xl flex items-center justify-center text-3xl sm:text-4xl shadow-md shrink-0 border border-yellow-200">
+                  📋
+                </div>
+                <div className="flex-1 text-center sm:text-left">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 mb-1.5">
+                    ⚡ Instant Order Service
+                  </span>
+                  <h4 className="font-extrabold text-slate-900 text-base sm:text-lg">
+                    Add an image in Instant Order & we can manage it for you!
+                  </h4>
+                  <p className="text-slate-600 text-xs sm:text-sm mt-1.5 leading-relaxed">
+                    Can&apos;t find your specific medicine or product? Just snap and upload a photo of the product package or prescription. Our certified pharmacists will source, verify, and deliver it directly to you.
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                    <Link
+                      href="/instant-order"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 active:scale-95 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-md transition-all border border-yellow-500/40"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      Upload Image / Prescription →
+                    </Link>
+                    <span className="text-[11px] text-slate-500 font-medium flex items-center gap-1">
+                      ✅ 100% Genuine • Fast Delivery
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               {/* Popular Search Recommendations */}
-              <div className="flex flex-col items-center gap-2 max-w-md w-full mt-1">
+              <div className="flex flex-col items-center gap-2 max-w-md w-full">
                 <span className="text-xs text-slate-400 font-medium">Suggested Searches:</span>
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   {['Panadol', 'Augmentin', 'Brufen', 'Disprin', 'Paracetamol', 'Multivitamin'].map((kw) => (

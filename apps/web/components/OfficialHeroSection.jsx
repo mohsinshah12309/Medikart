@@ -1,14 +1,56 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { triggerCategorySelect, scrollToCatalog } from '../lib/catalogEvents';
 
-export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
+const DEFAULT_CITIES = ['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan'];
+
+export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [] }) {
   const [selectedCity, setSelectedCity] = useState(initialCity);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const [cities, setCities] = useState(DEFAULT_CITIES);
 
-  const cities = ['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan'];
+  // Fetch dynamic active cities from backend API
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+    fetch(`${apiUrl}/cities`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data?.cities && data.data.cities.length > 0) {
+          const apiCityNames = data.data.cities.map((c) => c.name?.trim()).filter(Boolean);
+          // Merge unique city names with defaults
+          const merged = Array.from(new Set([...apiCityNames, ...DEFAULT_CITIES]));
+          setCities(merged);
+        }
+      })
+      .catch((err) => {
+        console.warn('Could not load dynamic cities, using defaults:', err);
+      });
+  }, []);
+
+  // Helper: Find MongoDB category ID by slug or fuzzy name
+  const findCategoryId = (slug, name) => {
+    if (!categories || categories.length === 0) return '';
+    const bySlug = categories.find((c) => c.slug === slug);
+    if (bySlug) return bySlug._id;
+    const lowerName = name.toLowerCase();
+    const byName = categories.find(
+      (c) =>
+        c.name.toLowerCase().includes(lowerName) ||
+        lowerName.includes(c.name.toLowerCase()) ||
+        c.slug?.toLowerCase().includes(slug.toLowerCase())
+    );
+    return byName ? byName._id : '';
+  };
+
+  const handleAppCategoryClick = (cat, e) => {
+    if (e) e.preventDefault();
+    const catId = findCategoryId(cat.slug, cat.name);
+    triggerCategorySelect(catId, true);
+    scrollToCatalog();
+  };
 
   const trustBadges = [
     { icon: '⚡', label: 'Fast Delivery' },
@@ -17,7 +59,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
     { icon: '❤️', label: 'Better Health' },
   ];
 
-  // 6 Core Categories with Authentic Commercial Studio Photography (No Emojis/Icons)
+  // 6 Core Categories with Authentic Commercial Studio Photography
   const appCategories = [
     { 
       name: 'Prescription Medicines', 
@@ -51,14 +93,9 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
     },
   ];
 
-  const scrollToCatalog = (e) => {
+  const handleScrollCatalog = (e) => {
     if (e) e.preventDefault();
-    const el = document.getElementById('store-catalog') || document.getElementById('catalog');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      window.location.hash = '#store-catalog';
-    }
+    scrollToCatalog();
   };
 
   return (
@@ -112,7 +149,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
           {/* Location Selector Pill & Action Buttons */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             
-            {/* City Selector Pill with interactive dropdown */}
+            {/* City Selector Pill with interactive scrollable dropdown */}
             <div className="relative">
               <button
                 type="button"
@@ -127,9 +164,10 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
               </button>
 
               {cityDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-44 bg-white rounded-2xl border border-amber-200 shadow-xl py-2 z-50 animate-fade-in-up">
-                  <div className="px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100">
-                    Select City
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-2xl border border-amber-200 shadow-xl py-2 z-50 max-h-60 overflow-y-auto scrollbar-thin animate-fade-in-up">
+                  <div className="px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100 flex items-center justify-between">
+                    <span>Select City</span>
+                    <span className="text-[10px] text-amber-600 font-bold">{cities.length} Cities</span>
                   </div>
                   {cities.map((city) => (
                     <button
@@ -139,14 +177,14 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
                         setSelectedCity(city);
                         setCityDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-3.5 py-2 text-xs font-bold transition-colors flex items-center justify-between cursor-pointer ${
+                      className={`w-full text-left px-3.5 py-2.5 text-xs font-bold transition-colors flex items-center justify-between cursor-pointer ${
                         selectedCity === city 
-                          ? 'bg-amber-50 text-amber-700 font-extrabold' 
+                          ? 'bg-amber-100/70 text-amber-900 font-extrabold' 
                           : 'text-slate-700 hover:bg-amber-50/60'
                       }`}
                     >
-                      <span>{city}</span>
-                      {selectedCity === city && <span className="text-emerald-600">✓</span>}
+                      <span className="truncate">{city}</span>
+                      {selectedCity === city && <span className="text-emerald-600 font-black">✓</span>}
                     </button>
                   ))}
                 </div>
@@ -165,7 +203,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
             {/* Fully Functional Browse Products Smooth Scroll Button */}
             <a
               href="#store-catalog"
-              onClick={scrollToCatalog}
+              onClick={handleScrollCatalog}
               className="px-5 py-2.5 rounded-full bg-white hover:bg-amber-50/70 border border-[#F3EFE6] hover:border-amber-300 text-sm font-bold text-[#1E293B] shadow-xs transition-all cursor-pointer"
             >
               Browse Products
@@ -173,16 +211,16 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
           </div>
         </div>
 
-        {/* ─── Right Column: Master Phone Mockup & Skyline (Clear of overlaps) ── */}
+        {/* ─── Right Column: Master Phone Mockup & Skyline ── */}
         <div className="relative z-10 w-full lg:w-[460px] flex flex-col items-center justify-center pt-8 sm:pt-10 lg:pt-6">
           
-          {/* Handwritten Annotation on Top-Right (Positioned cleanly ABOVE the phone) */}
+          {/* Handwritten Annotation on Top-Right */}
           <div className="w-full flex justify-end mb-2 pr-2 sm:pr-6 z-20 pointer-events-none">
             <div className="flex flex-col items-end transform rotate-[-3deg]">
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-amber-200 shadow-xs">
                 <span className="text-amber-500 text-xs animate-pulse">✨</span>
                 <span className="font-script text-lg sm:text-2xl font-bold text-[#D97706] whitespace-nowrap">
-                  Same medicines. Faster delivery.
+                  Trusted medicine,Fastest delivery
                 </span>
               </div>
               {/* Playful curved hand-drawn doodle arrow pointing toward the phone */}
@@ -196,7 +234,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
           {/* Relative Container for Phone and Floating Badges */}
           <div className="relative flex items-center justify-center w-full">
             
-            {/* Lahore Skyline & Minar Silhouette Illustration Backdrop */}
+            {/* Skyline Illustration Backdrop */}
             <div className="absolute inset-0 flex items-end justify-center opacity-30 pointer-events-none z-0 overflow-hidden">
               <svg viewBox="0 0 500 300" className="w-full h-full text-amber-400 fill-current">
                 <path d="M250,40 L253,120 L258,200 L268,260 L232,260 L242,200 L247,120 Z" opacity="0.75" />
@@ -263,28 +301,31 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
 
                 {/* In-App Search Bar */}
                 <div className="relative w-full my-1">
-                  <div className="flex items-center gap-2 bg-white rounded-xl px-3 py-1.5 border border-slate-200/80 shadow-xs text-xs text-slate-400">
+                  <div 
+                    onClick={handleScrollCatalog}
+                    className="flex items-center gap-2 bg-white rounded-xl px-3 py-1.5 border border-slate-200/80 shadow-xs text-xs text-slate-400 cursor-pointer hover:border-amber-300 transition-colors"
+                  >
                     <span>🔍</span>
                     <span className="text-[10.5px] font-medium text-slate-400">Search medicines, vitamins...</span>
                   </div>
                 </div>
 
-                {/* In-App 6-Category Grid with Real High-Res Photos */}
+                {/* In-App 6-Category Grid with Real Photos & Click Routing */}
                 <div className="pt-2">
                   <div className="flex items-center justify-between pb-1.5">
                     <span className="text-[11px] font-black text-slate-800 uppercase tracking-tight">Categories</span>
-                    <span className="text-[10px] font-bold text-amber-600 cursor-pointer" onClick={scrollToCatalog}>See all</span>
+                    <span className="text-[10px] font-bold text-amber-600 cursor-pointer hover:underline" onClick={handleScrollCatalog}>See all</span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2">
                     {appCategories.map((cat, i) => (
                       <div 
                         key={i} 
-                        onClick={scrollToCatalog}
-                        className="flex items-center gap-2 p-1.5 rounded-xl bg-white border border-amber-100/80 shadow-xs hover:border-amber-300 transition-all cursor-pointer"
+                        onClick={(e) => handleAppCategoryClick(cat, e)}
+                        className="flex items-center gap-2 p-1.5 rounded-xl bg-white border border-amber-100/80 shadow-xs hover:border-amber-300 hover:bg-amber-50/50 transition-all cursor-pointer group"
                       >
                         {/* Real Photo Thumbnail */}
-                        <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-amber-200 relative bg-amber-50">
+                        <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-amber-200 relative bg-amber-50 group-hover:scale-105 transition-transform">
                           <Image
                             src={cat.image}
                             alt={cat.name}
@@ -293,7 +334,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
                             className="object-cover"
                           />
                         </div>
-                        <span className="text-[9.5px] font-bold text-slate-800 leading-tight text-left line-clamp-2">
+                        <span className="text-[9.5px] font-bold text-slate-800 leading-tight text-left line-clamp-2 group-hover:text-amber-800 transition-colors">
                           {cat.name}
                         </span>
                       </div>
@@ -305,7 +346,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
                 <div className="mt-auto pt-2">
                   <Link 
                     href="/instant-order"
-                    className="w-full p-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-900 flex items-center justify-between shadow-xs cursor-pointer"
+                    className="w-full p-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-900 flex items-center justify-between shadow-xs cursor-pointer hover:opacity-95 transition-opacity"
                   >
                     <div className="text-left leading-tight">
                       <div className="text-[10px] font-black">Prescription Upload</div>
@@ -325,13 +366,12 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          2. TWO FEATURE CALLOUT BLOCKS (Side-by-Side matching Image 3)
+          2. TWO FEATURE CALLOUT BLOCKS
       ────────────────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         
         {/* Card 1: Prescription Order with Ease */}
         <div className="card-warm p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-[#FFFDF9] via-white to-amber-50/50 border border-[#F3EFE6] min-h-[220px]">
-          {/* Subtle Rx Background Watermark */}
           <div className="absolute -right-4 -bottom-6 text-8xl font-black text-amber-200/25 pointer-events-none select-none">
             ℞
           </div>
@@ -357,7 +397,6 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
               <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
 
-            {/* Graphic Illustration: Prescription Pad & Blister */}
             <div className="flex items-center gap-2">
               <div className="w-12 h-14 bg-white rounded-lg border border-amber-200 shadow-sm p-1.5 flex flex-col justify-between transform -rotate-3">
                 <span className="text-xs font-black text-amber-700">℞</span>
@@ -393,14 +432,12 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
           </div>
 
           <div className="relative z-10 pt-6 flex items-center justify-between">
-            {/* City selector pill in card */}
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-amber-300 text-xs font-bold text-slate-800 shadow-xs">
               <span className="text-amber-500">📍</span>
               <span>{selectedCity}</span>
               <span className="text-amber-600 text-[10px]">▾</span>
             </div>
 
-            {/* Delivery Scooter Graphic with Cart Logo on Rear Box */}
             <div className="relative flex items-center">
               <div className="text-4xl transform -scale-x-100 drop-shadow-md">
                 🛵
@@ -416,7 +453,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          3. FULL-WIDTH CATEGORIES STRIP (Real Photos instead of Icons)
+          3. FULL-WIDTH CATEGORIES STRIP
       ────────────────────────────────────────────────────────────────────── */}
       <div className="card-warm p-6 sm:p-8 bg-white border border-[#F3EFE6] flex flex-col lg:flex-row items-center justify-between gap-6">
         
@@ -431,7 +468,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
           <div className="pt-3">
             <a
               href="#store-catalog"
-              onClick={scrollToCatalog}
+              onClick={handleScrollCatalog}
               className="btn-amber-gradient px-4 py-2 text-xs font-extrabold shadow-xs inline-flex items-center gap-1.5 cursor-pointer"
             >
               <span>Shop Categories</span>
@@ -440,16 +477,14 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
           </div>
         </div>
 
-        {/* Middle: 6 Circular Category Photo Cards (Real High-Res Imagery) */}
+        {/* Middle: 6 Circular Category Photo Cards */}
         <div className="flex-2 grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 w-full lg:w-auto">
           {appCategories.map((cat, idx) => (
-            <a
+            <div
               key={idx}
-              href="#store-catalog"
-              onClick={scrollToCatalog}
+              onClick={(e) => handleAppCategoryClick(cat, e)}
               className="flex flex-col items-center text-center group cursor-pointer p-2 rounded-2xl hover:bg-amber-50/60 transition-colors"
             >
-              {/* Circular Photo Frame with Golden Accent Border */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-amber-300 group-hover:border-amber-500 shadow-xs group-hover:shadow-md transition-all transform group-hover:scale-110 relative bg-amber-50 flex-shrink-0">
                 <Image
                   src={cat.image}
@@ -462,7 +497,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore' }) {
               <span className="text-[11px] sm:text-xs font-bold text-slate-800 mt-2 leading-tight max-w-[85px] group-hover:text-amber-700 transition-colors">
                 {cat.name}
               </span>
-            </a>
+            </div>
           ))}
         </div>
 

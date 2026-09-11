@@ -26,16 +26,16 @@ export default function BlogsDirectoryPage() {
   return (
     <div className="flex flex-col gap-8 pb-12">
       {/* ─── Hero Header ─── */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-[#FFFDF7] via-[#FFFBEB] to-[#FEF3C7]/40 border border-[#F3EFE6] p-6 sm:p-10 shadow-warm-card overflow-hidden">
+      <div className="relative rounded-3xl bg-gradient-to-br from-white via-amber-50/50 to-yellow-50/30 border border-amber-200/80 p-6 sm:p-10 shadow-warm-card overflow-hidden">
         <div className="relative z-10 max-w-2xl text-left space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold border border-emerald-200 shadow-3xs">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-extrabold border border-amber-200 shadow-3xs">
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
             <span>Medically Verified by Licensed Pakistani Clinicians</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-heading tracking-tight text-slate-900 leading-tight">
             Healthcare &amp; Wellness{" "}
-            <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-amber-500 via-[#FFCB05] to-yellow-500 bg-clip-text text-transparent">
               Knowledge Hub
             </span>
           </h1>
@@ -47,7 +47,7 @@ export default function BlogsDirectoryPage() {
 
           {/* In-Page Blog Search Bar */}
           <div className="pt-2 max-w-md">
-            <div className="relative flex items-center bg-white rounded-full border border-slate-300/80 shadow-xs px-3.5 py-2">
+            <div className="relative flex items-center bg-white rounded-full border border-amber-200/90 shadow-xs px-3.5 py-2 focus-within:border-amber-400 focus-within:ring-2 focus-within:ring-amber-200">
               <Search className="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" />
               <input
                 type="text"
@@ -84,14 +84,14 @@ export default function BlogsDirectoryPage() {
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
                 isActive
-                  ? "bg-emerald-600 text-white shadow-xs font-extrabold"
-                  : "bg-white text-slate-700 hover:bg-emerald-50/70 border border-slate-200/80 hover:border-emerald-300"
+                  ? "btn-amber-gradient text-slate-950 shadow-xs font-black"
+                  : "bg-white text-slate-700 hover:bg-amber-50/70 border border-slate-200 hover:border-amber-400"
               }`}
             >
               <span>{cat.name}</span>
               <span
                 className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  isActive ? "bg-emerald-700 text-white" : "bg-slate-100 text-slate-600"
+                  isActive ? "bg-amber-500 text-slate-950 font-black" : "bg-slate-100 text-slate-600"
                 }`}
               >
                 {cat.count}
@@ -107,10 +107,10 @@ export default function BlogsDirectoryPage() {
           <Link
             key={blog.id}
             href={`/blogs/${blog.slug}`}
-            className="group flex flex-col rounded-3xl bg-white border border-[#F3EFE6] hover:border-emerald-300 shadow-3xs hover:shadow-warm-card overflow-hidden transition-all duration-300 cursor-pointer"
+            className="group flex flex-col rounded-3xl bg-white border border-slate-200 hover:border-amber-400 shadow-3xs hover:shadow-warm-card overflow-hidden transition-all duration-300 cursor-pointer"
           >
             {/* Real Photographic Card Image */}
-            <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+            <div className="relative h-60 sm:h-64 w-full overflow-hidden bg-slate-100">
               <Image
                 src={blog.image}
                 alt={blog.title}
@@ -118,7 +118,7 @@ export default function BlogsDirectoryPage() {
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10.5px] font-extrabold text-emerald-800 shadow-xs border border-emerald-100">
+              <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10.5px] font-extrabold text-amber-900 shadow-xs border border-amber-200">
                 {blog.category}
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function BlogsDirectoryPage() {
                   <span>{blog.date}</span>
                 </div>
 
-                <h2 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-2 leading-snug">
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-amber-800 transition-colors line-clamp-2 leading-snug">
                   {blog.title}
                 </h2>
 
@@ -148,7 +148,7 @@ export default function BlogsDirectoryPage() {
                 <span className="text-[11px] font-bold text-slate-500 truncate max-w-[180px]">
                   By {blog.author.split(",")[0]}
                 </span>
-                <span className="text-xs font-extrabold text-emerald-700 group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                <span className="text-xs font-extrabold text-amber-700 group-hover:translate-x-1 transition-transform flex items-center gap-1">
                   <span>Read</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </span>

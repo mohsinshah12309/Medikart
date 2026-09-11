@@ -1,8 +1,45 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+
+class ThreeErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("3D Viewer Error Boundary caught:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center gap-3 bg-slate-50 rounded-2xl border border-slate-200 aspect-square">
+          <span className="text-3xl">🌐</span>
+          <h4 className="text-xs font-bold text-slate-800">3D Interactive Preview Unavailable</h4>
+          <p className="text-[11px] text-slate-500 max-w-xs">
+            Hardware acceleration or WebGL is currently limited in your browser.
+          </p>
+          <button
+            type="button"
+            onClick={this.props.onFallback}
+            className="mt-1 px-4 py-1.5 bg-yellow-400 font-bold text-xs text-slate-950 rounded-xl shadow-xs cursor-pointer"
+          >
+            ← View Standard Photo
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Code split Three.js 3D viewer so it is only loaded on user request
 const Product3DViewer = dynamic(() => import('./3d/Product3DViewer'), {
@@ -62,10 +99,12 @@ export default function ProductGallery({
       {/* Active Display Panel */}
       {viewMode === "3d" ? (
         <div className="aspect-square bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden flex items-center justify-center relative shadow-sm">
-          <Product3DViewer 
-            productName={productName} 
-            imageUrl={getFullUrl(activeImage)} 
-          />
+          <ThreeErrorBoundary onFallback={() => setViewMode("2d")}>
+            <Product3DViewer 
+              productName={productName} 
+              imageUrl={getFullUrl(activeImage)} 
+            />
+          </ThreeErrorBoundary>
         </div>
       ) : (
         <>

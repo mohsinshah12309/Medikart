@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="100%" height="100%">
+  <defs>
+    <linearGradient id="searleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(18, 16)">
+    <rect x="0" y="0" width="46" height="46" rx="12" fill="url(#searleGrad)"/>
+    <text x="23" y="32" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="22" fill="#ffffff" text-anchor="middle">S</text>
+  </g>
+  <text x="76" y="42" font-family="'Segoe UI', -apple-system, sans-serif" font-weight="900" font-size="22" fill="#0F766E" letter-spacing="1">SEARLE</text>
+  <text x="76" y="57" font-family="'Segoe UI', -apple-system, sans-serif" font-weight="700" font-size="10" fill="#0D9488" letter-spacing="2">THE SEARLE COMPANY</text>
+</svg>

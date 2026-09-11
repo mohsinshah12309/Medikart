@@ -90,7 +90,7 @@ export default async function Home({ searchParams }) {
   return (
     <div className="flex flex-col gap-6 sm:gap-8">
       {/* 1. Official Master Brand Hero Section (matching Image 3) */}
-      <OfficialHeroSection initialCity="Lahore" />
+      <OfficialHeroSection initialCity="Lahore" categories={categories} />
 
       {/* 2. Secondary Promotional Hero Banners (if configured in Admin) */}
       {heroBanners && heroBanners.length > 0 && (

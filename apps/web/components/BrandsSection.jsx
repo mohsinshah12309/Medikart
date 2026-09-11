@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 /**
  * Top Pharmaceutical Brands Section
@@ -17,6 +18,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#008080',
     bgColor: '#F0FDFA',
     badge: 'Top Stocked',
+    logo: '/images/brands/getz-pharma.svg',
   },
   {
     name: 'Sami Pharma',
@@ -26,6 +28,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#4F46E5',
     bgColor: '#EEF2FF',
     badge: 'Popular',
+    logo: '/images/brands/sami-pharma.svg',
   },
   {
     name: 'Hilton Pharma',
@@ -35,6 +38,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#059669',
     bgColor: '#ECFDF5',
     badge: 'Essential',
+    logo: '/images/brands/hilton-pharma.svg',
   },
   {
     name: 'Barrett Hodgson',
@@ -44,6 +48,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#0369A1',
     bgColor: '#F0F9FF',
     badge: 'Trusted',
+    logo: '/images/brands/barrett-hodgson.svg',
   },
   {
     name: 'Highnoon Labs',
@@ -53,6 +58,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#D97706',
     bgColor: '#FFFBEB',
     badge: 'Healthcare',
+    logo: '/images/brands/highnoon-labs.svg',
   },
   {
     name: 'Martin Dow',
@@ -62,6 +68,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#0284C7',
     bgColor: '#F0F9FF',
     badge: 'Quality',
+    logo: '/images/brands/martin-dow.svg',
   },
   {
     name: 'CCL Pharma',
@@ -71,6 +78,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#2563EB',
     bgColor: '#EFF6FF',
     badge: 'Reliable',
+    logo: '/images/brands/ccl-pharma.svg',
   },
   {
     name: 'PharmEvo',
@@ -80,6 +88,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#16A34A',
     bgColor: '#F0FDF4',
     badge: 'Wellness',
+    logo: '/images/brands/pharmevo.svg',
   },
   {
     name: 'Abbott Labs',
@@ -89,6 +98,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#0096D6',
     bgColor: '#EFF6FF',
     badge: 'Global',
+    logo: '/images/brands/abbott-labs.svg',
   },
   {
     name: 'GSK Pakistan',
@@ -98,6 +108,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#F36F21',
     bgColor: '#FFF7ED',
     badge: 'Standard',
+    logo: '/images/brands/gsk-pakistan.svg',
   },
   {
     name: 'Atco Labs',
@@ -107,6 +118,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#7C3AED',
     bgColor: '#F5F3FF',
     badge: 'Certified',
+    logo: '/images/brands/atco-labs.svg',
   },
   {
     name: 'Ferozsons',
@@ -116,6 +128,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#0891B2',
     bgColor: '#ECFEFF',
     badge: 'Heritage',
+    logo: '/images/brands/ferozsons.svg',
   },
   {
     name: 'Searle Pharma',
@@ -125,6 +138,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#0D9488',
     bgColor: '#F0FDFA',
     badge: 'Specialist',
+    logo: '/images/brands/searle-pharma.svg',
   },
   {
     name: 'High-Q Int.',
@@ -134,6 +148,7 @@ const CATALOG_TOP_BRANDS = [
     themeColor: '#E11D48',
     bgColor: '#FFF1F2',
     badge: 'Specialist',
+    logo: '/images/brands/high-q.svg',
   },
 ];
 
@@ -204,7 +219,7 @@ export default function BrandsSection() {
       >
         <div
           ref={scrollRef}
-          className={`flex items-stretch gap-3 sm:gap-4 ${
+          className={`flex items-stretch gap-3.5 sm:gap-4 ${
             slideDirection === 'ltr' ? 'animate-slide-ltr' : 'animate-slide-rtl'
           }`}
           style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
@@ -213,17 +228,19 @@ export default function BrandsSection() {
             <Link
               key={`${brand.name}-${idx}`}
               href={`/?search=${encodeURIComponent(brand.query)}#store-catalog`}
-              className="shrink-0 w-36 sm:w-40 bg-white hover:bg-amber-50/50 rounded-2xl border border-[#F3EFE6] hover:border-amber-400 p-3.5 flex flex-col items-center justify-between text-center transition-all duration-200 hover:shadow-warm-card hover:-translate-y-1 group/card cursor-pointer"
+              className="shrink-0 w-40 sm:w-44 bg-white hover:bg-amber-50/40 rounded-2xl border border-slate-200 hover:border-amber-400 p-3.5 flex flex-col items-center justify-between text-center transition-all duration-200 hover:shadow-warm-card hover:-translate-y-1 group/card cursor-pointer"
             >
-              {/* Clean Monogram Brand Shield */}
-              <div
-                className="w-16 h-14 rounded-2xl flex items-center justify-center font-black text-xs sm:text-sm tracking-wider transition-all duration-200 group-hover/card:scale-105 shadow-2xs border border-slate-100"
-                style={{
-                  backgroundColor: brand.bgColor,
-                  color: brand.themeColor,
-                }}
-              >
-                {brand.shortCode}
+              {/* Brand Official Logo Container */}
+              <div className="w-full h-16 rounded-xl flex items-center justify-center p-2 bg-slate-50 group-hover/card:bg-white border border-slate-100 group-hover/card:border-amber-200 transition-all duration-200 shadow-2xs relative overflow-hidden">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={brand.logo}
+                    alt={`${brand.name} Logo`}
+                    fill
+                    sizes="(max-width: 640px) 140px, 160px"
+                    className="object-contain transition-transform duration-300 group-hover/card:scale-105"
+                  />
+                </div>
               </div>
 
               {/* Brand Title & Real Catalog Count */}
@@ -234,13 +251,13 @@ export default function BrandsSection() {
                 <h3 className="text-xs sm:text-sm font-black text-slate-800 truncate mt-0.5 group-hover/card:text-slate-950">
                   {brand.name}
                 </h3>
-                <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                <p className="text-[10.5px] text-slate-500 font-semibold mt-0.5">
                   {brand.productCount}
                 </p>
               </div>
 
               {/* Explore Link */}
-              <span className="mt-2 text-[10px] font-bold text-slate-600 group-hover/card:text-amber-700 group-hover/card:underline flex items-center gap-0.5">
+              <span className="mt-2 text-[10.5px] font-bold text-slate-600 group-hover/card:text-amber-700 group-hover/card:underline flex items-center gap-0.5">
                 Explore Products →
               </span>
             </Link>

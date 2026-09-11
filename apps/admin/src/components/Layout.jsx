@@ -39,19 +39,19 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
             <svg viewBox="0 0 100 90" fill="none" style={{ width: '100%', height: '100%' }}>
               <defs>
                 <linearGradient id="adminCartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#F59E0B" />
-                  <stop offset="50%" stopColor="#FBBF24" />
-                  <stop offset="100%" stopColor="#FACC15" />
+                  <stop offset="0%" stopColor="#F8BA03" />
+                  <stop offset="50%" stopColor="#FFCB05" />
+                  <stop offset="100%" stopColor="#FED604" />
                 </linearGradient>
                 <linearGradient id="adminCapsuleY" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#F59E0B" />
-                  <stop offset="100%" stopColor="#FCD34D" />
+                  <stop offset="0%" stopColor="#F8BA03" />
+                  <stop offset="100%" stopColor="#FED604" />
                 </linearGradient>
               </defs>
               {/* Motion Streaks */}
-              <rect x="6" y="24" width="22" height="7" rx="3.5" fill="#FBBF24" />
-              <rect x="0" y="36" width="25" height="7" rx="3.5" fill="#FBBF24" />
-              <rect x="8" y="48" width="18" height="6.5" rx="3.25" fill="#FBBF24" />
+              <rect x="6" y="24" width="22" height="7" rx="3.5" fill="#FFCB05" />
+              <rect x="0" y="36" width="25" height="7" rx="3.5" fill="#FFCB05" />
+              <rect x="8" y="48" width="18" height="6.5" rx="3.25" fill="#FFCB05" />
               {/* Capsule */}
               <g transform="translate(52, 24) rotate(32)">
                 <path d="M-7,-18 C-7,-24 7,-24 7,-18 L7,0 L-7,0 Z" fill="url(#adminCapsuleY)" />
@@ -66,9 +66,9 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
               <rect x="47.5" y="35" width="9" height="20" rx="3.5" fill="#FFFFFF" />
               <rect x="42" y="40.5" width="20" height="9" rx="3.5" fill="#FFFFFF" />
               {/* Wheels */}
-              <circle cx="38" cy="74" r="8" fill="#F59E0B" />
+              <circle cx="38" cy="74" r="8" fill="#F8BA03" />
               <circle cx="38" cy="74" r="3.5" fill="#FEF3C7" />
-              <circle cx="62" cy="74" r="8" fill="#F59E0B" />
+              <circle cx="62" cy="74" r="8" fill="#F8BA03" />
               <circle cx="62" cy="74" r="3.5" fill="#FEF3C7" />
             </svg>
           </div>

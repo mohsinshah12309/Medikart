@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="100%" height="100%">
+  <defs>
+    <linearGradient id="peGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(16, 16)">
+    <circle cx="24" cy="24" r="22" fill="none" stroke="url(#peGrad)" stroke-width="4"/>
+    <circle cx="24" cy="24" r="12" fill="url(#peGrad)"/>
+    <path d="M24,6 A18,18 0 0,1 42,24" fill="none" stroke="#86EFAC" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <text x="74" y="42" font-family="'Segoe UI', -apple-system, sans-serif" font-weight="900" font-size="20" fill="#15803D" letter-spacing="0.5">pharm<tspan fill="#22C55E">evo</tspan></text>
+  <text x="74" y="57" font-family="'Segoe UI', -apple-system, sans-serif" font-weight="600" font-size="10" fill="#16A34A" letter-spacing="1.5">Our promise, a healthier society</text>
+</svg>

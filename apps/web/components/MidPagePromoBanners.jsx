@@ -10,7 +10,7 @@ const FALLBACK_MID_BANNERS = [
     title: "Protect the Skin You're In",
     subtitle: "Dermatologist-recommended sunblocks, SPF 60 creams & gentle cleansers.",
     linkUrl: "#store-catalog",
-    gradient: "from-amber-100 via-yellow-50 to-orange-50",
+    gradient: "from-yellow-100 via-amber-50 to-yellow-50",
     badge: "Skin & Sun Care",
     icon: "☀️",
   },
@@ -52,7 +52,7 @@ export default function MidPagePromoBanners({ initialBanners = [] }) {
         <div
           key={b._id || idx}
           className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${
-            b.gradient || (idx === 0 ? "from-yellow-200 via-amber-100 to-yellow-50" : "from-amber-200 via-yellow-100 to-emerald-50")
+            b.gradient || (idx === 0 ? "from-yellow-200 via-amber-100 to-yellow-50" : "from-yellow-200 via-yellow-100 to-emerald-50")
           } p-6 sm:p-8 border border-yellow-300/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-h-[190px] sm:min-h-[210px] group`}
         >
           {/* Ambient Decorative Badge */}

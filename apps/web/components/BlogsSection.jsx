@@ -15,7 +15,7 @@ export default function BlogsSection() {
 
   const handleScroll = (direction) => {
     if (scrollContainerRef.current) {
-      const scrollAmount = direction === "left" ? -360 : 360;
+      const scrollAmount = direction === "left" ? -460 : 460;
       scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -24,13 +24,13 @@ export default function BlogsSection() {
     <section aria-label="Health & Wellness Blogs" className="w-full py-4 select-none">
       <div className="flex flex-col gap-4">
         
-        {/* ─── Header: "Blogs" + "VIEW ALL" (Matching Dvago Screenshot) ─── */}
+        {/* ─── Header: "Blogs" + "VIEW ALL" (Matching Medikart Yellow/Amber Theme) ─── */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <h2 className="text-2xl sm:text-3xl font-black font-heading tracking-tight text-emerald-700">
+            <h2 className="text-2xl sm:text-3xl font-black font-heading tracking-tight text-slate-900">
               Blogs
             </h2>
-            <span className="hidden sm:inline-block text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
+            <span className="hidden sm:inline-block text-xs font-bold text-amber-900 bg-amber-100/90 border border-amber-200 px-2.5 py-0.5 rounded-full">
               Verified Medical Insights
             </span>
           </div>
@@ -41,7 +41,7 @@ export default function BlogsSection() {
               <button
                 type="button"
                 onClick={() => handleScroll("left")}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:border-amber-300 hover:bg-amber-50 text-slate-700 hover:text-amber-700 flex items-center justify-center transition-all shadow-3xs cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white border border-amber-200 hover:border-amber-400 hover:bg-amber-50 text-slate-700 hover:text-amber-800 flex items-center justify-center transition-all shadow-3xs cursor-pointer"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -49,25 +49,25 @@ export default function BlogsSection() {
               <button
                 type="button"
                 onClick={() => handleScroll("right")}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:border-amber-300 hover:bg-amber-50 text-slate-700 hover:text-amber-700 flex items-center justify-center transition-all shadow-3xs cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white border border-amber-200 hover:border-amber-400 hover:bg-amber-50 text-slate-700 hover:text-amber-800 flex items-center justify-center transition-all shadow-3xs cursor-pointer"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
-            {/* "VIEW ALL" Pill Button (Matching Dvago Screenshot) */}
+            {/* "VIEW ALL" Pill Button (Matching Medikart Yellow/Amber Theme) */}
             <Link
               href="/blogs"
-              className="px-4 py-1.5 rounded-xl bg-[#70B32D] hover:bg-[#619E24] text-white text-xs font-black uppercase tracking-wider transition-all shadow-2xs hover:shadow-xs flex items-center gap-1"
+              className="btn-amber-gradient px-4 py-1.5 rounded-xl text-slate-950 text-xs font-black uppercase tracking-wider transition-all shadow-xs flex items-center gap-1 group"
             >
               <span>VIEW ALL</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
         </div>
 
-        {/* ─── Horizontal Continuous Sliding Track with Circular Thumbnails ─── */}
+        {/* ─── Horizontal Continuous Sliding Track with Enlarged Thumbnails ─── */}
         <div
           ref={scrollContainerRef}
           onMouseEnter={() => setIsPaused(true)}
@@ -85,36 +85,36 @@ export default function BlogsSection() {
               <Link
                 key={`${blog.id}-${idx}`}
                 href={`/blogs/${blog.slug}`}
-                className="group flex items-center gap-3.5 p-3 rounded-2xl bg-white hover:bg-emerald-50/40 border border-slate-100 hover:border-emerald-300 shadow-3xs hover:shadow-warm-card transition-all cursor-pointer w-[310px] sm:w-[350px] flex-shrink-0"
+                className="group flex items-center gap-4 p-3.5 sm:p-4 rounded-3xl bg-white hover:bg-amber-50/40 border border-slate-200 hover:border-amber-400 shadow-3xs hover:shadow-warm-card transition-all cursor-pointer w-[360px] sm:w-[440px] md:w-[470px] flex-shrink-0"
               >
-                {/* Circular Photographic Thumbnail (Matching Dvago Screenshot) */}
-                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full overflow-hidden flex-shrink-0 border-2 border-slate-100 group-hover:border-emerald-500 shadow-xs transition-all transform group-hover:scale-105">
+                {/* Enlarged Photographic Thumbnail */}
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden flex-shrink-0 border-2 border-slate-100 group-hover:border-amber-400 shadow-sm transition-all transform group-hover:scale-105 bg-slate-50">
                   <Image
                     src={blog.image}
                     alt={blog.title}
                     fill
-                    sizes="88px"
+                    sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, 144px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
 
                 {/* Blog Card Content */}
                 <div className="flex-1 min-w-0 text-left">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 line-clamp-1">
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 line-clamp-1">
                     {blog.category}
                   </span>
 
-                  <h3 className="text-xs sm:text-[13px] font-bold text-slate-800 group-hover:text-emerald-800 transition-colors line-clamp-2 leading-snug mt-0.5">
+                  <h3 className="text-xs sm:text-sm md:text-[15px] font-bold text-slate-800 group-hover:text-amber-900 transition-colors line-clamp-2 leading-snug mt-1">
                     {blog.title}
                   </h3>
 
-                  <div className="flex items-center gap-2 mt-2 text-[10.5px] text-slate-400 font-medium">
+                  <div className="flex items-center gap-2 mt-2.5 text-[11px] text-slate-400 font-medium">
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-slate-400" />
+                      <Clock className="w-3.5 h-3.5 text-slate-400" />
                       <span>{blog.readTime}</span>
                     </span>
                     <span>•</span>
-                    <span className="text-emerald-600 font-semibold group-hover:underline">
+                    <span className="text-amber-600 font-bold group-hover:text-amber-800 group-hover:underline">
                       Read Article &rarr;
                     </span>
                   </div>

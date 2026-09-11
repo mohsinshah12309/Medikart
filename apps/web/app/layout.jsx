@@ -120,15 +120,10 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-slate-900 tech-grid relative overflow-x-hidden font-body pb-16 md:pb-0">
-        
-        {/* Soft Ambient Warm Amber Highlights */}
-        <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-amber-200/25 blur-[140px] rounded-full pointer-events-none z-0" />
-        <div className="absolute top-[35%] left-0 w-[500px] h-[500px] bg-yellow-200/20 blur-[150px] rounded-full pointer-events-none z-0" />
-
+      <body className="min-h-screen flex flex-col bg-white text-slate-900 relative overflow-x-hidden font-body pb-16 md:pb-0">
         <CartProvider>
           {/* Main Brand Sticky Header */}
-          <header className="sticky top-0 z-40 bg-[#FAF8F5]/98 backdrop-blur-md border-b border-[#F3EFE6] shadow-xs transition-all">
+          <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between gap-4">
               <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
                 {/* Official Interactive Logo */}

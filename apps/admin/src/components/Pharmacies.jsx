@@ -17,6 +17,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
   // Directory Modal states
   const [showModal, setShowModal] = useState(false);
   const [editingPharmacy, setEditingPharmacy] = useState(null);
+  const [cityFilter, setCityFilter] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     code: "",
@@ -25,6 +26,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
     email: "",
     address: "",
     cityIds: [],
+    medikartPercentage: 5,
     active: true,
   });
   const [saving, setSaving] = useState(false);
@@ -38,15 +40,18 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
   const [selectedPharmacyFilter, setSelectedPharmacyFilter] = useState("");
 
   useEffect(() => {
-    fetchPharmacies();
     fetchCities();
   }, []);
+
+  useEffect(() => {
+    fetchPharmacies(cityFilter);
+  }, [cityFilter]);
 
   useEffect(() => {
     if (activeTab === "reports") {
       fetchReports();
     }
-  }, [activeTab, dateFilter, startDate, endDate, selectedPharmacyFilter]);
+  }, [activeTab, dateFilter, startDate, endDate, selectedPharmacyFilter, cityFilter]);
 
   const flash = (msg, isError = false) => {
     if (isError) setError(msg);
@@ -65,11 +70,14 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
     } catch (_) {}
   };
 
-  const fetchPharmacies = async () => {
+  const fetchPharmacies = async (cityId = cityFilter) => {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${apiUrl}/admin/pharmacies`, { headers });
+      const params = new URLSearchParams();
+      if (cityId) params.append("city", cityId);
+      const url = `${apiUrl}/admin/pharmacies${params.toString() ? `?${params.toString()}` : ""}`;
+      const res = await fetch(url, { headers });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to load pharmacies");
       setPharmacies(data.data?.pharmacies || []);
@@ -85,6 +93,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       setReportsLoading(true);
       const params = new URLSearchParams();
       if (selectedPharmacyFilter) params.append("pharmacyId", selectedPharmacyFilter);
+      if (cityFilter) params.append("city", cityFilter);
 
       let s = startDate;
       let e = endDate;
@@ -128,6 +137,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       email: "",
       address: "",
       cityIds: [],
+      medikartPercentage: 5,
       active: true,
     });
     setShowModal(true);
@@ -143,6 +153,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       email: p.email || "",
       address: p.address || "",
       cityIds: p.cityIds ? p.cityIds.map((c) => (typeof c === "object" ? c._id : c)) : [],
+      medikartPercentage: p.medikartPercentage !== undefined ? p.medikartPercentage : 5,
       active: p.active !== false,
     });
     setShowModal(true);
@@ -239,7 +250,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
           <button
             className="btn btn-primary"
             onClick={handleOpenCreate}
-            style={{ background: "#eab308", color: "#0f172a", fontWeight: "bold" }}
+            style={{ background: "#FFCB05", color: "#1E293B", fontWeight: "800", border: "1px solid rgba(245, 158, 11, 0.4)" }}
           >
             + Register Pharmacy Branch
           </button>
@@ -257,13 +268,14 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
           onClick={() => setActiveTab("directory")}
           style={{
             padding: "0.5rem 1.2rem",
-            borderRadius: "8px",
+            borderRadius: "9999px",
             border: "none",
             fontSize: "0.9rem",
-            fontWeight: 700,
+            fontWeight: 800,
             cursor: "pointer",
-            background: activeTab === "directory" ? "#eab308" : "transparent",
-            color: activeTab === "directory" ? "#0f172a" : "#64748b",
+            background: activeTab === "directory" ? "#FFCB05" : "transparent",
+            color: activeTab === "directory" ? "#1E293B" : "#64748b",
+            boxShadow: activeTab === "directory" ? "0 4px 14px rgba(245, 158, 11, 0.25)" : "none",
           }}
         >
           📍 Pharmacy Branches ({pharmacies.length})
@@ -273,13 +285,14 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
           onClick={() => setActiveTab("reports")}
           style={{
             padding: "0.5rem 1.2rem",
-            borderRadius: "8px",
+            borderRadius: "9999px",
             border: "none",
             fontSize: "0.9rem",
-            fontWeight: 700,
+            fontWeight: 800,
             cursor: "pointer",
-            background: activeTab === "reports" ? "#eab308" : "transparent",
-            color: activeTab === "reports" ? "#0f172a" : "#64748b",
+            background: activeTab === "reports" ? "#FFCB05" : "transparent",
+            color: activeTab === "reports" ? "#1E293B" : "#64748b",
+            boxShadow: activeTab === "reports" ? "0 4px 14px rgba(245, 158, 11, 0.25)" : "none",
           }}
         >
           📊 Fulfillment Reports & Analytics
@@ -289,14 +302,95 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       {/* TAB 1: PHARMACY DIRECTORY */}
       {activeTab === "directory" && (
         <>
+          {/* City Filter Toolbar */}
+          <div
+            style={{
+              background: "#ffffff",
+              padding: "0.85rem 1.25rem",
+              borderRadius: "14px",
+              border: "1px solid #F3EFE6",
+              marginBottom: "1.25rem",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "1rem",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+              <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1E293B", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                🏙️ Filter by City:
+              </span>
+              <select
+                className="form-control"
+                style={{
+                  padding: "0.45rem 0.85rem",
+                  fontSize: "0.875rem",
+                  borderRadius: "8px",
+                  border: "1px solid #cbd5e1",
+                  minWidth: "180px",
+                  maxWidth: "260px",
+                  fontWeight: 600,
+                }}
+                value={cityFilter}
+                onChange={(e) => setCityFilter(e.target.value)}
+              >
+                <option value="">All Cities (Show All)</option>
+                {cities.map((city) => (
+                  <option key={city._id} value={city._id}>
+                    {city.name} {city.code ? `(${city.code})` : ""}
+                  </option>
+                ))}
+              </select>
+
+              {cityFilter && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setCityFilter("")}
+                  style={{
+                    padding: "0.4rem 0.75rem",
+                    fontSize: "0.8rem",
+                    borderRadius: "8px",
+                    fontWeight: 600,
+                    background: "#f1f5f9",
+                    color: "#475569",
+                  }}
+                >
+                  ✕ Clear Filter
+                </button>
+              )}
+            </div>
+
+            <div style={{ fontSize: "0.825rem", color: "#64748b", fontWeight: 600 }}>
+              Showing <strong>{pharmacies.length}</strong> {pharmacies.length === 1 ? "pharmacy" : "pharmacies"}
+              {cityFilter && cities.find((c) => c._id === cityFilter) ? (
+                <span> in <strong style={{ color: "#1E293B" }}>{cities.find((c) => c._id === cityFilter)?.name}</strong></span>
+              ) : ""}
+            </div>
+          </div>
+
           {loading ? (
             <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>Loading pharmacies...</div>
           ) : pharmacies.length === 0 ? (
             <div style={{ padding: "3rem", textAlign: "center", background: "#f8fafc", borderRadius: "12px", border: "1px dashed #cbd5e1" }}>
-              <p style={{ color: "#64748b", fontWeight: 500 }}>No pharmacy branches registered yet.</p>
-              <button className="btn btn-primary" onClick={handleOpenCreate} style={{ marginTop: "0.75rem", background: "#eab308", color: "#0f172a" }}>
-                + Add First Pharmacy
-              </button>
+              <p style={{ color: "#64748b", fontWeight: 500 }}>
+                {cityFilter ? "No pharmacies found matching the selected city." : "No pharmacy branches registered yet."}
+              </p>
+              {cityFilter ? (
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setCityFilter("")}
+                  style={{ marginTop: "0.75rem" }}
+                >
+                  Clear City Filter
+                </button>
+              ) : (
+                <button className="btn btn-primary" onClick={handleOpenCreate} style={{ marginTop: "0.75rem", background: "#FFCB05", color: "#1E293B", fontWeight: 800 }}>
+                  + Add First Pharmacy
+                </button>
+              )}
             </div>
           ) : (
             <div className="table-responsive" style={{ background: "white", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
@@ -307,6 +401,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                     <th style={{ padding: "0.75rem 1rem" }}>Pharmacy Name & Contact</th>
                     <th style={{ padding: "0.75rem 1rem" }}>Address</th>
                     <th style={{ padding: "0.75rem 1rem" }}>Assigned Cities</th>
+                    <th style={{ padding: "0.75rem 1rem" }}>Medikart %</th>
                     <th style={{ padding: "0.75rem 1rem" }}>Status</th>
                     <th style={{ padding: "0.75rem 1rem", textAlign: "right" }}>Actions</th>
                   </tr>
@@ -348,6 +443,22 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                         ) : (
                           <span style={{ color: "#94a3b8", fontSize: "0.8rem", fontStyle: "italic" }}>All unassigned cities</span>
                         )}
+                      </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <span
+                          style={{
+                            background: "#fef9c3",
+                            color: "#854d0e",
+                            fontSize: "0.8rem",
+                            fontWeight: 800,
+                            padding: "0.2rem 0.55rem",
+                            borderRadius: "6px",
+                            border: "1px solid #fde047",
+                            display: "inline-block",
+                          }}
+                        >
+                          {p.medikartPercentage !== undefined ? p.medikartPercentage : 0}%
+                        </span>
                       </td>
                       <td style={{ padding: "0.75rem 1rem" }}>
                         <button
@@ -454,21 +565,40 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
               )}
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#475569" }}>Pharmacy:</span>
-              <select
-                className="form-control"
-                style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
-                value={selectedPharmacyFilter}
-                onChange={(e) => setSelectedPharmacyFilter(e.target.value)}
-              >
-                <option value="">All Pharmacies</option>
-                {pharmacies.map((ph) => (
-                  <option key={ph._id} value={ph._id}>
-                    {ph.name} ({ph.code})
-                  </option>
-                ))}
-              </select>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#475569" }}>🏙️ City:</span>
+                <select
+                  className="form-control"
+                  style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                  value={cityFilter}
+                  onChange={(e) => setCityFilter(e.target.value)}
+                >
+                  <option value="">All Cities</option>
+                  {cities.map((city) => (
+                    <option key={city._id} value={city._id}>
+                      {city.name} {city.code ? `(${city.code})` : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#475569" }}>🏥 Pharmacy:</span>
+                <select
+                  className="form-control"
+                  style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                  value={selectedPharmacyFilter}
+                  onChange={(e) => setSelectedPharmacyFilter(e.target.value)}
+                >
+                  <option value="">All Pharmacies</option>
+                  {pharmacies.map((ph) => (
+                    <option key={ph._id} value={ph._id}>
+                      {ph.name} ({ph.code})
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
@@ -532,6 +662,14 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                 <span style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" }}>Total Revenue Fulfilled</span>
                 <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#16a34a", marginTop: "0.25rem" }}>
                   PKR {reportsData.summary.totalRevenueSum.toLocaleString()}
+                </div>
+              </div>
+
+              {/* Total Medikart Share */}
+              <div style={{ background: "white", padding: "1.25rem", borderRadius: "12px", border: "1px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+                <span style={{ color: "#854d0e", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase" }}>Medikart Commission Share</span>
+                <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#d97706", marginTop: "0.25rem" }}>
+                  PKR {(reportsData.summary.totalMedikartShare || 0).toLocaleString()}
                 </div>
               </div>
 
@@ -654,7 +792,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                       <th style={{ padding: "0.75rem 1rem" }}>Branch</th>
                       <th style={{ padding: "0.75rem 1rem" }}>Assigned Orders</th>
                       <th style={{ padding: "0.75rem 1rem" }}>Total Revenue</th>
-                      <th style={{ padding: "0.75rem 1rem" }}>Avg. Order Value</th>
+                      <th style={{ padding: "0.75rem 1rem" }}>Medikart %</th>
                       <th style={{ padding: "0.75rem 1rem" }}>Delivered</th>
                       <th style={{ padding: "0.75rem 1rem" }}>Pending</th>
                       <th style={{ padding: "0.75rem 1rem" }}>Cancelled</th>
@@ -711,8 +849,25 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                       <td style={{ padding: "0.75rem 1rem", fontWeight: 700, color: "#16a34a" }}>
                         PKR {r.totalRevenue.toLocaleString()}
                       </td>
-                      <td style={{ padding: "0.75rem 1rem", color: "#475569" }}>
-                        PKR {r.averageOrderValue.toLocaleString()}
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", flexWrap: "wrap" }}>
+                          <span
+                            style={{
+                              background: "#fef9c3",
+                              color: "#854d0e",
+                              fontSize: "0.85rem",
+                              fontWeight: 800,
+                              padding: "0.2rem 0.55rem",
+                              borderRadius: "6px",
+                              border: "1px solid #fde047",
+                            }}
+                          >
+                            {r.medikartPercentage !== undefined ? r.medikartPercentage : 0}%
+                          </span>
+                          <span style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 600 }}>
+                            (PKR {(r.medikartRevenueShare !== undefined ? r.medikartRevenueShare : Math.round(((r.totalRevenue || 0) * (r.medikartPercentage || 0)) / 100)).toLocaleString()})
+                          </span>
+                        </div>
                       </td>
                       <td style={{ padding: "0.75rem 1rem" }}>
                         {r.deliveredOrders > 0 ? (
@@ -857,7 +1012,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "0.75rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem", marginBottom: "0.75rem" }}>
                 <div className="form-group">
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
                     Contact Phone *
@@ -875,7 +1030,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
 
                 <div className="form-group">
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
-                    Contact Person / Pharmacist
+                    Contact Person
                   </label>
                   <input
                     type="text"
@@ -883,8 +1038,28 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                     style={{ width: "100%", padding: "0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
                     value={formData.contactPerson}
                     onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-                    placeholder="Dr. Ahmed (Pharm-D)"
+                    placeholder="Dr. Ahmed"
                   />
+                </div>
+
+                <div className="form-group">
+                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
+                    Medikart % Commission
+                  </label>
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                      className="form-control"
+                      style={{ width: "100%", padding: "0.5rem 1.75rem 0.5rem 0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1", fontWeight: 700 }}
+                      value={formData.medikartPercentage}
+                      onChange={(e) => setFormData({ ...formData, medikartPercentage: e.target.value === "" ? "" : Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)) })}
+                      placeholder="e.g. 5"
+                    />
+                    <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", color: "#64748b", fontWeight: 800, fontSize: "0.85rem" }}>%</span>
+                  </div>
                 </div>
               </div>
 
@@ -954,7 +1129,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ background: "#eab308", color: "#0f172a", fontWeight: "bold" }}
+                  style={{ background: "#FFCB05", color: "#1E293B", fontWeight: "800", border: "1px solid rgba(245, 158, 11, 0.4)" }}
                   disabled={saving}
                 >
                   {saving ? "Saving..." : editingPharmacy ? "Save Changes" : "Register Pharmacy"}

@@ -14,6 +14,12 @@ const pharmacySchema = new mongoose.Schema(
         ref: "City",
       },
     ],
+    medikartPercentage: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
     active: { type: Boolean, default: true, index: true },
   },
   {

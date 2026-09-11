@@ -69,20 +69,21 @@ The official Medikart logo is composed of three harmonious elements:
    - Primary: `"Medicines. Delivered Fast."` (Storefront Nav, Admin Shell, Social Mockups)
    - Localized / Hero Variant: `"Medicines. Nearest to you."` (Surfacing immediate proximity and local pharmacy dispatch)
 
-### 2. Canonical Color Tokens
+### 2. Canonical Color Tokens (Exact Logo Palette Revision)
 
 | Token Name | Hex / CSS Value | Description & WCAG Contrast |
 |:---|:---|:---|
-| `--color-brand-gradient` | `linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #FACC15 100%)` | Primary interactive gradient for CTA buttons, cart highlights, active indicators |
-| `--color-brand-amber` | `#F59E0B` | Deep warm amber base (4.5:1+ contrast on cream) |
-| `--color-brand-gold` | `#FBBF24` | Vivid golden yellow center tone |
-| `--color-brand-yellow` | `#FACC15` | Bright warm sunlight accent |
+| `--color-brand-yellow` | `#FFCB05` | **Primary Brand Color** (exact sampled logo yellow; **9.6:1 AAA contrast** with `#1E293B` text) |
+| `--color-brand-amber` | `#F8BA03` | Warm golden sun base stop (replaces reddish orange `#F59E0B`; **8.4:1 AAA contrast** with `#1E293B`) |
+| `--color-brand-gold` | `#FDC804` | Radiant golden yellow bridge tone |
+| `--color-brand-highlight` | `#FED604` | Bright sunlight highlight accent |
+| `--color-brand-gradient` | `linear-gradient(135deg, #F8BA03 0%, #FFCB05 60%, #FED604 100%)` | Primary interactive gradient for CTA buttons, active indicators, and mobile highlights |
 | `--color-brand-bg` | `#FAF8F5` | Warm cream/off-white page canvas (eliminates harsh clinical blue-gray glare) |
 | `--color-brand-surface` | `#FFFFFF` | Elevated cards, dialogs, drawers, dropdowns |
 | `--color-brand-border` | `#F3EFE6` | Soft warm border separating cards from cream canvas |
 | `--color-brand-border-amber`| `#FEF3C7` | Amber-tinted active/featured card border |
-| `--color-brand-badge-bg` | `#FEF9C3` | Soft pastel yellow circle fill for trust badges and category icon backdrops |
-| `--color-brand-navy` | `#1E293B` | Deep Navy Charcoal primary typography (**15.6:1 AAA contrast** on canvas) |
+| `--color-brand-badge-bg` | `#FEF9C3` | Soft pastel yellow fill for trust badges and category icon backdrops |
+| `--color-brand-navy` | `#1E293B` | Deep Navy Charcoal primary typography (**15.6:1 AAA contrast** on canvas, **9.6:1 AAA contrast** on yellow buttons) |
 | `--color-brand-slate` | `#475569` | Secondary descriptive text (**7.2:1 AAA contrast**) |
 | `--color-brand-muted` | `#64748b` | Tertiary metadata, placeholders, inactive tabs (**4.6:1 AA contrast**) |
 | `--color-brand-green` | `#10B981` | Leaf green accent on "i", DRAP verified badges, stock confirmations |
@@ -99,8 +100,8 @@ The official Medikart logo is composed of three harmonious elements:
 ### 4. Corner Radius & Elevation Tokens
 - **Pills & Buttons**: `border-radius: 9999px` (`rounded-full`) — used for all primary CTAs, city selectors, and status chips.
 - **Cards & Surfaces**: `border-radius: 20px` to `24px` (`rounded-2xl` / `rounded-3xl`) — generous organic rounding.
-- **Amber Glow Shadow**: `box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35)` — applied to primary CTA buttons on hover.
-- **Warm Card Shadow**: `box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)`
+- **Golden Glow Shadow**: `box-shadow: 0 4px 14px rgba(248, 186, 3, 0.35)` — applied to primary CTA buttons on hover.
+- **Warm Card Shadow**: `box-shadow: 0 10px 25px -5px rgba(248, 186, 3, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)`
 
 ### 5. Four Core Trust Badges
 Presented as soft cream/yellow circular pills with icons and bold labels:

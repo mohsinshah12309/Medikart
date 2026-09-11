@@ -4,6 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Search, X } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
+import {
+  triggerCatalogSearch,
+  triggerFilterReset,
+  scrollToCatalog,
+  CATALOG_EVENTS,
+} from "../lib/catalogEvents";
+
 // Popular Pakistani pharmacy search queries that cycle every 1.5s (Dvago style)
 const ROTATING_PLACEHOLDERS = [
   'Search for "Medicines & Antibiotics"...',
@@ -26,6 +33,35 @@ export default function DvagoSearchBar({ className = "" }) {
   const router = useRouter();
   const pathname = usePathname();
   const intervalRef = useRef(null);
+
+  // Sync search input state if query is set/reset externally
+  useEffect(() => {
+    // Check initial search param from URL
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlSearch = params.get("search");
+      if (urlSearch) {
+        setQuery(urlSearch);
+      }
+    }
+
+    const handleSearchEvent = (e) => {
+      if (e.detail?.search !== undefined) {
+        setQuery(e.detail.search || "");
+      }
+    };
+
+    const handleResetEvent = () => {
+      setQuery("");
+    };
+
+    window.addEventListener(CATALOG_EVENTS.SEARCH, handleSearchEvent);
+    window.addEventListener(CATALOG_EVENTS.RESET_FILTERS, handleResetEvent);
+    return () => {
+      window.removeEventListener(CATALOG_EVENTS.SEARCH, handleSearchEvent);
+      window.removeEventListener(CATALOG_EVENTS.RESET_FILTERS, handleResetEvent);
+    };
+  }, []);
 
   // Cycle placeholder every 1.5 seconds with smooth fade transition
   useEffect(() => {
@@ -50,30 +86,26 @@ export default function DvagoSearchBar({ className = "" }) {
     const cleanQuery = query.trim();
     if (!cleanQuery) return;
 
-    if (pathname === "/") {
-      const inputEl = document.getElementById("catalog-search-input");
-      if (inputEl) {
-        inputEl.value = cleanQuery;
-        inputEl.dispatchEvent(new Event("input", { bubbles: true }));
-      }
-      const catalogEl = document.getElementById("store-catalog") || document.getElementById("catalog");
-      if (catalogEl) {
-        catalogEl.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    triggerCatalogSearch(cleanQuery);
+    scrollToCatalog();
+
+    if (pathname !== "/") {
       router.push(`/?search=${encodeURIComponent(cleanQuery)}#store-catalog`);
     } else {
-      router.push(`/?search=${encodeURIComponent(cleanQuery)}#store-catalog`);
+      const url = new URL(window.location.href);
+      url.searchParams.set("search", cleanQuery);
+      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 
   const handleClear = () => {
     setQuery("");
+    triggerCatalogSearch("");
     if (pathname === "/") {
-      const inputEl = document.getElementById("catalog-search-input");
-      if (inputEl) {
-        inputEl.value = "";
-        inputEl.dispatchEvent(new Event("input", { bubbles: true }));
-      }
+      const url = new URL(window.location.href);
+      url.searchParams.delete("search");
+      const newQuery = url.searchParams.toString();
+      window.history.pushState({}, "", newQuery ? `${url.pathname}?${newQuery}` : url.pathname);
     }
   };
 

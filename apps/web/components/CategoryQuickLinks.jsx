@@ -20,6 +20,11 @@ import {
   Package,
 } from "lucide-react";
 
+import {
+  triggerCategorySelect,
+  scrollToCatalog,
+} from "../lib/catalogEvents";
+
 export default function CategoryQuickLinks({ categories: initialCategories = [], onSelectCategory }) {
   const scrollRef = useRef(null);
   const [categories, setCategories] = useState(initialCategories);
@@ -54,10 +59,9 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
     if (onSelectCategory) {
       onSelectCategory(catId);
     } else {
-      window.dispatchEvent(new CustomEvent("select-category", { detail: catId }));
+      triggerCategorySelect(catId, true);
     }
-    const el = document.getElementById("store-catalog") || document.getElementById("catalog");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToCatalog();
   };
 
   const renderCategoryIcon = (name = "") => {

@@ -2,9 +2,10 @@ const pharmacyService = require("./pharmacy.service");
 
 const getPharmacies = async (req, res, next) => {
   try {
-    const { active } = req.query;
+    const { active, city, cityId } = req.query;
     const pharmacies = await pharmacyService.getPharmacies({
       active: active !== undefined ? active === "true" : undefined,
+      city: city || cityId,
     });
     res.status(200).json({
       status: "success",
@@ -66,9 +67,10 @@ const deletePharmacy = async (req, res, next) => {
 
 const getPharmacyReports = async (req, res, next) => {
   try {
-    const { pharmacyId, startDate, endDate } = req.query;
+    const { pharmacyId, city, cityId, startDate, endDate } = req.query;
     const reportData = await pharmacyService.getPharmacyReports({
       pharmacyId,
+      city: city || cityId,
       startDate,
       endDate,
     });
