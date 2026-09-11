@@ -5,14 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { triggerCategorySelect, scrollToCatalog } from '../lib/catalogEvents';
 
-const DEFAULT_CITIES = ['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan'];
+const DEFAULT_CITIES = ['Lahore'];
 
 export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [] }) {
   const [selectedCity, setSelectedCity] = useState(initialCity);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const [cities, setCities] = useState(DEFAULT_CITIES);
 
-  // Fetch dynamic active cities from backend API
+  // Fetch dynamic active cities from backend API (strictly from DB)
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
     fetch(`${apiUrl}/cities`)
@@ -20,9 +20,10 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       .then((data) => {
         if (data?.data?.cities && data.data.cities.length > 0) {
           const apiCityNames = data.data.cities.map((c) => c.name?.trim()).filter(Boolean);
-          // Merge unique city names with defaults
-          const merged = Array.from(new Set([...apiCityNames, ...DEFAULT_CITIES]));
-          setCities(merged);
+          if (apiCityNames.length > 0) {
+            setCities(apiCityNames);
+            setSelectedCity((prev) => (apiCityNames.includes(prev) ? prev : apiCityNames[0]));
+          }
         }
       })
       .catch((err) => {
@@ -103,11 +104,13 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       {/* ─────────────────────────────────────────────────────────────────────
           1. MAIN HERO BANNER (Left: Content | Right: Phone Mockup & Skyline)
       ────────────────────────────────────────────────────────────────────── */}
-      <div className="relative w-full rounded-3xl bg-gradient-to-br from-[#FFFDF7] via-[#FFFBEB] to-[#FEF3C7]/40 border border-[#F3EFE6] shadow-warm-card overflow-hidden p-6 sm:p-10 lg:p-12 min-h-[500px] flex flex-col lg:flex-row items-center justify-between gap-10">
+      <div className="relative z-30 w-full rounded-3xl bg-gradient-to-br from-[#FFFDF7] via-[#FFFBEB] to-[#FEF3C7]/40 border border-[#F3EFE6] shadow-warm-card p-6 sm:p-10 lg:p-12 min-h-[500px] flex flex-col lg:flex-row items-center justify-between gap-10">
         
-        {/* Background Decorative Radiant Glow & Subtle Arcs */}
-        <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-amber-300/35 via-yellow-200/20 to-transparent rounded-full blur-3xl pointer-events-none -mr-20 -mt-20 z-0" />
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-amber-200/20 rounded-full blur-2xl pointer-events-none z-0" />
+        {/* Background Decorative Radiant Glow & Subtle Arcs (Clipped to Banner) */}
+        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
+          <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-amber-300/35 via-yellow-200/20 to-transparent rounded-full blur-3xl -mr-20 -mt-20" />
+          <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-amber-200/20 rounded-full blur-2xl" />
+        </div>
 
         {/* ─── Left Column: Brand Copy, Trust Badges, City Selector & CTA ─── */}
         <div className="relative z-10 flex-1 max-w-xl flex flex-col items-start gap-6 text-left">
@@ -150,7 +153,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
           <div className="flex flex-wrap items-center gap-4 pt-2">
             
             {/* City Selector Pill with interactive scrollable dropdown */}
-            <div className="relative">
+            <div className="relative z-50">
               <button
                 type="button"
                 onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
@@ -164,30 +167,38 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               </button>
 
               {cityDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-2xl border border-amber-200 shadow-xl py-2 z-50 max-h-60 overflow-y-auto scrollbar-thin animate-fade-in-up">
-                  <div className="px-3.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100 flex items-center justify-between">
-                    <span>Select City</span>
-                    <span className="text-[10px] text-amber-600 font-bold">{cities.length} Cities</span>
+                <>
+                  <div 
+                    className="fixed inset-0 z-40 bg-transparent" 
+                    onClick={() => setCityDropdownOpen(false)} 
+                  />
+                  <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl border border-amber-200 shadow-2xl z-50 overflow-hidden animate-fade-in-up ring-1 ring-black/5">
+                    <div className="px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100 flex items-center justify-between bg-amber-50/70">
+                      <span>Select City</span>
+                      <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.5 rounded-full">{cities.length} Cities</span>
+                    </div>
+                    <div className="max-h-44 overflow-y-auto overscroll-contain py-1 divide-y divide-slate-100 bg-white scrollbar-thin">
+                      {cities.map((city) => (
+                        <button
+                          key={city}
+                          type="button"
+                          onClick={() => {
+                            setSelectedCity(city);
+                            setCityDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3.5 py-2.5 text-xs font-bold transition-colors flex items-center justify-between cursor-pointer ${
+                            selectedCity === city 
+                              ? 'bg-amber-100/90 text-amber-900 font-extrabold' 
+                              : 'text-slate-700 hover:bg-amber-50 hover:text-amber-900 bg-white'
+                          }`}
+                        >
+                          <span className="truncate">{city}</span>
+                          {selectedCity === city && <span className="text-emerald-600 font-black text-sm">✓</span>}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  {cities.map((city) => (
-                    <button
-                      key={city}
-                      type="button"
-                      onClick={() => {
-                        setSelectedCity(city);
-                        setCityDropdownOpen(false);
-                      }}
-                      className={`w-full text-left px-3.5 py-2.5 text-xs font-bold transition-colors flex items-center justify-between cursor-pointer ${
-                        selectedCity === city 
-                          ? 'bg-amber-100/70 text-amber-900 font-extrabold' 
-                          : 'text-slate-700 hover:bg-amber-50/60'
-                      }`}
-                    >
-                      <span className="truncate">{city}</span>
-                      {selectedCity === city && <span className="text-emerald-600 font-black">✓</span>}
-                    </button>
-                  ))}
-                </div>
+                </>
               )}
             </div>
 
@@ -368,7 +379,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       {/* ─────────────────────────────────────────────────────────────────────
           2. TWO FEATURE CALLOUT BLOCKS
       ────────────────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full relative z-10">
         
         {/* Card 1: Prescription Order with Ease */}
         <div className="card-warm p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-[#FFFDF9] via-white to-amber-50/50 border border-[#F3EFE6] min-h-[220px]">
@@ -427,7 +438,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               Need it now?<br />We've got you.
             </h2>
             <p className="text-sm text-[#475569] mt-2 leading-relaxed font-medium">
-              Connected to pharmacies near you for the fastest delivery in {selectedCity}.
+              Connected to pharmacies near you for fast delivery all across Pakistan.
             </p>
           </div>
 

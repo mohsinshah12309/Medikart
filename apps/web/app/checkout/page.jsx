@@ -8,18 +8,7 @@ import Link from 'next/link';
 import CardFlip3D from '../../components/3d/CardFlip3D';
 import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
 
-const CITIES = [
-  'Lahore',
-  'Karachi',
-  'Islamabad',
-  'Rawalpindi',
-  'Faisalabad',
-  'Multan',
-  'Peshawar',
-  'Quetta',
-  'Gujranwala',
-  'Sialkot'
-];
+const CITIES = ['Lahore'];
 
 export default function CheckoutPage() {
   const { cart, cartTotal, clearCart, isLoaded } = useCart();
