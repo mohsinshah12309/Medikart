@@ -12,16 +12,40 @@ import BlogsSection from '../components/BlogsSection';
 
 export async function generateMetadata({ searchParams }) {
   const resolvedParams = await searchParams;
-  const categoryId = resolvedParams?.category;
-  if (categoryId) {
+  const categoryParam = resolvedParams?.category;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+  if (categoryParam) {
     try {
       const categoriesRes = await getCategories();
       if (categoriesRes && categoriesRes.data) {
-        const category = categoriesRes.data.categories.find(c => c._id === categoryId);
+        const category = categoriesRes.data.categories.find(
+          (c) => c._id === categoryParam || c.slug === categoryParam
+        );
         if (category) {
+          const title = `${category.name} Medicines & Healthcare Products | Medikart Pakistan`;
+          const description = `Buy authentic ${category.name} medicines, OTC remedies, and health essentials online at Medikart Pakistan. Verified pharmacies, fast doorstep delivery & Cash on Delivery.`;
+          const canonicalUrl = `${siteUrl}/?category=${category.slug || category._id}`;
+
           return {
-            title: `${category.name} | Medikart`,
-            description: `Browse authentic ${category.name} medicines and healthcare products online at Medikart. Standard Cash on Delivery across Pakistan.`,
+            title,
+            description,
+            alternates: {
+              canonical: canonicalUrl,
+            },
+            openGraph: {
+              title,
+              description,
+              url: canonicalUrl,
+              siteName: 'Medikart - Authentic Online Pharmacy',
+              locale: 'en_PK',
+              type: 'website',
+            },
+            twitter: {
+              card: 'summary_large_image',
+              title,
+              description,
+            },
           };
         }
       }
@@ -29,9 +53,26 @@ export async function generateMetadata({ searchParams }) {
       console.error("Failed to load category metadata:", err);
     }
   }
+
   return {
-    title: 'Medikart - Authentic Online Pharmacy',
-    description: 'Pakistan\'s trusted online pharmacy. Buy authentic prescription and OTC medicines online with fast Cash on Delivery.',
+    title: 'Medikart - Authentic Online Pharmacy & Healthcare Store Pakistan',
+    description: 'Pakistan\'s trusted online pharmacy. Buy authentic prescription medicines, vitamins, baby care, and OTC health products with fast Cash on Delivery.',
+    alternates: {
+      canonical: siteUrl,
+    },
+    openGraph: {
+      title: 'Medikart - Authentic Online Pharmacy & Healthcare Store Pakistan',
+      description: 'Pakistan\'s trusted online pharmacy. Buy authentic prescription medicines, vitamins, baby care, and OTC health products with fast Cash on Delivery.',
+      url: siteUrl,
+      siteName: 'Medikart',
+      locale: 'en_PK',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Medikart - Authentic Online Pharmacy Pakistan',
+      description: 'Order genuine prescription and OTC medicines online with fast Cash on Delivery across Pakistan.',
+    },
   };
 }
 

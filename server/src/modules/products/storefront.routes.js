@@ -68,7 +68,14 @@ router.get("/products", async (req, res, next) => {
     }
 
     if (categoryId) {
-      query.categoryIds = categoryId;
+      if (categoryId.match(/^[0-9a-fA-F]{24}$/)) {
+        query.categoryIds = categoryId;
+      } else {
+        const catDoc = await Category.findOne({ slug: categoryId, active: true }).lean();
+        if (catDoc) {
+          query.categoryIds = catDoc._id;
+        }
+      }
     }
 
     if (condition) {

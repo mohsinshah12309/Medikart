@@ -33,7 +33,8 @@ function Products({ token }) {
     sku: "",
     price: "",
     description: "",
-    categoryId: "",
+    primaryCategoryId: "",
+    secondaryCategoryId: "",
     isNarcotic: false,
     stockStatus: "in_stock",
     active: true,
@@ -108,7 +109,8 @@ function Products({ token }) {
       sku: "",
       price: "",
       description: "",
-      categoryId: categories[0]?._id || "",
+      primaryCategoryId: categories[0]?._id || "",
+      secondaryCategoryId: "",
       isNarcotic: false,
       stockStatus: "in_stock",
       active: true,
@@ -120,12 +122,16 @@ function Products({ token }) {
   const handleOpenEditModal = (product) => {
     setIsEditMode(true);
     setEditId(product._id);
+    const catIds = (product.categoryIds || [])
+      .map((c) => (typeof c === "object" && c ? c._id : c))
+      .filter(Boolean);
     setFormData({
       name: product.name || "",
       sku: product.sku || "",
       price: product.price || "",
       description: product.description || "",
-      categoryId: product.categoryIds?.[0]?._id || product.categoryIds?.[0] || "",
+      primaryCategoryId: catIds[0] || "",
+      secondaryCategoryId: catIds[1] || "",
       isNarcotic: !!product.isNarcotic,
       stockStatus: product.stockStatus || "in_stock",
       active: product.active !== false,
@@ -139,12 +145,16 @@ function Products({ token }) {
     setError("");
     setSuccessMsg("");
 
+    const selectedCategoryIds = [formData.primaryCategoryId, formData.secondaryCategoryId]
+      .filter(Boolean)
+      .filter((id, index, self) => self.indexOf(id) === index);
+
     const payload = {
       name: formData.name,
       sku: formData.sku,
       price: parseFloat(formData.price),
       description: formData.description,
-      categoryIds: formData.categoryId ? [formData.categoryId] : [],
+      categoryIds: selectedCategoryIds,
       isNarcotic: formData.isNarcotic,
       stockStatus: formData.stockStatus,
       active: formData.active !== false,
@@ -418,9 +428,15 @@ function Products({ token }) {
   };
 
   const getCategoryName = (product) => {
-    const catId = product.categoryIds?.[0]?._id || product.categoryIds?.[0];
-    const catObj = categories.find((c) => c._id === catId);
-    return catObj ? catObj.name : "N/A";
+    if (!product.categoryIds || product.categoryIds.length === 0) return "N/A";
+    const names = product.categoryIds
+      .map((c) => {
+        const id = typeof c === "object" && c ? c._id : c;
+        const catObj = categories.find((cat) => cat._id === id);
+        return catObj ? catObj.name : null;
+      })
+      .filter(Boolean);
+    return names.length > 0 ? names.join(", ") : "N/A";
   };
 
   const getPrimaryImage = (product) => {
@@ -798,21 +814,42 @@ function Products({ token }) {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="prod-cat">Category *</label>
-                  <select
-                    id="prod-cat"
-                    className="form-control"
-                    value={formData.categoryId}
-                    onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                    required
-                  >
-                    {categories.map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                  <div className="form-group">
+                    <label htmlFor="prod-cat-primary">Primary Category *</label>
+                    <select
+                      id="prod-cat-primary"
+                      className="form-control"
+                      value={formData.primaryCategoryId}
+                      onChange={(e) => setFormData({ ...formData, primaryCategoryId: e.target.value })}
+                      required
+                    >
+                      <option value="" disabled>Select Primary Category</option>
+                      {categories.map((c) => (
+                        <option key={c._id} value={c._id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="prod-cat-secondary">Secondary Category (Optional)</label>
+                    <select
+                      id="prod-cat-secondary"
+                      className="form-control"
+                      value={formData.secondaryCategoryId}
+                      onChange={(e) => setFormData({ ...formData, secondaryCategoryId: e.target.value })}
+                    >
+                      <option value="">-- None (Single Category) --</option>
+                      {categories
+                        .filter((c) => c._id !== formData.primaryCategoryId)
+                        .map((c) => (
+                          <option key={c._id} value={c._id}>
+                            {c.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="prod-desc">Description</label>
