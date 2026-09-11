@@ -148,7 +148,7 @@ export default async function Home({ searchParams }) {
       <CategoryQuickLinks categories={categories} />
 
       {/* 6. Mid-Page Promotional Banner Blocks */}
-      <MidPagePromoBanners initialBanners={midBanners} />
+      <MidPagePromoBanners initialBanners={midBanners} categories={categories} />
 
       {/* 6. Top Pharmaceutical Brands Section */}
       <BrandsSection />
