@@ -9,6 +9,7 @@ import MidPagePromoBanners from '../components/MidPagePromoBanners';
 import BrandsSection from '../components/BrandsSection';
 import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanners';
 import BlogsSection from '../components/BlogsSection';
+import HeroBlogSidebar from '../components/HeroBlogSidebar';
 
 export async function generateMetadata({ searchParams }) {
   const resolvedParams = await searchParams;
@@ -136,10 +137,20 @@ export default async function Home({ searchParams }) {
       {/* 2. Official Master Brand Hero Section */}
       <OfficialHeroSection initialCity="Lahore" categories={categories} />
 
-      {/* 3. Secondary Promotional Hero Banners (if configured in Admin) */}
-      {heroBanners && heroBanners.length > 0 && (
-        <HeroBannerCarousel initialBanners={heroBanners} />
-      )}
+      {/* 3. Hero Interactive Showcase: Promotional Banner Carousel + Health & Wellness Blogs Widget */}
+      <section className="w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+          {/* Left: Hero Banner Carousel (8 cols on lg/xl) */}
+          <div className="lg:col-span-8 flex flex-col min-h-[340px] sm:min-h-[380px] lg:min-h-[410px]">
+            <HeroBannerCarousel initialBanners={heroBanners} />
+          </div>
+
+          {/* Right: Health & Wellness Blogs Sidebar (4 cols on lg/xl, placed exactly in right-hand sidebar) */}
+          <div className="lg:col-span-4 flex flex-col min-h-[340px] sm:min-h-[380px] lg:min-h-[410px]">
+            <HeroBlogSidebar />
+          </div>
+        </div>
+      </section>
 
       {/* 4. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
       <NutritionRefreshmentBanners />

@@ -135,54 +135,54 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
   const renderSlideContent = (slide) => {
     if (!slide) return null;
     return (
-      <div className="relative w-full h-full min-h-[300px] sm:min-h-[340px] md:min-h-[380px] bg-gradient-to-r from-amber-300 via-yellow-400 to-yellow-300 text-slate-900 rounded-3xl overflow-hidden shadow-md flex items-center border border-yellow-400/90">
+      <div className="relative w-full h-full min-h-[340px] sm:min-h-[380px] lg:min-h-[410px] bg-gradient-to-r from-amber-300 via-yellow-400 to-yellow-300 text-slate-900 rounded-3xl overflow-hidden shadow-md flex items-center border border-yellow-400/90">
         {/* Background ambient lighting */}
         <div className="absolute top-0 right-1/3 w-80 h-80 bg-white/30 blur-[70px] rounded-full pointer-events-none z-0" />
         <div className="absolute bottom-0 left-10 w-64 h-64 bg-amber-500/20 blur-[60px] rounded-full pointer-events-none z-0" />
 
         {/* Right Side: High-Resolution Real People Photography */}
         {slide.imageUrl && (
-          <div className="absolute top-0 right-0 w-full sm:w-1/2 md:w-[52%] h-full z-0 overflow-hidden">
+          <div className="absolute top-0 right-0 w-full sm:w-1/2 md:w-[50%] lg:w-[48%] h-full z-0 overflow-hidden">
             <Image
               src={slide.imageUrl}
               alt={slide.title}
               fill
               unoptimized
-              sizes="(max-width: 640px) 100vw, 50vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
               priority
               className="object-cover object-center opacity-90 sm:opacity-100 transition-transform duration-700 group-hover:scale-105"
             />
             {/* Seamless Left Gradient Blend Mask */}
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-400/80 to-transparent hidden sm:block w-36" />
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-400/80 to-transparent hidden sm:block w-32 md:w-36" />
             <div className="absolute inset-0 bg-yellow-400/60 sm:hidden" />
           </div>
         )}
 
         {/* Left Side: Copy & CTA */}
-        <div className="relative z-10 w-full sm:w-[62%] md:w-[58%] px-6 sm:px-10 md:px-12 py-8 flex flex-col justify-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-slate-900 text-yellow-400 w-fit shadow-xs mb-3 border border-slate-800">
+        <div className="relative z-10 w-full sm:w-[62%] md:w-[58%] lg:w-[60%] px-5 sm:px-8 md:px-10 py-6 sm:py-8 flex flex-col justify-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-slate-900 text-yellow-400 w-fit shadow-xs mb-2.5 sm:mb-3 border border-slate-800">
             <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse shadow-[0_0_8px_#facc15]" />
             {slide.badgeText || "100% Authentic Pharmacy"}
           </div>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-slate-900 leading-tight mb-2 sm:mb-3 drop-shadow-2xs">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-3xl font-black tracking-tight text-slate-900 leading-tight mb-2 sm:mb-2.5 drop-shadow-2xs line-clamp-2">
             {slide.title}
           </h2>
 
-          <p className="text-xs sm:text-sm md:text-base text-slate-800 font-medium leading-relaxed max-w-md mb-5 sm:mb-6">
+          <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed max-w-md mb-4 sm:mb-5 line-clamp-2 sm:line-clamp-3">
             {slide.subtitle || "Order authentic prescription & OTC medicines online with fast doorstep delivery."}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             <Link
               href={slide.ctaLink || slide.linkUrl || "/instant-order"}
-              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-yellow-400 font-black text-xs sm:text-sm rounded-xl transition-all shadow-sm hover:shadow-md cursor-pointer border border-slate-900"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-yellow-400 font-black text-xs sm:text-sm rounded-xl transition-all shadow-sm hover:shadow-md cursor-pointer border border-slate-900 whitespace-nowrap"
             >
               {slide.ctaText || "Upload Prescription"}
             </Link>
             <a
               href={slide.secondaryLink || "#store-catalog"}
-              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white/95 hover:bg-white active:scale-[0.98] text-slate-800 font-bold text-xs sm:text-sm rounded-xl transition-all border border-slate-300 shadow-2xs cursor-pointer"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 bg-white/95 hover:bg-white active:scale-[0.98] text-slate-800 font-bold text-xs sm:text-sm rounded-xl transition-all border border-slate-300 shadow-2xs cursor-pointer whitespace-nowrap"
             >
               {slide.secondaryText || "Browse Catalog"}
             </a>
@@ -194,14 +194,14 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
 
   return (
     <div
-      className="relative w-full py-2 select-none group"
+      className="relative w-full h-full select-none group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       style={{ perspective: prefersReducedMotion ? "none" : "1200px" }}
     >
       {/* 3D Flip Card Container */}
       <div
-        className="relative w-full rounded-3xl"
+        className="relative w-full h-full rounded-3xl"
         style={{
           transformStyle: prefersReducedMotion ? "flat" : "preserve-3d",
           transform: prefersReducedMotion
