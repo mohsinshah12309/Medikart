@@ -8,8 +8,7 @@ import CareByConditionSection from '../components/CareByConditionSection';
 import MidPagePromoBanners from '../components/MidPagePromoBanners';
 import BrandsSection from '../components/BrandsSection';
 import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanners';
-import BlogsSection from '../components/BlogsSection';
-import HeroBlogSidebar from '../components/HeroBlogSidebar';
+import RightBlogSidebar from '../components/RightBlogSidebar';
 
 export async function generateMetadata({ searchParams }) {
   const resolvedParams = await searchParams;
@@ -130,52 +129,45 @@ export default async function Home({ searchParams }) {
   const { categories = [] } = categoriesData;
 
   return (
-    <div className="flex flex-col gap-6 sm:gap-8">
-      {/* 1. Care By Condition Section (Prominently placed at the top) */}
-      <CareByConditionSection initialConditions={conditions} />
+    <div className="flex flex-col xl:flex-row gap-6 lg:gap-8 items-start w-full relative">
+      {/* ─── Main Content Stream (Full Width on Mobile/Tablet, Spacious Stream on XL Desktop) ─── */}
+      <div className="flex-1 min-w-0 w-full flex flex-col gap-6 sm:gap-8">
+        {/* 1. Care By Condition Section (Prominently placed at the top) */}
+        <CareByConditionSection initialConditions={conditions} />
 
-      {/* 2. Official Master Brand Hero Section */}
-      <OfficialHeroSection initialCity="Lahore" categories={categories} />
+        {/* 2. Official Master Brand Hero Section */}
+        <OfficialHeroSection initialCity="Lahore" categories={categories} />
 
-      {/* 3. Hero Interactive Showcase: Promotional Banner Carousel + Health & Wellness Blogs Widget */}
-      <section className="w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
-          {/* Left: Hero Banner Carousel (8 cols on lg/xl) */}
-          <div className="lg:col-span-8 flex flex-col min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px]">
-            <HeroBannerCarousel initialBanners={heroBanners} />
-          </div>
+        {/* 3. Hero Promotional Banner Carousel (Full Width) */}
+        {heroBanners && heroBanners.length > 0 && (
+          <HeroBannerCarousel initialBanners={heroBanners} />
+        )}
 
-          {/* Right: Health & Wellness Blogs Sidebar (4 cols on lg/xl, placed exactly in right-hand sidebar) */}
-          <div className="lg:col-span-4 flex flex-col min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px]">
-            <HeroBlogSidebar />
-          </div>
-        </div>
-      </section>
+        {/* 4. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
+        <NutritionRefreshmentBanners />
 
-      {/* 4. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
-      <NutritionRefreshmentBanners />
+        {/* 5. Horizontal Category Quick-Links Scroller */}
+        <CategoryQuickLinks categories={categories} />
 
-      {/* 5. Horizontal Category Quick-Links Scroller */}
-      <CategoryQuickLinks categories={categories} />
+        {/* 6. Mid-Page Promotional Banner Blocks */}
+        <MidPagePromoBanners initialBanners={midBanners} categories={categories} />
 
-      {/* 6. Mid-Page Promotional Banner Blocks */}
-      <MidPagePromoBanners initialBanners={midBanners} categories={categories} />
+        {/* 7. Top Pharmaceutical Brands Section */}
+        <BrandsSection />
 
-      {/* 6. Top Pharmaceutical Brands Section */}
-      <BrandsSection />
+        {/* 8. Client-Side In-Place High-Density Product Catalog */}
+        <CatalogSection
+          initialProducts={products}
+          initialPagination={pagination}
+          categories={categories}
+          initialSearch={queryParams.search}
+          initialCategoryId={queryParams.categoryId}
+          initialPage={queryParams.page}
+        />
+      </div>
 
-      {/* 7. Health & Wellness Blogs Slider (Matching Dvago Screenshot) */}
-      <BlogsSection />
-
-      {/* 8. Client-Side In-Place High-Density Product Catalog */}
-      <CatalogSection
-        initialProducts={products}
-        initialPagination={pagination}
-        categories={categories}
-        initialSearch={queryParams.search}
-        initialCategoryId={queryParams.categoryId}
-        initialPage={queryParams.page}
-      />
+      {/* ─── Dedicated Moving Health Blogs Right Sidebar (Right edge of screen) ─── */}
+      <RightBlogSidebar />
     </div>
   );
 }
