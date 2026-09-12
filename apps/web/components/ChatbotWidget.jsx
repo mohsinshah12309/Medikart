@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { sendChatbotMessage } from '../lib/api';
 
 export default function ChatbotWidget() {
@@ -9,7 +10,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hello! I am your Medikart AI Medicine & Symptom Assistant 💊.\n\nAsk me about medicine availability, prices, or describe your symptoms (e.g. headache, fever, cough), and I will search our authentic catalog for you!\n\nDisclaimer: I am an AI, not a doctor. This suggestion is for informational purposes only. Consult a physician for medical advice.',
+      content: 'Hello! I am your Medikart AI Medicine & Symptom Assistant 🦉💊.\n\nAsk me about medicine availability, prices, or describe your symptoms (e.g. headache, fever, cough), and I will search our authentic catalog for you!\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
       suggestedProducts: []
     }
   ]);
@@ -79,41 +80,60 @@ export default function ChatbotWidget() {
   return (
     <>
       {/* ─────────────────────────────────────────────────────────────────
-          1. FLOATING CHAT BUTTON (Larger, more noticeable, glowing amber)
+          1. FLOATING CHAT BUTTON (Prominent 3D AI Med-Bot Owl Doctor)
       ────────────────────────────────────────────────────────────────── */}
-      <div className="fixed bottom-5 right-4 sm:right-6 z-40 flex items-center group">
+      <div className="fixed bottom-5 right-4 sm:right-6 z-50 flex items-center select-none">
         
         {/* Playful Floating Desktop Greeting Pill */}
         {!isOpen && showTooltip && (
           <div 
             onClick={() => setIsOpen(true)}
-            className="hidden sm:flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full border border-amber-200 shadow-xl text-xs font-bold text-slate-800 mr-3 cursor-pointer hover:border-amber-400 hover:shadow-amber-glow transition-all transform hover:-translate-x-1 select-none"
+            className="hidden sm:flex items-center gap-2.5 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border-2 border-amber-300 shadow-xl text-xs font-bold text-slate-800 mr-3 cursor-pointer hover:border-amber-500 hover:shadow-amber-glow transition-all transform hover:-translate-x-1 select-none animate-pulse-glow"
           >
-            <span className="text-sm">💬</span>
-            <span>Need medicine? Ask AI</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="relative w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border border-amber-300">
+              <Image
+                src="/images/ai-med-bot.png"
+                alt="AI Med-Bot"
+                fill
+                sizes="20px"
+                className="object-cover"
+              />
+            </div>
+            <span className="font-extrabold text-amber-950">Need medicine? Ask AI Med-Bot</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
           </div>
         )}
 
-        {/* Floating Chat Button */}
+        {/* Prominent Floating 3D AI Med-Bot Character Button */}
         <button
           onClick={() => {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-300 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-200 text-slate-950 rounded-full shadow-[0_8px_25px_rgba(248,186,3,0.45)] hover:shadow-[0_12px_32px_rgba(248,186,3,0.65)] ring-4 ring-amber-200/60 transition-all hover:scale-110 active:scale-95 flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 cursor-pointer border border-amber-300"
-          title="Medikart AI Medicine Assistant"
-          aria-label="Open AI Medicine Assistant"
+          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_10px_35px_rgba(248,186,3,0.55)] hover:shadow-[0_14px_42px_rgba(248,186,3,0.75)] ring-4 ring-amber-300/80 hover:ring-amber-400 transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 cursor-pointer border-2 border-white overflow-visible group"
+          title="Medikart AI Med-Bot Assistant"
+          aria-label="Open AI Med-Bot Assistant"
         >
           {isOpen ? (
-            <span className="text-2xl font-black text-slate-900 leading-none">✕</span>
+            <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">✕</span>
           ) : (
             <>
               {/* Pulsing Active Online Badge */}
-              <span className="absolute -top-1.5 -right-1 flex items-center gap-1 bg-emerald-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full ring-2 ring-white shadow-sm animate-pulse">
+              <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
                 Ask AI
               </span>
-              <span className="text-2xl sm:text-3xl filter drop-shadow-xs">🤖</span>
+
+              {/* 3D Owl Doctor Character Image */}
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                <Image
+                  src="/images/ai-med-bot.png"
+                  alt="AI Med-Bot Character"
+                  fill
+                  sizes="80px"
+                  priority
+                  className="object-cover object-center drop-shadow-md"
+                />
+              </div>
             </>
           )}
         </button>
@@ -123,17 +143,26 @@ export default function ChatbotWidget() {
           2. CHAT WINDOW PANEL
       ────────────────────────────────────────────────────────────────── */}
       {isOpen && (
-        <div className="fixed bottom-22 sm:bottom-26 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[440px] h-[520px] max-h-[80vh] z-50 bg-[#FAF8F5] border border-amber-200/90 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 select-none">
+        <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[440px] h-[520px] max-h-[80vh] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 select-none">
           
-          {/* Header */}
+          {/* Header with 3D Owl Avatar */}
           <div className="bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-white/90 shadow-xs flex items-center justify-center text-lg">
-                🤖
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-10 rounded-full bg-white shadow-xs overflow-hidden border-2 border-white flex-shrink-0">
+                <Image
+                  src="/images/ai-med-bot.png"
+                  alt="AI Med-Bot"
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                />
               </div>
               <div>
-                <h3 className="font-black text-sm leading-tight text-slate-900 font-heading">
-                  Medikart AI Assistant
+                <h3 className="font-black text-sm leading-tight text-slate-900 font-heading flex items-center gap-1.5">
+                  <span>AI Med-Bot</span>
+                  <span className="text-[10px] font-black uppercase text-amber-900 bg-amber-200/80 px-1.5 py-0.2 rounded-md">
+                    Doctor Assistant
+                  </span>
                 </h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
@@ -161,10 +190,21 @@ export default function ChatbotWidget() {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex flex-col max-w-[88%] ${
-                  msg.role === 'user' ? 'self-end items-end' : 'self-start items-start'
+                className={`flex gap-2 max-w-[92%] ${
+                  msg.role === 'user' ? 'self-end justify-end' : 'self-start justify-start'
                 }`}
               >
+                {msg.role === 'assistant' && (
+                  <div className="relative w-6 h-6 rounded-full overflow-hidden border border-amber-300 flex-shrink-0 bg-white mt-1 shadow-3xs">
+                    <Image
+                      src="/images/ai-med-bot.png"
+                      alt="AI Med-Bot"
+                      fill
+                      sizes="24px"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
                 <div
                   className={`rounded-2xl px-4 py-3 text-xs leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user'
@@ -209,9 +249,18 @@ export default function ChatbotWidget() {
             ))}
 
             {loading && (
-              <div className="self-start max-w-[85%] flex flex-col items-start">
+              <div className="self-start max-w-[85%] flex items-center gap-2">
+                <div className="relative w-6 h-6 rounded-full overflow-hidden border border-amber-300 flex-shrink-0 bg-white shadow-3xs animate-bounce">
+                  <Image
+                    src="/images/ai-med-bot.png"
+                    alt="AI Med-Bot"
+                    fill
+                    sizes="24px"
+                    className="object-cover"
+                  />
+                </div>
                 <div className="bg-white border border-amber-200 rounded-2xl rounded-bl-none px-4 py-2.5 text-xs text-amber-800 shadow-xs flex items-center gap-2">
-                  <span className="text-xs">🔍 Searching catalog...</span>
+                  <span className="text-xs font-semibold">🔍 Searching catalog...</span>
                   <div className="flex gap-1">
                     <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce"></span>
                     <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
