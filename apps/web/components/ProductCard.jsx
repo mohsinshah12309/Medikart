@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import TiltCard3D from './3d/TiltCard3D';
+import { useCart } from './CartProvider';
+import { ShoppingCart, Check } from 'lucide-react';
 
 export default function ProductCard({ product }) {
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
   const hasDiscount = product.discountPercent > 0;
   const isOutOfStock = product.stockStatus === 'out_of_stock' || product.stock <= 0;
   
@@ -23,6 +28,16 @@ export default function ProductCard({ product }) {
   };
 
   const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
+
+  const handleAddToCart = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    addToCart(product, 1);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1600);
+  };
 
   return (
     <TiltCard3D className="bg-white border border-[#F3EFE6] rounded-2xl overflow-hidden hover:shadow-warm-card hover:border-amber-300 flex flex-col h-full relative group transition-all duration-200">
@@ -116,27 +131,52 @@ export default function ProductCard({ product }) {
             )}
           </div>
 
-          {/* Interactive CTA Buttons */}
-          <div className="mt-2.5">
+          {/* Interactive CTA Buttons: Add to Cart (Primary) + View Details (Below) */}
+          <div className="mt-3 flex flex-col gap-1.5">
             {isOutOfStock ? (
-              <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-full border border-slate-200 select-none">
+              <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-xl border border-slate-200 select-none">
                 Out of Stock
               </span>
             ) : product.isNarcotic ? (
               <Link
                 href={`/products/${product._id}`}
-                className="w-full inline-block text-center bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] sm:text-xs font-bold py-1.5 rounded-full border border-amber-300 transition-colors"
+                className="w-full inline-flex items-center justify-center gap-1 text-center bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] sm:text-xs font-bold py-1.5 rounded-xl border border-amber-300 transition-colors"
               >
-                Rx Required
+                <span>Rx Required</span>
+                <span>&rarr;</span>
               </Link>
             ) : (
-              <Link
-                href={`/products/${product._id}`}
-                className="btn-amber-gradient w-full text-[10px] sm:text-xs py-1.5 shadow-xs"
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className={`w-full py-1.5 px-2 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
+                  added
+                    ? 'bg-emerald-600 text-white shadow-emerald-500/20'
+                    : 'btn-amber-gradient text-slate-950 hover:brightness-105'
+                }`}
               >
-                View Details
-              </Link>
+                {added ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <span>Added!</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                    <span>Add to Cart</span>
+                  </>
+                )}
+              </button>
             )}
+
+            {/* Below: View Details Secondary Button */}
+            <Link
+              href={`/products/${product._id}`}
+              className="w-full inline-flex items-center justify-center gap-1 text-center bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-900 text-[10px] sm:text-[11px] font-bold py-1 rounded-xl border border-slate-200 hover:border-amber-300 transition-all group"
+            >
+              <span>View Details</span>
+              <span className="text-[10px] transition-transform group-hover:translate-x-0.5">&rarr;</span>
+            </Link>
           </div>
         </div>
       </div>
