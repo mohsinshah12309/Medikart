@@ -3,6 +3,7 @@ import { getProduct } from '../../../lib/api';
 import ProductGallery from '../../../components/ProductGallery';
 import NarcoticsBlock from '../../../components/NarcoticsBlock';
 import AddToCartButton from '../../../components/AddToCartButton';
+import RelatedProducts from '../../../components/RelatedProducts';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -165,6 +166,9 @@ export default async function ProductDetailPage({ params }) {
           </div>
         </div>
       </div>
+
+      {/* ─── Related Products & Smart Suggestions Section ─── */}
+      <RelatedProducts currentProduct={product} />
     </div>
   );
 }
