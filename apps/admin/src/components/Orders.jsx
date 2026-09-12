@@ -63,12 +63,150 @@ function Orders({ token, adminUser, initialFilter }) {
   const [cancelReason, setCancelReason] = useState("");
   const [cancelLoading, setCancelLoading] = useState(false);
 
+  // Excel Export States
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [exportDatePreset, setExportDatePreset] = useState("today");
+  const [exportStartDate, setExportStartDate] = useState("");
+  const [exportEndDate, setExportEndDate] = useState("");
+  const [exportStatus, setExportStatus] = useState("");
+  const [exportType, setExportType] = useState("");
+  const [exportLoading, setExportLoading] = useState(false);
+
   // Calculate PKT dates helper
   const getPKTDate = (offsetDays = 0) => {
     const now = new Date();
     const PKT_OFFSET_MS = 5 * 60 * 60 * 1000;
     const pktTime = new Date(now.getTime() + PKT_OFFSET_MS - offsetDays * 24 * 60 * 60 * 1000);
     return pktTime.toISOString().split("T")[0];
+  };
+
+  const handleOpenExportModal = () => {
+    setExportDatePreset(dateFilter);
+    if (dateFilter === "today") {
+      setExportStartDate(getPKTDate(0));
+      setExportEndDate(getPKTDate(0));
+    } else if (dateFilter === "yesterday") {
+      setExportStartDate(getPKTDate(1));
+      setExportEndDate(getPKTDate(1));
+    } else if (dateFilter === "7days") {
+      setExportStartDate(getPKTDate(7));
+      setExportEndDate(getPKTDate(0));
+    } else if (dateFilter === "month") {
+      const now = new Date();
+      setExportStartDate(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`);
+      setExportEndDate(getPKTDate(0));
+    } else if (dateFilter === "all") {
+      setExportStartDate("");
+      setExportEndDate("");
+    } else {
+      setExportStartDate(startDate || getPKTDate(0));
+      setExportEndDate(endDate || getPKTDate(0));
+    }
+    setExportStatus(filterStatus);
+    setExportType(filterType);
+    setIsExportModalOpen(true);
+  };
+
+  const handleExportPresetChange = (preset) => {
+    setExportDatePreset(preset);
+    if (preset === "today") {
+      setExportStartDate(getPKTDate(0));
+      setExportEndDate(getPKTDate(0));
+    } else if (preset === "yesterday") {
+      setExportStartDate(getPKTDate(1));
+      setExportEndDate(getPKTDate(1));
+    } else if (preset === "7days") {
+      setExportStartDate(getPKTDate(7));
+      setExportEndDate(getPKTDate(0));
+    } else if (preset === "month") {
+      const now = new Date();
+      setExportStartDate(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`);
+      setExportEndDate(getPKTDate(0));
+    } else if (preset === "all") {
+      setExportStartDate("");
+      setExportEndDate("");
+    }
+  };
+
+  const handleDownloadExcel = async (e) => {
+    if (e) e.preventDefault();
+    try {
+      setExportLoading(true);
+      setError("");
+
+      let s = exportStartDate;
+      let eDate = exportEndDate;
+
+      if (exportDatePreset === "today") {
+        s = getPKTDate(0);
+        eDate = getPKTDate(0);
+      } else if (exportDatePreset === "yesterday") {
+        s = getPKTDate(1);
+        eDate = getPKTDate(1);
+      } else if (exportDatePreset === "7days") {
+        s = getPKTDate(7);
+        eDate = getPKTDate(0);
+      } else if (exportDatePreset === "month") {
+        const now = new Date();
+        s = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+        eDate = getPKTDate(0);
+      } else if (exportDatePreset === "all") {
+        s = "";
+        eDate = "";
+      }
+
+      const params = [];
+      if (s) params.push(`startDate=${encodeURIComponent(s)}`);
+      if (eDate) params.push(`endDate=${encodeURIComponent(eDate)}`);
+      if (exportStatus) params.push(`status=${encodeURIComponent(exportStatus)}`);
+      if (exportType) params.push(`type=${encodeURIComponent(exportType)}`);
+      if (isScopedAdmin) {
+        params.push(`pharmacyId=${encodeURIComponent(scopedPharmacyId)}`);
+      } else if (filterPharmacyId) {
+        params.push(`pharmacyId=${encodeURIComponent(filterPharmacyId)}`);
+      }
+      if (activeSearch.trim()) {
+        params.push(`search=${encodeURIComponent(activeSearch.trim())}`);
+      }
+
+      let endpoint = `/admin/orders/export/excel${params.length > 0 ? `?${params.join("&")}` : ""}`;
+      const fullUrl = endpoint.startsWith("http") ? endpoint : `${apiUrl}${endpoint}`;
+
+      const res = await fetch(fullUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.message || `Export failed with status ${res.status}`);
+      }
+
+      let filename = `Medikart_Orders_${s || "all"}_to_${eDate || "all"}.xlsx`;
+      const disposition = res.headers.get("Content-Disposition");
+      if (disposition && disposition.includes("filename=")) {
+        const match = disposition.match(/filename="?([^";]+)"?/);
+        if (match && match[1]) filename = match[1];
+      }
+
+      const blob = await res.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+
+      setSuccessMsg(`Excel report "${filename}" downloaded successfully.`);
+      setIsExportModalOpen(false);
+    } catch (err) {
+      setError(err.message || "Failed to download Excel report.");
+    } finally {
+      setExportLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -591,10 +729,31 @@ function Orders({ token, adminUser, initialFilter }) {
             Real-time orders queue, status progression, and pharmacy branch fulfillment.
           </p>
         </div>
-        <button className="btn btn-secondary" onClick={fetchOrders} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-          <span>🔄</span>
-          <span>Refresh</span>
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <button
+            className="btn btn-primary"
+            onClick={handleOpenExportModal}
+            disabled={exportLoading}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              background: "#059669",
+              borderColor: "#047857",
+              color: "#ffffff",
+              fontWeight: "bold",
+              boxShadow: "0 2px 4px rgba(5, 150, 105, 0.2)",
+            }}
+            title="Download date-filtered orders spreadsheet in Excel (.xlsx) format"
+          >
+            <span>📥</span>
+            <span>{exportLoading ? "Exporting..." : "Download Excel"}</span>
+          </button>
+          <button className="btn btn-secondary" onClick={fetchOrders} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span>🔄</span>
+            <span>Refresh</span>
+          </button>
+        </div>
       </div>
 
       {/* Scoped Pharmacy Admin Notice */}
@@ -1663,6 +1822,180 @@ function Orders({ token, adminUser, initialFilter }) {
                 </button>
                 <button type="submit" className="btn btn-danger" disabled={cancelLoading}>
                   {cancelLoading ? "Cancelling..." : "Confirm Cancellation & Send Email"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {/* Excel Export Modal */}
+      {isExportModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{ maxWidth: "580px" }}>
+            <div className="modal-header" style={{ borderBottom: "1px solid #bbf7d0", background: "#f0fdf4", borderRadius: "12px 12px 0 0" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <span style={{ fontSize: "1.3rem" }}>📊</span>
+                <h3 style={{ color: "#166534", margin: 0, fontSize: "1.15rem", fontWeight: 800 }}>
+                  Download Orders Excel Spreadsheet
+                </h3>
+              </div>
+              <button className="modal-close" onClick={() => setIsExportModalOpen(false)}>&times;</button>
+            </div>
+            <form onSubmit={handleDownloadExcel}>
+              <div className="modal-body" style={{ padding: "1.25rem" }}>
+                <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "0.75rem 1rem", marginBottom: "1.25rem", fontSize: "0.85rem", color: "#475569" }}>
+                  <p style={{ margin: 0 }}>
+                    Export comprehensive order data including customer contacts, delivery addresses, pricing breakdown, platform fees, and pharmacy commissions into a Microsoft Excel (.xlsx) file.
+                  </p>
+                </div>
+
+                {/* Date Presets */}
+                <div style={{ marginBottom: "1rem" }}>
+                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.4rem", color: "#1e293b" }}>
+                    Select Date Range Preset:
+                  </label>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                    {[
+                      { key: "today", label: "Today" },
+                      { key: "yesterday", label: "Yesterday" },
+                      { key: "7days", label: "Last 7 Days" },
+                      { key: "month", label: "This Month" },
+                      { key: "all", label: "All Orders History" },
+                      { key: "custom", label: "Custom Dates" },
+                    ].map((item) => (
+                      <button
+                        key={item.key}
+                        type="button"
+                        onClick={() => handleExportPresetChange(item.key)}
+                        style={{
+                          border: "1px solid",
+                          borderColor: exportDatePreset === item.key ? "#059669" : "#cbd5e1",
+                          background: exportDatePreset === item.key ? "#ecfdf5" : "#ffffff",
+                          color: exportDatePreset === item.key ? "#047857" : "#475569",
+                          fontWeight: exportDatePreset === item.key ? 700 : 500,
+                          borderRadius: "6px",
+                          padding: "0.35rem 0.65rem",
+                          fontSize: "0.8rem",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Explicit Start / End Date Pickers */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
+                      From (Start Date):
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={exportStartDate}
+                      onChange={(e) => {
+                        setExportStartDate(e.target.value);
+                        setExportDatePreset("custom");
+                      }}
+                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
+                      To (End Date):
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={exportEndDate}
+                      onChange={(e) => {
+                        setExportEndDate(e.target.value);
+                        setExportDatePreset("custom");
+                      }}
+                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
+                    />
+                  </div>
+                </div>
+
+                {/* Filter Options */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
+                      Order Status Filter (Optional):
+                    </label>
+                    <select
+                      className="form-control"
+                      value={exportStatus}
+                      onChange={(e) => setExportStatus(e.target.value)}
+                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
+                    >
+                      <option value="">All Statuses</option>
+                      <option value="delivered">Delivered / Completed</option>
+                      <option value="pending">Pending Fulfillment</option>
+                      <option value="packed">Packed</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="awaiting-pharmacist-pricing">Awaiting Pharmacist Pricing</option>
+                      <option value="pending_verification">Pending Narcotics Review</option>
+                      <option value="cancelled">Cancelled</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
+                      Order Type Filter (Optional):
+                    </label>
+                    <select
+                      className="form-control"
+                      value={exportType}
+                      onChange={(e) => setExportType(e.target.value)}
+                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
+                    >
+                      <option value="">All Order Types</option>
+                      <option value="standard">Standard Catalog Orders</option>
+                      <option value="instant">Instant Prescription Orders</option>
+                      <option value="narcotics">Narcotics Prescription Orders</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Scope Notice */}
+                {isScopedAdmin && (
+                  <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "6px", padding: "0.5rem 0.75rem", fontSize: "0.8rem", color: "#166534" }}>
+                    ℹ️ <strong>Scope Notice:</strong> Only orders assigned to <strong>{scopedPharmacy ? scopedPharmacy.name : "your assigned branch"}</strong> will be exported.
+                  </div>
+                )}
+              </div>
+
+              <div className="modal-footer" style={{ borderTop: "1px solid #e2e8f0", background: "#f8fafc" }}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setIsExportModalOpen(false)}
+                  disabled={exportLoading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{
+                    background: "#059669",
+                    borderColor: "#047857",
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    padding: "0.5rem 1.25rem",
+                  }}
+                  disabled={exportLoading}
+                >
+                  <span>📥</span>
+                  <span>{exportLoading ? "Generating Excel..." : "Download Excel (.xlsx)"}</span>
                 </button>
               </div>
             </form>

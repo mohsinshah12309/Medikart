@@ -191,6 +191,16 @@ const updateOrderStatusSchema = z.object({
   reason: z.string().trim().optional(),
 });
 
+// GET /api/v1/admin/orders/export/excel — admin date-filtered Excel download
+const exportOrdersExcelQuerySchema = z.object({
+  search: z.string().trim().optional(),
+  type: z.enum(["standard", "instant", "narcotics"]).optional(),
+  status: z.string().trim().optional(),
+  startDate: z.string().trim().optional(),
+  endDate: z.string().trim().optional(),
+  pharmacyId: z.string().trim().optional(),
+});
+
 module.exports = {
   placeStandardOrderSchema,
   placeInstantOrderSchema,
@@ -198,7 +208,9 @@ module.exports = {
   priceInstantOrderSchema,
   narcoticsVerificationSchema,
   adminOrderQuerySchema,
+  exportOrdersExcelQuerySchema,
   orderIdParamsSchema,
   cancelOrderSchema,
   updateOrderStatusSchema,
 };
+

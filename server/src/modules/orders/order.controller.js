@@ -277,6 +277,35 @@ const assignPharmacy = async (req, res, next) => {
   }
 };
 
+const exportOrdersExcel = async (req, res, next) => {
+  try {
+    const { buffer, count, startDate, endDate } = await orderService.exportOrdersToExcel(
+      req.query,
+      req.admin
+    );
+
+    const dateRangeLabel = startDate && endDate
+      ? `${startDate}_to_${endDate}`
+      : startDate
+      ? `from_${startDate}`
+      : endDate
+      ? `until_${endDate}`
+      : "all_dates";
+
+    const filename = `Medikart_Orders_${dateRangeLabel}_${Date.now()}.xlsx`;
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    res.setHeader("Content-Length", buffer.length);
+    res.send(buffer);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   placeStandardOrder,
   placeNarcoticsOrder,
@@ -285,6 +314,7 @@ module.exports = {
   getOrders,
   getOrderStats,
   getOrderById,
+  exportOrdersExcel,
   getPublicOrder,
   priceInstantOrder,
   cancelOrder,
@@ -292,3 +322,4 @@ module.exports = {
   updateOrderStatus,
   assignPharmacy,
 };
+

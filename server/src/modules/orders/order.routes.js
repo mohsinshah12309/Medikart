@@ -9,9 +9,11 @@
  *   POST /api/v1/orders/instant   — place an instant order with prescription upload (no auth)
  *
  * Admin (behind auth middleware):
- *   GET   /api/v1/admin/orders         — list orders, filterable by type/status
- *   GET   /api/v1/admin/orders/:id     — single order detail
- *   PATCH /api/v1/admin/orders/:id/items — price an instant order (Phase 14 / FR-AD-19)
+ *   GET   /api/v1/admin/orders              — list orders, filterable by type/status
+ *   GET   /api/v1/admin/orders/export/excel — date-filtered Excel export
+ *   GET   /api/v1/admin/orders/stats        — dashboard stats
+ *   GET   /api/v1/admin/orders/:id          — single order detail
+ *   PATCH /api/v1/admin/orders/:id/items    — price an instant order (Phase 14 / FR-AD-19)
  */
 
 const express = require("express");
@@ -24,6 +26,7 @@ const {
   placeStandardOrderSchema,
   priceInstantOrderSchema,
   adminOrderQuerySchema,
+  exportOrdersExcelQuerySchema,
   orderIdParamsSchema,
   narcoticsVerificationSchema,
   cancelOrderSchema,
@@ -68,10 +71,24 @@ adminOrderRoutes.get(
   orderController.getOrders,
 );
 
+// GET /api/v1/admin/orders/export/excel — date-filtered Excel export
+// IMPORTANT: must be mounted BEFORE /:id so the literal "export" is not
+// treated as a MongoDB ObjectId parameter.
+adminOrderRoutes.get(
+  "/export/excel",
+  requirePermission("view_orders", "manage_orders"),
+  validateQuery(exportOrdersExcelQuerySchema),
+  orderController.exportOrdersExcel
+);
+
 // GET /api/v1/admin/orders/stats — dashboard aggregation counts (Phase 23 gap fix).
 // IMPORTANT: must be mounted BEFORE /:id so the literal "stats" is not
 // treated as a MongoDB ObjectId parameter.
-adminOrderRoutes.get("/stats", requirePermission("view_orders", "manage_orders"), orderController.getOrderStats);
+adminOrderRoutes.get(
+  "/stats",
+  requirePermission("view_orders", "manage_orders"),
+  orderController.getOrderStats
+);
 
 adminOrderRoutes.get(
   "/:id",
