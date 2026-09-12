@@ -119,9 +119,16 @@ export default function CartPage() {
               <span className="text-slate-600 font-medium">Subtotal</span>
               <span className="font-black text-slate-950">PKR {cartTotal.toFixed(2)}</span>
             </div>
+            <div className="flex justify-between text-sm items-center">
+              <span className="text-slate-600 font-medium flex items-center gap-1.5">
+                <span>Platform Fee</span>
+                <span className="bg-amber-100 text-amber-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">Medikart Care</span>
+              </span>
+              <span className="font-bold text-slate-900">PKR 10.00</span>
+            </div>
             
             <div className="text-xs text-slate-500 italic mt-1 leading-relaxed border-t border-slate-200 pt-3">
-              * Delivery charges and taxes will be computed during checkout based on your city.
+              * Delivery charges will be computed during checkout based on your destination city.
             </div>
 
             {hasNarcotics && (

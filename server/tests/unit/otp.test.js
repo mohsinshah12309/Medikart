@@ -27,24 +27,32 @@ jest.mock("../../src/integrations/smtp", () => ({
   sendEmail: jest.fn().mockResolvedValue({ messageId: "test-mock-id" }),
 }));
 
+const { resetRateLimiters } = require("../../src/middleware/rateLimiter");
+
 beforeAll(async () => {
   process.env.ENABLE_OTP_LIMITS_IN_TESTS = "true";
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) {
     throw new Error("MONGODB_URI environment variable is not defined");
   }
-  await mongoose.connect(mongoUri);
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(mongoUri);
+  }
   await Otp.deleteMany({});
 }, 90000);
+
+beforeEach(() => {
+  resetRateLimiters();
+});
 
 afterEach(async () => {
   await Otp.deleteMany({});
   otpService._resetIpRequestLog();
+  resetRateLimiters();
 });
 
 afterAll(async () => {
   await Otp.deleteMany({});
-  await mongoose.connection.close();
 }, 90000);
 
 /** Request an OTP and return the raw code from the test-mode payload. */

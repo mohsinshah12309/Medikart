@@ -150,36 +150,33 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 
 // 5. Rate Limiters Setup (Phase 22 / Step 2)
-// Generous in development / test environments to prevent locking out developer workflows
-const isProd = process.env.NODE_ENV === "production";
-
 const authLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isProd ? 15 : 10000,
+  max: 5,
   message: "Too many attempts. Please try again in 15 minutes.",
 });
 
 const otpLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isProd ? 10 : 10000,
+  max: 5,
   message: "Too many OTP attempts. Please wait 15 minutes.",
 });
 
 const adminLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isProd ? 2000 : 10000,
+  max: 20,
   message: "Too many administrative operations. Please try again in 15 minutes.",
 });
 
 const expensiveLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isProd ? 2000 : 10000,
+  max: 50,
   message: "Rate limit exceeded for resource-heavy operations. Please wait.",
 });
 
 const storefrontLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isProd ? 1000 : 10000,
+  max: 100,
   message: "Too many requests. Please try again in 15 minutes.",
 });
 

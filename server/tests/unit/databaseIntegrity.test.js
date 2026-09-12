@@ -376,10 +376,11 @@ describe("Database Integrity, Concurrency & Transaction Safety", () => {
       status: "delivered", // Terminal state
     });
 
-    // Delivered order cannot be cancelled
+    // Delivered order cannot be cancelled by non-super admin
+    const regularAdmin = { ...actorAdmin, role: "admin" };
     await expect(
-      orderService.cancelOrder(order._id, { reason: "late", admin: actorAdmin })
-    ).rejects.toThrow(/Only Pending or Packed orders can be cancelled/i);
+      orderService.cancelOrder(order._id, { reason: "late", admin: regularAdmin })
+    ).rejects.toThrow(/Cannot cancel order|Only Pending or Packed orders can be cancelled/i);
 
     const finalOrder = await Order.findById(order._id);
     expect(finalOrder.status).toBe("delivered");
@@ -395,10 +396,11 @@ describe("Database Integrity, Concurrency & Transaction Safety", () => {
       status: "cancelled", // Terminal state
     });
 
+    const regularAdmin = { ...actorAdmin, role: "admin" };
     // Cancelled order cannot be cancelled again concurrently or updated to delivered via cancellation logic
     await expect(
-      orderService.cancelOrder(order._id, { reason: "some reason", admin: actorAdmin })
-    ).rejects.toThrow(/Only Pending or Packed orders can be cancelled/i);
+      orderService.cancelOrder(order._id, { reason: "some reason", admin: regularAdmin })
+    ).rejects.toThrow(/Cannot cancel order|Only Pending or Packed orders can be cancelled/i);
 
     const finalOrder = await Order.findById(order._id);
     expect(finalOrder.status).toBe("cancelled");

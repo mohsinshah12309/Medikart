@@ -140,10 +140,11 @@ describe("Mass Assignment Protection", () => {
     expect(savedOrder.items[0].price).not.toBe(1);
     expect(savedOrder.items[0].price).toBe(475);
 
-    // 3. Totals must be server-calculated: 2 * 475 + 200 delivery = 1150 PKR
+    // 3. Totals must be server-calculated: 2 * 475 + 200 delivery + 10 platform fee = 1160 PKR
     expect(savedOrder.totals.subtotal).toBe(950);
     expect(savedOrder.totals.deliveryCharge).toBe(200);
-    expect(savedOrder.totals.total).toBe(1150);
+    expect(savedOrder.totals.platformFee).toBe(10);
+    expect(savedOrder.totals.total).toBe(1160);
 
     // 4. Injected root/item attributes must not corrupt the document
     expect(savedOrder.role).toBeUndefined();

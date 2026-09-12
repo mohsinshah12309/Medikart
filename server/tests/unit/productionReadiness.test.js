@@ -93,10 +93,20 @@ afterAll(async () => {
 describe("Production Readiness & Hardening", () => {
 
   describe("1. Environment & Config Validation", () => {
-    const originalEnv = { ...process.env };
+    let savedNodeEnv;
+    let savedJwtSecret;
+    let savedMongoUri;
+
+    beforeEach(() => {
+      savedNodeEnv = process.env.NODE_ENV;
+      savedJwtSecret = process.env.JWT_SECRET;
+      savedMongoUri = process.env.MONGODB_URI;
+    });
 
     afterEach(() => {
-      process.env = { ...originalEnv };
+      process.env.NODE_ENV = savedNodeEnv;
+      if (savedJwtSecret !== undefined) process.env.JWT_SECRET = savedJwtSecret; else delete process.env.JWT_SECRET;
+      if (savedMongoUri !== undefined) process.env.MONGODB_URI = savedMongoUri; else delete process.env.MONGODB_URI;
     });
 
     test("validateEnv rejects missing critical environment variables in production mode", () => {

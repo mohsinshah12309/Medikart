@@ -28,6 +28,8 @@ const path = require("path");
 const crypto = require("crypto");
 const fs = require("fs").promises;
 
+const round2 = (n) => Math.round(n * 100) / 100;
+
 // ── Prescription Upload Configuration ────────────────────────────────────────
 // Stored outside public routes: server/uploads/prescriptions/
 const PRESCRIPTIONS_DIR = path.join(
@@ -162,11 +164,12 @@ const placeInstantOrder = async (payload) => {
   const requiresVerification = false;
 
   // Create order with empty items, awaiting-pharmacist-pricing status
+  const platformFee = 10;
   const order = await Order.create({
     type: "instant",
     customer,
     items: [],
-    totals: { subtotal: 0, deliveryCharge, total: deliveryCharge },
+    totals: { subtotal: 0, deliveryCharge, platformFee, total: round2(deliveryCharge + platformFee) },
     paymentMethod,
     paymentState: "pending",
     status: "awaiting-pharmacist-pricing",

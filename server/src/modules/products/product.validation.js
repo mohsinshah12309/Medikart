@@ -99,7 +99,7 @@ const listProductsQuerySchema = z.object({
   categoryId: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid category ID format").optional(),
   search: z.string().optional(),
   page: z.coerce.number().int().min(1, "Page must be at least 1").optional().default(1),
-  limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(200, "Limit cannot exceed 200").optional().default(50),
+  limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(100, "Limit cannot exceed 100").optional().default(50),
 });
 
 module.exports = {

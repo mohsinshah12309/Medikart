@@ -170,7 +170,8 @@ describe("Medikart Core Workflows Integration Tests", () => {
       const subtotal = res.body.data.order.totals.subtotal;
       expect([380, 400]).toContain(subtotal);
       expect(res.body.data.order.totals.deliveryCharge).toBe(250); // Lahore
-      expect([630, 650]).toContain(res.body.data.order.totals.total);
+      expect(res.body.data.order.totals.platformFee).toBe(10);
+      expect([640, 660]).toContain(res.body.data.order.totals.total);
     });
 
     test("Failure Path: placing standard order fails with invalid OTP", async () => {
@@ -241,7 +242,8 @@ describe("Medikart Core Workflows Integration Tests", () => {
       
       const subtotal = priceRes.body.data.order.totals.subtotal;
       expect([570, 600]).toContain(subtotal); // 200 * 3 = 600 (discounted to 570 if 5% off)
-      expect([820, 850]).toContain(priceRes.body.data.order.totals.total);
+      expect(priceRes.body.data.order.totals.platformFee).toBe(10);
+      expect([830, 860]).toContain(priceRes.body.data.order.totals.total);
     });
 
     test("Failure Path: pricing with invalid product ID is rejected", async () => {

@@ -239,6 +239,10 @@ export default function OrderConfirmationPage() {
                           : `PKR ${order.totals?.deliveryCharge || 0}`}
                       </span>
                     </div>
+                    <div className="flex justify-between text-slate-600">
+                      <span>Platform Fee:</span>
+                      <span>PKR {order.totals?.platformFee !== undefined ? order.totals.platformFee : 10}</span>
+                    </div>
                     <div className="flex justify-between font-black text-slate-900 border-t border-slate-200 pt-2 text-sm">
                       <span>Total Amount:</span>
                       <span className="text-slate-950">

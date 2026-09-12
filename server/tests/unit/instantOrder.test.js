@@ -24,11 +24,16 @@ const Otp = require("../../src/modules/otp/otp.model");
 const otpService = require("../../src/modules/otp/otp.service");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { resetRateLimiters } = require("../../src/middleware/rateLimiter");
 
 // Mock sheetsSyncQueue to avoid Sheets API calls and background timers/retries
 jest.mock("../../src/modules/integrations/sheetsSyncQueue", () => ({
   enqueueSheetSync: jest.fn(),
 }));
+
+beforeEach(() => {
+  resetRateLimiters();
+});
 
 let authToken;
 let product1, product2;
@@ -51,7 +56,9 @@ beforeAll(async () => {
   // Connect to test database
   const mongoUri =
     process.env.MONGODB_URI || "mongodb://localhost:27017/medikart_test";
-  await mongoose.connect(mongoUri);
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(mongoUri);
+  }
 
   // Clean up
   await Order.deleteMany({});
@@ -104,6 +111,8 @@ beforeAll(async () => {
     email: "admin@test.com",
     passwordHash: hashedPassword,
     role: "admin",
+    permissions: ["view_orders", "manage_orders"],
+    active: true,
   });
 
   // Generate auth token
@@ -121,7 +130,6 @@ afterAll(async () => {
   await City.deleteMany({});
   await AdminUser.deleteMany({});
   await Otp.deleteMany({});
-  await mongoose.connection.close();
 
   // Clean up test prescription files
   const uploadsDir = path.join(__dirname, "../../uploads/prescriptions");
@@ -198,7 +206,8 @@ describe("Phase 14 — Instant Order Workflow", () => {
     );
     expect(response.body.data.order.totals.subtotal).toBe(0);
     expect(response.body.data.order.totals.deliveryCharge).toBe(100);
-    expect(response.body.data.order.totals.total).toBe(100);
+    expect(response.body.data.order.totals.platformFee).toBe(10);
+    expect(response.body.data.order.totals.total).toBe(110);
 
     // Clean up test file
     await fs.unlink(prescriptionPath);
@@ -268,14 +277,16 @@ describe("Phase 14 — Instant Order Workflow", () => {
     expect(pricingResponse.body.data.order.items[0].price).toBeGreaterThan(0);
     expect(pricingResponse.body.data.order.items[1].price).toBeGreaterThan(0);
 
-    // Verify totals are computed correctly (subtotal + delivery)
+    // Verify totals are computed correctly (subtotal + delivery + platformFee)
     const subtotal = pricingResponse.body.data.order.totals.subtotal;
     const deliveryCharge =
       pricingResponse.body.data.order.totals.deliveryCharge;
+    const platformFee = pricingResponse.body.data.order.totals.platformFee;
     const total = pricingResponse.body.data.order.totals.total;
 
     expect(deliveryCharge).toBe(100);
-    expect(total).toBe(subtotal + deliveryCharge);
+    expect(platformFee).toBe(10);
+    expect(total).toBe(subtotal + deliveryCharge + platformFee);
     expect(subtotal).toBeGreaterThan(0);
 
     // Clean up test file

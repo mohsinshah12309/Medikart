@@ -89,17 +89,18 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
   });
 
   // ── Compute totals server-side (rules.md §1) ────────────────────────────────
+  const platformFee = 10;
   const subtotal = round2(
     orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
   );
-  const total = round2(subtotal + deliveryCharge);
+  const total = round2(subtotal + deliveryCharge + platformFee);
 
   // ── Save order ──────────────────────────────────────────────────────────────
   const order = await Order.create({
     type: 'standard',
     customer,
     items: orderItems,
-    totals: { subtotal, deliveryCharge, total },
+    totals: { subtotal, deliveryCharge, platformFee, total },
     paymentMethod,
     paymentState: 'pending',
     status: 'pending',
@@ -180,8 +181,12 @@ const sendOrderConfirmationEmail = async (order) => {
           <td style="padding:4px 12px;text-align:right;">PKR ${order.totals.subtotal.toFixed(2)}</td>
         </tr>
         <tr>
-          <td style="padding:4px 12px;">Delivery</td>
+          <td style="padding:4px 12px;">Delivery Fee</td>
           <td style="padding:4px 12px;text-align:right;">PKR ${order.totals.deliveryCharge.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 12px;">Platform Fee</td>
+          <td style="padding:4px 12px;text-align:right;">PKR ${(order.totals.platformFee !== undefined ? order.totals.platformFee : 10).toFixed(2)}</td>
         </tr>
         <tr style="font-weight:bold;font-size:1.05em;">
           <td style="padding:8px 12px;">Total</td>

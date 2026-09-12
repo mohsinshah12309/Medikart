@@ -130,10 +130,11 @@ const placeNarcoticsOrder = async ({
   });
 
   // ── Step 7: Compute totals server-side (rules.md §1) ──────────────────────
+  const platformFee = 10;
   const subtotal = round2(
     orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
   );
-  const total = round2(subtotal + deliveryCharge);
+  const total = round2(subtotal + deliveryCharge + platformFee);
 
   // ── Step 9: Save order — status pending_verification, NOT pending ──────────
   // The requiresVerification value is baked permanently into this document.
@@ -142,7 +143,7 @@ const placeNarcoticsOrder = async ({
     type: "narcotics",
     customer,
     items: orderItems,
-    totals: { subtotal, deliveryCharge, total },
+    totals: { subtotal, deliveryCharge, platformFee, total },
     paymentMethod,
     paymentState: "pending", // Phase 16 owns card authorize/capture from here
     status: "pending_verification",
@@ -220,8 +221,12 @@ const sendNarcoticsOrderConfirmationEmail = async (order) => {
           <td>PKR ${order.totals.subtotal.toFixed(2)}</td>
         </tr>
         <tr>
-          <td>Delivery</td>
+          <td>Delivery Fee</td>
           <td>PKR ${order.totals.deliveryCharge.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td>Platform Fee</td>
+          <td>PKR ${(order.totals.platformFee !== undefined ? order.totals.platformFee : 10).toFixed(2)}</td>
         </tr>
         <tr style="font-weight:bold;font-size:1.05em;">
           <td>Total</td>

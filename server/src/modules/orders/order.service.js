@@ -177,7 +177,7 @@ const getOrderStats = async (admin = null) => {
         ],
         medikartCommission: [
           ...pharmacyMatch,
-          { $match: { status: { $nin: ["cancelled", "rejected"] }, assignedPharmacyId: { $ne: null } } },
+          { $match: { status: { $nin: ["cancelled", "rejected"] } } },
           {
             $lookup: {
               from: "pharmacies",
@@ -190,9 +190,14 @@ const getOrderStats = async (admin = null) => {
           {
             $project: {
               commissionAmount: {
-                $multiply: [
-                  { $ifNull: ["$totals.total", 0] },
-                  { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 0] }, 100] },
+                $add: [
+                  {
+                    $multiply: [
+                      { $ifNull: ["$totals.subtotal", 0] },
+                      { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 0] }, 100] },
+                    ],
+                  },
+                  { $ifNull: ["$totals.platformFee", 10] },
                 ],
               },
             },
@@ -313,11 +318,12 @@ const priceInstantOrder = async (orderId, { items }, admin = null) => {
   });
 
   // Step 7: Compute totals server-side
+  const platformFee = 10;
   const subtotal = round2(
     orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
   );
   const deliveryCharge = await getDeliveryCharge(order.customer.city);
-  const total = round2(subtotal + deliveryCharge);
+  const total = round2(subtotal + deliveryCharge + platformFee);
 
   // Step 8: NEVER recompute requiresVerification from live Product data.
   // The snapshot was taken at order submission time (FR-AD-16) — a product's
@@ -331,7 +337,7 @@ const priceInstantOrder = async (orderId, { items }, admin = null) => {
   // straight to pending — so the pharmacist reviews the prescription before
   // fulfillment. Otherwise move to the normal pending status.
   order.items = orderItems;
-  order.totals = { subtotal, deliveryCharge, total };
+  order.totals = { subtotal, deliveryCharge, platformFee, total };
   order.status = requiresVerification ? "pending_verification" : "pending";
 
   await order.save();

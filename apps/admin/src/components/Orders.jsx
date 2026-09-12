@@ -1291,8 +1291,10 @@ function Orders({ token, adminUser, initialFilter }) {
               </div>
 
               <div style={{ textAlign: "right", marginTop: "1rem", borderTop: "1px solid #e2e8f0", paddingTop: "0.75rem" }}>
+                <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Subtotal: PKR {selectedOrder.totals?.subtotal?.toLocaleString() || 0}</div>
                 <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Delivery: PKR {selectedOrder.totals?.deliveryCharge || 0}</div>
-                <div style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#0f172a" }}>Total: PKR {selectedOrder.totals?.total?.toLocaleString() || 0}</div>
+                <div style={{ fontSize: "0.85rem", color: "#64748b" }}>Platform Fee: PKR {selectedOrder.totals?.platformFee !== undefined ? selectedOrder.totals.platformFee : 10}</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#0f172a", marginTop: "0.25rem" }}>Total: PKR {selectedOrder.totals?.total?.toLocaleString() || 0}</div>
               </div>
             </div>
             <div className="modal-footer">
@@ -1555,7 +1557,8 @@ function Orders({ token, adminUser, initialFilter }) {
                         0
                       );
                       const delivery = subtotal >= 2000 || subtotal === 0 ? 0 : 200;
-                      const grandTotal = subtotal + (subtotal > 0 ? delivery : 0);
+                      const platformFee = subtotal > 0 ? 10 : 0;
+                      const grandTotal = subtotal + (subtotal > 0 ? delivery : 0) + platformFee;
 
                       return (
                         <div style={{ background: "#f8fafc", padding: "0.85rem", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
@@ -1563,9 +1566,13 @@ function Orders({ token, adminUser, initialFilter }) {
                             <span>Subtotal ({pricingItems.reduce((acc, it) => acc + (Number(it.quantity) || 1), 0)} items):</span>
                             <span>PKR {subtotal.toLocaleString()}</span>
                           </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", marginBottom: "0.5rem", color: "#64748b" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", marginBottom: "0.25rem", color: "#64748b" }}>
                             <span>Delivery Fee:</span>
                             <span>{delivery === 0 && subtotal > 0 ? "FREE (PKR 0)" : `PKR ${delivery}`}</span>
+                          </div>
+                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", marginBottom: "0.5rem", color: "#64748b" }}>
+                            <span>Platform Fee:</span>
+                            <span>PKR {platformFee}</span>
                           </div>
                           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", borderTop: "1px solid #cbd5e1", paddingTop: "0.5rem" }}>
                             <span>Estimated Total Quote:</span>

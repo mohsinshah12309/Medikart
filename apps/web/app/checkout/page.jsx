@@ -386,7 +386,8 @@ export default function CheckoutPage() {
     }
   };
 
-  const totalAmount = cartTotal + deliveryCharge;
+  const PLATFORM_FEE = 10;
+  const totalAmount = cartTotal + deliveryCharge + PLATFORM_FEE;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col gap-6">
@@ -1024,10 +1025,18 @@ export default function CheckoutPage() {
                 </span>
               </div>
 
+              <div className="flex justify-between items-center text-slate-600">
+                <span className="flex items-center gap-1.5">
+                  <span>Platform Fee</span>
+                  <span className="bg-amber-100 text-amber-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">Medikart Care</span>
+                </span>
+                <span className="font-bold text-slate-900">PKR {PLATFORM_FEE.toFixed(2)}</span>
+              </div>
+
               <div className="border-t-2 border-dashed border-slate-200 pt-3.5 flex justify-between items-baseline">
                 <div>
                   <span className="text-base font-black text-slate-900 uppercase tracking-wider block">Total Amount</span>
-                  <span className="text-[11px] text-slate-500">(Inclusive of all taxes)</span>
+                  <span className="text-[11px] text-slate-500">(Inclusive of all taxes &amp; fees)</span>
                 </div>
                 <span className="text-2xl font-black text-slate-950 tracking-tight">
                   PKR {totalAmount.toFixed(2)}

@@ -12,6 +12,7 @@ const speakeasy = require("speakeasy");
 const app = require("../../src/app");
 const AdminUser = require("../../src/modules/admin-users/adminUser.model");
 const adminUserService = require("../../src/modules/admin-users/adminUser.service");
+const { resetRateLimiters } = require("../../src/middleware/rateLimiter");
 
 const TEST_EMAIL = "2fa-test@test.com";
 const TEST_PASSWORD = "Password123!";
@@ -24,7 +25,9 @@ beforeAll(async () => {
   if (!mongoUri) {
     throw new Error("MONGODB_URI environment variable is not defined");
   }
-  await mongoose.connect(mongoUri);
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(mongoUri);
+  }
 
   await AdminUser.deleteMany({ email: TEST_EMAIL });
 
@@ -34,15 +37,19 @@ beforeAll(async () => {
     name: "2FA Test Admin",
     email: TEST_EMAIL,
     role: "admin",
+    permissions: ["view_products", "manage_products", "view_orders", "manage_orders"],
     passwordHash,
     active: true,
   });
   adminId = user._id.toString();
 });
 
+beforeEach(() => {
+  resetRateLimiters();
+});
+
 afterAll(async () => {
   await AdminUser.deleteMany({ email: TEST_EMAIL });
-  await mongoose.connection.close();
 });
 
 describe("Admin Two-Factor Authentication (2FA) API Flow", () => {

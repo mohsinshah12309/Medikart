@@ -71,7 +71,7 @@ beforeEach(async () => {
     name: "Super Admin",
     email: "super@test.com",
     role: "super_admin",
-    permissions: ["products", "orders", "narcotics_approval", "reports", "settings"],
+    permissions: ["view_products", "manage_products", "view_orders", "manage_orders", "narcotics_approval", "reports", "settings"],
     passwordHash: "$2a$12$dummyhashformanytests",
     active: true,
   });
@@ -80,7 +80,7 @@ beforeEach(async () => {
     name: "Regular Admin",
     email: "admin@test.com",
     role: "admin",
-    permissions: ["products"],
+    permissions: ["view_products", "manage_products"],
     passwordHash: "$2a$12$dummyhashformanytests",
     active: true,
   });
@@ -221,7 +221,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
         name: "Second Super Admin",
         email: "super2@test.com",
         role: "super_admin",
-        permissions: ["products", "orders", "narcotics_approval", "reports", "settings"],
+        permissions: ["view_products", "manage_products", "view_orders", "manage_orders", "narcotics_approval", "reports", "settings"],
         passwordHash: "$2a$12$dummyhashformanytests",
         active: true,
       });
@@ -475,7 +475,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
           name: "New Admin",
           email: "newadmin@test.com",
           role: "admin",
-          permissions: ["products"],
+          permissions: ["view_products"],
         });
 
       expect(res.status).toBe(201);

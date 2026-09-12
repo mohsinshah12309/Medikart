@@ -43,6 +43,7 @@ const totalsSchema = new mongoose.Schema(
   {
     subtotal: { type: Number, required: true, min: 0 },
     deliveryCharge: { type: Number, required: true, min: 0 },
+    platformFee: { type: Number, default: 10, min: 0 },
     total: { type: Number, required: true, min: 0 },
   },
   { _id: false },
