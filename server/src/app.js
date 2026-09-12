@@ -44,6 +44,10 @@ const {
 // Phase 5 — Auth Routes (public — mounted BEFORE the auth middleware)
 const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 
+// Customer Auth & Wishlist Routes
+const customerRoutes = require("./modules/customers/customer.routes");
+const wishlistRoutes = require("./modules/customers/wishlist.routes");
+
 // Phase 20 — Admin Account Management (Super Admin)
 const adminUserManagementRoutes = require("./modules/admin-users/adminUserManagement.routes");
 
@@ -213,6 +217,8 @@ const paymentRoutes = require("./modules/payments/payment.routes");
 // ─── PUBLIC routes ─────────────────────────────────────────────────────────────
 // Mounted BEFORE the auth middleware so public endpoints are never blocked.
 app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
+app.use("/api/v1/auth/customer", authLimiter, customerRoutes);
+app.use("/api/v1/wishlist", storefrontLimiter, wishlistRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);

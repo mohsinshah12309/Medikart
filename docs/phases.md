@@ -588,3 +588,17 @@ card data ever reaches your server, and running test transactions against their 
 certification process and checklist for this integration has not yet been confirmed directly by
 Habib Metro/Kuickpay as of this writing — this should be confirmed directly with the bank contact
 before Phase 30 deployment planning finalizes a timeline.
+
+---
+
+## Addendum D — Additional Feature: Customer Accounts & Wishlist (approved addition)
+
+**Status:** Approved by user and client. Not part of the original guest-only storefront phase plan.
+
+A persistent customer identity system and Wishlist capability was added to the storefront while preserving guest checkout:
+
+- **Customer Account Model:** Separate `Customer` identity model (`email`, `passwordHash`, `name`, `phone`, `emailVerified`, `isBlocked`).
+- **Real OTP Email Verification:** 6-digit OTP verification using the isolated `account_verification` purpose in `Otp` collection before account activation and login capability.
+- **Hard Authentication Isolation:** Dedicated customer JWTs (`role: "customer"`), separate routes (`/api/v1/auth/customer/*`), separate middleware (`customerAuth.js`), and isolated client token storage (`customer_token`), strictly partitioned from Admin authentication (`role: "admin"` / `"super_admin"`, `/api/v1/admin/*`, `admin_token`).
+- **Wishlist Module:** Compound indexed `CustomerWishlist` model (`customerId`, `productId`), dynamic product population, O(1) existence lookups, and heart-toggle controls on cards and product details.
+- **Preserved Guest Checkout:** Standard guest checkout with per-order OTP remains completely unchanged and unimpacted.

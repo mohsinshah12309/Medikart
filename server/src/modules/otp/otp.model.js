@@ -41,6 +41,11 @@ const otpSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    purpose: {
+      type: String,
+      enum: ["order_otp", "account_verification"],
+      default: "order_otp",
+    },
   },
   {
     timestamps: true,
@@ -48,6 +53,7 @@ const otpSchema = new mongoose.Schema(
 );
 
 // Indexes for fast lookup by email and query sorting
+otpSchema.index({ email: 1, purpose: 1, createdAt: -1 });
 otpSchema.index({ email: 1, createdAt: -1 });
 otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 86400 }); // cleanup after 24 hours
 

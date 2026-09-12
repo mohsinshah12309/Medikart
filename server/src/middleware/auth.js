@@ -39,6 +39,11 @@ const auth = async (req, res, next) => {
     // jwt.verify throws on any problem (expired, bad signature, malformed)
     const decoded = jwt.verify(token, secret);
 
+    // Hard boundary: reject any customer token attempting to access admin routes
+    if (!decoded || !["admin", "super_admin"].includes(decoded.role)) {
+      throw new UnauthorizedError("Authentication required");
+    }
+
     // Fetch the admin user from DB to check current account state (especially 'active')
     const adminUser = await AdminUser.findById(decoded.sub);
     if (!adminUser || !adminUser.active) {

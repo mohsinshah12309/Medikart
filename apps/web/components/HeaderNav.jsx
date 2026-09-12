@@ -9,27 +9,28 @@ import {
   X,
   ChevronDown,
   ChevronRight,
-  Sparkles,
   ArrowRight,
   Pill,
-  ShoppingBag,
-  Clock,
-  ShieldCheck,
+  Heart,
+  User,
+  LogOut,
 } from "lucide-react";
 
-import {
-  triggerCategorySelect,
-  scrollToCatalog,
-} from "../lib/catalogEvents";
+import { useCustomer } from "./CustomerProvider";
+import { triggerCategorySelect, scrollToCatalog } from "../lib/catalogEvents";
 
 export default function HeaderNav({ initialCategories = [] }) {
   const [categories, setCategories] = useState(initialCategories);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
   const hoverTimeoutRef = useRef(null);
+  const accountTimeoutRef = useRef(null);
   const pathname = usePathname();
   const router = useRouter();
+
+  const { customer, isAuthenticated, logout, wishlistCount } = useCustomer();
 
   // Load categories if not passed down from server layout
   useEffect(() => {
@@ -52,13 +53,12 @@ export default function HeaderNav({ initialCategories = [] }) {
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsDropdownOpen(false);
+    setIsAccountMenuOpen(false);
   }, [pathname]);
 
-  // Dropdown hover handlers with grace delay to avoid flickering
+  // Dropdown hover handlers with grace delay
   const handleMouseEnter = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setIsDropdownOpen(true);
   };
 
@@ -100,10 +100,8 @@ export default function HeaderNav({ initialCategories = [] }) {
 
   return (
     <>
-      {/* ───────────────────────────────────────────────────────────────────
-          1. DESKTOP NAVIGATION BAR (Hidden on mobile, flex on md+)
-      ──────────────────────────────────────────────────────────────────── */}
-      <nav className="hidden md:flex items-center gap-6 lg:gap-7 relative">
+      {/* 1. DESKTOP NAVIGATION BAR */}
+      <nav className="hidden md:flex items-center gap-5 lg:gap-6 relative">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
 
@@ -119,9 +117,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className={`text-sm font-bold transition-colors flex items-center gap-1.5 cursor-pointer relative py-1 ${
-                    isDropdownOpen
-                      ? "text-amber-600"
-                      : "text-slate-700 hover:text-amber-600"
+                    isDropdownOpen ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
                   }`}
                 >
                   <span>Categories</span>
@@ -130,7 +126,6 @@ export default function HeaderNav({ initialCategories = [] }) {
                       isDropdownOpen ? "rotate-180 text-amber-500" : "text-slate-400"
                     }`}
                   />
-                  {/* Subtle active amber indicator line */}
                   <span
                     className={`absolute bottom-[-18px] left-0 h-[2.5px] bg-amber-500 transition-all duration-200 ${
                       isDropdownOpen ? "w-full" : "w-0"
@@ -138,18 +133,16 @@ export default function HeaderNav({ initialCategories = [] }) {
                   />
                 </button>
 
-                {/* ─── DWAGO-STYLE TOP-DOWN MEGA DROPDOWN ─── */}
+                {/* Categories Dropdown */}
                 {isDropdownOpen && (
                   <div
-                    className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[780px] lg:w-[860px] max-w-[92vw] z-50 transition-all duration-200 animate-in fade-in slide-in-from-top-2"
+                    className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[780px] lg:w-[860px] max-w-[92vw] z-50 transition-all duration-200"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
                     <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200/90 overflow-hidden">
-                      {/* Top Accent Gradient Line */}
                       <div className="h-1.5 w-full bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300" />
 
-                      {/* Header Strip inside Dropdown */}
                       <div className="px-6 py-3.5 bg-[#FAF8F5] border-b border-amber-100 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-base">💊</span>
@@ -179,7 +172,6 @@ export default function HeaderNav({ initialCategories = [] }) {
                         </Link>
                       </div>
 
-                      {/* Multi-Column Category Grid */}
                       <div className="p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-[420px] overflow-y-auto scrollbar-thin">
                         {categories.map((cat) => {
                           const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -191,7 +183,6 @@ export default function HeaderNav({ initialCategories = [] }) {
                               onClick={(e) => handleCategorySelect(cat._id, e)}
                               className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all cursor-pointer select-none"
                             >
-                              {/* Category Thumbnail */}
                               <div className="w-10 h-10 rounded-lg bg-amber-50/80 border border-amber-100 flex items-center justify-center relative overflow-hidden flex-shrink-0 group-hover:scale-105 group-hover:border-amber-300 transition-all">
                                 {imgSrc ? (
                                   <Image
@@ -206,21 +197,18 @@ export default function HeaderNav({ initialCategories = [] }) {
                                 )}
                               </div>
 
-                              {/* Category Title */}
                               <div className="flex-1 min-w-0 text-left">
                                 <p className="text-xs font-bold text-slate-800 group-hover:text-amber-700 transition-colors line-clamp-2 leading-tight">
                                   {cat.name}
                                 </p>
                               </div>
 
-                              {/* Subtle arrow on hover */}
                               <ChevronRight className="w-3.5 h-3.5 text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
                             </div>
                           );
                         })}
                       </div>
 
-                      {/* Bottom Quick Action Banner */}
                       <div className="px-6 py-3 bg-gradient-to-r from-amber-50 via-yellow-50 to-white border-t border-amber-100/80 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-xs text-slate-700">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -257,11 +245,108 @@ export default function HeaderNav({ initialCategories = [] }) {
             </Link>
           );
         })}
+
+        {/* Wishlist Link */}
+        <Link
+          href="/wishlist"
+          className={`text-sm font-bold transition-colors relative py-1 flex items-center gap-1.5 ${
+            pathname === "/wishlist" ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
+          }`}
+        >
+          <Heart
+            className={`w-4 h-4 ${
+              pathname === "/wishlist" || wishlistCount > 0
+                ? "text-rose-500 fill-rose-500"
+                : "text-slate-400"
+            }`}
+          />
+          <span>Wishlist</span>
+          {wishlistCount > 0 && (
+            <span className="min-w-[18px] h-[18px] flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full px-1 shadow-xs">
+              {wishlistCount > 99 ? "99+" : wishlistCount}
+            </span>
+          )}
+        </Link>
+
+        {/* Customer Account Dropdown / Sign In Button */}
+        {isAuthenticated ? (
+          <div
+            className="relative py-1"
+            onMouseEnter={() => {
+              if (accountTimeoutRef.current) clearTimeout(accountTimeoutRef.current);
+              setIsAccountMenuOpen(true);
+            }}
+            onMouseLeave={() => {
+              accountTimeoutRef.current = setTimeout(() => setIsAccountMenuOpen(false), 220);
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+              className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 hover:border-amber-400 text-slate-800 transition-all cursor-pointer shadow-2xs"
+            >
+              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs">
+                {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
+              </div>
+              <span className="text-xs font-bold max-w-[100px] truncate">
+                {customer?.name ? customer.name.split(" ")[0] : "Account"}
+              </span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
+                  isAccountMenuOpen ? "rotate-180 text-amber-600" : ""
+                }`}
+              />
+            </button>
+
+            {isAccountMenuOpen && (
+              <div className="absolute right-0 top-full pt-2 w-56 z-50">
+                <div className="bg-white rounded-2xl shadow-xl border border-amber-200/90 p-2 overflow-hidden">
+                  <div className="px-3 py-2.5 bg-amber-50/50 rounded-xl mb-1.5 border border-amber-100/60">
+                    <p className="text-xs font-bold text-slate-900 truncate">
+                      {customer?.name || "Customer"}
+                    </p>
+                    <p className="text-[11px] text-slate-500 truncate">{customer?.email}</p>
+                  </div>
+                  <Link
+                    href="/wishlist"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Heart className="w-3.5 h-3.5 text-rose-500" />
+                      <span>My Wishlist</span>
+                    </span>
+                    <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900">
+                      {wishlistCount}
+                    </span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAccountMenuOpen(false);
+                      logout();
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer text-left"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-amber-200 text-slate-800 hover:border-amber-400 hover:bg-amber-50/50 text-xs font-bold transition-all shadow-2xs cursor-pointer"
+          >
+            <User className="w-3.5 h-3.5 text-amber-600" />
+            <span>Sign In</span>
+          </Link>
+        )}
       </nav>
 
-      {/* ───────────────────────────────────────────────────────────────────
-          2. MOBILE HAMBURGER BUTTON (Visible on md:hidden)
-      ──────────────────────────────────────────────────────────────────── */}
+      {/* 2. MOBILE HAMBURGER BUTTON */}
       <div className="flex items-center md:hidden">
         <button
           type="button"
@@ -273,20 +358,15 @@ export default function HeaderNav({ initialCategories = [] }) {
         </button>
       </div>
 
-      {/* ───────────────────────────────────────────────────────────────────
-          3. MOBILE ASIDE NAVIGATION DRAWER (<aside>)
-      ──────────────────────────────────────────────────────────────────── */}
+      {/* 3. MOBILE ASIDE DRAWER */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex">
-          {/* Backdrop Overlay */}
           <div
             className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          {/* Slide-out Aside Drawer */}
-          <aside className="relative w-[310px] max-w-[85vw] bg-[#FAF8F5] h-full shadow-2xl flex flex-col z-10 border-r border-[#F3EFE6] animate-in slide-in-from-left duration-200">
-            {/* Drawer Header */}
+          <aside className="relative w-[310px] max-w-[85vw] bg-[#FAF8F5] h-full shadow-2xl flex flex-col z-10 border-r border-[#F3EFE6]">
             <div className="p-4 border-b border-[#F3EFE6] flex items-center justify-between bg-white">
               <div className="flex items-center gap-2">
                 <span className="text-xl">🛒</span>
@@ -304,7 +384,6 @@ export default function HeaderNav({ initialCategories = [] }) {
               </button>
             </div>
 
-            {/* Nav Items List: Home | Instant Order | Categories | About | Contact */}
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
               <Link
                 href="/"
@@ -333,7 +412,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                 <ChevronRight className="w-4 h-4 text-slate-400" />
               </Link>
 
-              {/* Expandable Top-Down Categories Accordion */}
+              {/* Categories Accordion */}
               <div className="rounded-xl bg-white border border-[#F3EFE6] overflow-hidden">
                 <button
                   type="button"
@@ -387,6 +466,27 @@ export default function HeaderNav({ initialCategories = [] }) {
                 )}
               </div>
 
+              {/* Wishlist Mobile Link */}
+              <Link
+                href="/wishlist"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
+                  pathname === "/wishlist" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Heart className={`w-4 h-4 ${wishlistCount > 0 ? "text-rose-500 fill-rose-500" : "text-slate-400"}`} />
+                  <span>My Wishlist</span>
+                </div>
+                {wishlistCount > 0 ? (
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
+                    {wishlistCount}
+                  </span>
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                )}
+              </Link>
+
               <Link
                 href="/about"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -411,7 +511,41 @@ export default function HeaderNav({ initialCategories = [] }) {
             </div>
 
             {/* Aside Drawer Footer */}
-            <div className="p-4 border-t border-[#F3EFE6] bg-white space-y-2">
+            <div className="p-4 border-t border-[#F3EFE6] bg-white space-y-2.5">
+              {isAuthenticated ? (
+                <div className="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/80 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs flex-shrink-0">
+                      {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-slate-900 truncate">{customer?.name}</p>
+                      <p className="text-[10px] text-slate-500 truncate">{customer?.email}</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      logout();
+                    }}
+                    className="p-1.5 rounded-lg bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 cursor-pointer shadow-2xs"
+                    title="Sign Out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-colors"
+                >
+                  <User className="w-4 h-4 text-yellow-400" />
+                  <span>Sign In / Register</span>
+                </Link>
+              )}
+
               <Link
                 href="/instant-order"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -420,7 +554,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                 <span>Upload Prescription</span>
                 <span>→</span>
               </Link>
-              <div className="text-center pt-1">
+              <div className="text-center pt-0.5">
                 <span className="text-[10px] text-slate-400 font-medium">
                   DRAP Licensed Pharmacy • 100% Genuine
                 </span>

@@ -120,10 +120,12 @@ const requestOtp = async (email, ip, options = {}) => {
   // the request was rejected for an email-specific reason.)
   recordIpRequest(ip);
 
-  // 2. Invalidate any unexpired, unverified OTP for this email (don't stack live codes)
+  // 2. Invalidate any unexpired, unverified OTP for this email and purpose (don't stack live codes)
+  const purpose = options.purpose || "order_otp";
   await Otp.updateMany(
     {
       email: normalizedEmail,
+      purpose,
       verified: false,
       expiresAt: { $gt: new Date() },
     },
@@ -148,14 +150,15 @@ const requestOtp = async (email, ip, options = {}) => {
     email: normalizedEmail,
     codeHash,
     expiresAt,
+    purpose,
   });
 
   // 7. Send code via email
-  const subject = "Your Medikart Verification Code";
+  const subject = options.customSubject || (purpose === "account_verification" ? "Verify Your Medikart Account" : "Your Medikart Verification Code");
   const text = `Your Medikart verification code is: ${code}. It expires in 10 minutes. Do not share this code with anyone.`;
-  const html = `<div style="font-family: Arial, sans-serif; padding: 20px;">
-    <h2>Medikart Verification Code</h2>
-    <p>Your verification code is:</p>
+  const html = options.customHtml || `<div style="font-family: Arial, sans-serif; padding: 20px;">
+    <h2>${purpose === "account_verification" ? "Medikart Account Verification" : "Medikart Verification Code"}</h2>
+    <p>Your 6-digit verification code is:</p>
     <h1 style="color: #0d9488; letter-spacing: 4px;">${code}</h1>
     <p>This code expires in 10 minutes. If you did not request this, please ignore this email.</p>
   </div>`;
@@ -184,14 +187,17 @@ const requestOtp = async (email, ip, options = {}) => {
  *
  * @param {String} email
  * @param {String} code
+ * @param {Object} [options]
  */
 const verifyOtp = async (email, code, options = {}) => {
   const normalizedEmail = email.trim().toLowerCase();
   const consume = options.consume !== false; // Default is true (single-use consumption)
+  const purpose = options.purpose || "order_otp";
 
-  // 1. Find the most recent OTP document for this email
+  // 1. Find the most recent OTP document for this email and purpose
   const otpDoc = await Otp.findOne({
     email: normalizedEmail,
+    purpose,
   }).sort({ createdAt: -1 });
 
   if (!otpDoc) {

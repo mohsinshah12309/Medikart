@@ -5,12 +5,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TiltCard3D from './3d/TiltCard3D';
 import { useCart } from './CartProvider';
-import { ShoppingCart, Check, Eye } from 'lucide-react';
+import { useCustomer } from './CustomerProvider';
+import { ShoppingCart, Check, Eye, Heart } from 'lucide-react';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useCustomer();
   const [added, setAdded] = useState(false);
 
+  const wishlisted = isWishlisted(product._id);
   const hasDiscount = product.discountPercent > 0;
   const isOutOfStock = product.stockStatus === 'out_of_stock' || product.stock <= 0;
   
@@ -39,6 +42,14 @@ export default function ProductCard({ product }) {
     setTimeout(() => setAdded(false), 1600);
   };
 
+  const handleWishlistToggle = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    toggleWishlist(product._id);
+  };
+
   return (
     <TiltCard3D className="bg-white border border-[#F3EFE6] rounded-2xl overflow-hidden hover:shadow-warm-card hover:border-amber-300 flex flex-col h-full relative group transition-all duration-200">
       {/* Product Image Link Container */}
@@ -49,15 +60,30 @@ export default function ProductCard({ product }) {
             -{product.discountPercent}%
           </span>
         )}
+
+        {/* Wishlist Heart Button */}
+        <button
+          type="button"
+          onClick={handleWishlistToggle}
+          className={`absolute top-1.5 right-1.5 z-30 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150 shadow-xs cursor-pointer ${
+            wishlisted
+              ? "bg-rose-50 text-rose-500 border border-rose-200 scale-105"
+              : "bg-white/95 text-slate-400 hover:text-rose-500 border border-slate-200 hover:border-rose-200 hover:scale-110 opacity-80 group-hover:opacity-100"
+          }`}
+          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          title={wishlisted ? "Saved in Wishlist" : "Save to Wishlist"}
+        >
+          <Heart className={`w-3.5 h-3.5 ${wishlisted ? "fill-rose-500 text-rose-500" : ""}`} />
+        </button>
         
         {/* Narcotics Badge vs OTC Badge */}
         {product.isNarcotic ? (
-          <span className="absolute top-1.5 right-1.5 z-10 bg-amber-100 text-amber-900 border border-amber-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-2xs">
+          <span className="absolute bottom-1.5 left-1.5 z-10 bg-amber-100 text-amber-900 border border-amber-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-2xs">
             Rx ONLY
           </span>
         ) : (
           !isOutOfStock && (
-            <span className="absolute top-1.5 right-1.5 z-10 bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded-md border border-emerald-200">
+            <span className="absolute bottom-1.5 left-1.5 z-10 bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded-md border border-emerald-200">
               OTC
             </span>
           )

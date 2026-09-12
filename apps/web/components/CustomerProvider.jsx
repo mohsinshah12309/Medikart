@@ -1,0 +1,273 @@
+"use client";
+
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+
+const CustomerContext = createContext(null);
+
+export function CustomerProvider({ children }) {
+  const [customer, setCustomer] = useState(null);
+  const [token, setToken] = useState(null);
+  const [wishlistIds, setWishlistIds] = useState([]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isWishlistLoading, setIsWishlistLoading] = useState(false);
+
+  const router = useRouter();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+
+  // Fetch wishlist IDs for fast O(1) active state
+  const refreshWishlistIds = useCallback(async (authToken) => {
+    if (!authToken) {
+      setWishlistIds([]);
+      setWishlistCount(0);
+      return;
+    }
+    try {
+      const res = await fetch(`${apiUrl}/wishlist/ids`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const ids = json?.data?.ids || [];
+        setWishlistIds(ids);
+        setWishlistCount(ids.length);
+      } else if (res.status === 401) {
+        // Token expired/invalid
+        logout();
+      }
+    } catch (err) {
+      console.error("[CustomerProvider] Failed to fetch wishlist IDs:", err);
+    }
+  }, [apiUrl]);
+
+  // Fetch full wishlist with product details
+  const refreshWishlist = useCallback(async (authToken = token) => {
+    if (!authToken) {
+      setWishlistItems([]);
+      setWishlistCount(0);
+      return;
+    }
+    setIsWishlistLoading(true);
+    try {
+      const res = await fetch(`${apiUrl}/wishlist`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const items = json?.data?.items || [];
+        setWishlistItems(items);
+        setWishlistCount(items.length);
+        setWishlistIds(items.map((i) => i._id));
+      }
+    } catch (err) {
+      console.error("[CustomerProvider] Failed to fetch full wishlist:", err);
+    } finally {
+      setIsWishlistLoading(false);
+    }
+  }, [apiUrl, token]);
+
+  // Initial token hydration from localStorage
+  useEffect(() => {
+    try {
+      const storedToken = localStorage.getItem("customer_token");
+      const storedCustomer = localStorage.getItem("customer_user");
+
+      if (storedToken && storedCustomer) {
+        setToken(storedToken);
+        setCustomer(JSON.parse(storedCustomer));
+        refreshWishlistIds(storedToken);
+      }
+    } catch (e) {
+      console.error("[CustomerProvider] Failed to hydrate customer auth:", e);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refreshWishlistIds]);
+
+  // Auth Functions
+  const setSession = (tokenData, customerData) => {
+    setToken(tokenData);
+    setCustomer(customerData);
+    localStorage.setItem("customer_token", tokenData);
+    localStorage.setItem("customer_user", JSON.stringify(customerData));
+    refreshWishlistIds(tokenData);
+  };
+
+  const logout = () => {
+    setToken(null);
+    setCustomer(null);
+    setWishlistIds([]);
+    setWishlistItems([]);
+    setWishlistCount(0);
+    localStorage.removeItem("customer_token");
+    localStorage.removeItem("customer_user");
+  };
+
+  const login = async (email, password) => {
+    const res = await fetch(`${apiUrl}/auth/customer/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      const err = new Error(data.message || "Login failed");
+      err.code = data.code;
+      throw err;
+    }
+    setSession(data.token, data.customer);
+    return data;
+  };
+
+  const signup = async (formData) => {
+    const res = await fetch(`${apiUrl}/auth/customer/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Registration failed");
+    }
+    return data;
+  };
+
+  const verifyEmail = async (email, code) => {
+    const res = await fetch(`${apiUrl}/auth/customer/verify-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, code }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Verification failed");
+    }
+    setSession(data.token, data.customer);
+    return data;
+  };
+
+  const resendVerification = async (email, overrideSuggestion = false) => {
+    const res = await fetch(`${apiUrl}/auth/customer/resend-verification`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, overrideSuggestion }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to resend code");
+    }
+    return data;
+  };
+
+  const forgotPassword = async (email) => {
+    const res = await fetch(`${apiUrl}/auth/customer/forgot-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to submit request");
+    }
+    return data;
+  };
+
+  const resetPassword = async (resetToken, password) => {
+    const res = await fetch(`${apiUrl}/auth/customer/reset-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: resetToken, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to reset password");
+    }
+    return data;
+  };
+
+  // Wishlist Functions
+  const isWishlisted = useCallback((productId) => {
+    return wishlistIds.includes(productId);
+  }, [wishlistIds]);
+
+  const toggleWishlist = async (productId) => {
+    if (!token) {
+      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+      return false;
+    }
+
+    const currentlyWishlisted = isWishlisted(productId);
+
+    // Optimistic UI update
+    if (currentlyWishlisted) {
+      setWishlistIds((prev) => prev.filter((id) => id !== productId));
+      setWishlistItems((prev) => prev.filter((item) => item._id !== productId));
+      setWishlistCount((prev) => Math.max(0, prev - 1));
+    } else {
+      setWishlistIds((prev) => [...prev, productId]);
+      setWishlistCount((prev) => prev + 1);
+    }
+
+    try {
+      const method = currentlyWishlisted ? "DELETE" : "POST";
+      const res = await fetch(`${apiUrl}/wishlist/${productId}`, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        // Rollback on failure
+        refreshWishlistIds(token);
+        return false;
+      }
+      return !currentlyWishlisted;
+    } catch (err) {
+      console.error("[CustomerProvider] Wishlist toggle failed:", err);
+      refreshWishlistIds(token);
+      return false;
+    }
+  };
+
+  return (
+    <CustomerContext.Provider
+      value={{
+        customer,
+        token,
+        isAuthenticated: Boolean(token && customer),
+        isLoading,
+        login,
+        signup,
+        verifyEmail,
+        resendVerification,
+        forgotPassword,
+        resetPassword,
+        logout,
+        wishlistIds,
+        wishlistItems,
+        wishlistCount,
+        isWishlistLoading,
+        isWishlisted,
+        toggleWishlist,
+        refreshWishlist,
+      }}
+    >
+      {children}
+    </CustomerContext.Provider>
+  );
+}
+
+export function useCustomer() {
+  const context = useContext(CustomerContext);
+  if (!context) {
+    throw new Error("useCustomer must be used within a CustomerProvider");
+  }
+  return context;
+}

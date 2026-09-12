@@ -3,18 +3,20 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "./CartProvider";
+import { useCustomer } from "./CustomerProvider";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
   const { cart } = useCart();
+  const { isAuthenticated, wishlistCount } = useCustomer();
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const tabs = [
     { href: "/", label: "Home", icon: "🏠" },
-    { href: "/#catalog", label: "Shop", icon: "📁" },
+    { href: "/wishlist", label: "Wishlist", icon: "❤️", badge: wishlistCount },
     { href: "/instant-order", label: "Rx Upload", icon: "🩺", isCenter: true },
-    { href: "/about", label: "About", icon: "📖" },
     { href: "/cart", label: "Cart", icon: "🛒", badge: cartCount },
+    { href: isAuthenticated ? "/wishlist" : "/login", label: isAuthenticated ? "Account" : "Sign In", icon: "👤" },
   ];
 
   const isActive = (href) => {
