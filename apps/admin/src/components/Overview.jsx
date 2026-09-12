@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { adminFetch } from "../apiClient";
 
-function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts }) {
+function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, onNavigateToPharmacies }) {
   const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const isSuperAdmin = adminUser?.role === "super_admin";
@@ -17,6 +17,9 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts }
     totalProducts: 0,
     narcoticsPending: 0,
     pricingPending: 0,
+    totalSale: 0,
+    todaySale: 0,
+    medikartCommission: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -30,11 +33,19 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts }
       setLoading(true);
       setError("");
 
-      let orderStats = { todayOrders: 0, totalOrders: 0, narcoticsPending: 0, pricingPending: 0 };
+      let orderStats = {
+        todayOrders: 0,
+        totalOrders: 0,
+        narcoticsPending: 0,
+        pricingPending: 0,
+        totalSale: 0,
+        todaySale: 0,
+        medikartCommission: 0,
+      };
       let productCount = 0;
 
       // 1. Fetch order stats only if authorized
-      if (canViewOrders) {
+      if (canViewOrders || canAccess("view_pharmacies", "manage_pharmacies")) {
         try {
           const dataStats = await adminFetch("/admin/orders/stats");
           if (dataStats.data) {
@@ -60,6 +71,9 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts }
         totalOrders: orderStats.totalOrders ?? 0,
         narcoticsPending: orderStats.narcoticsPending ?? 0,
         pricingPending: orderStats.pricingPending ?? 0,
+        totalSale: orderStats.totalSale ?? 0,
+        todaySale: orderStats.todaySale ?? 0,
+        medikartCommission: orderStats.medikartCommission ?? 0,
         totalProducts: productCount,
       });
     } catch (err) {
@@ -221,6 +235,82 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts }
                 </div>
                 <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500 }}>
                   Cumulative order count in database
+                </div>
+              </div>
+            )}
+
+            {/* Total Sale Card (Orders Permission) */}
+            {canViewOrders && (
+              <div
+                className="card"
+                role="button"
+                tabIndex={0}
+                onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterStatus: "", filterType: "" })}
+                style={{
+                  padding: "1.5rem",
+                  borderLeft: "5px solid #10b981",
+                  background: "#ffffff",
+                  cursor: "pointer",
+                  transition: "transform 0.15s ease, box-shadow 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "none";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ color: "#065f46", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                    💰 Total Sale
+                  </div>
+                  <span style={{ fontSize: "0.75rem", color: "#059669", fontWeight: 700 }}>Orders →</span>
+                </div>
+                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#065f46", margin: "0.5rem 0" }}>
+                  PKR {stats.totalSale ? stats.totalSale.toLocaleString() : "0"}
+                </div>
+                <div style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 500 }}>
+                  Today: <strong>PKR {stats.todaySale ? stats.todaySale.toLocaleString() : "0"}</strong> • Gross revenue
+                </div>
+              </div>
+            )}
+
+            {/* Medikart Commission Card (Orders or Pharmacies Permission) */}
+            {(canViewOrders || canAccess("view_pharmacies", "manage_pharmacies")) && (
+              <div
+                className="card"
+                role="button"
+                tabIndex={0}
+                onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies() : (onNavigateToOrders && onNavigateToOrders({ dateFilter: "all" }))}
+                style={{
+                  padding: "1.5rem",
+                  borderLeft: "5px solid #6366f1",
+                  background: "#ffffff",
+                  cursor: "pointer",
+                  transition: "transform 0.15s ease, box-shadow 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "none";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ color: "#3730a3", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                    📈 Medikart Commission
+                  </div>
+                  <span style={{ fontSize: "0.75rem", color: "#4f46e5", fontWeight: 700 }}>Branches →</span>
+                </div>
+                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#3730a3", margin: "0.5rem 0" }}>
+                  PKR {stats.medikartCommission ? stats.medikartCommission.toLocaleString() : "0"}
+                </div>
+                <div style={{ fontSize: "0.75rem", color: "#4338ca", fontWeight: 500 }}>
+                  Platform share from partner fulfillment
                 </div>
               </div>
             )}

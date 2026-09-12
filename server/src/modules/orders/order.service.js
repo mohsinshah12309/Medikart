@@ -165,6 +165,40 @@ const getOrderStats = async (admin = null) => {
           { $match: { status: "awaiting-pharmacist-pricing" } },
           { $count: "count" },
         ],
+        totalSale: [
+          ...pharmacyMatch,
+          { $match: { status: { $nin: ["cancelled", "rejected"] } } },
+          { $group: { _id: null, total: { $sum: "$totals.total" } } },
+        ],
+        todaySale: [
+          ...pharmacyMatch,
+          { $match: { createdAt: { $gte: todayStartUTC }, status: { $nin: ["cancelled", "rejected"] } } },
+          { $group: { _id: null, total: { $sum: "$totals.total" } } },
+        ],
+        medikartCommission: [
+          ...pharmacyMatch,
+          { $match: { status: { $nin: ["cancelled", "rejected"] }, assignedPharmacyId: { $ne: null } } },
+          {
+            $lookup: {
+              from: "pharmacies",
+              localField: "assignedPharmacyId",
+              foreignField: "_id",
+              as: "pharmacy",
+            },
+          },
+          { $unwind: { path: "$pharmacy", preserveNullAndEmptyArrays: true } },
+          {
+            $project: {
+              commissionAmount: {
+                $multiply: [
+                  { $ifNull: ["$totals.total", 0] },
+                  { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 0] }, 100] },
+                ],
+              },
+            },
+          },
+          { $group: { _id: null, total: { $sum: "$commissionAmount" } } },
+        ],
       },
     },
   ]);
@@ -174,6 +208,9 @@ const getOrderStats = async (admin = null) => {
     totalOrders: result.totalOrders[0]?.count ?? 0,
     narcoticsPending: result.narcoticsPending[0]?.count ?? 0,
     pricingPending: result.pricingPending[0]?.count ?? 0,
+    totalSale: Math.round(result.totalSale[0]?.total ?? 0),
+    todaySale: Math.round(result.todaySale[0]?.total ?? 0),
+    medikartCommission: Math.round(result.medikartCommission[0]?.total ?? 0),
   };
 };
 

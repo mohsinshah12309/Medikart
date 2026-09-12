@@ -34,6 +34,10 @@ function App() {
     setActiveTab("products");
   };
 
+  const handleNavigateToPharmacies = () => {
+    setActiveTab("pharmacies");
+  };
+
   useEffect(() => {
     const handleExpired = (e) => {
       const msg = e?.detail?.message || "Your session has expired. Please sign in again.";
@@ -89,6 +93,7 @@ function App() {
             adminUser={adminUser}
             onNavigateToOrders={handleNavigateToOrders}
             onNavigateToProducts={handleNavigateToProducts}
+            onNavigateToPharmacies={handleNavigateToPharmacies}
           />
         );
       case "products":
