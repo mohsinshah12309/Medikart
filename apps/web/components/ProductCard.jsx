@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TiltCard3D from './3d/TiltCard3D';
 import { useCart } from './CartProvider';
-import { ShoppingCart, Check } from 'lucide-react';
+import { ShoppingCart, Check, Eye } from 'lucide-react';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
@@ -172,10 +172,11 @@ export default function ProductCard({ product }) {
             {/* Below: View Details Secondary Button */}
             <Link
               href={`/products/${product._id}`}
-              className="w-full inline-flex items-center justify-center gap-1 text-center bg-slate-50 hover:bg-amber-50 text-slate-600 hover:text-amber-900 text-[10px] sm:text-[11px] font-bold py-1 rounded-xl border border-slate-200 hover:border-amber-300 transition-all group"
+              className="w-full inline-flex items-center justify-center gap-1.5 text-center bg-amber-50/80 hover:bg-amber-100 text-amber-950 text-[11px] sm:text-xs font-bold py-1.5 px-2 rounded-xl border border-amber-300/80 hover:border-amber-400 transition-all duration-150 shadow-2xs group hover:shadow-xs active:scale-98"
             >
+              <Eye className="w-3.5 h-3.5 text-amber-700 group-hover:text-amber-900 transition-colors" />
               <span>View Details</span>
-              <span className="text-[10px] transition-transform group-hover:translate-x-0.5">&rarr;</span>
+              <span className="text-[11px] text-amber-600 group-hover:text-amber-950 transition-transform group-hover:translate-x-0.5">&rarr;</span>
             </Link>
           </div>
         </div>
