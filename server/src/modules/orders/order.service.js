@@ -397,12 +397,24 @@ const cancelOrder = async (orderId, { reason, admin }) => {
   }
 
   const currentStatus = order.status ? order.status.toLowerCase() : "";
+  const isLocked = currentStatus === "delivered" || currentStatus === "cancelled";
+
+  if (isLocked && admin?.role !== "super_admin") {
+    throw new ForbiddenError(
+      `Cannot cancel order in "${order.status}" status. Delivered and cancelled orders are locked and can only be modified by Super Admin.`
+    );
+  }
+
   const allowedStatuses = [
     "pending",
     "packed",
     "pending_verification",
     "awaiting-pharmacist-pricing",
   ];
+
+  if (admin?.role === "super_admin") {
+    allowedStatuses.push("delivered", "shipped");
+  }
 
   if (!allowedStatuses.includes(currentStatus)) {
     throw new BadRequestError(
@@ -640,7 +652,15 @@ const updateOrderStatus = async (orderId, { status, reason, admin }) => {
     }
   }
 
-  if (order.status === "cancelled") {
+  // Terminal Lock Check: If order is delivered or cancelled, only Super Admin can modify it
+  const isLocked = order.status === "delivered" || order.status === "cancelled";
+  if (isLocked && admin?.role !== "super_admin") {
+    throw new ForbiddenError(
+      `Order is locked in '${order.status}' status. Only Super Admin has permission to modify delivered or cancelled orders.`
+    );
+  }
+
+  if (order.status === "cancelled" && admin?.role !== "super_admin") {
     throw new BadRequestError("Cannot change status of a cancelled order.");
   }
 
@@ -683,6 +703,10 @@ const assignPharmacy = async (orderId, pharmacyId, admin) => {
 
   if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
     throw new ForbiddenError("Access denied: Only Super Admins can assign or reassign pharmacies.");
+  }
+
+  if ((order.status === "delivered" || order.status === "cancelled") && admin?.role !== "super_admin") {
+    throw new ForbiddenError("Cannot reassign pharmacy branch on a locked (delivered or cancelled) order.");
   }
 
   const previousPharmacy = order.assignedPharmacyId;

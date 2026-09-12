@@ -98,6 +98,7 @@ const login = async ({ email, password }) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      permissions: user.permissions || [],
       assignedPharmacyId: user.assignedPharmacyId ? user.assignedPharmacyId.toString() : null,
     },
   };
@@ -389,6 +390,7 @@ const verify2FA = async ({ code, tempToken }) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      permissions: user.permissions || [],
       assignedPharmacyId: user.assignedPharmacyId ? user.assignedPharmacyId.toString() : null,
     },
   };

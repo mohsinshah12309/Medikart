@@ -6,6 +6,8 @@ import React, { useState } from "react";
  */
 function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
   const isSuperAdmin = adminUser?.role === "super_admin";
+  const userPerms = Array.isArray(adminUser?.permissions) ? adminUser.permissions : [];
+  const canAccess = (...perms) => isSuperAdmin || perms.some((p) => userPerms.includes(p));
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleTabClick = (tab) => {
@@ -119,16 +121,16 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
 
         <nav className="sidebar-nav">
           {navItem("overview", "📊 Overview")}
-          {navItem("products", "💊 Products")}
-          {navItem("categories", "📁 Categories")}
-          {navItem("conditions", "🩺 Conditions")}
-          {navItem("banners", "🖼️ Banners")}
-          {navItem("orders", "📦 Orders")}
-          {navItem("pharmacies", "🏥 Pharmacies")}
-          {navItem("cities", "📍 Cities")}
-          {navItem("settings", "⚙️ Settings")}
-          {navItem("activityLogs", "📋 Activity Logs")}
-          {navItem("messages", "💬 Messages")}
+          {canAccess("view_products", "manage_products") && navItem("products", "💊 Products")}
+          {canAccess("view_categories", "manage_categories") && navItem("categories", "📁 Categories")}
+          {canAccess("view_conditions", "manage_conditions") && navItem("conditions", "🩺 Conditions")}
+          {canAccess("view_banners", "manage_banners") && navItem("banners", "🖼️ Banners")}
+          {canAccess("view_orders", "manage_orders") && navItem("orders", "📦 Orders")}
+          {canAccess("view_pharmacies", "manage_pharmacies") && navItem("pharmacies", "🏥 Pharmacies")}
+          {canAccess("view_cities", "manage_cities") && navItem("cities", "📍 Cities")}
+          {canAccess("view_settings", "manage_settings") && navItem("settings", "⚙️ Settings")}
+          {canAccess("view_activity_logs") && navItem("activityLogs", "📋 Activity Logs")}
+          {canAccess("view_messages") && navItem("messages", "💬 Messages")}
           {/* Admin Users — UI only shown to Super Admin. */}
           {isSuperAdmin && navItem("adminUsers", "👤 Admin Users")}
         </nav>

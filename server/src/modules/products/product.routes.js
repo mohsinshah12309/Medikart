@@ -14,6 +14,7 @@ const router = express.Router();
 const productController = require("./product.controller");
 const productDiscountController = require("./product.discount.controller");
 const { validate, validateParams, validateQuery } = require("../../middleware/validate");
+const requirePermission = require("../../middleware/requirePermission");
 const {
   createProductSchema,
   updateProductSchema,
@@ -26,18 +27,19 @@ const {
 const { productDiscountSchema } = require("./product.discount.validation");
 
 // POST /admin/products — create new product
-router.post("/", validate(createProductSchema), productController.createProduct);
+router.post("/", requirePermission("manage_products"), validate(createProductSchema), productController.createProduct);
 
 // GET /admin/products — get all products (with optional filters)
-router.get("/", validateQuery(listProductsQuerySchema), productController.getAllProducts);
+router.get("/", requirePermission("view_products", "manage_products"), validateQuery(listProductsQuerySchema), productController.getAllProducts);
 
 // ── Phase 11 — Narcotics Flagging & Audit Routes ─────────────────────────────
 // GET /admin/products/narcotics — list products flagged isNarcotic: true (FR-AD-14)
-router.get("/narcotics", productController.getNarcoticProducts);
+router.get("/narcotics", requirePermission("view_products", "manage_products"), productController.getNarcoticProducts);
 
 // PATCH /admin/products/bulk/narcotics — bulk add/remove narcotics flag (FR-AD-13)
 router.patch(
   "/bulk/narcotics",
+  requirePermission("manage_products"),
   validate(bulkNarcoticsSchema),
   productController.bulkSetNarcoticFlag
 );
@@ -45,6 +47,7 @@ router.patch(
 // PATCH /admin/products/:id/narcotics — single product narcotics flag (FR-AD-11/12)
 router.patch(
   "/:id/narcotics",
+  requirePermission("manage_products"),
   validateParams(productIdSchema),
   validate(narcoticToggleSchema),
   productController.setNarcoticFlag
@@ -53,6 +56,7 @@ router.patch(
 // GET /admin/products/:id — get single product
 router.get(
   "/:id",
+  requirePermission("view_products", "manage_products"),
   validateParams(productIdSchema),
   productController.getProductById
 );
@@ -60,6 +64,7 @@ router.get(
 // PUT /admin/products/:id — update product
 router.put(
   "/:id",
+  requirePermission("manage_products"),
   validateParams(productIdSchema),
   validate(updateProductSchema),
   productController.updateProduct
@@ -72,6 +77,7 @@ const upload = require("../../middleware/upload");
 // POST /admin/products/:id/discount — Phase 8
 router.patch(
   "/:id/discount",
+  requirePermission("manage_products"),
   validateParams(productIdSchema),
   validate(productDiscountSchema),
   productDiscountController.setProductDiscount
@@ -81,6 +87,7 @@ router.patch(
 // POST /admin/products/:id/images — upload 1+ images
 router.post(
   "/:id/images",
+  requirePermission("manage_products"),
   validateParams(productIdSchema),
   upload.array("images", 5),
   productImagesController.uploadProductImages
@@ -89,6 +96,7 @@ router.post(
 // PATCH /admin/products/:id/images/:imageId/primary — set primary cover image
 router.patch(
   "/:id/images/:imageId/primary",
+  requirePermission("manage_products"),
   validateParams(productImageParamsSchema),
   productImagesController.setPrimaryImage
 );
@@ -96,6 +104,7 @@ router.patch(
 // DELETE /admin/products/:id/images/:imageId — delete single image
 router.delete(
   "/:id/images/:imageId",
+  requirePermission("manage_products"),
   validateParams(productImageParamsSchema),
   productImagesController.deleteProductImage
 );
@@ -103,6 +112,7 @@ router.delete(
 // DELETE /admin/products/:id — delete product
 router.delete(
   "/:id",
+  requirePermission("manage_products"),
   validateParams(productIdSchema),
   productController.deleteProduct
 );

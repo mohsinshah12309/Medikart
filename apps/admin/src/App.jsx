@@ -66,43 +66,75 @@ function App() {
     return <Login onLoginSuccess={handleLogin} sessionExpiredMessage={sessionExpiredMsg} />;
   }
 
+  const isSuperAdmin = adminUser?.role === "super_admin";
+  const userPerms = Array.isArray(adminUser?.permissions) ? adminUser.permissions : [];
+  const canAccess = (...perms) => isSuperAdmin || perms.some((p) => userPerms.includes(p));
+
+  const accessDeniedView = (
+    <div style={{ padding: "3rem", textAlign: "center", background: "#ffffff", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
+      <span style={{ fontSize: "2.5rem" }}>🔒</span>
+      <h3 style={{ margin: "0.75rem 0 0.25rem 0", color: "#0f172a", fontWeight: 800 }}>Access Restricted</h3>
+      <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
+        You do not have permission to access or manage this module. Please contact the Super Admin for access.
+      </p>
+    </div>
+  );
+
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
         return (
           <Overview
             token={token}
+            adminUser={adminUser}
             onNavigateToOrders={handleNavigateToOrders}
             onNavigateToProducts={handleNavigateToProducts}
           />
         );
       case "products":
-        return <Products token={token} />;
+        return canAccess("view_products", "manage_products")
+          ? <Products token={token} />
+          : accessDeniedView;
       case "categories":
-        return <Categories token={token} />;
+        return canAccess("view_categories", "manage_categories")
+          ? <Categories token={token} />
+          : accessDeniedView;
       case "conditions":
-        return <Conditions token={token} />;
+        return canAccess("view_conditions", "manage_conditions")
+          ? <Conditions token={token} />
+          : accessDeniedView;
       case "banners":
-        return <Banners token={token} />;
+        return canAccess("view_banners", "manage_banners")
+          ? <Banners token={token} />
+          : accessDeniedView;
       case "orders":
-        return <Orders token={token} adminUser={adminUser} initialFilter={initialOrderFilter} />;
+        return canAccess("view_orders", "manage_orders")
+          ? <Orders token={token} adminUser={adminUser} initialFilter={initialOrderFilter} />
+          : accessDeniedView;
       case "pharmacies":
-        return <Pharmacies token={token} onNavigateToOrders={handleNavigateToOrders} />;
+        return canAccess("view_pharmacies", "manage_pharmacies")
+          ? <Pharmacies token={token} onNavigateToOrders={handleNavigateToOrders} />
+          : accessDeniedView;
       case "cities":
-        return <Cities token={token} />;
+        return canAccess("view_cities", "manage_cities")
+          ? <Cities token={token} />
+          : accessDeniedView;
       case "settings":
-        return <Settings token={token} />;
+        return canAccess("view_settings", "manage_settings")
+          ? <Settings token={token} />
+          : accessDeniedView;
       case "adminUsers":
-        // Extra guard in App — if somehow a non-super-admin reaches this tab
-        // (e.g. stale localStorage), they still see nothing useful.
-        // The backend is the real guard (requireSuperAdmin middleware, Phase 20).
-        return adminUser?.role === "super_admin"
+        return isSuperAdmin
           ? <AdminUsers token={token} adminUser={adminUser} />
-          : <div style={{ padding: "2rem", color: "#64748b" }}>Access denied.</div>;
+          : accessDeniedView;
       case "activityLogs":
-        return <ActivityLogs token={token} />;
+        return canAccess("view_activity_logs")
+          ? <ActivityLogs token={token} />
+          : accessDeniedView;
       case "messages":
-        return <Messages token={token} />;
+        return canAccess("view_messages")
+          ? <Messages token={token} />
+          : accessDeniedView;
       default:
         return (
           <div>

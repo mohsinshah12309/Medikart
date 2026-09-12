@@ -45,11 +45,12 @@ const auth = async (req, res, next) => {
       throw new UnauthorizedError("Authentication required");
     }
 
-    // Attach minimal identity info — downstream code reads req.admin
+    // Attach identity & permissions info — downstream code reads req.admin
     req.admin = {
       id: adminUser._id.toString(),
       role: adminUser.role,
       email: adminUser.email,
+      permissions: adminUser.permissions || [],
       assignedPharmacyId: adminUser.assignedPharmacyId ? adminUser.assignedPharmacyId.toString() : null,
     };
 

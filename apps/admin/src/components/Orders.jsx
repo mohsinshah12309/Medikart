@@ -912,11 +912,20 @@ function Orders({ token, adminUser, initialFilter }) {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {orders.map((order) => {
+                  const isLocked = order.status === "delivered" || order.status === "cancelled";
+                  const isOrderLockedForUser = isLocked && adminUser?.role !== "super_admin";
+
+                  return (
                   <tr key={order._id}>
                     <td>
-                      <div style={{ fontWeight: 800, color: "#0f172a" }}>
+                      <div style={{ fontWeight: 800, color: "#0f172a", display: "flex", alignItems: "center", gap: "4px" }}>
                         #{order.orderCode || order._id.slice(-6).toUpperCase()}
+                        {isLocked && (
+                          <span title={isOrderLockedForUser ? "Order is locked (Delivered/Cancelled)" : "Locked (Super Admin has override)"} style={{ fontSize: "0.75rem" }}>
+                            {isOrderLockedForUser ? "🔒" : "🔓"}
+                          </span>
+                        )}
                       </div>
                       <code style={{ fontSize: "0.7rem", color: "#94a3b8" }}>{order._id}</code>
                     </td>
@@ -956,6 +965,8 @@ function Orders({ token, adminUser, initialFilter }) {
                           className="form-control"
                           style={{ fontSize: "0.75rem", padding: "0.2rem 0.4rem", width: "auto" }}
                           value={typeof order.assignedPharmacyId === "object" ? order.assignedPharmacyId?._id || "" : order.assignedPharmacyId || ""}
+                          disabled={isOrderLockedForUser}
+                          title={isOrderLockedForUser ? "Cannot reassign branch on a locked order" : "Assign pharmacy branch"}
                           onChange={(e) => handleAssignPharmacy(order._id, e.target.value)}
                         >
                           <option value="">Unassigned</option>
@@ -968,58 +979,67 @@ function Orders({ token, adminUser, initialFilter }) {
                       )}
                     </td>
                     <td>
-                      <select
-                        className="form-control"
-                        style={{
-                          fontSize: "0.75rem",
-                          padding: "0.2rem 0.4rem",
-                          width: "auto",
-                          minWidth: "125px",
-                          fontWeight: 700,
-                          borderRadius: "6px",
-                          cursor: "pointer",
-                          background:
-                            order.status === "delivered" ? "#f0fdf4" :
-                            order.status === "shipped" ? "#eff6ff" :
-                            order.status === "packed" ? "#fefce8" :
-                            order.status === "cancelled" ? "#fef2f2" :
-                            order.status === "awaiting-pharmacist-pricing" ? "#faf5ff" :
-                            order.status === "pending_verification" ? "#fffbeb" : "#f8fafc",
-                          borderColor:
-                            order.status === "delivered" ? "#86efac" :
-                            order.status === "shipped" ? "#93c5fd" :
-                            order.status === "packed" ? "#fde047" :
-                            order.status === "cancelled" ? "#fca5a5" :
-                            order.status === "awaiting-pharmacist-pricing" ? "#d8b4fe" :
-                            order.status === "pending_verification" ? "#fde68a" : "#cbd5e1",
-                          color:
-                            order.status === "delivered" ? "#166534" :
-                            order.status === "shipped" ? "#1e40af" :
-                            order.status === "packed" ? "#854d0e" :
-                            order.status === "cancelled" ? "#991b1b" :
-                            order.status === "awaiting-pharmacist-pricing" ? "#6b21a8" :
-                            order.status === "pending_verification" ? "#92400e" : "#0f172a",
-                        }}
-                        value={order.status}
-                        disabled={statusUpdatingId === order._id}
-                        onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
-                        title="Change order status"
-                      >
-                        {order.status === "awaiting-pharmacist-pricing" && (
-                          <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
-                        )}
-                        {order.status === "pending_verification" && (
-                          <option value="pending_verification">Pending Verification</option>
-                        )}
-                        <option value="pending">Pending</option>
-                        <option value="packed">Packed</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered / Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
+                      <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                        <select
+                          className="form-control"
+                          style={{
+                            fontSize: "0.75rem",
+                            padding: "0.2rem 0.4rem",
+                            width: "auto",
+                            minWidth: "125px",
+                            fontWeight: 700,
+                            borderRadius: "6px",
+                            cursor: isOrderLockedForUser ? "not-allowed" : "pointer",
+                            opacity: isOrderLockedForUser ? 0.8 : 1,
+                            background:
+                              order.status === "delivered" ? "#f0fdf4" :
+                              order.status === "shipped" ? "#eff6ff" :
+                              order.status === "packed" ? "#fefce8" :
+                              order.status === "cancelled" ? "#fef2f2" :
+                              order.status === "awaiting-pharmacist-pricing" ? "#faf5ff" :
+                              order.status === "pending_verification" ? "#fffbeb" : "#f8fafc",
+                            borderColor:
+                              order.status === "delivered" ? "#86efac" :
+                              order.status === "shipped" ? "#93c5fd" :
+                              order.status === "packed" ? "#fde047" :
+                              order.status === "cancelled" ? "#fca5a5" :
+                              order.status === "awaiting-pharmacist-pricing" ? "#d8b4fe" :
+                              order.status === "pending_verification" ? "#fde68a" : "#cbd5e1",
+                            color:
+                              order.status === "delivered" ? "#166534" :
+                              order.status === "shipped" ? "#1e40af" :
+                              order.status === "packed" ? "#854d0e" :
+                              order.status === "cancelled" ? "#991b1b" :
+                              order.status === "awaiting-pharmacist-pricing" ? "#6b21a8" :
+                              order.status === "pending_verification" ? "#92400e" : "#0f172a",
+                          }}
+                          value={order.status}
+                          disabled={statusUpdatingId === order._id || isOrderLockedForUser}
+                          onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
+                          title={
+                            isOrderLockedForUser
+                              ? `🔒 Locked (${order.status.toUpperCase()}) - Only Super Admin can modify`
+                              : isLocked && adminUser?.role === "super_admin"
+                              ? "🔓 Super Admin Override - You can change this locked order"
+                              : "Change order status"
+                          }
+                        >
+                          {order.status === "awaiting-pharmacist-pricing" && (
+                            <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
+                          )}
+                          {order.status === "pending_verification" && (
+                            <option value="pending_verification">Pending Verification</option>
+                          )}
+                          <option value="pending">Pending</option>
+                          <option value="packed">Packed</option>
+                          <option value="shipped">Shipped</option>
+                          <option value="delivered">Delivered / Completed</option>
+                          <option value="cancelled">Cancelled</option>
+                        </select>
+                      </div>
                     </td>
                     <td>
-                      {order.status === "pending" && (
+                      {!isOrderLockedForUser && order.status === "pending" && (
                         <button
                           className="btn btn-secondary"
                           style={{ padding: "0.2rem 0.5rem", fontSize: "0.75rem", background: "#fef3c7", color: "#92400e", border: "1px solid #fde047" }}
@@ -1029,7 +1049,7 @@ function Orders({ token, adminUser, initialFilter }) {
                           → Mark Packed
                         </button>
                       )}
-                      {order.status === "packed" && (
+                      {!isOrderLockedForUser && order.status === "packed" && (
                         <button
                           className="btn btn-secondary"
                           style={{ padding: "0.2rem 0.5rem", fontSize: "0.75rem", background: "#e0e7ff", color: "#3730a3", border: "1px solid #c7d2fe" }}
@@ -1039,7 +1059,7 @@ function Orders({ token, adminUser, initialFilter }) {
                           → Mark Shipped
                         </button>
                       )}
-                      {order.status === "shipped" && (
+                      {!isOrderLockedForUser && order.status === "shipped" && (
                         <button
                           className="btn btn-secondary"
                           style={{ padding: "0.2rem 0.5rem", fontSize: "0.75rem", background: "#dcfce7", color: "#166534", border: "1px solid #bbf7d0" }}
@@ -1050,10 +1070,14 @@ function Orders({ token, adminUser, initialFilter }) {
                         </button>
                       )}
                       {order.status === "delivered" && (
-                        <span style={{ fontSize: "0.8rem", color: "#166534", fontWeight: 700 }}>✓ Completed</span>
+                        <span style={{ fontSize: "0.8rem", color: "#166534", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: "3px" }}>
+                          {isOrderLockedForUser ? "🔒 " : "✓ "}Completed
+                        </span>
                       )}
                       {order.status === "cancelled" && (
-                        <span style={{ fontSize: "0.8rem", color: "#dc2626", fontWeight: 600 }}>Cancelled</span>
+                        <span style={{ fontSize: "0.8rem", color: "#dc2626", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "3px" }}>
+                          {isOrderLockedForUser ? "🔒 " : ""}Cancelled
+                        </span>
                       )}
                     </td>
                     <td style={{ textAlign: "right" }}>
@@ -1065,7 +1089,7 @@ function Orders({ token, adminUser, initialFilter }) {
                         >
                           Details
                         </button>
-                        {order.status === "awaiting-pharmacist-pricing" && (
+                        {!isOrderLockedForUser && order.status === "awaiting-pharmacist-pricing" && (
                           <button
                             className="btn btn-primary"
                             style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem", background: "#8b5cf6" }}
@@ -1074,7 +1098,7 @@ function Orders({ token, adminUser, initialFilter }) {
                             Price Items
                           </button>
                         )}
-                        {order.status === "pending_verification" && (
+                        {!isOrderLockedForUser && order.status === "pending_verification" && (
                           <button
                             className="btn btn-primary"
                             style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem", background: "#059669" }}
@@ -1083,7 +1107,7 @@ function Orders({ token, adminUser, initialFilter }) {
                             Approve Rx
                           </button>
                         )}
-                        {isCancelable(order.status) && (
+                        {!isOrderLockedForUser && isCancelable(order.status) && (
                           <button
                             className="btn btn-danger"
                             style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem" }}
@@ -1095,7 +1119,8 @@ function Orders({ token, adminUser, initialFilter }) {
                       </div>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -1111,6 +1136,21 @@ function Orders({ token, adminUser, initialFilter }) {
               <button className="modal-close" onClick={handleCloseDetails}>&times;</button>
             </div>
             <div className="modal-body">
+              {/* Order Lock Banner */}
+              {(selectedOrder.status === "delivered" || selectedOrder.status === "cancelled") && (
+                adminUser?.role === "super_admin" ? (
+                  <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderLeft: "4px solid #16a34a", padding: "0.75rem 1rem", borderRadius: "8px", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem", color: "#166534", fontSize: "0.85rem", fontWeight: 600 }}>
+                    <span>🔓</span>
+                    <span><strong>Super Admin Override:</strong> This order is currently <strong>{selectedOrder.status.toUpperCase()}</strong>. As Super Admin, you have authority to modify or change its status.</span>
+                  </div>
+                ) : (
+                  <div style={{ background: "#fef2f2", border: "1px solid #fecaca", borderLeft: "4px solid #ef4444", padding: "0.75rem 1rem", borderRadius: "8px", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem", color: "#991b1b", fontSize: "0.85rem", fontWeight: 600 }}>
+                    <span>🔒</span>
+                    <span><strong>Order Locked:</strong> This order is in <strong>{selectedOrder.status.toUpperCase()}</strong> status and is locked. Only Super Admin has permission to modify its status.</span>
+                  </div>
+                )
+              )}
+
               {/* Instant Order Action Banner if awaiting pricing */}
               {selectedOrder.status === "awaiting-pharmacist-pricing" && (
                 <div style={{ background: "#fef9c3", border: "1px solid #facc15", padding: "0.85rem 1rem", borderRadius: "10px", marginBottom: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
@@ -1155,7 +1195,8 @@ function Orders({ token, adminUser, initialFilter }) {
                         minWidth: "140px",
                         fontWeight: 700,
                         borderRadius: "6px",
-                        cursor: "pointer",
+                        cursor: ((selectedOrder.status === "delivered" || selectedOrder.status === "cancelled") && adminUser?.role !== "super_admin") ? "not-allowed" : "pointer",
+                        opacity: ((selectedOrder.status === "delivered" || selectedOrder.status === "cancelled") && adminUser?.role !== "super_admin") ? 0.8 : 1,
                         background:
                           selectedOrder.status === "delivered" ? "#f0fdf4" :
                           selectedOrder.status === "shipped" ? "#eff6ff" :
@@ -1179,9 +1220,13 @@ function Orders({ token, adminUser, initialFilter }) {
                           selectedOrder.status === "pending_verification" ? "#92400e" : "#0f172a",
                       }}
                       value={selectedOrder.status}
-                      disabled={statusUpdatingId === selectedOrder._id}
+                      disabled={statusUpdatingId === selectedOrder._id || ((selectedOrder.status === "delivered" || selectedOrder.status === "cancelled") && adminUser?.role !== "super_admin")}
                       onChange={(e) => handleUpdateOrderStatus(selectedOrder._id, e.target.value)}
-                      title="Update order status directly"
+                      title={
+                        ((selectedOrder.status === "delivered" || selectedOrder.status === "cancelled") && adminUser?.role !== "super_admin")
+                          ? "🔒 Locked - Only Super Admin can change status"
+                          : "Update order status directly"
+                      }
                     >
                       {selectedOrder.status === "awaiting-pharmacist-pricing" && (
                         <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>

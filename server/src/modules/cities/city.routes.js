@@ -18,6 +18,7 @@
  */
 
 const express = require("express");
+const requirePermission = require("../../middleware/requirePermission");
 const router = express.Router();
 
 const cityController = require("./city.controller");
@@ -25,10 +26,10 @@ const { validate, validateParams } = require("../../middleware/validate");
 const { createCitySchema, updateCitySchema, cityIdSchema } = require("./city.validation");
 
 // POST /cities — create
-router.post("/", validate(createCitySchema), cityController.createCity);
+router.post("/", requirePermission("manage_cities"), validate(createCitySchema), cityController.createCity);
 
 // GET /cities — list all (optional ?active=true/false filter)
-router.get("/", cityController.getAllCities);
+router.get("/", requirePermission("view_cities", "manage_cities"), cityController.getAllCities);
 
 // GET /cities/delivery-charge?city=<name> — FR-CW-11 lookup (must be before /:id)
 router.get("/delivery-charge", cityController.deliveryCharge);
@@ -45,6 +46,6 @@ router.put(
 );
 
 // DELETE /cities/:id
-router.delete("/:id", validateParams(cityIdSchema), cityController.deleteCity);
+router.delete("/:id", requirePermission("manage_cities"), validateParams(cityIdSchema), cityController.deleteCity);
 
 module.exports = router;

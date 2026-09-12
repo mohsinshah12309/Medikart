@@ -40,18 +40,24 @@ function AdminUsers({ token, adminUser }) {
 
   // Each permission with human-readable label, icon, and description
   const PERMISSION_META = [
-    { key: "view_orders",       icon: "📋", label: "View Orders",      desc: "Read order list & details" },
-    { key: "manage_orders",     icon: "✏️",  label: "Manage Orders",    desc: "Update order status & info" },
-    { key: "view_products",     icon: "💊", label: "View Products",    desc: "Browse the product catalog" },
-    { key: "manage_products",   icon: "📦", label: "Manage Products",  desc: "Create, edit & delete products" },
-    { key: "view_categories",   icon: "🗂️", label: "View Categories",  desc: "Browse product categories" },
-    { key: "manage_categories", icon: "🏷️", label: "Manage Categories", desc: "Create & edit categories" },
-    { key: "view_cities",       icon: "🏙️", label: "View Cities",      desc: "Browse delivery cities" },
-    { key: "manage_cities",     icon: "🗺️", label: "Manage Cities",    desc: "Add & edit cities/delivery charges" },
-    { key: "view_settings",     icon: "⚙️", label: "View Settings",    desc: "Read store-wide settings" },
-    { key: "manage_settings",   icon: "🔧", label: "Manage Settings",  desc: "Edit discounts, content & settings" },
-    { key: "view_activity_logs", icon: "📜", label: "Activity Logs",   desc: "View admin audit trail" },
-    { key: "view_messages",      icon: "💬", label: "View Messages",   desc: "Read customer contact inquiries" },
+    { key: "view_orders",        icon: "📋", label: "View Orders",        desc: "Read order list & details" },
+    { key: "manage_orders",      icon: "✏️",  label: "Manage Orders",      desc: "Update order status & info" },
+    { key: "view_products",      icon: "💊", label: "View Products",      desc: "Browse the product catalog" },
+    { key: "manage_products",    icon: "📦", label: "Manage Products",    desc: "Create, edit & delete products" },
+    { key: "view_categories",    icon: "🗂️", label: "View Categories",    desc: "Browse product categories" },
+    { key: "manage_categories",  icon: "🏷️", label: "Manage Categories",  desc: "Create & edit categories" },
+    { key: "view_conditions",    icon: "🩺", label: "View Conditions",    desc: "Browse health conditions" },
+    { key: "manage_conditions",  icon: "🩹", label: "Manage Conditions",  desc: "Add & edit health conditions" },
+    { key: "view_banners",       icon: "🖼️", label: "View Banners",       desc: "Browse promotional banners" },
+    { key: "manage_banners",     icon: "🎨", label: "Manage Banners",     desc: "Upload & edit banners" },
+    { key: "view_pharmacies",    icon: "🏥", label: "View Pharmacies",    desc: "Browse pharmacy branches" },
+    { key: "manage_pharmacies",  icon: "🏢", label: "Manage Pharmacies",  desc: "Add & edit pharmacy branches" },
+    { key: "view_cities",        icon: "🏙️", label: "View Cities",        desc: "Browse delivery cities" },
+    { key: "manage_cities",      icon: "🗺️", label: "Manage Cities",      desc: "Add & edit cities/delivery charges" },
+    { key: "view_settings",      icon: "⚙️", label: "View Settings",      desc: "Read store-wide settings" },
+    { key: "manage_settings",    icon: "🔧", label: "Manage Settings",    desc: "Edit discounts, content & settings" },
+    { key: "view_activity_logs", icon: "📜", label: "Activity Logs",     desc: "View admin audit trail" },
+    { key: "view_messages",      icon: "💬", label: "View Messages",     desc: "Read customer contact inquiries" },
   ];
 
   const AVAILABLE_PERMISSIONS = PERMISSION_META.map(p => p.key);

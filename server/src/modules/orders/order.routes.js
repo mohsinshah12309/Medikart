@@ -30,6 +30,7 @@ const {
   updateOrderStatusSchema,
 } = require("./order.validation");
 const orderController = require("./order.controller");
+const requirePermission = require("../../middleware/requirePermission");
 
 // ── Public routes ─────────────────────────────────────────────────────────────
 const publicOrderRoutes = express.Router();
@@ -70,7 +71,7 @@ adminOrderRoutes.get(
 // GET /api/v1/admin/orders/stats — dashboard aggregation counts (Phase 23 gap fix).
 // IMPORTANT: must be mounted BEFORE /:id so the literal "stats" is not
 // treated as a MongoDB ObjectId parameter.
-adminOrderRoutes.get("/stats", orderController.getOrderStats);
+adminOrderRoutes.get("/stats", requirePermission("view_orders", "manage_orders"), orderController.getOrderStats);
 
 adminOrderRoutes.get(
   "/:id",

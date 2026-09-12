@@ -11,6 +11,7 @@ const { connectDB } = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./middleware/auth");
 const requireSuperAdmin = require("./middleware/requireSuperAdmin");
+const requirePermission = require("./middleware/requirePermission");
 const crypto = require("crypto");
 const { createRateLimiter } = require("./middleware/rateLimiter");
 const { ForbiddenError } = require("./utils/errors");
@@ -264,7 +265,7 @@ app.use('/api/v1/admin/reports', expensiveLimiter, reportsRoutes);
 app.use("/api/v1/admin/users", adminLimiter, requireSuperAdmin, adminUserManagementRoutes);
 
 // Admin contact messages route
-app.get("/api/v1/admin/contact-messages", adminLimiter, contactController.getMessages);
+app.get("/api/v1/admin/contact-messages", adminLimiter, requirePermission("view_messages"), contactController.getMessages);
 
 // Central error handler — must be AFTER all routes
 // Per rules.md Section 2: typed errors (NotFoundError, ValidationError)

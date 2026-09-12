@@ -5,6 +5,7 @@
  */
 
 const express = require("express");
+const requirePermission = require("../../middleware/requirePermission");
 const router = express.Router();
 
 const activityLogController = require("./activityLog.controller");
