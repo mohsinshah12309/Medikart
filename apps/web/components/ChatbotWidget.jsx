@@ -80,56 +80,77 @@ export default function ChatbotWidget() {
   return (
     <>
       {/* ─────────────────────────────────────────────────────────────────
-          1. FLOATING CHAT BUTTON (Prominent 3D Medi Owl Doctor)
+          1. FLOATING CHAT BUTTON (Ultra-Prominent 3D Medi Owl Doctor)
       ────────────────────────────────────────────────────────────────── */}
-      <div className="fixed bottom-5 right-4 sm:right-6 z-50 flex items-center select-none">
+      <div className="fixed bottom-6 right-4 sm:right-8 z-50 flex items-center select-none">
         
-        {/* Playful Floating Desktop Greeting Pill */}
+        {/* Irresistible High-Visibility Greeting Speech Bubble */}
         {!isOpen && showTooltip && (
           <div 
             onClick={() => setIsOpen(true)}
-            className="hidden sm:flex items-center gap-2.5 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border-2 border-amber-300 shadow-xl text-xs font-bold text-slate-800 mr-3 cursor-pointer hover:border-amber-500 hover:shadow-amber-glow transition-all transform hover:-translate-x-1 select-none animate-pulse-glow"
+            className="hidden md:flex flex-col gap-0.5 bg-white/98 backdrop-blur-md px-4 py-3 rounded-2xl border-2 border-amber-400 shadow-2xl mr-3 cursor-pointer hover:border-amber-500 hover:shadow-amber-glow transition-all transform hover:-translate-x-1 select-none animate-float relative group/tooltip max-w-[280px]"
           >
-            <div className="relative w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border border-amber-300">
-              <Image
-                src="/images/ai-med-bot.png"
-                alt="Medi AI"
-                fill
-                sizes="20px"
-                className="object-cover"
-              />
+            {/* Triangular Speech Bubble Pointer */}
+            <div className="absolute right-[-8px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[8px] border-l-amber-400" />
+            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[7px] border-t-transparent border-b-[7px] border-b-transparent border-l-[7px] border-l-white" />
+
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded-full">
+                  24/7 AI Doctor
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowTooltip(false);
+                }}
+                className="text-slate-400 hover:text-slate-700 text-xs font-bold leading-none p-0.5"
+                title="Dismiss"
+              >
+                ✕
+              </button>
             </div>
-            <span className="font-extrabold text-amber-950">Need medicine? Ask Medi your personal AI assistant</span>
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+
+            <p className="font-black text-xs text-slate-900 leading-snug mt-1">
+              Need medicine? Ask Medi your personal AI assistant 👋
+            </p>
+            <p className="text-[11px] text-amber-700 font-semibold mt-0.5 flex items-center gap-1">
+              <span>⚡ Click to search &amp; consult</span>
+              <span className="text-xs">&rarr;</span>
+            </p>
           </div>
         )}
 
-        {/* Prominent Floating 3D Medi Character Button */}
+        {/* Ultra-Prominent Floating 3D Medi Character Button */}
         <button
           onClick={() => {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_10px_35px_rgba(248,186,3,0.55)] hover:shadow-[0_14px_42px_rgba(248,186,3,0.75)] ring-4 ring-amber-300/80 hover:ring-amber-400 transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 cursor-pointer border-2 border-white overflow-visible group"
+          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_12px_40px_rgba(248,186,3,0.65)] hover:shadow-[0_18px_50px_rgba(248,186,3,0.85)] ring-4 ring-amber-300 ring-offset-2 ring-offset-white hover:ring-amber-500 transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center h-20 w-20 sm:h-22 sm:w-22 cursor-pointer border-2 border-white overflow-visible group"
           title="Medi - Your Personal AI Assistant"
           aria-label="Open Medi AI Assistant"
         >
           {isOpen ? (
-            <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">✕</span>
+            <span className="text-3xl font-black text-slate-900 leading-none">✕</span>
           ) : (
             <>
               {/* Pulsing Active Online Badge */}
-              <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
+              <span className="absolute -top-2.5 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
                 Ask Medi
               </span>
 
-              {/* 3D Owl Doctor Character Image */}
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+              {/* 3D Owl Doctor Character Image with Ambient Glow */}
+              <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                 <Image
                   src="/images/ai-med-bot.png"
                   alt="Medi AI Assistant"
                   fill
-                  sizes="80px"
+                  sizes="96px"
                   priority
                   className="object-cover object-center drop-shadow-md"
                 />
