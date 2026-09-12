@@ -228,38 +228,21 @@ export default function BrandsSection() {
             <Link
               key={`${brand.name}-${idx}`}
               href={`/?search=${encodeURIComponent(brand.query)}#store-catalog`}
-              className="shrink-0 w-40 sm:w-44 bg-white hover:bg-amber-50/40 rounded-2xl border border-slate-200 hover:border-amber-400 p-3.5 flex flex-col items-center justify-between text-center transition-all duration-200 hover:shadow-warm-card hover:-translate-y-1 group/card cursor-pointer"
+              title={`${brand.name} (${brand.productCount}) — Click to explore products`}
+              aria-label={`${brand.name} (${brand.productCount})`}
+              className="shrink-0 w-36 sm:w-44 h-20 sm:h-24 bg-white hover:bg-amber-50/50 rounded-2xl border border-slate-200/90 hover:border-amber-400 p-2.5 sm:p-3 flex items-center justify-center transition-all duration-200 hover:shadow-warm-card hover:-translate-y-1 group/card cursor-pointer shadow-xs"
             >
-              {/* Brand Official Logo Container */}
-              <div className="w-full h-16 rounded-xl flex items-center justify-center p-2 bg-slate-50 group-hover/card:bg-white border border-slate-100 group-hover/card:border-amber-200 transition-all duration-200 shadow-2xs relative overflow-hidden">
-                <div className="relative w-full h-full">
-                  <Image
-                    src={brand.logo}
-                    alt={`${brand.name} Logo`}
-                    fill
-                    sizes="(max-width: 640px) 140px, 160px"
-                    className="object-contain transition-transform duration-300 group-hover/card:scale-105"
-                  />
-                </div>
+              {/* Brand Official Logo */}
+              <div className="relative w-full h-full">
+                <Image
+                  src={brand.logo}
+                  alt={`${brand.name} Logo`}
+                  fill
+                  sizes="(max-width: 640px) 144px, 176px"
+                  className="object-contain transition-transform duration-300 group-hover/card:scale-110"
+                  priority={idx < 8}
+                />
               </div>
-
-              {/* Brand Title & Real Catalog Count */}
-              <div className="mt-2.5 w-full">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover/card:text-amber-700 transition-colors">
-                  {brand.badge}
-                </span>
-                <h3 className="text-xs sm:text-sm font-black text-slate-800 truncate mt-0.5 group-hover/card:text-slate-950">
-                  {brand.name}
-                </h3>
-                <p className="text-[10.5px] text-slate-500 font-semibold mt-0.5">
-                  {brand.productCount}
-                </p>
-              </div>
-
-              {/* Explore Link */}
-              <span className="mt-2 text-[10.5px] font-bold text-slate-600 group-hover/card:text-amber-700 group-hover/card:underline flex items-center gap-0.5">
-                Explore Products →
-              </span>
             </Link>
           ))}
         </div>
