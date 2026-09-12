@@ -10,7 +10,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hello! I am your Medikart AI Medicine & Symptom Assistant 🦉💊.\n\nAsk me about medicine availability, prices, or describe your symptoms (e.g. headache, fever, cough), and I will search our authentic catalog for you!\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
+      content: 'Hello! I am Medi, your personal AI medicine & symptom assistant 🦉💊.\n\nAsk me about medicine availability, prices, or describe your symptoms (e.g. headache, fever, cough), and I will search our authentic catalog for you!\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
       suggestedProducts: []
     }
   ]);
@@ -58,7 +58,7 @@ export default function ChatbotWidget() {
       console.error("Chatbot error:", err);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `⚠️ I'm having trouble connecting to the medicine assistant right now. Please try asking again in a moment, or speak directly with our licensed pharmacist on WhatsApp: +92 331 4170744.`
+        content: `⚠️ I'm having trouble connecting to Medi right now. Please try asking again in a moment, or speak directly with our licensed pharmacist on WhatsApp: +92 331 4170744.`
       }]);
     } finally {
       setLoading(false);
@@ -80,7 +80,7 @@ export default function ChatbotWidget() {
   return (
     <>
       {/* ─────────────────────────────────────────────────────────────────
-          1. FLOATING CHAT BUTTON (Prominent 3D AI Med-Bot Owl Doctor)
+          1. FLOATING CHAT BUTTON (Prominent 3D Medi Owl Doctor)
       ────────────────────────────────────────────────────────────────── */}
       <div className="fixed bottom-5 right-4 sm:right-6 z-50 flex items-center select-none">
         
@@ -93,26 +93,26 @@ export default function ChatbotWidget() {
             <div className="relative w-5 h-5 rounded-full overflow-hidden flex-shrink-0 border border-amber-300">
               <Image
                 src="/images/ai-med-bot.png"
-                alt="AI Med-Bot"
+                alt="Medi AI"
                 fill
                 sizes="20px"
                 className="object-cover"
               />
             </div>
-            <span className="font-extrabold text-amber-950">Need medicine? Ask AI Med-Bot</span>
+            <span className="font-extrabold text-amber-950">Need medicine? Ask Medi your personal AI assistant</span>
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
           </div>
         )}
 
-        {/* Prominent Floating 3D AI Med-Bot Character Button */}
+        {/* Prominent Floating 3D Medi Character Button */}
         <button
           onClick={() => {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
           className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_10px_35px_rgba(248,186,3,0.55)] hover:shadow-[0_14px_42px_rgba(248,186,3,0.75)] ring-4 ring-amber-300/80 hover:ring-amber-400 transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center h-16 w-16 sm:h-20 sm:w-20 cursor-pointer border-2 border-white overflow-visible group"
-          title="Medikart AI Med-Bot Assistant"
-          aria-label="Open AI Med-Bot Assistant"
+          title="Medi - Your Personal AI Assistant"
+          aria-label="Open Medi AI Assistant"
         >
           {isOpen ? (
             <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">✕</span>
@@ -120,14 +120,14 @@ export default function ChatbotWidget() {
             <>
               {/* Pulsing Active Online Badge */}
               <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
-                Ask AI
+                Ask Medi
               </span>
 
               {/* 3D Owl Doctor Character Image */}
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                 <Image
                   src="/images/ai-med-bot.png"
-                  alt="AI Med-Bot Character"
+                  alt="Medi AI Assistant"
                   fill
                   sizes="80px"
                   priority
@@ -151,7 +151,7 @@ export default function ChatbotWidget() {
               <div className="relative w-10 h-10 rounded-full bg-white shadow-xs overflow-hidden border-2 border-white flex-shrink-0">
                 <Image
                   src="/images/ai-med-bot.png"
-                  alt="AI Med-Bot"
+                  alt="Medi"
                   fill
                   sizes="40px"
                   className="object-cover"
@@ -159,14 +159,14 @@ export default function ChatbotWidget() {
               </div>
               <div>
                 <h3 className="font-black text-sm leading-tight text-slate-900 font-heading flex items-center gap-1.5">
-                  <span>AI Med-Bot</span>
+                  <span>Medi</span>
                   <span className="text-[10px] font-black uppercase text-amber-900 bg-amber-200/80 px-1.5 py-0.2 rounded-md">
-                    Doctor Assistant
+                    Personal AI Assistant
                   </span>
                 </h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
-                  <span className="text-[10px] text-amber-950 font-bold">Catalog &amp; Symptoms Live</span>
+                  <span className="text-[10px] text-amber-950 font-bold">Live Medicine &amp; Symptoms</span>
                 </div>
               </div>
             </div>
