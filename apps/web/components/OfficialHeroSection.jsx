@@ -102,68 +102,72 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
   return (
     <section className="relative w-full flex flex-col gap-6 sm:gap-8 pt-2 pb-4 select-none">
       {/* ─────────────────────────────────────────────────────────────────────
-          1. MAIN HERO BANNER (Left: Content | Right: Phone Mockup & Skyline)
+          1. DUAL HERO CARDS SECTION (Card 1: Brand & Actions | Card 2: Interactive App Mockup)
       ────────────────────────────────────────────────────────────────────── */}
-      <div className="relative z-30 w-full rounded-3xl bg-gradient-to-br from-[#FFFDF7] via-[#FFFBEB] to-[#FEF3C7]/40 border border-[#F3EFE6] shadow-warm-card p-6 sm:p-10 lg:p-12 min-h-[500px] flex flex-col lg:flex-row items-center justify-between gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full items-stretch relative z-30">
         
-        {/* Background Decorative Radiant Glow & Subtle Arcs (Clipped to Banner) */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-amber-300/35 via-yellow-200/20 to-transparent rounded-full blur-3xl -mr-20 -mt-20" />
-          <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-amber-200/20 rounded-full blur-2xl" />
-        </div>
-
-        {/* ─── Left Column: Brand Copy, Trust Badges, City Selector & CTA ─── */}
-        <div className="relative z-10 flex-1 max-w-xl flex flex-col items-start gap-6 text-left">
+        {/* ─── CARD 1 (Left): Main Hero Value Proposition, City Picker & CTAs ─── */}
+        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFEB3B] bg-gradient-to-br from-[#FFEB3B] via-[#FFE02E] to-[#FDD835] border-2 border-[#FBC02D]/50 shadow-xl shadow-amber-400/20 p-6 sm:p-8 lg:p-10 flex flex-col justify-between relative overflow-hidden">
           
-          {/* Top Wordmark & Proximity Tagline */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-amber-200/80 shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-bold text-[#1E293B]">Medikart</span>
-            <span className="text-amber-400 font-bold">•</span>
-            <span className="text-xs font-semibold text-amber-800">Medicines. Nearest to you.</span>
+          {/* Background Decorative Radiant Glow */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-white/30 rounded-full blur-3xl -mr-16 -mt-16" />
+            <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-amber-400/20 rounded-full blur-2xl" />
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight leading-[1.12] text-[#1E293B]">
-            Your medicines,<br />
-            <span className="bg-gradient-to-r from-amber-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent drop-shadow-xs">
-              just a tap away.
-            </span>
-          </h1>
+          {/* Card 1 Content Area */}
+          <div className="relative z-10 flex flex-col items-start gap-5 text-left">
+            
+            {/* Top Wordmark & Proximity Tagline */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border border-amber-300 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-black text-slate-950">Medikart</span>
+              <span className="text-amber-500 font-black">•</span>
+              <span className="text-xs font-bold text-amber-900">Medicines. Nearest to you.</span>
+            </div>
 
-          {/* Real Benefit-Led Copy */}
-          <p className="text-base sm:text-lg text-[#475569] leading-relaxed max-w-md">
-            Authentic prescription and daily wellness medicines delivered rapidly from licensed neighborhood pharmacies right to your doorstep.
-          </p>
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl xl:text-5xl font-black font-heading tracking-tight leading-[1.12] text-slate-950">
+              Your medicines,<br />
+              <span className="text-slate-900 drop-shadow-xs">
+                just a tap away.
+              </span>
+            </h1>
 
-          {/* 4 Circular Trust Badges Row */}
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 w-full pt-1">
-            {trustBadges.map((badge, idx) => (
-              <div 
-                key={idx}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FEF9C3]/90 hover:bg-[#FEF08A] transition-all border border-[#FEF08A] text-xs font-bold text-[#1E293B] shadow-xs"
-              >
-                <span className="text-sm">{badge.icon}</span>
-                <span className="whitespace-nowrap">{badge.label}</span>
-              </div>
-            ))}
+            {/* Real Benefit-Led Copy */}
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed max-w-lg font-medium">
+              Authentic prescription and daily wellness medicines delivered rapidly from licensed neighborhood pharmacies right to your doorstep.
+            </p>
+
+            {/* 4 Trust Badges in Crisp White/Yellow Pills */}
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full pt-1">
+              {trustBadges.map((badge, idx) => (
+                <div 
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 hover:bg-white transition-all border border-amber-300/80 text-xs font-bold text-slate-900 shadow-xs"
+                >
+                  <span className="text-sm">{badge.icon}</span>
+                  <span className="whitespace-nowrap">{badge.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Location Selector Pill & Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* Card 1 Action Controls (Bottom) */}
+          <div className="relative z-10 flex flex-wrap items-center gap-3 pt-6 mt-auto">
             
             {/* City Selector Pill with interactive scrollable dropdown */}
             <div className="relative z-50">
               <button
                 type="button"
                 onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-amber-50/50 border border-amber-300 text-sm font-bold text-[#1E293B] shadow-xs transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-amber-50/70 border border-amber-300 text-xs sm:text-sm font-black text-slate-900 shadow-xs transition-all cursor-pointer"
                 aria-haspopup="true"
                 aria-expanded={cityDropdownOpen}
               >
                 <span className="text-amber-500 text-base">📍</span>
                 <span>{selectedCity}</span>
-                <span className="text-amber-600 text-xs font-bold ml-1">▾</span>
+                <span className="text-amber-700 text-xs font-bold ml-1">▾</span>
               </button>
 
               {cityDropdownOpen && (
@@ -172,10 +176,10 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                     className="fixed inset-0 z-40 bg-transparent" 
                     onClick={() => setCityDropdownOpen(false)} 
                   />
-                  <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl border border-amber-200 shadow-2xl z-50 overflow-hidden animate-fade-in-up ring-1 ring-black/5">
+                  <div className="absolute bottom-full left-0 mb-2 w-52 bg-white rounded-2xl border border-amber-300 shadow-2xl z-50 overflow-hidden animate-fade-in-up ring-1 ring-black/10">
                     <div className="px-3.5 py-2 text-[11px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100 flex items-center justify-between bg-amber-50/70">
                       <span>Select City</span>
-                      <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.5 rounded-full">{cities.length} Cities</span>
+                      <span className="text-[10px] text-amber-800 font-bold bg-amber-200/80 px-1.5 py-0.5 rounded-full">{cities.length} Cities</span>
                     </div>
                     <div className="max-h-44 overflow-y-auto overscroll-contain py-1 divide-y divide-slate-100 bg-white scrollbar-thin">
                       {cities.map((city) => (
@@ -188,7 +192,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                           }}
                           className={`w-full text-left px-3.5 py-2.5 text-xs font-bold transition-colors flex items-center justify-between cursor-pointer ${
                             selectedCity === city 
-                              ? 'bg-amber-100/90 text-amber-900 font-extrabold' 
+                              ? 'bg-amber-100 text-amber-950 font-extrabold' 
                               : 'text-slate-700 hover:bg-amber-50 hover:text-amber-900 bg-white'
                           }`}
                         >
@@ -202,52 +206,35 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               )}
             </div>
 
-            {/* Primary Amber Gradient CTA Button */}
+            {/* Primary Order Now Button */}
             <Link
               href="/instant-order"
-              className="btn-amber-gradient px-6 py-2.5 text-sm font-extrabold shadow-amber-glow flex items-center gap-2 group"
+              className="px-6 py-2.5 rounded-full bg-slate-950 hover:bg-slate-900 text-white hover:text-[#FFEB3B] text-xs sm:text-sm font-black shadow-md flex items-center gap-2 transition-all group"
             >
               <span>Order Now</span>
               <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
 
-            {/* Fully Functional Browse Products Smooth Scroll Button */}
+            {/* Browse Products Button */}
             <a
               href="#store-catalog"
               onClick={handleScrollCatalog}
-              className="px-5 py-2.5 rounded-full bg-white hover:bg-amber-50/70 border border-[#F3EFE6] hover:border-amber-300 text-sm font-bold text-[#1E293B] shadow-xs transition-all cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-white/90 hover:bg-white border border-amber-300 text-xs sm:text-sm font-bold text-slate-900 shadow-xs transition-all cursor-pointer"
             >
               Browse Products
             </a>
           </div>
+
         </div>
 
-        {/* ─── Right Column: Master Phone Mockup & Skyline ── */}
-        <div className="relative z-10 w-full lg:w-[460px] flex flex-col items-center justify-center pt-8 sm:pt-10 lg:pt-6">
+        {/* ─── CARD 2 (Right): Interactive App Showcase & 3D Phone Mockup ─── */}
+        <div className="lg:col-span-5 w-full rounded-3xl bg-gradient-to-br from-[#FFFDE7] via-[#FFF9C4] to-[#FFEB3B]/40 border-2 border-amber-300/80 shadow-xl shadow-amber-200/30 p-6 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden">
           
-          {/* Handwritten Annotation on Top-Right */}
-          <div className="w-full flex justify-end mb-2 pr-2 sm:pr-6 z-20 pointer-events-none">
-            <div className="flex flex-col items-end transform rotate-[-3deg]">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-amber-200 shadow-xs">
-                <span className="text-amber-500 text-xs animate-pulse">✨</span>
-                <span className="font-script text-lg sm:text-2xl font-bold text-[#D97706] whitespace-nowrap">
-                  Trusted medicine,Fastest delivery
-                </span>
-              </div>
-              {/* Playful curved hand-drawn doodle arrow pointing toward the phone */}
-              <svg className="w-16 h-5 text-amber-500 mr-4 mt-0.5 opacity-80" viewBox="0 0 60 20" fill="none">
-                <path d="M10,2 Q30,16 52,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <path d="M44,14 L52,10 L48,3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Relative Container for Phone and Floating Badges */}
-          <div className="relative flex items-center justify-center w-full">
-            
-            {/* Skyline Illustration Backdrop */}
-            <div className="absolute inset-0 flex items-end justify-center opacity-30 pointer-events-none z-0 overflow-hidden">
-              <svg viewBox="0 0 500 300" className="w-full h-full text-amber-400 fill-current">
+          {/* Background Decorative Skyline & Glow */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
+            <div className="absolute -top-10 -right-10 w-60 h-60 bg-amber-300/25 rounded-full blur-2xl" />
+            <div className="absolute bottom-0 inset-x-0 h-40 flex items-end justify-center opacity-25">
+              <svg viewBox="0 0 500 300" className="w-full h-full text-amber-500 fill-current">
                 <path d="M250,40 L253,120 L258,200 L268,260 L232,260 L242,200 L247,120 Z" opacity="0.75" />
                 <circle cx="250" cy="35" r="5" />
                 <rect x="245" y="115" width="10" height="6" rx="2" />
@@ -256,56 +243,76 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                 <path d="M340,260 Q380,190 420,260 Z" opacity="0.5" />
                 <rect x="40" y="220" width="40" height="40" opacity="0.3" />
                 <rect x="430" y="210" width="50" height="50" opacity="0.3" />
-                <path d="M80,60 L120,75 L95,85 L90,105 L105,88 Z" fill="#F59E0B" opacity="0.85" />
               </svg>
             </div>
+          </div>
 
+          {/* Top Handwritten Annotation / Feature Callout */}
+          <div className="w-full flex justify-end mb-3 pr-2 z-20 pointer-events-none">
+            <div className="flex flex-col items-end transform rotate-[-2deg]">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-amber-300 shadow-xs">
+                <span className="text-amber-500 text-xs animate-pulse">✨</span>
+                <span className="font-script text-base sm:text-xl font-bold text-amber-800 whitespace-nowrap">
+                  Trusted medicine, Fastest delivery
+                </span>
+              </div>
+              {/* Playful curved hand-drawn doodle arrow pointing toward the phone */}
+              <svg className="w-14 h-4 text-amber-600 mr-4 mt-0.5 opacity-80" viewBox="0 0 60 20" fill="none">
+                <path d="M10,2 Q30,16 52,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path d="M44,14 L52,10 L48,3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Relative Container for Phone & Floating Trust Badges */}
+          <div className="relative flex items-center justify-center w-full my-auto z-10">
+            
             {/* Floating Medicine Box (Behind Phone Left) */}
-            <div className="absolute -left-4 top-12 hidden sm:flex flex-col items-center bg-white/95 backdrop-blur-md rounded-2xl border border-amber-200 p-2.5 shadow-md transform -rotate-6 z-20">
-              <span className="text-xl">📦</span>
-              <span className="text-[9px] font-black text-amber-700 uppercase tracking-wider">Medikart</span>
-              <span className="text-[8px] text-slate-500 font-bold">100% Genuine</span>
+            <div className="absolute -left-3 top-8 hidden sm:flex flex-col items-center bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 p-2 shadow-md transform -rotate-6 z-20">
+              <span className="text-lg">📦</span>
+              <span className="text-[9px] font-black text-amber-800 uppercase tracking-wider">Medikart</span>
+              <span className="text-[8px] text-slate-600 font-bold">100% Genuine</span>
             </div>
 
             {/* Floating Safe Packing Pill (Behind Phone Right) */}
-            <div className="absolute -right-3 bottom-12 hidden sm:flex items-center gap-2 bg-white/95 backdrop-blur-md rounded-2xl border border-amber-200 px-3 py-1.5 shadow-md transform rotate-6 z-20">
-              <span className="text-lg">💊</span>
+            <div className="absolute -right-2 bottom-8 hidden sm:flex items-center gap-2 bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 px-2.5 py-1.5 shadow-md transform rotate-6 z-20">
+              <span className="text-base">💊</span>
               <div className="text-left">
-                <div className="text-[10px] font-extrabold text-slate-800 leading-tight">Safe Packing</div>
+                <div className="text-[9.5px] font-black text-slate-800 leading-tight">Safe Packing</div>
                 <div className="text-[8px] font-bold text-emerald-600">Sanitized Box</div>
               </div>
             </div>
 
             {/* ─── The Smartphone Mockup Screen ─── */}
-            <div className="relative w-[280px] sm:w-[305px] h-[520px] sm:h-[550px] bg-slate-900 rounded-[44px] p-3 shadow-2xl border-[5px] border-slate-800 transform hover:scale-[1.01] transition-transform duration-300 z-10">
+            <div className="relative w-[260px] sm:w-[285px] h-[480px] sm:h-[510px] bg-slate-900 rounded-[40px] p-2.5 shadow-2xl border-4 border-slate-800 transform hover:scale-[1.01] transition-transform duration-300 z-10">
               
               {/* Phone Speaker Notch */}
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-900 rounded-b-xl z-30 flex items-center justify-center">
-                <div className="w-10 h-1 bg-slate-700 rounded-full" />
+              <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-24 h-3.5 bg-slate-900 rounded-b-xl z-30 flex items-center justify-center">
+                <div className="w-8 h-1 bg-slate-700 rounded-full" />
               </div>
 
               {/* Inner Phone Screen Content */}
-              <div className="w-full h-full bg-[#FAF8F5] rounded-[36px] overflow-hidden flex flex-col pt-7 px-3.5 pb-3.5 select-none relative">
+              <div className="w-full h-full bg-[#FAF8F5] rounded-[32px] overflow-hidden flex flex-col pt-6 px-3 pb-3 select-none relative">
                 
                 {/* In-App Header */}
-                <div className="flex items-center justify-between py-2 border-b border-amber-100/60">
+                <div className="flex items-center justify-between py-1.5 border-b border-amber-100/60">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-6 h-6 rounded-full bg-amber-400 flex items-center justify-center text-xs font-black text-slate-900">
+                    <div className="w-5 h-5 rounded-full bg-[#FFEB3B] flex items-center justify-center text-xs font-black text-slate-900">
                       🛒
                     </div>
                     <div className="leading-tight">
                       <div className="text-xs font-black text-slate-900">medikart</div>
-                      <div className="text-[8px] font-bold text-amber-700">{selectedCity} Hub</div>
+                      <div className="text-[8px] font-bold text-amber-800">{selectedCity} Hub</div>
                     </div>
                   </div>
-                  <div className="text-[10px] font-bold text-slate-600 bg-amber-100/80 px-2 py-0.5 rounded-full">
+                  <div className="text-[9.5px] font-bold text-slate-700 bg-amber-100 px-2 py-0.5 rounded-full">
                     ⚡ 45 mins
                   </div>
                 </div>
 
                 {/* In-App Tagline */}
-                <div className="pt-2.5 pb-1.5 text-left">
-                  <p className="text-[11px] font-extrabold text-slate-700 leading-tight">
+                <div className="pt-2 pb-1 text-left">
+                  <p className="text-[10.5px] font-black text-slate-700 leading-tight">
                     Find medicines from nearest pharmacies
                   </p>
                 </div>
@@ -314,38 +321,38 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                 <div className="relative w-full my-1">
                   <div 
                     onClick={handleScrollCatalog}
-                    className="flex items-center gap-2 bg-white rounded-xl px-3 py-1.5 border border-slate-200/80 shadow-xs text-xs text-slate-400 cursor-pointer hover:border-amber-300 transition-colors"
+                    className="flex items-center gap-1.5 bg-white rounded-xl px-2.5 py-1.5 border border-slate-200 shadow-xs text-xs text-slate-400 cursor-pointer hover:border-amber-300 transition-colors"
                   >
-                    <span>🔍</span>
-                    <span className="text-[10.5px] font-medium text-slate-400">Search medicines, vitamins...</span>
+                    <span className="text-[11px]">🔍</span>
+                    <span className="text-[10px] font-medium text-slate-400">Search medicines, vitamins...</span>
                   </div>
                 </div>
 
                 {/* In-App 6-Category Grid with Real Photos & Click Routing */}
-                <div className="pt-2">
-                  <div className="flex items-center justify-between pb-1.5">
-                    <span className="text-[11px] font-black text-slate-800 uppercase tracking-tight">Categories</span>
-                    <span className="text-[10px] font-bold text-amber-600 cursor-pointer hover:underline" onClick={handleScrollCatalog}>See all</span>
+                <div className="pt-1.5">
+                  <div className="flex items-center justify-between pb-1">
+                    <span className="text-[10px] font-black text-slate-800 uppercase tracking-tight">Categories</span>
+                    <span className="text-[9.5px] font-bold text-amber-700 cursor-pointer hover:underline" onClick={handleScrollCatalog}>See all</span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-1.5">
                     {appCategories.map((cat, i) => (
                       <div 
                         key={i} 
                         onClick={(e) => handleAppCategoryClick(cat, e)}
-                        className="flex items-center gap-2 p-1.5 rounded-xl bg-white border border-amber-100/80 shadow-xs hover:border-amber-300 hover:bg-amber-50/50 transition-all cursor-pointer group"
+                        className="flex items-center gap-1.5 p-1 rounded-xl bg-white border border-amber-100 shadow-xs hover:border-amber-400 hover:bg-amber-50/50 transition-all cursor-pointer group"
                       >
                         {/* Real Photo Thumbnail */}
-                        <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-amber-200 relative bg-amber-50 group-hover:scale-105 transition-transform">
+                        <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border border-amber-200 relative bg-amber-50 group-hover:scale-105 transition-transform">
                           <Image
                             src={cat.image}
                             alt={cat.name}
                             fill
-                            sizes="32px"
+                            sizes="28px"
                             className="object-cover"
                           />
                         </div>
-                        <span className="text-[9.5px] font-bold text-slate-800 leading-tight text-left line-clamp-2 group-hover:text-amber-800 transition-colors">
+                        <span className="text-[9px] font-bold text-slate-800 leading-tight text-left line-clamp-2 group-hover:text-amber-800 transition-colors">
                           {cat.name}
                         </span>
                       </div>
@@ -357,13 +364,13 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                 <div className="mt-auto pt-2">
                   <Link 
                     href="/instant-order"
-                    className="w-full p-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-900 flex items-center justify-between shadow-xs cursor-pointer hover:opacity-95 transition-opacity"
+                    className="w-full p-2 rounded-xl bg-[#FFEB3B] hover:bg-[#FFE01B] border border-amber-300 text-slate-950 flex items-center justify-between shadow-xs cursor-pointer transition-colors"
                   >
                     <div className="text-left leading-tight">
-                      <div className="text-[10px] font-black">Prescription Upload</div>
-                      <div className="text-[8px] font-semibold text-slate-800">Pharmacist verifies in 5 min</div>
+                      <div className="text-[9.5px] font-black">Prescription Upload</div>
+                      <div className="text-[7.5px] font-bold text-amber-900">Pharmacist verifies in 5 min</div>
                     </div>
-                    <span className="text-xs font-black bg-white/85 rounded-full px-2 py-0.5">Upload</span>
+                    <span className="text-[10.5px] font-black bg-white rounded-full px-2 py-0.5 text-slate-900 shadow-xs">Upload</span>
                   </Link>
                 </div>
 
