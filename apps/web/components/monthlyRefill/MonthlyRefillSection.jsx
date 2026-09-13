@@ -182,7 +182,7 @@ export default function MonthlyRefillSection({
                 Monthly Medicine Refill
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl font-medium leading-relaxed">
-                Never run out of essential doses. Save routine medicines to your 30-day queue, receive automated email reminders via Mailjet, and reorder in 1-click with Cash on Delivery or Card.
+                Never run out of essential doses. Save routine medicines to your 30-day queue, receive automated email reminders, and reorder in 1-click with Cash on Delivery or Card.
               </p>
             </div>
           </div>
@@ -238,8 +238,8 @@ export default function MonthlyRefillSection({
               <Bell className="w-4 h-4 text-amber-700" />
             </div>
             <div>
-              <p className="text-xs text-slate-900 font-black">30-Day Mailjet Reminders</p>
-              <p className="text-[11px] text-slate-500">Auto email alert before you run out</p>
+              <p className="text-xs text-slate-900 font-black">Timely 30-Day Reminders</p>
+              <p className="text-[11px] text-slate-500">Direct email alert before you run out</p>
             </div>
           </div>
 
