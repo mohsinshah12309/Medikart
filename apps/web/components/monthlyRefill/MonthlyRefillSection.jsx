@@ -222,34 +222,34 @@ export default function MonthlyRefillSection({
         </div>
 
         {/* ─── Feature Guarantee Strip ─── */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-5">
-          <div className="bg-white/90 p-3 rounded-2xl border border-[#fef08a] flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-[#fff850] text-[#1a1a1a] flex items-center justify-center font-black text-sm flex-shrink-0">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6">
+          <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-[#fde047]/60 flex items-center gap-3.5 sm:gap-4 shadow-xs hover:shadow-sm transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#fff850] text-[#1a1a1a] flex items-center justify-center font-black text-lg sm:text-xl flex-shrink-0 shadow-2xs">
               ⚡
             </div>
             <div>
-              <p className="text-xs text-slate-900 font-black">1-Click Fast Reorder</p>
-              <p className="text-[11px] text-slate-500">Saved address & phone checkout</p>
+              <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">1-Click Fast Reorder</p>
+              <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5 leading-snug">Saved address & phone checkout</p>
             </div>
           </div>
 
-          <div className="bg-white/90 p-3 rounded-2xl border border-[#fef08a] flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-black text-sm flex-shrink-0">
-              <Bell className="w-4 h-4 text-amber-700" />
+          <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-[#fde047]/60 flex items-center gap-3.5 sm:gap-4 shadow-xs hover:shadow-sm transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-amber-700" />
             </div>
             <div>
-              <p className="text-xs text-slate-900 font-black">Timely 30-Day Reminders</p>
-              <p className="text-[11px] text-slate-500">Direct email alert before you run out</p>
+              <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">Timely 30-Day Reminders</p>
+              <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5 leading-snug">Direct email alert before you run out</p>
             </div>
           </div>
 
-          <div className="bg-white/90 p-3 rounded-2xl border border-[#fef08a] flex items-center gap-2.5 shadow-2xs">
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-900 flex items-center justify-center font-black text-sm flex-shrink-0">
-              <ShieldCheck className="w-4 h-4 text-emerald-700" />
+          <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-[#fde047]/60 flex items-center gap-3.5 sm:gap-4 shadow-xs hover:shadow-sm transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center flex-shrink-0 shadow-2xs">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-700" />
             </div>
             <div>
-              <p className="text-xs text-slate-900 font-black">Genuine & Discounted</p>
-              <p className="text-[11px] text-slate-500">100% authentic pharmacy stock</p>
+              <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">Genuine & Discounted</p>
+              <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5 leading-snug">100% authentic pharmacy stock</p>
             </div>
           </div>
         </div>
