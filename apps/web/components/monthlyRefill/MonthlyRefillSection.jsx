@@ -223,33 +223,33 @@ export default function MonthlyRefillSection({
 
         {/* ─── Feature Guarantee Strip ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6">
-          <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-[#fde047]/60 flex items-center gap-3.5 sm:gap-4 shadow-xs hover:shadow-sm transition-all duration-200">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#fff850] text-[#1a1a1a] flex items-center justify-center font-black text-lg sm:text-xl flex-shrink-0 shadow-2xs">
+          <div className="bg-[#FFFACD] p-4 sm:p-5 rounded-2xl border border-[#fae845] flex items-center gap-3.5 sm:gap-4 shadow-sm hover:shadow-md hover:bg-[#FFF8B0] transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#fff850] text-[#1a1a1a] flex items-center justify-center font-black text-lg sm:text-xl flex-shrink-0 shadow-sm border border-[#fae845]">
               ⚡
             </div>
             <div>
               <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">1-Click Fast Reorder</p>
-              <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5 leading-snug">Saved address & phone checkout</p>
+              <p className="text-xs sm:text-[13px] text-slate-600 mt-0.5 leading-snug">Saved address & phone checkout</p>
             </div>
           </div>
 
-          <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-[#fde047]/60 flex items-center gap-3.5 sm:gap-4 shadow-xs hover:shadow-sm transition-all duration-200">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center flex-shrink-0 shadow-2xs">
+          <div className="bg-[#FFFACD] p-4 sm:p-5 rounded-2xl border border-[#fae845] flex items-center gap-3.5 sm:gap-4 shadow-sm hover:shadow-md hover:bg-[#FFF8B0] transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-200 text-amber-900 flex items-center justify-center flex-shrink-0 shadow-sm border border-amber-300">
               <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-amber-700" />
             </div>
             <div>
               <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">Timely 30-Day Reminders</p>
-              <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5 leading-snug">Direct email alert before you run out</p>
+              <p className="text-xs sm:text-[13px] text-slate-600 mt-0.5 leading-snug">Direct email alert before you run out</p>
             </div>
           </div>
 
-          <div className="bg-white/95 p-4 sm:p-5 rounded-2xl border border-[#fde047]/60 flex items-center gap-3.5 sm:gap-4 shadow-xs hover:shadow-sm transition-all duration-200">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center flex-shrink-0 shadow-2xs">
+          <div className="bg-[#FFFACD] p-4 sm:p-5 rounded-2xl border border-[#fae845] flex items-center gap-3.5 sm:gap-4 shadow-sm hover:shadow-md hover:bg-[#FFF8B0] transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center flex-shrink-0 shadow-sm border border-emerald-200">
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-700" />
             </div>
             <div>
               <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">Genuine & Discounted</p>
-              <p className="text-xs sm:text-[13px] text-slate-500 mt-0.5 leading-snug">100% authentic pharmacy stock</p>
+              <p className="text-xs sm:text-[13px] text-slate-600 mt-0.5 leading-snug">100% authentic pharmacy stock</p>
             </div>
           </div>
         </div>
