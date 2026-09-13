@@ -72,6 +72,41 @@ export function CustomerProvider({ children }) {
     }
   }, [apiUrl, token]);
 
+  // Monthly Refill State
+  const [refillData, setRefillData] = useState({
+    items: [],
+    count: 0,
+    subtotal: 0,
+    lastOrderedAt: null,
+    nextReminderAt: null,
+  });
+  const [isRefillLoading, setIsRefillLoading] = useState(false);
+
+  // Fetch customer's full Monthly Refill list
+  const refreshRefill = useCallback(async (authToken = token) => {
+    if (!authToken) {
+      setRefillData({ items: [], count: 0, subtotal: 0, lastOrderedAt: null, nextReminderAt: null });
+      return;
+    }
+    setIsRefillLoading(true);
+    try {
+      const res = await fetch(`${apiUrl}/customer/monthly-refill`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const data = json?.data || { items: [], count: 0, subtotal: 0 };
+        setRefillData(data);
+      }
+    } catch (err) {
+      console.error("[CustomerProvider] Failed to fetch monthly refill list:", err);
+    } finally {
+      setIsRefillLoading(false);
+    }
+  }, [apiUrl, token]);
+
   // Initial token hydration from localStorage
   useEffect(() => {
     try {
@@ -238,41 +273,6 @@ export function CustomerProvider({ children }) {
       return false;
     }
   };
-
-  // Monthly Refill State
-  const [refillData, setRefillData] = useState({
-    items: [],
-    count: 0,
-    subtotal: 0,
-    lastOrderedAt: null,
-    nextReminderAt: null,
-  });
-  const [isRefillLoading, setIsRefillLoading] = useState(false);
-
-  // Fetch customer's full Monthly Refill list
-  const refreshRefill = useCallback(async (authToken = token) => {
-    if (!authToken) {
-      setRefillData({ items: [], count: 0, subtotal: 0, lastOrderedAt: null, nextReminderAt: null });
-      return;
-    }
-    setIsRefillLoading(true);
-    try {
-      const res = await fetch(`${apiUrl}/customer/monthly-refill`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      if (res.ok) {
-        const json = await res.json();
-        const data = json?.data || { items: [], count: 0, subtotal: 0 };
-        setRefillData(data);
-      }
-    } catch (err) {
-      console.error("[CustomerProvider] Failed to fetch monthly refill list:", err);
-    } finally {
-      setIsRefillLoading(false);
-    }
-  }, [apiUrl, token]);
 
   // Check if product is in refill list
   const isRefillSaved = useCallback((productId) => {
