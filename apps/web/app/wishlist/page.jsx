@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCustomer } from "../../components/CustomerProvider";
 import ProductCard from "../../components/ProductCard";
+import MonthlyRefillSection from "../../components/monthlyRefill/MonthlyRefillSection";
 import { Heart, ShoppingBag, ArrowRight, Loader2 } from "lucide-react";
 
 export default function WishlistPage() {
@@ -88,6 +89,9 @@ export default function WishlistPage() {
           </div>
         </div>
       )}
+
+      {/* Monthly Medicine Refill Routine Section */}
+      <MonthlyRefillSection />
     </div>
   );
 }

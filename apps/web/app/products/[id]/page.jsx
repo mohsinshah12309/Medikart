@@ -3,6 +3,7 @@ import { getProduct } from '../../../lib/api';
 import ProductGallery from '../../../components/ProductGallery';
 import NarcoticsBlock from '../../../components/NarcoticsBlock';
 import AddToCartButton from '../../../components/AddToCartButton';
+import AddToRefillButton from '../../../components/monthlyRefill/AddToRefillButton';
 import RelatedProducts from '../../../components/RelatedProducts';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -160,8 +161,9 @@ export default async function ProductDetailPage({ params }) {
           )}
 
           {/* Checkout controls */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <AddToCartButton product={product} />
+            <AddToRefillButton product={product} variant="button" />
             {product.isNarcotic && <NarcoticsBlock />}
           </div>
         </div>

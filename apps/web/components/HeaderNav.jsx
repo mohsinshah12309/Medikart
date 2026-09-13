@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Pill,
   Heart,
+  CalendarSync,
   User,
   LogOut,
 } from "lucide-react";
@@ -30,7 +31,7 @@ export default function HeaderNav({ initialCategories = [] }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { customer, isAuthenticated, logout, wishlistCount } = useCustomer();
+  const { customer, isAuthenticated, logout, wishlistCount, refillCount } = useCustomer();
 
   // Load categories if not passed down from server layout
   useEffect(() => {
@@ -320,6 +321,25 @@ export default function HeaderNav({ initialCategories = [] }) {
                       {wishlistCount}
                     </span>
                   </Link>
+                  <Link
+                    href="/refill"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-yellow-50 hover:text-amber-900 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <CalendarSync className="w-3.5 h-3.5 text-amber-700" />
+                      <span>Monthly Refill</span>
+                    </span>
+                    {refillCount > 0 ? (
+                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-[#fff850] text-[#1a1a1a] border border-[#fae845]">
+                        {refillCount}
+                      </span>
+                    ) : (
+                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-50 text-amber-800">
+                        30-Day
+                      </span>
+                    )}
+                  </Link>
                   <button
                     type="button"
                     onClick={() => {
@@ -481,6 +501,27 @@ export default function HeaderNav({ initialCategories = [] }) {
                 {wishlistCount > 0 ? (
                   <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
                     {wishlistCount}
+                  </span>
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                )}
+              </Link>
+
+              {/* Monthly Refill Mobile Link */}
+              <Link
+                href="/refill"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
+                  pathname === "/refill" ? "bg-yellow-100/80 text-amber-950 font-black" : "text-slate-800 hover:bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <CalendarSync className="w-4 h-4 text-amber-700" />
+                  <span>Monthly Refill</span>
+                </div>
+                {refillCount > 0 ? (
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#fff850] text-[#1a1a1a] border border-[#fae845]">
+                    {refillCount}
                   </span>
                 ) : (
                   <ChevronRight className="w-4 h-4 text-slate-400" />

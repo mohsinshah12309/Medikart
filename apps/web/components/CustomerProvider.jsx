@@ -82,13 +82,14 @@ export function CustomerProvider({ children }) {
         setToken(storedToken);
         setCustomer(JSON.parse(storedCustomer));
         refreshWishlistIds(storedToken);
+        refreshRefill(storedToken);
       }
     } catch (e) {
       console.error("[CustomerProvider] Failed to hydrate customer auth:", e);
     } finally {
       setIsLoading(false);
     }
-  }, [refreshWishlistIds]);
+  }, [refreshWishlistIds, refreshRefill]);
 
   // Auth Functions
   const setSession = (tokenData, customerData) => {
@@ -97,6 +98,7 @@ export function CustomerProvider({ children }) {
     localStorage.setItem("customer_token", tokenData);
     localStorage.setItem("customer_user", JSON.stringify(customerData));
     refreshWishlistIds(tokenData);
+    refreshRefill(tokenData);
   };
 
   const logout = () => {
@@ -105,6 +107,7 @@ export function CustomerProvider({ children }) {
     setWishlistIds([]);
     setWishlistItems([]);
     setWishlistCount(0);
+    setRefillData({ items: [], count: 0, subtotal: 0, lastOrderedAt: null, nextReminderAt: null });
     localStorage.removeItem("customer_token");
     localStorage.removeItem("customer_user");
   };
@@ -236,6 +239,185 @@ export function CustomerProvider({ children }) {
     }
   };
 
+  // Monthly Refill State
+  const [refillData, setRefillData] = useState({
+    items: [],
+    count: 0,
+    subtotal: 0,
+    lastOrderedAt: null,
+    nextReminderAt: null,
+  });
+  const [isRefillLoading, setIsRefillLoading] = useState(false);
+
+  // Fetch customer's full Monthly Refill list
+  const refreshRefill = useCallback(async (authToken = token) => {
+    if (!authToken) {
+      setRefillData({ items: [], count: 0, subtotal: 0, lastOrderedAt: null, nextReminderAt: null });
+      return;
+    }
+    setIsRefillLoading(true);
+    try {
+      const res = await fetch(`${apiUrl}/customer/monthly-refill`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const data = json?.data || { items: [], count: 0, subtotal: 0 };
+        setRefillData(data);
+      }
+    } catch (err) {
+      console.error("[CustomerProvider] Failed to fetch monthly refill list:", err);
+    } finally {
+      setIsRefillLoading(false);
+    }
+  }, [apiUrl, token]);
+
+  // Check if product is in refill list
+  const isRefillSaved = useCallback((productId) => {
+    if (!refillData?.items) return false;
+    return refillData.items.some(
+      (it) => it.productId === productId || it.productId?._id === productId
+    );
+  }, [refillData]);
+
+  // Add item to monthly refill
+  const addToRefill = async (productId, quantity = 1) => {
+    if (!token) {
+      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+      return false;
+    }
+
+    try {
+      const res = await fetch(`${apiUrl}/customer/monthly-refill`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId, quantity }),
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        setRefillData(json?.data || refillData);
+        return true;
+      }
+      const errJson = await res.json().catch(() => ({}));
+      throw new Error(errJson.message || "Failed to add product to refill list");
+    } catch (err) {
+      console.error("[CustomerProvider] Add to refill error:", err);
+      throw err;
+    }
+  };
+
+  // Update item quantity in monthly refill
+  const updateRefillQuantity = async (itemId, quantity) => {
+    if (!token) return false;
+    // Optimistic update
+    const previous = { ...refillData };
+    setRefillData((prev) => {
+      const updatedItems = prev.items.map((it) => {
+        if (it._id === itemId) {
+          const itemSubtotal = Math.round(it.effectivePrice * quantity * 100) / 100;
+          return { ...it, quantity, subtotal: itemSubtotal };
+        }
+        return it;
+      });
+      const newSubtotal = Math.round(
+        updatedItems.reduce((acc, it) => acc + it.subtotal, 0) * 100
+      ) / 100;
+      return { ...prev, items: updatedItems, subtotal: newSubtotal };
+    });
+
+    try {
+      const res = await fetch(`${apiUrl}/customer/monthly-refill/${itemId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ quantity }),
+      });
+
+      if (!res.ok) {
+        // Rollback
+        setRefillData(previous);
+        return false;
+      }
+      const json = await res.json();
+      setRefillData(json?.data || previous);
+      return true;
+    } catch (err) {
+      setRefillData(previous);
+      throw err;
+    }
+  };
+
+  // Remove item from monthly refill
+  const removeFromRefill = async (itemId) => {
+    if (!token) return false;
+    const previous = { ...refillData };
+    setRefillData((prev) => {
+      const updatedItems = prev.items.filter((it) => it._id !== itemId);
+      const newSubtotal = Math.round(
+        updatedItems.reduce((acc, it) => acc + it.subtotal, 0) * 100
+      ) / 100;
+      return {
+        ...prev,
+        items: updatedItems,
+        count: updatedItems.length,
+        subtotal: newSubtotal,
+      };
+    });
+
+    try {
+      const res = await fetch(`${apiUrl}/customer/monthly-refill/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        setRefillData(previous);
+        return false;
+      }
+      const json = await res.json();
+      setRefillData(json?.data || previous);
+      return true;
+    } catch (err) {
+      setRefillData(previous);
+      throw err;
+    }
+  };
+
+  // Clear entire refill list
+  const clearRefill = async () => {
+    if (!token) return false;
+    const previous = { ...refillData };
+    setRefillData({ ...refillData, items: [], count: 0, subtotal: 0 });
+
+    try {
+      const res = await fetch(`${apiUrl}/customer/monthly-refill`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        setRefillData(previous);
+        return false;
+      }
+      return true;
+    } catch (err) {
+      setRefillData(previous);
+      throw err;
+    }
+  };
+
   return (
     <CustomerContext.Provider
       value={{
@@ -257,6 +439,17 @@ export function CustomerProvider({ children }) {
         isWishlisted,
         toggleWishlist,
         refreshWishlist,
+        refillData,
+        refillItems: refillData.items || [],
+        refillCount: refillData.count || 0,
+        refillSubtotal: refillData.subtotal || 0,
+        isRefillLoading,
+        refreshRefill,
+        isRefillSaved,
+        addToRefill,
+        updateRefillQuantity,
+        removeFromRefill,
+        clearRefill,
       }}
     >
       {children}

@@ -1,0 +1,126 @@
+/**
+ * Monthly Refill Feature Stylesheet.
+ *
+ * Theme: Yellow + White.
+ * Exact Primary Yellow: #fff850 (sampled from user-uploaded visual palette).
+ */
+
+:root {
+  --refill-yellow-primary: #fff850;
+  --refill-yellow-light: #fffde0;
+  --refill-yellow-subtle: #fffebb;
+  --refill-yellow-border: #fae845;
+  --refill-yellow-hover: #fae432;
+  --refill-white: #ffffff;
+  --refill-text-dark: #1a1a1a;
+  --refill-shadow: 0 4px 20px -2px rgba(250, 232, 69, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --refill-card-shadow: 0 4px 16px -3px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
+  --refill-card-hover: 0 10px 25px -5px rgba(234, 179, 8, 0.18), 0 6px 10px -3px rgba(0, 0, 0, 0.05);
+}
+
+/* Card Micro-interactions */
+.refill-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #fef08a;
+  border-radius: 16px;
+  background-color: var(--refill-white);
+  box-shadow: var(--refill-card-shadow);
+}
+
+.refill-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--refill-card-hover);
+  border-color: var(--refill-yellow-border);
+}
+
+/* Smooth Quantity Pulse */
+@keyframes refill-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+    background-color: var(--refill-yellow-subtle);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.refill-qty-pulsing {
+  animation: refill-pulse 0.28s ease-in-out;
+}
+
+/* Smooth Fade + Collapse for Item Removal */
+.refill-item-removing {
+  transition: all 0.35s ease-out;
+  opacity: 0;
+  transform: scale(0.94) translateY(-10px);
+  max-height: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Sticky Reorder Bar */
+.refill-reorder-bar {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid #fef08a;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+/* Primary Reorder Button */
+.btn-refill-primary {
+  background-color: var(--refill-yellow-primary);
+  color: var(--refill-text-dark);
+  font-weight: 900;
+  border: 1px solid var(--refill-yellow-border);
+  box-shadow: 0 3px 10px rgba(250, 232, 69, 0.45);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-refill-primary:hover:not(:disabled) {
+  background-color: var(--refill-yellow-hover);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(250, 232, 69, 0.6);
+}
+
+.btn-refill-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-refill-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Stepper Buttons */
+.refill-stepper-btn {
+  background-color: #fefce8;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+  transition: all 0.15s ease;
+}
+
+.refill-stepper-btn:hover:not(:disabled) {
+  background-color: var(--refill-yellow-primary);
+  color: var(--refill-text-dark);
+  border-color: var(--refill-yellow-border);
+  transform: scale(1.08);
+}
+
+.refill-stepper-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Badge Accent */
+.refill-badge {
+  background-color: var(--refill-yellow-subtle);
+  color: #854d0e;
+  border: 1px solid #fde047;
+}

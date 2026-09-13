@@ -6,6 +6,7 @@ import Image from 'next/image';
 import TiltCard3D from './3d/TiltCard3D';
 import { useCart } from './CartProvider';
 import { useCustomer } from './CustomerProvider';
+import AddToRefillButton from './monthlyRefill/AddToRefillButton';
 import { ShoppingCart, Check, Eye, Heart } from 'lucide-react';
 
 export default function ProductCard({ product }) {
@@ -61,20 +62,23 @@ export default function ProductCard({ product }) {
           </span>
         )}
 
-        {/* Wishlist Heart Button */}
-        <button
-          type="button"
-          onClick={handleWishlistToggle}
-          className={`absolute top-1.5 right-1.5 z-30 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150 shadow-xs cursor-pointer ${
-            wishlisted
-              ? "bg-rose-50 text-rose-500 border border-rose-200 scale-105"
-              : "bg-white/95 text-slate-400 hover:text-rose-500 border border-slate-200 hover:border-rose-200 hover:scale-110 opacity-80 group-hover:opacity-100"
-          }`}
-          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          title={wishlisted ? "Saved in Wishlist" : "Save to Wishlist"}
-        >
-          <Heart className={`w-3.5 h-3.5 ${wishlisted ? "fill-rose-500 text-rose-500" : ""}`} />
-        </button>
+        {/* Quick Action Buttons: Monthly Refill + Wishlist */}
+        <div className="absolute top-1.5 right-1.5 z-30 flex items-center gap-1">
+          <AddToRefillButton product={product} variant="icon" />
+          <button
+            type="button"
+            onClick={handleWishlistToggle}
+            className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150 shadow-xs cursor-pointer ${
+              wishlisted
+                ? "bg-rose-50 text-rose-500 border border-rose-200 scale-105"
+                : "bg-white/95 text-slate-400 hover:text-rose-500 border border-slate-200 hover:border-rose-200 hover:scale-110 opacity-80 group-hover:opacity-100"
+            }`}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            title={wishlisted ? "Saved in Wishlist" : "Save to Wishlist"}
+          >
+            <Heart className={`w-3.5 h-3.5 ${wishlisted ? "fill-rose-500 text-rose-500" : ""}`} />
+          </button>
+        </div>
         
         {/* Narcotics Badge vs OTC Badge */}
         {product.isNarcotic ? (

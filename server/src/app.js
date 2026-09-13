@@ -47,6 +47,7 @@ const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 // Customer Auth & Wishlist Routes
 const customerRoutes = require("./modules/customers/customer.routes");
 const wishlistRoutes = require("./modules/customers/wishlist.routes");
+const monthlyRefillRoutes = require("./modules/customers/monthlyRefill.routes");
 
 // Phase 20 — Admin Account Management (Super Admin)
 const adminUserManagementRoutes = require("./modules/admin-users/adminUserManagement.routes");
@@ -54,6 +55,7 @@ const adminUserManagementRoutes = require("./modules/admin-users/adminUserManage
 // Phase 19 — Weekly Report (admin trigger route + cron scheduler)
 const reportsRoutes = require('./modules/orders/reports.routes');
 const { scheduleWeeklyReport } = require('./jobs/weeklyReport.job');
+const { scheduleMonthlyRefillReminder, stopMonthlyRefillReminder } = require('./jobs/monthlyRefillReminder.job');
 
 // Phase 22 — Chatbot Routes
 const chatbotRoutes = require("./modules/chatbot/chatbot.routes");
@@ -219,6 +221,8 @@ const paymentRoutes = require("./modules/payments/payment.routes");
 app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
 app.use("/api/v1/auth/customer", authLimiter, customerRoutes);
 app.use("/api/v1/wishlist", storefrontLimiter, wishlistRoutes);
+app.use("/api/v1/customer/monthly-refill", storefrontLimiter, monthlyRefillRoutes);
+app.use("/api/v1/monthly-refill", storefrontLimiter, monthlyRefillRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
@@ -289,6 +293,7 @@ if (require.main === module) {
     });
     // Phase 19: register the weekly report cron job (skipped in test env).
     scheduleWeeklyReport();
+    scheduleMonthlyRefillReminder();
     setupGracefulShutdown();
 
     process.on("unhandledRejection", (reason) => {
@@ -323,12 +328,13 @@ function setupGracefulShutdown() {
       });
     }
 
-    // 2. Stop weekly reports cron job
+    // 2. Stop cron jobs
     try {
       const { stopWeeklyReport } = require("./jobs/weeklyReport.job");
       stopWeeklyReport();
+      stopMonthlyRefillReminder();
     } catch (err) {
-      console.error("[Server] Error stopping weekly report job:", err.message);
+      console.error("[Server] Error stopping cron jobs:", err.message);
     }
 
     // 3. Stop retry queues (Google Sheets sync queue)
