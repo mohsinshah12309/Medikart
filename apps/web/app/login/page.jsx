@@ -6,7 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCustomer } from "../../components/CustomerProvider";
 import AuthCard3D from "../../components/3d/AuthCard3D";
 import Auth3DScene from "../../components/3d/Auth3DScene";
-import { Mail, Lock, ArrowRight, AlertCircle, ShieldCheck, Heart, Sparkles, Eye, EyeOff } from "lucide-react";
+import PasswordInput from "../../components/PasswordInput";
+import { Mail, Lock, ArrowRight, AlertCircle, ShieldCheck, Heart, Sparkles } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -16,7 +17,6 @@ function LoginForm() {
   const { login } = useCustomer();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -114,25 +114,17 @@ function LoginForm() {
                   Forgot password?
                 </Link>
               </div>
-              <div className="relative group">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-xs text-slate-800 placeholder:text-slate-400 transition-all shadow-xs group-hover:border-amber-300"
-                />
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors group-hover:text-amber-500" />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
+              <PasswordInput
+                id="login-password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                disabled={loading}
+                leadingIcon={<Lock className="w-4 h-4" />}
+                autoComplete="current-password"
+              />
             </div>
 
             <button

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PasswordInput from "./PasswordInput";
 
 function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
   const [email, setEmail] = useState("");
@@ -55,29 +56,32 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="admin-email">Email Address</label>
             <input
-              id="email"
+              id="admin-email"
               type="email"
               className="form-control"
               placeholder="admin@medikart.pk"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="username"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              className="form-control"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+
+          {/* Password with independent show/hide toggle via PasswordInput */}
+          <PasswordInput
+            id="admin-password"
+            name="password"
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            required
+            disabled={loading}
+            autoComplete="current-password"
+          />
+
           <button
             type="submit"
             className="btn btn-primary"
