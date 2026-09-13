@@ -16,16 +16,13 @@ const passwordResetService = require("./passwordReset.service");
  */
 const forgotPassword = async (req, res, next) => {
   try {
-    // Fire-and-forget — service handles enumeration protection internally.
-    // We await so SMTP errors are logged, but response is always the same.
-    await passwordResetService.forgotPassword(req.body.email);
+    const result = await passwordResetService.forgotPassword(req.body.email);
 
-    // Always 200, always the same message — no information about whether
-    // the email exists in the system.
     res.status(200).json({
       status: "success",
       message:
-        "If that email is associated with an admin account, a reset link has been sent.",
+        "If that email is associated with an admin account, a verification code has been sent.",
+      ...(process.env.NODE_ENV === "test" && result?.code && { _testCode: result.code }),
     });
   } catch (error) {
     next(error);

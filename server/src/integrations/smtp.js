@@ -1,78 +1,121 @@
 /**
- * SMTP Email Integration — Phase 12.
+ * Email Integration — Mailjet Send API v3.1.
  *
- * Uses nodemailer transport configured from environment variables:
- * SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM.
+ * Drop-in replacement for the previous nodemailer/SMTP transporter.
+ * Exports the same `sendEmail({ to, subject, text, html, attachments })`
+ * interface so all callers (customer.service.js, otp.service.js, etc.)
+ * require zero changes.
  *
- * Wraps email delivery in a try-catch to throw a typed error without
- * crashing or leaking credentials.
+ * Environment variables (same keys already in .env):
+ *   MAILJET_API_KEY        — Mailjet public API key
+ *   MAILJET_API_SECRET     — Mailjet secret API key
+ *   MAILJET_SENDER_EMAIL   — Verified sender address
+ *   MAILJET_SENDER_NAME    — Display name shown in email clients
+ *
+ * Fallback behaviour:
+ *   - NODE_ENV === "test" → skips real send, returns mock result (unchanged).
+ *   - Missing credentials → logs a warning and returns mock result so the app
+ *     boots cleanly in environments where email isn't configured yet.
  */
 
-const nodemailer = require("nodemailer");
+const Mailjet = require("node-mailjet");
 const { AppError } = require("../utils/errors");
 
-let transporter = null;
-
-const getTransporter = () => {
-  if (!transporter) {
-    const host = process.env.SMTP_HOST || "localhost";
-    const port = parseInt(process.env.SMTP_PORT || "2525", 10);
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-
-    const auth = user && pass ? { user, pass } : undefined;
-
-    transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure: port === 465,
-      auth,
-      // For development/mailtrap local testing:
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-  }
-  return transporter;
-};
+let _client = null;
 
 /**
- * Sends an email using the configured SMTP transport.
- *
- * @param {Object} options
- * @param {String} options.to - Recipient email
- * @param {String} options.subject - Email subject line
- * @param {String} options.text - Plain text content
- * @param {String} [options.html] - HTML content
- * @param {Array} [options.attachments] - Array of attachment objects
+ * Lazily initialise and cache the Mailjet API client.
+ * Returns null if credentials are not configured.
  */
-const sendEmail = async ({ to, subject, text, html, attachments }) => {
+function getClient() {
+  if (_client) return _client;
+
+  const apiKey = process.env.MAILJET_API_KEY;
+  const apiSecret = process.env.MAILJET_API_SECRET;
+
+  if (!apiKey || !apiSecret) {
+    return null;
+  }
+
+  _client = Mailjet.apiConnect(apiKey, apiSecret);
+  return _client;
+}
+
+/**
+ * Send an email via the Mailjet Send API v3.1.
+ *
+ * @param {Object}   options
+ * @param {string}   options.to          - Recipient email address
+ * @param {string}   options.subject     - Email subject line
+ * @param {string}   options.text        - Plain-text body (required fallback)
+ * @param {string}   [options.html]      - HTML body (used if provided)
+ * @param {Array}    [options.attachments] - Ignored (Mailjet attachments use
+ *                                          a different format; extend as needed)
+ * @returns {Promise<{ messageId: string, accepted: string[] }>}
+ */
+const sendEmail = async ({ to, subject, text, html }) => {
+  // ── Test environment: skip real network call ──────────────────────────────
   if (process.env.NODE_ENV === "test") {
-    // In test environment, skip external network call to prevent third-party SMTP rate limits
     return { messageId: "test-mock-id", accepted: [to] };
   }
 
-  try {
-    const from = process.env.SMTP_FROM || "noreply@medikart.pk";
-    const mailOptions = {
-      from,
-      to,
-      subject,
-      text,
-      html: html || text,
-      attachments,
-    };
+  const client = getClient();
 
-    const transport = getTransporter();
-    const info = await transport.sendMail(mailOptions);
-    return info;
+  // ── Credentials not configured: warn but do not crash the app ─────────────
+  if (!client) {
+    console.warn(
+      `[smtp] Mailjet credentials not configured — skipping email to ${to}. ` +
+        "Set MAILJET_API_KEY and MAILJET_API_SECRET in .env to enable email delivery."
+    );
+    return { messageId: "no-credentials-skipped", accepted: [] };
+  }
+
+  const senderEmail =
+    process.env.MAILJET_SENDER_EMAIL || "noreply@medikart.pk";
+  const senderName =
+    process.env.MAILJET_SENDER_NAME || "Medikart";
+
+  try {
+    const result = await client.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From: {
+            Email: senderEmail,
+            Name: senderName,
+          },
+          To: [
+            {
+              Email: to,
+            },
+          ],
+          Subject: subject,
+          TextPart: text,
+          HTMLPart: html || text,
+        },
+      ],
+    });
+
+    const msgStatus = result?.body?.Messages?.[0]?.Status;
+    const msgId =
+      result?.body?.Messages?.[0]?.To?.[0]?.MessageID ||
+      result?.body?.Messages?.[0]?.MessageID ||
+      "unknown";
+
+    console.log(
+      `[smtp] Email sent via Mailjet to ${to} — subject: "${subject}" — status: ${msgStatus}`
+    );
+
+    return { messageId: String(msgId), accepted: [to] };
   } catch (error) {
-    console.error("Email delivery failed:", error.message);
-    throw new AppError(`Failed to send email: ${error.message}`, 500);
+    const detail =
+      error?.response?.data?.ErrorMessage ||
+      error?.ErrorMessage ||
+      error?.message ||
+      "Unknown Mailjet error";
+
+    console.error(`[smtp] Mailjet delivery failed to ${to}:`, detail);
+    throw new AppError(`Failed to send email: ${detail}`, 500);
   }
 };
 
-
-module.exports = {
-  sendEmail,
-};
+module.exports = { sendEmail };

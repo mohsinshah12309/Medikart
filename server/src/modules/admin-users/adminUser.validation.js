@@ -33,6 +33,11 @@ const createAdminUserSchema = z
       .email("Invalid email format")
       .toLowerCase()
       .trim(),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .max(128, "Password cannot exceed 128 characters")
+      .optional(),
     role: z.enum(["super_admin", "admin"], {
       invalid_type_error: "Role must be super_admin or admin",
     }).default("admin"),

@@ -196,7 +196,7 @@ function SignupForm() {
                 autoComplete="new-password"
                 minLength={8}
               />
-              <p className="text-[10px] text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1.5">
                 Must contain 8+ characters, uppercase, lowercase, and a number.
               </p>
             </div>

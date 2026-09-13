@@ -24,13 +24,18 @@ const errorHandler = (err, req, res, next) => {
 
   // For Zod validation errors (from zod.parse failures)
   if (err.name === "ZodError") {
+    const details = err.errors.map((e) => ({
+      field: e.path.join("."),
+      message: e.message,
+    }));
+    // Surface the first specific Zod message as the top-level message so
+    // frontends can display it directly (e.g. "Password must contain at least
+    // one uppercase letter") instead of the generic "Validation failed".
+    const topMessage = details[0]?.message || "Validation failed";
     return res.status(400).json({
       status: "error",
-      message: "Validation failed",
-      details: err.errors.map((e) => ({
-        field: e.path.join("."),
-        message: e.message,
-      })),
+      message: topMessage,
+      details,
     });
   }
 

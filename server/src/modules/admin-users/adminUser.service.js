@@ -122,14 +122,14 @@ const getAdminUsers = async () => {
 
 /**
  * Create a new admin user.
- * Assigns role/permissions, sets a random password, and fires the password reset email flow.
+ * Assigns role/permissions, sets assigned password (or random temp password if not provided).
  */
 const createAdminUser = async (data, actor) => {
-  const { name, email, role, permissions, assignedPharmacyId } = data;
+  const { name, email, role, permissions, assignedPharmacyId, password } = data;
 
-  // Generate a random temporary password
-  const tempPassword = crypto.randomBytes(32).toString("hex");
-  const passwordHash = await hashPassword(tempPassword);
+  // Use provided password or generate a random temporary password
+  const assignedPassword = password && password.trim() ? password.trim() : crypto.randomBytes(32).toString("hex");
+  const passwordHash = await hashPassword(assignedPassword);
 
   const user = await AdminUser.create({
     name,
@@ -145,8 +145,10 @@ const createAdminUser = async (data, actor) => {
 
   await user.populate("assignedPharmacyId", "name code city address");
 
-  // Re-use the forgot-password service to trigger the reset token email pattern
-  await forgotPassword(email);
+  // If no password was explicitly assigned, trigger the password reset flow so they can set their password
+  if (!password) {
+    await forgotPassword(email);
+  }
 
   const sanitized = sanitizeUser(user);
 
