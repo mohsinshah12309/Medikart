@@ -232,9 +232,6 @@ export default async function RootLayout({ children }) {
                     <span className="inline-flex items-center gap-1 text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full font-semibold">
                       🔐 256-Bit SSL Encrypted
                     </span>
-                    <span className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full font-semibold border border-blue-100">
-                      🏥 DRAP Licensed Partner Pharmacies
-                    </span>
                     <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-semibold border border-emerald-100">
                       🛡️ Authentic Medicines Guaranteed
                     </span>

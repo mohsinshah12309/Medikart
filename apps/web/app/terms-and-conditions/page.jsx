@@ -123,7 +123,7 @@ export default function TermsAndConditionsPage() {
             7. Governing Law &amp; Jurisdiction
           </h2>
           <p className="text-xs sm:text-sm text-slate-700">
-            These terms shall be governed by and construed in accordance with the laws of the Islamic Republic of Pakistan. Any disputes arising out of or related to these Terms and Conditions shall be subject to the exclusive jurisdiction of the competent courts of <strong>[Jurisdiction / City: e.g., Lahore / Karachi, Pakistan]</strong>.
+            These terms shall be governed by and construed in accordance with the laws of the Islamic Republic of Pakistan. Any disputes arising out of or related to these Terms and Conditions shall be subject to the exclusive jurisdiction of the competent courts of Pakistan.
           </p>
         </section>
 

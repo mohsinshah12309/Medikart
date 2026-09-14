@@ -35,7 +35,8 @@ function AnalyticsTracker() {
 
 export default function AnalyticsProvider() {
   const [allowed, setAllowed] = useState(false);
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-MEDIKARTDEMO';
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const isValidGaId = gaId && typeof gaId === 'string' && gaId.startsWith('G-') && !gaId.includes('XXXXX') && gaId !== 'G-MEDIKARTDEMO';
 
   useEffect(() => {
     setAllowed(isAnalyticsAllowed());
@@ -52,7 +53,7 @@ export default function AnalyticsProvider() {
 
   return (
     <>
-      {allowed && gaId && (
+      {allowed && isValidGaId && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
