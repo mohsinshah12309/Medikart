@@ -16,6 +16,7 @@ const bcrypt = require("bcryptjs");
 const Otp = require("./otp.model");
 const smtp = require("../../integrations/smtp");
 const emailPrecheck = require("../../utils/emailPrecheck");
+const { generateOtpEmailTemplate } = require("../../utils/emailTemplates");
 const { BadRequestError } = require("../../utils/errors");
 
 /**
@@ -153,21 +154,23 @@ const requestOtp = async (email, ip, options = {}) => {
     purpose,
   });
 
-  // 7. Send code via email
-  const subject = options.customSubject || (purpose === "account_verification" ? "Verify Your Medikart Account" : "Your Medikart Verification Code");
-  const text = `Your Medikart verification code is: ${code}. It expires in 10 minutes. Do not share this code with anyone.`;
-  const html = options.customHtml || `<div style="font-family: Arial, sans-serif; padding: 20px;">
-    <h2>${purpose === "account_verification" ? "Medikart Account Verification" : "Medikart Verification Code"}</h2>
-    <p>Your 6-digit verification code is:</p>
-    <h1 style="color: #0d9488; letter-spacing: 4px;">${code}</h1>
-    <p>This code expires in 10 minutes. If you did not request this, please ignore this email.</p>
-  </div>`;
+  // 7. Generate high-deliverability email template (Primary Inbox optimized)
+  const template = generateOtpEmailTemplate({
+    code,
+    purpose,
+    expiryMinutes: 10,
+  });
+
+  const subject = options.customSubject || template.subject;
+  const text = options.customText || template.text;
+  const html = options.customHtml || template.html;
 
   await smtp.sendEmail({
     to: normalizedEmail,
     subject,
     text,
     html,
+    fromName: "Medikart Verification",
   });
 
   const responsePayload = {

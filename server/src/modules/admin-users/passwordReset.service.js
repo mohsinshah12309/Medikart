@@ -36,6 +36,7 @@ const bcrypt = require("bcryptjs");
 const AdminUser = require("./adminUser.model");
 const PasswordReset = require("./passwordReset.model");
 const { sendEmail } = require("../../integrations/smtp");
+const { generateOtpEmailTemplate } = require("../../utils/emailTemplates");
 const { BadRequestError } = require("../../utils/errors");
 
 const TOKEN_EXPIRY_MINUTES = 30;
@@ -77,43 +78,20 @@ const forgotPassword = async (email) => {
       used: false,
     });
 
-    // Send email with 6-digit verification code via Mailjet
+    // Send email with 6-digit verification code via Mailjet / SMTP with Primary Inbox headers
+    const template = generateOtpEmailTemplate({
+      code: verificationCode,
+      purpose: "password_reset",
+      recipientName: user.name,
+      expiryMinutes: TOKEN_EXPIRY_MINUTES,
+    });
+
     await sendEmail({
       to: user.email,
-      subject: "Medikart Admin — Password Reset Verification Code",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 540px; margin: 0 auto; background: #ffffff; border: 1px solid #fef08a; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-          <div style="background-color: #fff850; padding: 24px; text-align: center; border-bottom: 2px solid #fae845;">
-            <h1 style="color: #1a1a1a; margin: 0; font-size: 22px; font-weight: 900;">
-              💊 Medikart Staff Portal
-            </h1>
-            <p style="color: #451a03; margin: 6px 0 0 0; font-size: 14px; font-weight: bold;">
-              Password Reset Verification Code
-            </p>
-          </div>
-          <div style="padding: 28px 24px;">
-            <p style="font-size: 15px; color: #1a1a1a; margin-top: 0;">
-              Hello <strong>${user.name}</strong>,
-            </p>
-            <p style="font-size: 14px; color: #475569; line-height: 1.5;">
-              A password reset was requested for your Medikart Admin/Staff account. Use the 6-digit verification code below to set your new password:
-            </p>
-            <div style="background-color: #fffde0; border: 2px dashed #facc15; border-radius: 12px; padding: 18px; text-align: center; margin: 22px 0;">
-              <span style="font-size: 34px; font-weight: 900; letter-spacing: 10px; color: #854d0e; font-family: monospace; display: inline-block; padding-left: 10px;">${verificationCode}</span>
-            </div>
-            <p style="font-size: 12px; color: #64748b; line-height: 1.5;">
-              This verification code expires in <strong>${TOKEN_EXPIRY_MINUTES} minutes</strong> and can only be used once.
-            </p>
-            <p style="font-size: 12px; color: #94a3b8; margin-top: 16px;">
-              If you did not request this password reset, please ignore this email or contact the Super Administrator immediately.
-            </p>
-          </div>
-          <div style="background-color: #f8fafc; padding: 14px 24px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 11px; color: #94a3b8;">
-            &copy; ${new Date().getFullYear()} Medikart Pharmacy Admin Console
-          </div>
-        </div>
-      `,
-      text: `Your Medikart Admin password reset verification code is: ${verificationCode}\n\nExpires in ${TOKEN_EXPIRY_MINUTES} minutes. Single use only.`,
+      subject: `[Medikart Staff] ${verificationCode} is your Password Reset Code`,
+      html: template.html,
+      text: template.text,
+      fromName: "Medikart Security",
     });
 
     return { code: verificationCode };

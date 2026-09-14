@@ -17,6 +17,7 @@ const Customer = require("./customer.model");
 const CustomerPasswordReset = require("./customerPasswordReset.model");
 const otpService = require("../otp/otp.service");
 const emailPrecheck = require("../../utils/emailPrecheck");
+const { generatePasswordResetTemplate } = require("../../utils/emailTemplates");
 const smtp = require("../../integrations/smtp");
 const {
   BadRequestError,
@@ -301,22 +302,18 @@ const forgotPassword = async (payload) => {
 
     const storefrontUrl = process.env.STOREFRONT_URL || "http://localhost:3000";
     const resetLink = `${storefrontUrl}/reset-password?token=${rawToken}`;
+    const template = generatePasswordResetTemplate({
+      recipientName: customer.name,
+      resetLink,
+      expiryMinutes: TOKEN_EXPIRY_MINUTES,
+    });
 
     await smtp.sendEmail({
       to: customer.email,
-      subject: "Medikart — Password Reset Request",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; rounded: 8px;">
-          <h2 style="color: #0d9488;">Password Reset Request</h2>
-          <p>Hello ${customer.name},</p>
-          <p>We received a request to reset your Medikart password. Click the button below to set a new password:</p>
-          <div style="margin: 24px 0;">
-            <a href="${resetLink}" style="background-color: #0d9488; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Reset Password</a>
-          </div>
-          <p style="font-size: 13px; color: #64748b;">This link will expire in 30 minutes. If you did not request a password reset, please ignore this email.</p>
-        </div>
-      `,
-      text: `Hello ${customer.name},\n\nReset your Medikart password here: ${resetLink}\n\nThis link will expire in 30 minutes.`,
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
+      fromName: "Medikart Security",
     });
 
     return {
