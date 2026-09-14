@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import TiltCard3D from './3d/TiltCard3D';
@@ -23,7 +23,7 @@ const getFullUrl = (path) => {
   return path.startsWith('http') || path.startsWith('/') ? path : `${apiOrigin}${path.startsWith('/') ? '' : '/'}${path}`;
 };
 
-export default function ProductCard({ product }) {
+function ProductCardComponent({ product }) {
   const { addToCart } = useCart();
   const { isWishlisted, toggleWishlist } = useCustomer();
   const [added, setAdded] = useState(false);
@@ -34,7 +34,7 @@ export default function ProductCard({ product }) {
 
   const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = useCallback((e) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -42,15 +42,15 @@ export default function ProductCard({ product }) {
     addToCart(product, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
-  };
+  }, [addToCart, product]);
 
-  const handleWishlistToggle = (e) => {
+  const handleWishlistToggle = useCallback((e) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
     toggleWishlist(product._id);
-  };
+  }, [toggleWishlist, product._id]);
 
   return (
     <TiltCard3D className="bg-white border border-[#F3EFE6] rounded-2xl overflow-hidden hover:shadow-warm-card hover:border-amber-300 flex flex-col h-full relative group transition-all duration-200">
@@ -215,3 +215,6 @@ export default function ProductCard({ product }) {
     </TiltCard3D>
   );
 }
+
+const ProductCard = memo(ProductCardComponent);
+export default ProductCard;

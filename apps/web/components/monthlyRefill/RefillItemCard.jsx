@@ -1,33 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Trash2, Plus, Minus, Loader2, AlertCircle } from "lucide-react";
 import "./monthlyRefill.css";
 
-export default function RefillItemCard({ item, onUpdateQuantity, onRemove }) {
+// Pure helpers hoisted outside component to avoid recreation on every render
+const formatPrice = (num) => {
+  return typeof num === "number" ? Math.round(num) : num;
+};
+
+const getFullUrl = (path) => {
+  const fallback = "/uploads/placeholder.webp";
+  if (!path || path === "/images/placeholder-product.png") {
+    return fallback;
+  }
+  const apiOrigin = process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/api\/v1\/?$/, '') : '';
+  return path.startsWith("http") || path.startsWith("/")
+    ? path
+    : `${apiOrigin}${path.startsWith('/') ? '' : '/'}${path}`;
+};
+
+function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
   const [isRemoving, setIsRemoving] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const formatPrice = (num) => {
-    return typeof num === "number" ? Math.round(num) : num;
-  };
-
-  const getFullUrl = (path) => {
-    const fallback = "/uploads/placeholder.webp";
-    if (!path || path === "/images/placeholder-product.png") {
-      return fallback;
-    }
-    return path.startsWith("http") || path.startsWith("/")
-      ? path
-      : `http://localhost:5000${path}`;
-  };
-
   const [imgSrc, setImgSrc] = useState(getFullUrl(item.coverImage));
 
-  const handleQtyChange = async (newQty) => {
+  const handleQtyChange = useCallback(async (newQty) => {
     if (newQty < 1 || loading) return;
     setIsPulsing(true);
     setTimeout(() => setIsPulsing(false), 300);
@@ -40,9 +42,9 @@ export default function RefillItemCard({ item, onUpdateQuantity, onRemove }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [item._id, loading, onUpdateQuantity]);
 
-  const handleRemoveClick = async () => {
+  const handleRemoveClick = useCallback(async () => {
     if (loading) return;
     setIsRemoving(true);
     // Smooth fade + collapse delay
@@ -53,7 +55,7 @@ export default function RefillItemCard({ item, onUpdateQuantity, onRemove }) {
         setIsRemoving(false);
       }
     }, 280);
-  };
+  }, [item._id, loading, onRemove]);
 
   const isOutOfStock = item.stockStatus === "out_of_stock";
 
@@ -184,3 +186,6 @@ export default function RefillItemCard({ item, onUpdateQuantity, onRemove }) {
     </div>
   );
 }
+
+const RefillItemCard = memo(RefillItemCardComponent);
+export default RefillItemCard;

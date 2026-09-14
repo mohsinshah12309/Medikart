@@ -3,11 +3,16 @@
 import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useCustomer } from "../../components/CustomerProvider";
 import AuthCard3D from "../../components/3d/AuthCard3D";
-import Auth3DScene from "../../components/3d/Auth3DScene";
 import PasswordInput from "../../components/PasswordInput";
 import { Mail, Lock, ArrowRight, AlertCircle, ShieldCheck, Heart, Sparkles } from "lucide-react";
+
+// Code-split Three.js 3D background scene so it does not bloat initial auth bundle
+const Auth3DScene = dynamic(() => import("../../components/3d/Auth3DScene"), {
+  ssr: false,
+});
 
 function LoginForm() {
   const router = useRouter();

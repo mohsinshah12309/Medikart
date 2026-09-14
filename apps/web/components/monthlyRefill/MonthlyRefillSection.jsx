@@ -255,7 +255,31 @@ export default function MonthlyRefillSection({
         </div>
 
         {/* ─── 2. Active Customer Refill Items (if logged in & has items) ─── */}
-        {isAuthenticated && refillItems && refillItems.length > 0 ? (
+        {isAuthenticated && isRefillLoading && (!refillItems || refillItems.length === 0) ? (
+          <div className="mt-4 space-y-2.5">
+            <div className="h-4 bg-amber-200/50 rounded w-40 animate-pulse mb-3" />
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3.5 sm:p-4 flex items-center justify-between gap-3 animate-pulse shadow-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-slate-100 shrink-0" />
+                <div className="space-y-2">
+                  <div className="h-3.5 bg-slate-100 rounded w-32" />
+                  <div className="h-2.5 bg-slate-100 rounded w-20" />
+                </div>
+              </div>
+              <div className="h-8 bg-slate-100 rounded-lg w-24" />
+            </div>
+            <div className="bg-white rounded-2xl border border-slate-200/90 p-3.5 sm:p-4 flex items-center justify-between gap-3 animate-pulse shadow-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-slate-100 shrink-0" />
+                <div className="space-y-2">
+                  <div className="h-3.5 bg-slate-100 rounded w-28" />
+                  <div className="h-2.5 bg-slate-100 rounded w-16" />
+                </div>
+              </div>
+              <div className="h-8 bg-slate-100 rounded-lg w-24" />
+            </div>
+          </div>
+        ) : isAuthenticated && refillItems && refillItems.length > 0 ? (
           <div className="mt-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">

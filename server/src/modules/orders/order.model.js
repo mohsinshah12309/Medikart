@@ -168,11 +168,14 @@ orderSchema.pre("validate", async function (next) {
   next();
 });
 
-// Indexes for admin list filtering (NFR-PERF-04)
+// Indexes for admin and customer list filtering (NFR-PERF-04)
 orderSchema.index({ type: 1 });
 orderSchema.index({ status: 1 });
 orderSchema.index({ "customer.email": 1 });
 orderSchema.index({ createdAt: -1 });
+orderSchema.index({ assignedPharmacyId: 1, createdAt: -1 });
+orderSchema.index({ status: 1, createdAt: -1 });
+orderSchema.index({ type: 1, createdAt: -1 });
 orderSchema.index({ gatewayTransactionId: 1 }, { unique: true, sparse: true });
 
 

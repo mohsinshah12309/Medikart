@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const compression = require("compression");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
@@ -151,6 +152,17 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// 3.5. Response Compression (Gzip / Deflate for payloads > 1KB)
+app.use(
+  compression({
+    threshold: 1024,
+    filter: (req, res) => {
+      if (req.headers["x-no-compression"]) return false;
+      return compression.filter(req, res);
+    },
+  })
+);
+
 // 4. Request Size Limits (Phase 22 / Step 6)
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
@@ -188,21 +200,21 @@ const storefrontLimiter = createRateLimiter({
   message: "Too many requests. Please try again in 15 minutes.",
 });
 
-// Public static serving for uploaded PRODUCT & BANNER images & the placeholder asset ONLY.
+// Public static serving with 7-day browser caching & ETag support.
 // Prescriptions are NEVER served statically — they are only reachable through
-// the authenticated admin route GET /api/v1/admin/prescriptions/:filename
-// (Fix 1 — FR-SYS-02 / PRD §15.3 / §17.7).
+// the authenticated admin route GET /api/v1/admin/prescriptions/:filename.
+const staticCacheOptions = { maxAge: "7d", etag: true };
 const productsUploadsDir = path.join(__dirname, "../uploads/products");
-app.use("/uploads/products", express.static(productsUploadsDir));
+app.use("/uploads/products", express.static(productsUploadsDir, staticCacheOptions));
 
 const bannersUploadsDir = path.join(__dirname, "../uploads/banners");
-app.use("/uploads/banners", express.static(bannersUploadsDir));
-app.use("/banners", express.static(bannersUploadsDir));
+app.use("/uploads/banners", express.static(bannersUploadsDir, staticCacheOptions));
+app.use("/banners", express.static(bannersUploadsDir, staticCacheOptions));
 
-// Placeholder asset is outside the products dir — serve it explicitly.
+// Placeholder asset is outside the products dir — serve it with long cache.
 const placeholderPath = path.join(__dirname, "../uploads/placeholder.webp");
 app.get("/uploads/placeholder.webp", (req, res) => {
-  res.sendFile(placeholderPath);
+  res.sendFile(placeholderPath, { maxAge: "30d" });
 });
 
 // FR-SYS-01 / Phase 2: GET /health reports DB connection status.
@@ -228,10 +240,18 @@ app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
 app.use("/api/v1/chatbot", chatbotRoutes);
-app.get("/api/v1/banners", storefrontLimiter, bannerController.getPublicBanners);
-app.get("/api/v1/conditions", storefrontLimiter, conditionController.getPublicConditions);
-app.get("/api/v1/conditions/:idOrSlug", storefrontLimiter, conditionController.getPublicConditionDetail);
-app.use("/api/v1", storefrontLimiter, storefrontRoutes);
+// Public HTTP Cache-Control header for non-sensitive public read endpoints
+const publicCacheControl = (req, res, next) => {
+  if (req.method === "GET") {
+    res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+  }
+  next();
+};
+
+app.get("/api/v1/banners", storefrontLimiter, publicCacheControl, bannerController.getPublicBanners);
+app.get("/api/v1/conditions", storefrontLimiter, publicCacheControl, conditionController.getPublicConditions);
+app.get("/api/v1/conditions/:idOrSlug", storefrontLimiter, publicCacheControl, conditionController.getPublicConditionDetail);
+app.use("/api/v1", storefrontLimiter, publicCacheControl, storefrontRoutes);
 app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────

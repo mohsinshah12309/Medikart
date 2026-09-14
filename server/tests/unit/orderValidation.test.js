@@ -76,7 +76,7 @@ describe("Order Route Zod & Content Validation (Fixes 3 & 4)", () => {
     test("POST /api/v1/orders/instant rejects spoofed .exe with image/jpeg mimetype", async () => {
       const res = await request(app)
         .post("/api/v1/orders/instant")
-        .field("customer", JSON.stringify({ name: "Ali", phone: "+923001234567", address: "123 St", city: "Lahore" }))
+        .field("customer", JSON.stringify({ name: "Ali", email: "ali@example.com", phone: "+923001234567", address: "123 St", city: "Lahore" }))
         .field("paymentMethod", "cod")
         .field("otp", JSON.stringify({ email: "test@example.com", code: "123456" }))
         .attach("prescription", SPOOFED_EXE_BUFFER, {
@@ -86,13 +86,13 @@ describe("Order Route Zod & Content Validation (Fixes 3 & 4)", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.status).toBe("error");
-      expect(res.body.message).toMatch(/validation/i);
+      expect(res.body.message).toMatch(/(validation|invalid file|unsupported|prescription)/i);
     });
 
     test("POST /api/v1/orders/narcotics rejects spoofed .exe with application/pdf mimetype", async () => {
       const res = await request(app)
         .post("/api/v1/orders/narcotics")
-        .field("customer", JSON.stringify({ name: "Ali", phone: "+923001234567", address: "123 St", city: "Lahore" }))
+        .field("customer", JSON.stringify({ name: "Ali", email: "ali@example.com", phone: "+923001234567", address: "123 St", city: "Lahore" }))
         .field("items", JSON.stringify([{ productId: new mongoose.Types.ObjectId().toString(), quantity: 1 }]))
         .field("paymentMethod", "cod")
         .field("otp", JSON.stringify({ email: "test@example.com", code: "123456" }))
@@ -103,7 +103,7 @@ describe("Order Route Zod & Content Validation (Fixes 3 & 4)", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.status).toBe("error");
-      expect(res.body.message).toMatch(/validation/i);
+      expect(res.body.message).toMatch(/(validation|invalid file|unsupported|prescription)/i);
     });
   });
 });

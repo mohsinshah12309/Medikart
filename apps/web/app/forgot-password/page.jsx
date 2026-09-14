@@ -2,10 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useCustomer } from "../../components/CustomerProvider";
 import AuthCard3D from "../../components/3d/AuthCard3D";
-import Auth3DScene from "../../components/3d/Auth3DScene";
 import { Mail, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+
+// Code-split Three.js 3D background scene
+const Auth3DScene = dynamic(() => import("../../components/3d/Auth3DScene"), {
+  ssr: false,
+});
 
 export default function ForgotPasswordPage() {
   const { forgotPassword } = useCustomer();

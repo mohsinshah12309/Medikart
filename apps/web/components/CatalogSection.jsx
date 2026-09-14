@@ -12,6 +12,27 @@ import {
   scrollToCatalog,
 } from '../lib/catalogEvents';
 
+// Lightweight skeleton placeholder matching exact ProductCard dimensions and styling
+function ProductCardSkeleton() {
+  return (
+    <div className="bg-white border border-[#F3EFE6] rounded-2xl overflow-hidden flex flex-col h-full animate-pulse shadow-2xs" aria-hidden="true">
+      <div className="aspect-square bg-[#FAF8F5]/90 flex items-center justify-center p-2.5 border-b border-[#F3EFE6]">
+        <div className="w-12 h-12 rounded-xl bg-slate-200/50" />
+      </div>
+      <div className="p-2.5 sm:p-3 flex flex-col flex-1 justify-between gap-2.5">
+        <div className="space-y-1.5">
+          <div className="h-3.5 bg-slate-100 rounded-md w-4/5" />
+          <div className="h-2.5 bg-slate-100 rounded-md w-3/5" />
+        </div>
+        <div className="space-y-2 pt-2 border-t border-[#F3EFE6]">
+          <div className="h-4 bg-slate-100 rounded-md w-1/2" />
+          <div className="h-7 bg-slate-100 rounded-xl w-full" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CatalogSection({
   initialProducts = [],
   initialPagination = { page: 1, limit: 20, total: 0, pages: 1 },
@@ -420,9 +441,15 @@ export default function CatalogSection({
                 </button>
               </div>
             </div>
+          ) : loading && products.length === 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <ProductCardSkeleton key={`skeleton-${i}`} />
+              ))}
+            </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5">
+              <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5 transition-opacity duration-150 ${loading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
                 {products.map((prod) => (
                   <ProductCard key={prod._id} product={prod} />
                 ))}

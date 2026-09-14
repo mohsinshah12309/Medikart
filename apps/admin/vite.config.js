@@ -20,4 +20,11 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    minify: 'esbuild',
+    target: 'es2020',
+    cssMinify: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 600,
+  },
 })

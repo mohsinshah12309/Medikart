@@ -64,6 +64,8 @@ productSchema.index({ genericName: 1 });
 productSchema.index({ active: 1, name: 1 });
 productSchema.index({ active: 1, categoryIds: 1 });
 productSchema.index({ active: 1, isNarcotic: 1 });
+productSchema.index({ active: 1, createdAt: -1 });
+productSchema.index({ active: 1, price: 1 });
 
 module.exports = mongoose.model("Product", productSchema);
 
