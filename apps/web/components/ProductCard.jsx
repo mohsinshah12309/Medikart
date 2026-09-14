@@ -9,6 +9,20 @@ import { useCustomer } from './CustomerProvider';
 import AddToRefillButton from './monthlyRefill/AddToRefillButton';
 import { ShoppingCart, Check, Eye, Heart } from 'lucide-react';
 
+// Pure helpers hoisted outside component to avoid recreation on every render
+const formatPrice = (num) => {
+  return typeof num === 'number' ? Math.round(num) : num;
+};
+
+const getFullUrl = (path) => {
+  const fallback = "/uploads/placeholder.webp";
+  if (!path || path === "/images/placeholder-product.png") {
+    return fallback;
+  }
+  const apiOrigin = process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/api\/v1\/?$/, '') : '';
+  return path.startsWith('http') || path.startsWith('/') ? path : `${apiOrigin}${path.startsWith('/') ? '' : '/'}${path}`;
+};
+
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { isWishlisted, toggleWishlist } = useCustomer();
@@ -17,19 +31,6 @@ export default function ProductCard({ product }) {
   const wishlisted = isWishlisted(product._id);
   const hasDiscount = product.discountPercent > 0;
   const isOutOfStock = product.stockStatus === 'out_of_stock' || product.stock <= 0;
-  
-  // Format price helper
-  const formatPrice = (num) => {
-    return typeof num === 'number' ? Math.round(num) : num;
-  };
-
-  const getFullUrl = (path) => {
-    const fallback = "/uploads/placeholder.webp";
-    if (!path || path === "/images/placeholder-product.png") {
-      return fallback;
-    }
-    return path.startsWith('http') || path.startsWith('/') ? path : `http://localhost:5000${path}`;
-  };
 
   const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
 

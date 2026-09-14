@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 export default function Banners({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  };
 
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,9 +40,7 @@ export default function Banners({ token }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${apiUrl}/admin/banners`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load banners");
+      const data = await adminFetch("/admin/banners");
       setBanners(data.data?.banners || []);
     } catch (err) {
       flash(err.message, true);
@@ -92,18 +86,15 @@ export default function Banners({ token }) {
 
     try {
       setSaving(true);
-      const url = editingBanner
-        ? `${apiUrl}/admin/banners/${editingBanner._id}`
-        : `${apiUrl}/admin/banners`;
+      const endpoint = editingBanner
+        ? `/admin/banners/${editingBanner._id}`
+        : `/admin/banners`;
       const method = editingBanner ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      await adminFetch(endpoint, {
         method,
-        headers,
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to save banner");
 
       flash(editingBanner ? "Banner updated successfully!" : "Banner created successfully!");
       setShowModal(false);
@@ -117,13 +108,10 @@ export default function Banners({ token }) {
 
   const handleToggleActive = async (b) => {
     try {
-      const res = await fetch(`${apiUrl}/admin/banners/${b._id}`, {
+      await adminFetch(`/admin/banners/${b._id}`, {
         method: "PUT",
-        headers,
         body: JSON.stringify({ active: !b.active }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update banner status");
       flash(`Banner "${b.title}" is now ${!b.active ? "Active" : "Disabled"}.`);
       fetchBanners();
     } catch (err) {
@@ -134,12 +122,7 @@ export default function Banners({ token }) {
   const handleDelete = async (id, title) => {
     if (!window.confirm(`Are you sure you want to delete banner "${title}"?`)) return;
     try {
-      const res = await fetch(`${apiUrl}/admin/banners/${id}`, {
-        method: "DELETE",
-        headers,
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to delete banner");
+      await adminFetch(`/admin/banners/${id}`, { method: "DELETE" });
       flash("Banner deleted successfully!");
       fetchBanners();
     } catch (err) {

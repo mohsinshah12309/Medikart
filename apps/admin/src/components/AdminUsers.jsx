@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PasswordInput from "./PasswordInput";
+import { adminFetch, API_URL } from "../apiClient";
 
 /**
  * AdminUsers screen — Phase 24c
@@ -17,7 +18,6 @@ import PasswordInput from "./PasswordInput";
  *   DELETE /api/v1/admin/users/:id
  */
 function AdminUsers({ token, adminUser }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const [users, setUsers] = useState([]);
   const [pharmacies, setPharmacies] = useState([]);
@@ -100,7 +100,7 @@ function AdminUsers({ token, adminUser }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${apiUrl}/admin/users`, { headers });
+      const res = await fetch(`${API_URL}/admin/users`, { headers });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to load admin users");
       setUsers(data.data || []);
@@ -113,7 +113,7 @@ function AdminUsers({ token, adminUser }) {
 
   const fetchPharmacies = async () => {
     try {
-      const res = await fetch(`${apiUrl}/admin/pharmacies`, { headers });
+      const res = await fetch(`${API_URL}/admin/pharmacies`, { headers });
       const data = await res.json();
       if (res.ok) {
         setPharmacies(data.data?.pharmacies || []);
@@ -152,7 +152,7 @@ function AdminUsers({ token, adminUser }) {
       if (createForm.assignedPharmacyId) {
         payload.assignedPharmacyId = createForm.assignedPharmacyId;
       }
-      const res = await fetch(`${apiUrl}/admin/users`, {
+      const res = await fetch(`${API_URL}/admin/users`, {
         method: "POST",
         headers,
         body: JSON.stringify(payload),
@@ -193,7 +193,7 @@ function AdminUsers({ token, adminUser }) {
   const handleSave = async (id) => {
     setSaving(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/users/${id}`, {
+      const res = await fetch(`${API_URL}/admin/users/${id}`, {
         method: "PUT",
         headers,
         body: JSON.stringify({
@@ -220,7 +220,7 @@ function AdminUsers({ token, adminUser }) {
   const handleDelete = async (id) => {
     setDeleting(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/users/${id}`, {
+      const res = await fetch(`${API_URL}/admin/users/${id}`, {
         method: "DELETE",
         headers,
       });

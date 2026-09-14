@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PasswordInput from "./PasswordInput";
+import { API_URL } from "../apiClient";
 
 function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
   // mode: "login" | "forgot" | "reset"
@@ -21,7 +22,6 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
   const [forgotError, setForgotError] = useState("");
   const [forgotSuccess, setForgotSuccess] = useState("");
 
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   // ── Handle standard login ──────────────────────────────────────────────────
   const handleLoginSubmit = async (e) => {
@@ -31,7 +31,7 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
     setLoading(true);
 
     try {
-      const res = await fetch(`${apiUrl}/auth/admin/login`, {
+      const res = await fetch(`${API_URL}/auth/admin/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
     setForgotLoading(true);
 
     try {
-      const res = await fetch(`${apiUrl}/auth/admin/forgot-password`, {
+      const res = await fetch(`${API_URL}/auth/admin/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: resetEmail.trim().toLowerCase() }),
@@ -111,7 +111,7 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
     setForgotLoading(true);
 
     try {
-      const res = await fetch(`${apiUrl}/auth/admin/reset-password`, {
+      const res = await fetch(`${API_URL}/auth/admin/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

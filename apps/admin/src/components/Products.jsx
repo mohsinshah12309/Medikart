@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { adminFetch } from "../apiClient";
+import { adminFetch, API_URL } from "../apiClient";
 
 const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
 
 function Products({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
+  // API_URL is imported from apiClient — the single source of truth for the base URL
+
 
   // List State
   const [products, setProducts] = useState([]);
@@ -162,8 +163,8 @@ function Products({ token }) {
 
     try {
       const url = isEditMode
-        ? `${apiUrl}/admin/products/${editId}`
-        : `${apiUrl}/admin/products`;
+        ? `${API_URL}/admin/products/${editId}`
+        : `${API_URL}/admin/products`;
 
       const method = isEditMode ? "PUT" : "POST";
 
@@ -189,7 +190,7 @@ function Products({ token }) {
           imageFormData.append("images", file);
         });
 
-        const imgRes = await fetch(`${apiUrl}/admin/products/${newProductId}/images`, {
+        const imgRes = await fetch(`${API_URL}/admin/products/${newProductId}/images`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -218,7 +219,7 @@ function Products({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${id}`, {
+      const res = await fetch(`${API_URL}/admin/products/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -239,7 +240,7 @@ function Products({ token }) {
     const newNarcoticState = !product.isNarcotic;
 
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${product._id}/narcotics`, {
+      const res = await fetch(`${API_URL}/admin/products/${product._id}/narcotics`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -269,7 +270,7 @@ function Products({ token }) {
     );
 
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${product._id}`, {
+      const res = await fetch(`${API_URL}/admin/products/${product._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -308,7 +309,7 @@ function Products({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${selectedProduct._id}/discount`, {
+      const res = await fetch(`${API_URL}/admin/products/${selectedProduct._id}/discount`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -354,7 +355,7 @@ function Products({ token }) {
     });
 
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${selectedProduct._id}/images`, {
+      const res = await fetch(`${API_URL}/admin/products/${selectedProduct._id}/images`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -378,7 +379,7 @@ function Products({ token }) {
   };
 
   const fetchSingleProduct = async (id) => {
-    const res = await fetch(`${apiUrl}/admin/products/${id}`, {
+    const res = await fetch(`${API_URL}/admin/products/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -388,7 +389,7 @@ function Products({ token }) {
   const handleSetPrimaryImage = async (imageId) => {
     setError("");
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${selectedProduct._id}/images/${imageId}/primary`, {
+      const res = await fetch(`${API_URL}/admin/products/${selectedProduct._id}/images/${imageId}/primary`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -410,7 +411,7 @@ function Products({ token }) {
     setError("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/products/${selectedProduct._id}/images/${imageId}`, {
+      const res = await fetch(`${API_URL}/admin/products/${selectedProduct._id}/images/${imageId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -459,7 +460,7 @@ function Products({ token }) {
     const fetchCleared = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${apiUrl}/admin/products?page=1&limit=${limit}`, {
+        const res = await fetch(`${API_URL}/admin/products?page=1&limit=${limit}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -602,7 +603,7 @@ function Products({ token }) {
               <tbody>
                 {products.map((product) => {
                   const cover = getPrimaryImage(product);
-                  const baseUploadUrl = apiUrl.replace("/api/v1", "");
+                  const baseUploadUrl = API_URL.replace("/api/v1", "");
                   const coverUrl = cover
                     ? cover.startsWith("http")
                       ? cover
@@ -986,7 +987,7 @@ function Products({ token }) {
               ) : (
                 <div className="image-previews">
                   {selectedProduct.images.map((img) => {
-                    const baseUploadUrl = apiUrl.replace("/api/v1", "");
+                    const baseUploadUrl = API_URL.replace("/api/v1", "");
                     const imgUrl = img.path.startsWith("http")
                       ? img.path
                       : `${baseUploadUrl}${img.path}`;

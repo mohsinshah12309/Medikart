@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 export default function Conditions({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  };
-
   const [conditions, setConditions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -43,9 +38,7 @@ export default function Conditions({ token }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${apiUrl}/admin/conditions`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load health conditions");
+      const data = await adminFetch("/admin/conditions");
       setConditions(data.data?.conditions || []);
     } catch (err) {
       flash(err.message, true);
@@ -91,18 +84,15 @@ export default function Conditions({ token }) {
 
     try {
       setSaving(true);
-      const url = editingCondition
-        ? `${apiUrl}/admin/conditions/${editingCondition._id}`
-        : `${apiUrl}/admin/conditions`;
+      const endpoint = editingCondition
+        ? `/admin/conditions/${editingCondition._id}`
+        : `/admin/conditions`;
       const method = editingCondition ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      await adminFetch(endpoint, {
         method,
-        headers,
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to save condition");
 
       flash(editingCondition ? "Condition updated successfully!" : "Condition created successfully!");
       setShowModal(false);
@@ -116,13 +106,10 @@ export default function Conditions({ token }) {
 
   const handleToggleActive = async (c) => {
     try {
-      const res = await fetch(`${apiUrl}/admin/conditions/${c._id}`, {
+      await adminFetch(`/admin/conditions/${c._id}`, {
         method: "PUT",
-        headers,
         body: JSON.stringify({ active: !c.active }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update condition status");
       flash(`Condition "${c.name}" is now ${!c.active ? "Active" : "Disabled"}.`);
       fetchConditions();
     } catch (err) {
@@ -133,12 +120,7 @@ export default function Conditions({ token }) {
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Are you sure you want to delete health condition "${name}"?`)) return;
     try {
-      const res = await fetch(`${apiUrl}/admin/conditions/${id}`, {
-        method: "DELETE",
-        headers,
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to delete condition");
+      await adminFetch(`/admin/conditions/${id}`, { method: "DELETE" });
       flash("Condition deleted successfully!");
       fetchConditions();
     } catch (err) {

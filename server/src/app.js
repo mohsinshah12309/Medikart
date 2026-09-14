@@ -156,33 +156,35 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 
 // 5. Rate Limiters Setup (Phase 22 / Step 2)
+const isDev = process.env.NODE_ENV === "development";
+
 const authLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: isDev ? 100 : 25,
   message: "Too many attempts. Please try again in 15 minutes.",
 });
 
 const otpLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: isDev ? 100 : 15,
   message: "Too many OTP attempts. Please wait 15 minutes.",
 });
 
 const adminLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: isDev ? 200 : 50,
   message: "Too many administrative operations. Please try again in 15 minutes.",
 });
 
 const expensiveLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 50,
+  max: isDev ? 300 : 100,
   message: "Rate limit exceeded for resource-heavy operations. Please wait.",
 });
 
 const storefrontLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: isDev ? 500 : 200,
   message: "Too many requests. Please try again in 15 minutes.",
 });
 
@@ -222,7 +224,6 @@ app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
 app.use("/api/v1/auth/customer", authLimiter, customerRoutes);
 app.use("/api/v1/wishlist", storefrontLimiter, wishlistRoutes);
 app.use("/api/v1/customer/monthly-refill", storefrontLimiter, monthlyRefillRoutes);
-app.use("/api/v1/monthly-refill", storefrontLimiter, monthlyRefillRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);
 app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
 app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);

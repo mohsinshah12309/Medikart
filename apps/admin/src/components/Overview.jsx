@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { adminFetch } from "../apiClient";
+import { adminFetch, API_URL } from "../apiClient";
 
 function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, onNavigateToPharmacies }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   const isSuperAdmin = adminUser?.role === "super_admin";
   const userPerms = Array.isArray(adminUser?.permissions) ? adminUser.permissions : [];
@@ -106,7 +105,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
       if (exportType) params.push(`type=${encodeURIComponent(exportType)}`);
 
       let endpoint = `/admin/orders/export/excel${params.length > 0 ? `?${params.join("&")}` : ""}`;
-      const fullUrl = endpoint.startsWith("http") ? endpoint : `${apiUrl}${endpoint}`;
+      const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
 
       const res = await fetch(fullUrl, {
         headers: {

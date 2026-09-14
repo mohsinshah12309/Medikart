@@ -1,5 +1,5 @@
 // Centralized Authenticated Fetch Wrapper with Global Session Expiration Interception
-const API_URL = import.meta.env.VITE_API_URL || "/api/v1";
+export const API_URL = import.meta.env.VITE_API_URL || "/api/v1";
 
 // Custom event to notify App.jsx when session expires
 export const SESSION_EXPIRED_EVENT = "medikart_admin_session_expired";

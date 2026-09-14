@@ -816,3 +816,8 @@ input:checked + .slider:before {
   text-decoration: underline;
   color: #a16207;
 }
+
+/* Lazy-load page spinner — used by PageLoader in App.jsx */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch, API_URL } from "../apiClient";
 
 function Orders({ token, adminUser, initialFilter }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   // Role scoping
   const isScopedAdmin = adminUser?.role !== "super_admin" && !!adminUser?.assignedPharmacyId;
@@ -170,7 +170,7 @@ function Orders({ token, adminUser, initialFilter }) {
       }
 
       let endpoint = `/admin/orders/export/excel${params.length > 0 ? `?${params.join("&")}` : ""}`;
-      const fullUrl = endpoint.startsWith("http") ? endpoint : `${apiUrl}${endpoint}`;
+      const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
 
       const res = await fetch(fullUrl, {
         headers: {
@@ -249,23 +249,7 @@ function Orders({ token, adminUser, initialFilter }) {
     }
   }, [pricingSearchQuery, pricingCategoryFilter, isPricingModalOpen]);
 
-  const adminFetch = async (endpoint, options = {}) => {
-    const fullUrl = endpoint.startsWith("http") ? endpoint : `${apiUrl}${endpoint}`;
-    const res = await fetch(fullUrl, {
-      ...options,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-    });
 
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      throw new Error(data.message || `API request failed with status ${res.status}`);
-    }
-    return data;
-  };
 
   const fetchPharmacies = async () => {
     try {
@@ -419,7 +403,7 @@ function Orders({ token, adminUser, initialFilter }) {
 
     setPrescriptionLoading(true);
     try {
-      const baseApiUrl = apiUrl.replace("/api/v1", "");
+      const baseApiUrl = API_URL.replace("/api/v1", "");
       const fullUrl = prescriptionUrl.startsWith("http") ? prescriptionUrl : `${baseApiUrl}${prescriptionUrl}`;
 
       const res = await fetch(fullUrl, {
@@ -499,7 +483,7 @@ function Orders({ token, adminUser, initialFilter }) {
     // Fetch prescription if present
     if (order?.prescriptionUrl) {
       try {
-        const baseApiUrl = apiUrl.replace("/api/v1", "");
+        const baseApiUrl = API_URL.replace("/api/v1", "");
         const fullUrl = order.prescriptionUrl.startsWith("http")
           ? order.prescriptionUrl
           : `${baseApiUrl}${order.prescriptionUrl}`;

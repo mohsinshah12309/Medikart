@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 /**
  * Cities screen — Phase 24a
@@ -9,8 +10,6 @@ import React, { useState, useEffect } from "react";
  *   DELETE /api/v1/admin/cities/:id
  */
 function Cities({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -30,8 +29,6 @@ function Cities({ token }) {
   const [deleteId, setDeleteId] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
-  const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
-
   useEffect(() => {
     fetchCities();
   }, []);
@@ -40,9 +37,7 @@ function Cities({ token }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${apiUrl}/admin/cities`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load cities");
+      const data = await adminFetch("/admin/cities");
       setCities(data.data?.cities || data.data || []);
     } catch (err) {
       setError(err.message);
@@ -61,17 +56,14 @@ function Cities({ token }) {
     e.preventDefault();
     setCreating(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/cities`, {
+      await adminFetch("/admin/cities", {
         method: "POST",
-        headers,
         body: JSON.stringify({
           name: createForm.name.trim(),
           deliveryCharge: Number(createForm.deliveryCharge),
           active: createForm.active,
         }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Create failed");
       flash("City created successfully");
       setShowCreate(false);
       setCreateForm({ name: "", deliveryCharge: "", active: true });
@@ -91,17 +83,14 @@ function Cities({ token }) {
   const handleSave = async (id) => {
     setSaving(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/cities/${id}`, {
+      await adminFetch(`/admin/cities/${id}`, {
         method: "PUT",
-        headers,
         body: JSON.stringify({
           name: editForm.name.trim(),
           deliveryCharge: Number(editForm.deliveryCharge),
           active: editForm.active,
         }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Update failed");
       flash("City updated successfully");
       setEditId(null);
       fetchCities();
@@ -115,9 +104,7 @@ function Cities({ token }) {
   const handleDelete = async (id) => {
     setDeleting(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/cities/${id}`, { method: "DELETE", headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Delete failed");
+      await adminFetch(`/admin/cities/${id}`, { method: "DELETE" });
       flash("City deleted");
       setDeleteId(null);
       fetchCities();

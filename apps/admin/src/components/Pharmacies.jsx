@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch, API_URL } from "../apiClient";
 
 export default function Pharmacies({ token, onNavigateToOrders }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  };
 
   const [activeTab, setActiveTab] = useState("directory"); // 'directory' | 'reports'
   const [pharmacies, setPharmacies] = useState([]);
@@ -64,9 +60,8 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
 
   const fetchCities = async () => {
     try {
-      const res = await fetch(`${apiUrl}/admin/cities`, { headers });
-      const data = await res.json();
-      if (res.ok) setCities(data.data?.cities || data.data || []);
+      const data = await adminFetch("/admin/cities");
+      setCities(data.data?.cities || data.data || []);
     } catch (_) {}
   };
 
@@ -76,10 +71,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       setError("");
       const params = new URLSearchParams();
       if (cityId) params.append("city", cityId);
-      const url = `${apiUrl}/admin/pharmacies${params.toString() ? `?${params.toString()}` : ""}`;
-      const res = await fetch(url, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load pharmacies");
+      const data = await adminFetch(`/admin/pharmacies${params.toString() ? `?${params.toString()}` : ""}`);
       setPharmacies(data.data?.pharmacies || []);
     } catch (err) {
       flash(err.message, true);
@@ -116,9 +108,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       if (s) params.append("startDate", s);
       if (e) params.append("endDate", e);
 
-      const res = await fetch(`${apiUrl}/admin/pharmacies/reports?${params.toString()}`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load pharmacy reports");
+      const data = await adminFetch(`/admin/pharmacies/reports?${params.toString()}`);
       setReportsData(data.data || null);
     } catch (err) {
       flash(err.message, true);
@@ -168,18 +158,15 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
 
     try {
       setSaving(true);
-      const url = editingPharmacy
-        ? `${apiUrl}/admin/pharmacies/${editingPharmacy._id}`
-        : `${apiUrl}/admin/pharmacies`;
+      const endpoint = editingPharmacy
+        ? `/admin/pharmacies/${editingPharmacy._id}`
+        : `/admin/pharmacies`;
       const method = editingPharmacy ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      await adminFetch(endpoint, {
         method,
-        headers,
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to save pharmacy");
 
       flash(editingPharmacy ? "Pharmacy updated successfully!" : "Pharmacy registered successfully!");
       setShowModal(false);
@@ -204,13 +191,10 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
 
   const handleToggleActive = async (p) => {
     try {
-      const res = await fetch(`${apiUrl}/admin/pharmacies/${p._id}`, {
+      await adminFetch(`/admin/pharmacies/${p._id}`, {
         method: "PUT",
-        headers,
         body: JSON.stringify({ active: !p.active }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update status");
       flash(`Pharmacy "${p.name}" is now ${!p.active ? "Active" : "Disabled"}.`);
       fetchPharmacies();
     } catch (err) {
@@ -221,12 +205,9 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Are you sure you want to delete pharmacy "${name}"?`)) return;
     try {
-      const res = await fetch(`${apiUrl}/admin/pharmacies/${id}`, {
+      await adminFetch(`/admin/pharmacies/${id}`, {
         method: "DELETE",
-        headers,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to delete pharmacy");
       flash("Pharmacy deleted successfully!");
       fetchPharmacies();
     } catch (err) {

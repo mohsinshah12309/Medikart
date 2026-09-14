@@ -6,23 +6,14 @@ const Condition = require("../conditions/condition.model");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getDeliveryCharge } = require("../cities/city.service");
+const { formatProductWithImages } = require("./product.service");
 const redisClient = require("../../config/redisClient");
 
-// Helper: attach coverImage and fallback placeholder if no images exist
-const PLACEHOLDER_PATH = "/uploads/placeholder.webp";
-const formatProductWithImages = (productDoc) => {
-  if (!productDoc) return productDoc;
-  const obj = productDoc.toObject ? productDoc.toObject() : { ...productDoc };
-
-  if (!obj.images || obj.images.length === 0) {
-    obj.images = [{ path: PLACEHOLDER_PATH, isPrimary: true }];
-    obj.coverImage = PLACEHOLDER_PATH;
-  } else {
-    const primary = obj.images.find((img) => img.isPrimary) || obj.images[0];
-    obj.coverImage = primary ? primary.path : obj.images[0].path;
+// Dev-only cache logger to avoid production event-loop and I/O overhead
+const logCache = (type, key) => {
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`[Cache ${type}] key=${key}`);
   }
-
-  return obj;
 };
 
 // GET /api/v1/products - Public listing/browsing
@@ -44,11 +35,11 @@ router.get("/products", async (req, res, next) => {
     }
 
     if (cached) {
-      console.log(`[Cache HIT] key=${cacheKey}`);
+      logCache("HIT", cacheKey);
       const data = JSON.parse(cached);
       return res.status(200).json(data);
     }
-    console.log(`[Cache MISS] key=${cacheKey}`);
+    logCache("MISS", cacheKey);
 
     // Load active category IDs to filter out products in disabled categories
     const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
@@ -174,11 +165,11 @@ router.get("/products/:id", async (req, res, next) => {
     }
 
     if (cached) {
-      console.log(`[Cache HIT] key=${cacheKey}`);
+      logCache("HIT", cacheKey);
       const data = JSON.parse(cached);
       return res.status(200).json(data);
     }
-    console.log(`[Cache MISS] key=${cacheKey}`);
+    logCache("MISS", cacheKey);
 
     const [product, storewidePercent] = await Promise.all([
       Product.findOne({ _id: req.params.id, active: true })
@@ -236,10 +227,10 @@ router.get("/categories", async (req, res, next) => {
     }
 
     if (cached) {
-      console.log(`[Cache HIT] key=${cacheKey}`);
+      logCache("HIT", cacheKey);
       return res.status(200).json(JSON.parse(cached));
     }
-    console.log(`[Cache MISS] key=${cacheKey}`);
+    logCache("MISS", cacheKey);
 
     const categories = await Category.find({ active: true }).sort({ name: 1 });
     const responseBody = {
@@ -294,10 +285,10 @@ router.get("/cities", async (req, res, next) => {
     }
 
     if (cached) {
-      console.log(`[Cache HIT] key=${cacheKey}`);
+      logCache("HIT", cacheKey);
       return res.status(200).json(JSON.parse(cached));
     }
-    console.log(`[Cache MISS] key=${cacheKey}`);
+    logCache("MISS", cacheKey);
 
     const { getAllCities } = require("../cities/city.service");
     const cities = await getAllCities({ active: true });
@@ -333,10 +324,10 @@ router.get("/content", async (req, res, next) => {
     }
 
     if (cached) {
-      console.log(`[Cache HIT] key=${cacheKey}`);
+      logCache("HIT", cacheKey);
       return res.status(200).json(JSON.parse(cached));
     }
-    console.log(`[Cache MISS] key=${cacheKey}`);
+    logCache("MISS", cacheKey);
 
     const { getPageContent } = require("../settings/settings.service");
     const content = await getPageContent();

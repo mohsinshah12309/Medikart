@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 /**
  * ActivityLogs screen — Phase 24e
@@ -10,8 +11,6 @@ import React, { useState, useEffect } from "react";
  * Supports filtering by entityType and pagination.
  */
 function ActivityLogs({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-
   const [logs, setLogs] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1, limit: 20, pages: 1 });
   const [loading, setLoading] = useState(true);
@@ -21,8 +20,6 @@ function ActivityLogs({ token }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const ENTITY_TYPES = ["product", "category", "order", "admin_user", "settings", "city"];
-
-  const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {
     fetchLogs();
@@ -34,9 +31,7 @@ function ActivityLogs({ token }) {
       setError("");
       const params = new URLSearchParams({ page: currentPage, limit: 20 });
       if (filterEntityType) params.set("entityType", filterEntityType);
-      const res = await fetch(`${apiUrl}/admin/activity-logs?${params}`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load activity logs");
+      const data = await adminFetch(`/admin/activity-logs?${params}`);
       setLogs(data.data || []);
       setPagination(data.pagination || { total: 0, page: 1, limit: 20, pages: 1 });
     } catch (err) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 /**
  * Settings screen — Phase 24d
@@ -14,9 +15,6 @@ import React, { useState, useEffect } from "react";
  * of Phase 24 — it was not previously existing.
  */
 function Settings({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-  const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
-
   // Discount state
   const [discountValue, setDiscountValue] = useState(0);
   const [discountActive, setDiscountActive] = useState(false);
@@ -47,9 +45,7 @@ function Settings({ token }) {
   const fetchDiscount = async () => {
     try {
       setDiscountLoading(true);
-      const res = await fetch(`${apiUrl}/admin/settings/discount`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load discount");
+      const data = await adminFetch("/admin/settings/discount");
       // The GET /discount endpoint returns storewideDiscountPercent (active value or 0)
       // We need the full discount object for toggle — fetch it differently:
       // Actually the GET returns just the active percent. We'll display that.
@@ -67,9 +63,7 @@ function Settings({ token }) {
   const fetchContent = async () => {
     try {
       setContentLoading(true);
-      const res = await fetch(`${apiUrl}/admin/settings/content`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load content");
+      const data = await adminFetch("/admin/settings/content");
       setAboutText(data.data?.aboutText ?? "");
       setContactEmail(data.data?.contactEmail ?? "");
       setContactPhone(data.data?.contactPhone ?? "");
@@ -84,13 +78,10 @@ function Settings({ token }) {
     e.preventDefault();
     setDiscountSaving(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/settings/discount`, {
+      await adminFetch("/admin/settings/discount", {
         method: "PUT",
-        headers,
         body: JSON.stringify({ value: Number(discountValue), active: discountActive }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Save failed");
       flash("Storewide discount updated");
     } catch (err) {
       flash(err.message, true);
@@ -103,13 +94,10 @@ function Settings({ token }) {
     e.preventDefault();
     setContentSaving(true);
     try {
-      const res = await fetch(`${apiUrl}/admin/settings/content`, {
+      await adminFetch("/admin/settings/content", {
         method: "PUT",
-        headers,
         body: JSON.stringify({ aboutText, contactEmail, contactPhone }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Save failed");
       flash("Page content updated");
     } catch (err) {
       flash(err.message, true);

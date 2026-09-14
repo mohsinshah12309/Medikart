@@ -97,6 +97,26 @@ const getProductById = async (productId) => {
 /**
  * Update a product by ID
  */
+/** Helper: invalidate product storefront cache in Redis */
+const invalidateProductCache = async (productId) => {
+  try {
+    if (productId) {
+      await redisClient.del(`cache:storefront:product:${productId}`);
+    }
+    if (typeof redisClient.keys === "function") {
+      const productKeys = await redisClient.keys("cache:storefront:products:*");
+      if (productKeys && productKeys.length > 0) {
+        await redisClient.del(...productKeys);
+      }
+    }
+  } catch (err) {
+    console.error("[Cache] Invalidation error:", err.message);
+  }
+};
+
+/**
+ * Update a product by ID
+ */
 const updateProduct = async (productId, updateData) => {
   const product = await Product.findByIdAndUpdate(
     productId,
@@ -112,17 +132,7 @@ const updateProduct = async (productId, updateData) => {
   }
 
   // Invalidate cache
-  try {
-    await redisClient.del(`cache:storefront:product:${productId}`);
-    if (typeof redisClient.keys === "function") {
-      const productKeys = await redisClient.keys("cache:storefront:products:*");
-      if (productKeys && productKeys.length > 0) {
-        await redisClient.del(...productKeys);
-      }
-    }
-  } catch (err) {
-    console.error("[Cache] Invalidation error on update:", err.message);
-  }
+  await invalidateProductCache(productId);
 
   return product;
 };
@@ -138,17 +148,7 @@ const deleteProduct = async (productId) => {
   }
 
   // Invalidate cache
-  try {
-    await redisClient.del(`cache:storefront:product:${productId}`);
-    if (typeof redisClient.keys === "function") {
-      const productKeys = await redisClient.keys("cache:storefront:products:*");
-      if (productKeys && productKeys.length > 0) {
-        await redisClient.del(...productKeys);
-      }
-    }
-  } catch (err) {
-    console.error("[Cache] Invalidation error on delete:", err.message);
-  }
+  await invalidateProductCache(productId);
 
   return product;
 };
@@ -181,6 +181,8 @@ const setNarcoticFlag = async (productId, isNarcotic, actor) => {
     after: { isNarcotic },
   });
 
+  await invalidateProductCache(productId);
+
   return formatProductWithImages(product);
 };
 
@@ -195,27 +197,29 @@ const bulkSetNarcoticFlag = async (productIds, isNarcotic, actor) => {
     throw new NotFoundError("No matching products found for bulk update");
   }
 
-  const updatedProducts = [];
+  // Atomic batch update across all matching product IDs
+  await Product.updateMany(
+    { _id: { $in: productIds } },
+    { $set: { isNarcotic } }
+  );
+
   const action = isNarcotic ? "narcotics_flag_added" : "narcotics_flag_removed";
 
   for (const product of products) {
-    const previousFlag = product.isNarcotic;
-    product.isNarcotic = isNarcotic;
-    await product.save();
-
     activityLogService.logActivity({
       actor,
       action,
       entityType: "product",
       entityId: product._id,
-      before: { isNarcotic: previousFlag },
+      before: { isNarcotic: product.isNarcotic },
       after: { isNarcotic },
     });
-
-    updatedProducts.push(formatProductWithImages(product));
+    product.isNarcotic = isNarcotic;
   }
 
-  return updatedProducts;
+  await invalidateProductCache();
+
+  return products.map(formatProductWithImages);
 };
 
 /**
@@ -239,5 +243,7 @@ module.exports = {
   setNarcoticFlag,
   bulkSetNarcoticFlag,
   getNarcoticProducts,
+  formatProductWithImages,
+  invalidateProductCache,
 };
 

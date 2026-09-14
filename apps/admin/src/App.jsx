@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
-import Products from "./components/Products";
-import Overview from "./components/Overview";
-import Categories from "./components/Categories";
-import Orders from "./components/Orders";
-import Cities from "./components/Cities";
-import Settings from "./components/Settings";
-import AdminUsers from "./components/AdminUsers";
-import ActivityLogs from "./components/ActivityLogs";
-import Messages from "./components/Messages";
-import Banners from "./components/Banners";
-import Conditions from "./components/Conditions";
-import Pharmacies from "./components/Pharmacies";
 import { SESSION_EXPIRED_EVENT } from "./apiClient";
+
+// Route-level code splitting — each page component loads only when first visited.
+// Login and Layout stay eager (always needed on startup).
+const Products = lazy(() => import("./components/Products"));
+const Overview = lazy(() => import("./components/Overview"));
+const Categories = lazy(() => import("./components/Categories"));
+const Orders = lazy(() => import("./components/Orders"));
+const Cities = lazy(() => import("./components/Cities"));
+const Settings = lazy(() => import("./components/Settings"));
+const AdminUsers = lazy(() => import("./components/AdminUsers"));
+const ActivityLogs = lazy(() => import("./components/ActivityLogs"));
+const Messages = lazy(() => import("./components/Messages"));
+const Banners = lazy(() => import("./components/Banners"));
+const Conditions = lazy(() => import("./components/Conditions"));
+const Pharmacies = lazy(() => import("./components/Pharmacies"));
+
+// Shared loading fallback for all lazy-loaded admin sections
+const PageLoader = () => (
+  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "200px", color: "#64748b", fontSize: "0.9rem", gap: "0.5rem" }}>
+    <span style={{ display: "inline-block", width: "18px", height: "18px", border: "2px solid #e2e8f0", borderTopColor: "#FFCB05", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+    Loading…
+  </div>
+);
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
@@ -159,7 +170,9 @@ function App() {
       activeTab={activeTab}
       onTabChange={setActiveTab}
     >
-      {renderContent()}
+      <Suspense fallback={<PageLoader />}>
+        {renderContent()}
+      </Suspense>
     </Layout>
   );
 }

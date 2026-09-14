@@ -56,8 +56,8 @@ const createRateLimiter = ({
         }
       }
 
-      // Namespace key by either admin ID or IP + path, so limits don't bleed across routes
-      const routeKey = req.baseUrl || req.path;
+      // Namespace key by either admin ID or IP + full path, so limits don't bleed across subroutes
+      const routeKey = req.originalUrl ? req.originalUrl.split("?")[0] : `${req.baseUrl || ""}${req.path || ""}`;
       const key = adminId ? `ratelimit:admin:${adminId}:${routeKey}` : `ratelimit:ip:${ip}:${routeKey}`;
 
       const now = Date.now();

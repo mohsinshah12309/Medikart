@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 function Categories({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
 
   // List State
   const [categories, setCategories] = useState([]);
@@ -40,11 +40,7 @@ function Categories({ token }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${apiUrl}/admin/categories?limit=100`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to fetch categories");
+      const data = await adminFetch("/admin/categories?limit=100");
       setCategories(data.data.categories || []);
     } catch (err) {
       setError(err.message);
@@ -107,23 +103,15 @@ function Categories({ token }) {
     };
 
     try {
-      const url = isEditMode
-        ? `${apiUrl}/admin/categories/${editId}`
-        : `${apiUrl}/admin/categories`;
-
+      const endpoint = isEditMode
+        ? `/admin/categories/${editId}`
+        : `/admin/categories`;
       const method = isEditMode ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      await adminFetch(endpoint, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(payload),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || `Failed to ${isEditMode ? "update" : "create"} category`);
 
       setSuccessMsg(`Category successfully ${isEditMode ? "updated" : "created"}!`);
       setIsCategoryModalOpen(false);
@@ -139,14 +127,7 @@ function Categories({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/categories/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to delete category");
-
+      await adminFetch(`/admin/categories/${id}`, { method: "DELETE" });
       setSuccessMsg("Category deleted successfully.");
       fetchCategories();
     } catch (err) {
@@ -169,20 +150,13 @@ function Categories({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${apiUrl}/admin/categories/${selectedCategory._id}/discount`, {
+      await adminFetch(`/admin/categories/${selectedCategory._id}/discount`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({
           value: parseFloat(discountData.value),
           active: discountData.active,
         }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update category discount");
 
       setSuccessMsg(`Discount updated for category: ${selectedCategory.name}`);
       setIsDiscountModalOpen(false);
@@ -194,18 +168,10 @@ function Categories({ token }) {
 
   const handleToggleCategoryActive = async (category) => {
     try {
-      const res = await fetch(`${apiUrl}/admin/categories/${category._id}`, {
+      await adminFetch(`/admin/categories/${category._id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          active: !category.active,
-        }),
+        body: JSON.stringify({ active: !category.active }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to update category status");
       setSuccessMsg(`Category "${category.name}" is now ${!category.active ? "Active" : "Disabled"}.`);
       fetchCategories();
     } catch (err) {

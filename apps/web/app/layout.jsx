@@ -55,10 +55,11 @@ export default async function RootLayout({ children }) {
   let aboutText = 'Medikart is Pakistan\'s leading online pharmacy.';
   let categories = [];
 
+  const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
   try {
     const [contentRes, catRes] = await Promise.all([
-      fetch('http://127.0.0.1:5000/api/v1/content', { cache: 'no-store' }).catch(() => null),
-      fetch('http://127.0.0.1:5000/api/v1/categories', { cache: 'no-store' }).catch(() => null),
+      fetch(`${baseUrl}/content`, { next: { revalidate: 300 } }).catch(() => null),
+      fetch(`${baseUrl}/categories`, { next: { revalidate: 300 } }).catch(() => null),
     ]);
 
     if (contentRes && contentRes.ok) {

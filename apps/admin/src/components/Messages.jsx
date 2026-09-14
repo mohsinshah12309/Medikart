@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { adminFetch } from "../apiClient";
 
 function Messages({ token }) {
-  const apiUrl = import.meta.env.VITE_API_URL || "/api/v1";
-
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -16,10 +15,7 @@ function Messages({ token }) {
     try {
       setLoading(true);
       setError("");
-      const headers = { Authorization: `Bearer ${token}` };
-      const res = await fetch(`${apiUrl}/admin/contact-messages`, { headers });
-      if (!res.ok) throw new Error(`Server returned status ${res.status}`);
-      const body = await res.json();
+      const body = await adminFetch("/admin/contact-messages");
       setMessages(body.data?.messages || []);
     } catch (err) {
       setError("Failed to load customer messages: " + err.message);
