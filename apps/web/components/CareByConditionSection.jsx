@@ -164,7 +164,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
                   {imgSrc ? (
                     <Image
                       src={imgSrc}
-                      alt={item.name}
+                      alt={item.name ? `${item.name} condition medicines & care` : "Health condition"}
                       fill
                       sizes="96px"
                       className="object-cover transition-transform duration-300 group-hover/card:scale-110"

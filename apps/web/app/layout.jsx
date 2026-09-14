@@ -8,6 +8,8 @@ import InteractiveLogo from '../components/InteractiveLogo';
 import HeaderNav from '../components/HeaderNav';
 import DvagoSearchBar from '../components/DvagoSearchBar';
 import HomeOnlyBanners from '../components/HomeOnlyBanners';
+import CookieConsentBanner from '../components/CookieConsentBanner';
+import AnalyticsProvider from '../components/AnalyticsProvider';
 import dynamic from 'next/dynamic';
 import { Plus_Jakarta_Sans, Inter, Caveat } from 'next/font/google';
 
@@ -44,13 +46,51 @@ const caveat = Caveat({
 });
 
 export const metadata = {
-  title: 'Medikart - Authentic Online Pharmacy',
-  description: 'Your trusted healthcare partner. Order authentic medicines online with Cash on Delivery.',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk'),
+  title: {
+    default: 'Medikart - Authentic Online Pharmacy',
+    template: '%s | Medikart',
+  },
+  description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines with fast Cash on Delivery.',
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  openGraph: {
+    title: 'Medikart - Authentic Online Pharmacy',
+    description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines.',
+    url: 'https://medikart.pk',
+    siteName: 'Medikart',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Medikart - Authentic Online Pharmacy Pakistan',
+      },
+    ],
+    locale: 'en_PK',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Medikart - Authentic Online Pharmacy',
+    description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines.',
+    images: ['/og-image.png'],
+  },
 };
 
 export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
-  let contactPhone = '923314170744';
+  let contactPhone = '923244489159';
   let contactEmail = 'medikart.com@gmail.com';
   let aboutText = 'Medikart is Pakistan\'s leading online pharmacy.';
   let categories = [];
@@ -87,8 +127,8 @@ export default async function RootLayout({ children }) {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     'name': 'Medikart',
-    'url': 'http://localhost:3000',
-    'logo': 'http://localhost:3000/uploads/placeholder.webp',
+    'url': 'https://medikart.pk',
+    'logo': 'https://medikart.pk/uploads/placeholder.webp',
     'contactPoint': {
       '@type': 'ContactPoint',
       'telephone': contactPhone,
@@ -125,12 +165,15 @@ export default async function RootLayout({ children }) {
       <body className="min-h-screen flex flex-col bg-white text-slate-900 relative overflow-x-hidden font-body pb-16 md:pb-0">
         <CustomerProvider>
           <CartProvider>
+            {/* Analytics Engine (Gated behind cookie consent) */}
+            <AnalyticsProvider />
+
             {/* Main Brand Sticky Header */}
             <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all">
               <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-18 sm:h-20 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
                   {/* Official Interactive Logo */}
-                  <Link href="/" className="flex items-center flex-shrink-0">
+                  <Link href="/" className="flex items-center flex-shrink-0" aria-label="Medikart Home">
                     <InteractiveLogo />
                   </Link>
 
@@ -163,14 +206,17 @@ export default async function RootLayout({ children }) {
             <footer className="bg-white border-t border-[#F3EFE6] py-10 mt-12 relative z-10 shadow-sm">
               <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#F3EFE6]">
-                  <Link href="/">
+                  <Link href="/" aria-label="Medikart Home">
                     <InteractiveLogo />
                   </Link>
                   <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-600 font-medium">
                     <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
                     <Link href="/instant-order" className="hover:text-amber-600 transition-colors">Instant Order</Link>
+                    <Link href="/blogs" className="hover:text-amber-600 transition-colors">Health Blogs</Link>
                     <Link href="/about" className="hover:text-amber-600 transition-colors">About Us</Link>
                     <Link href="/contact" className="hover:text-amber-600 transition-colors">Contact Support</Link>
+                    <Link href="/privacy-policy" className="hover:text-amber-600 transition-colors font-semibold">Privacy Policy</Link>
+                    <Link href="/terms-and-conditions" className="hover:text-amber-600 transition-colors font-semibold">Terms &amp; Conditions</Link>
                   </div>
                 </div>
                 <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
@@ -178,7 +224,7 @@ export default async function RootLayout({ children }) {
                   <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-semibold">
                     <span className="text-slate-700">Cash on Delivery</span>
                     <span>•</span>
-                    <span className="text-slate-700">Online Card Payments</span>
+                    <span className="text-slate-700">Online Card Payments (Kuickpay)</span>
                     <span>•</span>
                     <span className="text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full font-bold">Narcotics Compliance Active</span>
                   </div>
@@ -187,15 +233,18 @@ export default async function RootLayout({ children }) {
                       🔐 256-Bit SSL Encrypted
                     </span>
                     <span className="inline-flex items-center gap-1 text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full font-semibold border border-blue-100">
-                      🏥 DRAP Licensed Pharmacy
+                      🏥 DRAP Licensed Partner Pharmacies
                     </span>
                     <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-semibold border border-emerald-100">
-                      🛡️ Secure Patient Data
+                      🛡️ Authentic Medicines Guaranteed
                     </span>
                   </div>
                 </div>
               </div>
             </footer>
+
+            {/* Cookie Consent Banner */}
+            <CookieConsentBanner />
 
             {/* Floating WhatsApp chat link (positioned bottom-left with crisp official SVG) */}
             {cleanPhone && (
@@ -225,3 +274,4 @@ export default async function RootLayout({ children }) {
     </html>
   );
 }
+

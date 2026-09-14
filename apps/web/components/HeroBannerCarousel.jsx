@@ -145,7 +145,7 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
           <div className="absolute top-0 right-0 w-full sm:w-1/2 md:w-[52%] h-full z-0 overflow-hidden">
             <Image
               src={slide.imageUrl}
-              alt={slide.title}
+              alt={slide.title ? `${slide.title} — healthcare promotion` : "Medikart healthcare promotion banner"}
               fill
               unoptimized
               sizes="(max-width: 640px) 100vw, 55vw"

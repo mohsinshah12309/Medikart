@@ -91,7 +91,7 @@ export default function BlogsSection() {
                 <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0 border-2 border-slate-100 group-hover:border-amber-400 shadow-sm transition-all transform group-hover:scale-105 bg-slate-50">
                   <Image
                     src={blog.image}
-                    alt={blog.title}
+                    alt={blog.title ? `${blog.title} — healthcare guide` : "Medikart healthcare guide"}
                     fill
                     sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"

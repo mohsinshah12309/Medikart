@@ -123,7 +123,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
       name: "",
       code: `PH-${Math.floor(100 + Math.random() * 900)}`,
       contactPerson: "",
-      phone: "03314170744",
+      phone: "03244489159",
       email: "",
       address: "",
       cityIds: [],
@@ -1004,7 +1004,7 @@ export default function Pharmacies({ token, onNavigateToOrders }) {
                     style={{ width: "100%", padding: "0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="03314170744"
+                    placeholder="03244489159"
                     required
                   />
                 </div>

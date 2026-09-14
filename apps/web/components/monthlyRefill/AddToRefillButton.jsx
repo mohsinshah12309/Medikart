@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useCustomer } from "../CustomerProvider";
 import { CalendarSync, Check, Loader2 } from "lucide-react";
+import { trackAddToRefill } from "../../lib/analytics";
 
 /**
  * AddToRefillButton
@@ -46,6 +47,7 @@ export default function AddToRefillButton({
         }
       } else {
         await addToRefill(product._id, 1);
+        trackAddToRefill(product);
         setJustAdded(true);
         setTimeout(() => setJustAdded(false), 1600);
       }

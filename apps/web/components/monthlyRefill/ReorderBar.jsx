@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Zap, Loader2, CheckCircle2, MapPin, X, ArrowRight } from "lucide-react";
+import { trackRefillReorderClick, trackPurchase } from "../../lib/analytics";
 import "./monthlyRefill.css";
 
 export default function ReorderBar({
@@ -35,6 +36,7 @@ export default function ReorderBar({
   const handleOpenModal = () => {
     setError("");
     setPhone(customer?.phone || phone || "");
+    trackRefillReorderClick(itemCount, subtotal);
     setIsModalOpen(true);
   };
 
@@ -76,6 +78,9 @@ export default function ReorderBar({
       }
 
       setPlacedOrder(data?.data?.order);
+      if (data?.data?.order) {
+        trackPurchase(data.data.order);
+      }
       if (onOrderSuccess) {
         onOrderSuccess(data?.data?.order);
       }

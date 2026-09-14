@@ -80,7 +80,7 @@ export function OrderConfirmedCard({
   const whatsappMessage = encodeURIComponent(
     `Hello Medikart Support, I have placed an order.\nOrder ID: ${orderId}\nCustomer: ${customer?.name || ''}\nCity: ${customer?.city || ''}`
   );
-  const whatsappUrl = `https://wa.me/923314170744?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/923244489159?text=${whatsappMessage}`;
 
   return (
     <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-2xl flex flex-col items-center text-center relative overflow-hidden animate-in zoom-in-95 fade-in duration-300">

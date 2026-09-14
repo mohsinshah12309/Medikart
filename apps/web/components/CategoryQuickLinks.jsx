@@ -174,7 +174,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
                   {imgSrc ? (
                     <Image
                       src={imgSrc}
-                      alt={cat.name}
+                      alt={cat.name ? `${cat.name} medicines & healthcare products` : "Medikart category"}
                       fill
                       sizes="80px"
                       className="object-cover transition-transform duration-300 group-hover/card:scale-110"

@@ -8,6 +8,7 @@ import { useCart } from './CartProvider';
 import { useCustomer } from './CustomerProvider';
 import AddToRefillButton from './monthlyRefill/AddToRefillButton';
 import { ShoppingCart, Check, Eye, Heart } from 'lucide-react';
+import { trackAddToCart } from '../lib/analytics';
 
 // Pure helpers hoisted outside component to avoid recreation on every render
 const formatPrice = (num) => {
@@ -40,6 +41,7 @@ function ProductCardComponent({ product }) {
       e.stopPropagation();
     }
     addToCart(product, 1);
+    trackAddToCart(product, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
   }, [addToCart, product]);
@@ -111,7 +113,7 @@ function ProductCardComponent({ product }) {
         <div className="relative w-full h-full flex items-center justify-center">
           <Image
             src={imgSrc}
-            alt={product.name || 'Product Image'}
+            alt={product.name ? `${product.name} — authentic medicine packaging` : 'Medikart healthcare product'}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
             loading="lazy"

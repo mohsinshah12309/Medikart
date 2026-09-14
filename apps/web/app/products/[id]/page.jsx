@@ -5,28 +5,85 @@ import NarcoticsBlock from '../../../components/NarcoticsBlock';
 import AddToCartButton from '../../../components/AddToCartButton';
 import AddToRefillButton from '../../../components/monthlyRefill/AddToRefillButton';
 import RelatedProducts from '../../../components/RelatedProducts';
+import ProductStickyMobileCta from '../../../components/ProductStickyMobileCta';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const productId = resolvedParams.id;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
+  const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
+
   try {
     const res = await getProduct(productId);
     if (res && res.data && res.data.product) {
       const product = res.data.product;
       const genericStr = product.genericName ? ` (${product.genericName})` : '';
+      
+      // Keep title under ~60 characters
+      let title = `${product.name}${genericStr} | Medikart`;
+      if (title.length > 60) {
+        title = `${product.name} | Medikart`;
+      }
+      if (title.length > 60) {
+        title = product.name.slice(0, 50) + '... | Medikart';
+      }
+
+      // Keep description under ~155 characters
+      let rawDesc = product.description 
+        ? product.description.replace(/\s+/g, ' ').trim() 
+        : `Buy authentic ${product.name} online at Medikart. Licensed pharmacies, fast delivery & Cash on Delivery.`;
+      const description = rawDesc.length > 155 ? rawDesc.slice(0, 150) + '...' : rawDesc;
+
+      // Extract primary product cover image for dynamic OG
+      let ogImageUrl = `${siteUrl}/og-image.png`;
+      if (product.coverImage) {
+        ogImageUrl = product.coverImage.startsWith('http') 
+          ? product.coverImage 
+          : `http://localhost:5000${product.coverImage}`;
+      } else if (product.images && product.images.length > 0 && product.images[0].path) {
+        const imgPath = product.images[0].path;
+        ogImageUrl = imgPath.startsWith('http') ? imgPath : `http://localhost:5000${imgPath}`;
+      }
+
+      const canonicalUrl = `${siteUrl}/products/${product._id}`;
+
       return {
-        title: `${product.name}${genericStr} | Medikart`,
-        description: product.description || `Buy ${product.name} online at Medikart. In stock and available.`,
+        title,
+        description,
+        alternates: {
+          canonical: canonicalUrl,
+        },
+        openGraph: {
+          title,
+          description,
+          url: canonicalUrl,
+          siteName: 'Medikart',
+          locale: 'en_PK',
+          type: 'website',
+          images: [
+            {
+              url: ogImageUrl,
+              alt: `${product.name} — authentic medicine packaging`,
+            },
+          ],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title,
+          description,
+          images: [ogImageUrl],
+        },
       };
     }
   } catch (err) {
     console.error("Failed to load product metadata:", err);
   }
+
   return {
-    title: 'Product Details | Medikart',
-    description: 'View product details on Medikart.',
+    title: 'Product Details | Medikart Pharmacy',
+    description: 'Order authentic medicines with fast Cash on Delivery from licensed partner pharmacies on Medikart.',
   };
 }
 
@@ -61,7 +118,7 @@ export default async function ProductDetailPage({ params }) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     'name': product.name,
-    'image': product.coverImage ? `http://localhost:3000${product.coverImage}` : undefined,
+    'image': product.coverImage ? (product.coverImage.startsWith('http') ? product.coverImage : `http://localhost:5000${product.coverImage}`) : undefined,
     'description': product.description || `Buy ${product.name} online at Medikart.`,
     'sku': product.sku,
     'offers': {
@@ -171,6 +228,10 @@ export default async function ProductDetailPage({ params }) {
 
       {/* ─── Related Products & Smart Suggestions Section ─── */}
       <RelatedProducts currentProduct={product} />
+
+      {/* ─── Sticky Bottom Mobile CTA Bar (Item 10) ─── */}
+      <ProductStickyMobileCta product={product} />
     </div>
   );
 }
+

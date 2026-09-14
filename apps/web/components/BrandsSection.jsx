@@ -236,7 +236,7 @@ export default function BrandsSection() {
               <div className="relative w-full h-full">
                 <Image
                   src={brand.logo}
-                  alt={`${brand.name} Logo`}
+                  alt={`${brand.name} pharmaceutical manufacturer logo`}
                   fill
                   sizes="(max-width: 640px) 144px, 176px"
                   className="object-contain transition-transform duration-300 group-hover/card:scale-110"

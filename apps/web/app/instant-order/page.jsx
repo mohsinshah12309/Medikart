@@ -387,7 +387,7 @@ export default function InstantOrderPage() {
                 {filePreviewUrl ? (
                   <img 
                     src={filePreviewUrl} 
-                    alt="Prescription preview" 
+                    alt="Uploaded doctor prescription document preview" 
                     className="w-16 h-16 object-cover rounded-xl border border-slate-200 shadow-xs"
                   />
                 ) : (
@@ -476,7 +476,7 @@ export default function InstantOrderPage() {
                 onChange={handleInputChange}
                 required
                 disabled={otpVerified || submitting}
-                placeholder="e.g. 03314170744"
+                placeholder="e.g. 03244489159"
                 className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
               />
             </div>

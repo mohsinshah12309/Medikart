@@ -74,7 +74,7 @@ export default function ContactPage() {
   };
 
   const defaultEmail = "medikart.com@gmail.com";
-  const defaultPhone = "+92 331 4170744";
+  const defaultPhone = "+92 324 4489159";
 
   return (
     <div className="max-w-5xl mx-auto flex flex-col gap-8 pb-16">
@@ -88,15 +88,16 @@ export default function ContactPage() {
             <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse shadow-[0_0_8px_#eab308]" />
             Direct Pharmacist Support
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-            Contact Medikart
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900">
+            Get in Touch With Us
           </h1>
-          <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
-            Have questions about an order, prescription verification, or medicine availability? Our pharmacy team is here to help.
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+            Have a question about a medicine, need prescription verification assistance, or want to track an active order? We are available 24/7.
           </p>
         </div>
       </div>
 
+      {/* Main Content: Info & Interactive Form */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Direct Contact Information */}
         <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xl flex flex-col gap-6 relative overflow-hidden">
@@ -152,7 +153,7 @@ export default function ContactPage() {
                   Connect immediately with on-duty pharmacists for urgent prescription queries.
                 </p>
                 <a
-                  href="https://wa.me/923314170744?text=Hi%20Medikart%20Support,%20I%20have%20a%20query%20about%20an%20order."
+                  href="https://wa.me/923244489159?text=Hi%20Medikart%20Support,%20I%20have%20a%20query%20about%20an%20order."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#25D366] hover:bg-[#1faa53] text-white text-xs font-black rounded-xl transition-all shadow-xs cursor-pointer active:scale-[0.98]"

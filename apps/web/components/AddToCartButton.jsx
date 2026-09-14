@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useCart } from './CartProvider';
 import { useCustomer } from './CustomerProvider';
 import { Heart } from 'lucide-react';
+import { trackAddToCart } from '../lib/analytics';
 
 export default function AddToCartButton({ product }) {
   const { addToCart } = useCart();
@@ -15,6 +16,7 @@ export default function AddToCartButton({ product }) {
 
   const handleAdd = () => {
     addToCart(product, quantity);
+    trackAddToCart(product, quantity);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };

@@ -73,7 +73,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
         >
           <Image
             src={imgSrc}
-            alt={item.name || "Medicine"}
+            alt={item.name ? `${item.name} — monthly refill medicine` : "Medikart monthly refill medicine"}
             fill
             sizes="80px"
             className="object-contain p-1 transition-transform group-hover:scale-105"

@@ -64,7 +64,7 @@ export default function OrderConfirmationPage() {
   const whatsappMessage = encodeURIComponent(
     `Hello Medikart Support, I have a query regarding my Order #${codeToDisplay}.\nCustomer: ${order?.customer?.name || ""}`
   );
-  const whatsappUrl = `https://wa.me/923314170744?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/923244489159?text=${whatsappMessage}`;
 
   return (
     <div className="max-w-3xl mx-auto my-8 px-4 print:p-0 print:m-0 print:max-w-none">
@@ -254,13 +254,29 @@ export default function OrderConfirmationPage() {
               </div>
             )}
 
+            {/* Estimated Delivery & Pharmacy Notice */}
+            <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4 mb-6 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">⚡</span>
+                <div>
+                  <span className="font-bold text-slate-900 block">Estimated Doorstep Delivery Time</span>
+                  <p className="text-slate-600 text-[11px] mt-0.5">
+                    Express Local Dispatch: <strong>45–60 mins</strong> • Standard Regional Fulfillment: <strong>24–48 hours</strong>
+                  </p>
+                </div>
+              </div>
+              <span className="bg-amber-100 text-amber-900 border border-amber-300 font-bold px-2.5 py-1 rounded-full text-[11px] shrink-0">
+                Partner Pharmacy Active
+              </span>
+            </div>
+
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-200 print:hidden">
               <Link
                 href="/"
-                className="flex-1 py-3 px-4 bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-bold text-xs sm:text-sm rounded-xl transition-colors text-center"
+                className="flex-1 py-3 px-4 bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-xs sm:text-sm rounded-xl transition-all shadow-xs text-center"
               >
-                ← Return to Storefront
+                ← Continue Shopping
               </Link>
 
               <button

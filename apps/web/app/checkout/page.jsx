@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CardFlip3D from '../../components/3d/CardFlip3D';
 import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
+import { trackPurchase } from '../../lib/analytics';
 
 const CITIES = ['Lahore'];
 
@@ -356,6 +357,13 @@ export default function CheckoutPage() {
       }
 
       if (orderId) {
+        trackPurchase({
+          orderCode: orderId,
+          totals: { total: totalAmount, deliveryCharge },
+          paymentMethod,
+          items: cart,
+        });
+
         setPlacedOrderSummary({
           total: totalAmount,
           customer: { ...customer },
@@ -434,7 +442,7 @@ export default function CheckoutPage() {
             </div>
           </div>
           <a
-            href="https://wa.me/923314170744?text=Hi%20Medikart,%20I%20had%20an%20issue%20during%20checkout"
+            href="https://wa.me/923244489159?text=Hi%20Medikart,%20I%20had%20an%20issue%20during%20checkout"
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0 text-xs bg-red-100 hover:bg-red-200 text-red-900 font-bold px-3 py-1.5 rounded-xl border border-red-300 transition-colors text-center"
@@ -582,7 +590,7 @@ export default function CheckoutPage() {
                   onChange={handleInputChange}
                   required
                   disabled={otpVerified || submitting}
-                  placeholder="e.g. 03314170744"
+                  placeholder="e.g. 03244489159"
                   className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                 />
               </div>

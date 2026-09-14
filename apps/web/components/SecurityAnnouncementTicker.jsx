@@ -3,15 +3,15 @@
 import React from "react";
 import { ShieldCheck } from "lucide-react";
 
-export default function SecurityAnnouncementTicker({ contactPhone = "+92 331 4170744" }) {
+export default function SecurityAnnouncementTicker({ contactPhone = "+92 324 4489159" }) {
   // Normalize phone digits for WhatsApp and tel links
-  const rawDigits = (contactPhone || "").replace(/[^0-9]/g, "") || "923314170744";
+  const rawDigits = (contactPhone || "").replace(/[^0-9]/g, "") || "923244489159";
   const cleanPhone = rawDigits.startsWith("0") ? `92${rawDigits.slice(1)}` : rawDigits;
 
-  // Format display phone: e.g. +92 331 4170744
+  // Format display phone: e.g. +92 324 4489159
   let displayPhone = contactPhone;
-  if (cleanPhone === "923314170744") {
-    displayPhone = "+92 331 4170744";
+  if (cleanPhone === "923244489159") {
+    displayPhone = "+92 324 4489159";
   }
 
   // Ticker content items repeated inside each track

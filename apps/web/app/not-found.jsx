@@ -69,16 +69,16 @@ export default function NotFound() {
               ← Back to Home
             </Link>
             <Link
+              href="/#store-catalog"
+              className="px-6 py-3 bg-white hover:bg-amber-50 active:bg-amber-100 text-slate-900 font-black text-sm rounded-xl transition-all border border-amber-300 shadow-2xs"
+            >
+              Browse Products →
+            </Link>
+            <Link
               href="/instant-order"
               className="px-6 py-3 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-800 font-bold text-sm rounded-xl transition-all border border-slate-300 shadow-2xs"
             >
-              Upload Prescription (Instant Order)
-            </Link>
-            <Link
-              href="/contact"
-              className="px-6 py-3 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-800 font-bold text-sm rounded-xl transition-all border border-slate-300 shadow-2xs"
-            >
-              Contact Pharmacist Support
+              Instant Order (Prescription)
             </Link>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import React from 'react';
 import { useCart } from '../../components/CartProvider';
 import Link from 'next/link';
+import { trackBeginCheckout } from '../../lib/analytics';
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, isLoaded } = useCart();
@@ -10,13 +11,17 @@ export default function CartPage() {
   if (!isLoaded) {
     return (
       <div className="max-w-4xl mx-auto py-12 text-center">
-        <p className="text-slate-400">Loading cart...</p>
+        <p className="text-slate-400 font-medium">Loading cart...</p>
       </div>
     );
   }
 
   // Check if any narcotics items are somehow in the cart
   const hasNarcotics = cart.some(item => item.isNarcotic);
+
+  const handleProceedCheckout = () => {
+    trackBeginCheckout(cart, cartTotal + 10);
+  };
 
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
@@ -55,7 +60,7 @@ export default function CartPage() {
                 <div className="w-16 h-16 bg-slate-50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-slate-100">
                   <img
                     src={item.coverImage?.startsWith('http') ? item.coverImage : `http://localhost:5000${item.coverImage}`}
-                    alt={item.name}
+                    alt={item.name ? `${item.name} — cart medicine item` : 'Medicine thumbnail'}
                     loading="lazy"
                     className="max-h-full max-w-full object-contain"
                     onError={(e) => {
@@ -140,6 +145,7 @@ export default function CartPage() {
             <div className="mt-4">
               <Link
                 href="/checkout"
+                onClick={handleProceedCheckout}
                 className="w-full inline-block text-center py-3.5 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm hover:shadow-md border border-yellow-500/50 active:scale-[0.98]"
               >
                 Proceed to Checkout
@@ -152,3 +158,4 @@ export default function CartPage() {
     </div>
   );
 }
+
