@@ -162,15 +162,11 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              {/* Operating Hours & Pharmacy Hub */}
+              {/* Operating Hours */}
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2 text-xs">
                 <div>
-                  <span className="font-bold text-slate-700 block">🕒 Operating Hours</span>
-                  <span className="text-slate-600 font-normal">Monday — Sunday: 12:00 AM — 12:00 PM (PKT)</span>
-                </div>
-                <div className="border-t border-slate-200 pt-2 mt-1">
-                  <span className="font-bold text-slate-700 block">📍 Central Pharmacy Hub</span>
-                  <span className="text-slate-600 font-normal">Medikart Licensed Dispensary, Tech Town, Pakistan</span>
+                  <span className="font-bold text-slate-700 block">🕒 Support &amp; Delivery Hours</span>
+                  <span className="text-slate-600 font-normal">Monday — Sunday: 24/7 Nationwide Digital Ordering &amp; Customer Support</span>
                 </div>
               </div>
             </div>
