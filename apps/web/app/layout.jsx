@@ -128,7 +128,7 @@ export default async function RootLayout({ children }) {
     '@type': 'Organization',
     'name': 'Medikart',
     'url': 'https://medikart.pk',
-    'logo': 'https://medikart.pk/uploads/placeholder.webp',
+    'logo': 'https://medikart.pk/logo.png',
     'contactPoint': {
       '@type': 'ContactPoint',
       'telephone': contactPhone,

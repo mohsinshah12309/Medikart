@@ -73,8 +73,7 @@ export default function OrderConfirmationPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-6 mb-6 gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-4 h-4 rounded-full bg-yellow-400 inline-block"></span>
-              <span className="text-xl font-black text-slate-900 tracking-tight">Medikart Pharmacy</span>
+              <img src="/logo.png" alt="Medikart Logo" className="h-9 w-auto object-contain" />
             </div>
             <p className="text-xs text-slate-500 mt-1">
               Licensed Online Pharmacy &amp; Healthcare Fulfillment Network

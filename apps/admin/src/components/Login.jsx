@@ -143,10 +143,18 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
   return (
     <div className="auth-container">
       <div className="auth-card" style={{ maxWidth: "420px" }}>
+        <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+          <img 
+            src="/logo.png" 
+            alt="Medikart Logo" 
+            style={{ height: "48px", width: "auto", margin: "0 auto 0.5rem auto", display: "block", objectFit: "contain" }} 
+          />
+        </div>
+
         {/* ── MODE 1: STAFF LOGIN ────────────────────────────────────────── */}
         {mode === "login" && (
           <>
-            <h2>Medikart Staff Login</h2>
+            <h2 style={{ textAlign: "center", marginTop: 0, marginBottom: "1rem", fontSize: "1.35rem" }}>Staff Portal Login</h2>
             {sessionExpiredMessage && (
               <div className="alert alert-warning" style={{ background: "#fef9c3", color: "#854d0e", border: "1px solid #fde047" }}>
                 ⏱️ {sessionExpiredMessage}
