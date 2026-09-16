@@ -1,40 +1,24 @@
 /**
- * Email Integration — Mailjet Send API v3.1 & SMTP Fallback Transporter.
+ * Email Integration — Dual Transporter: SMTP (Brevo Relay) & Mailjet Send API v3.1.
  *
- * Enhanced for Primary Inbox Deliverability:
- * 1. Disables click-tracking & open-tracking beacons (prevents spam/phishing filters from flagging OTPs)
- * 2. Injects transactional RFC 3834 & priority headers (Auto-Submitted, X-Priority, Importance)
- * 3. Supports contextual Sender Names ("Medikart Verification" vs "Medikart Healthcare")
- * 4. Dual fallback support: Mailjet API v3.1 primary, Nodemailer / Brevo SMTP secondary fallback
+ * Enhanced for Primary Inbox Deliverability & Reliability:
+ * 1. Prioritizes authenticated SMTP relay (Brevo) with verified sender credentials.
+ * 2. Automatic fallback to Mailjet API v3.1 if SMTP is unavailable.
+ * 3. Injects transactional RFC 3834 & priority headers (Auto-Submitted, X-Priority, Importance).
+ * 4. Disables tracking redirects and tracking pixels to prevent spam / phishing flags.
+ * 5. Supports contextual Sender Names ("Medikart Verification" vs "Medikart Security").
  */
 
 const crypto = require("crypto");
-const Mailjet = require("node-mailjet");
 const nodemailer = require("nodemailer");
+const Mailjet = require("node-mailjet");
 const { AppError } = require("../utils/errors");
 
-let _mailjetClient = null;
 let _smtpTransporter = null;
+let _mailjetClient = null;
 
 /**
- * Lazily initialise and cache the Mailjet API client.
- */
-function getMailjetClient() {
-  if (_mailjetClient) return _mailjetClient;
-
-  const apiKey = process.env.MAILJET_API_KEY;
-  const apiSecret = process.env.MAILJET_API_SECRET;
-
-  if (!apiKey || !apiSecret) {
-    return null;
-  }
-
-  _mailjetClient = Mailjet.apiConnect(apiKey, apiSecret);
-  return _mailjetClient;
-}
-
-/**
- * Lazily initialise and cache the Nodemailer SMTP transporter (e.g. Brevo or standard SMTP).
+ * Lazily initialize and cache the Nodemailer SMTP transporter.
  */
 function getSmtpTransporter() {
   if (_smtpTransporter) return _smtpTransporter;
@@ -56,13 +40,33 @@ function getSmtpTransporter() {
       user,
       pass,
     },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
   });
 
   return _smtpTransporter;
 }
 
 /**
- * Send an email via Mailjet or SMTP with high-deliverability transactional headers.
+ * Lazily initialize and cache the Mailjet API client.
+ */
+function getMailjetClient() {
+  if (_mailjetClient) return _mailjetClient;
+
+  const apiKey = process.env.MAILJET_API_KEY;
+  const apiSecret = process.env.MAILJET_API_SECRET;
+
+  if (!apiKey || !apiSecret) {
+    return null;
+  }
+
+  _mailjetClient = Mailjet.apiConnect(apiKey, apiSecret);
+  return _mailjetClient;
+}
+
+/**
+ * Send an email with transactional deliverability headers and automatic fallback.
  *
  * @param {Object}   options
  * @param {string}   options.to          - Recipient email address
@@ -81,8 +85,8 @@ const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
 
   const senderEmail =
     fromEmail ||
-    process.env.MAILJET_SENDER_EMAIL ||
     process.env.SMTP_FROM ||
+    process.env.MAILJET_SENDER_EMAIL ||
     "medikart.com@gmail.com";
 
   const senderName =
@@ -90,22 +94,50 @@ const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
     process.env.MAILJET_SENDER_NAME ||
     "Medikart Verification";
 
-  const entityRefId = crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString("hex");
+  const entityRefId = crypto.randomUUID
+    ? crypto.randomUUID()
+    : crypto.randomBytes(16).toString("hex");
 
   // High-deliverability headers to guarantee Primary Inbox categorization
   const deliverabilityHeaders = {
     "Auto-Submitted": "auto-generated",
     "X-Auto-Response-Suppress": "All",
     "X-Priority": "1 (Highest)",
-    "Priority": "urgent",
-    "Importance": "high",
+    Priority: "urgent",
+    Importance: "high",
     "X-MSMail-Priority": "High",
     "X-Entity-Ref-ID": entityRefId,
   };
 
+  const smtpTransporter = getSmtpTransporter();
   const mailjetClient = getMailjetClient();
 
-  // 1. Primary path: Mailjet Send API v3.1 with inbox-optimized settings
+  // 1. Primary: SMTP Transporter (Brevo Authenticated Relay)
+  if (smtpTransporter) {
+    try {
+      const info = await smtpTransporter.sendMail({
+        from: `"${senderName}" <${senderEmail}>`,
+        to,
+        replyTo: senderEmail,
+        subject,
+        text,
+        html: html || text,
+        headers: deliverabilityHeaders,
+      });
+
+      console.log(
+        `[smtp] Email delivered via Brevo SMTP to ${to} — messageId: ${info.messageId}`
+      );
+
+      return { messageId: String(info.messageId), accepted: [to] };
+    } catch (smtpErr) {
+      console.warn(
+        `[smtp] Brevo SMTP delivery failed to ${to}: ${smtpErr.message}. Attempting Mailjet fallback...`
+      );
+    }
+  }
+
+  // 2. Secondary / Fallback: Mailjet Send API v3.1
   if (mailjetClient) {
     try {
       const result = await mailjetClient.post("send", { version: "v3.1" }).request({
@@ -127,7 +159,6 @@ const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
             Subject: subject,
             TextPart: text,
             HTMLPart: html || text,
-            // Disable tracking redirects & pixels so spam filters don't flag transactional OTPs
             TrackOpens: "disabled",
             TrackClicks: "disabled",
             Headers: deliverabilityHeaders,
@@ -142,7 +173,7 @@ const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
         "unknown";
 
       console.log(
-        `[smtp] Email delivered via Mailjet to ${to} — subject: "${subject}" — status: ${msgStatus}`
+        `[smtp] Email delivered via Mailjet fallback to ${to} — subject: "${subject}" — status: ${msgStatus}`
       );
 
       return { messageId: String(msgId), accepted: [to] };
@@ -153,40 +184,16 @@ const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
         error?.message ||
         "Unknown Mailjet error";
 
-      console.warn(`[smtp] Mailjet delivery failed to ${to}: ${detail}. Attempting SMTP fallback...`);
-    }
-  }
-
-  // 2. Secondary path: SMTP Transporter (Brevo / Relay)
-  const smtpTransporter = getSmtpTransporter();
-  if (smtpTransporter) {
-    try {
-      const info = await smtpTransporter.sendMail({
-        from: `"${senderName}" <${senderEmail}>`,
-        to,
-        replyTo: senderEmail,
-        subject,
-        text,
-        html: html || text,
-        headers: deliverabilityHeaders,
-      });
-
-      console.log(
-        `[smtp] Email delivered via SMTP fallback to ${to} — messageId: ${info.messageId}`
-      );
-
-      return { messageId: String(info.messageId), accepted: [to] };
-    } catch (smtpErr) {
-      console.error(`[smtp] SMTP fallback also failed to ${to}:`, smtpErr.message);
-      throw new AppError(`Failed to send email: ${smtpErr.message}`, 500);
+      console.error(`[smtp] Mailjet delivery also failed to ${to}:`, detail);
+      throw new AppError(`Failed to send email: ${detail}`, 500);
     }
   }
 
   // ── No credentials configured at all ──────────────────────────────────────
-  if (!mailjetClient && !smtpTransporter) {
+  if (!smtpTransporter && !mailjetClient) {
     console.warn(
-      `[smtp] Neither Mailjet nor SMTP credentials configured — skipping email to ${to}. ` +
-        "Set MAILJET_API_KEY & MAILJET_API_SECRET or SMTP_HOST & SMTP_USER in .env."
+      `[smtp] Neither SMTP nor Mailjet credentials configured — skipping email to ${to}. ` +
+        "Set SMTP_HOST, SMTP_USER, SMTP_PASS or MAILJET_API_KEY, MAILJET_API_SECRET in .env."
     );
     return { messageId: "no-credentials-skipped", accepted: [] };
   }
