@@ -19,10 +19,23 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
     totalSale: 0,
     todaySale: 0,
     medikartCommission: 0,
+    totalCommissionPaid: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
+  // Commission Paid Breakdown Modal States
+  const [isCommissionPaidModalOpen, setIsCommissionPaidModalOpen] = useState(false);
+  const [commPaidDatePreset, setCommPaidDatePreset] = useState("all");
+  const [commPaidStartDate, setCommPaidStartDate] = useState("");
+  const [commPaidEndDate, setCommPaidEndDate] = useState("");
+  const [commPaidPharmacyFilter, setCommPaidPharmacyFilter] = useState("");
+  const [commPaidLoading, setCommPaidLoading] = useState(false);
+  const [commPaidData, setCommPaidData] = useState(null);
+  const [commPaidError, setCommPaidError] = useState("");
+  const [expandedBranchId, setExpandedBranchId] = useState(null);
+  const [previewScreenshot, setPreviewScreenshot] = useState("");
 
   // Excel Export States
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -39,6 +52,63 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
     const PKT_OFFSET_MS = 5 * 60 * 60 * 1000;
     const pktTime = new Date(now.getTime() + PKT_OFFSET_MS - offsetDays * 24 * 60 * 60 * 1000);
     return pktTime.toISOString().split("T")[0];
+  };
+
+  const resolveImageUrl = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    const base = API_URL.replace(/\/api\/v1\/?$/, "");
+    return `${base}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
+  const handleOpenCommissionPaidModal = () => {
+    setIsCommissionPaidModalOpen(true);
+    fetchCommissionPaidSummary(commPaidDatePreset, commPaidStartDate, commPaidEndDate, commPaidPharmacyFilter);
+  };
+
+  const fetchCommissionPaidSummary = async (preset = commPaidDatePreset, sDate = commPaidStartDate, eDate = commPaidEndDate, phFilter = commPaidPharmacyFilter) => {
+    try {
+      setCommPaidLoading(true);
+      setCommPaidError("");
+
+      const params = new URLSearchParams();
+      if (preset && preset !== "custom") params.append("datePreset", preset);
+      if (preset === "custom") {
+        if (sDate) params.append("startDate", sDate);
+        if (eDate) params.append("endDate", eDate);
+      }
+      if (phFilter) params.append("pharmacyId", phFilter);
+
+      const res = await adminFetch(`/admin/commissions/paid-summary?${params.toString()}`);
+      setCommPaidData(res.data || null);
+    } catch (err) {
+      setCommPaidError(err.message || "Failed to load commission payment breakdown");
+    } finally {
+      setCommPaidLoading(false);
+    }
+  };
+
+  const handleCommPaidPresetChange = (preset) => {
+    setCommPaidDatePreset(preset);
+    let s = "";
+    let e = "";
+    if (preset === "today") {
+      s = getPKTDate(0);
+      e = getPKTDate(0);
+    } else if (preset === "yesterday") {
+      s = getPKTDate(1);
+      e = getPKTDate(1);
+    } else if (preset === "7days") {
+      s = getPKTDate(7);
+      e = getPKTDate(0);
+    } else if (preset === "month") {
+      const now = new Date();
+      s = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+      e = getPKTDate(0);
+    }
+    setCommPaidStartDate(s);
+    setCommPaidEndDate(e);
+    fetchCommissionPaidSummary(preset, s, e, commPaidPharmacyFilter);
   };
 
   const handleOpenExportModal = () => {
@@ -194,6 +264,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
         totalSale: orderStats.totalSale ?? 0,
         todaySale: orderStats.todaySale ?? 0,
         medikartCommission: orderStats.medikartCommission ?? 0,
+        totalCommissionPaid: orderStats.totalCommissionPaid ?? 0,
         totalProducts: productCount,
       });
     } catch (err) {
@@ -420,13 +491,13 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
               </div>
             )}
 
-            {/* Medikart Commission Card (Orders or Pharmacies Permission) */}
+            {/* Medikart Commission (Accrued) Card (Orders or Pharmacies Permission) */}
             {(canViewOrders || canAccess("view_pharmacies", "manage_pharmacies")) && (
               <div
                 className="card"
                 role="button"
                 tabIndex={0}
-                onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies() : (onNavigateToOrders && onNavigateToOrders({ dateFilter: "all" }))}
+                onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies("commissions") : (onNavigateToOrders && onNavigateToOrders({ dateFilter: "all" }))}
                 style={{
                   padding: "1.5rem",
                   borderLeft: "5px solid #6366f1",
@@ -445,7 +516,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ color: "#3730a3", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                    📈 Medikart Commission
+                    📈 Commission Accrued
                   </div>
                   <span style={{ fontSize: "0.75rem", color: "#4f46e5", fontWeight: 700 }}>Branches →</span>
                 </div>
@@ -454,6 +525,47 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 </div>
                 <div style={{ fontSize: "0.75rem", color: "#4338ca", fontWeight: 500 }}>
                   Platform share from partner fulfillment
+                </div>
+              </div>
+            )}
+
+            {/* Medikart Commission Paid Functional Card (Redirects to Pharmacy Commission section) */}
+            {(canViewOrders || canAccess("view_pharmacies", "manage_pharmacies")) && (
+              <div
+                className="card"
+                role="button"
+                tabIndex={0}
+                onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies("commissions") : null}
+                style={{
+                  padding: "1.5rem",
+                  borderLeft: "5px solid #059669",
+                  background: "#ffffff",
+                  cursor: "pointer",
+                  transition: "transform 0.15s ease, box-shadow 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "none";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+                title="Click to open Pharmacy Commission & Payments section"
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ color: "#065f46", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                    💵 Commission Paid
+                  </div>
+                  <span style={{ fontSize: "0.75rem", color: "#059669", fontWeight: 700, background: "#ecfdf5", padding: "0.15rem 0.45rem", borderRadius: "4px" }}>
+                    Branches →
+                  </span>
+                </div>
+                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#065f46", margin: "0.5rem 0" }}>
+                  PKR {stats.totalCommissionPaid ? stats.totalCommissionPaid.toLocaleString() : "0"}
+                </div>
+                <div style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 500 }}>
+                  Total verified receipts received • <strong>Click to manage</strong>
                 </div>
               </div>
             )}
@@ -768,6 +880,458 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL: MEDIKART COMMISSION PAID BREAKDOWN & HISTORY ──────────── */}
+      {isCommissionPaidModalOpen && (
+        <div className="modal-backdrop" style={{ display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1050 }}>
+          <div className="modal-content" style={{ maxWidth: "900px", width: "95%", maxHeight: "90vh", display: "flex", flexDirection: "column", borderRadius: "16px", overflow: "hidden", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)" }}>
+            <div className="modal-header" style={{ background: "#ffffff", borderBottom: "1px solid #e2e8f0", padding: "1.25rem 1.5rem" }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 800, color: "#065f46", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  💵 Medikart Commission Paid — Branch Breakdown
+                </h3>
+                <p style={{ margin: "0.25rem 0 0 0", fontSize: "0.85rem", color: "#64748b" }}>
+                  Inspect total verified commission receipts collected from pharmacy branches with custom date filtering.
+                </p>
+              </div>
+              <button
+                type="button"
+                className="close-btn"
+                onClick={() => setIsCommissionPaidModalOpen(false)}
+                style={{ fontSize: "1.5rem", background: "none", border: "none", cursor: "pointer", color: "#64748b" }}
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="modal-body" style={{ padding: "1.25rem 1.5rem", overflowY: "auto", flex: 1, background: "#f8fafc" }}>
+              {commPaidError && (
+                <div className="alert alert-danger" style={{ marginBottom: "1rem" }}>
+                  {commPaidError}
+                </div>
+              )}
+
+              {/* Date Filter Bar */}
+              <div
+                style={{
+                  background: "#ffffff",
+                  padding: "0.85rem 1rem",
+                  borderRadius: "12px",
+                  border: "1px solid #e2e8f0",
+                  marginBottom: "1.25rem",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.75rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569", marginRight: "0.25rem" }}>
+                    📅 Date Filter:
+                  </span>
+                  {[
+                    { key: "all", label: "All Time" },
+                    { key: "today", label: "Today" },
+                    { key: "yesterday", label: "Yesterday" },
+                    { key: "7days", label: "Last 7 Days" },
+                    { key: "month", label: "This Month" },
+                    { key: "custom", label: "Custom Range" },
+                  ].map((preset) => (
+                    <button
+                      key={preset.key}
+                      type="button"
+                      onClick={() => handleCommPaidPresetChange(preset.key)}
+                      style={{
+                        padding: "0.3rem 0.65rem",
+                        borderRadius: "6px",
+                        border: "1px solid #cbd5e1",
+                        fontSize: "0.75rem",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                        background: commPaidDatePreset === preset.key ? "#065f46" : "#ffffff",
+                        color: commPaidDatePreset === preset.key ? "#ffffff" : "#475569",
+                        transition: "all 0.15s ease",
+                      }}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Custom Date Range Inputs */}
+                {commPaidDatePreset === "custom" && (
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexWrap: "wrap" }}>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={commPaidStartDate}
+                      onChange={(e) => setCommPaidStartDate(e.target.value)}
+                      style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
+                    />
+                    <span style={{ fontSize: "0.75rem", color: "#64748b" }}>to</span>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={commPaidEndDate}
+                      onChange={(e) => setCommPaidEndDate(e.target.value)}
+                      style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => fetchCommissionPaidSummary("custom", commPaidStartDate, commPaidEndDate, commPaidPharmacyFilter)}
+                      style={{ fontSize: "0.75rem", padding: "0.3rem 0.75rem", background: "#065f46", border: "none" }}
+                    >
+                      Apply
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Summary Metric KPI Cards */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", marginBottom: "1.25rem" }}>
+                <div style={{ background: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #e2e8f0", borderLeft: "4px solid #059669" }}>
+                  <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#065f46", textTransform: "uppercase" }}>
+                    Total Commission Paid
+                  </div>
+                  <div style={{ fontSize: "1.5rem", fontWeight: 900, color: "#065f46", margin: "0.3rem 0" }}>
+                    PKR {commPaidData?.summary?.totalPaidInPeriod ? commPaidData.summary.totalPaidInPeriod.toLocaleString() : "0"}
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#64748b" }}>
+                    In selected date filter
+                  </div>
+                </div>
+
+                <div style={{ background: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #e2e8f0", borderLeft: "4px solid #6366f1" }}>
+                  <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#3730a3", textTransform: "uppercase" }}>
+                    Active Contributing Branches
+                  </div>
+                  <div style={{ fontSize: "1.5rem", fontWeight: 900, color: "#3730a3", margin: "0.3rem 0" }}>
+                    {commPaidData?.summary?.activePharmaciesCount || 0}{" "}
+                    <span style={{ fontSize: "0.85rem", fontWeight: 500, color: "#64748b" }}>
+                      / {commPaidData?.summary?.totalPharmaciesCount || 0}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#64748b" }}>
+                    Branches with payments in period
+                  </div>
+                </div>
+
+                <div style={{ background: "#ffffff", padding: "1rem", borderRadius: "10px", border: "1px solid #e2e8f0", borderLeft: "4px solid #f59e0b" }}>
+                  <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#92400e", textTransform: "uppercase" }}>
+                    Verified Receipts
+                  </div>
+                  <div style={{ fontSize: "1.5rem", fontWeight: 900, color: "#92400e", margin: "0.3rem 0" }}>
+                    {commPaidData?.summary?.totalVerifiedCount || 0}
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#64748b" }}>
+                    Verified submission records
+                  </div>
+                </div>
+              </div>
+
+              {/* Pharmacy Branch Breakdown List */}
+              {commPaidLoading ? (
+                <div style={{ textAlign: "center", padding: "3rem", color: "#64748b", background: "#ffffff", borderRadius: "12px" }}>
+                  🔄 Loading commission breakdown...
+                </div>
+              ) : !commPaidData?.branches || commPaidData.branches.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "3rem", background: "#ffffff", borderRadius: "12px", border: "1px dashed #cbd5e1" }}>
+                  <p style={{ color: "#64748b", margin: 0 }}>No pharmacy branches found.</p>
+                </div>
+              ) : (
+                <div style={{ background: "#ffffff", borderRadius: "12px", border: "1px solid #e2e8f0", overflow: "hidden" }}>
+                  <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid #e2e8f0", background: "#f8fafc", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0f172a" }}>
+                      🏥 Pharmacy Branch Contributions ({commPaidData.branches.length})
+                    </span>
+                    <span style={{ fontSize: "0.75rem", color: "#64748b" }}>
+                      Click on any branch to view individual payment proofs
+                    </span>
+                  </div>
+
+                  <div className="table-responsive">
+                    <table className="table" style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85rem", margin: 0 }}>
+                      <thead>
+                        <tr style={{ background: "#f1f5f9", textAlign: "left", borderBottom: "1px solid #e2e8f0" }}>
+                          <th style={{ padding: "0.65rem 1rem" }}>Branch</th>
+                          <th style={{ padding: "0.65rem 1rem" }}>Total Paid (Filtered)</th>
+                          <th style={{ padding: "0.65rem 1rem" }}>Receipts</th>
+                          <th style={{ padding: "0.65rem 1rem" }}>Outstanding Balance</th>
+                          <th style={{ padding: "0.65rem 1rem" }}>Last Payment</th>
+                          <th style={{ padding: "0.65rem 1rem", textAlign: "right" }}>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {commPaidData.branches.map((b) => {
+                          const isExpanded = expandedBranchId === b.pharmacyId;
+                          return (
+                            <React.Fragment key={b.pharmacyId}>
+                              <tr
+                                style={{
+                                  borderBottom: "1px solid #f1f5f9",
+                                  background: isExpanded ? "#f0fdf4" : b.totalPaidInPeriod > 0 ? "#ffffff" : "#fafafa",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => setExpandedBranchId(isExpanded ? null : b.pharmacyId)}
+                              >
+                                <td style={{ padding: "0.75rem 1rem" }}>
+                                  <div style={{ fontWeight: 700, color: "#0f172a" }}>
+                                    {b.pharmacyName}
+                                  </div>
+                                  <div style={{ fontSize: "0.75rem", color: "#64748b" }}>
+                                    <code style={{ background: "#f1f5f9", padding: "0.1rem 0.3rem", borderRadius: "3px" }}>{b.pharmacyCode}</code> • Commission Rate: {b.medikartPercentage}%
+                                  </div>
+                                </td>
+                                <td style={{ padding: "0.75rem 1rem", fontWeight: 800, color: b.totalPaidInPeriod > 0 ? "#059669" : "#64748b" }}>
+                                  PKR {b.totalPaidInPeriod.toLocaleString()}
+                                </td>
+                                <td style={{ padding: "0.75rem 1rem" }}>
+                                  <span style={{
+                                    background: b.verifiedPaymentsCount > 0 ? "#ecfdf5" : "#f1f5f9",
+                                    color: b.verifiedPaymentsCount > 0 ? "#065f46" : "#64748b",
+                                    padding: "0.2rem 0.5rem",
+                                    borderRadius: "9999px",
+                                    fontSize: "0.75rem",
+                                    fontWeight: 700,
+                                  }}>
+                                    {b.verifiedPaymentsCount} {b.verifiedPaymentsCount === 1 ? "receipt" : "receipts"}
+                                  </span>
+                                </td>
+                                <td style={{ padding: "0.75rem 1rem", fontWeight: 700, color: b.outstandingBalance > 0 ? "#dc2626" : "#059669" }}>
+                                  PKR {b.outstandingBalance ? b.outstandingBalance.toLocaleString() : "0"}
+                                </td>
+                                <td style={{ padding: "0.75rem 1rem", fontSize: "0.75rem", color: "#475569" }}>
+                                  {b.lastPaymentDate ? new Date(b.lastPaymentDate).toLocaleDateString("en-PK", { year: "numeric", month: "short", day: "numeric" }) : "None"}
+                                </td>
+                                <td style={{ padding: "0.75rem 1rem", textAlign: "right" }}>
+                                  <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setExpandedBranchId(isExpanded ? null : b.pharmacyId);
+                                    }}
+                                    style={{ fontSize: "0.75rem", padding: "0.25rem 0.55rem" }}
+                                  >
+                                    {isExpanded ? "▲ Hide Details" : `▼ Receipts (${b.payments?.length || 0})`}
+                                  </button>
+                                </td>
+                              </tr>
+
+                              {/* Expanded Receipts Sub-Table */}
+                              {isExpanded && (
+                                <tr style={{ background: "#f8fafc" }}>
+                                  <td colSpan={6} style={{ padding: "1rem 1.25rem", borderBottom: "1px solid #e2e8f0" }}>
+                                    <div style={{ background: "#ffffff", borderRadius: "8px", border: "1px solid #cbd5e1", padding: "0.85rem" }}>
+                                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.5rem" }}>
+                                        <h5 style={{ margin: 0, fontSize: "0.85rem", fontWeight: 800, color: "#0f172a" }}>
+                                          🧾 Verified Payment Proofs for {b.pharmacyName}
+                                        </h5>
+                                        {onNavigateToPharmacies && (
+                                          <button
+                                            type="button"
+                                            onClick={() => {
+                                              setIsCommissionPaidModalOpen(false);
+                                              onNavigateToPharmacies("commissions");
+                                            }}
+                                            style={{
+                                              background: "none",
+                                              border: "none",
+                                              color: "#2563eb",
+                                              fontSize: "0.75rem",
+                                              fontWeight: 700,
+                                              cursor: "pointer",
+                                              textDecoration: "underline",
+                                            }}
+                                          >
+                                            Go to Pharmacy Commission Tab →
+                                          </button>
+                                        )}
+                                      </div>
+
+                                      {!b.payments || b.payments.length === 0 ? (
+                                        <p style={{ color: "#64748b", fontSize: "0.8rem", margin: "0.5rem 0" }}>
+                                          No verified payment receipts found for this pharmacy in the selected date range.
+                                        </p>
+                                      ) : (
+                                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "0.75rem" }}>
+                                          {b.payments.map((p) => (
+                                            <div
+                                              key={p._id}
+                                              style={{
+                                                background: "#f8fafc",
+                                                border: "1px solid #e2e8f0",
+                                                borderRadius: "8px",
+                                                padding: "0.75rem",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "space-between",
+                                                gap: "0.5rem",
+                                              }}
+                                            >
+                                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                                                <div>
+                                                  <div style={{ fontSize: "1rem", fontWeight: 800, color: "#065f46" }}>
+                                                    PKR {p.amount.toLocaleString()}
+                                                  </div>
+                                                  <div style={{ fontSize: "0.7rem", color: "#64748b" }}>
+                                                    Paid: {new Date(p.paidOnDate).toLocaleDateString("en-PK", { month: "short", day: "numeric", year: "numeric" })}
+                                                  </div>
+                                                </div>
+                                                <span style={{ fontSize: "0.7rem", fontWeight: 700, background: "#dcfce7", color: "#15803d", padding: "0.15rem 0.4rem", borderRadius: "4px" }}>
+                                                  ✓ Verified
+                                                </span>
+                                              </div>
+
+                                              {p.periodFrom && p.periodTo && (
+                                                <div style={{ fontSize: "0.7rem", color: "#475569", background: "#ffffff", padding: "0.25rem 0.5rem", borderRadius: "4px", border: "1px solid #e2e8f0" }}>
+                                                  Period: {new Date(p.periodFrom).toLocaleDateString("en-PK", { month: "short", day: "numeric" })} - {new Date(p.periodTo).toLocaleDateString("en-PK", { month: "short", day: "numeric", year: "numeric" })}
+                                                </div>
+                                              )}
+
+                                              {p.notes && (
+                                                <div style={{ fontSize: "0.7rem", color: "#64748b", fontStyle: "italic" }}>
+                                                  "{p.notes}"
+                                                </div>
+                                              )}
+
+                                              {p.screenshotUrl && (
+                                                <div style={{ marginTop: "0.25rem" }}>
+                                                  <button
+                                                    type="button"
+                                                    onClick={() => setPreviewScreenshot(resolveImageUrl(p.screenshotUrl))}
+                                                    style={{
+                                                      display: "inline-flex",
+                                                      alignItems: "center",
+                                                      gap: "0.3rem",
+                                                      fontSize: "0.75rem",
+                                                      fontWeight: 700,
+                                                      color: "#2563eb",
+                                                      background: "#eff6ff",
+                                                      border: "1px solid #bfdbfe",
+                                                      borderRadius: "6px",
+                                                      padding: "0.25rem 0.5rem",
+                                                      cursor: "pointer",
+                                                      width: "100%",
+                                                      justifyContent: "center",
+                                                    }}
+                                                  >
+                                                    🖼️ View Bank Receipt
+                                                  </button>
+                                                </div>
+                                              )}
+                                            </div>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </td>
+                                </tr>
+                              )}
+                            </React.Fragment>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="modal-footer" style={{ borderTop: "1px solid #e2e8f0", background: "#f8fafc", padding: "0.85rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              {onNavigateToPharmacies ? (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setIsCommissionPaidModalOpen(false);
+                    onNavigateToPharmacies("commissions");
+                  }}
+                  style={{ fontSize: "0.85rem" }}
+                >
+                  Manage All Commissions in Branches Tab →
+                </button>
+              ) : <div />}
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => setIsCommissionPaidModalOpen(false)}
+                style={{ fontSize: "0.85rem", background: "#065f46", border: "none" }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── LIGHTBOX PREVIEW MODAL ────────────────────────────────────── */}
+      {previewScreenshot && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setPreviewScreenshot("")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1100,
+            background: "rgba(0,0,0,0.8)",
+            cursor: "zoom-out",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              background: "#ffffff",
+              borderRadius: "12px",
+              padding: "0.5rem",
+              boxShadow: "0 20px 25px -5px rgba(0,0,0,0.5)",
+              cursor: "default",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.5rem 0.75rem", borderBottom: "1px solid #e2e8f0" }}>
+              <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#0f172a" }}>📄 Bank Payment Proof Screenshot</span>
+              <button
+                type="button"
+                onClick={() => setPreviewScreenshot("")}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: "1.25rem",
+                  cursor: "pointer",
+                  color: "#64748b",
+                  fontWeight: "bold",
+                }}
+              >
+                &times;
+              </button>
+            </div>
+            <div style={{ padding: "0.5rem", display: "flex", justifyContent: "center", overflow: "auto", maxHeight: "80vh" }}>
+              <img
+                src={previewScreenshot}
+                alt="Bank Proof"
+                style={{ maxWidth: "100%", maxHeight: "75vh", objectFit: "contain", borderRadius: "8px" }}
+              />
+            </div>
+            <div style={{ textAlign: "center", padding: "0.4rem" }}>
+              <a
+                href={previewScreenshot}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-secondary"
+                style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem" }}
+              >
+                Open Original Image in New Tab ↗
+              </a>
+            </div>
           </div>
         </div>
       )}

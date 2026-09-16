@@ -34,6 +34,7 @@ function App() {
   });
   const [activeTab, setActiveTab] = useState("overview");
   const [initialOrderFilter, setInitialOrderFilter] = useState(null);
+  const [initialPharmacyTab, setInitialPharmacyTab] = useState(null);
   const [sessionExpiredMsg, setSessionExpiredMsg] = useState("");
 
   const handleNavigateToOrders = (filter = null) => {
@@ -45,7 +46,8 @@ function App() {
     setActiveTab("products");
   };
 
-  const handleNavigateToPharmacies = () => {
+  const handleNavigateToPharmacies = (tab = null) => {
+    setInitialPharmacyTab(tab ? { tab, _ts: Date.now() } : null);
     setActiveTab("pharmacies");
   };
 
@@ -128,8 +130,8 @@ function App() {
           ? <Orders token={token} adminUser={adminUser} initialFilter={initialOrderFilter} />
           : accessDeniedView;
       case "pharmacies":
-        return canAccess("view_pharmacies", "manage_pharmacies")
-          ? <Pharmacies token={token} onNavigateToOrders={handleNavigateToOrders} />
+        return canAccess("view_pharmacies", "manage_pharmacies", "view_orders", "manage_orders") || Boolean(adminUser?.assignedPharmacyId)
+          ? <Pharmacies token={token} adminUser={adminUser} initialTab={initialPharmacyTab} onNavigateToOrders={handleNavigateToOrders} />
           : accessDeniedView;
       case "cities":
         return canAccess("view_cities", "manage_cities")

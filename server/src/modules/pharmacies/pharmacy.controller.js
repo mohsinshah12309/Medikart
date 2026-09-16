@@ -3,10 +3,13 @@ const pharmacyService = require("./pharmacy.service");
 const getPharmacies = async (req, res, next) => {
   try {
     const { active, city, cityId } = req.query;
-    const pharmacies = await pharmacyService.getPharmacies({
-      active: active !== undefined ? active === "true" : undefined,
-      city: city || cityId,
-    });
+    const pharmacies = await pharmacyService.getPharmacies(
+      {
+        active: active !== undefined ? active === "true" : undefined,
+        city: city || cityId,
+      },
+      req.admin
+    );
     res.status(200).json({
       status: "success",
       results: pharmacies.length,
@@ -19,7 +22,7 @@ const getPharmacies = async (req, res, next) => {
 
 const getPharmacyById = async (req, res, next) => {
   try {
-    const pharmacy = await pharmacyService.getPharmacyById(req.params.id);
+    const pharmacy = await pharmacyService.getPharmacyById(req.params.id, req.admin);
     res.status(200).json({
       status: "success",
       data: { pharmacy },
@@ -31,7 +34,7 @@ const getPharmacyById = async (req, res, next) => {
 
 const createPharmacy = async (req, res, next) => {
   try {
-    const pharmacy = await pharmacyService.createPharmacy(req.body);
+    const pharmacy = await pharmacyService.createPharmacy(req.body, req.admin);
     res.status(201).json({
       status: "success",
       data: { pharmacy },
@@ -43,7 +46,7 @@ const createPharmacy = async (req, res, next) => {
 
 const updatePharmacy = async (req, res, next) => {
   try {
-    const pharmacy = await pharmacyService.updatePharmacy(req.params.id, req.body);
+    const pharmacy = await pharmacyService.updatePharmacy(req.params.id, req.body, req.admin);
     res.status(200).json({
       status: "success",
       data: { pharmacy },
@@ -55,7 +58,7 @@ const updatePharmacy = async (req, res, next) => {
 
 const deletePharmacy = async (req, res, next) => {
   try {
-    await pharmacyService.deletePharmacy(req.params.id);
+    await pharmacyService.deletePharmacy(req.params.id, req.admin);
     res.status(200).json({
       status: "success",
       message: "Pharmacy deleted successfully",
@@ -68,15 +71,30 @@ const deletePharmacy = async (req, res, next) => {
 const getPharmacyReports = async (req, res, next) => {
   try {
     const { pharmacyId, city, cityId, startDate, endDate } = req.query;
-    const reportData = await pharmacyService.getPharmacyReports({
-      pharmacyId,
-      city: city || cityId,
-      startDate,
-      endDate,
-    });
+    const reportData = await pharmacyService.getPharmacyReports(
+      {
+        pharmacyId,
+        city: city || cityId,
+        startDate,
+        endDate,
+      },
+      req.admin
+    );
     res.status(200).json({
       status: "success",
       data: reportData,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const revealAccountNumber = async (req, res, next) => {
+  try {
+    const data = await pharmacyService.revealAccountNumber(req.params.id, req.admin);
+    res.status(200).json({
+      status: "success",
+      data,
     });
   } catch (error) {
     next(error);
@@ -90,4 +108,5 @@ module.exports = {
   updatePharmacy,
   deletePharmacy,
   getPharmacyReports,
+  revealAccountNumber,
 };

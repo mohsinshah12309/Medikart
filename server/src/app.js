@@ -70,6 +70,7 @@ const bannerController = require("./modules/banners/banner.controller");
 const conditionRoutes = require("./modules/conditions/condition.routes");
 const conditionController = require("./modules/conditions/condition.controller");
 const pharmacyRoutes = require("./modules/pharmacies/pharmacy.routes");
+const commissionRoutes = require("./modules/commissions/commission.routes");
 
 const contactController = require("./modules/contact-messages/contactMessage.controller");
 
@@ -204,11 +205,10 @@ const storefrontLimiter = createRateLimiter({
 // Prescriptions are NEVER served statically — they are only reachable through
 // the authenticated admin route GET /api/v1/admin/prescriptions/:filename.
 const staticCacheOptions = { maxAge: "7d", etag: true };
-const productsUploadsDir = path.join(__dirname, "../uploads/products");
-app.use("/uploads/products", express.static(productsUploadsDir, staticCacheOptions));
+const uploadsDir = path.join(__dirname, "../uploads");
+app.use("/uploads", express.static(uploadsDir, staticCacheOptions));
 
 const bannersUploadsDir = path.join(__dirname, "../uploads/banners");
-app.use("/uploads/banners", express.static(bannersUploadsDir, staticCacheOptions));
 app.use("/banners", express.static(bannersUploadsDir, staticCacheOptions));
 
 // Placeholder asset is outside the products dir — serve it with long cache.
@@ -279,6 +279,7 @@ app.use("/api/v1/admin/activity-logs", expensiveLimiter, activityLogRoutes);
 app.use("/api/v1/admin/banners", expensiveLimiter, bannerRoutes);
 app.use("/api/v1/admin/conditions", expensiveLimiter, conditionRoutes);
 app.use("/api/v1/admin/pharmacies", expensiveLimiter, pharmacyRoutes);
+app.use("/api/v1/admin/commissions", expensiveLimiter, commissionRoutes);
 
 // Fix 1 — Authenticated prescription access (mounted AFTER auth middleware)
 app.use("/api/v1/admin/prescriptions", prescriptionRoutes);

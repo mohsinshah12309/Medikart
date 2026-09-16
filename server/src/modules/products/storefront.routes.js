@@ -251,6 +251,161 @@ router.get("/categories", async (req, res, next) => {
   }
 });
 
+// GET /api/v1/search/suggestions and /api/v1/products/suggestions (Dvago-style Autocomplete & Trending)
+const getSuggestionsHandler = async (req, res, next) => {
+  try {
+    const q = (req.query.q || req.query.search || "").trim();
+    const storewidePercent = await getStorewideDiscount();
+
+    // Cache key for suggestions (short TTL 60s)
+    const cacheKey = `cache:storefront:suggestions:${q ? q.toLowerCase() : "__trending__"}`;
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (err) {
+      console.error("[Cache] Read error:", err.message);
+    }
+
+    if (cached) {
+      logCache("HIT", cacheKey);
+      return res.status(200).json(JSON.parse(cached));
+    }
+    logCache("MISS", cacheKey);
+
+    if (!q) {
+      // Return Trending Searches and Trending Products
+      const trendingSearches = [
+        "Centrum",
+        "Surbex Z",
+        "Panadol",
+        "Brufen",
+        "Augmentin",
+        "Citro",
+        "Viagra",
+        "Vitamin D",
+        "Nutrifactor",
+        "Livity",
+        "Face wash",
+      ];
+
+      const featuredProducts = await Product.find({ active: true })
+        .populate("categoryIds", "name slug discount active")
+        .sort({ isFeatured: -1, createdAt: -1 })
+        .limit(6);
+
+      const trendingProducts = featuredProducts.map((prod) => {
+        const formatted = formatProductWithImages(prod);
+        const category = formatted.categoryIds?.[0] ?? null;
+        const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+          formatted,
+          category,
+          storewidePercent
+        );
+        return {
+          ...formatted,
+          effectivePrice,
+          appliedDiscount,
+          discountPercent,
+        };
+      });
+
+      const responseBody = {
+        status: "success",
+        data: {
+          trendingSearches,
+          trendingProducts,
+          matchingSearches: [],
+          matchingProducts: [],
+          matchingCategories: [],
+        },
+      };
+
+      try {
+        await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 120);
+      } catch (_) {}
+
+      return res.status(200).json(responseBody);
+    }
+
+    const escapedQ = q.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const regex = new RegExp(escapedQ, "i");
+
+    // Parallel lookup of matching products and matching categories
+    const [products, categories] = await Promise.all([
+      Product.find({
+        active: true,
+        $or: [{ name: regex }, { genericName: regex }, { tags: regex }],
+      })
+        .populate("categoryIds", "name slug discount active")
+        .sort({ name: 1 })
+        .limit(10),
+      Category.find({
+        active: true,
+        $or: [{ name: regex }, { slug: regex }],
+      }).limit(5),
+    ]);
+
+    const matchingProducts = products.slice(0, 8).map((prod) => {
+      const formatted = formatProductWithImages(prod);
+      const category = formatted.categoryIds?.[0] ?? null;
+      const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+        formatted,
+        category,
+        storewidePercent
+      );
+      return {
+        ...formatted,
+        effectivePrice,
+        appliedDiscount,
+        discountPercent,
+      };
+    });
+
+    // Generate intelligent search phrases from product names and generic names
+    const searchTermsSet = new Set();
+    products.forEach((p) => {
+      if (p.name) searchTermsSet.add(p.name);
+      if (p.genericName && p.genericName.toLowerCase().includes(q.toLowerCase())) {
+        searchTermsSet.add(p.genericName);
+      }
+    });
+
+    const matchingSearches = Array.from(searchTermsSet).slice(0, 6);
+
+    const matchingCategories = categories.map((c) => ({
+      _id: c._id,
+      name: c.name,
+      slug: c.slug,
+      image: c.image || null,
+    }));
+
+    const responseBody = {
+      status: "success",
+      data: {
+        query: q,
+        matchingSearches,
+        matchingProducts,
+        matchingCategories,
+        trendingSearches: [],
+        trendingProducts: [],
+      },
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 60);
+    } catch (_) {}
+
+    return res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+};
+
+router.get("/search/suggestions", getSuggestionsHandler);
+router.get("/products/suggestions", getSuggestionsHandler);
+
 // GET /api/v1/delivery-charge - Public delivery charge calculator
 router.get("/delivery-charge", async (req, res, next) => {
   try {

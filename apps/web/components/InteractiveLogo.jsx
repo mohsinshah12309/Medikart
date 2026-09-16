@@ -15,11 +15,11 @@ export default function InteractiveLogo({
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Sizing scales (height in pixels)
+  // Sizing scales (height in pixels, matched for wide horizontal logo aspect ratio)
   const sizeMap = {
-    sm: { height: 38, width: 140, imgClass: "h-9 w-auto" },
-    md: { height: 48, width: 180, imgClass: "h-11 sm:h-12 w-auto" },
-    lg: { height: 60, width: 220, imgClass: "h-14 sm:h-16 w-auto" },
+    sm: { height: 40, width: 130, imgClass: "h-9 sm:h-10 w-auto" },
+    md: { height: 56, width: 185, imgClass: "h-11 sm:h-13 md:h-14 w-auto" },
+    lg: { height: 72, width: 235, imgClass: "h-14 sm:h-16 md:h-18 w-auto" },
   };
 
   const current = sizeMap[size] || sizeMap.md;

@@ -20,6 +20,16 @@ const pharmacySchema = new mongoose.Schema(
       min: 0,
       max: 100,
     },
+    accountNumberEncrypted: {
+      type: String,
+      select: false, // Never returned by default queries
+      default: null,
+    },
+    accountNumberLast4: {
+      type: String,
+      default: null,
+      trim: true,
+    },
     active: { type: Boolean, default: true, index: true },
   },
   {

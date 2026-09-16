@@ -12,6 +12,7 @@ const { placeNarcoticsOrder } = require("./narcoticsOrder.handler");
 const Order = require("./order.model");
 const Pharmacy = require("../pharmacies/pharmacy.model");
 const Product = require("../products/product.model");
+const CommissionPayment = require("../commissions/commissionPayment.model");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getDeliveryCharge } = require("../cities/city.service");
@@ -209,6 +210,18 @@ const getOrderStats = async (admin = null) => {
     },
   ]);
 
+  const commissionPaidQuery = {
+    status: "verified",
+    ...(admin && admin.role !== "super_admin" && admin.assignedPharmacyId
+      ? { pharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) }
+      : {}),
+  };
+
+  const [paidAgg] = await CommissionPayment.aggregate([
+    { $match: commissionPaidQuery },
+    { $group: { _id: null, total: { $sum: "$amount" } } },
+  ]);
+
   return {
     todayOrders: result.todayOrders[0]?.count ?? 0,
     totalOrders: result.totalOrders[0]?.count ?? 0,
@@ -217,6 +230,7 @@ const getOrderStats = async (admin = null) => {
     totalSale: Math.round(result.totalSale[0]?.total ?? 0),
     todaySale: Math.round(result.todaySale[0]?.total ?? 0),
     medikartCommission: Math.round(result.medikartCommission[0]?.total ?? 0),
+    totalCommissionPaid: Math.round(paidAgg?.total ?? 0),
   };
 };
 

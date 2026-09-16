@@ -1,17 +1,49 @@
 const mongoose = require("mongoose");
 const Pharmacy = require("./pharmacy.model");
 const Order = require("../orders/order.model");
-const { NotFoundError, BadRequestError } = require("../../utils/errors");
+const { NotFoundError, BadRequestError, ForbiddenError } = require("../../utils/errors");
+const { encrypt, decrypt } = require("../../services/encryption.service");
+const { logActivity } = require("../activity-logs/activityLog.service");
 
-const createPharmacy = async (data) => {
-  if (data.code) data.code = data.code.toUpperCase().trim();
-  const pharmacy = new Pharmacy(data);
+const createPharmacy = async (data, adminUser = null) => {
+  if (adminUser && adminUser.role !== "super_admin") {
+    throw new ForbiddenError("Access denied: Only Super Admin can create new pharmacies");
+  }
+
+  const pharmacyData = { ...data };
+  if (pharmacyData.code) pharmacyData.code = pharmacyData.code.toUpperCase().trim();
+
+  // Secure AES-256-GCM encryption of bank account number
+  if (pharmacyData.accountNumber !== undefined) {
+    const rawAcct = String(pharmacyData.accountNumber || "").replace(/[\s-]/g, "").trim();
+    if (rawAcct) {
+      pharmacyData.accountNumberEncrypted = encrypt(rawAcct);
+      pharmacyData.accountNumberLast4 = rawAcct.slice(-4);
+    } else {
+      pharmacyData.accountNumberEncrypted = null;
+      pharmacyData.accountNumberLast4 = null;
+    }
+    delete pharmacyData.accountNumber; // Never store raw plaintext
+  }
+
+  const pharmacy = new Pharmacy(pharmacyData);
   await pharmacy.save();
   return pharmacy;
 };
 
-const getPharmacies = async ({ active, city } = {}) => {
+const getPharmacies = async ({ active, city } = {}, adminUser = null) => {
   const query = {};
+
+  if (adminUser && adminUser.role !== "super_admin") {
+    const assignedId = adminUser.assignedPharmacyId
+      ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
+      : null;
+    if (!assignedId) {
+      return [];
+    }
+    query._id = new mongoose.Types.ObjectId(assignedId);
+  }
+
   if (active !== undefined) query.active = active;
   if (city) {
     if (mongoose.Types.ObjectId.isValid(city)) {
@@ -26,17 +58,50 @@ const getPharmacies = async ({ active, city } = {}) => {
     .sort({ name: 1 });
 };
 
-const getPharmacyById = async (id) => {
+const getPharmacyById = async (id, adminUser = null) => {
+  if (adminUser && adminUser.role !== "super_admin") {
+    const assignedId = adminUser.assignedPharmacyId
+      ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
+      : null;
+    if (!assignedId || assignedId !== id.toString()) {
+      throw new ForbiddenError("Access denied: You can only view details for your assigned pharmacy branch");
+    }
+  }
+
   const pharmacy = await Pharmacy.findById(id).populate("cityIds", "name deliveryCharge");
   if (!pharmacy) throw new NotFoundError("Pharmacy not found");
   return pharmacy;
 };
 
-const updatePharmacy = async (id, updateData) => {
-  if (updateData.code) updateData.code = updateData.code.toUpperCase().trim();
+const updatePharmacy = async (id, updateData, adminUser = null) => {
+  if (adminUser && adminUser.role !== "super_admin") {
+    const assignedId = adminUser.assignedPharmacyId
+      ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
+      : null;
+    if (!assignedId || assignedId !== id.toString()) {
+      throw new ForbiddenError("Access denied: You can only update your assigned pharmacy branch");
+    }
+  }
+
+  const payload = { ...updateData };
+  if (payload.code) payload.code = payload.code.toUpperCase().trim();
+
+  // Secure AES-256-GCM encryption of bank account number on update
+  if (payload.accountNumber !== undefined) {
+    const rawAcct = String(payload.accountNumber || "").replace(/[\s-]/g, "").trim();
+    if (rawAcct) {
+      payload.accountNumberEncrypted = encrypt(rawAcct);
+      payload.accountNumberLast4 = rawAcct.slice(-4);
+    } else {
+      payload.accountNumberEncrypted = null;
+      payload.accountNumberLast4 = null;
+    }
+    delete payload.accountNumber; // Never store raw plaintext
+  }
+
   const pharmacy = await Pharmacy.findByIdAndUpdate(
     id,
-    { $set: updateData },
+    { $set: payload },
     { new: true, runValidators: true }
   ).populate("cityIds", "name deliveryCharge");
 
@@ -44,7 +109,47 @@ const updatePharmacy = async (id, updateData) => {
   return pharmacy;
 };
 
-const deletePharmacy = async (id) => {
+const revealAccountNumber = async (id, adminUser) => {
+  if (!adminUser || adminUser.role !== "super_admin") {
+    throw new ForbiddenError("Only Super Admin can reveal sensitive pharmacy bank account details");
+  }
+
+  const pharmacy = await Pharmacy.findById(id).select("+accountNumberEncrypted");
+  if (!pharmacy) throw new NotFoundError("Pharmacy not found");
+
+  let decryptedAccountNumber = null;
+  if (pharmacy.accountNumberEncrypted) {
+    decryptedAccountNumber = decrypt(pharmacy.accountNumberEncrypted);
+  }
+
+  // Log audit access
+  await logActivity({
+    actor: adminUser,
+    action: "pharmacy_account_revealed",
+    entityType: "pharmacy",
+    entityId: pharmacy._id,
+    before: null,
+    after: {
+      pharmacyName: pharmacy.name,
+      pharmacyCode: pharmacy.code,
+      hasAccountNumber: !!decryptedAccountNumber,
+      revealedAt: new Date(),
+    },
+  });
+
+  return {
+    pharmacyId: pharmacy._id,
+    name: pharmacy.name,
+    accountNumber: decryptedAccountNumber,
+    accountNumberLast4: pharmacy.accountNumberLast4,
+  };
+};
+
+const deletePharmacy = async (id, adminUser = null) => {
+  if (adminUser && adminUser.role !== "super_admin") {
+    throw new ForbiddenError("Access denied: Only Super Admin can delete pharmacies");
+  }
+
   const pharmacy = await Pharmacy.findByIdAndDelete(id);
   if (!pharmacy) throw new NotFoundError("Pharmacy not found");
   return pharmacy;
@@ -54,7 +159,26 @@ const deletePharmacy = async (id) => {
  * Get fulfillment and revenue reports for pharmacies
  * Supports date range, specific pharmacy, and city filtering
  */
-const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {}) => {
+const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {}, adminUser = null) => {
+  if (adminUser && adminUser.role !== "super_admin") {
+    const assignedId = adminUser.assignedPharmacyId
+      ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
+      : null;
+    if (!assignedId) {
+      return {
+        summary: {
+          totalAssignedOrders: 0,
+          totalRevenueSum: 0,
+          totalMedikartShare: 0,
+          totalDelivered: 0,
+          totalCancelled: 0,
+        },
+        reports: [],
+      };
+    }
+    pharmacyId = assignedId;
+  }
+
   const match = {};
 
   if (pharmacyId) {
@@ -97,6 +221,11 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {})
           _id: "$assignedPharmacyId",
           totalOrders: { $sum: 1 },
           totalRevenue: { $sum: "$totals.total" },
+          deliveredRevenue: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "delivered"] }, "$totals.total", 0],
+            },
+          },
           deliveredOrders: {
             $sum: { $cond: [{ $eq: ["$status", "delivered"] }, 1, 0] },
           },
@@ -133,12 +262,14 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {})
     const stats = reportMap.get(ph._id.toString()) || {
       totalOrders: 0,
       totalRevenue: 0,
+      deliveredRevenue: 0,
       deliveredOrders: 0,
       cancelledOrders: 0,
       pendingOrders: 0,
     };
+    const deliveredRevenue = stats.deliveredRevenue || (stats.deliveredOrders > 0 ? stats.totalRevenue : 0);
     const medikartPercentage = Number(ph.medikartPercentage) || 0;
-    const medikartRevenueShare = Math.round(((stats.totalRevenue || 0) * medikartPercentage) / 100);
+    const medikartRevenueShare = Math.round((deliveredRevenue * medikartPercentage) / 100);
 
     return {
       pharmacyId: ph._id,
@@ -151,6 +282,7 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {})
       medikartRevenueShare,
       totalOrders: stats.totalOrders,
       totalRevenue: stats.totalRevenue,
+      deliveredRevenue,
       deliveredOrders: stats.deliveredOrders,
       cancelledOrders: stats.cancelledOrders,
       pendingOrders: stats.pendingOrders,
@@ -190,5 +322,6 @@ module.exports = {
   getPharmacyById,
   updatePharmacy,
   deletePharmacy,
+  revealAccountNumber,
   getPharmacyReports,
 };
