@@ -17,9 +17,9 @@ export default function InteractiveLogo({
 
   // Sizing scales (height in pixels, matched for wide horizontal logo aspect ratio)
   const sizeMap = {
-    sm: { height: 40, width: 130, imgClass: "h-9 sm:h-10 w-auto" },
-    md: { height: 56, width: 185, imgClass: "h-11 sm:h-13 md:h-14 w-auto" },
-    lg: { height: 72, width: 235, imgClass: "h-14 sm:h-16 md:h-18 w-auto" },
+    sm: { height: 46, width: 155, imgClass: "h-10 sm:h-11 w-auto" },
+    md: { height: 64, width: 215, imgClass: "h-13 sm:h-15 md:h-16 w-auto" },
+    lg: { height: 80, width: 270, imgClass: "h-16 sm:h-18 md:h-20 w-auto" },
   };
 
   const current = sizeMap[size] || sizeMap.md;
