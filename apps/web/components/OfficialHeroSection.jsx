@@ -287,9 +287,19 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
             </div>
           </div>
 
-          {/* Top Handwritten Annotation / Feature Callout */}
-          <div className="w-full flex justify-end mb-1 pr-1 z-20 pointer-events-none">
-            <div className="flex flex-col items-end transform rotate-[-2deg]">
+          {/* Top Floating Badges Row (Top-Left: 100% Genuine | Top-Right: Fastest Delivery) */}
+          <div className="w-full flex items-center justify-between mb-1 z-20 pointer-events-none">
+            {/* Top-Left: Floating 100% Genuine Badge */}
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-amber-300 shadow-2xs transform -rotate-2 animate-float">
+              <span className="text-sm">📦</span>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] font-black text-amber-900 uppercase tracking-wide">Medikart</span>
+                <span className="text-[8px] text-amber-600 font-bold">• 100% Genuine</span>
+              </div>
+            </div>
+
+            {/* Top-Right: Handwritten Annotation / Feature Callout */}
+            <div className="flex flex-col items-end transform rotate-[-2deg] ml-auto">
               <div className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-white/95 backdrop-blur-sm border border-amber-300 shadow-2xs">
                 <span className="text-amber-500 text-xs animate-pulse">✨</span>
                 <span className="font-script text-sm sm:text-base font-bold text-amber-800 whitespace-nowrap">
@@ -304,28 +314,12 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
             </div>
           </div>
 
-          {/* Relative Container for Phone & Floating Trust Badges */}
-          <div className="relative flex items-center justify-center w-full my-auto z-10 py-2">
+          {/* Relative Container for Phone Mockup */}
+          <div className="relative flex items-center justify-center w-full my-auto z-10 py-1">
             
-            {/* ─── The Smartphone Mockup Screen ─── */}
+            {/* ─── The Smartphone Mockup Screen (Completely Unobstructed) ─── */}
             <div className="relative w-[265px] sm:w-[290px] md:w-[310px] lg:w-[295px] xl:w-[325px] h-[445px] sm:h-[480px] md:h-[510px] lg:h-[490px] xl:h-[520px] bg-slate-900 rounded-[42px] sm:rounded-[46px] p-2.5 sm:p-3 shadow-2xl border-[5px] sm:border-[6px] border-slate-800 transform hover:scale-[1.01] transition-transform duration-300 z-10">
               
-              {/* Floating Medicine Box (Top-Left, floating outside phone bezel) */}
-              <div className="absolute -left-7 sm:-left-9 lg:-left-7 xl:-left-9 top-8 sm:top-10 hidden sm:flex flex-col items-center bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 p-2 shadow-lg transform -rotate-6 z-30 animate-float pointer-events-none">
-                <span className="text-base sm:text-lg">📦</span>
-                <span className="text-[9px] font-black text-amber-800 uppercase tracking-wider">Medikart</span>
-                <span className="text-[7.5px] text-slate-600 font-bold whitespace-nowrap">100% Genuine</span>
-              </div>
-
-              {/* Floating Safe Packing Pill (Bottom-Right, floating outside phone bezel) */}
-              <div className="absolute -right-7 sm:-right-9 lg:-right-7 xl:-right-9 bottom-7 sm:bottom-9 hidden sm:flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 px-2.5 sm:px-3 py-1.5 shadow-lg transform rotate-6 z-30 animate-float pointer-events-none" style={{ animationDelay: '1.5s' }}>
-                <span className="text-sm sm:text-base">💊</span>
-                <div className="text-left">
-                  <div className="text-[9.5px] font-black text-slate-800 leading-tight whitespace-nowrap">Safe Packing</div>
-                  <div className="text-[8px] font-bold text-emerald-600 whitespace-nowrap">Sanitized Box</div>
-                </div>
-              </div>
-
               {/* Phone Speaker Notch */}
               <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-24 h-3.5 bg-slate-900 rounded-b-xl z-30 flex items-center justify-center pointer-events-none">
                 <div className="w-8 h-1 bg-slate-700 rounded-full" />
@@ -417,6 +411,17 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               </div>
             </div>
 
+          </div>
+
+          {/* Bottom Floating Badge Row (Bottom-Right, non-overlapping) */}
+          <div className="w-full flex justify-end mt-1 pr-1 z-20 pointer-events-none">
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-amber-300 shadow-2xs transform rotate-1 animate-float" style={{ animationDelay: '1.5s' }}>
+              <span className="text-sm">💊</span>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] font-black text-slate-800">Safe Packing</span>
+                <span className="text-[8px] font-bold text-emerald-600">• Sanitized Box</span>
+              </div>
+            </div>
           </div>
 
         </div>
