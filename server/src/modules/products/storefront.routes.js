@@ -331,23 +331,62 @@ const getSuggestionsHandler = async (req, res, next) => {
 
     const escapedQ = q.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
     const regex = new RegExp(escapedQ, "i");
+    const wordBoundaryRegex = new RegExp(`(^|\\s)${escapedQ}`, "i");
+    const cleanQ = q.trim().toLowerCase();
 
     // Parallel lookup of matching products and matching categories
-    const [products, categories] = await Promise.all([
+    const [rawProducts, rawCategories] = await Promise.all([
       Product.find({
         active: true,
         $or: [{ name: regex }, { genericName: regex }, { tags: regex }],
       })
         .populate("categoryIds", "name slug discount active")
-        .sort({ name: 1 })
-        .limit(10),
+        .limit(40),
       Category.find({
         active: true,
         $or: [{ name: regex }, { slug: regex }],
-      }).limit(5),
+      }).limit(6),
     ]);
 
-    const matchingProducts = products.slice(0, 8).map((prod) => {
+    // Relevance scoring function
+    const scoreProduct = (prod) => {
+      let score = 0;
+      const nameLower = (prod.name || "").toLowerCase();
+      const genericLower = (prod.genericName || "").toLowerCase();
+      const tagsString = Array.isArray(prod.tags) ? prod.tags.join(" ").toLowerCase() : "";
+
+      // 1. Exact match on name
+      if (nameLower === cleanQ) score += 1000;
+      // 2. Name starts with query
+      else if (nameLower.startsWith(cleanQ)) score += 600;
+      // 3. Name contains query at word boundary
+      else if (wordBoundaryRegex.test(prod.name || "")) score += 400;
+      // 4. Name contains query substring
+      else if (nameLower.includes(cleanQ)) score += 200;
+
+      // 5. Generic name match
+      if (genericLower === cleanQ) score += 150;
+      else if (genericLower.startsWith(cleanQ)) score += 100;
+      else if (wordBoundaryRegex.test(prod.genericName || "")) score += 80;
+      else if (genericLower.includes(cleanQ)) score += 40;
+
+      // 6. Tags match
+      if (tagsString.includes(cleanQ)) score += 20;
+
+      // In-stock preference
+      if (prod.stockStatus !== "out_of_stock" && (prod.stock ?? 1) > 0) score += 10;
+
+      return score;
+    };
+
+    // Sort products by descending relevance score, then alphabetically
+    const scoredProducts = rawProducts
+      .map((p) => ({ product: p, score: scoreProduct(p) }))
+      .sort((a, b) => b.score - a.score || (a.product.name || "").localeCompare(b.product.name || ""));
+
+    const sortedProducts = scoredProducts.map((sp) => sp.product);
+
+    const matchingProducts = sortedProducts.slice(0, 8).map((prod) => {
       const formatted = formatProductWithImages(prod);
       const category = formatted.categoryIds?.[0] ?? null;
       const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
@@ -363,18 +402,43 @@ const getSuggestionsHandler = async (req, res, next) => {
       };
     });
 
-    // Generate intelligent search phrases from product names and generic names
+    // Generate intelligent, relevant search phrases
+    // Prioritize product names that directly contain or start with the user's query
     const searchTermsSet = new Set();
-    products.forEach((p) => {
-      if (p.name) searchTermsSet.add(p.name);
-      if (p.genericName && p.genericName.toLowerCase().includes(q.toLowerCase())) {
+    
+    // First: Names starting with query
+    sortedProducts.forEach((p) => {
+      if (p.name && p.name.toLowerCase().startsWith(cleanQ)) {
+        searchTermsSet.add(p.name);
+      }
+    });
+
+    // Second: Names containing query at word boundary or substring
+    sortedProducts.forEach((p) => {
+      if (p.name && p.name.toLowerCase().includes(cleanQ)) {
+        searchTermsSet.add(p.name);
+      }
+    });
+
+    // Third: Generic names matching query
+    sortedProducts.forEach((p) => {
+      if (p.genericName && p.genericName.toLowerCase().includes(cleanQ)) {
         searchTermsSet.add(p.genericName);
       }
     });
 
     const matchingSearches = Array.from(searchTermsSet).slice(0, 6);
 
-    const matchingCategories = categories.map((c) => ({
+    // Sort categories: startsWith first
+    const sortedCategories = rawCategories.sort((a, b) => {
+      const aStarts = (a.name || "").toLowerCase().startsWith(cleanQ);
+      const bStarts = (b.name || "").toLowerCase().startsWith(cleanQ);
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      return (a.name || "").localeCompare(b.name || "");
+    });
+
+    const matchingCategories = sortedCategories.map((c) => ({
       _id: c._id,
       name: c.name,
       slug: c.slug,

@@ -305,94 +305,94 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
           </div>
 
           {/* Relative Container for Phone & Floating Trust Badges */}
-          <div className="relative flex items-center justify-center w-full my-auto z-10">
+          <div className="relative flex items-center justify-center w-full my-auto z-10 py-2">
             
-            {/* Floating Medicine Box (Behind Phone Left) with float animation */}
-            <div className="absolute -left-2 top-6 hidden sm:flex flex-col items-center bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 p-1.5 shadow-md transform -rotate-6 z-20 animate-float">
-              <span className="text-base">📦</span>
-              <span className="text-[8.5px] font-black text-amber-800 uppercase tracking-wider">Medikart</span>
-              <span className="text-[7.5px] text-slate-600 font-bold">100% Genuine</span>
-            </div>
-
-            {/* Floating Safe Packing Pill (Behind Phone Right) with float animation */}
-            <div className="absolute -right-2 bottom-6 hidden sm:flex items-center gap-1.5 bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 px-2 py-1 shadow-md transform rotate-6 z-20 animate-float" style={{ animationDelay: '1.5s' }}>
-              <span className="text-sm">💊</span>
-              <div className="text-left">
-                <div className="text-[9px] font-black text-slate-800 leading-tight">Safe Packing</div>
-                <div className="text-[7.5px] font-bold text-emerald-600">Sanitized Box</div>
-              </div>
-            </div>
-
-            {/* ─── The Compact Smartphone Mockup Screen ─── */}
-            <div className="relative w-[230px] sm:w-[250px] h-[375px] sm:h-[400px] bg-slate-900 rounded-[36px] p-2 shadow-2xl border-4 border-slate-800 transform hover:scale-[1.02] transition-transform duration-300 z-10">
+            {/* ─── The Smartphone Mockup Screen ─── */}
+            <div className="relative w-[265px] sm:w-[290px] md:w-[310px] lg:w-[295px] xl:w-[325px] h-[445px] sm:h-[480px] md:h-[510px] lg:h-[490px] xl:h-[520px] bg-slate-900 rounded-[42px] sm:rounded-[46px] p-2.5 sm:p-3 shadow-2xl border-[5px] sm:border-[6px] border-slate-800 transform hover:scale-[1.01] transition-transform duration-300 z-10">
               
+              {/* Floating Medicine Box (Top-Left, floating outside phone bezel) */}
+              <div className="absolute -left-7 sm:-left-9 lg:-left-7 xl:-left-9 top-8 sm:top-10 hidden sm:flex flex-col items-center bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 p-2 shadow-lg transform -rotate-6 z-30 animate-float pointer-events-none">
+                <span className="text-base sm:text-lg">📦</span>
+                <span className="text-[9px] font-black text-amber-800 uppercase tracking-wider">Medikart</span>
+                <span className="text-[7.5px] text-slate-600 font-bold whitespace-nowrap">100% Genuine</span>
+              </div>
+
+              {/* Floating Safe Packing Pill (Bottom-Right, floating outside phone bezel) */}
+              <div className="absolute -right-7 sm:-right-9 lg:-right-7 xl:-right-9 bottom-7 sm:bottom-9 hidden sm:flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md rounded-2xl border border-amber-300 px-2.5 sm:px-3 py-1.5 shadow-lg transform rotate-6 z-30 animate-float pointer-events-none" style={{ animationDelay: '1.5s' }}>
+                <span className="text-sm sm:text-base">💊</span>
+                <div className="text-left">
+                  <div className="text-[9.5px] font-black text-slate-800 leading-tight whitespace-nowrap">Safe Packing</div>
+                  <div className="text-[8px] font-bold text-emerald-600 whitespace-nowrap">Sanitized Box</div>
+                </div>
+              </div>
+
               {/* Phone Speaker Notch */}
-              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-3 bg-slate-900 rounded-b-xl z-30 flex items-center justify-center">
-                <div className="w-7 h-1 bg-slate-700 rounded-full" />
+              <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-24 h-3.5 bg-slate-900 rounded-b-xl z-30 flex items-center justify-center pointer-events-none">
+                <div className="w-8 h-1 bg-slate-700 rounded-full" />
               </div>
 
               {/* Inner Phone Screen Content */}
-              <div className="w-full h-full bg-[#FAF8F5] rounded-[28px] overflow-hidden flex flex-col pt-5 px-2.5 pb-2.5 select-none relative">
+              <div className="w-full h-full bg-[#FAF8F5] rounded-[30px] sm:rounded-[34px] overflow-hidden flex flex-col pt-6 sm:pt-7 px-3 sm:px-3.5 pb-3 sm:pb-3.5 select-none relative">
                 
                 {/* In-App Header */}
-                <div className="flex items-center justify-between py-1 border-b border-amber-100/60">
-                  <div className="flex items-center gap-1">
-                    <div className="w-4 h-4 rounded-full bg-[#FFEB3B] flex items-center justify-center text-[10px] font-black text-slate-900">
+                <div className="flex items-center justify-between py-1 border-b border-amber-100/70">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded-full bg-[#FFEB3B] flex items-center justify-center text-xs font-black text-slate-900 shadow-2xs">
                       🛒
                     </div>
                     <div className="leading-tight">
-                      <div className="text-[11px] font-black text-slate-900">medikart</div>
-                      <div className="text-[7.5px] font-bold text-amber-800">{selectedCity} Hub</div>
+                      <div className="text-xs sm:text-[13px] font-black text-slate-900">medikart</div>
+                      <div className="text-[8.5px] sm:text-[9.5px] font-bold text-amber-800">{selectedCity} Hub</div>
                     </div>
                   </div>
-                  <div className="text-[8.5px] font-bold text-slate-700 bg-amber-100 px-1.5 py-0.5 rounded-full">
+                  <div className="text-[9.5px] sm:text-[10.5px] font-bold text-slate-700 bg-amber-100 px-2 py-0.5 rounded-full shadow-2xs">
                     ⚡ 45 mins
                   </div>
                 </div>
 
                 {/* In-App Tagline */}
-                <div className="pt-1.5 pb-0.5 text-left">
-                  <p className="text-[9.5px] font-black text-slate-700 leading-tight">
+                <div className="pt-2 pb-1 text-left">
+                  <p className="text-[11px] sm:text-xs font-black text-slate-800 leading-snug">
                     Find medicines from nearest pharmacies
                   </p>
                 </div>
 
                 {/* In-App Search Bar */}
-                <div className="relative w-full my-0.5">
+                <div className="relative w-full my-1">
                   <div 
                     onClick={handleScrollCatalog}
-                    className="flex items-center gap-1 bg-white rounded-lg px-2 py-1 border border-slate-200 shadow-2xs text-xs text-slate-400 cursor-pointer hover:border-amber-400 hover:bg-amber-50/30 transition-all"
+                    className="flex items-center gap-1.5 bg-white rounded-xl px-2.5 py-1.5 border border-slate-200 shadow-2xs text-xs text-slate-400 cursor-pointer hover:border-amber-400 hover:bg-amber-50/30 transition-all"
                   >
-                    <span className="text-[10px]">🔍</span>
-                    <span className="text-[9px] font-medium text-slate-400 truncate">Search medicines, vitamins...</span>
+                    <span className="text-xs">🔍</span>
+                    <span className="text-[10px] sm:text-[11px] font-medium text-slate-400 truncate">Search medicines, vitamins...</span>
                   </div>
                 </div>
 
                 {/* In-App 6-Category Grid with Real Photos & Click Routing */}
-                <div className="pt-1">
-                  <div className="flex items-center justify-between pb-0.5">
-                    <span className="text-[9.5px] font-black text-slate-800 uppercase tracking-tight">Categories</span>
-                    <span className="text-[8.5px] font-bold text-amber-700 cursor-pointer hover:underline" onClick={handleScrollCatalog}>See all</span>
+                <div className="pt-1.5">
+                  <div className="flex items-center justify-between pb-1">
+                    <span className="text-[10.5px] sm:text-[11.5px] font-black text-slate-800 uppercase tracking-tight">Categories</span>
+                    <span className="text-[9.5px] sm:text-[10.5px] font-bold text-amber-700 cursor-pointer hover:underline" onClick={handleScrollCatalog}>See all</span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-1">
+                  <div className="grid grid-cols-2 gap-1.5">
                     {appCategories.map((cat, i) => (
                       <div 
                         key={i} 
                         onClick={(e) => handleAppCategoryClick(cat, e)}
-                        className="flex items-center gap-1 p-0.5 rounded-lg bg-white border border-amber-100 shadow-2xs hover:border-amber-400 hover:bg-amber-50/60 hover:scale-102 active:scale-98 transition-all cursor-pointer group"
+                        className="flex items-center gap-1.5 p-1 sm:p-1.5 rounded-xl bg-white border border-amber-100 shadow-2xs hover:border-amber-400 hover:bg-amber-50/60 hover:scale-102 active:scale-98 transition-all cursor-pointer group"
                       >
                         {/* Real Photo Thumbnail */}
-                        <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 border border-amber-200 relative bg-amber-50 group-hover:scale-105 transition-transform">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden flex-shrink-0 border border-amber-200 relative bg-amber-50 group-hover:scale-105 transition-transform">
                           <Image
                             src={cat.image}
                             alt={cat.name}
                             fill
-                            sizes="24px"
+                            sizes="32px"
                             className="object-cover"
                           />
                         </div>
-                        <span className="text-[8px] font-bold text-slate-800 leading-tight text-left line-clamp-2 group-hover:text-amber-800 transition-colors">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-slate-800 leading-tight text-left line-clamp-2 group-hover:text-amber-800 transition-colors">
                           {cat.name}
                         </span>
                       </div>
@@ -401,16 +401,16 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                 </div>
 
                 {/* Bottom In-App Banner Accent */}
-                <div className="mt-auto pt-1.5">
+                <div className="mt-auto pt-2">
                   <Link 
                     href="/instant-order"
-                    className="w-full p-1.5 rounded-xl bg-[#FFEB3B] hover:bg-[#FFE01B] border border-amber-300 text-slate-950 flex items-center justify-between shadow-2xs cursor-pointer hover:scale-102 active:scale-98 transition-all"
+                    className="w-full p-2 rounded-xl sm:rounded-2xl bg-[#FFEB3B] hover:bg-[#FFE01B] border border-amber-300 text-slate-950 flex items-center justify-between shadow-2xs cursor-pointer hover:scale-102 active:scale-98 transition-all"
                   >
                     <div className="text-left leading-tight">
-                      <div className="text-[8.5px] font-black">Prescription Upload</div>
-                      <div className="text-[7px] font-bold text-amber-900">Verified in 5 min</div>
+                      <div className="text-[10px] sm:text-[11px] font-black">Prescription Upload</div>
+                      <div className="text-[8px] sm:text-[9px] font-bold text-amber-900">Verified in 5 min</div>
                     </div>
-                    <span className="text-[9.5px] font-black bg-white rounded-full px-1.5 py-0.5 text-slate-900 shadow-2xs">Upload</span>
+                    <span className="text-[10.5px] sm:text-xs font-black bg-white rounded-full px-2.5 py-0.5 text-slate-900 shadow-2xs">Upload</span>
                   </Link>
                 </div>
 

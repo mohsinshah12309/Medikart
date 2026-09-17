@@ -1,27 +1,59 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Search, Clock, ArrowRight, BookOpen, ShieldCheck, Sparkles } from "lucide-react";
+import { Search, Clock, ArrowRight, ShieldCheck } from "lucide-react";
 import { BLOGS_DATA, BLOG_CATEGORIES } from "../../data/blogsData";
 
+const getFullUrl = (path) => {
+  const fallback = "/uploads/placeholder.webp";
+  if (!path || path === "/images/placeholder-product.png") {
+    return fallback;
+  }
+  const apiOrigin = process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace(/\/api\/v1\/?$/, "") : "";
+  return path.startsWith("http") || path.startsWith("/") ? path : `${apiOrigin}${path.startsWith("/") ? "" : "/"}${path}`;
+};
+
 export default function BlogsDirectoryPage() {
+  const [blogs, setBlogs] = useState(BLOGS_DATA);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+
+  useEffect(() => {
+    async function fetchLiveBlogs() {
+      try {
+        setLoading(true);
+        const res = await fetch(`${apiUrl}/blogs?limit=100`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.data?.blogs && json.data.blogs.length > 0) {
+            setBlogs(json.data.blogs);
+          }
+        }
+      } catch (_) {
+        // Keep fallback BLOGS_DATA
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLiveBlogs();
+  }, [apiUrl]);
 
   const filteredBlogs = useMemo(() => {
-    return BLOGS_DATA.filter((blog) => {
-      const matchesCat =
-        selectedCategory === "all" || blog.categorySlug === selectedCategory;
+    return blogs.filter((blog) => {
+      const catSlug = blog.categorySlug || blog.category?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const matchesCat = selectedCategory === "all" || catSlug === selectedCategory;
       const matchesSearch =
         !searchQuery.trim() ||
         blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        blog.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        blog.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+        (blog.summary && blog.summary.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (Array.isArray(blog.tags) && blog.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())));
       return matchesCat && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [blogs, selectedCategory, searchQuery]);
 
   return (
     <div className="flex flex-col gap-8 pb-12">
@@ -60,7 +92,7 @@ export default function BlogsDirectoryPage() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="text-xs text-slate-400 hover:text-slate-700 font-bold ml-1"
+                  className="text-xs text-slate-400 hover:text-slate-700 font-bold ml-1 cursor-pointer"
                 >
                   Clear
                 </button>
@@ -89,80 +121,76 @@ export default function BlogsDirectoryPage() {
               }`}
             >
               <span>{cat.name}</span>
-              <span
-                className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  isActive ? "bg-amber-500 text-slate-950 font-black" : "bg-slate-100 text-slate-600"
-                }`}
-              >
-                {cat.count}
-              </span>
             </button>
           );
         })}
       </div>
 
-      {/* ─── Blog Articles Grid (60 Articles) ─── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredBlogs.map((blog) => (
-          <Link
-            key={blog.id}
-            href={`/blogs/${blog.slug}`}
-            className="group flex flex-col rounded-3xl bg-white border border-slate-200 hover:border-amber-400 shadow-3xs hover:shadow-warm-card overflow-hidden transition-all duration-300 cursor-pointer"
+      {/* ─── Articles Grid ─── */}
+      {filteredBlogs.length === 0 ? (
+        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200">
+          <p className="text-sm font-bold text-slate-600 mb-2">No health articles match your filter.</p>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedCategory("all");
+              setSearchQuery("");
+            }}
+            className="text-xs font-bold text-amber-700 hover:underline cursor-pointer"
           >
-            {/* Real Photographic Card Image */}
-            <div className="relative h-60 sm:h-64 w-full overflow-hidden bg-slate-100">
-              <Image
-                src={blog.image}
-                alt={blog.title}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10.5px] font-extrabold text-amber-900 shadow-xs border border-amber-200">
-                {blog.category}
-              </div>
-            </div>
+            Reset Filters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredBlogs.map((blog) => {
+            const thumb = getFullUrl(blog.thumbnailUrl || blog.image || "/images/blogs/family-wellness.jpg");
+            const slug = blog.slug || "article";
+            const readTime = blog.readTimeMinutes ? `${blog.readTimeMinutes} min read` : blog.readTime || "4 min read";
 
-            {/* Content Body */}
-            <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between text-left">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-[11px] text-slate-400 font-medium">
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-slate-400" />
-                    <span>{blog.readTime}</span>
-                  </span>
-                  <span>•</span>
-                  <span>{blog.date}</span>
+            return (
+              <Link
+                key={blog._id || blog.id || slug}
+                href={`/blogs/${slug}`}
+                className="group flex flex-col justify-between bg-white rounded-3xl border border-[#F3EFE6] hover:border-amber-400 shadow-warm-card hover:shadow-lg transition-all duration-300 overflow-hidden text-left p-4 sm:p-5"
+              >
+                <div>
+                  {/* Card Thumbnail Banner */}
+                  <div className="relative aspect-[1.91/1] w-full rounded-2xl overflow-hidden bg-slate-950 mb-4 border border-slate-100">
+                    <img
+                      src={thumb}
+                      alt={blog.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full shadow-xs">
+                      {blog.categoryName || blog.category}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm sm:text-base font-bold font-heading text-slate-900 group-hover:text-amber-800 line-clamp-2 leading-snug mb-2 transition-colors">
+                    {blog.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
+                    {blog.summary}
+                  </p>
                 </div>
 
-                <h2 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-amber-800 transition-colors line-clamp-2 leading-snug">
-                  {blog.title}
-                </h2>
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-semibold">
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                    <span>{readTime}</span>
+                  </div>
 
-                <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
-                  {blog.summary}
-                </p>
-              </div>
-
-              <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[11px] font-bold text-slate-500 truncate max-w-[180px]">
-                  By {blog.author.split(",")[0]}
-                </span>
-                <span className="text-xs font-extrabold text-amber-700 group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                  <span>Read</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {filteredBlogs.length === 0 && (
-        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200">
-          <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-          <h3 className="text-base font-bold text-slate-800">No articles found</h3>
-          <p className="text-xs text-slate-500 mt-1">Try adjusting your search terms or category filter.</p>
+                  <span className="text-amber-700 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                    <span>Read Guide</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

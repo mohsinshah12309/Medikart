@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Search, X, TrendingUp, ArrowUpRight, Clock } from "lucide-react";
+import { Search, X, TrendingUp, ArrowUpRight, Clock, Heart, Plus, Check } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import { useCart } from "./CartProvider";
+import { useCustomer } from "./CustomerProvider";
 
 import {
   triggerCatalogSearch,
@@ -12,7 +14,7 @@ import {
   CATALOG_EVENTS,
 } from "../lib/catalogEvents";
 
-// Popular Pakistani pharmacy search queries that cycle every 1.8s in the navbar placeholder
+// Popular Pakistani pharmacy search queries that cycle every 2s in the navbar placeholder
 const ROTATING_PLACEHOLDERS = [
   'Search for "Medicines & Antibiotics"...',
   'Search for "Baby & Mother Care"...',
@@ -51,6 +53,10 @@ export default function DvagoSearchBar({ className = "" }) {
     trendingProducts: [],
   });
   const [loading, setLoading] = useState(false);
+  const [addedIds, setAddedIds] = useState({});
+
+  const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useCustomer();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -245,6 +251,136 @@ export default function DvagoSearchBar({ className = "" }) {
     fetchSuggestions(query);
   };
 
+  // Quick Action: Add to Cart
+  const handleAddToCart = (prod, e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (prod.stockStatus === "out_of_stock" || (prod.stock !== undefined && prod.stock <= 0)) return;
+    addToCart(prod, 1);
+    setAddedIds((prev) => ({ ...prev, [prod._id]: true }));
+    setTimeout(() => {
+      setAddedIds((prev) => {
+        const next = { ...prev };
+        delete next[prod._id];
+        return next;
+      });
+    }, 1500);
+  };
+
+  // Quick Action: Wishlist Toggle
+  const handleWishlistToggle = (prod, e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    toggleWishlist(prod._id);
+  };
+
+  // Reusable Product Card Component for Search Results
+  const renderProductItem = (prod) => {
+    const imgSrc = getFullUrl(prod.coverImage || (prod.images && prod.images[0]));
+    const price = Math.round(prod.effectivePrice ?? prod.price ?? 0);
+    const mrp = prod.price ? Math.round(prod.price) : null;
+    const hasDiscount = prod.discountPercent > 0 && mrp && mrp > price;
+    const wishlisted = isWishlisted ? isWishlisted(prod._id) : false;
+    const isAdded = Boolean(addedIds[prod._id]);
+    const isOutOfStock = prod.stockStatus === "out_of_stock" || (prod.stock !== undefined && prod.stock <= 0);
+
+    return (
+      <div
+        key={prod._id}
+        className="flex items-center justify-between gap-2 p-2 sm:p-2.5 rounded-xl border border-slate-200/80 hover:border-amber-400 bg-white hover:bg-amber-50/25 transition-all shadow-2xs group"
+      >
+        {/* Clickable Product Info */}
+        <Link
+          href={`/products/${prod._id}`}
+          onClick={() => {
+            saveRecentSearch(prod.name);
+            setIsOpen(false);
+          }}
+          className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0"
+        >
+          <div className="w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 border border-slate-100 flex items-center justify-center overflow-hidden">
+            <img
+              src={imgSrc}
+              alt={prod.name}
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform"
+              loading="lazy"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold text-slate-900 truncate group-hover:text-amber-700 transition-colors">
+              {prod.name}
+            </div>
+            <div className="flex items-baseline gap-1.5 mt-0.5">
+              <span className="text-xs font-black text-red-600">
+                Rs. {price.toLocaleString()}
+              </span>
+              {hasDiscount && (
+                <span className="text-[10px] text-slate-400 line-through font-medium">
+                  Rs. {mrp.toLocaleString()}
+                </span>
+              )}
+            </div>
+          </div>
+        </Link>
+
+        {/* Quick Action Buttons (Wishlist Heart + Add to Cart) */}
+        <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
+          {/* Wishlist Button */}
+          <button
+            type="button"
+            onClick={(e) => handleWishlistToggle(prod, e)}
+            className={`w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-2xs ${
+              wishlisted
+                ? "bg-rose-50 text-rose-500 border border-rose-300 scale-105"
+                : "bg-slate-50 text-slate-400 hover:text-rose-500 hover:bg-rose-50 border border-slate-200 hover:border-rose-200"
+            }`}
+            title={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            aria-label="Toggle wishlist"
+          >
+            <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${wishlisted ? "fill-rose-500 text-rose-500" : ""}`} />
+          </button>
+
+          {/* Add to Cart (+) Button */}
+          {isOutOfStock ? (
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1.5 rounded-xl border border-slate-200">
+              Out
+            </span>
+          ) : prod.isNarcotic ? (
+            <Link
+              href={`/products/${prod._id}`}
+              onClick={() => setIsOpen(false)}
+              className="text-[10px] font-extrabold text-amber-900 bg-amber-100 border border-amber-300 px-2 py-1.5 rounded-xl hover:bg-amber-200 transition-colors"
+            >
+              Rx
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={(e) => handleAddToCart(prod, e)}
+              className={`w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-2xs font-bold text-sm ${
+                isAdded
+                  ? "bg-emerald-600 text-white border border-emerald-600 scale-105"
+                  : "bg-amber-500 hover:bg-amber-600 text-slate-950 hover:scale-105 active:scale-95 border border-amber-500"
+              }`}
+              title={isAdded ? "Added to Cart!" : "Add to Cart"}
+              aria-label="Add to cart"
+            >
+              {isAdded ? (
+                <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[3]" />
+              ) : (
+                <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+              )}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const isQuerying = Boolean(query && query.trim().length > 0);
 
   return (
@@ -301,14 +437,14 @@ export default function DvagoSearchBar({ className = "" }) {
         </div>
       </div>
 
-      {/* ── DVAGO-STYLE POPUP OVERLAY MODAL ────────────────────────────── */}
+      {/* ── FULL BACKDROP BLURRED OVERLAY MODAL ────────────────────────────── */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-14 px-3 sm:px-4 bg-slate-950/60 backdrop-blur-xs animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-start justify-center pt-4 sm:pt-12 px-3 sm:px-4 bg-slate-950/75 backdrop-blur-md sm:backdrop-blur-lg animate-fade-in"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[85vh] animate-scale-up"
+            className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-150 overflow-hidden flex flex-col max-h-[88vh] animate-scale-up"
             onClick={(e) => e.stopPropagation()}
             style={{ animationDuration: "0.2s" }}
           >
@@ -346,7 +482,7 @@ export default function DvagoSearchBar({ className = "" }) {
             </form>
 
             {/* Modal Body Container */}
-            <div className="overflow-y-auto p-4 sm:p-6 space-y-6 bg-slate-50/50 flex-1">
+            <div className="overflow-y-auto p-4 sm:p-6 space-y-5 bg-slate-50/50 flex-1">
               {/* SECTION 1: RECENT SEARCHES */}
               {recentSearches.length > 0 && (
                 <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-2xs">
@@ -394,7 +530,7 @@ export default function DvagoSearchBar({ className = "" }) {
                             key={idx}
                             type="button"
                             onClick={() => executeSearch(term)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-amber-500 hover:text-slate-950 text-slate-700 rounded-full text-xs font-semibold border border-slate-200 hover:border-amber-400 transition-all text-left shadow-2xs"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-amber-500 hover:text-slate-950 text-slate-700 rounded-full text-xs font-semibold border border-slate-200 hover:border-amber-400 transition-all text-left shadow-2xs cursor-pointer group"
                           >
                             <ArrowUpRight className="w-3.5 h-3.5 text-amber-500 group-hover:text-slate-950 flex-shrink-0" />
                             <span className="truncate max-w-[280px]">{term}</span>
@@ -444,7 +580,7 @@ export default function DvagoSearchBar({ className = "" }) {
                         <button
                           type="button"
                           onClick={() => executeSearch(query)}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 transition-colors shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 transition-colors shadow-xs cursor-pointer"
                         >
                           <Search className="w-3.5 h-3.5" />
                           <span>Search in Full Catalog</span>
@@ -452,48 +588,7 @@ export default function DvagoSearchBar({ className = "" }) {
                       </div>
                     ) : (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        {suggestions.matchingProducts.map((prod) => {
-                          const imgSrc = getFullUrl(prod.coverImage || (prod.images && prod.images[0]));
-                          const price = Math.round(prod.effectivePrice ?? prod.price ?? 0);
-                          const mrp = prod.price ? Math.round(prod.price) : null;
-                          const hasDiscount = prod.discountPercent > 0 && mrp && mrp > price;
-
-                          return (
-                            <Link
-                              key={prod._id}
-                              href={`/products/${prod._id}`}
-                              onClick={() => {
-                                saveRecentSearch(prod.name);
-                                setIsOpen(false);
-                              }}
-                              className="flex items-center gap-3 p-2.5 rounded-xl border border-slate-100 hover:border-amber-300 bg-white hover:bg-amber-50/30 transition-all group"
-                            >
-                              <div className="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 border border-slate-100 flex items-center justify-center overflow-hidden">
-                                <img
-                                  src={imgSrc}
-                                  alt={prod.name}
-                                  className="w-full h-full object-contain group-hover:scale-105 transition-transform"
-                                  loading="lazy"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="text-xs font-bold text-slate-900 truncate group-hover:text-amber-700 transition-colors">
-                                  {prod.name}
-                                </div>
-                                <div className="flex items-baseline gap-1.5 mt-0.5">
-                                  <span className="text-xs font-extrabold text-red-600">
-                                    Rs. {price.toLocaleString()}
-                                  </span>
-                                  {hasDiscount && (
-                                    <span className="text-[10px] text-slate-400 line-through">
-                                      Rs. {mrp.toLocaleString()}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </Link>
-                          );
-                        })}
+                        {suggestions.matchingProducts.map(renderProductItem)}
                       </div>
                     )}
                   </div>
@@ -514,9 +609,9 @@ export default function DvagoSearchBar({ className = "" }) {
                             key={idx}
                             type="button"
                             onClick={() => executeSearch(term)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-50 hover:bg-amber-500 hover:text-slate-950 text-slate-700 rounded-full text-xs font-semibold border border-slate-200 hover:border-amber-400 transition-all shadow-2xs cursor-pointer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-50 hover:bg-amber-500 hover:text-slate-950 text-slate-700 rounded-full text-xs font-semibold border border-slate-200 hover:border-amber-400 transition-all shadow-2xs cursor-pointer group"
                           >
-                            <ArrowUpRight className="w-3.5 h-3.5 text-amber-500" />
+                            <ArrowUpRight className="w-3.5 h-3.5 text-amber-500 group-hover:text-slate-950" />
                             <span>{term}</span>
                           </button>
                         ))}
@@ -531,48 +626,7 @@ export default function DvagoSearchBar({ className = "" }) {
                         Trending Products
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        {suggestions.trendingProducts.map((prod) => {
-                          const imgSrc = getFullUrl(prod.coverImage || (prod.images && prod.images[0]));
-                          const price = Math.round(prod.effectivePrice ?? prod.price ?? 0);
-                          const mrp = prod.price ? Math.round(prod.price) : null;
-                          const hasDiscount = prod.discountPercent > 0 && mrp && mrp > price;
-
-                          return (
-                            <Link
-                              key={prod._id}
-                              href={`/products/${prod._id}`}
-                              onClick={() => {
-                                saveRecentSearch(prod.name);
-                                setIsOpen(false);
-                              }}
-                              className="flex items-center gap-3 p-2.5 rounded-xl border border-slate-100 hover:border-amber-300 bg-white hover:bg-amber-50/30 transition-all group"
-                            >
-                              <div className="w-12 h-12 flex-shrink-0 bg-slate-50 rounded-lg p-1 border border-slate-100 flex items-center justify-center overflow-hidden">
-                                <img
-                                  src={imgSrc}
-                                  alt={prod.name}
-                                  className="w-full h-full object-contain group-hover:scale-105 transition-transform"
-                                  loading="lazy"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="text-xs font-bold text-slate-900 truncate group-hover:text-amber-700 transition-colors">
-                                  {prod.name}
-                                </div>
-                                <div className="flex items-baseline gap-1.5 mt-0.5">
-                                  <span className="text-xs font-extrabold text-red-600">
-                                    Rs. {price.toLocaleString()}
-                                  </span>
-                                  {hasDiscount && (
-                                    <span className="text-[10px] text-slate-400 line-through">
-                                      Rs. {mrp.toLocaleString()}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </Link>
-                          );
-                        })}
+                        {suggestions.trendingProducts.map(renderProductItem)}
                       </div>
                     </div>
                   )}

@@ -17,6 +17,7 @@ const Messages = lazy(() => import("./components/Messages"));
 const Banners = lazy(() => import("./components/Banners"));
 const Conditions = lazy(() => import("./components/Conditions"));
 const Pharmacies = lazy(() => import("./components/Pharmacies"));
+const Blogs = lazy(() => import("./components/Blogs"));
 
 // Shared loading fallback for all lazy-loaded admin sections
 const PageLoader = () => (
@@ -124,6 +125,10 @@ function App() {
       case "banners":
         return canAccess("view_banners", "manage_banners")
           ? <Banners token={token} />
+          : accessDeniedView;
+      case "blogs":
+        return canAccess("view_blogs", "manage_blogs", "view_products")
+          ? <Blogs token={token} />
           : accessDeniedView;
       case "orders":
         return canAccess("view_orders", "manage_orders")

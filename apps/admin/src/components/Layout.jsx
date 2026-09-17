@@ -73,6 +73,7 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
           {canAccess("view_categories", "manage_categories") && navItem("categories", "📁 Categories")}
           {canAccess("view_conditions", "manage_conditions") && navItem("conditions", "🩺 Conditions")}
           {canAccess("view_banners", "manage_banners") && navItem("banners", "🖼️ Banners")}
+          {canAccess("view_blogs", "manage_blogs", "view_products") && navItem("blogs", "📰 Blogs")}
           {canAccess("view_orders", "manage_orders") && navItem("orders", "📦 Orders")}
           {(canAccess("view_pharmacies", "manage_pharmacies", "view_orders", "manage_orders") || Boolean(adminUser?.assignedPharmacyId)) && navItem("pharmacies", "🏥 Pharmacies")}
           {canAccess("view_cities", "manage_cities") && navItem("cities", "📍 Cities")}

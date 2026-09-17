@@ -72,6 +72,10 @@ const conditionController = require("./modules/conditions/condition.controller")
 const pharmacyRoutes = require("./modules/pharmacies/pharmacy.routes");
 const commissionRoutes = require("./modules/commissions/commission.routes");
 
+// Blogs Module (Public & Admin)
+const blogRoutes = require("./modules/blogs/blog.routes");
+const { seedInitialBlogsIfEmpty } = require("./modules/blogs/blog.service");
+
 const contactController = require("./modules/contact-messages/contactMessage.controller");
 
 const path = require("path");
@@ -252,6 +256,7 @@ app.get("/api/v1/banners", storefrontLimiter, publicCacheControl, bannerControll
 app.get("/api/v1/conditions", storefrontLimiter, publicCacheControl, conditionController.getPublicConditions);
 app.get("/api/v1/conditions/:idOrSlug", storefrontLimiter, publicCacheControl, conditionController.getPublicConditionDetail);
 app.use("/api/v1", storefrontLimiter, publicCacheControl, storefrontRoutes);
+app.use("/api/v1", blogRoutes);
 app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
@@ -316,6 +321,7 @@ if (require.main === module) {
     // Phase 19: register the weekly report cron job (skipped in test env).
     scheduleWeeklyReport();
     scheduleMonthlyRefillReminder();
+    seedInitialBlogsIfEmpty();
     setupGracefulShutdown();
 
     process.on("unhandledRejection", (reason) => {
