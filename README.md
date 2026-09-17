@@ -1,346 +1,168 @@
-# Medikart — Pharmacy E-Commerce & Management System
+# Medikart — Pharmacy E-Commerce, Multi-Vendor & Clinical Content Platform
 
-> **Pakistan-based pharmacy platform** — prescription verification, narcotics compliance, multi-channel order management, and an AI-powered symptom chatbot.
-
----
-
-## Project Status
-
-| Layer | Status |
-|---|---|
-| **Backend API** (Phases 1–22) | ✅ Complete |
-| **Admin Dashboard** (Phases 23–24) | ✅ Built |
-| **Customer Storefront** (Phases 25–26) | ✅ Built |
-| **Integration Tests** (Phase 29) | ✅ 12 / 12 passing |
-| **Theme** | Midnight Teal & Mint Green (client-approved dark design) |
+> **Pakistan's Modern Pharmacy & Healthcare Platform** — Prescription verification, narcotics compliance, multi-vendor pharmacy commissions, AI-powered blog content engine, Dvago-style 3-tier instant search, and automated refill reminders.
 
 ---
 
-## Tech Stack
+## 🚀 Live Repository
 
-| Layer | Technology |
-|---|---|
-| **Backend API** | Node.js · Express.js |
-| **Database** | MongoDB Atlas (Mongoose ODM) |
-| **Cache / Rate Limiting** | Redis (ioredis) |
-| **Admin Dashboard** | React 18 · Vite · Tailwind CSS |
-| **Customer Storefront** | Next.js (SSR/SSG) · Tailwind CSS |
-| **Authentication** | JWT Bearer header · bcrypt · TOTP 2FA (speakeasy) |
-| **Email** | Nodemailer (Mailtrap sandbox → SMTP production) |
-| **File Storage** | Self-hosted · Sharp (WebP processing) |
-| **Payment Gateway** | Kuickpay via Habib Metro Bank (sandbox) |
-| **AI Chatbot** | Groq API (LLaMA) |
-| **Google Sheets Sync** | Google Sheets API v4 (service account) |
-| **Reverse Proxy** | Nginx |
-| **Process Manager** | PM2 (production) |
-| **Testing** | Jest · Supertest |
+**GitHub:** [https://github.com/mohsinshah12309/Medikart](https://github.com/mohsinshah12309/Medikart)  
+**Branch:** `master`
 
 ---
 
-## Implemented Phases
+## 📊 System Overview & Status
 
-### Backend (Phases 1–22) — ✅ Complete
-
-| Phase | Description |
-|---|---|
-| **1** | Project scaffolding — monorepo, Express / Next.js / Vite apps, `.env` setup, Git hygiene, health endpoint |
-| **2** | MongoDB Atlas connection — M0 dev cluster, DB health check |
-| **3** | Core data models — `Product`, `Category`, `City` schemas (incl. `isNarcotic`, discount fields, multi-image arrays) |
-| **4** | Product & Category CRUD APIs — Zod-validated, explicit field allow-lists, no mass-assignment risk |
-| **5** | Admin authentication & roles — JWT login, `auth.js` middleware, `requireSuperAdmin`, seed script |
-| **6** | Admin password reset — short-lived single-use tokens, Mailtrap email delivery |
-| **7** | Cities & delivery pricing — server-side charge calculation (PKR 250 configured / PKR 500 default) |
-| **8** | Discounts — product → category → storewide precedence model; no stacking |
-| **9** | Bulk Excel product import — `scripts/importProducts.js`, row-level validation, 5,606 products in dev DB |
-| **10** | Image upload & processing pipeline — multi-image per product, Sharp WebP conversion, primary image selection, placeholder handling |
-| **11** | Narcotics flagging & audit — single/bulk flag endpoints, filtered view, activity log on every change |
-| **12** | Email OTP verification — generation, delivery, expiry, 4-attempt rate limiting |
-| **13** | Standard COD order workflow — cart → OTP → order creation → confirmation email |
-| **14** | Instant order workflow — prescription upload, empty `items[]`, admin pricing endpoint |
-| **15** | Narcotics order workflow — prescription gating, `pending_verification` status, approve/reject endpoints |
-| **15.1** | Narcotics COD-only restriction — server-side block of `paymentMethod: card` on narcotics carts |
-| **16** | Payment gateway (Kuickpay / Habib Metro) — hosted checkout, webhook + independent status-check verification, charge-immediately only (no refund API → manual tracking) |
-| **17** | Order cancellation & manual refund tracking — cancel pre-shipment, `refund_pending` → `refunded` states, activity log |
-| **18** | Google Sheets sync — queued/retried job, Standard Orders and Instant Orders worksheet tabs |
-| **19** | Email notifications & weekly report — single confirmation email per order, scheduled weekly Excel report |
-| **20** | Admin account management (Super Admin) — create/edit/delete admins, module-level permission enforcement |
-| **21** | Redis caching & global rate limiting — product list cache, token-bucket limiter on every route, stricter limits on OTP / login / chatbot |
-| **22** | AI chatbot (Groq) — symptom → OTC suggestions, narcotics hard-filter, disclaimer on every response, conversation logging |
-
-### Admin Dashboard (Phases 23–24) — ✅ Built
-
-| Phase | Description |
-|---|---|
-| **23** | Core screens — Overview, Products (narcotics toggle, discounts, multi-image), Categories, Orders (all 3 types + cancel action) |
-| **24** | Remaining modules — Cities, Discounts, Admin Users, Settings, Activity Logs, **Messages inbox** (client-approved addition) |
-
-### Customer Storefront (Phases 25–26) — ✅ Built
-
-| Phase | Description |
-|---|---|
-| **25** | Core shopping flow — SSR product/category pages, discount badges, multi-image gallery, cart, Standard COD checkout |
-| **26** | Extended flows — Instant Order, Narcotics prescription upload, card payment (Kuickpay), About/Contact pages, WhatsApp button, chatbot widget |
-
-### Remaining Phases
-
-| Phase | Description | Status |
+| Layer | Status | Key Features |
 |---|---|---|
-| **27** | SEO — sitemap.xml, robots.txt, per-page metadata, JSON-LD structured data | Planned |
-| **28** | Security hardening — helmet, 2FA enforcement, `npm audit`, OWASP ZAP scan | Planned |
-| **29** | Integration test suite & UAT prep | ✅ 12 / 12 passing |
-| **30** | Production deployment — VPS, Nginx, PM2, SSL (Let's Encrypt), MongoDB Flex tier | Planned |
-| **31** | Launch & client handover | Planned |
+| **Backend API** (Node / Express) | ✅ Production-Ready | Zod validation, JWT & TOTP 2FA, Redis caching, Groq AI & Google Gemini AI |
+| **Admin Dashboard** (React / Vite) | ✅ Feature-Complete | Multi-vendor pharmacy management, commission audit, AI blog editor, order dispatch |
+| **Customer Storefront** (Next.js 14) | ✅ Feature-Complete | SSR/SSG catalog, instant 3-tier search, 3D interactive hero, clinical blog directory |
+| **Unit & Integration Tests** | ✅ 100% Passing | 24+ unit test suites (incl. `blogs.test.js`), 12 core workflow integration tests |
 
 ---
 
-## Test Coverage
+## 🛠️ Technology Stack
 
-### Unit Tests — 23 suites (`server/tests/unit/`)
-
-| Test File | What It Covers |
-|---|---|
-| `adminAuth.test.js` | Login, JWT issuance, wrong-password rejection |
-| `admin2FA.test.js` | TOTP setup, QR code generation, verify, disable |
-| `adminUserManagement.test.js` | Create/edit/delete admins, last-super-admin safeguard |
-| `adminSecurityHardening.test.js` | Auth middleware, role enforcement, token rejection |
-| `apiSecurityHardening.test.js` | OWASP API Top 10 — BOLA, mass-assignment, function-level auth |
-| `chatbot.test.js` | Groq integration, narcotics filter, disclaimer presence |
-| `databaseIntegrity.test.js` | Unique constraints, required fields, referential integrity |
-| `deliveryCharge.test.js` | PKR 250 / 500 server-side charge calculation |
-| `discount.test.js` | Product → category → storewide precedence, no stacking |
-| `emailDedup.test.js` | Single confirmation email per order (no duplicates on retry) |
-| `imageProcessor.test.js` | Sharp WebP conversion, real MIME-type validation |
-| `importProducts.test.js` | Bulk import — valid rows accepted, invalid rows reported with reason |
-| `instantOrder.test.js` | Prescription upload, empty items, admin pricing flow |
-| `massAssignment.test.js` | `isNarcotic`, `price`, `role` cannot be injected via request body |
-| `narcoticsGate.test.js` | Prescription required, `pending_verification` status, snapshot immutability |
-| `orderCancellation.test.js` | Cancel pre-shipment, refund status branching, post-shipment rejection |
-| `orderValidation.test.js` | Checkout field validation (Zod schema) |
-| `otp.test.js` | OTP generate, verify, expiry, 4-attempt rate limit |
-| `paymentGateway.test.js` | Kuickpay webhook verification, independent status-check confirmation |
-| `prescriptionAccess.test.js` | Prescription files accessible only to the owning admin |
-| `productionReadiness.test.js` | Environment variable checks, secrets validation |
-| `sheetsSync.test.js` | Google Sheets sync queue, retry-on-failure logic |
-| `weeklyReport.test.js` | Weekly Excel report generation and email delivery |
-
-Run unit tests:
-```bash
-cd server && npm test
-```
-
-### Integration Tests — `server/tests/integration/medikartWorkflows.test.js`
-
-```
-PASS  tests/integration/medikartWorkflows.test.js  (31.2 s)
-
-  Medikart Core Workflows Integration Tests
-    Workflow: Standard Order
-      ✓ Happy Path: placing a standard COD order succeeds with valid OTP      (1008 ms)
-      ✓ Failure Path: placing standard order fails with invalid OTP            (911 ms)
-    Workflow: Instant Order
-      ✓ Happy Path: submit prescription then pricing by admin                 (1206 ms)
-      ✓ Failure Path: pricing with invalid product ID is rejected              (332 ms)
-    Workflow: Narcotics Order
-      ✓ Happy Path: submits prescription, order goes to pending_verification   (846 ms)
-      ✓ Failure Path: standard endpoint without prescription → blocked         (789 ms)
-    Workflow: Order Cancellation
-      ✓ Happy Path: cancel pending order sets status to cancelled             (1339 ms)
-      ✓ Failure Path: cancel already shipped order is rejected                (1091 ms)
-    Workflow: Payment
-      ✓ Happy Path: initiate payment then confirm via webhook                 (1219 ms)
-      ✓ Failure Path: webhook fails with unknown transaction ID               (1072 ms)
-    Workflow: AI Chatbot
-      ✓ Happy Path: returns OTC recommendations with disclaimer                (310 ms)
-      ✓ Failure Path: filters out narcotics products                           (247 ms)
-
-  Tests:       12 passed, 12 total
-```
-
-Run integration tests:
-```bash
-cd server
-npx jest tests/integration/medikartWorkflows.test.js --testMatch="**/tests/**/*.test.js" --forceExit --verbose
-```
-
-> **Note:** `jest.config.js` scopes the default `npm test` to unit tests only. Use the command above to run the integration suite.
+- **Backend:** Node.js, Express.js, MongoDB Atlas (Mongoose ODM), Redis (ioredis / in-memory fallback)
+- **Storefront (apps/web):** Next.js 14 (App Router), React, Tailwind CSS, Lucide Icons
+- **Admin Portal (apps/admin):** React 18, Vite, Tailwind CSS, Lucide Icons, Recharts
+- **Image Processing & Assets:** Sharp (1200x630 WebP banners, real MIME validation)
+- **AI Integrations:**
+  - **Google Gemini API** (Structured clinical blog generation & SEO writing)
+  - **Groq LLaMA** (OTC symptom assistant chatbot with narcotics hard-filter)
+- **Payments & Logistics:** Kuickpay (Habib Metro Bank gateway), Cash on Delivery (COD)
+- **Notifications & Jobs:** Nodemailer (SMTP), Node-cron (daily refill reminders, weekly reports)
+- **Testing:** Jest, Supertest
 
 ---
 
-## Project Structure
+## ✨ Features Implemented To Date
+
+### 1. 📰 Clinical Blog & Content Management Engine
+- **Structured Content Schema:** Mongoose model supporting typed blocks (`heading`, `paragraph`, `table`, `list`, `faq`, `callout`, `disclaimer`).
+- **AI Content Generator:** Powered by **Google Gemini API** with clinical fallback, generating DRAP-compliant medicine tables, FAQ accordions, and pharmacist alerts.
+- **60 Unique Clinical Photography Assets:** 60 dedicated, high-resolution clinical/medical photographs matching every specific health guide (zero repeated images).
+- **Automated 1200x630 WebP Banner Engine:** Sharp-powered image optimization for edge-to-edge banners and OpenGraph previews.
+- **Storefront Integration (`/blogs` & `/blogs/[slug]`):** Full-width hero photography, structured reader, and automated **Related Categories** and **Related Products** cards with live Add-to-Cart (`+`) and Wishlist (`❤️`) actions.
+- **Admin Blog Portal:** Visual block editor, draft management, and one-click AI generation assistant.
+
+### 2. 🔍 Dvago-Style 3-Tier Live Search & Background Blur
+- **Instant Interactive Overlay:** Backdrop blur with smooth focus transitions.
+- **3-Tier Grouped Results:**
+  1. **Matching Searches:** Quick autocomplete keywords.
+  2. **Matching Products:** Direct product cards with dosage, price, stock, and quick-action buttons (`+` Add to Cart, `❤️` Wishlist).
+  3. **Matching Categories:** Instant category badges linking to catalog filters.
+
+### 3. 📱 Dynamic Hero Section & 3D Interactive Smartphone Mockup
+- **Vibrant Dual-Card Layout:** Warm Medikart amber branding with trust badges (*Fast Delivery*, *100% Genuine*, *Safe Packing*).
+- **Proportional Smartphone Mockup:** Scaled mockup displaying 6 core clinical category photo tiles, interactive city switcher (`Lahore Hub`, etc.), and prescription upload action.
+- **Balanced Floating Badges:** Perfectly anchored badges hovering cleanly outside the bezel without overlapping the in-app screen.
+
+### 4. 🏥 Multi-Vendor Pharmacy & Commission Tracking
+- **Pharmacy Onboarding & Role Management:** Dedicated pharmacy portals with active status toggling and inventory controls.
+- **Superadmin Commission Audit:** Real-time dashboard showing total Medikart commissions earned, pharmacy breakdown, and date-range filtering.
+
+### 5. 💊 Narcotics & Prescription Safety Compliance
+- **DRAP & Narcotics Gating:** Prescription mandatory for restricted drugs; automated blocking of card payment for narcotics carts (COD only).
+- **Prescription Verification Workflow:** Admin review drawer to approve, reject, or price instant prescription uploads.
+
+### 6. ⏰ Refill Reminders & Scheduled Cron Jobs
+- **Daily Cron:** Automated prescription refill reminders for chronic medication patients.
+- **Weekly Report:** Automated performance and sales spreadsheet dispatched via email.
+
+---
+
+## 📁 Repository Structure
 
 ```
 Medikart/
 ├── apps/
-│   ├── admin/               # React 18 + Vite admin dashboard (SPA)
-│   └── web/                 # Next.js customer storefront (SSR/SSG)
+│   ├── admin/               # React 18 + Vite Admin Dashboard (SPA)
+│   │   └── src/components/  # Overview, Products, Orders, Pharmacies, Blogs, Settings
+│   └── web/                 # Next.js 14 Customer Storefront (SSR/SSG)
+│       ├── app/             # App Router pages (/blogs, /products, /cart, /checkout)
+│       ├── components/      # OfficialHeroSection, DvagoSearchBar, ProductCard, Header
+│       ├── data/            # blogsData.js (60 curated clinical datasets)
+│       └── public/images/   # 60 1200x630 unique clinical photography assets
 ├── server/
 │   ├── src/
-│   │   ├── app.js
-│   │   ├── config/          # db.js, redisClient.js
-│   │   ├── middleware/       # auth.js, requireSuperAdmin.js, rateLimiter.js, errorHandler.js
+│   │   ├── config/          # db.js, redisClient.js, geminiClient.js
+│   │   ├── middleware/      # auth.js, requireSuperAdmin.js, rateLimiter.js
 │   │   ├── modules/
-│   │   │   ├── activity-logs/
-│   │   │   ├── admin-users/     # login, 2FA, password reset, account management
-│   │   │   ├── categories/
-│   │   │   ├── chatbot/         # Groq AI, narcotics filter, conversation log
-│   │   │   ├── cities/
-│   │   │   ├── contact-messages/ # Messages inbox (client-approved addition)
-│   │   │   ├── discounts/
-│   │   │   ├── integrations/    # Google Sheets sync queue
-│   │   │   ├── orders/          # Standard, Instant, Narcotics, Cancellation
-│   │   │   ├── otp/
-│   │   │   ├── payments/        # Kuickpay provider, webhook handler
-│   │   │   ├── prescriptions/
-│   │   │   ├── products/        # CRUD, narcotics, images, bulk import
-│   │   │   └── settings/
-│   │   ├── jobs/            # weeklyReport.js scheduler
-│   │   └── utils/           # errors.js, email.js, imageProcessor.js
-│   ├── tests/
-│   │   ├── unit/            # 23 Jest unit test suites
-│   │   └── integration/     # medikartWorkflows.test.js (12 workflow tests)
-│   ├── scripts/             # importProducts.js, seedAdmin.js
-│   └── uploads/             # Self-hosted product images (WebP)
-├── docs/
-│   ├── design.md            # UI/UX design system — Midnight Teal & Mint Green
-│   ├── phases.md            # Delivery phases 1–31 + approved addenda (A, B, C)
-│   ├── rules.md             # Architecture & coding rules
-│   └── PRD.pdf              # Product Requirements Document
-├── nginx/                   # Reverse proxy configs (staging + production)
-└── postman/                 # API collection
+│   │   │   ├── admin-users/ # JWT auth, 2FA, password reset
+│   │   │   ├── blogs/       # Blog model, AI service, thumbnail generator, controller
+│   │   │   ├── commissions/ # Pharmacy commission ledger & superadmin analytics
+│   │   │   ├── pharmacies/  # Multi-vendor pharmacy accounts
+│   │   │   ├── products/    # Product CRUD, narcotics audit, bulk Excel import
+│   │   │   ├── orders/      # Standard, Instant, Narcotics, and Cancellations
+│   │   │   └── chatbot/     # Groq AI medical assistant
+│   │   └── jobs/            # Refill reminders & weekly report cron schedulers
+│   ├── scripts/             # updateAll60BlogPhotos.js, seedAdmin.js, importProducts.js
+│   └── tests/
+│       ├── unit/            # 24 Jest unit test suites (incl. blogs.test.js)
+│       └── integration/     # medikartWorkflows.test.js (12 core workflows)
+└── docs/                    # Architecture, design system, and PRD specifications
 ```
 
 ---
 
-## Prerequisites
+## 🧪 Testing & Verification
 
-| Requirement | Version |
-|---|---|
-| Node.js | v18+ (v24+ recommended) |
-| npm | v9+ (v10+ recommended) |
-| MongoDB | Atlas Free (M0) cluster or local instance |
-| Redis | v6+ (local or remote) |
-
----
-
-## Setup & Running Locally
-
-### 1. Install Dependencies
-
-```bash
-cd server      && npm install
-cd apps/admin  && npm install
-cd apps/web    && npm install
-```
-
-### 2. Configure Environment Variables
-
-Copy `.env.example` to `.env` inside `server/`, `apps/admin/`, and `apps/web/`, then fill in your values.
-
-Key variables for `server/.env`:
-
-```env
-MONGODB_URI=        # MongoDB Atlas connection string
-REDIS_URL=          # redis://localhost:6379
-JWT_SECRET=         # node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-JWT_EXPIRY=8h
-SMTP_HOST=          # Mailtrap sandbox or production SMTP
-SMTP_PORT=2525
-SMTP_USER=
-SMTP_PASS=
-GROQ_API_KEY=       # Groq Cloud API key
-```
-
-### 3. Seed the Super Admin
-
+### Run Unit Tests (Server):
 ```bash
 cd server
-node scripts/seedAdmin.js
+npm test
 ```
 
-Default **development** credentials (change in production):
-
-| Field | Value |
-|---|---|
-| Email | `admin@medikart.pk` |
-| Password | `medikart@admin123` |
-| Role | `super_admin` |
-
-### 4. Start All Services
-
+### Run Blog System Unit Tests:
 ```bash
-# Backend API — http://localhost:5000
+cd server
+npx jest tests/unit/blogs.test.js
+```
+
+### Run Core Workflows Integration Tests:
+```bash
+cd server
+npx jest tests/integration/medikartWorkflows.test.js --forceExit
+```
+
+### Build Verification:
+```bash
+# Build Next.js Storefront
+cd apps/web && npm run build
+
+# Build Admin Portal
+cd apps/admin && npm run build
+```
+
+---
+
+## ⚡ Quick Start (Local Development)
+
+### 1. Install Dependencies
+```bash
+cd server     && npm install
+cd apps/admin && npm install
+cd apps/web   && npm install
+```
+
+### 2. Configure `.env`
+Ensure `server/.env`, `apps/admin/.env`, and `apps/web/.env` contain required keys (`MONGODB_URI`, `JWT_SECRET`, `GEMINI_API_KEY`, `GROQ_API_KEY`).
+
+### 3. Run Development Servers
+```bash
+# Terminal 1: Backend API (Port 5000)
 cd server && npm run dev
 
-# Admin Dashboard — http://localhost:5173
+# Terminal 2: Admin Dashboard (Port 5173)
 cd apps/admin && npm run dev
 
-# Customer Storefront — http://localhost:3000
+# Terminal 3: Storefront (Port 3000)
 cd apps/web && npm run dev
 ```
 
 ---
 
-## Design System
-
-The active UI theme is **Midnight Teal & Mint Green** — a dark design system explicitly approved by the client.
-
-| Token | HEX | Role |
-|---|---|---|
-| Background | `#0a1628` | Root page background, sidebar base |
-| Surface | `#0f2035` | Cards, panels, modal backgrounds |
-| Surface Elevated | `#162845` | Dropdowns, nav drawers |
-| **Primary (Mint Green)** | `#00d4aa` | CTAs, active states, highlights |
-| Primary Hover | `#00b894` | Button hover / pressed states |
-| Teal Accent | `#14b8a6` | Links, icon accents |
-| Text Primary | `#e2e8f0` | Body text on dark surfaces |
-| Text Secondary | `#94a3b8` | Labels, metadata, inactive tabs |
-| Warning | `#f59e0b` | Narcotics alerts, prescription-pending states |
-| Error | `#ef4444` | Validation errors, critical alerts |
-| Success | `#10b981` | Confirmed orders, positive status badges |
-
-Full specification including typography, animations, and accessibility: [`docs/design.md`](docs/design.md)
-
----
-
-## Security Architecture
-
-| Concern | Implementation |
-|---|---|
-| **Authentication** | JWT Bearer header on all admin routes — no session cookies, so CSRF is not applicable by design |
-| **Authorization** | Role-based (`super_admin` / `admin`) + module-level permissions enforced server-side on every request |
-| **2FA** | TOTP via speakeasy, optional per admin account |
-| **Password storage** | bcrypt (cost factor 12); `passwordHash` field excluded from all queries by default (`select: false`) |
-| **Rate limiting** | Redis-backed token-bucket limiter applied globally; stricter per-route limits on OTP, login, and chatbot |
-| **Input validation** | Zod on all request bodies; explicit field allow-lists prevent mass-assignment |
-| **File uploads** | Real MIME-type validation (not extension-only); Sharp processing before storage |
-| **Timing attacks** | Constant-time bcrypt compare even when the user does not exist (dummy hash path) |
-
----
-
-## Key Business Rules
-
-- **Narcotics:** Any cart containing a narcotics-flagged product is **COD-only**. A prescription file is required. Admin must approve/reject before the order proceeds.
-- **Delivery charges:** Calculated server-side exclusively — PKR 250 for configured cities, PKR 500 default. Clients cannot inject a charge value.
-- **Discounts:** Product-level > Category-level > Storewide. Precedence model — never stacked.
-- **Payments:** Card payment (Kuickpay hosted checkout) is never offered for narcotics orders. Webhook payloads are always independently verified via the status-check API before the order is marked paid.
-- **Refunds:** Kuickpay has no refund/void API. Refunds are tracked manually (`refund_pending` → `refunded`) with admin sign-off and a mandatory activity log entry.
-- **Chatbot:** Narcotics products are hard-filtered from all AI suggestions regardless of prompt. Every response includes the medical disclaimer.
-- **Google Sheets sync:** Orders are queued and retried up to 4 times on failure — a Sheets outage never blocks order creation.
-
----
-
-## Documentation
-
-| File | Contents |
-|---|---|
-| [`docs/design.md`](docs/design.md) | Complete UI/UX design system — canonical Midnight Teal dark palette, typography, animations, accessibility guidelines |
-| [`docs/phases.md`](docs/phases.md) | Delivery plan (Phases 1–31) + Addendum A (dark theme) + Addendum B (Messages inbox) + Addendum C (Kuickpay answer sheet) |
-| [`docs/rules.md`](docs/rules.md) | Architecture, coding, and security rules enforced throughout the project |
-| [`docs/PRD.pdf`](docs/PRD.pdf) | Original Product Requirements Document |
-
----
-
-## Repository
-
-**GitHub:** [https://github.com/mohsinshah12309/Medikart](https://github.com/mohsinshah12309/Medikart)  
-**Account:** mohsinalishahnaqvi123@gmail.com
+## 📝 License
+Proprietary — Developed for Medikart Pakistan.
