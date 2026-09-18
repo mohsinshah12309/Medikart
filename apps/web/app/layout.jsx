@@ -8,6 +8,7 @@ import InteractiveLogo from '../components/InteractiveLogo';
 import HeaderNav from '../components/HeaderNav';
 import DvagoSearchBar from '../components/DvagoSearchBar';
 import HomeOnlyBanners from '../components/HomeOnlyBanners';
+import Footer from '../components/Footer';
 import CookieConsentBanner from '../components/CookieConsentBanner';
 import AnalyticsProvider from '../components/AnalyticsProvider';
 import dynamic from 'next/dynamic';
@@ -202,43 +203,12 @@ export default async function RootLayout({ children }) {
               {children}
             </main>
 
-            {/* Warm Clinical Footer with Amber Accents */}
-            <footer className="bg-white border-t border-[#F3EFE6] py-10 mt-12 relative z-10 shadow-sm">
-              <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-[#F3EFE6]">
-                  <Link href="/" aria-label="Medikart Home">
-                    <InteractiveLogo />
-                  </Link>
-                  <div className="flex flex-wrap justify-center gap-6 text-sm text-slate-600 font-medium">
-                    <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
-                    <Link href="/instant-order" className="hover:text-amber-600 transition-colors">Instant Order</Link>
-                    <Link href="/blogs" className="hover:text-amber-600 transition-colors">Health Blogs</Link>
-                    <Link href="/about" className="hover:text-amber-600 transition-colors">About Us</Link>
-                    <Link href="/contact" className="hover:text-amber-600 transition-colors">Contact Support</Link>
-                    <Link href="/privacy-policy" className="hover:text-amber-600 transition-colors font-semibold">Privacy Policy</Link>
-                    <Link href="/terms-and-conditions" className="hover:text-amber-600 transition-colors font-semibold">Terms &amp; Conditions</Link>
-                  </div>
-                </div>
-                <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-                  <p>&copy; {new Date().getFullYear()} Medikart. All rights reserved. Your trusted healthcare partner.</p>
-                  <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-semibold">
-                    <span className="text-slate-700">Cash on Delivery</span>
-                    <span>•</span>
-                    <span className="text-slate-700">Online Card Payments (Kuickpay)</span>
-                    <span>•</span>
-                    <span className="text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full font-bold">Narcotics Compliance Active</span>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-3 text-[11px]">
-                    <span className="inline-flex items-center gap-1 text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full font-semibold">
-                      🔐 256-Bit SSL Encrypted
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full font-semibold border border-emerald-100">
-                      🛡️ Authentic Medicines Guaranteed
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </footer>
+            {/* Full-Featured Brand Yellow Footer & Disclaimer Bar */}
+            <Footer
+              initialCategories={categories}
+              contactPhone={contactPhone}
+              contactEmail={contactEmail}
+            />
 
             {/* Cookie Consent Banner */}
             <CookieConsentBanner />
