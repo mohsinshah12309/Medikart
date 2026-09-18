@@ -318,7 +318,7 @@ button:focus-visible {
 .animate-blog-vertical {
   display: flex;
   flex-direction: column;
-  animation: blog-scroll-up 40s linear infinite;
+  animation: blog-scroll-up 110s linear infinite;
   will-change: transform;
 }
 

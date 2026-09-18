@@ -220,6 +220,15 @@ export default function DvagoSearchBar({ className = "" }) {
     const cleanQuery = (searchTerm !== undefined ? searchTerm : query).trim();
     if (!cleanQuery) return;
 
+    // Track search query popularity in background
+    try {
+      fetch(`${apiUrl}/search/record`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: cleanQuery }),
+      }).catch(() => {});
+    } catch (_) {}
+
     saveRecentSearch(cleanQuery);
     setQuery(cleanQuery);
     setIsOpen(false);
@@ -604,17 +613,20 @@ export default function DvagoSearchBar({ className = "" }) {
                         Trending Searches
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {suggestions.trendingSearches.map((term, idx) => (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => executeSearch(term)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-50 hover:bg-amber-500 hover:text-slate-950 text-slate-700 rounded-full text-xs font-semibold border border-slate-200 hover:border-amber-400 transition-all shadow-2xs cursor-pointer group"
-                          >
-                            <ArrowUpRight className="w-3.5 h-3.5 text-amber-500 group-hover:text-slate-950" />
-                            <span>{term}</span>
-                          </button>
-                        ))}
+                        {suggestions.trendingSearches.map((term, idx) => {
+                          const name = typeof term === "string" ? term : term.name;
+                          return (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => executeSearch(name)}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-50 hover:bg-amber-500 hover:text-slate-950 text-slate-700 rounded-full text-xs font-semibold border border-slate-200 hover:border-amber-400 transition-all shadow-2xs cursor-pointer group"
+                            >
+                              <ArrowUpRight className="w-3.5 h-3.5 text-amber-500 group-hover:text-slate-950" />
+                              <span>{name}</span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   )}

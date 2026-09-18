@@ -8,7 +8,6 @@ import CareByConditionSection from '../components/CareByConditionSection';
 import MidPagePromoBanners from '../components/MidPagePromoBanners';
 import BrandsSection from '../components/BrandsSection';
 import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanners';
-import MonthlyRefillSection from '../components/monthlyRefill/MonthlyRefillSection';
 import BlogsSection from '../components/BlogsSection';
 import RightBlogSidebar from '../components/RightBlogSidebar';
 
@@ -137,8 +136,12 @@ export default async function Home({ searchParams }) {
         {/* 1. Care By Condition Section (Prominently placed at the top) */}
         <CareByConditionSection initialConditions={conditions} />
 
-        {/* 2. Official Master Brand Hero Section */}
-        <OfficialHeroSection initialCity="Lahore" categories={categories} />
+        {/* 2. Official Master Brand Hero Section (Contains Integrated Monthly Medicine Refill) */}
+        <OfficialHeroSection
+          initialCity="Lahore"
+          categories={categories}
+          initialProducts={products.slice(0, 6)}
+        />
 
         {/* 3. Hero Promotional Banner Carousel (Full Width) */}
         {heroBanners && heroBanners.length > 0 && (
@@ -156,9 +159,6 @@ export default async function Home({ searchParams }) {
 
         {/* 7. Top Pharmaceutical Brands Section */}
         <BrandsSection />
-
-        {/* 7.5. 30-Day Monthly Medicine Refill Routine Section */}
-        <MonthlyRefillSection initialProducts={products.slice(0, 6)} />
 
         {/* 8. Health & Wellness Blogs Slider (Fixed Position & Continuous Animation) */}
         <BlogsSection />

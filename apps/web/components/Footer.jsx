@@ -8,7 +8,6 @@ import {
   Mail,
   MapPin,
   Clock,
-  ShieldCheck,
   Lock,
   CreditCard,
   Banknote,
@@ -426,11 +425,6 @@ export default function Footer({
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700">
                 <CreditCard className="w-3.5 h-3.5 text-slate-600" />
                 <span>Kuickpay Online Card</span>
-              </span>
-
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
-                <span>DRAP Compliance</span>
               </span>
 
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900">

@@ -3,9 +3,12 @@ import { adminFetch, API_URL } from "../apiClient";
 
 export default function Pharmacies({ token, adminUser, initialTab, onNavigateToOrders }) {
   const isSuperAdmin = adminUser?.role === "super_admin";
-  const assignedPharmacyId = adminUser?.assignedPharmacyId;
+  const assignedPharmacyId = typeof adminUser?.assignedPharmacyId === "object"
+    ? adminUser?.assignedPharmacyId?._id?.toString()
+    : adminUser?.assignedPharmacyId?.toString() || null;
+  const isBranchScoped = !isSuperAdmin && Boolean(assignedPharmacyId);
   const userPerms = Array.isArray(adminUser?.permissions) ? adminUser.permissions : [];
-  const canManagePharmacies = isSuperAdmin || userPerms.includes("manage_pharmacies");
+  const canManagePharmacies = isSuperAdmin || (!isBranchScoped && userPerms.includes("manage_pharmacies"));
 
   const [activeTab, setActiveTab] = useState(initialTab?.tab || "directory"); // 'directory' | 'reports' | 'commissions'
   const [allPharmacies, setAllPharmacies] = useState([]);
@@ -43,7 +46,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
   const [dateFilter, setDateFilter] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [selectedPharmacyFilter, setSelectedPharmacyFilter] = useState("");
+  const [selectedPharmacyFilter, setSelectedPharmacyFilter] = useState(assignedPharmacyId || "");
 
   // Commission Tracking state
   const [selectedCommPharmacy, setSelectedCommPharmacy] = useState(assignedPharmacyId || "");
@@ -89,24 +92,24 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     if (activeTab === "reports") {
       fetchReports();
     }
-  }, [activeTab, dateFilter, startDate, endDate, selectedPharmacyFilter, cityFilter]);
+  }, [activeTab, dateFilter, startDate, endDate, selectedPharmacyFilter, cityFilter, assignedPharmacyId]);
 
   // Set default selected pharmacy for commissions when pharmacies load
   useEffect(() => {
-    if (!selectedCommPharmacy && allPharmacies.length > 0) {
-      if (assignedPharmacyId) {
-        setSelectedCommPharmacy(assignedPharmacyId);
-      } else {
-        setSelectedCommPharmacy(allPharmacies[0]._id);
-      }
+    if (isBranchScoped && assignedPharmacyId) {
+      setSelectedCommPharmacy(assignedPharmacyId);
+      setSelectedPharmacyFilter(assignedPharmacyId);
+    } else if (!selectedCommPharmacy && allPharmacies.length > 0) {
+      setSelectedCommPharmacy(allPharmacies[0]._id);
     }
-  }, [allPharmacies, assignedPharmacyId, selectedCommPharmacy]);
+  }, [allPharmacies, assignedPharmacyId, isBranchScoped, selectedCommPharmacy]);
 
   useEffect(() => {
-    if (activeTab === "commissions" && selectedCommPharmacy) {
-      fetchCommissionData(selectedCommPharmacy);
+    const targetPharmacy = isBranchScoped ? assignedPharmacyId : selectedCommPharmacy;
+    if (activeTab === "commissions" && targetPharmacy) {
+      fetchCommissionData(targetPharmacy);
     }
-  }, [activeTab, selectedCommPharmacy]);
+  }, [activeTab, selectedCommPharmacy, assignedPharmacyId, isBranchScoped]);
 
   // Cleanup reveal timers on unmount
   useEffect(() => {
@@ -145,23 +148,34 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     }
   };
 
-  // Filtered pharmacies for Directory tab based on selected city filter
-  const filteredPharmacies = cityFilter
-    ? allPharmacies.filter((p) => {
-        if (!Array.isArray(p.cityIds)) return false;
-        return p.cityIds.some((c) => {
-          const cId = c && typeof c === "object" ? c._id : c;
-          return cId === cityFilter;
-        });
-      })
-    : allPharmacies;
+  // Matched assigned pharmacy object
+  const assignedPharmacyObj = allPharmacies.find((p) => p._id === assignedPharmacyId) ||
+    (typeof adminUser?.assignedPharmacyId === "object" ? adminUser?.assignedPharmacyId : null);
+
+  // Filtered pharmacies for Directory tab based on selected city filter / branch scope
+  const filteredPharmacies = isBranchScoped
+    ? (assignedPharmacyObj
+        ? [assignedPharmacyObj]
+        : (allPharmacies.filter((p) => p._id === assignedPharmacyId).length > 0
+            ? allPharmacies.filter((p) => p._id === assignedPharmacyId)
+            : allPharmacies.slice(0, 1)))
+    : (cityFilter
+        ? allPharmacies.filter((p) => {
+            if (!Array.isArray(p.cityIds)) return false;
+            return p.cityIds.some((c) => {
+              const cId = c && typeof c === "object" ? c._id : c;
+              return cId === cityFilter;
+            });
+          })
+        : allPharmacies);
 
   const fetchReports = async () => {
     try {
       setReportsLoading(true);
       const params = new URLSearchParams();
-      if (selectedPharmacyFilter) params.append("pharmacyId", selectedPharmacyFilter);
-      if (cityFilter) params.append("city", cityFilter);
+      const targetPharmacyId = isBranchScoped ? assignedPharmacyId : selectedPharmacyFilter;
+      if (targetPharmacyId) params.append("pharmacyId", targetPharmacyId);
+      if (!isBranchScoped && cityFilter) params.append("city", cityFilter);
 
       let s = startDate;
       let e = endDate;
@@ -194,12 +208,13 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
   };
 
   const fetchCommissionData = async (pharmacyId) => {
-    if (!pharmacyId) return;
+    const targetPharmacy = isBranchScoped ? assignedPharmacyId : pharmacyId;
+    if (!targetPharmacy) return;
     try {
       setCommissionLoading(true);
       const [balRes, payRes] = await Promise.all([
-        adminFetch(`/admin/commissions/pharmacy/${pharmacyId}/balance`),
-        adminFetch(`/admin/commissions/pharmacy/${pharmacyId}`),
+        adminFetch(`/admin/commissions/pharmacy/${targetPharmacy}/balance`),
+        adminFetch(`/admin/commissions/pharmacy/${targetPharmacy}`),
       ]);
 
       setCommissionBalance(balRes.data?.balance || balRes.data || { outstandingBalance: 0 });
@@ -1624,15 +1639,16 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
 
                 <div className="form-group">
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
-                    Branch Code *
+                    Branch Code * {isBranchScoped && <span style={{ fontSize: "0.75rem", color: "#64748b" }}>(Locked)</span>}
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    style={{ width: "100%", padding: "0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1", textTransform: "uppercase" }}
+                    style={{ width: "100%", padding: "0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1", textTransform: "uppercase", background: isBranchScoped ? "#f1f5f9" : "white" }}
                     value={formData.code}
                     onChange={(e) => setFormData({ ...formData, code: e.target.value })}
                     placeholder="LHR-01"
+                    disabled={isBranchScoped}
                     required
                   />
                 </div>
@@ -1670,7 +1686,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
 
                 <div className="form-group">
                   <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
-                    Medikart % Commission
+                    Medikart % {isBranchScoped && <span style={{ fontSize: "0.75rem", color: "#64748b" }}>(Locked)</span>}
                   </label>
                   <div style={{ position: "relative" }}>
                     <input
@@ -1679,10 +1695,11 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                       max="100"
                       step="0.1"
                       className="form-control"
-                      style={{ width: "100%", padding: "0.5rem 1.75rem 0.5rem 0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1", fontWeight: 700 }}
+                      style={{ width: "100%", padding: "0.5rem 1.75rem 0.5rem 0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1", fontWeight: 700, background: isBranchScoped ? "#f1f5f9" : "white" }}
                       value={formData.medikartPercentage}
                       onChange={(e) => setFormData({ ...formData, medikartPercentage: e.target.value === "" ? "" : Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)) })}
                       placeholder="e.g. 5"
+                      disabled={isBranchScoped}
                     />
                     <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", color: "#64748b", fontWeight: 800, fontSize: "0.85rem" }}>%</span>
                   </div>
@@ -1727,18 +1744,19 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               {/* City Multi-Select Association */}
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.35rem" }}>
-                  Delivery Cities Served by this Branch
+                  Delivery Cities Served by this Branch {isBranchScoped && <span style={{ fontSize: "0.75rem", color: "#64748b" }}>(Locked to HQ)</span>}
                 </label>
-                <div style={{ maxHeight: "120px", overflowY: "auto", border: "1px solid #cbd5e1", borderRadius: "8px", padding: "0.5rem", background: "#f8fafc" }}>
+                <div style={{ maxHeight: "120px", overflowY: "auto", border: "1px solid #cbd5e1", borderRadius: "8px", padding: "0.5rem", background: isBranchScoped ? "#f1f5f9" : "#f8fafc" }}>
                   {cities.length === 0 ? (
                     <span style={{ fontSize: "0.8rem", color: "#64748b" }}>No delivery cities available.</span>
                   ) : (
                     cities.map((c) => (
-                      <label key={c._id} style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.25rem 0", fontSize: "0.85rem", cursor: "pointer" }}>
+                      <label key={c._id} style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.25rem 0", fontSize: "0.85rem", cursor: isBranchScoped ? "default" : "pointer" }}>
                         <input
                           type="checkbox"
                           checked={formData.cityIds.includes(c._id)}
-                          onChange={() => handleToggleCity(c._id)}
+                          onChange={() => !isBranchScoped && handleToggleCity(c._id)}
+                          disabled={isBranchScoped}
                         />
                         <span>{c.name} (PKR {c.deliveryCharge})</span>
                       </label>
@@ -1755,11 +1773,12 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                   type="checkbox"
                   id="pharmacyActiveToggle"
                   checked={formData.active}
-                  onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                  onChange={(e) => !isBranchScoped && setFormData({ ...formData, active: e.target.checked })}
+                  disabled={isBranchScoped}
                   style={{ width: "16px", height: "16px" }}
                 />
-                <label htmlFor="pharmacyActiveToggle" style={{ fontSize: "0.85rem", fontWeight: 600, cursor: "pointer" }}>
-                  Active Branch (Available for Order Fulfillment Assignment)
+                <label htmlFor="pharmacyActiveToggle" style={{ fontSize: "0.85rem", fontWeight: 600, cursor: isBranchScoped ? "default" : "pointer" }}>
+                  Active Branch (Available for Order Fulfillment Assignment) {isBranchScoped && <span style={{ fontSize: "0.75rem", color: "#64748b" }}>(Managed by Super Admin)</span>}
                 </label>
               </div>
 

@@ -4,13 +4,28 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { triggerCategorySelect, triggerCatalogSearch, scrollToCatalog } from '../lib/catalogEvents';
+import MonthlyRefillSection from './monthlyRefill/MonthlyRefillSection';
 
 const DEFAULT_CITIES = ['Lahore'];
 
-export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [] }) {
+export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [], initialProducts = [] }) {
   const [selectedCity, setSelectedCity] = useState(initialCity);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const [cities, setCities] = useState(DEFAULT_CITIES);
+
+  // Dynamic trending searches state with rich pharmacy staples
+  const [trendingSearches, setTrendingSearches] = useState([
+    { icon: '💊', name: 'Panadol' },
+    { icon: '💊', name: 'Augmentin' },
+    { icon: '✨', name: 'Surbex Z' },
+    { icon: '🍼', name: 'Baby Diapers' },
+    { icon: '✨', name: 'Centrum' },
+    { icon: '🌿', name: 'Nexum' },
+    { icon: '💊', name: 'Brufen' },
+    { icon: '✨', name: 'CAC 1000 Plus' },
+    { icon: '🩹', name: 'First Aid' },
+    { icon: '🧴', name: 'Facewash' },
+  ]);
 
   // Fetch dynamic active cities from backend API (strictly from DB)
   useEffect(() => {
@@ -28,6 +43,21 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       })
       .catch((err) => {
         console.warn('Could not load dynamic cities, using defaults:', err);
+      });
+  }, []);
+
+  // Fetch dynamic trending searches from backend API
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+    fetch(`${apiUrl}/trending-searches?limit=12`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data?.trendingSearches && data.data.trendingSearches.length > 0) {
+          setTrendingSearches(data.data.trendingSearches);
+        }
+      })
+      .catch((err) => {
+        console.warn('Could not load dynamic trending searches:', err);
       });
   }, []);
 
@@ -55,23 +85,26 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
 
   const handleQuickSearch = (term, e) => {
     if (e) e.preventDefault();
+    if (!term) return;
+
+    // Record search hit in backend asynchronously
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+      fetch(`${apiUrl}/search/record`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: term }),
+      }).catch(() => {});
+    } catch (_) {}
+
     triggerCatalogSearch(term);
     scrollToCatalog();
   };
 
   const trustBadges = [
     { icon: '⚡', label: 'Fast Delivery' },
-    { icon: '📍', label: 'Nearest Pharmacies' },
     { icon: '🛡️', label: 'Trusted & Genuine' },
     { icon: '❤️', label: 'Better Health' },
-  ];
-
-  const quickSearches = [
-    { icon: '💊', name: 'Panadol' },
-    { icon: '🌿', name: 'Nexum' },
-    { icon: '🍼', name: 'Baby Diapers' },
-    { icon: '✨', name: 'Multivitamins' },
-    { icon: '🩹', name: 'First Aid' },
   ];
 
   // 6 Core Categories with Authentic Commercial Studio Photography
@@ -157,7 +190,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               Authentic prescription and daily wellness medicines delivered rapidly from licensed neighborhood pharmacies right to your doorstep.
             </p>
 
-            {/* 4 Trust Badges in Interactive Pills */}
+            {/* Trust Badges in Interactive Pills */}
             <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full pt-0.5">
               {trustBadges.map((badge, idx) => (
                 <div 
@@ -170,24 +203,28 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               ))}
             </div>
 
-            {/* Interactive Trending Quick Searches Bar (Fills empty space beautifully) */}
+            {/* Interactive Trending Quick Searches Bar (Dynamic Most-Searched Products) */}
             <div className="w-full pt-2 flex flex-col gap-1.5 border-t border-amber-400/40">
               <div className="flex items-center gap-1.5 text-[11px] font-black text-amber-950 uppercase tracking-wide">
                 <span className="text-amber-700 animate-pulse">🔥</span>
                 <span>Trending Searches:</span>
               </div>
               <div className="flex flex-wrap items-center gap-1.5">
-                {quickSearches.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={(e) => handleQuickSearch(item.name, e)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/80 hover:bg-white hover:border-amber-400 hover:scale-105 active:scale-95 transition-all duration-150 border border-amber-300/80 text-[11px] font-bold text-slate-900 shadow-2xs cursor-pointer group"
-                  >
-                    <span className="text-[11px] group-hover:scale-110 transition-transform">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </button>
-                ))}
+                {trendingSearches.map((item, idx) => {
+                  const name = typeof item === 'string' ? item : item.name;
+                  const icon = typeof item === 'object' && item.icon ? item.icon : '🔍';
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={(e) => handleQuickSearch(name, e)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/80 hover:bg-white hover:border-amber-400 hover:scale-105 active:scale-95 transition-all duration-150 border border-amber-300/80 text-[11px] font-bold text-slate-900 shadow-2xs cursor-pointer group"
+                    >
+                      <span className="text-[11px] group-hover:scale-110 transition-transform">{icon}</span>
+                      <span>{name}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -513,6 +550,13 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
 
         </div>
 
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────────────
+          2.5. 30-DAY MONTHLY MEDICINE REFILL ORDER SECTION
+      ────────────────────────────────────────────────────────────────────── */}
+      <div className="w-full relative z-10">
+        <MonthlyRefillSection initialProducts={initialProducts} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────

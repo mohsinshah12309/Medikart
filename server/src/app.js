@@ -49,6 +49,8 @@ const adminUserRoutes = require("./modules/admin-users/adminUser.routes");
 const customerRoutes = require("./modules/customers/customer.routes");
 const wishlistRoutes = require("./modules/customers/wishlist.routes");
 const monthlyRefillRoutes = require("./modules/customers/monthlyRefill.routes");
+const cartRoutes = require("./modules/cart/cart.routes");
+const cookieParser = require("./middleware/cookieParser");
 
 // Phase 20 — Admin Account Management (Super Admin)
 const adminUserManagementRoutes = require("./modules/admin-users/adminUserManagement.routes");
@@ -171,6 +173,7 @@ app.use(
 // 4. Request Size Limits (Phase 22 / Step 6)
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
+app.use(cookieParser);
 
 // 5. Rate Limiters Setup (Phase 22 / Step 2)
 const isDev = process.env.NODE_ENV === "development";
@@ -238,6 +241,7 @@ const paymentRoutes = require("./modules/payments/payment.routes");
 // Mounted BEFORE the auth middleware so public endpoints are never blocked.
 app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
 app.use("/api/v1/auth/customer", authLimiter, customerRoutes);
+app.use("/api/v1/cart", storefrontLimiter, cartRoutes);
 app.use("/api/v1/wishlist", storefrontLimiter, wishlistRoutes);
 app.use("/api/v1/customer/monthly-refill", storefrontLimiter, monthlyRefillRoutes);
 app.use("/api/v1/otp", otpLimiter, otpRoutes);

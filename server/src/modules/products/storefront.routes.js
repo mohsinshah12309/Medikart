@@ -7,6 +7,7 @@ const { getStorewideDiscount } = require("../settings/settings.service");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getDeliveryCharge } = require("../cities/city.service");
 const { formatProductWithImages } = require("./product.service");
+const { recordSearch, getTrendingSearches, getTrendingProducts } = require("../search/search.service");
 const redisClient = require("../../config/redisClient");
 
 // Dev-only cache logger to avoid production event-loop and I/O overhead
@@ -22,6 +23,13 @@ router.get("/products", async (req, res, next) => {
     const { search, categoryId, condition, isNarcotic, page = 1, limit = 20 } = req.query;
     const p = parseInt(page, 10) || 1;
     const l = parseInt(limit, 10) || 20;
+
+    // Track search query popularity asynchronously in background
+    if (search && search.trim()) {
+      recordSearch(search).catch((err) =>
+        console.error("[SearchTracking] Error recording search:", err.message)
+      );
+    }
 
     // Cache check (bypassable for load testing)
     const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}`;
@@ -275,46 +283,20 @@ const getSuggestionsHandler = async (req, res, next) => {
     logCache("MISS", cacheKey);
 
     if (!q) {
-      // Return Trending Searches and Trending Products
-      const trendingSearches = [
-        "Centrum",
-        "Surbex Z",
-        "Panadol",
-        "Brufen",
-        "Augmentin",
-        "Citro",
-        "Viagra",
-        "Vitamin D",
-        "Nutrifactor",
-        "Livity",
-        "Face wash",
-      ];
+      // Return dynamic Trending Searches and expanded Trending Products
+      const [trendingList, trendingProducts] = await Promise.all([
+        getTrendingSearches(15),
+        getTrendingProducts(12, storewidePercent),
+      ]);
 
-      const featuredProducts = await Product.find({ active: true })
-        .populate("categoryIds", "name slug discount active")
-        .sort({ isFeatured: -1, createdAt: -1 })
-        .limit(6);
-
-      const trendingProducts = featuredProducts.map((prod) => {
-        const formatted = formatProductWithImages(prod);
-        const category = formatted.categoryIds?.[0] ?? null;
-        const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
-          formatted,
-          category,
-          storewidePercent
-        );
-        return {
-          ...formatted,
-          effectivePrice,
-          appliedDiscount,
-          discountPercent,
-        };
-      });
+      // Array of string terms for compatibility with existing string consumers
+      const trendingSearches = trendingList.map((t) => t.name);
 
       const responseBody = {
         status: "success",
         data: {
           trendingSearches,
+          trendingItems: trendingList, // Rich objects with { name, icon, count }
           trendingProducts,
           matchingSearches: [],
           matchingProducts: [],
@@ -323,7 +305,7 @@ const getSuggestionsHandler = async (req, res, next) => {
       };
 
       try {
-        await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 120);
+        await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 60);
       } catch (_) {}
 
       return res.status(200).json(responseBody);
@@ -469,6 +451,76 @@ const getSuggestionsHandler = async (req, res, next) => {
 
 router.get("/search/suggestions", getSuggestionsHandler);
 router.get("/products/suggestions", getSuggestionsHandler);
+
+// POST /api/v1/search/record - Record a search query to update dynamic search popularity
+router.post("/search/record", async (req, res, next) => {
+  try {
+    const { query } = req.body || {};
+    if (!query || typeof query !== "string" || !query.trim()) {
+      return res.status(400).json({ status: "fail", message: "Query string is required" });
+    }
+
+    const recorded = await recordSearch(query);
+
+    // Invalidate suggestion/trending caches so next fetch is immediately fresh
+    try {
+      await Promise.all([
+        redisClient.del("cache:storefront:suggestions:__trending__"),
+        redisClient.del("cache:storefront:trending-searches"),
+      ]);
+    } catch (_) {}
+
+    res.status(200).json({
+      status: "success",
+      message: "Search recorded successfully",
+      data: recorded,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/v1/trending-searches - Public dynamic trending searches and products
+router.get("/trending-searches", async (req, res, next) => {
+  try {
+    const limit = parseInt(req.query.limit, 10) || 12;
+    const cacheKey = `cache:storefront:trending-searches:limit:${limit}`;
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (_) {}
+
+    if (cached) {
+      logCache("HIT", cacheKey);
+      return res.status(200).json(JSON.parse(cached));
+    }
+    logCache("MISS", cacheKey);
+
+    const storewidePercent = await getStorewideDiscount();
+    const [trendingSearches, trendingProducts] = await Promise.all([
+      getTrendingSearches(limit),
+      getTrendingProducts(10, storewidePercent),
+    ]);
+
+    const responseBody = {
+      status: "success",
+      data: {
+        trendingSearches,
+        trendingProducts,
+      },
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 60);
+    } catch (_) {}
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // GET /api/v1/delivery-charge - Public delivery charge calculator
 router.get("/delivery-charge", async (req, res, next) => {

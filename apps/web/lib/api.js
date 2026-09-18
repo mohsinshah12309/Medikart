@@ -128,3 +128,62 @@ export async function getBanners(placement) {
 export async function getConditions() {
   return fetchApi('/conditions', { next: { revalidate: 60 } });
 }
+
+// ─── Cart API ───────────────────────────────────────────────────────────────
+export async function getCartApi(token) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  return fetchApi('/cart', {
+    headers,
+    credentials: 'include',
+    cache: 'no-store',
+  });
+}
+
+export async function addToCartApi(productId, quantity = 1, token) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  return fetchApi('/cart/items', {
+    method: 'POST',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify({ productId, quantity }),
+  });
+}
+
+export async function updateCartItemApi(productId, quantity, token) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  return fetchApi(`/cart/items/${productId}`, {
+    method: 'PATCH',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify({ quantity }),
+  });
+}
+
+export async function removeCartItemApi(productId, token) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  return fetchApi(`/cart/items/${productId}`, {
+    method: 'DELETE',
+    headers,
+    credentials: 'include',
+  });
+}
+
+export async function clearCartApi(token) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  return fetchApi('/cart', {
+    method: 'DELETE',
+    headers,
+    credentials: 'include',
+  });
+}
+
+export async function mergeCartApi(token) {
+  if (!token) return;
+  return fetchApi('/cart/merge', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    credentials: 'include',
+    body: JSON.stringify({}),
+  });
+}
+

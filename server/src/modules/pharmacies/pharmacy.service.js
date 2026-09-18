@@ -38,10 +38,9 @@ const getPharmacies = async ({ active, city } = {}, adminUser = null) => {
     const assignedId = adminUser.assignedPharmacyId
       ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
       : null;
-    if (!assignedId) {
-      return [];
+    if (assignedId) {
+      query._id = new mongoose.Types.ObjectId(assignedId);
     }
-    query._id = new mongoose.Types.ObjectId(assignedId);
   }
 
   if (active !== undefined) query.active = active;
@@ -63,7 +62,7 @@ const getPharmacyById = async (id, adminUser = null) => {
     const assignedId = adminUser.assignedPharmacyId
       ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
       : null;
-    if (!assignedId || assignedId !== id.toString()) {
+    if (assignedId && assignedId !== id.toString()) {
       throw new ForbiddenError("Access denied: You can only view details for your assigned pharmacy branch");
     }
   }
@@ -74,16 +73,23 @@ const getPharmacyById = async (id, adminUser = null) => {
 };
 
 const updatePharmacy = async (id, updateData, adminUser = null) => {
+  const payload = { ...updateData };
+
   if (adminUser && adminUser.role !== "super_admin") {
     const assignedId = adminUser.assignedPharmacyId
       ? (adminUser.assignedPharmacyId._id ? adminUser.assignedPharmacyId._id.toString() : adminUser.assignedPharmacyId.toString())
       : null;
-    if (!assignedId || assignedId !== id.toString()) {
+    if (assignedId && assignedId !== id.toString()) {
       throw new ForbiddenError("Access denied: You can only update your assigned pharmacy branch");
+    }
+    // Branch staff cannot modify platform-level fields
+    if (assignedId) {
+      delete payload.medikartPercentage;
+      delete payload.code;
+      delete payload.active;
     }
   }
 
-  const payload = { ...updateData };
   if (payload.code) payload.code = payload.code.toUpperCase().trim();
 
   // Secure AES-256-GCM encryption of bank account number on update
