@@ -10,9 +10,11 @@
  */
 
 const ActivityLog = require("./activityLog.model");
+const { sanitizeSensitiveData } = require("../../utils/sanitizeLog");
 
 /**
  * Creates an activity log entry asynchronously without throwing/blocking.
+ * Automatically redacts sensitive fields (passwords, tokens, OTPs, etc.).
  *
  * @param {Object} logData
  * @param {Object} logData.actor - req.admin identity
@@ -25,12 +27,12 @@ const ActivityLog = require("./activityLog.model");
 const logActivity = async ({ actor, action, entityType, entityId, before, after }) => {
   try {
     const entry = await ActivityLog.create({
-      actor,
+      actor: sanitizeSensitiveData(actor),
       action,
       entityType,
       entityId,
-      before,
-      after,
+      before: sanitizeSensitiveData(before),
+      after: sanitizeSensitiveData(after),
       timestamp: new Date(),
     });
     return entry;

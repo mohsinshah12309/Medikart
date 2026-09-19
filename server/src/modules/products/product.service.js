@@ -19,6 +19,7 @@ const redisClient = require("../../config/redisClient");
 const createProduct = async (productData) => {
   const product = new Product(productData);
   await product.save();
+  await invalidateProductCache(product._id);
   return product;
 };
 
@@ -73,7 +74,8 @@ const getAllProducts = async (filters = {}, page = 1, limit = 20) => {
     .populate("categoryIds", "name slug")
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .lean();
 
   return products.map(formatProductWithImages);
 };
@@ -85,7 +87,7 @@ const getProductById = async (productId) => {
   const product = await Product.findById(productId).populate(
     "categoryIds",
     "name slug"
-  );
+  ).lean();
 
   if (!product) {
     throw new NotFoundError("Product not found");
@@ -94,23 +96,24 @@ const getProductById = async (productId) => {
   return formatProductWithImages(product);
 };
 
-/**
- * Update a product by ID
- */
 /** Helper: invalidate product storefront cache in Redis */
 const invalidateProductCache = async (productId) => {
   try {
+    const delPromises = [];
     if (productId) {
-      await redisClient.del(`cache:storefront:product:${productId}`);
+      delPromises.push(redisClient.del(`cache:storefront:product:${productId}`));
     }
-    if (typeof redisClient.keys === "function") {
-      const productKeys = await redisClient.keys("cache:storefront:products:*");
-      if (productKeys && productKeys.length > 0) {
-        await redisClient.del(...productKeys);
-      }
+    if (typeof redisClient.deleteKeysByPattern === "function") {
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:products:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:suggestions:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:trending-searches:*"));
+    } else if (typeof redisClient.keys === "function") {
+      const keys = await redisClient.keys("cache:storefront:products:*");
+      if (keys && keys.length > 0) delPromises.push(redisClient.del(...keys));
     }
+    await Promise.allSettled(delPromises);
   } catch (err) {
-    console.error("[Cache] Invalidation error:", err.message);
+    console.error("[Cache] Product invalidation error:", err.message);
   }
 };
 

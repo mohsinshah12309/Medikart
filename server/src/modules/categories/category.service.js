@@ -14,13 +14,17 @@ const redisClient = require("../../config/redisClient");
 
 const invalidateCategoryCache = async () => {
   try {
-    await redisClient.del("cache:storefront:categories");
-    if (typeof redisClient.keys === "function") {
+    const delPromises = [redisClient.del("cache:storefront:categories")];
+    if (typeof redisClient.deleteKeysByPattern === "function") {
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:products:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:suggestions:*"));
+    } else if (typeof redisClient.keys === "function") {
       const productKeys = await redisClient.keys("cache:storefront:products:*");
       if (productKeys && productKeys.length > 0) {
-        await redisClient.del(...productKeys);
+        delPromises.push(redisClient.del(...productKeys));
       }
     }
+    await Promise.allSettled(delPromises);
   } catch (err) {
     console.error("[Cache] Category invalidation error:", err.message);
   }
@@ -55,7 +59,8 @@ const getAllCategories = async (filters = {}, page = 1, limit = 20) => {
   const categories = await Category.find(query)
     .sort({ name: 1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .lean();
 
   return categories;
 };

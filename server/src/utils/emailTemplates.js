@@ -51,7 +51,7 @@ function generateOtpEmailTemplate({
       break;
     case "password_reset":
       purposeTitle = "Password Reset Code";
-      purposeDesc = "We received a request to reset your Medikart password. Use the 6-digit code below to proceed:";
+      purposeDesc = "We received a request to reset your Medikart password. Use the 6-digit code below to proceed at /admin/reset-password:";
       subjectPrefix = "Password Reset Code";
       break;
     default:

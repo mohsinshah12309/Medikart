@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
+  swcMinify: true,
   images: {
     unoptimized: true,
     formats: ['image/avif', 'image/webp'],
@@ -33,6 +36,7 @@ const nextConfig = {
   experimental: {
     workerThreads: false,
     cpus: 1,
+    optimizePackageImports: ['lucide-react'],
   },
   async rewrites() {
     return [

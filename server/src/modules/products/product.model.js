@@ -56,14 +56,14 @@ const productSchema = new mongoose.Schema(
 );
 
 // Indexes for fields searched/filtered (NFR-PERF-04).
-productSchema.index({ name: "text" });
+productSchema.index({ name: "text", genericName: "text" });
 productSchema.index({ isNarcotic: 1 });
 productSchema.index({ active: 1 });
 productSchema.index({ categoryIds: 1 });
 productSchema.index({ genericName: 1 });
 productSchema.index({ active: 1, name: 1 });
-productSchema.index({ active: 1, categoryIds: 1 });
-productSchema.index({ active: 1, isNarcotic: 1 });
+productSchema.index({ active: 1, categoryIds: 1, name: 1 });
+productSchema.index({ active: 1, isNarcotic: 1, createdAt: -1 });
 productSchema.index({ active: 1, createdAt: -1 });
 productSchema.index({ active: 1, price: 1 });
 

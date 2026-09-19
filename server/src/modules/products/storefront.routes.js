@@ -110,10 +110,12 @@ router.get("/products", async (req, res, next) => {
     // Parallelize independent DB reads (Product.find, storewide discount, countDocuments)
     const [products, storewidePercent, totalCount] = await Promise.all([
       Product.find(query)
+        .select("name genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
         .populate("categoryIds", "name slug discount active")
         .sort({ name: 1 })
         .skip(skip)
-        .limit(l),
+        .limit(l)
+        .lean(),
       getStorewideDiscount(),
       Product.countDocuments(query),
     ]);
@@ -181,7 +183,8 @@ router.get("/products/:id", async (req, res, next) => {
 
     const [product, storewidePercent] = await Promise.all([
       Product.findOne({ _id: req.params.id, active: true })
-        .populate("categoryIds", "name slug discount active"),
+        .populate("categoryIds", "name slug discount active")
+        .lean(),
       getStorewideDiscount(),
     ]);
 
@@ -221,7 +224,7 @@ router.get("/products/:id", async (req, res, next) => {
   }
 });
 
-// GET /api/v1/categories - Public category listing with Redis caching
+// GET /api/v1/categories - Public category listing with Redis caching (1 hour TTL)
 router.get("/categories", async (req, res, next) => {
   try {
     const cacheKey = "cache:storefront:categories";
@@ -240,7 +243,7 @@ router.get("/categories", async (req, res, next) => {
     }
     logCache("MISS", cacheKey);
 
-    const categories = await Category.find({ active: true }).sort({ name: 1 });
+    const categories = await Category.find({ active: true }).sort({ name: 1 }).lean();
     const responseBody = {
       status: "success",
       results: categories.length,
@@ -248,7 +251,7 @@ router.get("/categories", async (req, res, next) => {
     };
 
     try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 3600); // 1 hour TTL
     } catch (err) {
       console.error("[Cache] Write error:", err.message);
     }

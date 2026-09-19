@@ -72,6 +72,14 @@ class InMemoryRedisStub {
     return members.slice(start, stop === -1 ? undefined : stop + 1);
   }
 
+  async scan(cursor, matchArg, pattern, countArg, count) {
+    const allKeys = [...this._kvStore.keys()];
+    const pat = pattern || (matchArg && matchArg !== "MATCH" ? matchArg : "*");
+    const regex = new RegExp("^" + pat.replace(/\*/g, ".*") + "$");
+    const matched = allKeys.filter(k => regex.test(k));
+    return ["0", matched];
+  }
+
   async pexpire(_key, _ms) {
     return 1; // no-op in memory
   }
@@ -185,4 +193,35 @@ if (isTest || forceInMemory) {
   });
 }
 
+/**
+ * Safely delete keys matching a pattern using non-blocking SCAN in production
+ */
+async function deleteKeysByPattern(pattern) {
+  try {
+    if (!pattern) return;
+    if (typeof redisClient.scan === "function") {
+      let cursor = "0";
+      do {
+        const result = await redisClient.scan(cursor, "MATCH", pattern, "COUNT", 100);
+        if (!result || !Array.isArray(result)) break;
+        cursor = result[0];
+        const keys = result[1];
+        if (keys && keys.length > 0) {
+          await redisClient.del(...keys);
+        }
+      } while (cursor !== "0");
+    } else if (typeof redisClient.keys === "function") {
+      const keys = await redisClient.keys(pattern);
+      if (keys && keys.length > 0) {
+        await redisClient.del(...keys);
+      }
+    }
+  } catch (err) {
+    console.error(`[Redis] deleteKeysByPattern error for "${pattern}":`, err.message);
+  }
+}
+
+redisClient.deleteKeysByPattern = deleteKeysByPattern;
+
 module.exports = redisClient;
+

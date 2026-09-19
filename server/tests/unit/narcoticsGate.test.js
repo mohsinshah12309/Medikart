@@ -101,6 +101,7 @@ beforeAll(async () => {
     email: "admin@test.com",
     passwordHash: hashedPassword,
     role: "admin",
+    permissions: ["manage_orders", "view_orders"],
   });
 
   // Generate auth token

@@ -28,12 +28,19 @@ async function connectDB() {
   }
 
   try {
+    const maxPoolSize = parseInt(process.env.MONGODB_MAX_POOL_SIZE, 10) || 100;
+    const minPoolSize = parseInt(process.env.MONGODB_MIN_POOL_SIZE, 10) || 10;
+
     await mongoose.connect(uri, {
       serverSelectionTimeoutMS: CONNECT_TIMEOUT_MS,
-      // NOTE: No poolSize/maxPoolSize override — Mongoose/driver defaults
-      // (maxPoolSize: 100) are intentionally left as-is (NFR-PERF-05).
+      connectTimeoutMS: CONNECT_TIMEOUT_MS,
+      socketTimeoutMS: 45000,
+      maxPoolSize,
+      minPoolSize,
+      maxIdleTimeMS: 60000,
+      family: 4, // Force IPv4 to prevent IPv6 lookup overhead
     });
-    console.log("[DB] MongoDB connected successfully");
+    console.log(`[DB] MongoDB connected successfully (pool: ${minPoolSize}-${maxPoolSize}).`);
     return true;
   } catch (err) {
     // err.message contains the driver's reason (e.g. "Server selection timed

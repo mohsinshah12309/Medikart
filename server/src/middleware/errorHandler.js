@@ -28,13 +28,9 @@ const errorHandler = (err, req, res, next) => {
       field: e.path.join("."),
       message: e.message,
     }));
-    // Surface the first specific Zod message as the top-level message so
-    // frontends can display it directly (e.g. "Password must contain at least
-    // one uppercase letter") instead of the generic "Validation failed".
-    const topMessage = details[0]?.message || "Validation failed";
     return res.status(400).json({
       status: "error",
-      message: topMessage,
+      message: "Validation failed",
       details,
     });
   }

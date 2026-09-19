@@ -94,6 +94,7 @@ try {
 }
 
 const app = express();
+const requestLogger = require("./middleware/requestLogger");
 
 // 1. Request ID / Traceability Middleware (Phase 22 / Step 17)
 app.use((req, res, next) => {
@@ -101,6 +102,9 @@ app.use((req, res, next) => {
   res.setHeader("X-Request-Id", req.id);
   next();
 });
+
+// 1.5. Secure Request Logger (Sensitive data scrubbed)
+app.use(requestLogger);
 
 // 2. HTTP Security Headers (Phase 22 / Step 7)
 app.use(
@@ -177,40 +181,45 @@ app.use(cookieParser);
 
 // 5. Rate Limiters Setup (Phase 22 / Step 2)
 const isDev = process.env.NODE_ENV === "development";
+const isTest = process.env.NODE_ENV === "test";
 
 const authLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 100 : 25,
+  max: isTest ? 5 : (isDev ? 100 : 25),
   message: "Too many attempts. Please try again in 15 minutes.",
 });
 
 const otpLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 100 : 15,
+  max: isTest ? 5 : (isDev ? 100 : 15),
   message: "Too many OTP attempts. Please wait 15 minutes.",
 });
 
 const adminLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 1000 : 500,
+  max: isTest ? 20 : (isDev ? 1000 : 500),
   message: "Too many administrative operations. Please try again in 15 minutes.",
 });
 
 const expensiveLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 1000 : 300,
+  max: isTest ? 100 : (isDev ? 1000 : 300),
   message: "Rate limit exceeded for resource-heavy operations. Please wait.",
 });
 
 const storefrontLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 500 : 200,
+  max: isTest ? 500 : (isDev ? 500 : 200),
   message: "Too many requests. Please try again in 15 minutes.",
 });
 
 // Public static serving with 7-day browser caching & ETag support.
 // Prescriptions are NEVER served statically — they are only reachable through
 // the authenticated admin route GET /api/v1/admin/prescriptions/:filename.
+app.use("/uploads/prescriptions", (req, res) => {
+  res.status(404).json({ error: "Prescriptions are not publicly accessible." });
+});
+
 const staticCacheOptions = { maxAge: "7d", etag: true };
 const uploadsDir = path.join(__dirname, "../uploads");
 app.use("/uploads", express.static(uploadsDir, staticCacheOptions));
@@ -237,30 +246,52 @@ app.get("/health", (req, res) => {
 
 const paymentRoutes = require("./modules/payments/payment.routes");
 
-// ─── PUBLIC routes ─────────────────────────────────────────────────────────────
-// Mounted BEFORE the auth middleware so public endpoints are never blocked.
-app.use("/api/v1/auth/admin", authLimiter, adminUserRoutes);
-app.use("/api/v1/auth/customer", authLimiter, customerRoutes);
-app.use("/api/v1/cart", storefrontLimiter, cartRoutes);
-app.use("/api/v1/wishlist", storefrontLimiter, wishlistRoutes);
-app.use("/api/v1/customer/monthly-refill", storefrontLimiter, monthlyRefillRoutes);
-app.use("/api/v1/otp", otpLimiter, otpRoutes);
-app.use("/api/v1/orders", storefrontLimiter, publicOrderRoutes);
-app.use("/api/v1/payments", storefrontLimiter, paymentRoutes);
-app.use("/api/v1/chatbot", chatbotRoutes);
-// Public HTTP Cache-Control header for non-sensitive public read endpoints
+// HTTP Cache-Control headers:
+// 1. Private / Dynamic / Customer / Admin endpoints MUST never be cached by CDN or shared proxies
+const privateNoCacheControl = (req, res, next) => {
+  res.set({
+    "Cache-Control": "no-store, no-cache, must-revalidate, private",
+    "Pragma": "no-cache",
+    "Expires": "0",
+  });
+  next();
+};
+
+// 2. Public HTTP Cache-Control header for non-sensitive public read endpoints (enables Cloudflare Edge Caching)
 const publicCacheControl = (req, res, next) => {
   if (req.method === "GET") {
-    res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
+    res.set("Cache-Control", "public, max-age=60, s-maxage=300, stale-while-revalidate=600");
   }
   next();
 };
 
+// ─── PUBLIC routes ─────────────────────────────────────────────────────────────
+// Mounted BEFORE the auth middleware so public endpoints are never blocked.
+app.use("/api/v1/auth/admin", authLimiter, privateNoCacheControl, adminUserRoutes);
+app.use("/api/v1/auth/customer", authLimiter, privateNoCacheControl, customerRoutes);
+app.use("/api/v1/cart", storefrontLimiter, privateNoCacheControl, cartRoutes);
+app.use("/api/v1/wishlist", storefrontLimiter, privateNoCacheControl, wishlistRoutes);
+app.use("/api/v1/customer/monthly-refill", storefrontLimiter, privateNoCacheControl, monthlyRefillRoutes);
+app.use("/api/v1/otp", otpLimiter, privateNoCacheControl, otpRoutes);
+app.use("/api/v1/orders", storefrontLimiter, privateNoCacheControl, publicOrderRoutes);
+app.use("/api/v1/payments", storefrontLimiter, privateNoCacheControl, paymentRoutes);
+app.use("/api/v1/chatbot", chatbotRoutes);
+
 app.get("/api/v1/banners", storefrontLimiter, publicCacheControl, bannerController.getPublicBanners);
 app.get("/api/v1/conditions", storefrontLimiter, publicCacheControl, conditionController.getPublicConditions);
 app.get("/api/v1/conditions/:idOrSlug", storefrontLimiter, publicCacheControl, conditionController.getPublicConditionDetail);
-app.use("/api/v1", storefrontLimiter, publicCacheControl, storefrontRoutes);
-app.use("/api/v1", blogRoutes);
+app.use(
+  "/api/v1",
+  (req, res, next) => {
+    if (req.path.startsWith("/admin")) return next();
+    storefrontLimiter(req, res, (err) => {
+      if (err) return next(err);
+      publicCacheControl(req, res, next);
+    });
+  },
+  storefrontRoutes
+);
+app.use("/api/v1", publicCacheControl, blogRoutes);
 app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
@@ -268,7 +299,7 @@ app.post("/api/v1/contact-messages", storefrontLimiter, contactController.create
 // mounted under /api/v1/admin/* is protected by default.
 // To make a future route public, mount it above this line — never disable auth
 // per-route by skipping the middleware selectively.
-app.use("/api/v1/admin", auth);
+app.use("/api/v1/admin", auth, privateNoCacheControl);
 
 // Phase 4 — Product & Category CRUD APIs (now auth-protected)
 // Per rules.md Section 2: /api/v1/<resource>
