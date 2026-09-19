@@ -30,6 +30,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     address: "",
     cityIds: [],
     medikartPercentage: 5,
+    accountTitle: "",
     accountNumber: "",
     active: true,
   });
@@ -278,6 +279,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
       address: "",
       cityIds: [],
       medikartPercentage: 5,
+      accountTitle: "",
       accountNumber: "",
       active: true,
     });
@@ -295,6 +297,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
       address: p.address || "",
       cityIds: p.cityIds ? p.cityIds.map((c) => (typeof c === "object" ? c._id : c)) : [],
       medikartPercentage: p.medikartPercentage !== undefined ? p.medikartPercentage : 5,
+      accountTitle: p.accountTitle || "",
       accountNumber: "", // Keep blank so we don't accidentally wipe it unless admin explicitly types a new one
       active: p.active !== false,
     });
@@ -716,6 +719,11 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                       </td>
                       {/* Secure Bank Account Cell */}
                       <td style={{ padding: "0.75rem 1rem", minWidth: "160px" }}>
+                        {p.accountTitle && (
+                          <div style={{ fontWeight: 600, color: "#1e293b", fontSize: "0.82rem", marginBottom: "0.2rem" }}>
+                            🏛️ {p.accountTitle}
+                          </div>
+                        )}
                         {revealedAccounts[p._id] ? (
                           <div style={{ background: "#f8fafc", padding: "0.35rem 0.5rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
@@ -1704,6 +1712,21 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                     <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", color: "#64748b", fontWeight: 800, fontSize: "0.85rem" }}>%</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Bank Account Title Field */}
+              <div className="form-group" style={{ marginBottom: "0.75rem" }}>
+                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
+                  Bank Account Title / Beneficiary Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ width: "100%", padding: "0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                  value={formData.accountTitle}
+                  onChange={(e) => setFormData({ ...formData, accountTitle: e.target.value })}
+                  placeholder="e.g. Medikart Health Pharmacy (Pvt) Ltd"
+                />
               </div>
 
               {/* Secure Bank Account Field */}

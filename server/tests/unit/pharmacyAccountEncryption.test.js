@@ -106,4 +106,31 @@ describe("Pharmacy Bank Account Encryption & Super Admin Reveal", () => {
       pharmacyService.revealAccountNumber(pharmacy._id, subAdmin)
     ).rejects.toThrow("Only Super Admin can reveal sensitive pharmacy bank account details");
   });
+
+  it("should store and update accountTitle correctly and include it when revealing", async () => {
+    const pharmacy = await pharmacyService.createPharmacy({
+      name: "MediHealth Branch 4",
+      code: "MED-04",
+      phone: "+923001234570",
+      address: "Phase 5 DHA, Lahore",
+      accountTitle: "MediHealth Care (Pvt) Ltd",
+      accountNumber: "PK36BAHL0001234567899999",
+    });
+
+    expect(pharmacy.accountTitle).toEqual("MediHealth Care (Pvt) Ltd");
+
+    const fetched = await Pharmacy.findById(pharmacy._id);
+    expect(fetched.accountTitle).toEqual("MediHealth Care (Pvt) Ltd");
+
+    // Update account title
+    const updated = await pharmacyService.updatePharmacy(pharmacy._id, {
+      accountTitle: "MediHealth Care International (Pvt) Ltd",
+    });
+    expect(updated.accountTitle).toEqual("MediHealth Care International (Pvt) Ltd");
+
+    // Reveal includes accountTitle
+    const revealed = await pharmacyService.revealAccountNumber(pharmacy._id, superAdmin);
+    expect(revealed.accountTitle).toEqual("MediHealth Care International (Pvt) Ltd");
+    expect(revealed.accountNumber).toEqual("PK36BAHL0001234567899999");
+  });
 });

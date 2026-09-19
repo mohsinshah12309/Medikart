@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Pharmacy = require("./pharmacy.model");
+const City = require("../cities/city.model");
 const Order = require("../orders/order.model");
 const { NotFoundError, BadRequestError, ForbiddenError } = require("../../utils/errors");
 const { encrypt, decrypt } = require("../../services/encryption.service");
@@ -146,6 +147,7 @@ const revealAccountNumber = async (id, adminUser) => {
   return {
     pharmacyId: pharmacy._id,
     name: pharmacy.name,
+    accountTitle: pharmacy.accountTitle || "",
     accountNumber: decryptedAccountNumber,
     accountNumberLast4: pharmacy.accountNumberLast4,
   };

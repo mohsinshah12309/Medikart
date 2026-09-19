@@ -13,6 +13,7 @@ const Order = require("./order.model");
 const Pharmacy = require("../pharmacies/pharmacy.model");
 const Product = require("../products/product.model");
 const CommissionPayment = require("../commissions/commissionPayment.model");
+const CommissionBalance = require("../commissions/commissionBalance.model");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getDeliveryCharge } = require("../cities/city.service");
@@ -217,10 +218,45 @@ const getOrderStats = async (admin = null) => {
       : {}),
   };
 
-  const [paidAgg] = await CommissionPayment.aggregate([
-    { $match: commissionPaidQuery },
-    { $group: { _id: null, total: { $sum: "$amount" } } },
+  const balanceMatch =
+    admin && admin.role !== "super_admin" && admin.assignedPharmacyId
+      ? { pharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) }
+      : {};
+
+  const [balanceAgg, paidAgg] = await Promise.all([
+    CommissionBalance.aggregate([
+      { $match: balanceMatch },
+      {
+        $group: {
+          _id: null,
+          totalAccrued: {
+            $sum: { $add: ["$outstandingBalance", "$totalPaidVerified"] },
+          },
+          totalPaid: {
+            $sum: "$totalPaidVerified",
+          },
+        },
+      },
+    ]),
+    CommissionPayment.aggregate([
+      { $match: commissionPaidQuery },
+      { $group: { _id: null, total: { $sum: "$amount" } } },
+    ]),
   ]);
+
+  const balanceAccrued = balanceAgg[0]?.totalAccrued;
+  const orderAccrued = result.medikartCommission[0]?.total ?? 0;
+  const computedCommission =
+    balanceAccrued !== undefined && balanceAccrued > 0
+      ? Math.max(balanceAccrued, orderAccrued)
+      : orderAccrued;
+
+  const balancePaid = balanceAgg[0]?.totalPaid;
+  const paymentsPaid = paidAgg[0]?.total ?? 0;
+  const computedPaid =
+    balancePaid !== undefined && balancePaid > 0
+      ? Math.max(balancePaid, paymentsPaid)
+      : paymentsPaid;
 
   return {
     todayOrders: result.todayOrders[0]?.count ?? 0,
@@ -229,8 +265,8 @@ const getOrderStats = async (admin = null) => {
     pricingPending: result.pricingPending[0]?.count ?? 0,
     totalSale: Math.round(result.totalSale[0]?.total ?? 0),
     todaySale: Math.round(result.todaySale[0]?.total ?? 0),
-    medikartCommission: Math.round(result.medikartCommission[0]?.total ?? 0),
-    totalCommissionPaid: Math.round(paidAgg?.total ?? 0),
+    medikartCommission: Math.round(computedCommission),
+    totalCommissionPaid: Math.round(computedPaid),
   };
 };
 

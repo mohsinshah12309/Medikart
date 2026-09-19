@@ -31,6 +31,7 @@ const createPharmacySchema = z
     address: z.string({ required_error: "Address is required" }).min(3).max(300).trim(),
     cityIds: z.array(z.string().regex(objectIdRegex, "Invalid city ID format")).optional().default([]),
     medikartPercentage: z.number().min(0).max(100).optional().default(5),
+    accountTitle: z.string().max(100).trim().optional().default(""),
     accountNumber: accountNumberSchema,
     active: z.boolean().optional().default(true),
   })
@@ -46,6 +47,7 @@ const updatePharmacySchema = z
     address: z.string().min(3).max(300).trim().optional(),
     cityIds: z.array(z.string().regex(objectIdRegex, "Invalid city ID format")).optional(),
     medikartPercentage: z.number().min(0).max(100).optional(),
+    accountTitle: z.string().max(100).trim().optional(),
     accountNumber: accountNumberSchema,
     active: z.boolean().optional(),
   })

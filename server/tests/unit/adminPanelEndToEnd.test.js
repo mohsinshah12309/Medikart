@@ -490,7 +490,7 @@ describe("Admin Panel End-to-End Workflows & Calculation Parity", () => {
   describe("Dashboard Overview vs Orders Queue Parity", () => {
     beforeAll(async () => {
       // Clean previous orders
-      await Order.deleteMany({ "customer.email": /@test-admin-e2e\.com$/ });
+      await Order.deleteMany({});
 
       // Create a set of orders:
       // 1. Delivered order today (Revenue = 1000, Subtotal = 900)
