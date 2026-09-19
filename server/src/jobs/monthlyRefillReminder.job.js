@@ -12,7 +12,7 @@
 
 const cron = require("node-cron");
 const MonthlyRefill = require("../modules/customers/monthlyRefill.model");
-const { sendRefillReminderEmail } = require("../services/mailjetReminder.service");
+const { sendRefillReminderEmail } = require("../services/mailjet.service");
 
 let cronTask = null;
 

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="coughBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EFF6FF"/>
+      <stop offset="100%" stop-color="#DBEAFE"/>
+    </linearGradient>
+    <filter id="coughShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1E3A8A" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#coughBg)" stroke="#BFDBFE" stroke-width="2"/>
+
+  <!-- Amber Cough Syrup Bottle with Measuring Cup & Honey Spoon -->
+  <g filter="url(#coughShadow)">
+    <!-- Bottle -->
+    <rect x="65" y="42" width="30" height="10" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="73" y="52" width="14" height="8" fill="#78350F"/>
+    <rect x="52" y="60" width="56" height="90" rx="14" fill="#B45309" stroke="#78350F"/>
+    <!-- Amber Liquid & Honey Glow -->
+    <rect x="55" y="78" width="50" height="68" rx="10" fill="#D97706"/>
+    <!-- Label -->
+    <rect x="58" y="90" width="44" height="38" rx="4" fill="#FFFFFF"/>
+    <path d="M68 100 L76 108 L88 96" stroke="#2563EB" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Calibrated Medicine Dosage Cup -->
+  <g filter="url(#coughShadow)" transform="translate(115, 85)">
+    <path d="M5 10 L35 10 L30 50 L10 50 Z" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+    <path d="M8 25 L32 25 L28 48 L12 48 Z" fill="#F59E0B" opacity="0.8"/>
+    <line x1="8" y1="20" x2="18" y2="20" stroke="#2563EB" stroke-width="1.5"/>
+    <line x1="10" y1="30" x2="22" y2="30" stroke="#2563EB" stroke-width="1.5"/>
+    <line x1="11" y1="40" x2="18" y2="40" stroke="#2563EB" stroke-width="1.5"/>
+  </g>
+
+  <!-- Honey & Lemon Lozenges -->
+  <circle cx="140" cy="55" r="14" fill="#FBBF24" stroke="#F59E0B" stroke-width="2" filter="url(#coughShadow)"/>
+  <circle cx="140" cy="55" r="8" fill="#FEF08A"/>
+</svg>

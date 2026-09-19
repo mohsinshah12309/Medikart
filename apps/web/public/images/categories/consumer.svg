@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="consBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#EDE9FE"/>
+    </linearGradient>
+    <linearGradient id="pumpGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <filter id="consShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#4C1D95" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#consBg)"/>
+
+  <!-- Liquid Hand Wash / Sanitizer Pump Bottle -->
+  <g filter="url(#consShadow)">
+    <!-- Pump head -->
+    <path d="M65 35 H95 V42 H85 V52 H75 V42 H65 Z" fill="#475569"/>
+    <rect x="75" y="52" width="10" height="12" fill="#94A3B8"/>
+    <!-- Bottle body -->
+    <path d="M55 70 C55 64 65 64 80 64 C95 64 105 64 105 70 L110 145 C110 152 98 156 80 156 C62 156 50 152 50 145 Z" fill="url(#pumpGrad)"/>
+    <!-- Label -->
+    <rect x="60" y="85" width="40" height="45" rx="6" fill="#FFFFFF"/>
+    <circle cx="80" cy="102" r="8" fill="#C4B5FD"/>
+    <path d="M80 97 V107 M75 102 H85" stroke="#6D28D9" stroke-width="2" stroke-linecap="round"/>
+    <rect x="68" y="116" width="24" height="4" rx="2" fill="#A78BFA"/>
+  </g>
+
+  <!-- Toothbrush with Toothpaste Swirl -->
+  <g filter="url(#consShadow)" transform="rotate(30 140 100)">
+    <!-- Handle -->
+    <rect x="135" y="45" width="12" height="105" rx="6" fill="#06B6D4"/>
+    <rect x="137" y="110" width="8" height="35" rx="4" fill="#0891B2"/>
+    <!-- Bristles -->
+    <rect x="133" y="32" width="16" height="15" rx="2" fill="#FFFFFF"/>
+    <!-- Toothpaste ribbon -->
+    <path d="M130 32 Q141 24 152 30 Q145 35 130 32 Z" fill="#38BDF8"/>
+  </g>
+
+  <!-- Clean Sparkles -->
+  <path d="M150 40 L153 46 L160 48 L153 50 L150 56 L147 50 L140 48 L147 46 Z" fill="#8B5CF6"/>
+  <path d="M40 90 L42 94 L47 95 L42 97 L40 101 L38 97 L33 95 L38 94 Z" fill="#06B6D4"/>
+</svg>

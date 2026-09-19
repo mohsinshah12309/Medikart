@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hairBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <filter id="hairShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#78350F" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#hairBg)" stroke="#FDE68A" stroke-width="2"/>
+
+  <!-- Scalp Dropper Pipette & Biotin Hair Growth Serum -->
+  <g filter="url(#hairShadow)">
+    <!-- Dropper with Golden Oil -->
+    <g transform="rotate(25 100 70)">
+      <path d="M95 20 C95 15 105 15 105 15 C105 15 115 15 115 20 V28 H95 Z" fill="#475569"/>
+      <rect x="92" y="28" width="26" height="8" rx="2" fill="#D97706"/>
+      <!-- Glass Pipette -->
+      <path d="M98 36 H112 L108 95 L102 95 Z" fill="#FFFFFF" stroke="#CBD5E1" opacity="0.9"/>
+      <path d="M100 55 H110 L108 92 L102 92 Z" fill="#F59E0B"/>
+      <!-- Serum Droplet -->
+      <path d="M105 102 C105 102 110 110 110 114 C110 117 108 120 105 120 C102 120 100 117 100 114 C100 110 105 102 105 102 Z" fill="#D97706"/>
+    </g>
+
+    <!-- Strong Hair Follicle Strand with Golden Strength Halo -->
+    <path d="M75 160 Q70 110 85 70" stroke="#78350F" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M65 160 Q55 120 70 85" stroke="#B45309" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M85 160 Q85 125 100 95" stroke="#92400E" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Vitality Sparkles -->
+  <path d="M145 125 L148 131 L154 133 L148 135 L145 141 L142 135 L136 133 L142 131 Z" fill="#F59E0B"/>
+  <path d="M50 65 L52 69 L56 70 L52 71 L50 75 L48 71 L44 70 L48 69 Z" fill="#F59E0B"/>
+</svg>

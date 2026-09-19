@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sleepBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EEF2FF"/>
+      <stop offset="100%" stop-color="#E0E7FF"/>
+    </linearGradient>
+    <filter id="sleepShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#312E81" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#sleepBg)" stroke="#C7D2FE" stroke-width="2"/>
+
+  <!-- Golden Crescent Moon & Lavender Night Tea -->
+  <g filter="url(#sleepShadow)">
+    <!-- Crescent Moon -->
+    <path d="M95 35 C60 40 40 75 50 110 C58 135 82 150 108 148 C85 138 72 110 82 85 C90 65 105 50 125 45 C115 38 105 35 95 35 Z" fill="#F59E0B"/>
+    <ellipse cx="80" cy="80" rx="3" ry="1" fill="#78350F" opacity="0.4"/>
+  </g>
+
+  <!-- Melatonin Night Softgel / Calming Chamomile Blossom -->
+  <g filter="url(#sleepShadow)" transform="translate(105, 85)">
+    <circle cx="25" cy="25" r="20" fill="#6366F1"/>
+    <!-- Zzz Icons -->
+    <text x="25" y="32" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="Arial, sans-serif">Z</text>
+  </g>
+
+  <!-- Stars -->
+  <path d="M140 40 L142 45 L147 47 L142 49 L140 54 L138 49 L133 47 L138 45 Z" fill="#FBBF24"/>
+  <path d="M165 75 L167 79 L171 80 L167 81 L165 85 L163 81 L159 80 L163 79 Z" fill="#818CF8"/>
+  <path d="M45 50 L47 54 L51 55 L47 56 L45 60 L43 56 L39 55 L43 54 Z" fill="#818CF8"/>
+</svg>

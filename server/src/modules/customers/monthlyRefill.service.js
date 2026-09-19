@@ -17,6 +17,7 @@ const Order = require("../orders/order.model");
 const { getEffectivePrice } = require("../discounts/discount.service");
 const { getStorewideDiscount } = require("../settings/settings.service");
 const { getDeliveryCharge } = require("../cities/city.service");
+const mailjetService = require("../../services/mailjet.service");
 const {
   BadRequestError,
   NotFoundError,
@@ -380,6 +381,11 @@ const reorderRefill = async (customerId, orderData = {}) => {
   refill.nextReminderAt = nextReminder;
   refill.reminderSentAt = null; // Reset so next reminder triggers in 30 days
   await refill.save();
+
+  // Send Monthly Refill Confirmation Email via Mailjet (non-blocking)
+  mailjetService.sendMonthlyRefillOrderEmail(order, nextReminder).catch((err) => {
+    console.error(`[monthlyRefill] Mailjet confirmation email failed for order ${order._id}:`, err.message);
+  });
 
   return {
     success: true,

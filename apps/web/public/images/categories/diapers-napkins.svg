@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="diaperBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF2F8"/>
+      <stop offset="100%" stop-color="#FCE7F3"/>
+    </linearGradient>
+    <filter id="diaperShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#831843" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#diaperBg)"/>
+
+  <!-- Stack of Premium Soft Baby Diapers -->
+  <g filter="url(#diaperShadow)">
+    <!-- Bottom Diaper -->
+    <path d="M40 120 C40 105 60 95 100 95 C140 95 160 105 160 120 C160 135 140 150 100 150 C60 150 40 135 40 120 Z" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="2"/>
+    <path d="M45 110 C50 95 70 85 100 85 C130 85 150 95 155 110 C155 125 130 140 100 140 C70 140 45 125 45 110 Z" fill="#FFFFFF" stroke="#F472B6" stroke-width="2"/>
+    <!-- Cute Waistband Pattern -->
+    <path d="M60 90 Q100 98 140 90" stroke="#F472B6" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <circle cx="80" cy="105" r="4" fill="#FBCFE8"/>
+    <circle cx="100" cy="105" r="4" fill="#FBCFE8"/>
+    <circle cx="120" cy="105" r="4" fill="#FBCFE8"/>
+    <!-- Side Grip Tapes -->
+    <rect x="42" y="102" width="12" height="10" rx="3" fill="#38BDF8"/>
+    <rect x="146" y="102" width="12" height="10" rx="3" fill="#38BDF8"/>
+  </g>
+
+  <!-- Baby Wipes Dispenser Box -->
+  <g filter="url(#diaperShadow)" transform="translate(35, 40)">
+    <rect x="0" y="15" width="65" height="40" rx="8" fill="#EC4899"/>
+    <!-- Pop-up Lid -->
+    <ellipse cx="32" cy="15" rx="18" ry="7" fill="#FBCFE8" stroke="#DB2777"/>
+    <!-- Protruding Soft White Wipe -->
+    <path d="M24 15 Q32 0 40 15 Z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Sanitary Care Napkins Package Indicator -->
+  <g filter="url(#diaperShadow)" transform="translate(125, 40)">
+    <rect x="0" y="0" width="40" height="45" rx="8" fill="#A855F7"/>
+    <circle cx="20" cy="22" r="10" fill="#E9D5FF"/>
+    <path d="M15 22 Q20 15 25 22 Q20 30 15 22 Z" fill="#9333EA"/>
+  </g>
+</svg>

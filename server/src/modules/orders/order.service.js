@@ -722,8 +722,21 @@ const updateOrderStatus = async (orderId, { status, reason, admin }) => {
     throw new BadRequestError("Cannot change status of a cancelled order.");
   }
 
-  if (order.status === "awaiting-pharmacist-pricing" && (targetStatus === "delivered" || targetStatus === "shipped" || targetStatus === "packed")) {
+  if (order.status === "rejected" && admin?.role !== "super_admin") {
+    throw new BadRequestError("Cannot change status of a rejected prescription order.");
+  }
+
+  if (order.status === "awaiting-pharmacist-pricing" && targetStatus !== "cancelled") {
     throw new BadRequestError("Instant order must be priced before updating fulfillment status.");
+  }
+
+  if (
+    order.status === "pending_verification" &&
+    (targetStatus === "packed" || targetStatus === "shipped" || targetStatus === "delivered")
+  ) {
+    throw new BadRequestError(
+      "Narcotics order prescription must be reviewed and approved before fulfilling the order."
+    );
   }
 
   const previousStatus = order.status;

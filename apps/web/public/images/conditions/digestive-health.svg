@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="digBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0FDF4"/>
+      <stop offset="100%" stop-color="#DCFCE7"/>
+    </linearGradient>
+    <filter id="digShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#065F46" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#digBg)" stroke="#BBF7D0" stroke-width="2"/>
+
+  <!-- Gut Health Probiotics & Stomach Wellness -->
+  <g filter="url(#digShadow)">
+    <!-- Stomach Silhouette -->
+    <path d="M70 50 C65 40 85 35 95 45 C115 50 145 65 140 100 C135 130 115 145 85 145 C65 145 55 130 55 115 C55 90 75 80 80 65 Z" fill="#22C55E" opacity="0.85" stroke="#16A34A" stroke-width="2"/>
+    
+    <!-- Soothing Probiotic Sparkles & Mint -->
+    <circle cx="95" cy="85" r="8" fill="#FFFFFF"/>
+    <circle cx="95" cy="85" r="5" fill="#10B981"/>
+    
+    <circle cx="115" cy="105" r="6" fill="#FFFFFF"/>
+    <circle cx="115" cy="105" r="3.5" fill="#10B981"/>
+
+    <circle cx="80" cy="115" r="6" fill="#FFFFFF"/>
+    <circle cx="80" cy="115" r="3.5" fill="#10B981"/>
+  </g>
+
+  <!-- Soothing Antacid Spoon & Droplet -->
+  <g filter="url(#digShadow)" transform="translate(45, 120)">
+    <path d="M0 15 Q25 20 45 5" stroke="#0284C7" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <ellipse cx="45" cy="5" rx="10" ry="6" fill="#38BDF8"/>
+  </g>
+</svg>

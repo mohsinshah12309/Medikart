@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fridgeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECFEFF"/>
+      <stop offset="100%" stop-color="#CFFAFE"/>
+    </linearGradient>
+    <linearGradient id="vialGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0891B2"/>
+      <stop offset="50%" stop-color="#06B6D4"/>
+      <stop offset="100%" stop-color="#0E7490"/>
+    </linearGradient>
+    <filter id="fridgeShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0E7490" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#fridgeBg)"/>
+
+  <!-- Cold Chain Medical Box / Cooler with 2°C - 8°C Badge -->
+  <g filter="url(#fridgeShadow)">
+    <!-- Insulated container base -->
+    <rect x="40" y="70" width="90" height="85" rx="14" fill="#FFFFFF" stroke="#A5F3FC" stroke-width="2"/>
+    <rect x="36" y="62" width="98" height="14" rx="6" fill="#06B6D4"/>
+    <!-- Temperature gauge pill -->
+    <rect x="52" y="85" width="66" height="24" rx="12" fill="#E0F2FE"/>
+    <text x="85" y="101" font-size="11" font-weight="900" fill="#0369A1" text-anchor="middle" font-family="Arial, sans-serif">2°C - 8°C</text>
+    <!-- Cold ice pack indicator -->
+    <rect x="55" y="118" width="60" height="24" rx="6" fill="#F0FDFA" stroke="#67E8F9"/>
+    <circle cx="70" cy="130" r="4" fill="#06B6D4"/>
+    <circle cx="85" cy="130" r="4" fill="#06B6D4"/>
+    <circle cx="100" cy="130" r="4" fill="#06B6D4"/>
+  </g>
+
+  <!-- Insulin Pen / Cold Injection Vial -->
+  <g filter="url(#fridgeShadow)" transform="rotate(20 145 90)">
+    <!-- Vial Cap -->
+    <rect x="135" y="35" width="20" height="8" rx="2" fill="#F43F5E"/>
+    <rect x="139" y="43" width="12" height="6" fill="#94A3B8"/>
+    <!-- Vial Glass -->
+    <rect x="130" y="49" width="30" height="55" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <!-- Liquid Vaccine / Insulin -->
+    <rect x="132" y="65" width="26" height="37" rx="4" fill="url(#vialGrad)"/>
+    <rect x="134" y="68" width="22" height="18" rx="2" fill="#FFFFFF"/>
+    <line x1="137" y1="74" x2="153" y2="74" stroke="#0891B2" stroke-width="2"/>
+    <line x1="137" y1="80" x2="147" y2="80" stroke="#0891B2" stroke-width="2"/>
+  </g>
+
+  <!-- Snowflakes (Cold Chain Indicator) -->
+  <g fill="#0284C7">
+    <!-- Snowflake 1 -->
+    <g transform="translate(145, 140) scale(0.9)">
+      <path d="M0 -15 V15 M-15 0 H15 M-10 -10 L10 10 M-10 10 L10 -10" stroke="#0284C7" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="3" fill="#0284C7"/>
+    </g>
+    <!-- Snowflake 2 -->
+    <g transform="translate(45, 40) scale(0.6)">
+      <path d="M0 -15 V15 M-15 0 H15 M-10 -10 L10 10 M-10 10 L10 -10" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

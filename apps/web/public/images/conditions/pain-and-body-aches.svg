@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="painBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="100%" stop-color="#FEE2E2"/>
+    </linearGradient>
+    <filter id="painShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#991B1B" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#painBg)" stroke="#FECACA" stroke-width="2"/>
+
+  <!-- Targeted Pain Relief Muscle Therapy & Heat Waves -->
+  <g filter="url(#painShadow)">
+    <!-- Muscle Pain Rub Tube -->
+    <g transform="rotate(-30 85 95)">
+      <rect x="65" y="45" width="35" height="85" rx="8" fill="#EF4444" stroke="#DC2626"/>
+      <rect x="72" y="130" width="21" height="12" rx="2" fill="#FFFFFF"/>
+      <path d="M72 65 L82 85 H74 L84 105" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+
+    <!-- Fast Acting Analgesic Pain Capsule -->
+    <g transform="rotate(35 130 95)">
+      <rect x="115" y="65" width="30" height="35" rx="15" fill="#DC2626"/>
+      <rect x="115" y="95" width="30" height="35" rx="15" fill="#F59E0B"/>
+      <line x1="115" y1="95" x2="145" y2="95" stroke="#FFFFFF" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Heat Waves / Radiating Relief Waves -->
+  <path d="M140 45 Q150 55 140 65 Q150 75 140 85" fill="none" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+  <path d="M155 45 Q165 55 155 65 Q165 75 155 85" fill="none" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -67,6 +67,7 @@ const adminOrderRoutes = express.Router();
 
 adminOrderRoutes.get(
   "/",
+  requirePermission("view_orders", "manage_orders"),
   validateQuery(adminOrderQuerySchema),
   orderController.getOrders,
 );
@@ -86,27 +87,30 @@ adminOrderRoutes.get(
 // treated as a MongoDB ObjectId parameter.
 adminOrderRoutes.get(
   "/stats",
-  requirePermission("view_orders", "manage_orders"),
+  requirePermission("view_orders", "manage_orders", "view_pharmacies", "manage_pharmacies"),
   orderController.getOrderStats
 );
 
 adminOrderRoutes.get(
   "/:id",
+  requirePermission("view_orders", "manage_orders"),
   validateParams(orderIdParamsSchema),
   orderController.getOrderById,
 );
 
 adminOrderRoutes.patch(
   "/:id/items",
+  requirePermission("manage_orders"),
   validateParams(orderIdParamsSchema),
   validate(priceInstantOrderSchema),
   orderController.priceInstantOrder,
 );
 
 // PATCH /api/v1/admin/orders/:id/verification — approve/reject a narcotics
-// prescription (Phase 15 / FR-AD-20). Auth applied at mount point in app.js.
+// prescription (Phase 15 / FR-AD-20).
 adminOrderRoutes.patch(
   "/:id/verification",
+  requirePermission("manage_orders"),
   validateParams(orderIdParamsSchema),
   validate(narcoticsVerificationSchema),
   orderController.reviewNarcoticsOrder,
@@ -115,6 +119,7 @@ adminOrderRoutes.patch(
 // PATCH /api/v1/admin/orders/:id/cancel — cancel order (Phase 17)
 adminOrderRoutes.patch(
   "/:id/cancel",
+  requirePermission("manage_orders"),
   validateParams(orderIdParamsSchema),
   validate(cancelOrderSchema),
   orderController.cancelOrder,
@@ -123,6 +128,7 @@ adminOrderRoutes.patch(
 // PATCH /api/v1/admin/orders/:id/status — update order fulfillment status (pending, packed, shipped, delivered/completed, cancelled)
 adminOrderRoutes.patch(
   "/:id/status",
+  requirePermission("manage_orders"),
   validateParams(orderIdParamsSchema),
   validate(updateOrderStatusSchema),
   orderController.updateOrderStatus,
@@ -131,6 +137,7 @@ adminOrderRoutes.patch(
 // PATCH /api/v1/admin/orders/:id/pharmacy — assign order to pharmacy
 adminOrderRoutes.patch(
   "/:id/pharmacy",
+  requirePermission("manage_orders", "manage_pharmacies"),
   validateParams(orderIdParamsSchema),
   orderController.assignPharmacy,
 );
@@ -138,6 +145,7 @@ adminOrderRoutes.patch(
 // PATCH /api/v1/admin/orders/:id/refund — complete manual refund (Phase 17)
 adminOrderRoutes.patch(
   "/:id/refund",
+  requirePermission("manage_orders"),
   validateParams(orderIdParamsSchema),
   orderController.refundOrder,
 );

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="heartBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="100%" stop-color="#FFE4E6"/>
+    </linearGradient>
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+    <filter id="heartShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#991B1B" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#heartBg)" stroke="#FECDD3" stroke-width="2"/>
+
+  <!-- Anatomical / Stethoscope Heart Shape with Pulse Wave -->
+  <g filter="url(#heartShadow)">
+    <!-- 3D Heart -->
+    <path d="M100 65 C90 40 55 40 45 65 C35 90 60 115 100 150 C140 115 165 90 155 65 C145 40 110 40 100 65 Z" fill="url(#heartGrad)"/>
+    
+    <!-- Heartbeat ECG Pulse Rhythm -->
+    <path d="M50 95 H80 L88 75 L96 115 L104 85 L112 105 L120 95 H150" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Pulse Beat Indicator -->
+  <circle cx="150" cy="50" r="14" fill="#F59E0B" filter="url(#heartShadow)"/>
+  <text x="150" y="55" font-size="14" fill="#FFFFFF" text-anchor="middle">♥</text>
+</svg>

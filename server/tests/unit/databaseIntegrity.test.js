@@ -249,6 +249,7 @@ describe("Database Integrity, Concurrency & Transaction Safety", () => {
       gatewayTransactionId: "TXN-INTEG-01",
     });
 
+    kuickpayProvider.verifyWebhookSignature.mockReturnValue(true);
     kuickpayProvider.verifyTransaction.mockResolvedValue({ status: "paid" });
 
     // Send webhook first time
@@ -281,6 +282,7 @@ describe("Database Integrity, Concurrency & Transaction Safety", () => {
       gatewayTransactionId: "TXN-INTEG-CONC",
     });
 
+    kuickpayProvider.verifyWebhookSignature.mockReturnValue(true);
     kuickpayProvider.verifyTransaction.mockResolvedValue({ status: "paid" });
 
     // Trigger webhook concurrently

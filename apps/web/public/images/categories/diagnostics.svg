@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="diagBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0FDF4"/>
+      <stop offset="100%" stop-color="#DCFCE7"/>
+    </linearGradient>
+    <linearGradient id="bpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <filter id="diagShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#065F46" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#diagBg)"/>
+
+  <!-- Digital Blood Pressure Monitor with Arm Cuff -->
+  <g filter="url(#diagShadow)">
+    <rect x="35" y="55" width="85" height="95" rx="16" fill="url(#bpGrad)" stroke="#CBD5E1" stroke-width="2"/>
+    <!-- Digital LCD Screen -->
+    <rect x="45" y="68" width="65" height="50" rx="8" fill="#0F172A"/>
+    <!-- Digital Numbers -->
+    <text x="52" y="90" font-size="16" font-weight="900" fill="#22C55E" font-family="monospace">120</text>
+    <text x="52" y="108" font-size="14" font-weight="900" fill="#38BDF8" font-family="monospace">80</text>
+    <text x="88" y="105" font-size="11" font-weight="bold" fill="#EF4444" font-family="monospace">♥72</text>
+    <!-- Start Button -->
+    <circle cx="77" cy="133" r="8" fill="#22C55E"/>
+    <text x="77" y="136" font-size="7" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ON</text>
+  </g>
+
+  <!-- Medical Stethoscope -->
+  <g filter="url(#diagShadow)">
+    <!-- Tube -->
+    <path d="M120 120 C140 140 170 110 155 80 C145 60 135 45 130 35" fill="none" stroke="#059669" stroke-width="5" stroke-linecap="round"/>
+    <!-- Chest Piece / Disc -->
+    <circle cx="120" cy="120" r="18" fill="#E2E8F0" stroke="#64748B" stroke-width="2"/>
+    <circle cx="120" cy="120" r="12" fill="#059669"/>
+    <!-- Earpieces -->
+    <path d="M130 35 Q135 25 145 25 M130 35 Q125 25 115 25" fill="none" stroke="#64748B" stroke-width="4"/>
+    <circle cx="145" cy="25" r="3" fill="#0F172A"/>
+    <circle cx="115" cy="25" r="3" fill="#0F172A"/>
+  </g>
+
+  <!-- Digital Clinical Thermometer -->
+  <g filter="url(#diagShadow)" transform="rotate(40 155 130)">
+    <rect x="145" y="90" width="10" height="55" rx="5" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <path d="M145 140 L150 155 L155 140 Z" fill="#94A3B8"/>
+    <rect x="147" y="105" width="6" height="15" rx="2" fill="#0F172A"/>
+    <text x="150" y="116" font-size="6" fill="#22C55E" font-weight="bold" text-anchor="middle">36.6</text>
+  </g>
+</svg>

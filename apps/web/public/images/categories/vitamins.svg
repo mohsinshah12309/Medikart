@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="vitBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <linearGradient id="bottleAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B45309"/>
+      <stop offset="40%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </linearGradient>
+    <linearGradient id="goldSoftgel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="60%" stop-color="#EAB308"/>
+      <stop offset="100%" stop-color="#CA8A04"/>
+    </linearGradient>
+    <filter id="vitShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#78350F" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#vitBg)"/>
+  
+  <!-- Multivitamin Amber Bottle -->
+  <g filter="url(#vitShadow)">
+    <rect x="55" y="32" width="50" height="14" rx="4" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <rect x="62" y="46" width="36" height="10" fill="#B45309"/>
+    <rect x="45" y="56" width="70" height="95" rx="14" fill="url(#bottleAmber)"/>
+    <!-- Label -->
+    <rect x="48" y="75" width="64" height="55" rx="6" fill="#FFFFFF"/>
+    <rect x="54" y="83" width="30" height="6" rx="3" fill="#D97706"/>
+    <rect x="54" y="93" width="52" height="4" rx="2" fill="#94A3B8"/>
+    <rect x="54" y="101" width="40" height="4" rx="2" fill="#CBD5E1"/>
+    <!-- Bottle Shine -->
+    <path d="M52 62 L52 145" stroke="#FDE68A" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- Golden Translucent Omega Softgels & Vitamin C Slice -->
+  <g filter="url(#vitShadow)">
+    <!-- Vitamin C Citrus slice -->
+    <circle cx="138" cy="120" r="32" fill="#F97316"/>
+    <circle cx="138" cy="120" r="28" fill="#FDBA74"/>
+    <circle cx="138" cy="120" r="24" fill="#EA580C"/>
+    <path d="M138 96 L138 144 M114 120 L162 120 M121 103 L155 137 M121 137 L155 103" stroke="#FDBA74" stroke-width="2.5"/>
+    <circle cx="138" cy="120" r="5" fill="#FFFFFF"/>
+    
+    <!-- Shiny Golden Softgel Pills -->
+    <ellipse cx="120" cy="70" rx="16" ry="10" transform="rotate(-25 120 70)" fill="url(#goldSoftgel)"/>
+    <ellipse cx="118" cy="67" rx="6" ry="3" transform="rotate(-25 118 67)" fill="#FFFFFF" opacity="0.8"/>
+
+    <ellipse cx="155" cy="65" rx="14" ry="9" transform="rotate(30 155 65)" fill="url(#goldSoftgel)"/>
+    <ellipse cx="153" cy="63" rx="5" ry="3" transform="rotate(30 153 63)" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+
+  <!-- Sparkles -->
+  <path d="M150 25 L153 32 L160 35 L153 38 L150 45 L147 38 L140 35 L147 32 Z" fill="#F59E0B"/>
+</svg>

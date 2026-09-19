@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="surgBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EEF2FF"/>
+      <stop offset="100%" stop-color="#E0E7FF"/>
+    </linearGradient>
+    <linearGradient id="steelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="50%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+    <filter id="surgShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#312E81" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#surgBg)"/>
+
+  <!-- Sterile Medical Tray -->
+  <rect x="30" y="45" width="140" height="120" rx="18" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3" filter="url(#surgShadow)"/>
+  <rect x="38" y="53" width="124" height="104" rx="12" fill="#F1F5F9"/>
+
+  <!-- Sterile Blue Surgical Latex Gloves -->
+  <g filter="url(#surgShadow)" transform="translate(45, 65)">
+    <path d="M15 45 C10 35 12 15 18 10 C22 6 28 12 30 20 C32 10 38 8 42 12 C45 15 45 22 45 28 C48 18 55 16 58 20 C60 25 58 35 55 45 L50 70 H20 Z" fill="#3B82F6" opacity="0.85"/>
+  </g>
+
+  <!-- Surgical Stainless Steel Scissors -->
+  <g filter="url(#surgShadow)" transform="rotate(-35 110 110)">
+    <!-- Finger loops -->
+    <circle cx="85" cy="145" r="12" fill="none" stroke="url(#steelGrad)" stroke-width="5"/>
+    <circle cx="115" cy="145" r="12" fill="none" stroke="url(#steelGrad)" stroke-width="5"/>
+    <!-- Shanks & Joint -->
+    <line x1="88" y1="135" x2="98" y2="105" stroke="url(#steelGrad)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="112" y1="135" x2="102" y2="105" stroke="url(#steelGrad)" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="100" cy="105" r="4" fill="#334155"/>
+    <!-- Sharp Blades -->
+    <path d="M100 105 L92 55 Q96 52 100 60 Z" fill="url(#steelGrad)"/>
+    <path d="M100 105 L108 55 Q104 52 100 60 Z" fill="url(#steelGrad)"/>
+  </g>
+
+  <!-- Stainless Steel Scalpel -->
+  <g filter="url(#surgShadow)" transform="rotate(45 135 105)">
+    <rect x="130" y="60" width="8" height="60" rx="2" fill="url(#steelGrad)"/>
+    <path d="M130 60 Q130 40 138 48 L138 60 Z" fill="#E2E8F0" stroke="#94A3B8"/>
+  </g>
+</svg>

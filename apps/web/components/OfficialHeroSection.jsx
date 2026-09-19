@@ -456,7 +456,6 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               <span className="text-sm">💊</span>
               <div className="flex items-center gap-1">
                 <span className="text-[10px] font-black text-slate-800">Safe Packing</span>
-                <span className="text-[8px] font-bold text-emerald-600">• Sanitized Box</span>
               </div>
             </div>
           </div>

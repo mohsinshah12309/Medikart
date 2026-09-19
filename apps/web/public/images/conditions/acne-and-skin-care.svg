@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="acneBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2"/>
+      <stop offset="100%" stop-color="#FFE4E6"/>
+    </linearGradient>
+    <filter id="acneShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#9F1239" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#acneBg)" stroke="#FECDD3" stroke-width="2"/>
+  
+  <!-- Clear Skin Facial Profile & Radiant Glow -->
+  <g filter="url(#acneShadow)" transform="translate(45, 35)">
+    <!-- Anti-Acne Treatment Tube -->
+    <g transform="rotate(-25 50 60)">
+      <rect x="35" y="20" width="30" height="75" rx="8" fill="#F43F5E" stroke="#E11D48"/>
+      <rect x="40" y="95" width="20" height="12" rx="2" fill="#FFFFFF"/>
+      <!-- Label -->
+      <rect x="40" y="35" width="20" height="40" rx="3" fill="#FFFFFF"/>
+      <circle cx="50" cy="50" r="5" fill="#FB7185"/>
+      <rect x="44" y="60" width="12" height="3" rx="1.5" fill="#94A3B8"/>
+    </g>
+
+    <!-- Calming Aloe & Salicylic Serum Droplet -->
+    <path d="M75 60 C75 60 90 80 90 90 C90 98 83 105 75 105 C67 105 60 98 60 90 C60 80 75 60 75 60 Z" fill="#10B981" opacity="0.9"/>
+    <circle cx="72" cy="92" r="3" fill="#A7F3D0"/>
+  </g>
+
+  <!-- Glowing Clear Skin Stars -->
+  <path d="M145 35 L148 42 L155 45 L148 48 L145 55 L142 48 L135 45 L142 42 Z" fill="#F59E0B"/>
+  <path d="M45 130 L47 134 L52 136 L47 138 L45 142 L43 138 L38 136 L43 134 Z" fill="#FB7185"/>
+</svg>

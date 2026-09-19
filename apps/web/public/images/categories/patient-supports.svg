@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="suppBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0FDFA"/>
+      <stop offset="100%" stop-color="#CCFBF1"/>
+    </linearGradient>
+    <filter id="suppShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#115E59" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#suppBg)"/>
+
+  <!-- Orthopedic Knee Support Brace with Patella Gel Ring -->
+  <g filter="url(#suppShadow)">
+    <!-- Main Neoprene Sleeve -->
+    <path d="M60 45 C75 42 125 42 140 45 L132 155 C120 158 80 158 68 155 Z" fill="#0F766E" stroke="#115E59" stroke-width="2"/>
+    <!-- Breathable Elastic Mesh Zones -->
+    <path d="M64 65 H136 M66 80 H134 M68 125 H132 M70 140 H130" stroke="#14B8A6" stroke-width="3" stroke-linecap="round"/>
+    <!-- Circular Patella Open Gel Ring -->
+    <circle cx="100" cy="102" r="20" fill="#042F2E" stroke="#F59E0B" stroke-width="4"/>
+    <circle cx="100" cy="102" r="12" fill="#CCFBF1"/>
+    <!-- Adjustable Dual Straps with Velcro -->
+    <rect x="52" y="55" width="96" height="12" rx="4" fill="#134E4A" stroke="#2DD4BF"/>
+    <rect x="54" y="132" width="92" height="12" rx="4" fill="#134E4A" stroke="#2DD4BF"/>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="genBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF2F2"/>
+      <stop offset="100%" stop-color="#FEE2E2"/>
+    </linearGradient>
+    <filter id="genShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#991B1B" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#genBg)"/>
+
+  <!-- First Aid Emergency Medical Kit Box -->
+  <g filter="url(#genShadow)">
+    <rect x="40" y="60" width="90" height="85" rx="14" fill="#EF4444" stroke="#DC2626" stroke-width="2"/>
+    <!-- Handle -->
+    <path d="M65 60 V48 C65 44 72 44 85 44 C98 44 105 44 105 48 V60" fill="none" stroke="#DC2626" stroke-width="5" stroke-linecap="round"/>
+    <!-- White Medical Cross -->
+    <circle cx="85" cy="102" r="24" fill="#FFFFFF"/>
+    <path d="M85 88 V116 M71 102 H99" stroke="#EF4444" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- Antiseptic Liquid Bottle (Dettol / Pyodine Style) -->
+  <g filter="url(#genShadow)" transform="rotate(18 140 100)">
+    <rect x="135" y="52" width="16" height="10" rx="2" fill="#FFFFFF"/>
+    <rect x="125" y="62" width="36" height="65" rx="8" fill="#B45309" stroke="#78350F"/>
+    <rect x="128" y="75" width="30" height="35" rx="4" fill="#FFFFFF"/>
+    <!-- Sword / Cross symbol on antiseptic -->
+    <path d="M143 82 V102 M136 88 H150" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Sterile Cotton Roll -->
+  <ellipse cx="145" cy="142" rx="16" ry="10" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#genShadow)"/>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="diabBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0F9FF"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
+    </linearGradient>
+    <filter id="diabShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0369A1" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#diabBg)" stroke="#BAE6FD" stroke-width="2"/>
+
+  <!-- Digital Glucometer Blood Glucose Meter -->
+  <g filter="url(#diabShadow)">
+    <!-- Glucometer Device -->
+    <rect x="65" y="45" width="70" height="95" rx="20" fill="#0284C7" stroke="#0369A1" stroke-width="2"/>
+    <!-- Screen -->
+    <rect x="75" y="60" width="50" height="40" rx="8" fill="#0F172A"/>
+    <!-- Glucose Reading -->
+    <text x="100" y="86" font-size="18" font-weight="900" fill="#22C55E" text-anchor="middle" font-family="monospace">105</text>
+    <text x="100" y="96" font-size="7" font-weight="bold" fill="#94A3B8" text-anchor="middle" font-family="Arial, sans-serif">mg/dL</text>
+    <!-- Buttons -->
+    <circle cx="88" cy="118" r="6" fill="#38BDF8"/>
+    <circle cx="112" cy="118" r="6" fill="#38BDF8"/>
+  </g>
+
+  <!-- Test Strip with Blood Drop -->
+  <g filter="url(#diabShadow)">
+    <rect x="94" y="22" width="12" height="30" rx="2" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="96" y="24" width="8" height="6" fill="#F59E0B"/>
+    <!-- Ruby Blood Drop -->
+    <path d="M100 8 C100 8 108 18 108 24 C108 28 104 32 100 32 C96 32 92 28 92 24 C92 18 100 8 100 8 Z" fill="#DC2626"/>
+    <circle cx="98" cy="25" r="2" fill="#F87171"/>
+  </g>
+</svg>

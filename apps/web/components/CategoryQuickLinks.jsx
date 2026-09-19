@@ -160,7 +160,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
         >
           {displayCategories.map((cat, idx) => {
             const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-            const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.jpg` : null);
+            const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
             return (
               <a

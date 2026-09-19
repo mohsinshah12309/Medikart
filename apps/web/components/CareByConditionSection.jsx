@@ -16,14 +16,14 @@ import {
 } from "lucide-react";
 
 const FALLBACK_CONDITIONS = [
-  { _id: "c-1", name: "Hair Fall", slug: "hair-fall", imageUrl: "/images/conditions/hair-fall.jpg", icon: "hair" },
-  { _id: "c-2", name: "Cough & Cold", slug: "cough-and-cold", imageUrl: "/images/conditions/cough-and-cold.jpg", icon: "cough" },
-  { _id: "c-3", name: "Bones & Joints Pain", slug: "bones-and-joints-pain", imageUrl: "/images/conditions/bones-and-joints-pain.jpg", icon: "bone" },
-  { _id: "c-4", name: "Acne & Skin Care", slug: "acne-and-skin-care", imageUrl: "/images/conditions/acne-and-skin-care.jpg", icon: "skin" },
-  { _id: "c-5", name: "Pain & Body Aches", slug: "pain-and-body-aches", imageUrl: "/images/conditions/pain-and-body-aches.jpg", icon: "pain" },
-  { _id: "c-6", name: "Sleep Disorders", slug: "sleep-disorders", imageUrl: "/images/conditions/sleep-disorders.jpg", icon: "sleep" },
-  { _id: "c-7", name: "Digestive Health", slug: "digestive-health", imageUrl: "/images/conditions/digestive-health.jpg", icon: "digestion" },
-  { _id: "c-8", name: "Diabetes Care", slug: "diabetes-care", imageUrl: "/images/conditions/diabetes-care.jpg", icon: "diabetes" },
+  { _id: "c-1", name: "Hair Fall", slug: "hair-fall", imageUrl: "/images/conditions/hair-fall.svg", icon: "hair" },
+  { _id: "c-2", name: "Cough & Cold", slug: "cough-and-cold", imageUrl: "/images/conditions/cough-and-cold.svg", icon: "cough" },
+  { _id: "c-3", name: "Bones & Joints Pain", slug: "bones-and-joints-pain", imageUrl: "/images/conditions/bones-and-joints-pain.svg", icon: "bone" },
+  { _id: "c-4", name: "Acne & Skin Care", slug: "acne-and-skin-care", imageUrl: "/images/conditions/acne-and-skin-care.svg", icon: "skin" },
+  { _id: "c-5", name: "Pain & Body Aches", slug: "pain-and-body-aches", imageUrl: "/images/conditions/pain-and-body-aches.svg", icon: "pain" },
+  { _id: "c-6", name: "Sleep Disorders", slug: "sleep-disorders", imageUrl: "/images/conditions/sleep-disorders.svg", icon: "sleep" },
+  { _id: "c-7", name: "Digestive Health", slug: "digestive-health", imageUrl: "/images/conditions/digestive-health.svg", icon: "digestion" },
+  { _id: "c-8", name: "Diabetes Care", slug: "diabetes-care", imageUrl: "/images/conditions/diabetes-care.svg", icon: "diabetes" },
 ];
 
 export default function CareByConditionSection({ initialConditions = [], onSelectCondition }) {
@@ -151,7 +151,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
           style={{ animationPlayState: isPaused ? "paused" : "running" }}
         >
           {displayConditions.map((item, idx) => {
-            const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.jpg` : null);
+            const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.svg` : null);
             return (
               <a
                 key={`${item._id || item.slug}-${idx}`}

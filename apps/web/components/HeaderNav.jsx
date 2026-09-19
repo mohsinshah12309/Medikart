@@ -176,7 +176,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                       <div className="p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-[420px] overflow-y-auto scrollbar-thin">
                         {categories.map((cat) => {
                           const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-                          const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.jpg` : null);
+                          const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
                           return (
                             <div
@@ -457,7 +457,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                   <div className="px-3 pb-3 pt-1 space-y-1 border-t border-slate-100 max-h-60 overflow-y-auto">
                     {categories.map((cat) => {
                       const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-                      const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.jpg` : null);
+                      const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
                       return (
                         <div

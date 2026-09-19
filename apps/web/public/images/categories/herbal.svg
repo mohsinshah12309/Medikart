@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="herbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0FDF4"/>
+      <stop offset="100%" stop-color="#DCFCE7"/>
+    </linearGradient>
+    <linearGradient id="mortarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="50%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="herbShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#065F46" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#herbBg)"/>
+
+  <!-- Natural Mortar & Pestle -->
+  <g filter="url(#herbShadow)">
+    <!-- Pestle -->
+    <rect x="110" y="35" width="16" height="65" rx="8" transform="rotate(30 110 35)" fill="#6EE7B7" stroke="#047857" stroke-width="2"/>
+    
+    <!-- Mortar Bowl -->
+    <path d="M45 90 Q100 80 155 90 L145 140 Q100 160 55 140 Z" fill="url(#mortarGrad)"/>
+    <ellipse cx="100" cy="90" rx="55" ry="15" fill="#34D399"/>
+    <ellipse cx="100" cy="90" rx="48" ry="10" fill="#047857"/>
+  </g>
+
+  <!-- Fresh Green Organic Medicinal Leaves -->
+  <g filter="url(#herbShadow)">
+    <path d="M100 75 Q125 50 145 60 Q135 85 100 75 Z" fill="#22C55E"/>
+    <path d="M100 75 Q125 65 145 60" stroke="#DCFCE7" stroke-width="1.5" fill="none"/>
+
+    <path d="M70 70 Q50 45 35 58 Q45 80 70 70 Z" fill="#16A34A"/>
+    <path d="M70 70 Q50 58 35 58" stroke="#DCFCE7" stroke-width="1.5" fill="none"/>
+
+    <path d="M100 50 Q100 20 115 30 Q115 50 100 50 Z" fill="#4ADE80"/>
+  </g>
+
+  <!-- Herbal Extract Dropper Bottle -->
+  <g filter="url(#herbShadow)" transform="translate(130, 95)">
+    <rect x="10" y="0" width="12" height="8" rx="2" fill="#15803D"/>
+    <rect x="6" y="8" width="20" height="40" rx="6" fill="#059669"/>
+    <rect x="9" y="16" width="14" height="24" rx="2" fill="#FFFFFF"/>
+    <!-- Droplet -->
+    <path d="M16 54 C16 54 22 62 22 66 C22 70 19 72 16 72 C13 72 10 70 10 66 C10 62 16 54 16 54 Z" fill="#22C55E"/>
+  </g>
+</svg>

@@ -86,13 +86,11 @@ const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
   const senderEmail =
     fromEmail ||
     process.env.SMTP_FROM ||
-    process.env.MAILJET_SENDER_EMAIL ||
     "medikart.com@gmail.com";
 
   const senderName =
     fromName ||
-    process.env.MAILJET_SENDER_NAME ||
-    "Medikart Verification";
+    "Medikart Pharmacy";
 
   const entityRefId = crypto.randomUUID
     ? crypto.randomUUID()

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bevBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <linearGradient id="juiceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="bevShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#B45309" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#bevBg)"/>
+
+  <!-- Electrolyte ORS Hydration Bottle -->
+  <g filter="url(#bevShadow)">
+    <rect x="75" y="32" width="20" height="10" rx="3" fill="#0284C7"/>
+    <rect x="80" y="42" width="10" height="8" fill="#E2E8F0"/>
+    <rect x="62" y="50" width="46" height="105" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+    <!-- Hydration Juice Level -->
+    <rect x="65" y="70" width="40" height="82" rx="10" fill="url(#juiceGrad)"/>
+    <!-- Energy Lightning / Wave on Bottle -->
+    <path d="M88 85 L80 102 H90 L82 120" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Citrus Slice & Refreshing Splash -->
+  <g filter="url(#bevShadow)">
+    <circle cx="138" cy="115" r="28" fill="#F97316"/>
+    <circle cx="138" cy="115" r="24" fill="#FEF08A"/>
+    <circle cx="138" cy="115" r="20" fill="#EA580C"/>
+    <path d="M138 95 V135 M118 115 H158" stroke="#FEF08A" stroke-width="2"/>
+    <circle cx="138" cy="115" r="4" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Water Drops -->
+  <circle cx="135" cy="55" r="5" fill="#38BDF8"/>
+  <circle cx="150" cy="70" r="3" fill="#38BDF8"/>
+</svg>

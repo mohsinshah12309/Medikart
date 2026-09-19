@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="boneBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FEF3C7"/>
+    </linearGradient>
+    <filter id="boneShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#78350F" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#boneBg)" stroke="#FDE68A" stroke-width="2"/>
+
+  <!-- Articulated Knee / Joint Bone Health & Calcium D3 Shield -->
+  <g filter="url(#boneShadow)" transform="translate(50, 30)">
+    <!-- Femur / Upper Bone -->
+    <path d="M45 15 C35 15 35 30 45 35 V70 C40 70 35 75 40 85 C45 92 55 92 60 85 C65 75 60 70 55 70 V35 C65 30 65 15 55 15 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    
+    <!-- Joint Cartilage Cushion & Mobility Sparkles -->
+    <ellipse cx="50" cy="80" rx="18" ry="6" fill="#F59E0B"/>
+
+    <!-- Tibia / Lower Bone -->
+    <path d="M42 95 C35 95 38 105 45 108 V135 C38 138 38 148 45 148 C55 148 55 138 55 135 V108 C62 105 65 95 58 95 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  </g>
+
+  <!-- Calcium & Vitamin D3 Molecular / Sparkle Badges -->
+  <g filter="url(#boneShadow)">
+    <circle cx="145" cy="75" r="16" fill="#F59E0B"/>
+    <text x="145" y="80" font-size="11" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="Arial, sans-serif">Ca</text>
+
+    <circle cx="140" cy="125" r="14" fill="#3B82F6"/>
+    <text x="140" y="130" font-size="10" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="Arial, sans-serif">D3</text>
+  </g>
+</svg>

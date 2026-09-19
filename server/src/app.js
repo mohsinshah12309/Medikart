@@ -192,13 +192,13 @@ const otpLimiter = createRateLimiter({
 
 const adminLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 200 : 50,
+  max: isDev ? 1000 : 500,
   message: "Too many administrative operations. Please try again in 15 minutes.",
 });
 
 const expensiveLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: isDev ? 300 : 100,
+  max: isDev ? 1000 : 300,
   message: "Rate limit exceeded for resource-heavy operations. Please wait.",
 });
 

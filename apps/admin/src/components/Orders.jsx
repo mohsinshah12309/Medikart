@@ -326,15 +326,14 @@ function Orders({ token, adminUser, initialFilter }) {
 
   const handleAssignPharmacy = async (orderId, pharmacyId) => {
     try {
-      await adminFetch(`/admin/orders/${orderId}/pharmacy`, {
+      const res = await adminFetch(`/admin/orders/${orderId}/pharmacy`, {
         method: "PATCH",
         body: JSON.stringify({ pharmacyId }),
       });
       setSuccessMsg("Fulfillment pharmacy branch assigned successfully.");
       await fetchOrders();
       if (selectedOrder && selectedOrder._id === orderId) {
-        const found = pharmacies.find((p) => p._id === pharmacyId);
-        setSelectedOrder((prev) => (prev ? { ...prev, assignedPharmacyId: found || null } : null));
+        setSelectedOrder(res.data?.order || null);
       }
     } catch (err) {
       setError(err.message || "Failed to assign pharmacy.");
@@ -359,7 +358,7 @@ function Orders({ token, adminUser, initialFilter }) {
     setStatusUpdatingId(orderId);
 
     try {
-      await adminFetch(`/admin/orders/${orderId}/status`, {
+      const res = await adminFetch(`/admin/orders/${orderId}/status`, {
         method: "PATCH",
         body: JSON.stringify({ status: newStatus }),
       });
@@ -367,9 +366,7 @@ function Orders({ token, adminUser, initialFilter }) {
       setSuccessMsg(`Order status successfully updated to "${newStatus}".`);
       await fetchOrders();
       if (selectedOrder && selectedOrder._id === orderId) {
-        setSelectedOrder((prev) =>
-          prev ? { ...prev, status: newStatus === "completed" ? "delivered" : newStatus } : null
-        );
+        setSelectedOrder(res.data?.order || null);
       }
     } catch (err) {
       setError(err.message || "Failed to update order status");
@@ -1168,15 +1165,15 @@ function Orders({ token, adminUser, initialFilter }) {
                           }
                         >
                           {order.status === "awaiting-pharmacist-pricing" && (
-                            <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
+                            <option value="awaiting-pharmacist-pricing" disabled>⚡ Awaiting Pricing (Price items first)</option>
                           )}
                           {order.status === "pending_verification" && (
-                            <option value="pending_verification">Pending Verification</option>
+                            <option value="pending_verification" disabled>📋 Pending Verification (Approve Rx first)</option>
                           )}
-                          <option value="pending">Pending</option>
-                          <option value="packed">Packed</option>
-                          <option value="shipped">Shipped</option>
-                          <option value="delivered">Delivered / Completed</option>
+                          <option value="pending" disabled={order.status === "awaiting-pharmacist-pricing" || order.status === "pending_verification"}>Pending</option>
+                          <option value="packed" disabled={order.status === "awaiting-pharmacist-pricing" || order.status === "pending_verification"}>Packed</option>
+                          <option value="shipped" disabled={order.status === "awaiting-pharmacist-pricing" || order.status === "pending_verification"}>Shipped</option>
+                          <option value="delivered" disabled={order.status === "awaiting-pharmacist-pricing" || order.status === "pending_verification"}>Delivered / Completed</option>
                           <option value="cancelled">Cancelled</option>
                         </select>
                       </div>
@@ -1372,15 +1369,15 @@ function Orders({ token, adminUser, initialFilter }) {
                       }
                     >
                       {selectedOrder.status === "awaiting-pharmacist-pricing" && (
-                        <option value="awaiting-pharmacist-pricing">Awaiting Pricing</option>
+                        <option value="awaiting-pharmacist-pricing" disabled>⚡ Awaiting Pricing (Price items first)</option>
                       )}
                       {selectedOrder.status === "pending_verification" && (
-                        <option value="pending_verification">Pending Verification</option>
+                        <option value="pending_verification" disabled>📋 Pending Verification (Approve Rx first)</option>
                       )}
-                      <option value="pending">Pending</option>
-                      <option value="packed">Packed</option>
-                      <option value="shipped">Shipped</option>
-                      <option value="delivered">Delivered / Completed</option>
+                      <option value="pending" disabled={selectedOrder.status === "awaiting-pharmacist-pricing" || selectedOrder.status === "pending_verification"}>Pending</option>
+                      <option value="packed" disabled={selectedOrder.status === "awaiting-pharmacist-pricing" || selectedOrder.status === "pending_verification"}>Packed</option>
+                      <option value="shipped" disabled={selectedOrder.status === "awaiting-pharmacist-pricing" || selectedOrder.status === "pending_verification"}>Shipped</option>
+                      <option value="delivered" disabled={selectedOrder.status === "awaiting-pharmacist-pricing" || selectedOrder.status === "pending_verification"}>Delivered / Completed</option>
                       <option value="cancelled">Cancelled</option>
                     </select>
                   </div>
