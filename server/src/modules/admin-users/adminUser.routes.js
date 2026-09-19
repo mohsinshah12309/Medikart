@@ -34,6 +34,23 @@ const {
 // POST /api/v1/auth/admin/login — Phase 5
 router.post("/login", validate(loginSchema), adminUserController.login);
 
+// GET /api/v1/auth/admin/me — returns current authenticated admin profile & live permissions
+router.get("/me", auth, (req, res) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      admin: {
+        id: req.admin.id,
+        name: req.admin.name || req.admin.email.split("@")[0],
+        email: req.admin.email,
+        role: req.admin.role,
+        permissions: req.admin.permissions || [],
+        assignedPharmacyId: req.admin.assignedPharmacyId || null,
+      },
+    },
+  });
+});
+
 // POST /api/v1/auth/admin/verify-2fa — Phase 28
 router.post("/verify-2fa", validate(verify2FASchema), adminUserController.verify2FA);
 

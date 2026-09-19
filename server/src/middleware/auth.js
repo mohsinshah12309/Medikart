@@ -53,6 +53,7 @@ const auth = async (req, res, next) => {
     // Attach identity & permissions info — downstream code reads req.admin
     req.admin = {
       id: adminUser._id.toString(),
+      name: adminUser.name,
       role: adminUser.role,
       email: adminUser.email,
       permissions: adminUser.permissions || [],

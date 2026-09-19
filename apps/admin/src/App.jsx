@@ -52,11 +52,17 @@ function App() {
     setActiveTab("pharmacies");
   };
 
+  // 1. Session expiration listener
   useEffect(() => {
     const handleExpired = (e) => {
       const msg = e?.detail?.message || "Your session has expired. Please sign in again.";
+      localStorage.removeItem("admin_token");
+      localStorage.removeItem("admin_user");
       setToken("");
       setAdminUser(null);
+      setActiveTab("overview");
+      setInitialOrderFilter(null);
+      setInitialPharmacyTab(null);
       setSessionExpiredMsg(msg);
     };
 
@@ -64,11 +70,52 @@ function App() {
     return () => window.removeEventListener(SESSION_EXPIRED_EVENT, handleExpired);
   }, []);
 
+  // 2. Validate token & fetch fresh live admin permissions on mount or when token changes
+  useEffect(() => {
+    let isMounted = true;
+    if (!token) return;
+
+    const syncAdminProfile = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || "/api/v1"}/auth/admin/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!isMounted) return;
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.data?.admin) {
+            setAdminUser(data.data.admin);
+            localStorage.setItem("admin_user", JSON.stringify(data.data.admin));
+          }
+        } else if (res.status === 401) {
+          localStorage.removeItem("admin_token");
+          localStorage.removeItem("admin_user");
+          setToken("");
+          setAdminUser(null);
+          setActiveTab("overview");
+        }
+      } catch (err) {
+        console.warn("Could not sync live admin profile:", err.message);
+      }
+    };
+
+    syncAdminProfile();
+    return () => {
+      isMounted = false;
+    };
+  }, [token]);
+
   const handleLogin = (newToken, user) => {
     localStorage.setItem("admin_token", newToken);
     localStorage.setItem("admin_user", JSON.stringify(user));
     setToken(newToken);
     setAdminUser(user);
+    setActiveTab("overview");
+    setInitialOrderFilter(null);
+    setInitialPharmacyTab(null);
     setSessionExpiredMsg("");
   };
 
@@ -77,6 +124,9 @@ function App() {
     localStorage.removeItem("admin_user");
     setToken("");
     setAdminUser(null);
+    setActiveTab("overview");
+    setInitialOrderFilter(null);
+    setInitialPharmacyTab(null);
     setSessionExpiredMsg("");
   };
 
@@ -172,6 +222,7 @@ function App() {
 
   return (
     <Layout
+      key={`${adminUser?.id || adminUser?._id || "guest"}-${adminUser?.role || "none"}`}
       adminUser={adminUser}
       onLogout={handleLogout}
       activeTab={activeTab}
