@@ -97,6 +97,7 @@ export default function HeaderNav({ initialCategories = [] }) {
     { name: "Categories", href: "#categories", isDropdown: true },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
+    { name: "FAQs", href: "/faqs" },
   ];
 
   return (
@@ -547,6 +548,17 @@ export default function HeaderNav({ initialCategories = [] }) {
                 }`}
               >
                 <span>Contact</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/faqs"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
+                  pathname === "/faqs" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
+                }`}
+              >
+                <span>FAQs</span>
                 <ChevronRight className="w-4 h-4 text-slate-400" />
               </Link>
             </div>

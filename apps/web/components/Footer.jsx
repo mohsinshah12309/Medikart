@@ -172,6 +172,8 @@ export default function Footer({
     { label: "Contact Support", href: "/contact" },
     { label: "Prescription Help", href: "/instant-order" },
     { label: "Refill Inquiries", href: "/refill" },
+    { label: "FAQs", href: "/faqs" },
+    { label: "Return & Refund Policy", href: "/return-refund-policy" },
   ];
 
   // Display up to top 7 categories in the footer column
@@ -182,7 +184,7 @@ export default function Footer({
       {/* ─────────────────────────────────────────────────────────────────────
           1. MAIN BRAND YELLOW FOOTER BLOCK (4-Column + Brand Block)
       ────────────────────────────────────────────────────────────────────── */}
-      <div className="w-full bg-gradient-to-b from-[#FFFDE7] via-[#FFF9C4] to-[#FFEB3B]/90 border-t-2 border-[#FBC02D] shadow-inner py-12 sm:py-16">
+      <div className="w-full bg-gradient-to-b from-[#FFFDE0] via-[#FFFEBB] to-[#FFF352]/90 border-t-2 border-[#F7E53B] shadow-inner py-12 sm:py-16">
         <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 text-left">
@@ -424,7 +426,7 @@ export default function Footer({
 
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700">
                 <CreditCard className="w-3.5 h-3.5 text-slate-600" />
-                <span>Kuickpay Online Card</span>
+                <span>Debit / Credit Card</span>
               </span>
 
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900">

@@ -2,20 +2,21 @@
  * Monthly Refill Feature Stylesheet.
  *
  * Theme: Yellow + White.
- * Exact Primary Yellow: #fff850 (sampled from user-uploaded visual palette).
+ * Exact Primary Yellow: #FFF352 (Medikart Canonical Brand Yellow).
  */
 
 :root {
-  --refill-yellow-primary: #fff850;
-  --refill-yellow-light: #fffde0;
-  --refill-yellow-subtle: #fffebb;
-  --refill-yellow-border: #fae845;
-  --refill-yellow-hover: #fae432;
-  --refill-white: #ffffff;
-  --refill-text-dark: #1a1a1a;
-  --refill-shadow: 0 4px 20px -2px rgba(250, 232, 69, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  color-scheme: light !important;
+  --refill-yellow-primary: #FFF352;
+  --refill-yellow-light: #FFFDE0;
+  --refill-yellow-subtle: #FFFEBB;
+  --refill-yellow-border: #F7E53B;
+  --refill-yellow-hover: #FEE833;
+  --refill-white: #FFFFFF;
+  --refill-text-dark: #1A1A1A;
+  --refill-shadow: 0 4px 20px -2px rgba(255, 243, 82, 0.35), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
   --refill-card-shadow: 0 4px 16px -3px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
-  --refill-card-hover: 0 10px 25px -5px rgba(234, 179, 8, 0.18), 0 6px 10px -3px rgba(0, 0, 0, 0.05);
+  --refill-card-hover: 0 10px 25px -5px rgba(255, 243, 82, 0.3), 0 6px 10px -3px rgba(0, 0, 0, 0.05);
 }
 
 /* Card Micro-interactions */

@@ -46,6 +46,13 @@ const caveat = Caveat({
   display: 'swap',
 });
 
+export const viewport = {
+  themeColor: '#FFF352',
+  colorScheme: 'light',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk'),
   title: {
@@ -152,8 +159,10 @@ export default async function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${inter.variable} ${caveat.variable}`}>
+    <html lang="en" className={`light ${plusJakarta.variable} ${inter.variable} ${caveat.variable}`} style={{ colorScheme: 'light' }}>
       <head>
+        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content="#FFF352" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}

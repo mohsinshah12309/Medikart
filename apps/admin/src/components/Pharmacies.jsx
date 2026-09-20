@@ -436,7 +436,11 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
         body: fd,
       });
 
-      flash("Payment proof uploaded successfully! Queued for Super Admin verification.");
+      flash(
+        isSuperAdmin
+          ? "Payment proof recorded and automatically approved & verified! Balance updated."
+          : "Payment proof uploaded successfully! Queued for Super Admin verification."
+      );
       setShowPaymentModal(false);
       fetchCommissionData(selectedCommPharmacy);
     } catch (err) {
@@ -1836,7 +1840,9 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               💳 Submit Commission Payment Proof
             </h2>
             <p style={{ color: "#64748b", fontSize: "0.85rem", margin: "0 0 1.25rem 0" }}>
-              Upload proof of bank transfer or cash deposit settling the Medikart commission balance.
+              {isSuperAdmin
+                ? "As Super Admin, uploading payment proof will automatically approve and verify the transaction and credit the commission balance immediately."
+                : "Upload proof of bank transfer or cash deposit settling the Medikart commission balance for Super Admin review."}
             </p>
 
             <form onSubmit={handlePaymentSubmit}>
@@ -1968,7 +1974,9 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                   style={{ background: "#FFCB05", color: "#1E293B", fontWeight: "800", border: "1px solid rgba(245, 158, 11, 0.4)" }}
                   disabled={paymentSubmitting}
                 >
-                  {paymentSubmitting ? "Uploading Proof..." : "Submit Proof"}
+                  {paymentSubmitting
+                    ? (isSuperAdmin ? "Approving & Recording..." : "Uploading Proof...")
+                    : (isSuperAdmin ? "Approve & Record Payment" : "Submit Proof")}
                 </button>
               </div>
             </form>

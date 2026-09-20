@@ -52,14 +52,14 @@ export default function AboutPage() {
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-10 pb-16 px-4 sm:px-6">
       {/* Hero Header Card - Yellow Dominant */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400 rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-yellow-500/40">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#FFF352] via-[#FFF866] to-[#FFE51A] rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-[#F7E53B]">
         {/* Soft Ambient Accents */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 blur-[90px] rounded-full pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-amber-500/20 blur-[80px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/40 blur-[90px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-yellow-300/30 blur-[80px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 flex flex-col gap-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-yellow-300 w-fit shadow-md">
-            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-pulse shadow-[0_0_8px_#facc15]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFF352] w-fit shadow-md">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFF352] animate-pulse shadow-[0_0_8px_#fff352]" />
             DRAP Compliant Digital Pharmacy Network
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 leading-tight">

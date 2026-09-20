@@ -245,4 +245,29 @@ describe("Medikart Commission Tracking & Verification Workflow", () => {
     expect(branch.totalPaidInPeriod).toBeGreaterThanOrEqual(8500);
     expect(branch.payments.length).toBeGreaterThanOrEqual(1);
   });
+
+  it("should auto-approve and verify payment proof when submitted by Super Admin and adjust balance immediately", async () => {
+    const payment = await commissionService.submitPayment(
+      {
+        pharmacyId: pharmacy._id.toString(),
+        amount: 6000,
+        screenshotUrl: "/uploads/commissions/proof_super_admin_direct.webp",
+        periodFrom: "2026-08-01",
+        periodTo: "2026-08-31",
+        paidOnDate: "2026-09-10",
+        notes: "Direct Super Admin deposit entry",
+      },
+      superAdmin
+    );
+
+    expect(payment.status).toEqual("verified");
+    expect(payment.verifiedBy.toString()).toEqual(superAdmin.id);
+    expect(payment.verifiedAt).toBeDefined();
+
+    // Outstanding balance decremented automatically: 15000 - 6000 = 9000
+    const balance = await commissionService.getPharmacyBalance(pharmacy._id, superAdmin);
+    expect(balance.outstandingBalance).toEqual(9000);
+    expect(balance.totalPaidVerified).toEqual(6000);
+    expect(balance.pendingCount).toEqual(0);
+  });
 });

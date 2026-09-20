@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Terms & Conditions | Medikart Online Pharmacy',
-  description: 'Terms of service, Kuickpay payments, order cancellation policy (FR-AD-39), prescription verification, and patient rights.',
+  description: 'Terms of service, online payments, order cancellation policy (FR-AD-39), prescription verification, and patient rights.',
   alternates: {
     canonical: 'https://medikart.pk/terms-and-conditions',
   },
@@ -74,7 +74,7 @@ export default function TermsAndConditionsPage() {
           </ul>
         </section>
 
-        {/* 4. Orders, Pricing & Kuickpay Payment Gateway */}
+        {/* 4. Orders, Pricing & Online Payment Gateway */}
         <section className="space-y-3">
           <h2 className="text-lg font-black text-slate-900 font-heading">
             4. Orders, Pricing &amp; Payment Terms
@@ -84,7 +84,7 @@ export default function TermsAndConditionsPage() {
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
             <li><strong>Cash on Delivery (COD):</strong> Pay cash directly to the authorized courier upon package delivery.</li>
-            <li><strong>Kuickpay Digital Gateway:</strong> Secure online debit/credit card payments and bill payment vouchers processed via 256-bit SSL encrypted gateway.</li>
+            <li><strong>Online Card &amp; Digital Gateway:</strong> Secure online debit/credit card payments and bill payment vouchers processed via 256-bit SSL encrypted gateway.</li>
           </ul>
           <p className="pt-1">
             In the event of an instant prescription order awaiting pharmacist pricing, the order total is finalized only after pharmacist review and customer approval.
@@ -103,7 +103,7 @@ export default function TermsAndConditionsPage() {
             <li><strong>Order Cancellation:</strong> Customers may cancel an unfulfilled order through customer support or WhatsApp prior to pharmacy dispatch. Once an order is out for delivery, cancellations cannot be processed.</li>
             <li><strong>Damaged or Incorrect Items:</strong> If any delivered medicine is damaged in transit, expired, or incorrect, notify Medikart within 24 hours of delivery with photographic evidence for immediate replacement or full refund.</li>
             <li><strong>Opened / Temperature-Sensitive Medicines:</strong> Due to hygiene and pharmaceutical safety standards, cold-chain items (e.g. insulin, vaccines) and opened tamper-evident seals cannot be returned once accepted.</li>
-            <li><strong>Refund Processing:</strong> Approved card refunds via Kuickpay will be credited back to the original source account within 5 to 7 business days.</li>
+            <li><strong>Refund Processing:</strong> Approved card refunds will be credited back to the original source account within 3 to 7 business days.</li>
           </ul>
         </section>
 

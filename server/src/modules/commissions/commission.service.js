@@ -185,6 +185,9 @@ const submitPayment = async (data, adminUser) => {
     throw new BadRequestError("Payment proof screenshot is required");
   }
 
+  const isSuperAdmin = Boolean(adminUser && adminUser.role === "super_admin");
+  const status = isSuperAdmin ? "verified" : "pending";
+
   const payment = await CommissionPayment.create({
     pharmacyId: data.pharmacyId,
     amount: Number(data.amount),
@@ -193,13 +196,38 @@ const submitPayment = async (data, adminUser) => {
     periodTo: new Date(data.periodTo),
     paidOnDate: new Date(data.paidOnDate),
     notes: data.notes ? String(data.notes).trim() : "",
-    status: "pending",
+    status,
     submittedBy: adminUser.id,
+    verifiedBy: isSuperAdmin ? adminUser.id : null,
+    verifiedAt: isSuperAdmin ? new Date() : null,
   });
+
+  if (isSuperAdmin) {
+    // Atomically decrement outstanding balance and increment totalPaidVerified
+    const balanceDoc = await CommissionBalance.findOneAndUpdate(
+      { pharmacyId: payment.pharmacyId },
+      {
+        $inc: {
+          outstandingBalance: -payment.amount,
+          totalPaidVerified: payment.amount,
+        },
+        $set: {
+          lastVerifiedDate: new Date(),
+          lastPaymentDate: payment.paidOnDate,
+        },
+      },
+      { new: true, upsert: true }
+    );
+
+    if (balanceDoc.outstandingBalance < 0) {
+      balanceDoc.outstandingBalance = 0;
+      await balanceDoc.save();
+    }
+  }
 
   await logActivity({
     actor: adminUser,
-    action: "commission_payment_submitted",
+    action: isSuperAdmin ? "commission_payment_verified" : "commission_payment_submitted",
     entityType: "commission_payment",
     entityId: payment._id,
     before: null,
@@ -207,6 +235,7 @@ const submitPayment = async (data, adminUser) => {
       pharmacyId: pharmacy._id,
       pharmacyName: pharmacy.name,
       amount: payment.amount,
+      status: payment.status,
       paidOnDate: payment.paidOnDate,
       period: `${data.periodFrom} to ${data.periodTo}`,
     },

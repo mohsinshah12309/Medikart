@@ -2,30 +2,52 @@
 @source "../components";
 @source "../app";
 
+:root, html, body {
+  color-scheme: light !important;
+  forced-color-adjust: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+:root {
+  --refill-yellow-primary: #FFF352;
+  --refill-yellow-light: #FFFDE0;
+  --refill-yellow-subtle: #FFFEBB;
+  --refill-yellow-border: #F7E53B;
+  --refill-yellow-hover: #FEE833;
+  --refill-white: #FFFFFF;
+  --refill-text-dark: #1A1A1A;
+  --brand-yellow-primary: #FFF352;
+  --brand-yellow-light: #FFFDE0;
+  --brand-yellow-subtle: #FFFEBB;
+  --brand-yellow-border: #F7E53B;
+  --brand-yellow-hover: #FEE833;
+  --brand-yellow-dark: #F5D800;
+}
+
 @theme {
   --color-primary-50: #fefce8;
   --color-primary-100: #fef9c3;
   --color-primary-200: #fef08a;
   --color-primary-300: #fde047;
-  --color-primary-400: #fed604;
-  --color-primary-500: #ffcb05;
-  --color-primary-600: #f8ba03;
-  --color-primary-700: #d49500;
-  --color-primary-800: #a37200;
-  --color-primary-900: #714f00;
+  --color-primary-400: #fff352;
+  --color-primary-500: #fff352;
+  --color-primary-600: #fee833;
+  --color-primary-700: #f5d800;
+  --color-primary-800: #d4b800;
+  --color-primary-900: #8a7800;
 
   --color-brand-bg: #ffffff;
   --color-brand-surface: #ffffff;
   --color-brand-elevated: #ffffff;
-  --color-brand-amber: #f8ba03;
-  --color-brand-gold: #fdc804;
-  --color-brand-yellow: #ffcb05;
-  --color-brand-yellow-hover: #e5a800;
-  --color-brand-yellow-light: #fef9c3;
+  --color-brand-amber: #f5d800;
+  --color-brand-gold: #fee833;
+  --color-brand-yellow: #fff352;
+  --color-brand-yellow-hover: #fee833;
+  --color-brand-yellow-light: #fffde0;
   --color-brand-navy: #1e293b;
   --color-brand-slate: #475569;
   --color-brand-green: #10b981;
-  --color-brand-script: #d97706;
+  --color-brand-script: #d4b800;
   
   --animate-float: float 4s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -37,8 +59,8 @@
     50% { transform: translateY(-5px); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(248, 186, 3, 0.35); }
-    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(248, 186, 3, 0.65); }
+    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(255, 243, 82, 0.35); }
+    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(255, 243, 82, 0.65); }
   }
   @keyframes fade-in-up {
     from {
@@ -171,26 +193,26 @@ button:focus-visible {
 
 /* ─── Medikart Canonical Brand Design Utilities (2026 Revision) ───────────── */
 .btn-amber-gradient {
-  background: linear-gradient(135deg, #F8BA03 0%, #FFCB05 60%, #FED604 100%);
+  background: linear-gradient(135deg, #FFF352 0%, #FFDE03 60%, #FED604 100%);
   color: #1E293B;
   font-weight: 800;
-  box-shadow: 0 4px 14px rgba(248, 186, 3, 0.35);
+  box-shadow: 0 4px 14px rgba(255, 243, 82, 0.45);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid rgba(248, 186, 3, 0.35);
+  border: 1px solid #F7E53B;
 }
 .btn-amber-gradient:hover {
   transform: translateY(-1.5px);
-  background: linear-gradient(135deg, #FFCB05 0%, #FED604 60%, #FFF066 100%);
-  box-shadow: 0 6px 20px rgba(248, 186, 3, 0.45);
+  background: linear-gradient(135deg, #FFF866 0%, #FFF352 60%, #FFE51A 100%);
+  box-shadow: 0 6px 20px rgba(255, 243, 82, 0.6);
   filter: brightness(1.02);
 }
 .btn-amber-gradient:active {
   transform: translateY(0.5px);
-  box-shadow: 0 2px 8px rgba(248, 186, 3, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.35);
 }
 
 .card-warm {

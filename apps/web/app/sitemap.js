@@ -45,6 +45,18 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/faqs`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/return-refund-policy`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/instant-order`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

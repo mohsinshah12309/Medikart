@@ -96,7 +96,7 @@ export default function PrivacyPolicyPage() {
             <li>
               <strong>Order &amp; Transaction History:</strong> Medicines
               purchased, order references, payment method choices (Cash on
-              Delivery or Kuickpay card payments), and 30-day refill schedules.
+              Delivery or online card payments), and 30-day refill schedules.
             </li>
             <li>
               <strong>Technical &amp; Device Information:</strong> IP address,
@@ -112,29 +112,27 @@ export default function PrivacyPolicyPage() {
             2. How We Use Your Information
           </h2>
           <p>
-            We process your personal and health-related data strictly for
-            legitimate healthcare and fulfillment purposes:
+            Your information is used strictly to provide, optimize, and secure
+            Medikart pharmacy delivery services:
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
             <li>
-              To transmit prescription orders to licensed pharmacists for
-              clinical verification and dosage inspection.
+              Fulfilling and delivering prescription and OTC healthcare orders.
             </li>
             <li>
-              To dispatch riders from nearest partner pharmacies for rapid
-              doorstep delivery.
+              Enabling registered pharmacists to verify prescriptions and ensure
+              safe clinical dispensing.
             </li>
             <li>
-              To provide automated 30-day monthly refill reminders and order
-              confirmation notifications via SMS, email, and WhatsApp.
+              Sending critical order updates, tracking links, and refill
+              reminders via SMS, email, or WhatsApp.
             </li>
             <li>
-              To maintain mandatory narcotics and DRAP regulatory fulfillment
-              logs where required by law.
+              Processing secure payments via Cash on Delivery or authorized digital payment gateways.
             </li>
             <li>
-              To improve platform security, prevent fraud, and optimize customer
-              experience.
+              Improving user experience, website performance, and catalog
+              discovery.
             </li>
           </ul>
         </section>
@@ -169,8 +167,8 @@ export default function PrivacyPolicyPage() {
               package authentic medicines as prescribed.
             </li>
             <li>
-              <strong>Payment &amp; Logistics Partners:</strong> Kuickpay for
-              card payment tokenization, and authorized delivery personnel for
+              <strong>Payment &amp; Logistics Partners:</strong> Authorized payment gateways for
+              secure card payment processing, and authorized delivery personnel for
               parcel dropoff.
             </li>
             <li>

@@ -154,14 +154,14 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full items-stretch relative z-30">
         
         {/* ─── CARD 1 (Left): Compact & Rich Hero Proposition, Interactive Quick Searches & CTAs ─── */}
-        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFEB3B] bg-gradient-to-br from-[#FFEB3B] via-[#FFE12C] to-[#FDD835] border-2 border-[#FBC02D]/60 shadow-lg shadow-amber-300/30 p-5 sm:p-7 lg:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#FBC02D]">
+        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFF352] bg-gradient-to-br from-[#FFFDE0] via-[#FFF352] to-[#FEE833] border-2 border-[#F7E53B] shadow-lg shadow-yellow-200/50 p-5 sm:p-7 lg:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#F7E53B]">
           
           {/* Background Decorative Radiant Glow & Floating Micro Capsule */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
-            <div className="absolute top-0 right-0 w-72 h-72 bg-white/35 rounded-full blur-3xl -mr-16 -mt-16" />
-            <div className="absolute bottom-0 left-1/4 w-60 h-60 bg-amber-400/25 rounded-full blur-2xl" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-white/45 rounded-full blur-3xl -mr-16 -mt-16" />
+            <div className="absolute bottom-0 left-1/4 w-60 h-60 bg-yellow-300/35 rounded-full blur-2xl" />
             {/* Subtle floating 3D medical decor in background */}
-            <div className="absolute right-4 bottom-16 opacity-15 text-5xl select-none font-black text-amber-900 pointer-events-none animate-float">
+            <div className="absolute right-4 bottom-16 opacity-15 text-5xl select-none font-black text-slate-900 pointer-events-none animate-float">
               💊
             </div>
           </div>

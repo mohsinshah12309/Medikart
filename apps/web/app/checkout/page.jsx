@@ -861,10 +861,10 @@ export default function CheckoutPage() {
                   />
                   <div className="flex flex-col gap-0.5">
                     <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                      Card / Online Payment (Kuickpay)
+                      Debit / Credit Card / Online Payment
                       <span className="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">3D Interactive</span>
                     </span>
-                    <span className="text-xs text-slate-500">Pay securely online using Habib Metro hosted checkout.</span>
+                    <span className="text-xs text-slate-500">Pay securely online with Visa, Mastercard, or digital banking.</span>
                   </div>
                 </label>
               )}
