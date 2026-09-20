@@ -102,7 +102,7 @@ export default function BlogsDirectoryPage() {
         </div>
 
         {/* Ambient Warm Blur */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-300/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-yellow-300/20 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* ─── Category Filter Pills ─── */}
