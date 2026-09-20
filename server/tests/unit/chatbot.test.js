@@ -171,23 +171,39 @@ describe("AI Chatbot (Groq) — Symptoms & Safe OTC Suggestions", () => {
   });
 
   test("3. Chatbot endpoint gets its own strict rate limiter (blocks after 5 requests)", async () => {
-    // 5 requests from the same IP should succeed
-    for (let i = 0; i < 5; i++) {
-      const res = await request(app)
+    const groq = require("../../src/config/groqClient");
+    const groqSpy = jest.spyOn(groq.chat.completions, "create").mockResolvedValue({
+      choices: [
+        {
+          index: 0,
+          message: {
+            content: "Safe recommendation reply. I am an AI, not a doctor. Consult a medical professional.",
+          },
+        },
+      ],
+    });
+
+    try {
+      // 5 requests from the same IP should succeed
+      for (let i = 0; i < 5; i++) {
+        const res = await request(app)
+          .post("/api/v1/chatbot")
+          .send({ symptoms: "I have a headache" });
+        expect(res.status).not.toBe(429);
+      }
+
+      // 6th request must trigger a 429 Too Many Requests
+      const resBlocked = await request(app)
         .post("/api/v1/chatbot")
         .send({ symptoms: "I have a headache" });
-      expect(res.status).not.toBe(429);
+      
+      expect(resBlocked.status).toBe(429);
+      expect(resBlocked.body.message).toMatch(/too many chatbot requests/i);
+      expect(resBlocked.headers["retry-after"]).toBeDefined();
+      expect(parseInt(resBlocked.headers["retry-after"])).toBeGreaterThan(0);
+    } finally {
+      groqSpy.mockRestore();
     }
-
-    // 6th request must trigger a 429 Too Many Requests
-    const resBlocked = await request(app)
-      .post("/api/v1/chatbot")
-      .send({ symptoms: "I have a headache" });
-    
-    expect(resBlocked.status).toBe(429);
-    expect(resBlocked.body.message).toMatch(/too many chatbot requests/i);
-    expect(resBlocked.headers["retry-after"]).toBeDefined();
-    expect(parseInt(resBlocked.headers["retry-after"])).toBeGreaterThan(0);
   });
 
   test("4. Outgoing prompt payload structurally contains zero narcotic products or sibling names", async () => {
@@ -227,8 +243,91 @@ describe("AI Chatbot (Groq) — Symptoms & Safe OTC Suggestions", () => {
       
       // Assert that the genuine safe product IS present in the prompt content
       expect(promptContent).toContain("panadol");
+
+      // Assert that storefront knowledge base and confidentiality rules are present in system prompt
+      expect(promptContent).toContain("return & refund policy");
+      expect(promptContent).toContain("instant order");
+      expect(promptContent).toContain("monthly refill");
+      expect(promptContent).toContain("strict confidentiality rule");
+    } finally {
+      groqSpy.mockRestore();
+    }
+  });
+
+  test("5. Pure greeting returns warm storefront welcome and medical disclaimer", async () => {
+    const res = await request(app)
+      .post("/api/v1/chatbot")
+      .send({ symptoms: "Hello! Who are you?" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.response).toBeDefined();
+    const reply = res.body.data.response.toLowerCase();
+    expect(reply).toContain("medi");
+    expect(reply).toContain("assistant");
+    expect(reply).toContain("i am an ai, not a doctor");
+    expect(res.body.data.suggestedProducts).toEqual([]);
+  });
+
+  test("6. Storefront fallback correctly answers return & refund policy questions without vendor leaks", async () => {
+    const groq = require("../../src/config/groqClient");
+    // Simulate LLM error to test intelligent fallback
+    const groqSpy = jest.spyOn(groq.chat.completions, "create").mockRejectedValue(new Error("LLM offline"));
+
+    try {
+      const res = await request(app)
+        .post("/api/v1/chatbot")
+        .send({ symptoms: "What is your return and refund policy?" });
+
+      expect(res.status).toBe(200);
+      const reply = res.body.data.response.toLowerCase();
+      expect(reply).toContain("return & refund policy");
+      expect(reply).toContain("cancellation");
+      expect(reply).toContain("10"); // Rs 10 service fee
+      expect(reply).toContain("24 hours"); // 24-hour reporting
+      expect(reply).toContain("i am an ai, not a doctor");
+      expect(reply).not.toContain("kuickpay"); // Strict privacy: no vendor name leaks
+    } finally {
+      groqSpy.mockRestore();
+    }
+  });
+
+  test("7. Storefront fallback correctly answers delivery and shipping questions", async () => {
+    const groq = require("../../src/config/groqClient");
+    const groqSpy = jest.spyOn(groq.chat.completions, "create").mockRejectedValue(new Error("LLM offline"));
+
+    try {
+      const res = await request(app)
+        .post("/api/v1/chatbot")
+        .send({ symptoms: "How long does delivery and shipping take?" });
+
+      expect(res.status).toBe(200);
+      const reply = res.body.data.response.toLowerCase();
+      expect(reply).toContain("delivery");
+      expect(reply).toContain("2–4 hours");
+      expect(reply).toContain("24–48 hours");
+      expect(reply).toContain("i am an ai, not a doctor");
+    } finally {
+      groqSpy.mockRestore();
+    }
+  });
+
+  test("8. Storefront fallback correctly answers prescription and monthly refill questions", async () => {
+    const groq = require("../../src/config/groqClient");
+    const groqSpy = jest.spyOn(groq.chat.completions, "create").mockRejectedValue(new Error("LLM offline"));
+
+    try {
+      const res = await request(app)
+        .post("/api/v1/chatbot")
+        .send({ symptoms: "How do I upload my doctor prescription slip?" });
+
+      expect(res.status).toBe(200);
+      const reply = res.body.data.response.toLowerCase();
+      expect(reply).toContain("instant order");
+      expect(reply).toContain("prescription");
+      expect(reply).toContain("+92 324 4489159");
     } finally {
       groqSpy.mockRestore();
     }
   });
 });
+

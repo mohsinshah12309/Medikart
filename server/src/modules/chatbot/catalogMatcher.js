@@ -84,6 +84,14 @@ function isGreetingOrChitchat(text = "") {
   const medicineTerms = ["panadol", "augmentin", "brufen", "disprin", "calpol", "arinac", "paracetamol", "antibiotic", "tablet", "syrup", "capsule", "injection", "medicine", "dawa", "dawai", "prescription", "rx"];
   if (medicineTerms.some((t) => clean.includes(t))) return false;
 
+  const storefrontTerms = [
+    "return", "refund", "delivery", "deliver", "shipping", "payment", "pay", "order",
+    "cancel", "cancellation", "policy", "policies", "refill", "prescription", "faq", "faqs",
+    "contact", "support", "track", "price", "stock", "cost", "instant", "whatsapp",
+    "hours", "timing", "complaint", "authentic", "genuine", "discount", "voucher", "fee"
+  ];
+  if (storefrontTerms.some((t) => clean.includes(t))) return false;
+
   const GREETING_PATTERNS = [
     /^how\s+are\s+you/i,
     /^how\s+r\s+u/i,

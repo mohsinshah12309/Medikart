@@ -10,7 +10,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hello! I am Medi, your personal AI medicine & symptom assistant 🦉💊.\n\nAsk me about medicine availability, prices, or describe your symptoms (e.g. headache, fever, cough), and I will search our authentic catalog for you!\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
+      content: 'Hello! I am Medi, your personal AI assistant at Medikart 🦉💊.\n\nI can help you with:\n• Finding medicines, checking live prices & stock\n• Safe Over-The-Counter (OTC) symptom advice\n• Delivery timelines (2–4 hrs local, 24–48 hrs nationwide)\n• Payment methods (COD, Online Cards & Wallets)\n• Return & Refund Policy and Store FAQs\n• Uploading prescriptions via [Instant Order](/instant-order) & [Monthly Refills](/refill)\n\nHow can I help you today?\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
       suggestedProducts: []
     }
   ]);
@@ -58,7 +58,7 @@ export default function ChatbotWidget() {
       console.error("Chatbot error:", err);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `⚠️ I'm having trouble connecting to Medi right now. Please try asking again in a moment, or speak directly with our licensed pharmacist on WhatsApp: +92 331 4170744.`
+        content: `⚠️ I'm having trouble connecting right now. Please try asking again in a moment, or speak directly with our licensed pharmacist on WhatsApp: +92 324 4489159.`
       }]);
     } finally {
       setLoading(false);
@@ -71,9 +71,11 @@ export default function ChatbotWidget() {
   };
 
   const quickPrompts = [
+    "Delivery & Shipping time?",
+    "Return & Refund Policy",
+    "How to upload prescription?",
+    "Payment methods accepted",
     "Is Panadol available?",
-    "Suggest something for headache",
-    "Do you have Augmentin in stock?",
     "Medicine for fever & cough",
   ];
 
@@ -187,7 +189,7 @@ export default function ChatbotWidget() {
                 </h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
-                  <span className="text-[10px] text-amber-950 font-bold">Live Medicine &amp; Symptoms</span>
+                  <span className="text-[10px] text-amber-950 font-bold">Storefront, Medicines &amp; Support</span>
                 </div>
               </div>
             </div>
@@ -315,7 +317,7 @@ export default function ChatbotWidget() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about medicine or symptoms..."
+              placeholder="Ask about medicines, delivery, orders, policies..."
               disabled={loading}
               className="flex-grow border border-amber-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 disabled:opacity-50 text-slate-900 placeholder:text-slate-400 bg-[#FAF8F5]"
             />
