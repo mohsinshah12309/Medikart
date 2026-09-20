@@ -301,25 +301,57 @@ export default function InstantOrderPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 flex flex-col gap-6">
-      {/* Page Header */}
-      <div className="flex flex-col gap-2 border-b border-teal-500/20 pb-5">
-        <div className="flex items-center gap-3">
-          <span className="p-3 bg-emerald-500/20 text-emerald-400 rounded-2xl text-2xl border border-emerald-500/30">
-            📄
-          </span>
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 pb-16">
+      {/* Page Header - Storefront Yellow Dominant */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400 rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-yellow-500/40">
+        {/* Soft Ambient Accents */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 blur-[90px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-amber-500/20 blur-[80px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col gap-4 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-yellow-300 w-fit shadow-md">
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-pulse shadow-[0_0_8px_#facc15]" />
+            Fast-Track Doctor Prescription Fulfillment
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 leading-tight">
+            Instant Prescription Order
+          </h1>
+          <p className="text-base sm:text-lg text-slate-900 leading-relaxed font-semibold">
+            Upload your doctor&apos;s prescription slip or medicine list. Our licensed pharmacists will price, verify dosages, and dispatch your order swiftly.
+          </p>
+        </div>
+      </div>
+
+      {/* Trust & Process Pillars */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="p-4 bg-white rounded-2xl border-2 border-yellow-400 shadow-xs flex items-center gap-3">
+          <span className="p-2.5 bg-yellow-400 text-slate-950 rounded-xl text-lg font-black">1</span>
           <div>
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Instant Prescription Order</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Upload your prescription (Image or PDF only). Our licensed pharmacists will price and dispatch your items.
-            </p>
+            <h4 className="font-extrabold text-xs uppercase tracking-wider text-slate-900">Upload Rx / Slip</h4>
+            <p className="text-[11px] text-slate-500 font-medium">Clear photo or PDF</p>
+          </div>
+        </div>
+
+        <div className="p-4 bg-yellow-400 rounded-2xl border-2 border-yellow-500/60 shadow-xs flex items-center gap-3">
+          <span className="p-2.5 bg-slate-950 text-yellow-300 rounded-xl text-lg font-black">2</span>
+          <div>
+            <h4 className="font-extrabold text-xs uppercase tracking-wider text-slate-950">Pharmacist Review</h4>
+            <p className="text-[11px] text-slate-900 font-bold">Priced &amp; verified in minutes</p>
+          </div>
+        </div>
+
+        <div className="p-4 bg-white rounded-2xl border-2 border-yellow-400 shadow-xs flex items-center gap-3">
+          <span className="p-2.5 bg-yellow-400 text-slate-950 rounded-xl text-lg font-black">3</span>
+          <div>
+            <h4 className="font-extrabold text-xs uppercase tracking-wider text-slate-900">Doorstep Delivery</h4>
+            <p className="text-[11px] text-slate-500 font-medium">Standardized Cash on Delivery</p>
           </div>
         </div>
       </div>
 
       {errorMsg && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3 shadow-xs animate-fadeIn">
-          <span className="text-lg">⚠️</span>
+        <div className="bg-red-50 border-2 border-red-300 text-red-900 px-5 py-4 rounded-2xl text-sm font-bold flex items-center gap-3 shadow-xs animate-fadeIn">
+          <span className="text-xl">⚠️</span>
           <span>{errorMsg}</span>
         </div>
       )}
@@ -327,16 +359,16 @@ export default function InstantOrderPage() {
       {/* Main Order Form */}
       <form 
         onSubmit={handleSubmitOrder} 
-        className="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-xl flex flex-col gap-7 relative overflow-hidden"
+        className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl border-2 border-yellow-300/80 shadow-xl flex flex-col gap-8 relative overflow-hidden"
       >
         {/* Section 1: Prescription Upload Zone */}
         <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-            <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-              <span className="w-7 h-7 rounded-full bg-yellow-400 text-slate-950 text-xs font-black flex items-center justify-center border border-yellow-500/40">1</span>
-              Upload Prescription Document / Image
+          <div className="flex items-center justify-between border-b-2 border-yellow-100 pb-3">
+            <h2 className="text-lg sm:text-xl font-black text-slate-950 flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-full bg-yellow-400 text-slate-950 text-sm font-black flex items-center justify-center border-2 border-yellow-500 shadow-xs">1</span>
+              <span>Upload Prescription Document / Image</span>
             </h2>
-            <span className="text-xs text-amber-900 font-bold bg-amber-100 border border-amber-300 px-3 py-1 rounded-full">
+            <span className="text-xs text-amber-950 font-black bg-yellow-100 border border-yellow-300 px-3 py-1 rounded-full shadow-2xs">
               PDF or Images ONLY
             </span>
           </div>
@@ -348,24 +380,24 @@ export default function InstantOrderPage() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3 ${
+              className={`border-2 border-dashed rounded-2xl p-8 sm:p-10 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3 ${
                 isDragOver 
-                  ? 'border-yellow-500 bg-yellow-50 scale-[1.01]' 
-                  : 'border-slate-300 bg-slate-50/70 hover:border-yellow-400 hover:bg-yellow-50/30'
+                  ? 'border-yellow-500 bg-yellow-100/70 scale-[1.01]' 
+                  : 'border-yellow-300 bg-yellow-50/40 hover:border-yellow-500 hover:bg-yellow-50/80'
               }`}
             >
-              <div className="w-14 h-14 rounded-full bg-yellow-100 border border-yellow-300 flex items-center justify-center text-yellow-700 text-2xl mb-1 shadow-xs">
+              <div className="w-16 h-16 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-slate-950 text-3xl mb-1 shadow-xs">
                 📤
               </div>
               <div>
-                <p className="text-slate-900 font-bold text-base">
-                  Click to Upload or Drag & Drop Prescription
+                <p className="text-slate-950 font-black text-base sm:text-lg">
+                  Click to Upload or Drag &amp; Drop Prescription
                 </p>
-                <p className="text-slate-500 text-xs mt-1">
-                  Supported formats: <strong className="text-slate-800">PDF, JPG, PNG, WEBP</strong> (Max 15MB)
+                <p className="text-slate-600 text-xs sm:text-sm mt-1">
+                  Supported formats: <strong className="text-slate-950">PDF, JPG, PNG, WEBP</strong> (Max 15MB)
                 </p>
               </div>
-              <div className="mt-2 bg-red-50 border border-red-200 px-3.5 py-1.5 rounded-full text-[11px] text-red-700 font-bold">
+              <div className="mt-2 bg-red-50 border border-red-200 px-4 py-1.5 rounded-full text-xs text-red-700 font-bold">
                 🚫 ZIP files and compressed archives are strictly blocked
               </div>
               
@@ -382,33 +414,33 @@ export default function InstantOrderPage() {
             </div>
           ) : (
             /* Selected File Preview Box */
-            <div className="bg-slate-50 border-2 border-yellow-400/80 p-5 rounded-2xl flex items-center justify-between gap-4 shadow-sm">
+            <div className="bg-yellow-50/80 border-2 border-yellow-400 p-5 rounded-2xl flex items-center justify-between gap-4 shadow-sm">
               <div className="flex items-center gap-4 min-w-0">
                 {filePreviewUrl ? (
                   <img 
                     src={filePreviewUrl} 
                     alt="Uploaded doctor prescription document preview" 
-                    className="w-16 h-16 object-cover rounded-xl border border-slate-200 shadow-xs"
+                    className="w-16 h-16 object-cover rounded-xl border-2 border-yellow-300 shadow-xs"
                   />
                 ) : (
-                  <div className="w-14 h-14 bg-yellow-100 border border-yellow-300 rounded-xl flex items-center justify-center text-yellow-700 text-2xl font-black">
+                  <div className="w-16 h-16 bg-yellow-400 border-2 border-yellow-500 rounded-xl flex items-center justify-center text-slate-950 text-3xl font-black shadow-xs">
                     📄
                   </div>
                 )}
                 <div className="min-w-0">
-                  <p className="text-slate-900 font-black text-sm truncate">{prescriptionFile.name}</p>
-                  <p className="text-slate-500 text-xs mt-0.5">
+                  <p className="text-slate-950 font-black text-sm sm:text-base truncate">{prescriptionFile.name}</p>
+                  <p className="text-slate-600 text-xs mt-0.5 font-medium">
                     {(prescriptionFile.size / (1024 * 1024)).toFixed(2)} MB · {prescriptionFile.type.toUpperCase() || 'PDF Document'}
                   </p>
-                  <span className="inline-block mt-1 bg-green-50 text-green-700 border border-green-200 text-[10px] px-2 py-0.5 rounded font-bold">
-                    ✓ Format Accepted
+                  <span className="inline-block mt-1 bg-green-100 text-green-800 border border-green-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold">
+                    ✓ Format Accepted &amp; Ready
                   </span>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={removeFile}
-                className="bg-red-50 hover:bg-red-100 text-red-700 text-xs px-3.5 py-2 rounded-xl border border-red-200 font-bold transition-all cursor-pointer whitespace-nowrap"
+                className="bg-red-50 hover:bg-red-100 text-red-700 text-xs px-4 py-2.5 rounded-xl border border-red-200 font-bold transition-all cursor-pointer whitespace-nowrap"
               >
                 Remove File
               </button>
@@ -417,7 +449,7 @@ export default function InstantOrderPage() {
 
           {/* Pharmacist Instructions Textarea */}
           <div className="flex flex-col gap-1.5 mt-2">
-            <label htmlFor="branchDescription" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+            <label htmlFor="branchDescription" className="text-xs font-bold uppercase tracking-wider text-slate-800">
               Additional Instructions for Pharmacist (Optional)
             </label>
             <textarea
@@ -427,20 +459,20 @@ export default function InstantOrderPage() {
               onChange={(e) => setBranchDescription(e.target.value)}
               disabled={submitting}
               placeholder="E.g., Specific brand requirements, number of boxes, dosages, or delivery timing..."
-              className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all"
+              className="border-2 border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl p-4 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all hover:border-yellow-400"
             />
           </div>
         </div>
 
         {/* Section 2: Customer Shipping & OTP Details */}
-        <div className="flex flex-col gap-4 border-t border-slate-200 pt-6">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-            <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
-              <span className="w-7 h-7 rounded-full bg-yellow-400 text-slate-950 text-xs font-black flex items-center justify-center border border-yellow-500/40">2</span>
-              Contact & OTP Details
+        <div className="flex flex-col gap-4 border-t-2 border-yellow-100 pt-6">
+          <div className="flex items-center justify-between border-b-2 border-yellow-100 pb-3">
+            <h2 className="text-lg sm:text-xl font-black text-slate-950 flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-full bg-yellow-400 text-slate-950 text-sm font-black flex items-center justify-center border-2 border-yellow-500 shadow-xs">2</span>
+              <span>Contact &amp; Delivery Details</span>
             </h2>
             {otpVerified && (
-              <span className="bg-green-50 border border-green-200 text-green-700 text-xs px-3 py-1 rounded-full font-bold">
+              <span className="bg-green-100 border border-green-300 text-green-800 text-xs px-3 py-1 rounded-full font-black">
                 ✓ Email Verified
               </span>
             )}
@@ -448,7 +480,7 @@ export default function InstantOrderPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-slate-800">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -460,12 +492,12 @@ export default function InstantOrderPage() {
                 required
                 disabled={otpVerified || submitting}
                 placeholder="e.g. Ali Ahmed"
-                className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
+                className="border-2 border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all disabled:opacity-70 hover:border-yellow-400"
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-800">
                 Phone Number <span className="text-red-500">*</span>
               </label>
               <input
@@ -477,13 +509,13 @@ export default function InstantOrderPage() {
                 required
                 disabled={otpVerified || submitting}
                 placeholder="e.g. 03244489159"
-                className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
+                className="border-2 border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all disabled:opacity-70 hover:border-yellow-400"
               />
             </div>
 
             {/* Email Address + Send OTP Button */}
             <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-800">
                 Email Address (for OTP Verification) <span className="text-red-500">*</span>
               </label>
               <div className="flex flex-col sm:flex-row gap-2.5">
@@ -496,14 +528,14 @@ export default function InstantOrderPage() {
                   required
                   disabled={otpVerified || submitting}
                   placeholder="customer@example.com"
-                  className="flex-grow border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
+                  className="flex-grow border-2 border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all disabled:opacity-70 hover:border-yellow-400"
                 />
                 {!otpVerified && (
                   <button
                     type="button"
                     onClick={() => handleSendOtp()}
                     disabled={otpSending || !customer.email || resendTimer > 0}
-                    className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition-all shadow-xs border border-yellow-500/40 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+                    className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-xs px-6 py-3.5 rounded-xl transition-all shadow-sm border-2 border-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
                   >
                     {otpSending ? 'Sending OTP...' : resendTimer > 0 ? `Resend (${resendTimer}s)` : otpSent ? 'Resend OTP' : 'Send OTP Code'}
                   </button>
@@ -512,7 +544,7 @@ export default function InstantOrderPage() {
 
               {/* Pre-Check Typo Suggestion Banner */}
               {otpFeedback.type === 'suggestion' && (
-                <div className="bg-amber-50 border border-amber-300 p-3.5 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-2xs mt-2">
+                <div className="bg-amber-50 border-2 border-amber-300 p-3.5 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shadow-2xs mt-2">
                   <div className="flex items-center gap-2">
                     <span className="text-amber-700 text-sm">💡</span>
                     <span className="text-amber-950 font-bold">
@@ -526,14 +558,14 @@ export default function InstantOrderPage() {
                         setCustomer(prev => ({ ...prev, email: otpFeedback.suggestion }));
                         handleSendOtp(false, otpFeedback.suggestion);
                       }}
-                      className="px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-lg transition-all shadow-2xs cursor-pointer text-xs"
+                      className="px-3.5 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-lg transition-all shadow-2xs cursor-pointer text-xs"
                     >
                       Use {otpFeedback.suggestion}
                     </button>
                     <button
                       type="button"
                       onClick={() => handleSendOtp(true)}
-                      className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-lg border border-slate-300 transition-all cursor-pointer text-xs"
+                      className="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-lg border border-slate-300 transition-all cursor-pointer text-xs"
                     >
                       Send anyway
                     </button>
@@ -541,16 +573,16 @@ export default function InstantOrderPage() {
                 </div>
               )}
 
-              {/* Pre-Check Error Banner (e.g. Unroutable domain without MX records) */}
+              {/* Pre-Check Error Banner */}
               {otpFeedback.type === 'error' && !otpSent && (
-                <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-xs font-semibold mt-2">
+                <div className="bg-red-50 border-2 border-red-200 text-red-700 p-3 rounded-xl text-xs font-semibold mt-2">
                   {otpFeedback.msg}
                 </div>
               )}
             </div>
 
             <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="address" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label htmlFor="address" className="text-xs font-bold uppercase tracking-wider text-slate-800">
                 Delivery Address <span className="text-red-500">*</span>
               </label>
               <input
@@ -562,12 +594,12 @@ export default function InstantOrderPage() {
                 required
                 disabled={otpVerified || submitting}
                 placeholder="e.g. House #12, Street 4, Sector F-7, Islamabad"
-                className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
+                className="border-2 border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all disabled:opacity-70 hover:border-yellow-400"
               />
             </div>
 
             <div className="flex flex-col gap-1.5 sm:col-span-2">
-              <label htmlFor="city" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+              <label htmlFor="city" className="text-xs font-bold uppercase tracking-wider text-slate-800">
                 City <span className="text-red-500">*</span>
               </label>
               <select
@@ -576,7 +608,7 @@ export default function InstantOrderPage() {
                 value={customer.city}
                 onChange={handleInputChange}
                 disabled={otpVerified || submitting}
-                className="border border-slate-300 bg-white text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all cursor-pointer disabled:opacity-70"
+                className="border-2 border-slate-200 bg-white text-slate-950 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all cursor-pointer disabled:opacity-70 hover:border-yellow-400"
               >
                 {citiesList.map(c => (
                   <option key={c} value={c} className="bg-white text-slate-900">{c}</option>
@@ -588,19 +620,19 @@ export default function InstantOrderPage() {
 
         {/* OTP Input Block */}
         {otpSent && !otpVerified && (
-          <div className="bg-yellow-50/50 p-5 md:p-6 rounded-2xl border-2 border-yellow-400/60 shadow-md flex flex-col gap-4 animate-fadeIn">
-            <div className="flex items-center justify-between border-b border-yellow-200 pb-3">
+          <div className="bg-yellow-50/70 p-5 md:p-6 rounded-2xl border-2 border-yellow-400 shadow-md flex flex-col gap-4 animate-fadeIn">
+            <div className="flex items-center justify-between border-b-2 border-yellow-200 pb-3">
               <div className="flex items-center gap-2">
                 <span className="text-xl">📩</span>
                 <div>
-                  <h3 className="text-sm font-black text-slate-900">Enter OTP Verification Code</h3>
+                  <h3 className="text-sm font-black text-slate-950">Enter OTP Verification Code</h3>
                   <p className="text-xs text-slate-600">Code sent to <span className="text-slate-950 font-bold">{customer.email}</span></p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => { setOtpSent(false); setOtpFeedback({ type: '', msg: '' }); }}
-                className="text-xs text-yellow-700 hover:text-yellow-800 underline font-bold cursor-pointer"
+                className="text-xs text-amber-900 hover:text-amber-950 underline font-extrabold cursor-pointer"
               >
                 Change Email
               </button>
@@ -625,7 +657,7 @@ export default function InstantOrderPage() {
                   value={otpCode}
                   onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
                   placeholder="Enter 6-digit OTP"
-                  className="w-full border-2 border-yellow-400/80 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-center text-lg font-mono font-bold tracking-[0.4em] focus:outline-none focus:border-yellow-500 focus:ring-4 focus:ring-yellow-400/20 transition-all"
+                  className="w-full border-2 border-yellow-400 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-center text-lg font-mono font-bold tracking-[0.4em] focus:outline-none focus:border-yellow-500 focus:ring-4 focus:ring-yellow-400/20 transition-all"
                 />
               </div>
 
@@ -633,7 +665,7 @@ export default function InstantOrderPage() {
                 type="button"
                 onClick={handleVerifyOtp}
                 disabled={otpVerifying || otpCode.length !== 6}
-                className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm px-6 py-3 rounded-xl transition-all shadow-sm border border-yellow-500/50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
+                className="bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm px-6 py-3 rounded-xl transition-all shadow-sm border-2 border-yellow-500 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 {otpVerifying ? 'Verifying...' : 'Verify OTP'}
               </button>
@@ -643,12 +675,12 @@ export default function InstantOrderPage() {
 
         {/* OTP Verified Success Banner */}
         {otpVerified && (
-          <div className="bg-green-50 border border-green-200 p-4 rounded-2xl flex items-center justify-between gap-3 text-green-800 text-xs font-semibold shadow-xs">
+          <div className="bg-green-50 border-2 border-green-300 p-4 rounded-2xl flex items-center justify-between gap-3 text-green-900 text-xs font-semibold shadow-xs">
             <div className="flex items-center gap-2.5">
               <span className="w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center font-black text-sm">✓</span>
               <div>
-                <p className="font-extrabold text-sm text-green-900">Email Address Verified</p>
-                <p className="text-green-700 text-[11px] mt-0.5">OTP verified for {customer.email}</p>
+                <p className="font-extrabold text-sm text-green-950">Email Address Verified</p>
+                <p className="text-green-800 text-[11px] mt-0.5">OTP verified for {customer.email}</p>
               </div>
             </div>
           </div>
@@ -658,12 +690,12 @@ export default function InstantOrderPage() {
         <button
           type="submit"
           disabled={!otpVerified || submitting || !prescriptionFile}
-          className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border ${
+          className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border-2 ${
             !otpVerified || !prescriptionFile
               ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
               : submitting
               ? 'bg-yellow-500 text-slate-950 opacity-90 border-yellow-500'
-              : 'bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 border border-yellow-500/50 shadow-yellow-400/20 active:scale-[0.98]'
+              : 'bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 border-yellow-500 shadow-yellow-400/20 hover:shadow-lg active:scale-[0.98]'
           }`}
         >
           {submitting ? (

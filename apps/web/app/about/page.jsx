@@ -90,7 +90,7 @@ export default function AboutPage() {
           <span className="text-xs sm:text-sm font-black text-slate-950 mt-1 uppercase tracking-wider">
             Authentic Meds
           </span>
-          <span className="text-[11px] text-slate-900 font-bold mt-0.5">DRAP Licensed Supply</span>
+          <span className="text-[11px] text-slate-900 font-bold mt-0.5">Genuine &amp; Sealed</span>
         </div>
 
         <div className="p-6 bg-white rounded-3xl border-2 border-yellow-400 shadow-md flex flex-col justify-center items-center text-center hover:bg-yellow-50/50 transition-all">
