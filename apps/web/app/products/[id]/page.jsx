@@ -13,38 +13,48 @@ export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const productId = resolvedParams.id;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
-  const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
 
   try {
     const res = await getProduct(productId);
     if (res && res.data && res.data.product) {
       const product = res.data.product;
       const genericStr = product.genericName ? ` (${product.genericName})` : '';
+      const effectivePrice = product.effectivePrice || product.price;
+      const priceFormatted = typeof effectivePrice === 'number' ? effectivePrice.toFixed(2) : effectivePrice;
       
-      // Keep title under ~60 characters
-      let title = `${product.name}${genericStr} | Medikart`;
-      if (title.length > 60) {
-        title = `${product.name} | Medikart`;
-      }
-      if (title.length > 60) {
-        title = product.name.slice(0, 50) + '... | Medikart';
-      }
+      // Google-optimized title matching Pakistan search queries ("Buy Panadol Online Pakistan", "Panadol Price in Pakistan")
+      const title = `Buy ${product.name}${genericStr} in Pakistan | Rs. ${priceFormatted} PKR | Medikart`;
 
-      // Keep description under ~155 characters
-      let rawDesc = product.description 
-        ? product.description.replace(/\s+/g, ' ').trim() 
-        : `Buy authentic ${product.name} online at Medikart. Licensed pharmacies, fast delivery & Cash on Delivery.`;
-      const description = rawDesc.length > 155 ? rawDesc.slice(0, 150) + '...' : rawDesc;
+      // Rich snippet description with city delivery, price, authenticity and COD
+      const description = `Order 100% authentic ${product.name}${genericStr} online at Medikart Pakistan. Licensed pharmacy sourcing, 2–4 hr delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Price: Rs. ${priceFormatted} PKR.`;
+
+      // Pakistan targeted high-intent medicine keywords
+      const keywords = [
+        product.name,
+        product.genericName,
+        `buy ${product.name} in Pakistan`,
+        `${product.name} price in Pakistan`,
+        `${product.name} online delivery`,
+        `${product.name} Lahore`,
+        `${product.name} Karachi`,
+        `${product.name} Islamabad`,
+        `${product.name} Rawalpindi`,
+        'buy medicine online Pakistan',
+        'online pharmacy Pakistan',
+        'cash on delivery medicine',
+        'authentic medicine Pakistan',
+        'Medikart',
+      ].filter(Boolean);
 
       // Extract primary product cover image for dynamic OG
       let ogImageUrl = `${siteUrl}/og-image.png`;
       if (product.coverImage) {
         ogImageUrl = product.coverImage.startsWith('http') 
           ? product.coverImage 
-          : `http://localhost:5000${product.coverImage}`;
+          : `${siteUrl}${product.coverImage}`;
       } else if (product.images && product.images.length > 0 && product.images[0].path) {
         const imgPath = product.images[0].path;
-        ogImageUrl = imgPath.startsWith('http') ? imgPath : `http://localhost:5000${imgPath}`;
+        ogImageUrl = imgPath.startsWith('http') ? imgPath : `${siteUrl}${imgPath}`;
       }
 
       const canonicalUrl = `${siteUrl}/products/${product._id}`;
@@ -52,6 +62,7 @@ export async function generateMetadata({ params }) {
       return {
         title,
         description,
+        keywords,
         alternates: {
           canonical: canonicalUrl,
         },
@@ -59,13 +70,15 @@ export async function generateMetadata({ params }) {
           title,
           description,
           url: canonicalUrl,
-          siteName: 'Medikart',
+          siteName: 'Medikart - Authentic Online Pharmacy',
           locale: 'en_PK',
           type: 'website',
           images: [
             {
               url: ogImageUrl,
-              alt: `${product.name} — authentic medicine packaging`,
+              width: 800,
+              height: 800,
+              alt: `Buy ${product.name} online in Pakistan — Medikart`,
             },
           ],
         },
@@ -82,14 +95,15 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: 'Product Details | Medikart Pharmacy',
-    description: 'Order authentic medicines with fast Cash on Delivery from licensed partner pharmacies on Medikart.',
+    title: 'Buy Medicines Online in Pakistan | Price & Delivery | Medikart',
+    description: 'Order authentic prescription and OTC medicines with fast 2–4 hr delivery and Cash on Delivery across Pakistan on Medikart.',
   };
 }
 
 export default async function ProductDetailPage({ params }) {
   const resolvedParams = await params;
   const productId = resolvedParams.id;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
   
   let product = null;
 
@@ -108,32 +122,81 @@ export default async function ProductDetailPage({ params }) {
 
   const hasDiscount = product.discountPercent > 0;
   const isOutOfStock = product.stockStatus === 'out_of_stock';
+  const effectivePrice = product.effectivePrice || product.price;
   
   // Format price helper
   const formatPrice = (num) => {
     return typeof num === 'number' ? num.toFixed(2) : num;
   };
 
-  const jsonLd = {
+  const productImageUrl = product.coverImage 
+    ? (product.coverImage.startsWith('http') ? product.coverImage : `${siteUrl}${product.coverImage}`)
+    : `${siteUrl}/og-image.png`;
+
+  const canonicalUrl = `${siteUrl}/products/${product._id}`;
+
+  const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     'name': product.name,
-    'image': product.coverImage ? (product.coverImage.startsWith('http') ? product.coverImage : `http://localhost:5000${product.coverImage}`) : undefined,
-    'description': product.description || `Buy ${product.name} online at Medikart.`,
-    'sku': product.sku,
+    'image': [productImageUrl],
+    'description': product.description || `Buy genuine ${product.name} online at Medikart Pakistan with fast doorstep delivery and Cash on Delivery.`,
+    'sku': product.sku || `MED-${product._id}`,
+    'mpn': product._id,
+    'brand': {
+      '@type': 'Brand',
+      'name': product.manufacturer || 'Medikart Authentic Healthcare',
+    },
     'offers': {
       '@type': 'Offer',
-      'price': product.effectivePrice || product.price,
+      'url': canonicalUrl,
       'priceCurrency': 'PKR',
+      'price': effectivePrice,
+      'priceValidUntil': '2027-12-31',
+      'itemCondition': 'https://schema.org/NewCondition',
       'availability': product.stockStatus === 'in_stock' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      'seller': {
+        '@type': 'Pharmacy',
+        'name': 'Medikart Pakistan',
+        'url': siteUrl,
+      },
     },
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Medicines & Store Catalog',
+        'item': `${siteUrl}/#store-catalog`,
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': product.name,
+        'item': canonicalUrl,
+      },
+    ],
   };
 
   return (
     <div className="flex flex-col gap-6">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Link href="/" className="inline-flex items-center text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors">
         ← Back to Shop

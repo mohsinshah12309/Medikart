@@ -180,7 +180,7 @@ export default function Footer({
   const displayCategories = categories && categories.length > 0 ? categories.slice(0, 7) : [];
 
   return (
-    <footer className="w-full select-none mt-16 relative z-10">
+    <footer className="w-full mt-16 relative z-10">
       {/* ─────────────────────────────────────────────────────────────────────
           1. MAIN BRAND YELLOW FOOTER BLOCK (4-Column + Brand Block)
       ────────────────────────────────────────────────────────────────────── */}

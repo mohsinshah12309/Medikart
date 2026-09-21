@@ -17,24 +17,33 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Return & Refund Policy | Medikart Online Pharmacy",
+  title: "Return & Refund Policy | Medikart Online Pharmacy Pakistan",
   description:
-    "Official Return & Refund Policy for Medikart. Learn about order cancellations, online card refund settlements, Rs. 10 store fee, and medicine return guidelines in Pakistan.",
+    "Official Return & Refund Policy for Medikart. Learn about pre-dispatch order cancellations, online card refund settlements (2–5 business days), Rs. 10 store service fee, and pharmaceutical return safety rules in Pakistan.",
+  keywords: [
+    "Medikart return policy",
+    "medicine refund Pakistan",
+    "order cancellation pharmacy",
+    "pharmacy refund timeline Pakistan",
+    "damaged medicine replacement"
+  ],
   alternates: {
     canonical: "https://medikart.pk/return-refund-policy",
   },
   openGraph: {
-    title: "Return & Refund Policy | Medikart Online Pharmacy",
+    title: "Return & Refund Policy | Medikart Online Pharmacy Pakistan",
     description:
-      "Understand Medikart's cancellation terms, online card refund settlement timelines, Rs. 10 service fee, and pharmaceutical return safety rules.",
+      "Understand Medikart's cancellation terms, card refund turnaround (2–5 days), Rs. 10 store fee, and 24-hr damage reporting policy in Pakistan.",
     url: "https://medikart.pk/return-refund-policy",
+    siteName: "Medikart - Authentic Online Pharmacy",
+    locale: "en_PK",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Return & Refund Policy | Medikart Pharmacy",
+    title: "Return & Refund Policy | Medikart Pharmacy Pakistan",
     description:
-      "Read Medikart's cancellation and refund terms, card settlement rules, and DRAP pharmaceutical return compliance.",
+      "Read Medikart's cancellation terms, refund turnaround, and pharmaceutical return safety rules.",
   },
 };
 

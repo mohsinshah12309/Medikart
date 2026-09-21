@@ -166,7 +166,7 @@ export default function BrandsSection() {
   const displayBrands = [...CATALOG_TOP_BRANDS, ...CATALOG_TOP_BRANDS];
 
   return (
-    <section className="my-8 md:my-10 select-none overflow-hidden" aria-label="Brands Available on Medikart">
+    <section className="my-8 md:my-10 overflow-hidden" aria-label="Brands Available on Medikart">
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="flex items-center gap-2">

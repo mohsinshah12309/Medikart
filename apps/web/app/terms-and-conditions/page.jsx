@@ -2,19 +2,28 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Terms & Conditions | Medikart Online Pharmacy',
-  description: 'Terms of service, online payments, order cancellation policy (FR-AD-39), prescription verification, and patient rights.',
+  title: 'Terms & Conditions | Medikart Online Pharmacy Pakistan',
+  description: 'Terms of service, payment processing rules, pre-dispatch cancellation policy, prescription verification, and patient rights on Medikart Pakistan.',
+  keywords: [
+    'Medikart terms and conditions',
+    'online pharmacy legal terms Pakistan',
+    'prescription drug laws Pakistan',
+    'pharmacy cancellation terms'
+  ],
   alternates: {
     canonical: 'https://medikart.pk/terms-and-conditions',
   },
   openGraph: {
-    title: 'Terms & Conditions | Medikart Online Pharmacy',
-    description: 'Terms of service, payments, cancellation policies, and prescription verification.',
+    title: 'Terms & Conditions | Medikart Online Pharmacy Pakistan',
+    description: 'Terms of service, payments, cancellation policies, and prescription verification in Pakistan.',
+    url: 'https://medikart.pk/terms-and-conditions',
+    siteName: 'Medikart - Authentic Online Pharmacy',
+    locale: 'en_PK',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Terms and Conditions | Medikart Pharmacy',
+    title: 'Terms and Conditions | Medikart Pharmacy Pakistan',
     description: 'Read the terms of service, payment policies, and prescription compliance rules for Medikart.',
   },
 };

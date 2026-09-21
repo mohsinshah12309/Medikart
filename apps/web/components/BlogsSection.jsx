@@ -21,7 +21,7 @@ export default function BlogsSection() {
   };
 
   return (
-    <section aria-label="Health & Wellness Blogs" className="w-full py-4 select-none">
+    <section aria-label="Health & Wellness Blogs" className="w-full py-4">
       <div className="flex flex-col gap-4">
         
         {/* ─── Header: "Blogs" + "VIEW ALL" (Matching Medikart Yellow/Amber Theme) ─── */}

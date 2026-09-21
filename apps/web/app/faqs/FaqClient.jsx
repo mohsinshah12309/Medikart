@@ -471,7 +471,7 @@ export default function FaqClient() {
                   type="button"
                   onClick={() => toggleAccordion(faq.id)}
                   aria-expanded={isExpanded}
-                  className="w-full text-left p-5 sm:p-6 flex items-start justify-between gap-4 cursor-pointer select-none bg-white hover:bg-yellow-50/30 transition-colors"
+                  className="w-full text-left p-5 sm:p-6 flex items-start justify-between gap-4 cursor-pointer bg-white hover:bg-yellow-50/30 transition-colors"
                 >
                   <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                     <div className="flex items-center gap-2">

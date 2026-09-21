@@ -147,7 +147,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
   };
 
   return (
-    <section className="relative w-full flex flex-col gap-6 sm:gap-8 pt-1 pb-2 select-none">
+    <section className="relative w-full flex flex-col gap-6 sm:gap-8 pt-1 pb-2">
       {/* ─────────────────────────────────────────────────────────────────────
           1. DUAL HERO CARDS SECTION (Card 1: Brand & Actions | Card 2: Interactive App Mockup)
       ────────────────────────────────────────────────────────────────────── */}
@@ -363,7 +363,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               </div>
 
               {/* Inner Phone Screen Content */}
-              <div className="w-full h-full bg-[#FAF8F5] rounded-[30px] sm:rounded-[34px] overflow-hidden flex flex-col pt-6 sm:pt-7 px-3 sm:px-3.5 pb-3 sm:pb-3.5 select-none relative">
+              <div className="w-full h-full bg-[#FAF8F5] rounded-[30px] sm:rounded-[34px] overflow-hidden flex flex-col pt-6 sm:pt-7 px-3 sm:px-3.5 pb-3 sm:pb-3.5 relative">
                 
                 {/* In-App Header */}
                 <div className="flex items-center justify-between py-1 border-b border-amber-100/70">

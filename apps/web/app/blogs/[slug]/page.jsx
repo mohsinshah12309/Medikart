@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,80 +26,127 @@ const getFullUrl = (path) => {
   return path.startsWith("http") || path.startsWith("/") ? path : `${apiOrigin}${path.startsWith("/") ? "" : "/"}${path}`;
 };
 
-export default function BlogPostPage({ params }) {
-  const [blogData, setBlogData] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-  const [slug, setSlug] = React.useState("");
-
-  React.useEffect(() => {
-    async function loadData() {
-      const resolved = await params;
-      const s = resolved?.slug || "";
-      setSlug(s);
-
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
-      try {
-        const res = await fetch(`${apiUrl}/blogs/${s}`);
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data?.blog) {
-            setBlogData(json.data);
-            setLoading(false);
-            return;
-          }
-        }
-      } catch (_) {}
-
-      // Fallback to static seed data
-      const staticBlog = getBlogBySlug(s);
-      if (staticBlog) {
-        setBlogData({
-          blog: {
-            ...staticBlog,
-            thumbnailUrl: staticBlog.image,
-            categoryName: staticBlog.category,
-            categorySlug: staticBlog.categorySlug,
-            readTimeMinutes: parseInt(staticBlog.readTime) || 4,
-            publishedAt: staticBlog.date,
-            contentBlocks: [
-              { type: "paragraph", text: staticBlog.content },
-              { type: "heading", level: 2, text: "Doctor & Pharmacist Guidance for Pakistani Families" },
-              {
-                type: "paragraph",
-                text: "Healthcare management in Pakistan requires balancing cultural lifestyle habits with modern evidence-based clinical protocols. Whether preparing meals, administering pediatric formulations, or taking chronic daily prescription therapies, consistency and patient education are the most effective tools for preventing acute complications.",
-              },
-              {
-                type: "callout",
-                text: "Licensed Pharmacist Advisory: Always inspect medicine packaging for DRAP registration numbers (D-Reg), lot numbers, and intact tamper seals. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
-              },
-              {
-                type: "disclaimer",
-                text: "Medical Disclaimer: The information provided in this article is for educational purposes only and does not substitute for professional medical advice, clinical diagnosis, or treatment. Always seek the advice of a qualified healthcare provider or licensed pharmacist regarding any medical condition or prescription regimen in Pakistan.",
-              },
-            ],
-          },
-          relatedBlogs: BLOGS_DATA.filter((b) => b.categorySlug === staticBlog.categorySlug && b.slug !== staticBlog.slug).slice(0, 3),
-          relatedCategories: [
-            { name: "Baby & Mother Care", slug: "baby-mother-care" },
-            { name: "Medicines & Antibiotics", slug: "medicines" },
-            { name: "Nutrition & Supplements", slug: "nutrition-supplements" },
-            { name: "Personal Care", slug: "personal-care" },
-          ],
-          relatedProducts: [],
-        });
+async function getBlogData(slug) {
+  const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/api/v1";
+  try {
+    const res = await fetch(`${apiUrl}/blogs/${slug}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.data?.blog) {
+        return json.data;
       }
-      setLoading(false);
     }
-    loadData();
-  }, [params]);
+  } catch (_) {}
 
-  if (loading) {
-    return (
-      <div className="max-w-4xl mx-auto py-24 text-center text-slate-500 font-bold">
-        Loading clinical guide...
-      </div>
-    );
+  // Fallback to static seed data
+  const staticBlog = getBlogBySlug(slug);
+  if (staticBlog) {
+    return {
+      blog: {
+        ...staticBlog,
+        thumbnailUrl: staticBlog.image,
+        categoryName: staticBlog.category,
+        categorySlug: staticBlog.categorySlug,
+        readTimeMinutes: parseInt(staticBlog.readTime) || 4,
+        publishedAt: staticBlog.date,
+        contentBlocks: [
+          { type: "paragraph", text: staticBlog.content },
+          { type: "heading", level: 2, text: "Doctor & Pharmacist Guidance for Pakistani Families" },
+          {
+            type: "paragraph",
+            text: "Healthcare management in Pakistan requires balancing cultural lifestyle habits with modern evidence-based clinical protocols. Whether preparing meals, administering pediatric formulations, or taking chronic daily prescription therapies, consistency and patient education are the most effective tools for preventing acute complications.",
+          },
+          {
+            type: "callout",
+            text: "Licensed Pharmacist Advisory: Always inspect medicine packaging for DRAP registration numbers (D-Reg), lot numbers, and intact tamper seals. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
+          },
+          {
+            type: "disclaimer",
+            text: "Medical Disclaimer: The information provided in this article is for educational purposes only and does not substitute for professional medical advice, clinical diagnosis, or treatment. Always seek the advice of a qualified healthcare provider or licensed pharmacist regarding any medical condition or prescription regimen in Pakistan.",
+          },
+        ],
+      },
+      relatedBlogs: BLOGS_DATA.filter((b) => b.categorySlug === staticBlog.categorySlug && b.slug !== staticBlog.slug).slice(0, 3),
+      relatedCategories: [
+        { name: "Baby & Mother Care", slug: "baby-mother-care" },
+        { name: "Medicines & Antibiotics", slug: "medicines" },
+        { name: "Nutrition & Supplements", slug: "nutrition-supplements" },
+        { name: "Personal Care", slug: "personal-care" },
+      ],
+      relatedProducts: [],
+    };
   }
+
+  return null;
+}
+
+export async function generateMetadata({ params }) {
+  const resolved = await params;
+  const slug = resolved?.slug || "";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
+
+  const data = await getBlogData(slug);
+  const blog = data?.blog;
+
+  if (!blog) {
+    return {
+      title: "Health & Wellness Article | Medikart Pakistan",
+      description: "Read doctor-verified health guides and medicine safety articles on Medikart.",
+    };
+  }
+
+  const title = `${blog.title} | Medikart Health Guide`;
+  const description = blog.summary || (blog.content ? blog.content.slice(0, 150) + '...' : `Read ${blog.title} on Medikart Pakistan.`);
+  const canonicalUrl = `${siteUrl}/blogs/${slug}`;
+  const bannerImg = blog.thumbnailUrl || blog.image || `${siteUrl}/og-image.png`;
+  const fullBannerUrl = bannerImg.startsWith('http') ? bannerImg : `${siteUrl}${bannerImg.startsWith('/') ? '' : '/'}${bannerImg}`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      blog.categoryName || blog.category || 'Health Guide',
+      'health tips Pakistan',
+      'medicine guide Pakistan',
+      'doctor advice Lahore',
+      'Medikart blog',
+    ],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: 'Medikart - Authentic Online Pharmacy',
+      locale: 'en_PK',
+      type: 'article',
+      publishedTime: blog.publishedAt || blog.date,
+      authors: [blog.author || 'Dr. Ayesha Siddiqui (FCPS)'],
+      images: [
+        {
+          url: fullBannerUrl,
+          width: 1200,
+          height: 630,
+          alt: blog.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [fullBannerUrl],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }) {
+  const resolved = await params;
+  const slug = resolved?.slug || "";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
+
+  const blogData = await getBlogData(slug);
 
   if (!blogData?.blog) {
     return (
@@ -117,9 +162,71 @@ export default function BlogPostPage({ params }) {
 
   const { blog, relatedBlogs = [], relatedCategories = [], relatedProducts = [] } = blogData;
   const bannerImg = getFullUrl(blog.thumbnailUrl || blog.image || "/images/blogs/family-wellness.jpg");
+  const fullBannerUrl = bannerImg.startsWith('http') ? bannerImg : `${siteUrl}${bannerImg.startsWith('/') ? '' : '/'}${bannerImg}`;
+  const canonicalUrl = `${siteUrl}/blogs/${slug}`;
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': blog.title,
+    'description': blog.summary || blog.title,
+    'image': [fullBannerUrl],
+    'datePublished': blog.publishedAt || blog.date || '2026-09-01',
+    'dateModified': blog.publishedAt || blog.date || '2026-09-01',
+    'author': {
+      '@type': 'Person',
+      'name': blog.author || 'Dr. Ayesha Siddiqui (FCPS)',
+      'jobTitle': 'Pediatrician & Medical Reviewer',
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'Medikart',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': `${siteUrl}/icon.png`,
+      },
+    },
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Health & Wellness Blog',
+        'item': `${siteUrl}/blogs`,
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': blog.title,
+        'item': canonicalUrl,
+      },
+    ],
+  };
 
   return (
     <article className="max-w-4xl mx-auto flex flex-col gap-8 pb-16 text-left animate-fade-in-up">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* ─── Top Breadcrumb Navigation ─── */}
       <div className="flex items-center justify-between pt-2">
         <Link

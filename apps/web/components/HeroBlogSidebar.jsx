@@ -36,7 +36,7 @@ export default function HeroBlogSidebar() {
 
   return (
     <div
-      className="w-full h-full min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px] bg-white rounded-3xl border border-slate-200/90 shadow-warm-card p-4 sm:p-5 flex flex-col justify-between select-none relative overflow-hidden group"
+      className="w-full h-full min-h-[420px] sm:min-h-[460px] lg:min-h-[480px] xl:min-h-[500px] bg-white rounded-3xl border border-slate-200/90 shadow-warm-card p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

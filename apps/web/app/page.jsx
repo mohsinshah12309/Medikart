@@ -14,7 +14,8 @@ import RightBlogSidebar from '../components/RightBlogSidebar';
 export async function generateMetadata({ searchParams }) {
   const resolvedParams = await searchParams;
   const categoryParam = resolvedParams?.category;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const searchParam = resolvedParams?.search;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
 
   if (categoryParam) {
     try {
@@ -25,12 +26,22 @@ export async function generateMetadata({ searchParams }) {
         );
         if (category) {
           const title = `${category.name} Medicines & Healthcare Products | Medikart Pakistan`;
-          const description = `Buy authentic ${category.name} medicines, OTC remedies, and health essentials online at Medikart Pakistan. Verified pharmacies, fast doorstep delivery & Cash on Delivery.`;
+          const description = `Shop genuine ${category.name} medicines, OTC remedies & healthcare essentials online in Pakistan. Licensed pharmacist verification, 2–4 hr delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).`;
           const canonicalUrl = `${siteUrl}/?category=${category.slug || category._id}`;
 
           return {
             title,
             description,
+            keywords: [
+              category.name,
+              `buy ${category.name} Pakistan`,
+              `${category.name} price in Pakistan`,
+              `${category.name} Lahore`,
+              `${category.name} Karachi`,
+              `${category.name} Islamabad`,
+              'online pharmacy Pakistan',
+              'Medikart',
+            ],
             alternates: {
               canonical: canonicalUrl,
             },
@@ -55,24 +66,49 @@ export async function generateMetadata({ searchParams }) {
     }
   }
 
+  if (searchParam) {
+    const title = `Search: "${searchParam}" — Buy Medicines Online | Medikart Pakistan`;
+    const description = `Find authentic ${searchParam} and related healthcare products online in Pakistan on Medikart. Licensed partner pharmacy sourcing & fast Cash on Delivery.`;
+    return {
+      title,
+      description,
+      robots: { index: false, follow: true }, // Don't index internal search result pages to preserve crawl equity
+    };
+  }
+
   return {
-    title: 'Medikart - Authentic Online Pharmacy & Healthcare Store Pakistan',
-    description: 'Pakistan\'s trusted online pharmacy. Buy authentic prescription medicines, vitamins, baby care, and OTC health products with fast Cash on Delivery.',
+    title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+    description: 'Pakistan\'s trusted licensed online pharmacy. Order genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
+    keywords: [
+      'online pharmacy Pakistan',
+      'buy medicine online Pakistan',
+      'panadol price in pakistan',
+      'panadol online delivery',
+      'augmentin pakistan',
+      'pharmacy delivery Lahore',
+      'medicine home delivery Karachi',
+      'pharmacy Islamabad',
+      'prescription upload online',
+      'monthly medicine refill pakistan',
+      'authentic medicines pakistan',
+      'cash on delivery medicine',
+      'Medikart',
+    ],
     alternates: {
       canonical: siteUrl,
     },
     openGraph: {
-      title: 'Medikart - Authentic Online Pharmacy & Healthcare Store Pakistan',
-      description: 'Pakistan\'s trusted online pharmacy. Buy authentic prescription medicines, vitamins, baby care, and OTC health products with fast Cash on Delivery.',
+      title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+      description: 'Pakistan\'s trusted licensed online pharmacy. Buy genuine prescription medicines, vitamins, baby care & OTC health essentials with 2–4 hr delivery & Cash on Delivery.',
       url: siteUrl,
-      siteName: 'Medikart',
+      siteName: 'Medikart - Authentic Online Pharmacy',
       locale: 'en_PK',
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Medikart - Authentic Online Pharmacy Pakistan',
-      description: 'Order genuine prescription and OTC medicines online with fast Cash on Delivery across Pakistan.',
+      title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+      description: 'Order genuine prescription & OTC medicines online with fast 2–4 hr delivery and Cash on Delivery across Pakistan.',
     },
   };
 }

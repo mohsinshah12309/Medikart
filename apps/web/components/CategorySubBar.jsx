@@ -382,7 +382,7 @@ export default function CategorySubBar({ categories = [] }) {
 
   return (
     <div
-      className="w-full bg-white border-b border-[#F3EFE6] relative z-30 select-none transition-all"
+      className="w-full bg-white border-b border-[#F3EFE6] relative z-30 transition-all"
       onMouseLeave={handleMouseLeave}
     >
       <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
@@ -566,7 +566,7 @@ export default function CategorySubBar({ categories = [] }) {
                           <div
                             key={idx}
                             onClick={(e) => handleNestedSearchClick(item.query, activeSubCat?._id, e)}
-                            className="group p-3 rounded-xl bg-white border border-slate-200/80 hover:border-amber-300 hover:bg-amber-50/50 shadow-3xs hover:shadow-2xs transition-all cursor-pointer select-none text-left flex items-center justify-between"
+                            className="group p-3 rounded-xl bg-white border border-slate-200/80 hover:border-amber-300 hover:bg-amber-50/50 shadow-3xs hover:shadow-2xs transition-all cursor-pointer text-left flex items-center justify-between"
                           >
                             <div className="min-w-0 pr-2">
                               <p className="text-xs font-bold text-slate-800 group-hover:text-amber-800 transition-colors line-clamp-1">

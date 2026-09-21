@@ -1,6 +1,10 @@
 export const metadata = {
   title: "Forgot Password Recovery | Medikart",
   description: "Recover your Medikart customer account password securely with a single-use verification link.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title: "Forgot Password Recovery | Medikart",
     description: "Recover your Medikart customer account password securely with a single-use verification link.",

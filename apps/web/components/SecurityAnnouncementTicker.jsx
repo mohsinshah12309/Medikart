@@ -16,7 +16,7 @@ export default function SecurityAnnouncementTicker({ contactPhone = "+92 324 448
 
   // Ticker content items repeated inside each track
   const TickerTrackContent = () => (
-    <div className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8 py-1.5 select-none">
+    <div className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8 py-1.5">
       {/* 1. Official Verified Domain Pill */}
       <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white border border-slate-300/90 shadow-2xs text-[11.5px] font-bold text-slate-800">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

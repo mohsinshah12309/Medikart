@@ -150,7 +150,7 @@ export default function MonthlyRefillSection({
   return (
     <section
       id="monthly-refill-section"
-      className="my-8 md:my-10 w-full select-none"
+      className="my-8 md:my-10 w-full"
       aria-label="30-Day Monthly Medicine Refill"
     >
       {/* ─── 1. Main Showcase Section Card ─── */}

@@ -1,6 +1,10 @@
 export const metadata = {
   title: "My Saved Wishlist | Medikart Pharmacy",
   description: "View and order your saved medicines, vitamins, and healthcare wellness essentials from your Medikart wishlist.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title: "My Saved Wishlist | Medikart Pharmacy",
     description: "View and order your saved medicines, vitamins, and healthcare wellness essentials from your Medikart wishlist.",

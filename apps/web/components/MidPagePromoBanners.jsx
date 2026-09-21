@@ -97,7 +97,7 @@ export default function MidPagePromoBanners({ initialBanners = [], categories = 
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 py-3 select-none">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 py-3">
       {banners.slice(0, 2).map((b, idx) => (
         <div
           key={b._id || idx}

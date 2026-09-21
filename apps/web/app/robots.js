@@ -18,7 +18,6 @@ export default function robots() {
         '/reset-password',
         '/verify-email',
         '/wishlist',
-        '/refill',
         '/customer/*',
       ],
     },

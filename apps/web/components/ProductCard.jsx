@@ -167,7 +167,7 @@ function ProductCardComponent({ product }) {
           {/* Interactive CTA Buttons: Add to Cart (Primary) + View Details (Below) */}
           <div className="mt-3 flex flex-col gap-1.5">
             {isOutOfStock ? (
-              <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-xl border border-slate-200 select-none">
+              <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-xl border border-slate-200">
                 Out of Stock
               </span>
             ) : product.isNarcotic ? (

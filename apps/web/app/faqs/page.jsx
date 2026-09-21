@@ -2,24 +2,34 @@ import React from "react";
 import FaqClient from "./FaqClient";
 
 export const metadata = {
-  title: "Frequently Asked Questions (FAQs) | Medikart Online Pharmacy",
+  title: "Frequently Asked Questions (FAQs) | Medikart Online Pharmacy Pakistan",
   description:
-    "Find answers to frequently asked questions about online medicine orders, digital card and Cash on Delivery payments, cold-chain rapid shipping, prescription verification, and Monthly Refills in Pakistan.",
+    "Find clear answers about online medicine orders, Cash on Delivery, debit/credit cards, 2–4 hr express delivery, prescription verification & 30-day monthly refills in Pakistan.",
+  keywords: [
+    "Medikart FAQs",
+    "online pharmacy questions Pakistan",
+    "medicine delivery charges Lahore",
+    "cash on delivery pharmacy Karachi",
+    "prescription verification Pakistan",
+    "medicine refund policy Pakistan"
+  ],
   alternates: {
     canonical: "https://medikart.pk/faqs",
   },
   openGraph: {
-    title: "Frequently Asked Questions (FAQs) | Medikart Online Pharmacy",
+    title: "Frequently Asked Questions (FAQs) | Medikart Online Pharmacy Pakistan",
     description:
-      "Frequently asked questions about ordering authentic prescription medicines, payment options, delivery timelines, and monthly refills across Pakistan.",
+      "Get answers to common questions regarding ordering authentic medicines, delivery timelines, payment options, and prescription verification across Pakistan.",
     url: "https://medikart.pk/faqs",
+    siteName: "Medikart - Authentic Online Pharmacy",
+    locale: "en_PK",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Medikart FAQs — Online Pharmacy Pakistan",
     description:
-      "Find answers about medicine delivery, payment methods, prescription verification, and 30-day refills.",
+      "Find answers about medicine delivery, payment methods, prescription verification, and 30-day refills in Pakistan.",
   },
 };
 

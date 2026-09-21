@@ -1,6 +1,10 @@
 export const metadata = {
   title: "Sign In to Customer Account | Medikart",
   description: "Sign in to access your saved wishlists, 30-day monthly refills, prescription orders, and delivery addresses on Medikart.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title: "Sign In to Customer Account | Medikart",
     description: "Sign in to access your saved wishlists, 30-day monthly refills, prescription orders, and delivery addresses on Medikart.",

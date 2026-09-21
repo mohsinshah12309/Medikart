@@ -183,7 +183,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                             <div
                               key={cat._id}
                               onClick={(e) => handleCategorySelect(cat._id, e)}
-                              className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all cursor-pointer select-none"
+                              className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all cursor-pointer"
                             >
                               <div className="w-10 h-10 rounded-lg bg-amber-50/80 border border-amber-100 flex items-center justify-center relative overflow-hidden flex-shrink-0 group-hover:scale-105 group-hover:border-amber-300 transition-all">
                                 {imgSrc ? (

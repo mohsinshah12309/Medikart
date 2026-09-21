@@ -56,10 +56,37 @@ export const viewport = {
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk'),
   title: {
-    default: 'Medikart - Authentic Online Pharmacy',
-    template: '%s | Medikart',
+    default: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+    template: '%s | Medikart Online Pharmacy Pakistan',
   },
-  description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines with fast Cash on Delivery.',
+  description: 'Pakistan\'s trusted licensed online pharmacy. Order 100% genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
+  keywords: [
+    'online pharmacy Pakistan',
+    'buy medicine online Pakistan',
+    'panadol price in pakistan',
+    'panadol online delivery',
+    'augmentin pakistan',
+    'pharmacy delivery Lahore',
+    'medicine home delivery Karachi',
+    'pharmacy Islamabad',
+    'prescription upload online',
+    'monthly medicine refill pakistan',
+    'authentic medicines pakistan',
+    'cash on delivery medicine',
+    'medikart',
+    'medikart pk',
+  ],
+  authors: [{ name: 'Medikart Pharmacist Care Team', url: 'https://medikart.pk' }],
+  creator: 'Medikart Pakistan',
+  publisher: 'Medikart Healthcare Network',
+  formatDetection: {
+    email: true,
+    address: true,
+    telephone: true,
+  },
+  alternates: {
+    canonical: 'https://medikart.pk',
+  },
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
@@ -73,10 +100,10 @@ export const metadata = {
     ],
   },
   openGraph: {
-    title: 'Medikart - Authentic Online Pharmacy',
-    description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines.',
+    title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery Pakistan',
+    description: 'Order 100% genuine medicines, Panadol, Augmentin, vitamins, baby care & health essentials with fast 2–4 hr doorstep delivery across Pakistan.',
     url: 'https://medikart.pk',
-    siteName: 'Medikart',
+    siteName: 'Medikart - Authentic Online Pharmacy',
     images: [
       {
         url: '/og-image.png',
@@ -90,17 +117,28 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Medikart - Authentic Online Pharmacy',
-    description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines.',
+    title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery Pakistan',
+    description: 'Pakistan\'s trusted online pharmacy for authentic prescription & OTC medicines with 2–4 hr rapid delivery.',
     images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
 export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
   let contactPhone = '923244489159';
-  let contactEmail = 'medikart.com@gmail.com';
-  let aboutText = 'Medikart is Pakistan\'s leading online pharmacy.';
+  let contactEmail = 'support@medikart.pk';
+  let aboutText = 'Medikart is Pakistan\'s leading authentic licensed online pharmacy and medicine delivery platform.';
   let categories = [];
 
   const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
@@ -131,30 +169,47 @@ export default async function RootLayout({ children }) {
 
   const cleanPhone = contactPhone.replace(/[^0-9]/g, '');
 
-  const orgJsonLd = {
+  const pharmacyJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    'name': 'Medikart',
+    '@type': 'Pharmacy',
+    'name': 'Medikart Pakistan',
     'url': 'https://medikart.pk',
-    'logo': 'https://medikart.pk/logo.png',
+    'logo': 'https://medikart.pk/icon.png',
+    'image': 'https://medikart.pk/og-image.png',
+    'description': aboutText,
+    'telephone': '+923244489159',
+    'email': contactEmail,
+    'priceRange': 'PKR',
+    'currenciesAccepted': 'PKR',
+    'paymentAccepted': 'Cash on Delivery, Visa, MasterCard, JazzCash, Easypaisa, 1Bill, Internet Banking',
+    'address': {
+      '@type': 'PostalAddress',
+      'addressCountry': 'PK',
+      'addressRegion': 'Punjab',
+      'addressLocality': 'Lahore'
+    },
+    'areaServed': [
+      'Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan',
+      'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala', 'Hyderabad', 'Pakistan'
+    ],
     'contactPoint': {
       '@type': 'ContactPoint',
-      'telephone': contactPhone,
-      'contactType': 'customer service'
+      'telephone': '+923244489159',
+      'contactType': 'customer service',
+      'areaServed': 'PK',
+      'availableLanguage': ['English', 'Urdu']
     }
   };
 
-  const businessJsonLd = {
+  const websiteJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': 'WebSite',
     'name': 'Medikart',
-    'description': aboutText,
-    'telephone': contactPhone,
-    'email': contactEmail,
-    'address': {
-      '@type': 'PostalAddress',
-      'addressLocality': 'Lahore',
-      'addressCountry': 'PK'
+    'url': 'https://medikart.pk',
+    'potentialAction': {
+      '@type': 'SearchAction',
+      'target': 'https://medikart.pk/?search={search_term_string}#store-catalog',
+      'query-input': 'required name=search_term_string'
     }
   };
 
@@ -163,13 +218,15 @@ export default async function RootLayout({ children }) {
       <head>
         <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#FFF352" />
+        <meta name="geo.region" content="PK" />
+        <meta name="geo.placename" content="Pakistan" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pharmacyJsonLd) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className="min-h-screen flex flex-col bg-white text-slate-900 relative overflow-x-hidden font-body pb-16 md:pb-0">

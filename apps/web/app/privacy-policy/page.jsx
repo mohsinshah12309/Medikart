@@ -2,21 +2,30 @@ import React from "react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy | Medikart Online Pharmacy",
+  title: "Privacy Policy & Patient Data Protection | Medikart Pakistan",
   description:
-    "Learn how Medikart protects patient data, partners with licensed pharmacies, and safeguards your health information.",
+    "Learn how Medikart safeguards patient medical records, prescriptions, and health data with 256-bit encryption and strict medical confidentiality standards in Pakistan.",
+  keywords: [
+    "Medikart privacy policy",
+    "patient data privacy Pakistan",
+    "prescription security online",
+    "medical privacy online pharmacy"
+  ],
   alternates: {
     canonical: "https://medikart.pk/privacy-policy",
   },
   openGraph: {
-    title: "Privacy Policy | Medikart Online Pharmacy",
+    title: "Privacy Policy & Patient Data Protection | Medikart Pakistan",
     description:
-      "Learn how Medikart protects patient data and partners with licensed pharmacies.",
+      "Learn how Medikart protects patient data, prescriptions, and medical records across Pakistan.",
+    url: "https://medikart.pk/privacy-policy",
+    siteName: "Medikart - Authentic Online Pharmacy",
+    locale: "en_PK",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Privacy Policy | Medikart Pharmacy",
+    title: "Privacy Policy | Medikart Pharmacy Pakistan",
     description:
       "Learn how Medikart protects patient data and ensures medical privacy.",
   },

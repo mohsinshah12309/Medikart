@@ -194,7 +194,7 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
 
   return (
     <div
-      className="relative w-full h-full select-none group"
+      className="relative w-full h-full group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       style={{ perspective: prefersReducedMotion ? "none" : "1200px" }}

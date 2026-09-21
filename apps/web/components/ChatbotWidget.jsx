@@ -166,7 +166,7 @@ export default function ChatbotWidget() {
           2. CHAT WINDOW PANEL
       ────────────────────────────────────────────────────────────────── */}
       {isOpen && (
-        <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[440px] h-[520px] max-h-[80vh] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 select-none">
+        <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[440px] h-[520px] max-h-[80vh] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           
           {/* Header with 3D Owl Avatar */}
           <div className="bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">

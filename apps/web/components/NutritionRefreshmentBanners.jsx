@@ -31,7 +31,7 @@ export default function NutritionRefreshmentBanners() {
   };
 
   return (
-    <section aria-label="Featured Health Promotions" className="w-full select-none">
+    <section aria-label="Featured Health Promotions" className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         
         {/* ─── Card 1: Baby Nutrition ("Growing Strong Starts with Proper Nutrition") ─── */}

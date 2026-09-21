@@ -98,7 +98,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
   const displayConditions = [...conditions, ...conditions];
 
   return (
-    <div className="flex flex-col gap-3 py-2 select-none overflow-hidden">
+    <div className="flex flex-col gap-3 py-2 overflow-hidden">
       {/* Header with Navigation Controls */}
       <div className="flex items-center justify-between">
         <div>

@@ -47,7 +47,7 @@ export default function RightBlogSidebar({ isMobileDrawerOpen, setIsMobileDrawer
 
   const sidebarBody = (
     <div
-      className="w-full h-full bg-white/95 backdrop-blur-md rounded-3xl border border-amber-200/90 shadow-xl p-4 sm:p-5 flex flex-col justify-between select-none relative overflow-hidden group"
+      className="w-full h-full bg-white/95 backdrop-blur-md rounded-3xl border border-amber-200/90 shadow-xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
