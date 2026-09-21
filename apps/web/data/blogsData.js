@@ -10,7 +10,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "4 min read",
     "date": "Sep 6, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-1-baby-weight-chart-by-month-in-kg-boys-girls.webp",
     "summary": "Tracking your baby’s monthly weight gain is crucial for monitoring optimal developmental milestones and early nutritional intervention.",
     "tags": [
@@ -29,7 +29,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "5 min read",
     "date": "Sep 4, 2026",
-    "author": "Dr. Mahnoor Tariq, Clinical Nutritionist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-2-2-years-baby-food-chart-toddler-meals-portions.webp",
     "summary": "A wholesome Pakistani toddler meal plan combining soft rotis, lentils, yogurt, fresh seasonal fruits, and essential dairy portions.",
     "tags": [
@@ -48,7 +48,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "4 min read",
     "date": "Sep 2, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-3-1-year-baby-food-chart-meals-milk-portions.webp",
     "summary": "Graduating from breast milk or formula to textured solid foods requires balanced protein, healthy fats, and vital micronutrients.",
     "tags": [
@@ -67,7 +67,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "5 min read",
     "date": "Aug 29, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-4-how-to-choose-infant-formula-pakistan.webp",
     "summary": "Understand the clinical distinctions between Stage 1, Stage 2, and Stage 3 growing-up formulas, lactose-free options, and comfort blends.",
     "tags": [
@@ -77,7 +77,7 @@ export const BLOGS_DATA = [
       "BF-1",
       "Pediasure"
     ],
-    "content": "When breastfeeding is not possible or requires supplementation, choosing an authentic, DRAP-approved infant formula is paramount. Stage 1 formulas (0-6 months) are whey-dominant for easy gastric emptying. Stage 2 (6-12 months) contains higher iron and casein ratios. Stage 3 (1-3 years) supports active toddler growth. Always use boiled water cooled to 70°C and follow exact scoop ratios."
+    "content": "When breastfeeding is not possible or requires supplementation, choosing an authentic, certified infant formula is paramount. Stage 1 formulas (0-6 months) are whey-dominant for easy gastric emptying. Stage 2 (6-12 months) contains higher iron and casein ratios. Stage 3 (1-3 years) supports active toddler growth. Always use boiled water cooled to 70°C and follow exact scoop ratios."
   },
   {
     "id": 5,
@@ -87,7 +87,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "3 min read",
     "date": "Aug 25, 2026",
-    "author": "Dr. Zainab Bilal, Pediatric Dentist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-5-baby-teething-remedies-safe-practices.webp",
     "summary": "Safe home remedies, refrigerated silicone teether rings, and medical guidance for managing infant teething discomfort.",
     "tags": [
@@ -106,7 +106,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "4 min read",
     "date": "Aug 21, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-6-colic-gas-relief-pakistani-infants.webp",
     "summary": "Distinguishing infant colic from reflux, bicycle leg movements, tummy time, and pediatrician-verified anti-gas drops.",
     "tags": [
@@ -125,7 +125,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "5 min read",
     "date": "Aug 18, 2026",
-    "author": "Dr. Sadia Haroon, Gynecologist & Obstetrician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-7-postpartum-recovery-nutrition-pakistani-mothers.webp",
     "summary": "Nutritional healing after delivery: managing maternal blood volume, lactation hydration, iron stores, and gentle pelvic recovery.",
     "tags": [
@@ -144,7 +144,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "6 min read",
     "date": "Aug 14, 2026",
-    "author": "Dr. Salman Farooq, Consultant Pediatrician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-8-vaccination-schedule-in-pakistan-guide.webp",
     "summary": "Complete guide to the Expanded Programme on Immunization (EPI) and optional vaccines including Rotavirus, MMR, and Chickenpox.",
     "tags": [
@@ -163,7 +163,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "4 min read",
     "date": "Aug 10, 2026",
-    "author": "Dr. Mahnoor Tariq, Clinical Nutritionist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-9-iron-deficiency-anemia-pakistani-toddlers.webp",
     "summary": "Over-reliance on cow milk can block iron absorption. Learn symptoms of childhood anemia and iron-rich Pakistani food combinations.",
     "tags": [
@@ -182,7 +182,7 @@ export const BLOGS_DATA = [
     "categorySlug": "baby-child-nutrition",
     "readTime": "4 min read",
     "date": "Aug 6, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-10-winter-skin-care-for-babies-eczema-prevention.webp",
     "summary": "Protecting fragile infant skin during cold dry weather with ceramide moisturizers, lukewarm baths, and cotton clothing.",
     "tags": [
@@ -201,7 +201,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "5 min read",
     "date": "Aug 2, 2026",
-    "author": "Dr. Tariq Mahmood, Consultant Diabetologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-11-managing-diabetes-pakistani-diet-roti-rice.webp",
     "summary": "Master the glycemic impact of chapati, basmati rice, lentils, and desi curries with the plate method for strict HbA1c control.",
     "tags": [
@@ -220,7 +220,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "4 min read",
     "date": "Jul 28, 2026",
-    "author": "Dr. Usman Qureshi, Interventional Cardiologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-12-accurate-blood-pressure-monitoring-at-home-guide.webp",
     "summary": "Avoid common cuff placement errors, caffeine interference, and white-coat hypertension with certified digital upper-arm monitors.",
     "tags": [
@@ -239,7 +239,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "4 min read",
     "date": "Jul 24, 2026",
-    "author": "Dr. Tariq Mahmood, Consultant Diabetologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-13-fasting-blood-sugar-vs-hba1c-explained.webp",
     "summary": "Why daily finger-prick readings are only a snapshot, and why the 3-month HbA1c lab test is the true benchmark of diabetes health.",
     "tags": [
@@ -258,7 +258,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "5 min read",
     "date": "Jul 20, 2026",
-    "author": "Dr. Usman Qureshi, Interventional Cardiologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-14-cholesterol-triglycerides-pakistan-ghee-fried-foods.webp",
     "summary": "Unpacking trans-fats in samosas, nihari, and hydrogenated banaspati ghee that drive early coronary artery disease in South Asians.",
     "tags": [
@@ -277,7 +277,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "3 min read",
     "date": "Jul 16, 2026",
-    "author": "Dr. Tariq Mahmood, Consultant Diabetologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-15-insulin-storage-in-hot-pakistani-summers.webp",
     "summary": "Preserving insulin potency during power load-shedding and 45°C ambient temperatures using insulated cold packs and clay pots.",
     "tags": [
@@ -296,7 +296,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "5 min read",
     "date": "Jul 12, 2026",
-    "author": "Dr. Usman Qureshi, Interventional Cardiologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-16-recognizing-silent-heart-attack-symptoms-guide.webp",
     "summary": "Women and diabetics often experience atypical heart attack symptoms: nausea, jaw pain, unexplained sweating, and severe breathlessness.",
     "tags": [
@@ -315,7 +315,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "4 min read",
     "date": "Jul 8, 2026",
-    "author": "Dr. Tariq Mahmood, Consultant Diabetologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-17-diabetic-foot-care-daily-inspection-routines.webp",
     "summary": "Peripheral neuropathy robs feet of sensation. Learn how daily mirror checks, proper shoes, and dry toes prevent amputations.",
     "tags": [
@@ -334,7 +334,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "4 min read",
     "date": "Jul 4, 2026",
-    "author": "Dr. Mahnoor Tariq, Clinical Nutritionist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-18-salt-reduction-strategies-desi-cooking-hypertension.webp",
     "summary": "How lemon juice, roasted cumin, black pepper, and garlic can add intense flavor to curries while slashing sodium intake by half.",
     "tags": [
@@ -353,7 +353,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "5 min read",
     "date": "Jun 30, 2026",
-    "author": "Dr. Asad Rizvi, Consultant Nephrologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-19-kidney-health-diabetes-protecting-renal-function.webp",
     "summary": "Diabetic nephropathy is preventable. Why annual urine microalbumin tests and strict blood pressure control are vital.",
     "tags": [
@@ -372,7 +372,7 @@ export const BLOGS_DATA = [
     "categorySlug": "chronic-conditions",
     "readTime": "4 min read",
     "date": "Jun 26, 2026",
-    "author": "Dr. Bilal Anwer, Physiotherapist & Rehab Specialist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-20-safe-exercise-seniors-arthritis-hypertension.webp",
     "summary": "Low-impact walking, chair yoga, and gentle resistance bands for preserving knee cartilage and reducing arterial stiffness in seniors.",
     "tags": [
@@ -391,7 +391,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "5 min read",
     "date": "Jun 22, 2026",
-    "author": "Dr. Farhan Zaidi, Pulmonologist (MRCP)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-21-lahore-smog-survival-guide-n95-air-purifiers.webp",
     "summary": "Hazardous AQI 400+ particulate matter (PM2.5) causes chronic bronchitis and vascular inflammation. Practical protective protocols.",
     "tags": [
@@ -410,7 +410,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "5 min read",
     "date": "Jun 18, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-22-dengue-fever-warning-signs-platelet-recovery.webp",
     "summary": "Critical warning signs between Day 3 and Day 7 of dengue: abdominal pain, persistent vomiting, mucosal bleeding, and plasma leakage.",
     "tags": [
@@ -429,7 +429,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "4 min read",
     "date": "Jun 14, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-23-karachi-multan-heatwave-survival-ors-heatstroke.webp",
     "summary": "Recognizing the difference between heat exhaustion and life-threatening heatstroke: immediate cooling protocols and electrolyte drinks.",
     "tags": [
@@ -448,7 +448,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "4 min read",
     "date": "Jun 10, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-24-preventing-waterborne-typhoid-cholera-monsoon.webp",
     "summary": "Monsoon pipe contamination drives XDR (Extensively Drug-Resistant) Typhoid. Water boiling, vaccination, and food sanitation essentials.",
     "tags": [
@@ -467,7 +467,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "4 min read",
     "date": "Jun 6, 2026",
-    "author": "Dr. Farhan Zaidi, Pulmonologist (MRCP)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-25-pollen-allergy-season-islamabad-precautions.webp",
     "summary": "Paper Mulberry pollen counts in Islamabad reach 40,000+ grains/m³ in spring. Managing asthma flare-ups and seasonal rhinitis.",
     "tags": [
@@ -486,7 +486,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "3 min read",
     "date": "Jun 2, 2026",
-    "author": "Dr. Bilal Anwer, Sports Physiotherapist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-26-preventing-dehydration-sports-outdoor-commuters.webp",
     "summary": "Motorcyclists, delivery riders, and athletes lose up to 1.5 liters of sweat per hour. Maintaining sodium-potassium equilibrium.",
     "tags": [
@@ -505,7 +505,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "4 min read",
     "date": "May 28, 2026",
-    "author": "Dr. Farhan Zaidi, Pulmonologist (MRCP)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-27-dust-allergies-sinusitis-nasal-rinsing-guide.webp",
     "summary": "Saline sinus irrigation (Neti pot / saline squeeze bottles) physically flushes allergens, fungal spores, and dust from nasal cavities.",
     "tags": [
@@ -524,7 +524,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "5 min read",
     "date": "May 24, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-28-malaria-vs-dengue-symptoms-medication-guide.webp",
     "summary": "How to differentiate between Anopheles (night biter - Malaria) and Aedes (day biter - Dengue) fever patterns and laboratory diagnostics.",
     "tags": [
@@ -543,7 +543,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "3 min read",
     "date": "May 20, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-29-prickly-heat-rash-relief-pakistani-summer.webp",
     "summary": "Blocked eccrine sweat glands cause miliaria rubra. Calamine lotions, loose cotton clothing, and cooling shower routines.",
     "tags": [
@@ -562,7 +562,7 @@ export const BLOGS_DATA = [
     "categorySlug": "seasonal-health",
     "readTime": "3 min read",
     "date": "May 16, 2026",
-    "author": "Dr. Kashif Raza, Consultant Ophthalmologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-30-smog-eye-irritation-lubricating-drops-care.webp",
     "summary": "Toxic nitrogen oxides and sulfur dioxide in smog strip the ocular tear film. Preservative-free artificial tears and wraparound sunglasses.",
     "tags": [
@@ -581,7 +581,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "5 min read",
     "date": "May 12, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-31-dangers-of-self-medicating-antibiotics-pakistan.webp",
     "summary": "Taking Augmentin or Ciprofloxacin for viral colds does not cure you—it breeds superbugs. The critical importance of completing courses.",
     "tags": [
@@ -600,16 +600,16 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "May 8, 2026",
-    "author": "Hamza Sheikh, Chief Pharmacist (PharmD)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-32-generic-vs-branded-medicines-pakistan-safety.webp",
-    "summary": "DRAP bioequivalence standards: why generic paracetamol, metformin, and atorvastatin deliver identical clinical results at up to 70% lower price.",
+    "summary": "Pharmaceutical bioequivalence standards: why generic paracetamol, metformin, and atorvastatin deliver identical clinical results at up to 70% lower price.",
     "tags": [
       "Generic Medicines",
       "Pharma Savings",
-      "DRAP Standards",
+      "Quality Standards",
       "Prescription Care"
     ],
-    "content": "A generic medicine contains the exact same active pharmaceutical ingredient (API), strength, dosage form, and route of administration as the innovator brand. DRAP tests ensure generic bioequivalence and safety. Choosing high-quality certified generic alternatives can save families thousands of rupees each month on chronic prescriptions."
+    "content": "A generic medicine contains the exact same active pharmaceutical ingredient (API), strength, dosage form, and route of administration as the innovator brand. Laboratory bioequivalence tests ensure generic bioequivalence and safety. Choosing high-quality certified generic alternatives can save families thousands of rupees each month on chronic prescriptions."
   },
   {
     "id": 33,
@@ -619,7 +619,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "May 4, 2026",
-    "author": "Hamza Sheikh, Chief Pharmacist (PharmD)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-33-home-first-aid-kit-checklist-pakistan.webp",
     "summary": "Antiseptics, sterile gauze, burn ointments, oral rehydration salts, digital thermometer, and emergency contacts list.",
     "tags": [
@@ -638,7 +638,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "Apr 30, 2026",
-    "author": "Hamza Sheikh, Chief Pharmacist (PharmD)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-34-medicine-expiry-dates-what-happens-past-shelf-life.webp",
     "summary": "Degradation kinetics: why expired liquid suspensions, eye drops, insulins, and tetracyclines become dangerous or toxic.",
     "tags": [
@@ -657,7 +657,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "Apr 26, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-35-paracetamol-dosage-guidelines-infants-adults.webp",
     "summary": "Weight-based dosing (10-15 mg/kg) vs age guessing: preventing accidental hepatotoxicity from combination cold and flu remedies.",
     "tags": [
@@ -676,7 +676,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "Apr 22, 2026",
-    "author": "Dr. Farhan Zaidi, Pulmonologist (MRCP)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-36-how-to-use-inhaler-with-spacer-pediatric-guide.webp",
     "summary": "Pressurized metered-dose inhalers (pMDIs) fail without spacers: ensuring optimal aerosol deposition deep into bronchial airways.",
     "tags": [
@@ -695,7 +695,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "3 min read",
     "date": "Apr 18, 2026",
-    "author": "Hamza Sheikh, Chief Pharmacist (PharmD)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-37-safe-medication-disposal-pakistan-practices.webp",
     "summary": "Why flushing pills down the toilet contaminates municipal waterways, and safe disposal methods using sealed bags with coffee grounds.",
     "tags": [
@@ -714,7 +714,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "Apr 14, 2026",
-    "author": "Hamza Sheikh, Chief Pharmacist (PharmD)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-38-traveling-with-prescription-medicines-pakistan.webp",
     "summary": "Carrying doctor prescriptions, original blister packaging, insulin gel coolers in carry-on luggage, and narcotics compliance.",
     "tags": [
@@ -733,7 +733,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "5 min read",
     "date": "Apr 10, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-39-managing-severe-acidity-gerd-without-ppi-overuse.webp",
     "summary": "Long-term continuous omeprazole risks: bone demineralization and B12 deficiency. Dietary lifestyle shifts for acid reflux relief.",
     "tags": [
@@ -752,7 +752,7 @@ export const BLOGS_DATA = [
     "categorySlug": "medicine-safety",
     "readTime": "4 min read",
     "date": "Apr 6, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-40-recognizing-medication-allergy-reactions-guide.webp",
     "summary": "Mild drug rashes vs life-threatening anaphylaxis (throat swelling, lip edema, wheezing, hypotension) and urgent adrenaline protocols.",
     "tags": [
@@ -771,7 +771,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "4 min read",
     "date": "Apr 2, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-41-choosing-best-medicated-sunscreen-pakistani-summers.webp",
     "summary": "Broad-spectrum UVA/UVB protection, SPF 50+, non-comedogenic matte gels, and water resistance for oily South Asian skin.",
     "tags": [
@@ -790,7 +790,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "5 min read",
     "date": "Mar 29, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-42-acne-vulgaris-management-salicylic-vs-benzoyl.webp",
     "summary": "Which active ingredient works best for blackheads vs inflammatory pustules? How to avoid skin barrier irritation.",
     "tags": [
@@ -809,7 +809,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "4 min read",
     "date": "Mar 25, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-43-sudden-hair-fall-telogen-effluvium-after-fever.webp",
     "summary": "Losing handfuls of hair 2-3 months after dengue, typhoid, or childbirth is reversible. Clinical recovery timelines and nutrition.",
     "tags": [
@@ -828,7 +828,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "4 min read",
     "date": "Mar 21, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-44-stubborn-dandruff-treatment-ketoconazole-guide.webp",
     "summary": "Seborrheic dermatitis is driven by Malassezia yeast overgrowth. Why leave-on scalp contact time of 5 minutes is non-negotiable.",
     "tags": [
@@ -847,7 +847,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "4 min read",
     "date": "Mar 17, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-45-skin-barrier-repair-ceramides-niacinamide.webp",
     "summary": "Symptoms of a compromised stratum corneum from over-exfoliation and harsh whitening creams: stinging, redness, and dehydration.",
     "tags": [
@@ -866,7 +866,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "5 min read",
     "date": "Mar 13, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-46-hyperpigmentation-melasma-south-asian-skin.webp",
     "summary": "Dangers of steroid-based whitening creams. Safe dermatological alternatives: Tranexamic acid, Azelaic acid, and Alpha Arbutin.",
     "tags": [
@@ -885,7 +885,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "3 min read",
     "date": "Mar 9, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-47-dry-cracked-heels-winter-urea-cream-care.webp",
     "summary": "Deep fissures on heels can become infected. Why 10-20% urea creams break down hyperkeratosis and restore supple skin.",
     "tags": [
@@ -904,7 +904,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "4 min read",
     "date": "Mar 5, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-48-eczema-triggers-pakistani-homes-soaps-dust.webp",
     "summary": "Harsh laundry surf, synthetic perfumes, and wool allergens that trigger atopic dermatitis. Practical household elimination steps.",
     "tags": [
@@ -923,7 +923,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "4 min read",
     "date": "Mar 1, 2026",
-    "author": "Dr. Zainab Bilal, Dental Surgeon",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-49-oral-hygiene-preventing-gum-bleeding-enamel-loss.webp",
     "summary": "Why bleeding gums during brushing indicate gingivitis. Proper bass brushing technique and interdental cleaning.",
     "tags": [
@@ -942,7 +942,7 @@ export const BLOGS_DATA = [
     "categorySlug": "dermatology-skincare",
     "readTime": "5 min read",
     "date": "Feb 25, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-50-safe-anti-aging-routine-in-your-30s-retinoids.webp",
     "summary": "Collagen production declines after 25. The clinical evidence for starting low-dose retinol, Vitamin C, and daily SPF.",
     "tags": [
@@ -961,7 +961,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Feb 21, 2026",
-    "author": "Dr. Mahnoor Tariq, Clinical Nutritionist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-51-vitamin-d-deficiency-epidemic-pakistan.webp",
     "summary": "Despite abundant sunlight, over 70% of urban Pakistanis are severely Vitamin D deficient. Safe therapeutic dosing guidelines.",
     "tags": [
@@ -980,7 +980,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Feb 17, 2026",
-    "author": "Hamza Sheikh, Chief Pharmacist (PharmD)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-52-ultimate-guide-halal-multivitamins-labels.webp",
     "summary": "Checking bovine vs porcine gelatin softgels, plant-based cellulose capsules, and certified halal logos on pharmacy shelves.",
     "tags": [
@@ -989,7 +989,7 @@ export const BLOGS_DATA = [
       "Supplement Safety",
       "Pharma Guide"
     ],
-    "content": "Many imported multivitamin supplements use porcine-derived gelatin for softgels. In Pakistan, consumers should seek certified halal bovine or vegetarian pullulan capsule shells. Verify DRAP registration numbers (D-Reg) on packaging to guarantee authentic, compliant active ingredients."
+    "content": "Many imported multivitamin supplements use porcine-derived gelatin for softgels. In Pakistan, consumers should seek certified halal bovine or vegetarian pullulan capsule shells. Verify official registration and batch numbers on packaging to guarantee authentic, compliant active ingredients."
   },
   {
     "id": 53,
@@ -999,7 +999,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Feb 13, 2026",
-    "author": "Dr. Usman Qureshi, Interventional Cardiologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-53-omega-3-fish-oil-benefits-brain-heart-joints.webp",
     "summary": "EPA and DHA essential fatty acids reduce serum triglycerides, support cognitive memory, and ease morning joint stiffness.",
     "tags": [
@@ -1018,7 +1018,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Feb 9, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-54-combating-chronic-fatigue-iron-b12-folate.webp",
     "summary": "Waking up exhausted? Learn how subclinical deficiencies in Vitamin B12, ferritin, and thyroid hormones sap daily energy.",
     "tags": [
@@ -1037,7 +1037,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Feb 5, 2026",
-    "author": "Dr. Sadia Haroon, Consultant Gynecologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-55-calcium-bone-density-after-40-osteoporosis-women.webp",
     "summary": "Perimenopause accelerates bone mineral loss. The essential triad of Calcium carbonate/citrate, Vitamin D3, and weight-bearing exercise.",
     "tags": [
@@ -1056,7 +1056,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Feb 1, 2026",
-    "author": "Dr. Mahnoor Tariq, Clinical Nutritionist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-56-digestive-health-probiotics-pakistani-diets.webp",
     "summary": "How spicy curries and frequent antibiotic courses deplete gut microbiome. Restoring healthy bacteria with home-set curd and kefir.",
     "tags": [
@@ -1075,7 +1075,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Jan 28, 2026",
-    "author": "Dr. Nida Kamran, Consultant Dermatologist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-57-collagen-supplements-myths-vs-clinical-evidence.webp",
     "summary": "Hydrolyzed marine collagen peptides vs regular gelatin: what peer-reviewed dermatology studies reveal about skin elasticity.",
     "tags": [
@@ -1094,7 +1094,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Jan 24, 2026",
-    "author": "Dr. Ayesha Siddiqui, Pediatrician (FCPS)",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-58-healthy-weight-gain-underweight-children-pakistan.webp",
     "summary": "Calorie-dense healthy fats: pure desi ghee, almond paste, banana milk smoothies, and peanut butter for growing kids.",
     "tags": [
@@ -1113,7 +1113,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Jan 20, 2026",
-    "author": "Dr. Salman Farooq, Consultant Physician",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-59-mindful-sleep-hygiene-insomnia-without-sedatives.webp",
     "summary": "Breaking reliance on benzodiazepines like Xanax or Lexotan. Natural melatonin circadian regulation and blue light reduction.",
     "tags": [
@@ -1132,7 +1132,7 @@ export const BLOGS_DATA = [
     "categorySlug": "nutrition-wellness",
     "readTime": "4 min read",
     "date": "Jan 16, 2026",
-    "author": "Dr. Mahnoor Tariq, Clinical Nutritionist",
+    "author": "Medikart Health Team",
     "image": "/images/blogs/blog-60-hydration-science-why-water-isnt-always-enough.webp",
     "summary": "The physiology of hypotonic water intoxication: why sodium and glucose are essential for cellular water absorption via SGLT-1 pumps.",
     "tags": [

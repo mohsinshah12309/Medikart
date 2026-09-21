@@ -71,7 +71,7 @@ export default function PrivacyPolicyPage() {
           <p className="text-slate-800 text-xs sm:text-sm font-medium leading-relaxed">
             <strong>Authenticity Guarantee:</strong> All prescription and
             over-the-counter medicines ordered via Medikart are sourced
-            exclusively from these authorized, DRAP-licensed partner pharmacies.
+            from verified licensed partner pharmacies and authorized distributors.
             All products are{" "}
             <strong>
               100% authentic, genuine, unadulterated, and strictly
@@ -182,8 +182,7 @@ export default function PrivacyPolicyPage() {
             </li>
             <li>
               <strong>Regulatory Authorities:</strong> Where legally mandated by
-              DRAP (Drug Regulatory Authority of Pakistan) or healthcare
-              regulatory bodies.
+              applicable pharmaceutical and healthcare regulatory authorities in Pakistan.
             </li>
           </ul>
           <p className="pt-2">

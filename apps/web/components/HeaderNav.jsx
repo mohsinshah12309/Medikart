@@ -609,7 +609,7 @@ export default function HeaderNav({ initialCategories = [] }) {
               </Link>
               <div className="text-center pt-0.5">
                 <span className="text-[10px] text-slate-400 font-medium">
-                  DRAP Licensed Pharmacy • 100% Genuine
+                  Licensed Partner Pharmacies • 100% Genuine
                 </span>
               </div>
             </div>

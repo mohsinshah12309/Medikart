@@ -58,10 +58,10 @@ export default function SecurityAnnouncementTicker({ contactPhone = "+92 324 448
 
       <span className="text-amber-400 text-xs font-black">✦</span>
 
-      {/* 4. DRAP Licensed & Genuine Medicine Badge */}
+      {/* 4. Licensed Partner Pharmacies & Genuine Medicine Badge */}
       <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white border border-slate-300/90 shadow-2xs text-[11.5px] font-bold text-slate-700">
         <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
-        <span>DRAP Licensed Pharmacy</span>
+        <span>Licensed Partner Pharmacies</span>
         <span className="text-slate-400">•</span>
         <span className="text-amber-800">100% Genuine Medicines</span>
       </span>

@@ -19,7 +19,7 @@ import {
 export const metadata = {
   title: "Return & Refund Policy | Medikart Online Pharmacy Pakistan",
   description:
-    "Official Return & Refund Policy for Medikart. Learn about pre-dispatch order cancellations, online card refund settlements (2–5 business days), Rs. 10 store service fee, and pharmaceutical return safety rules in Pakistan.",
+    "Official Return & Refund Policy for Medikart. Learn about pre-dispatch order cancellations, online card refund settlements (2 business days), Rs. 10 store service fee, and pharmaceutical return safety rules in Pakistan.",
   keywords: [
     "Medikart return policy",
     "medicine refund Pakistan",
@@ -33,7 +33,7 @@ export const metadata = {
   openGraph: {
     title: "Return & Refund Policy | Medikart Online Pharmacy Pakistan",
     description:
-      "Understand Medikart's cancellation terms, card refund turnaround (2–5 days), Rs. 10 store fee, and 24-hr damage reporting policy in Pakistan.",
+      "Understand Medikart's cancellation terms, card refund turnaround (2 business days), Rs. 10 store fee, and 24-hr damage reporting policy in Pakistan.",
     url: "https://medikart.pk/return-refund-policy",
     siteName: "Medikart - Authentic Online Pharmacy",
     locale: "en_PK",
@@ -43,7 +43,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Return & Refund Policy | Medikart Pharmacy Pakistan",
     description:
-      "Read Medikart's cancellation terms, refund turnaround, and pharmaceutical return safety rules.",
+      "Read Medikart's cancellation terms, refund turnaround (2 business days), and pharmaceutical return safety rules.",
   },
 };
 
@@ -95,7 +95,7 @@ export default function ReturnRefundPolicyPage() {
             At <strong className="text-slate-950 font-bold">Medikart</strong>, we are committed to delivering 100% authentic, tamper-evident, and properly handled medications to every patient. Medikart functions as a technology service platform connecting consumers with licensed, certified retail partner pharmacies in Pakistan. Medikart is not a direct medicine manufacturer or primary warehouse supplier.
           </p>
           <p>
-            All prescription reviews, dispensing, packaging, and dispatching are executed by qualified registered pharmacists in compliance with the Drug Regulatory Authority of Pakistan (DRAP) regulations. Because pharmaceutical products directly impact human health and patient safety, strict statutory guidelines govern medicine returns and cancellations as detailed below.
+            All prescription reviews, dispensing, packaging, and dispatching are executed by qualified registered pharmacists in compliance with applicable medicine handling regulations. Because pharmaceutical products directly impact human health and patient safety, strict statutory guidelines govern medicine returns and cancellations as detailed below.
           </p>
         </div>
       </div>
@@ -161,7 +161,7 @@ export default function ReturnRefundPolicyPage() {
             <h2 className="text-xl sm:text-2xl font-black text-slate-950 font-heading">
               3. Card &amp; Online Payment (CC) Cancellations &amp; Gateway Settlement
             </h2>
-            <p className="text-xs text-slate-500 font-medium">Online debit/credit card gateway terms &amp; manual refund timeline</p>
+            <p className="text-xs text-slate-500 font-medium">Online debit/credit card gateway terms &amp; refund timeline</p>
           </div>
         </div>
 
@@ -189,17 +189,14 @@ export default function ReturnRefundPolicyPage() {
             </div>
           </div>
 
-          {/* Payment Gateway 2 Business Day Manual Settlement Note */}
+          {/* Payment Gateway 2 Business Day Settlement Note */}
           <div className="space-y-2">
             <h4 className="font-black text-slate-950 text-sm sm:text-base flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-600" />
-              <span>Payment Gateway Merchant Settlement &amp; Processing Window</span>
+              <span>Payment Gateway Merchant Settlement Window</span>
             </h4>
             <p>
-              Refunds for the remaining eligible amount are processed back to the original payment method. Please note that card and digital online payment settlements are governed by our authorized payment gateway with a standard settlement turnaround of <strong className="text-slate-950">2 business days</strong>.
-            </p>
-            <p className="text-xs text-slate-600">
-              In accordance with standard gateway capabilities, refund reversals are reviewed and processed securely via the authorized merchant administrative portal. Depending on your issuing bank&apos;s internal reconciliation cycle, the credited funds typically reflect in your statement within 3 to 7 working days following merchant approval.
+              Refunds for the remaining eligible amount are processed back to the original payment method. Card payment settlements and refund reversals are processed with a standard merchant turnaround of <strong className="text-slate-950">2 business days</strong>.
             </p>
           </div>
         </div>
@@ -236,9 +233,9 @@ export default function ReturnRefundPolicyPage() {
           </div>
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-950 font-heading">
-              5. Medicine Return Eligibility &amp; Statutory Guidelines
+              5. Medicine Return Eligibility &amp; Safety Guidelines
             </h2>
-            <p className="text-xs text-slate-500 font-medium">DRAP compliance &amp; patient safety restrictions</p>
+            <p className="text-xs text-slate-500 font-medium">Pharmacy standards &amp; patient safety restrictions</p>
           </div>
         </div>
 
@@ -305,7 +302,7 @@ export default function ReturnRefundPolicyPage() {
                 Controlled Substances &amp; Strict Prescription Verification:
               </strong>
               <p>
-                In strict compliance with DRAP regulations, Medikart does not dispense or deliver controlled narcotics, habit-forming psychotropics, or restricted Schedule X substances online. For orders requiring prescription verification, if a valid doctor&apos;s prescription is not supplied upon request, the scheduled items will be voided before dispatch.
+                In strict compliance with national drug laws and pharmacy regulations, Medikart does not dispense or deliver controlled narcotics, habit-forming psychotropics, or restricted Schedule X substances online. For orders requiring prescription verification, if a valid doctor&apos;s prescription is not supplied upon request, the scheduled items will be voided before dispatch.
               </p>
             </div>
           </div>

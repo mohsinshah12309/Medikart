@@ -58,11 +58,11 @@ async function getBlogData(slug) {
           },
           {
             type: "callout",
-            text: "Licensed Pharmacist Advisory: Always inspect medicine packaging for DRAP registration numbers (D-Reg), lot numbers, and intact tamper seals. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
+            text: "Pharmacist Advisory: Always inspect medicine packaging for intact tamper seals, verified batch numbers, and correct expiration dates. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
           },
           {
             type: "disclaimer",
-            text: "Medical Disclaimer: The information provided in this article is for educational purposes only and does not substitute for professional medical advice, clinical diagnosis, or treatment. Always seek the advice of a qualified healthcare provider or licensed pharmacist regarding any medical condition or prescription regimen in Pakistan.",
+            text: "Medical Disclaimer: The information provided in this article is for educational purposes only and does not substitute for professional medical advice, clinical diagnosis, or treatment. Always seek the advice of a qualified healthcare provider regarding any medical condition or prescription regimen.",
           },
         ],
       },
@@ -91,7 +91,7 @@ export async function generateMetadata({ params }) {
   if (!blog) {
     return {
       title: "Health & Wellness Article | Medikart Pakistan",
-      description: "Read doctor-verified health guides and medicine safety articles on Medikart.",
+      description: "Read healthcare and medicine guidance articles on Medikart.",
     };
   }
 
@@ -108,7 +108,6 @@ export async function generateMetadata({ params }) {
       blog.categoryName || blog.category || 'Health Guide',
       'health tips Pakistan',
       'medicine guide Pakistan',
-      'doctor advice Lahore',
       'Medikart blog',
     ],
     alternates: {
@@ -122,7 +121,7 @@ export async function generateMetadata({ params }) {
       locale: 'en_PK',
       type: 'article',
       publishedTime: blog.publishedAt || blog.date,
-      authors: [blog.author || 'Dr. Ayesha Siddiqui (FCPS)'],
+      authors: [blog.author || 'Medikart Health Team'],
       images: [
         {
           url: fullBannerUrl,
@@ -174,9 +173,8 @@ export default async function BlogPostPage({ params }) {
     'datePublished': blog.publishedAt || blog.date || '2026-09-01',
     'dateModified': blog.publishedAt || blog.date || '2026-09-01',
     'author': {
-      '@type': 'Person',
-      'name': blog.author || 'Dr. Ayesha Siddiqui (FCPS)',
-      'jobTitle': 'Pediatrician & Medical Reviewer',
+      '@type': 'Organization',
+      'name': blog.author || 'Medikart Health Team',
     },
     'publisher': {
       '@type': 'Organization',
@@ -251,11 +249,11 @@ export default async function BlogPostPage({ params }) {
         <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-500 pb-3 border-b border-slate-200">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-900 font-bold text-xs border border-amber-200">
-              👨‍⚕️
+              🏥
             </div>
             <div>
-              <p className="font-bold text-slate-900 leading-tight">{blog.author || "Dr. Ayesha Siddiqui (FCPS)"}</p>
-              <p className="text-[11px] text-amber-700 font-semibold">Clinically Reviewed &amp; Verified</p>
+              <p className="font-bold text-slate-900 leading-tight">{blog.author || "Medikart Health Team"}</p>
+              <p className="text-[11px] text-amber-700 font-semibold">Health &amp; Wellness Editorial</p>
             </div>
           </div>
 
@@ -450,7 +448,7 @@ export default async function BlogPostPage({ params }) {
             Need Authentic Medicines Delivered in 2 Hours?
           </h3>
           <p className="text-xs sm:text-sm font-semibold text-slate-900">
-            Order 100% genuine DRAP-approved medicines with Cash on Delivery across Pakistan.
+            Order 100% authentic prescription and OTC medicines with Cash on Delivery across Pakistan.
           </p>
         </div>
 

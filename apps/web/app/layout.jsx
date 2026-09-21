@@ -182,34 +182,16 @@ export default async function RootLayout({ children }) {
     'email': contactEmail,
     'priceRange': 'PKR',
     'currenciesAccepted': 'PKR',
-    'paymentAccepted': 'Cash on Delivery, Visa, MasterCard, JazzCash, Easypaisa, 1Bill, Internet Banking, Raast',
+    'paymentAccepted': 'Cash on Delivery, Credit Card, Debit Card',
     'address': {
       '@type': 'PostalAddress',
       'addressCountry': 'PK',
-      'addressRegion': 'Punjab',
-      'addressLocality': 'Lahore',
-      'streetAddress': 'Medikart Partner Pharmacy Network, Lahore, Pakistan'
+      'addressRegion': 'Pakistan'
     },
-    'geo': {
-      '@type': 'GeoCoordinates',
-      'latitude': 31.5204,
-      'longitude': 74.3587
+    'areaServed': {
+      '@type': 'Country',
+      'name': 'Pakistan'
     },
-    'openingHoursSpecification': [
-      {
-        '@type': 'OpeningHoursSpecification',
-        'dayOfWeek': [
-          'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-        ],
-        'opens': '00:00',
-        'closes': '23:59'
-      }
-    ],
-    'areaServed': [
-      'Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan',
-      'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala', 'Hyderabad', 'Abbottabad',
-      'Bahawalpur', 'Sargodha', 'Sukkur', 'Pakistan'
-    ],
     'contactPoint': {
       '@type': 'ContactPoint',
       'telephone': '+923244489159',
@@ -243,8 +225,6 @@ export default async function RootLayout({ children }) {
         <meta name="theme-color" content="#FFF352" />
         <meta name="geo.region" content="PK" />
         <meta name="geo.placename" content="Pakistan" />
-        <meta name="geo.position" content="31.5204;74.3587" />
-        <meta name="ICBM" content="31.5204, 74.3587" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pharmacyJsonLd) }}

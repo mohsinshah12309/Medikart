@@ -74,7 +74,7 @@ export default function TermsAndConditionsPage() {
             <h2 className="font-heading">3. Prescription (Rx) &amp; Narcotics Regulations</h2>
           </div>
           <p className="text-slate-800 text-xs sm:text-sm">
-            In compliance with the Drug Regulatory Authority of Pakistan (DRAP) and applicable narcotics control laws:
+            In compliance with national pharmacy regulations and applicable narcotics control laws:
           </p>
           <ul className="list-disc pl-5 space-y-1 text-slate-700 text-xs sm:text-sm">
             <li>Any order containing prescription-only medicines (Rx) or controlled substances requires a valid, legible doctor's prescription uploaded before fulfillment.</li>
@@ -93,7 +93,7 @@ export default function TermsAndConditionsPage() {
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
             <li><strong>Cash on Delivery (COD):</strong> Pay cash directly to the authorized courier upon package delivery.</li>
-            <li><strong>Online Card &amp; Digital Gateway:</strong> Secure online debit/credit card payments and bill payment vouchers processed via 256-bit SSL encrypted gateway.</li>
+            <li><strong>Online Card Gateway:</strong> Secure online debit/credit card payments (Visa/MasterCard) processed via 256-bit SSL encrypted gateway.</li>
           </ul>
           <p className="pt-1">
             In the event of an instant prescription order awaiting pharmacist pricing, the order total is finalized only after pharmacist review and customer approval.
@@ -112,7 +112,7 @@ export default function TermsAndConditionsPage() {
             <li><strong>Order Cancellation:</strong> Customers may cancel an unfulfilled order through customer support or WhatsApp prior to pharmacy dispatch. Once an order is out for delivery, cancellations cannot be processed.</li>
             <li><strong>Damaged or Incorrect Items:</strong> If any delivered medicine is damaged in transit, expired, or incorrect, notify Medikart within 24 hours of delivery with photographic evidence for immediate replacement or full refund.</li>
             <li><strong>Opened / Temperature-Sensitive Medicines:</strong> Due to hygiene and pharmaceutical safety standards, cold-chain items (e.g. insulin, vaccines) and opened tamper-evident seals cannot be returned once accepted.</li>
-            <li><strong>Refund Processing:</strong> Approved card refunds will be credited back to the original source account within 3 to 7 business days.</li>
+            <li><strong>Refund Processing:</strong> Approved card refunds will be processed with merchant gateway settlement within 2 business days.</li>
           </ul>
         </section>
 

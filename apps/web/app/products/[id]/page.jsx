@@ -388,7 +388,7 @@ export default async function ProductDetailPage({ params }) {
               <span>🛡️</span> Genuine Quality Assurance
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Every unit of {product.name} is procured directly through licensed pharmaceutical distributors and partner pharmacies across Pakistan. Stored in climate-controlled conditions adhering strictly to DRAP guidelines.
+              Every unit of {product.name} is procured directly through licensed pharmaceutical distributors and partner pharmacies across Pakistan. Stored in certified temperature-monitored conditions.
             </p>
           </div>
 
@@ -397,7 +397,7 @@ export default async function ProductDetailPage({ params }) {
               <span>⚡</span> Fast Nationwide Delivery
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Dispatched in 2–4 hours within Lahore, Karachi, Islamabad &amp; Rawalpindi. Courier delivery within 24–48 business hours to Faisalabad, Multan, Peshawar, Quetta, and all other cities in Pakistan with Cash on Delivery (COD).
+              Dispatched in 2–4 hours within major metropolitan hubs (Lahore, Karachi, Islamabad &amp; Rawalpindi) and 24–48 hours nationwide with Cash on Delivery (COD).
             </p>
           </div>
 

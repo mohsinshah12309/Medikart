@@ -52,8 +52,8 @@ const FAQ_ITEMS = [
     categoryLabel: "Ordering & Payment",
     question: "What payment methods are supported on Medikart?",
     answer:
-      "We offer multiple convenient and secure payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package.\n- **Online Card & Digital Payments:** Securely pay via Visa/MasterCard debit or credit cards, direct internet banking, and mobile financial services (JazzCash, Easypaisa, Raast, Nayapay, Sadapay).\n\nAll digital transactions are encrypted with industry-standard 256-bit SSL protocols.",
-    highlights: ["Cash on Delivery (COD)", "Debit / Credit Cards", "1Bill & Mobile Wallets"],
+      "We offer multiple convenient and secure payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package.\n- **Online Card Payments:** Securely pay via Visa/MasterCard debit or credit cards.\n\nAll digital transactions are encrypted with industry-standard 256-bit SSL protocols.",
+    highlights: ["Cash on Delivery (COD)", "Debit / Credit Cards", "256-bit SSL Encryption"],
   },
   {
     id: "order-3",
@@ -81,7 +81,7 @@ const FAQ_ITEMS = [
     categoryLabel: "Delivery & Shipping",
     question: "How fast is delivery and which cities are covered?",
     answer:
-      "Medikart connects you with partner pharmacies nationwide across Pakistan:\n\n- **Rapid Intra-City Delivery:** In major metropolitan hubs (Lahore, Karachi, Islamabad/Rawalpindi), emergency and regular orders are dispatched from nearby licensed partner pharmacies within 2 to 4 hours.\n- **Nationwide Courier Delivery:** For other cities and rural regions, orders are securely packed and dispatched via express courier, typically arriving within 24 to 48 business hours.",
+      "Medikart connects you with partner pharmacies nationwide across Pakistan:\n\n- **Rapid Intra-City Delivery:** In major metropolitan hubs (Lahore, Karachi, Islamabad/Rawalpindi), emergency and regular orders are dispatched from nearby licensed partner pharmacies within 2 to 4 hours.\n- **Nationwide Courier Delivery:** For other cities and regions across Pakistan, orders are securely packed and dispatched via express courier, typically arriving within 24 to 48 business hours.",
     highlights: ["2–4 Hour Rapid Intra-City Delivery", "Nationwide Express Courier across Pakistan"],
   },
   {
@@ -90,8 +90,8 @@ const FAQ_ITEMS = [
     categoryLabel: "Delivery & Shipping",
     question: "How are temperature-sensitive medicines (Insulin, Vaccines, Biologics) handled?",
     answer:
-      "We strictly adhere to DRAP cold-chain guidelines. All temperature-sensitive medications (such as Insulin vials/pens, biological eye drops, and vaccines) are packed in insulated thermal packaging with calibrated ice packs and dispatched via high-priority delivery to guarantee product potency and safety.",
-    highlights: ["Insulated thermal cold packs", "DRAP compliant cold-chain handling"],
+      "We strictly adhere to clinical cold-chain guidelines. All temperature-sensitive medications (such as Insulin vials/pens, biological eye drops, and vaccines) are packed in insulated thermal packaging with calibrated ice packs and dispatched via high-priority delivery to guarantee product potency and safety.",
+    highlights: ["Insulated thermal cold packs", "Cold-chain temperature control"],
   },
   {
     id: "del-3",
@@ -168,7 +168,7 @@ const FAQ_ITEMS = [
     categoryLabel: "Prescriptions & Safety",
     question: "Which medicines require a doctor's prescription?",
     answer:
-      "All Schedule G and prescription-only medications (including antibiotics, antihypertensives, cardiac drugs, hormonal treatments, and specialized injections) require a valid prescription signed by a PMDC-registered doctor. General OTC items, vitamins, dietary supplements, and surgical goods do not require a prescription.",
+      "All Schedule G and prescription-only medications (including antibiotics, antihypertensives, cardiac drugs, hormonal treatments, and specialized injections) require a valid prescription signed by a qualified doctor. General OTC items, vitamins, dietary supplements, and surgical goods do not require a prescription.",
     highlights: ["Prescription required for scheduled medicines", "OTC remedies available directly"],
   },
   {
@@ -177,7 +177,7 @@ const FAQ_ITEMS = [
     categoryLabel: "Prescriptions & Safety",
     question: "Does Medikart dispense controlled substances or narcotics online?",
     answer:
-      "**Strictly No.** In full compliance with DRAP regulations, provincial health department directives, and national drug laws, Medikart does not dispense or deliver controlled narcotics, habit-forming sedatives, or restricted Schedule X substances through digital channels.",
+      "**Strictly No.** In full compliance with national drug laws and provincial health directives, Medikart does not dispense or deliver controlled narcotics, habit-forming sedatives, or restricted Schedule X substances through digital channels.",
     highlights: ["Strict anti-narcotics compliance", "Zero tolerance for illegal restricted drugs"],
   },
   {
@@ -187,7 +187,7 @@ const FAQ_ITEMS = [
     question: "Are all medicines authentic and genuine?",
     answer:
       "Yes, 100%. Medikart partners exclusively with verified, licensed retail pharmacies and reputable pharmaceutical distributors. Every product batch is inspected for tamper-evident seals, correct expiration dates, and genuine manufacturer packaging.",
-    highlights: ["100% Genuine & Authentic", "DRAP compliant partner pharmacies"],
+    highlights: ["100% Genuine & Authentic", "Licensed partner pharmacies"],
   },
 
   // ─── 6. Returns & Refunds ───
@@ -215,8 +215,8 @@ const FAQ_ITEMS = [
     categoryLabel: "Returns & Refunds",
     question: "How and when are refunds processed for online payments?",
     answer:
-      "For orders paid online (debit/credit card or bank transfer) that are cancelled prior to dispatch, refunds are initiated immediately. Depending on your bank or card issuer, the credited funds typically reflect in your account within 3 to 7 working days.",
-    highlights: ["Immediate refund initiation", "Bank turnaround 3–7 working days"],
+      "For orders paid online via debit/credit card that are cancelled prior to dispatch, refunds are initiated immediately with merchant gateway settlement completed within 2 business days.",
+    highlights: ["Immediate refund initiation", "Merchant settlement within 2 business days"],
   },
 ];
 

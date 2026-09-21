@@ -45,7 +45,7 @@ export default function AboutPage() {
     loadData();
   }, []);
 
-  const defaultText = "Welcome to Medikart, Pakistan's premier licensed digital pharmacy network and healthcare delivery platform. We are committed to solving medicine accessibility by providing 100% authentic prescription medicines, OTC remedies, mother & baby essentials, and surgical supplies delivered safely to your doorstep.\n\nEvery medication on Medikart is sourced directly from licensed pharmaceutical manufacturers and authorized distributors. Orders are reviewed, verified, and fulfilled by registered qualified pharmacists in strict compliance with the Drug Regulatory Authority of Pakistan (DRAP) standards.";
+  const defaultText = "Welcome to Medikart, Pakistan's trusted digital pharmacy network and healthcare delivery platform. We are committed to solving medicine accessibility by providing 100% authentic prescription medicines, OTC remedies, mother & baby essentials, and healthcare supplies delivered safely to your doorstep.\n\nEvery medication on Medikart is sourced from licensed pharmaceutical distributors and partner retail pharmacies. Orders are reviewed and fulfilled with care and strict adherence to medicine safety standards.";
 
   const formattedProductCount = totalProducts.toLocaleString();
 
@@ -60,13 +60,13 @@ export default function AboutPage() {
         <div className="relative z-10 flex flex-col gap-4 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFF352] w-fit shadow-md">
             <span className="w-2.5 h-2.5 rounded-full bg-[#FFF352] animate-pulse shadow-[0_0_8px_#fff352]" />
-            DRAP Compliant Digital Pharmacy Network
+            Licensed Partner Pharmacy Network
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 leading-tight">
-            Authentic Healthcare, Verified by Pharmacists.
+            Authentic Healthcare, Delivered With Care.
           </h1>
           <p className="text-base sm:text-lg text-slate-900 leading-relaxed font-semibold">
-            Medikart is Pakistan&apos;s leading digital pharmacy dedicated to genuine medicines, clinical safety, transparent pricing, and nationwide accessibility.
+            Medikart connects customers with verified partner pharmacies dedicated to authentic medicines, clinical safety, and nationwide accessibility.
           </p>
         </div>
       </div>
@@ -157,7 +157,7 @@ export default function AboutPage() {
                   <span className="text-3xl">🔬</span>
                   <h4 className="font-black text-base text-slate-950">100% Genuine Sourcing</h4>
                   <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Zero counterfeit tolerance. All items procured directly from DRAP-approved manufacturers and top national distributors.
+                    Zero counterfeit tolerance. All items procured through licensed pharmaceutical distributors and partner pharmacies.
                   </p>
                 </div>
 
@@ -165,7 +165,7 @@ export default function AboutPage() {
                   <span className="text-3xl">❄️</span>
                   <h4 className="font-black text-base text-slate-950">Cold-Chain Storage</h4>
                   <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Dedicated 2°C - 8°C temperature-monitored refrigeration with generator backups for vaccines, insulin, and biologics.
+                    Dedicated 2°C - 8°C temperature-monitored refrigeration for vaccines, insulin, and biological products.
                   </p>
                 </div>
 
@@ -173,7 +173,7 @@ export default function AboutPage() {
                   <span className="text-3xl">🩺</span>
                   <h4 className="font-black text-base text-slate-950">Registered Pharmacists</h4>
                   <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Qualified pharmacists audit every prescription order, verify dosages, and flag drug-drug interactions before shipping.
+                    Qualified pharmacists review prescription orders, verify dosages, and ensure patient safety before shipping.
                   </p>
                 </div>
 
@@ -181,7 +181,7 @@ export default function AboutPage() {
                   <span className="text-3xl">📦</span>
                   <h4 className="font-black text-base text-slate-950">Tamper-Evident Packs</h4>
                   <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Heavy-duty sealed security envelopes and opaque medical-grade poly packaging ensuring complete privacy and hygiene.
+                    Heavy-duty sealed security envelopes and opaque packaging ensuring complete privacy and hygiene.
                   </p>
                 </div>
               </div>
@@ -191,13 +191,13 @@ export default function AboutPage() {
             <div className="border-t-2 border-yellow-100 pt-8 flex flex-col gap-5">
               <div className="flex flex-col gap-1">
                 <span className="text-xs font-black uppercase tracking-wider text-amber-700">
-                  Compliance Matrix
+                  Quality Matrix
                 </span>
                 <h3 className="text-xl sm:text-2xl font-black text-slate-950">
                   Medikart Quality & Safety Benchmarks
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600">
-                  Our operational protocol compared to regulatory healthcare benchmarks in Pakistan.
+                  Our operational protocol and quality benchmarks in Pakistan.
                 </p>
               </div>
 
@@ -206,9 +206,9 @@ export default function AboutPage() {
                   <thead>
                     <tr className="bg-yellow-400 text-slate-950 border-b-2 border-yellow-500">
                       <th className="py-4 px-5 font-black uppercase text-xs tracking-wider">Operational Parameter</th>
-                      <th className="py-4 px-5 font-black uppercase text-xs tracking-wider">Medikart Gold Standard</th>
+                      <th className="py-4 px-5 font-black uppercase text-xs tracking-wider">Medikart Standard</th>
                       <th className="py-4 px-5 font-black uppercase text-xs tracking-wider">Verification Protocol</th>
-                      <th className="py-4 px-5 font-black uppercase text-xs tracking-wider">Regulatory Alignment</th>
+                      <th className="py-4 px-5 font-black uppercase text-xs tracking-wider">Quality Alignment</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-yellow-100 bg-white">
@@ -216,11 +216,11 @@ export default function AboutPage() {
                       <td className="py-3.5 px-5 font-bold text-slate-950 flex items-center gap-2">
                         <span>🏷️</span> Medicine Procurement
                       </td>
-                      <td className="py-3.5 px-5 text-slate-800 font-semibold">100% Direct from Manufacturer / Authorized Primary Distributors</td>
-                      <td className="py-3.5 px-5 text-slate-600">Batch number, expiry validation, and warranty invoice match</td>
+                      <td className="py-3.5 px-5 text-slate-800 font-semibold">100% Direct from Licensed Distributors &amp; Partner Pharmacies</td>
+                      <td className="py-3.5 px-5 text-slate-600">Batch number, expiry validation, and genuine packaging match</td>
                       <td className="py-3.5 px-5">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-300">
-                          DRAP Act 2012
+                          Verified Sourcing
                         </span>
                       </td>
                     </tr>

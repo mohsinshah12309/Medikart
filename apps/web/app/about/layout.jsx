@@ -7,7 +7,7 @@ export const metadata = {
     "online medicine supplier Pakistan",
     "authentic medicines Lahore",
     "pharmacy network Karachi",
-    "DRAP approved medicines",
+    "authentic medicine delivery",
     "Medikart Pakistan"
   ],
   alternates: {
