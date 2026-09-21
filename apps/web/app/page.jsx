@@ -25,16 +25,19 @@ export async function generateMetadata({ searchParams }) {
           (c) => c._id === categoryParam || c.slug === categoryParam
         );
         if (category) {
-          const title = `${category.name} Medicines & Healthcare Products | Medikart Pakistan`;
-          const description = `Shop genuine ${category.name} medicines, OTC remedies & healthcare essentials online in Pakistan. Licensed pharmacist verification, 2–4 hr delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).`;
+          const title = `${category.name} Online in Pakistan | Medikart`;
+          const description = `Buy authentic ${category.name} online in Pakistan. Licensed pharmacy sourcing, 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Order now on Medikart.`;
           const canonicalUrl = `${siteUrl}/?category=${category.slug || category._id}`;
 
           return {
-            title,
+            title: {
+              absolute: title,
+            },
             description,
             keywords: [
               category.name,
-              `buy ${category.name} Pakistan`,
+              `${category.name} Pakistan`,
+              `buy ${category.name} online`,
               `${category.name} price in Pakistan`,
               `${category.name} Lahore`,
               `${category.name} Karachi`,
@@ -67,22 +70,31 @@ export async function generateMetadata({ searchParams }) {
   }
 
   if (searchParam) {
-    const title = `Search: "${searchParam}" — Buy Medicines Online | Medikart Pakistan`;
+    const title = `Search: "${searchParam}" | Medikart Online Pharmacy`;
     const description = `Find authentic ${searchParam} and related healthcare products online in Pakistan on Medikart. Licensed partner pharmacy sourcing & fast Cash on Delivery.`;
     return {
-      title,
+      title: {
+        absolute: title,
+      },
       description,
       robots: { index: false, follow: true }, // Don't index internal search result pages to preserve crawl equity
     };
   }
 
+  const homepageTitle = 'Medikart | Online Pharmacy Pakistan - Genuine Medicines';
+  const homepageDesc = 'Pakistan\'s trusted licensed online pharmacy. Order 100% genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).';
+
   return {
-    title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
-    description: 'Pakistan\'s trusted licensed online pharmacy. Order genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
+    title: {
+      absolute: homepageTitle,
+    },
+    description: homepageDesc,
     keywords: [
       'online pharmacy Pakistan',
       'buy medicine online Pakistan',
+      'panadol Pakistan',
       'panadol price in pakistan',
+      'buy panadol online',
       'panadol online delivery',
       'augmentin pakistan',
       'pharmacy delivery Lahore',
@@ -98,7 +110,7 @@ export async function generateMetadata({ searchParams }) {
       canonical: siteUrl,
     },
     openGraph: {
-      title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+      title: homepageTitle,
       description: 'Pakistan\'s trusted licensed online pharmacy. Buy genuine prescription medicines, vitamins, baby care & OTC health essentials with 2–4 hr delivery & Cash on Delivery.',
       url: siteUrl,
       siteName: 'Medikart - Authentic Online Pharmacy',
@@ -107,7 +119,7 @@ export async function generateMetadata({ searchParams }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+      title: homepageTitle,
       description: 'Order genuine prescription & OTC medicines online with fast 2–4 hr delivery and Cash on Delivery across Pakistan.',
     },
   };

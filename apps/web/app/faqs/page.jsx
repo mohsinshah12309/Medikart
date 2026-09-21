@@ -33,7 +33,7 @@ export const metadata = {
   },
 };
 
-// Structured Data JSON-LD Schema for Google Rich Snippets
+// Structured Data JSON-LD Schema for Google Rich Snippets & AI Overviews
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -51,15 +51,55 @@ const faqSchema = {
       name: "What payment methods are supported on Medikart?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We support Cash on Delivery (COD) across Pakistan as well as secure online card and digital payments (supporting Visa/MasterCard debit and credit cards, 1Bill, Internet Banking, JazzCash, and Easypaisa).",
+        text: "We offer multiple convenient payment channels across Pakistan including Cash on Delivery (COD), Visa/MasterCard debit and credit cards, 1Bill, direct internet banking, and mobile wallets (JazzCash, Easypaisa, Raast).",
       },
     },
     {
       "@type": "Question",
-      name: "How fast is medicine delivery in Pakistan?",
+      name: "Can I place an order without creating an account (Guest Checkout)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "In major metropolitan cities (Lahore, Karachi, Islamabad/Rawalpindi), intra-city orders are dispatched rapidly within 2 to 4 hours. Nationwide courier deliveries typically arrive within 24 to 48 hours.",
+        text: "Yes! Medikart fully supports rapid guest checkout. You only need to enter your recipient name, active contact phone number, and delivery address in Pakistan to complete an order.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I know if my order is confirmed?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Once you submit your order, you will immediately receive an on-screen Order ID and a confirmation SMS on your mobile number. For prescription orders, a licensed pharmacist may call you to verify dosage.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How fast is delivery and which cities are covered in Pakistan?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "In major metropolitan hubs (Lahore, Karachi, Islamabad/Rawalpindi), intra-city orders are dispatched from licensed partner pharmacies within 2 to 4 hours. Nationwide courier deliveries across Pakistan typically arrive within 24 to 48 business hours.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How are temperature-sensitive medicines (Insulin, Vaccines, Biologics) handled?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "All temperature-sensitive medications (such as Insulin, biologics, and vaccines) are packed in insulated thermal cold-chain packaging with calibrated ice packs in strict compliance with DRAP regulations.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What are the shipping charges?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Standard intra-city delivery fees typically range between PKR 100 to PKR 250 depending on distance. Free shipping is provided for qualifying cart amounts and active Monthly Refill subscribers.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How can I track my parcel status?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "You receive live tracking SMS updates upon dispatch. You can also message our 24/7 WhatsApp helpline (+92 324 4489159) with your Order ID for real-time rider tracking.",
       },
     },
     {
@@ -72,10 +112,74 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "Does Medikart dispense narcotics or controlled substances online?",
+      name: "Are there discounts or perks with Monthly Refill?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. In strict compliance with DRAP regulations and provincial drug laws, Medikart does not dispense or deliver controlled narcotics, habit-forming psychotropics, or restricted Schedule X substances online.",
+        text: "Yes, enrolling in Monthly Refill gives you priority order fulfillment, specialized cold-chain packaging at no extra cost, periodic discount savings, and free delivery on scheduled monthly cycles.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I pause, reschedule, or cancel my Monthly Refill plan?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, you have complete control over your subscription. You can pause deliveries, change your scheduled delivery date, update medicine quantities, or cancel anytime with zero lock-in contracts or penalty fees.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is my medical and prescription data kept private?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Your prescriptions, order details, and personal contact info are encrypted using bank-grade 256-bit SSL protocols. Prescriptions are accessible only to licensed pharmacists reviewing your order.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which medicines require a doctor's prescription?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "All Schedule G and prescription-only medications (antibiotics, antihypertensives, cardiac drugs, hormonal treatments) require a valid doctor's prescription. General OTC items and vitamins do not require a prescription.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does Medikart dispense controlled substances or narcotics online?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Strictly No. In full compliance with DRAP regulations and provincial drug laws, Medikart does not dispense or deliver controlled narcotics, habit-forming sedatives, or restricted Schedule X substances online.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are all medicines on Medikart authentic and genuine?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, 100%. Medikart partners exclusively with verified, licensed retail pharmacies and reputable pharmaceutical distributors. Every product batch is inspected for intact tamper seals, genuine manufacturer packaging, and DRAP registration.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I cancel my order before it is delivered?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. You can cancel your order free of charge at any stage before the partner pharmacy dispatches the delivery rider by contacting our 24/7 support helpline on WhatsApp (+92 324 4489159).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is the return policy for delivered medicines?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Under drug safety standards, medicines once delivered and unsealed cannot be returned. However, if an item is damaged in transit or incorrect, notify support within 24 hours for an immediate free replacement or refund.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How and when are refunds processed for online payments?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "For orders cancelled prior to dispatch, refunds are initiated immediately. Depending on your bank or card issuer, the credited funds reflect in your account within 3 to 7 working days.",
       },
     },
   ],

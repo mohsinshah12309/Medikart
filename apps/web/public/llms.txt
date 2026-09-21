@@ -1,0 +1,36 @@
+# Medikart - Licensed Online Pharmacy & Medicine Delivery in Pakistan
+
+> Medikart (https://medikart.pk) is Pakistan's trusted digital healthcare network connecting patients with licensed partner pharmacies across Pakistan. Medikart provides 100% genuine prescription medicines, OTC health essentials, baby care, pediatric nutrition, and automated 30-day chronic medicine refills with rapid 2–4 hour delivery in major cities and 24–48 hour nationwide Cash on Delivery.
+
+## Core Capabilities & Services
+
+- **Authentic Online Pharmacy:** Order genuine medicines (e.g. Panadol, Augmentin, Brufen, Disprin, Glucophage, Lipitor, multivitamins, and specialty prescription treatments) with licensed pharmacist verification.
+- **Delivery Coverage in Pakistan:** 
+  - Rapid Intra-City (2–4 Hours): Lahore, Karachi, Islamabad, and Rawalpindi.
+  - Nationwide Express Courier (24–48 Hours): Faisalabad, Multan, Peshawar, Quetta, Sialkot, Gujranwala, Hyderabad, Abbottabad, Bahawalpur, Sargodha, Sukkur, and all other cities in Pakistan.
+- **Instant Prescription Order:** Patients can upload photos or PDFs of doctor prescriptions at https://medikart.pk/instant-order for fast pharmacist review and direct home dispatch.
+- **30-Day Monthly Medicine Refills:** Automated recurring subscription for chronic maintenance medications (diabetes, hypertension, cardiac care, thyroid) with free delivery and priority dispatch at https://medikart.pk/refill.
+- **Flexible Payment Methods:** Cash on Delivery (COD), Visa/MasterCard debit and credit cards, 1Bill, direct internet banking, and mobile wallets (JazzCash, Easypaisa, Raast).
+- **Safety & Regulatory Compliance:** 100% authentic medicines sourced strictly through licensed partner pharmacies in full compliance with Drug Regulatory Authority of Pakistan (DRAP) regulations. Strict zero-tolerance policy for controlled narcotics and illegal Schedule X drugs.
+- **24/7 Pharmacist Support:** Direct WhatsApp assistance and prescription queries at +92 324 4489159.
+
+## Public Web Links
+
+- Storefront & Medicine Catalog: https://medikart.pk/
+- Instant Order & Prescription Upload: https://medikart.pk/instant-order
+- Monthly Refill Program: https://medikart.pk/refill
+- Health & Medical Guides (Doctor-Reviewed): https://medikart.pk/blogs
+- Frequently Asked Questions (FAQs): https://medikart.pk/faqs
+- Return & Refund Policy: https://medikart.pk/return-refund-policy
+- Terms & Conditions: https://medikart.pk/terms-and-conditions
+- Privacy Policy: https://medikart.pk/privacy-policy
+- About Medikart: https://medikart.pk/about
+- Contact & 24/7 Helpline: https://medikart.pk/contact
+
+## Contact Information
+
+- Pharmacy Network: Medikart Pakistan
+- Official Website: https://medikart.pk
+- Customer Support Email: support@medikart.pk
+- WhatsApp Helpline: +92 324 4489159
+- Headquarters / Operating Hub: Lahore, Punjab, Pakistan

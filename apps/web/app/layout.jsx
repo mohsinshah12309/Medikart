@@ -56,7 +56,7 @@ export const viewport = {
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk'),
   title: {
-    default: 'Medikart - Authentic Online Pharmacy & Medicine Delivery in Pakistan',
+    default: 'Medikart | Online Pharmacy Pakistan - Fast Delivery',
     template: '%s | Medikart Online Pharmacy Pakistan',
   },
   description: 'Pakistan\'s trusted licensed online pharmacy. Order 100% genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
@@ -138,7 +138,7 @@ export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
   let contactPhone = '923244489159';
   let contactEmail = 'support@medikart.pk';
-  let aboutText = 'Medikart is Pakistan\'s leading authentic licensed online pharmacy and medicine delivery platform.';
+  let aboutText = 'Medikart connects customers with licensed partner pharmacies across Pakistan to deliver 100% genuine prescription and OTC medicines, vitamins, and healthcare essentials with 2–4 hr express delivery and nationwide Cash on Delivery.';
   let categories = [];
 
   const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
@@ -171,8 +171,9 @@ export default async function RootLayout({ children }) {
 
   const pharmacyJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Pharmacy',
-    'name': 'Medikart Pakistan',
+    '@type': ['Pharmacy', 'MedicalBusiness', 'LocalBusiness'],
+    'name': 'Medikart Online Pharmacy Pakistan',
+    'alternateName': 'Medikart Pakistan',
     'url': 'https://medikart.pk',
     'logo': 'https://medikart.pk/icon.png',
     'image': 'https://medikart.pk/og-image.png',
@@ -181,16 +182,33 @@ export default async function RootLayout({ children }) {
     'email': contactEmail,
     'priceRange': 'PKR',
     'currenciesAccepted': 'PKR',
-    'paymentAccepted': 'Cash on Delivery, Visa, MasterCard, JazzCash, Easypaisa, 1Bill, Internet Banking',
+    'paymentAccepted': 'Cash on Delivery, Visa, MasterCard, JazzCash, Easypaisa, 1Bill, Internet Banking, Raast',
     'address': {
       '@type': 'PostalAddress',
       'addressCountry': 'PK',
       'addressRegion': 'Punjab',
-      'addressLocality': 'Lahore'
+      'addressLocality': 'Lahore',
+      'streetAddress': 'Medikart Partner Pharmacy Network, Lahore, Pakistan'
     },
+    'geo': {
+      '@type': 'GeoCoordinates',
+      'latitude': 31.5204,
+      'longitude': 74.3587
+    },
+    'openingHoursSpecification': [
+      {
+        '@type': 'OpeningHoursSpecification',
+        'dayOfWeek': [
+          'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+        ],
+        'opens': '00:00',
+        'closes': '23:59'
+      }
+    ],
     'areaServed': [
       'Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan',
-      'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala', 'Hyderabad', 'Pakistan'
+      'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala', 'Hyderabad', 'Abbottabad',
+      'Bahawalpur', 'Sargodha', 'Sukkur', 'Pakistan'
     ],
     'contactPoint': {
       '@type': 'ContactPoint',
@@ -198,13 +216,18 @@ export default async function RootLayout({ children }) {
       'contactType': 'customer service',
       'areaServed': 'PK',
       'availableLanguage': ['English', 'Urdu']
-    }
+    },
+    'sameAs': [
+      'https://www.facebook.com/medikart.pk',
+      'https://www.instagram.com/medikart.pk'
+    ]
   };
 
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     'name': 'Medikart',
+    'alternateName': 'Medikart Pharmacy',
     'url': 'https://medikart.pk',
     'potentialAction': {
       '@type': 'SearchAction',
@@ -214,12 +237,14 @@ export default async function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" className={`light ${plusJakarta.variable} ${inter.variable} ${caveat.variable}`} style={{ colorScheme: 'light' }}>
+    <html lang="en-PK" className={`light ${plusJakarta.variable} ${inter.variable} ${caveat.variable}`} style={{ colorScheme: 'light' }}>
       <head>
         <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#FFF352" />
         <meta name="geo.region" content="PK" />
         <meta name="geo.placename" content="Pakistan" />
+        <meta name="geo.position" content="31.5204;74.3587" />
+        <meta name="ICBM" content="31.5204, 74.3587" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pharmacyJsonLd) }}

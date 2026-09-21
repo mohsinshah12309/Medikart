@@ -22,26 +22,26 @@ export async function generateMetadata({ params }) {
       const effectivePrice = product.effectivePrice || product.price;
       const priceFormatted = typeof effectivePrice === 'number' ? effectivePrice.toFixed(2) : effectivePrice;
       
-      // Google-optimized title matching Pakistan search queries ("Buy Panadol Online Pakistan", "Panadol Price in Pakistan")
-      const title = `Buy ${product.name}${genericStr} in Pakistan | Rs. ${priceFormatted} PKR | Medikart`;
+      // Google & AI-optimized title matching Pakistan search intent ("Panadol 500mg Price in Pakistan | Buy Online | Medikart")
+      const title = `${product.name} Price in Pakistan | Buy Online | Medikart`;
 
-      // Rich snippet description with city delivery, price, authenticity and COD
-      const description = `Order 100% authentic ${product.name}${genericStr} online at Medikart Pakistan. Licensed pharmacy sourcing, 2–4 hr delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Price: Rs. ${priceFormatted} PKR.`;
+      // Rich snippet description with price, dosage/generic info, nationwide COD and soft CTA
+      const description = `Buy authentic ${product.name}${genericStr} online in Pakistan at Rs. ${priceFormatted} PKR. Genuine pharmacy stock, fast 2–4 hr doorstep delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Order now on Medikart.`;
 
       // Pakistan targeted high-intent medicine keywords
       const keywords = [
         product.name,
         product.genericName,
-        `buy ${product.name} in Pakistan`,
+        `${product.name} Pakistan`,
         `${product.name} price in Pakistan`,
-        `${product.name} online delivery`,
-        `${product.name} Lahore`,
-        `${product.name} Karachi`,
-        `${product.name} Islamabad`,
+        `buy ${product.name} online`,
+        `order ${product.name} Lahore`,
+        `buy ${product.name} Karachi`,
+        `buy ${product.name} Islamabad`,
         `${product.name} Rawalpindi`,
         'buy medicine online Pakistan',
         'online pharmacy Pakistan',
-        'cash on delivery medicine',
+        'cash on delivery medicine Pakistan',
         'authentic medicine Pakistan',
         'Medikart',
       ].filter(Boolean);
@@ -60,7 +60,9 @@ export async function generateMetadata({ params }) {
       const canonicalUrl = `${siteUrl}/products/${product._id}`;
 
       return {
-        title,
+        title: {
+          absolute: title,
+        },
         description,
         keywords,
         alternates: {
@@ -95,7 +97,9 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: 'Buy Medicines Online in Pakistan | Price & Delivery | Medikart',
+    title: {
+      absolute: 'Buy Medicines Online in Pakistan | Price & Delivery | Medikart',
+    },
     description: 'Order authentic prescription and OTC medicines with fast 2–4 hr delivery and Cash on Delivery across Pakistan on Medikart.',
   };
 }
@@ -135,6 +139,8 @@ export default async function ProductDetailPage({ params }) {
 
   const canonicalUrl = `${siteUrl}/products/${product._id}`;
 
+  const firstCategory = product.categoryIds && product.categoryIds.length > 0 ? product.categoryIds[0] : null;
+
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -147,6 +153,7 @@ export default async function ProductDetailPage({ params }) {
       '@type': 'Brand',
       'name': product.manufacturer || 'Medikart Authentic Healthcare',
     },
+    'category': firstCategory ? firstCategory.name : 'Medicines & Healthcare',
     'offers': {
       '@type': 'Offer',
       'url': canonicalUrl,
@@ -160,32 +167,85 @@ export default async function ProductDetailPage({ params }) {
         'name': 'Medikart Pakistan',
         'url': siteUrl,
       },
+      'hasMerchantReturnPolicy': {
+        '@type': 'MerchantReturnPolicy',
+        'applicableCountry': 'PK',
+        'returnPolicyCategory': 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        'merchantReturnDays': 1,
+        'returnMethod': 'https://schema.org/ReturnByMail',
+        'returnFees': 'https://schema.org/FreeReturn',
+      },
+      'shippingDetails': {
+        '@type': 'OfferShippingDetails',
+        'shippingRate': {
+          '@type': 'MonetaryAmount',
+          'value': '150.00',
+          'currency': 'PKR',
+        },
+        'shippingDestination': {
+          '@type': 'DefinedRegion',
+          'addressCountry': 'PK',
+        },
+        'deliveryTime': {
+          '@type': 'ShippingDeliveryTime',
+          'handlingTime': {
+            '@type': 'QuantitativeValue',
+            'minValue': 0,
+            'maxValue': 1,
+            'unitCode': 'd',
+          },
+          'transitTime': {
+            '@type': 'QuantitativeValue',
+            'minValue': 0,
+            'maxValue': 2,
+            'unitCode': 'd',
+          },
+        },
+      },
     },
   };
+
+  const breadcrumbItems = [
+    {
+      '@type': 'ListItem',
+      'position': 1,
+      'name': 'Home',
+      'item': siteUrl,
+    },
+  ];
+
+  if (firstCategory) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      'position': 2,
+      'name': firstCategory.name,
+      'item': `${siteUrl}/?category=${firstCategory.slug || firstCategory._id}`,
+    });
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      'position': 3,
+      'name': product.name,
+      'item': canonicalUrl,
+    });
+  } else {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      'position': 2,
+      'name': 'Medicines & Catalog',
+      'item': `${siteUrl}/#store-catalog`,
+    });
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      'position': 3,
+      'name': product.name,
+      'item': canonicalUrl,
+    });
+  }
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Home',
-        'item': siteUrl,
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Medicines & Store Catalog',
-        'item': `${siteUrl}/#store-catalog`,
-      },
-      {
-        '@type': 'ListItem',
-        'position': 3,
-        'name': product.name,
-        'item': canonicalUrl,
-      },
-    ],
+    'itemListElement': breadcrumbItems,
   };
 
   return (
@@ -198,9 +258,27 @@ export default async function ProductDetailPage({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <Link href="/" className="inline-flex items-center text-sm font-bold text-slate-700 hover:text-yellow-600 transition-colors">
-        ← Back to Shop
-      </Link>
+      
+      {/* ─── Breadcrumb Navigation ─── */}
+      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+        <Link href="/" className="hover:text-amber-700 transition-colors">
+          Home
+        </Link>
+        <span>/</span>
+        {firstCategory ? (
+          <Link href={`/?category=${firstCategory.slug || firstCategory._id}#store-catalog`} className="hover:text-amber-700 transition-colors">
+            {firstCategory.name}
+          </Link>
+        ) : (
+          <Link href="/#store-catalog" className="hover:text-amber-700 transition-colors">
+            Medicines
+          </Link>
+        )}
+        <span>/</span>
+        <span className="text-slate-900 font-bold truncate max-w-[200px] sm:max-w-none">
+          {product.name}
+        </span>
+      </nav>
 
       <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10 relative overflow-hidden">
         {/* Left Column - Gallery */}
@@ -214,15 +292,19 @@ export default async function ProductDetailPage({ params }) {
             <h1 className="text-2xl md:text-3xl font-black text-slate-900">{product.name}</h1>
             {product.genericName && (
               <p className="text-sm text-slate-600 italic mt-1.5 font-medium">
-                Generic Name: {product.genericName}
+                Generic Name: <span className="font-semibold text-slate-900">{product.genericName}</span>
               </p>
             )}
             
             <div className="flex flex-wrap gap-2.5 mt-4">
               {product.categoryIds?.map(cat => (
-                <span key={cat._id} className="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-lg font-bold border border-slate-200">
+                <Link
+                  key={cat._id}
+                  href={`/?category=${cat.slug || cat._id}#store-catalog`}
+                  className="bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 text-xs px-2.5 py-1 rounded-lg font-bold border border-slate-200 transition-colors"
+                >
                   {cat.name}
-                </span>
+                </Link>
               ))}
               
               <span className={`text-xs px-2.5 py-1 rounded-lg font-bold border ${
@@ -268,12 +350,17 @@ export default async function ProductDetailPage({ params }) {
                 Discount applied via {product.appliedDiscount} promotion.
               </p>
             )}
+
+            <p className="text-xs text-slate-500 mt-2 flex items-center gap-1.5 font-medium">
+              <span className="text-green-600 font-bold">✓</span>
+              <span>100% Genuine Medicine Sourced via Licensed Partner Pharmacies in Pakistan</span>
+            </p>
           </div>
 
-          {/* Description (H2 for sequential heading order) */}
+          {/* Description */}
           {product.description && (
             <div className="border-t border-slate-200 pt-5 flex-grow mb-6">
-              <h2 className="font-bold text-slate-900 text-sm tracking-wide uppercase">Description</h2>
+              <h2 className="font-bold text-slate-900 text-sm tracking-wide uppercase">Description &amp; Details</h2>
               <p className="text-slate-600 text-sm mt-2 leading-relaxed whitespace-pre-line">
                 {product.description}
               </p>
@@ -288,6 +375,47 @@ export default async function ProductDetailPage({ params }) {
           </div>
         </div>
       </div>
+
+      {/* ─── AEO / GEO Clinical & Pharmacy Information Section ─── */}
+      <section className="bg-slate-50/80 rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-6">
+        <h2 className="text-xl sm:text-2xl font-black font-heading text-slate-900">
+          About {product.name} — Essential Medicine &amp; Delivery Facts
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-3xs space-y-2">
+            <div className="text-amber-700 font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5">
+              <span>🛡️</span> Genuine Quality Assurance
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Every unit of {product.name} is procured directly through licensed pharmaceutical distributors and partner pharmacies across Pakistan. Stored in climate-controlled conditions adhering strictly to DRAP guidelines.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-3xs space-y-2">
+            <div className="text-amber-700 font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5">
+              <span>⚡</span> Fast Nationwide Delivery
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Dispatched in 2–4 hours within Lahore, Karachi, Islamabad &amp; Rawalpindi. Courier delivery within 24–48 business hours to Faisalabad, Multan, Peshawar, Quetta, and all other cities in Pakistan with Cash on Delivery (COD).
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-3xs space-y-2">
+            <div className="text-amber-700 font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5">
+              <span>🔄</span> 30-Day Monthly Refill
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Need regular supplies of {product.name}? Add it to your 30-day <Link href="/refill" className="text-amber-700 font-bold underline">Monthly Refill</Link> plan to enjoy automated recurring shipments, priority dispatch, and zero missed doses.
+            </p>
+          </div>
+        </div>
+
+        {/* Advisory / Disclaimer */}
+        <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-slate-600 leading-relaxed">
+          <strong className="text-slate-900">Pharmacist Note:</strong> Use {product.name} only as advised by your physician or healthcare practitioner. Keep out of reach of children. Store in a cool, dry place away from direct sunlight. For questions regarding dosage or drug interactions, reach out to our 24/7 helpline on WhatsApp at <a href="https://wa.me/923244489159" className="text-amber-800 font-bold underline">+92 324 4489159</a>.
+        </div>
+      </section>
 
       {/* ─── Related Products & Smart Suggestions Section ─── */}
       <RelatedProducts currentProduct={product} />
