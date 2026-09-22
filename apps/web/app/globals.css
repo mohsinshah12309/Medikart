@@ -192,39 +192,127 @@ button:focus-visible {
 }
 
 /* ─── Medikart Canonical Brand Design Utilities (2026 Revision) ───────────── */
-.btn-amber-gradient {
-  background: linear-gradient(135deg, #FFF352 0%, #FFDE03 60%, #FED604 100%);
-  color: #1E293B;
-  font-weight: 800;
-  box-shadow: 0 4px 14px rgba(255, 243, 82, 0.45);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.btn-amber-gradient,
+.btn-yellow-primary,
+.medikart-btn-primary {
+  background: linear-gradient(135deg, #FFF352 0%, #FFDE03 60%, #FED604 100%) !important;
+  color: #1A1A1A !important;
+  font-weight: 900 !important;
+  box-shadow: 0 4px 14px rgba(255, 243, 82, 0.45) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid #F7E53B;
+  border: 1.5px solid #F7E53B !important;
+  cursor: pointer;
 }
-.btn-amber-gradient:hover {
-  transform: translateY(-1.5px);
-  background: linear-gradient(135deg, #FFF866 0%, #FFF352 60%, #FFE51A 100%);
-  box-shadow: 0 6px 20px rgba(255, 243, 82, 0.6);
-  filter: brightness(1.02);
+
+.btn-amber-gradient:hover,
+.btn-yellow-primary:hover,
+.medikart-btn-primary:hover {
+  transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, #FFF866 0%, #FFF352 60%, #FFE51A 100%) !important;
+  box-shadow: 0 8px 22px rgba(255, 243, 82, 0.6) !important;
+  filter: brightness(1.03) !important;
 }
-.btn-amber-gradient:active {
-  transform: translateY(0.5px);
-  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.35);
+
+.btn-amber-gradient:active,
+.btn-yellow-primary:active,
+.medikart-btn-primary:active {
+  transform: translateY(0.5px) scale(0.98) !important;
+  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.35) !important;
+}
+
+.btn-yellow-outline,
+.medikart-btn-outline {
+  background-color: #FFFFFF !important;
+  color: #1A1A1A !important;
+  font-weight: 800 !important;
+  border: 2px solid #F7E53B !important;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-yellow-outline:hover,
+.medikart-btn-outline:hover {
+  background-color: #FFFDE0 !important;
+  border-color: #F5D800 !important;
+  transform: translateY(-1.5px) !important;
+  box-shadow: 0 4px 14px rgba(255, 243, 82, 0.35) !important;
+}
+
+.medikart-hero-banner {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FFF352 0%, #FFF866 50%, #FFE51A 100%) !important;
+  border: 2px solid #F7E53B !important;
+  border-radius: 1.5rem !important;
+  padding: 2rem 2.5rem !important;
+  color: #1A1A1A !important;
+  box-shadow: 0 10px 30px -5px rgba(255, 243, 82, 0.35) !important;
+}
+
+.medikart-card {
+  background-color: #FFFFFF !important;
+  border: 2px solid #FEF08A !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.medikart-card:hover {
+  border-color: #FACC15 !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 14px 35px -5px rgba(255, 243, 82, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.05) !important;
+}
+
+.medikart-badge-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background-color: #0F172A !important;
+  color: #FFF352 !important;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.medikart-badge-yellow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background-color: #FFF352 !important;
+  color: #0F172A !important;
+  border: 1.5px solid #F7E53B !important;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.4);
 }
 
 .card-warm {
   background: #ffffff;
-  border: 1px solid #F3EFE6;
+  border: 1.5px solid #FEF08A;
   border-radius: 20px;
-  box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.03);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .card-warm:hover {
-  border-color: #FEF3C7;
-  box-shadow: 0 14px 30px -5px rgba(245, 158, 11, 0.12), 0 10px 12px -6px rgba(0, 0, 0, 0.04);
+  border-color: #FACC15;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -5px rgba(255, 243, 82, 0.3), 0 10px 12px -6px rgba(0, 0, 0, 0.04);
 }
 
 .trust-badge {
@@ -232,16 +320,17 @@ button:focus-visible {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.9rem;
-  background: #FEF9C3;
+  background: #FFF352;
   color: #1E293B;
   border-radius: 9999px;
   font-size: 0.8125rem;
-  font-weight: 700;
-  border: 1px solid #FEF08A;
+  font-weight: 800;
+  border: 1px solid #F7E53B;
+  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.3);
   transition: all 0.2s ease;
 }
 .trust-badge:hover {
-  background: #FEF08A;
+  background: #FEE833;
   transform: translateY(-1px);
 }
 

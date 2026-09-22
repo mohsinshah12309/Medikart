@@ -963,12 +963,12 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={!otpVerified || submitting}
-            className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border ${
+            className={`w-full py-4 rounded-2xl font-black text-sm uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border-2 ${
               !otpVerified
                 ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
                 : submitting
                 ? 'bg-yellow-500 text-slate-950 opacity-90 border-yellow-500'
-                : 'bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 border-yellow-500/50 shadow-yellow-400/20 active:scale-[0.98]'
+                : 'bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 border-yellow-500 shadow-yellow-400/20 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]'
             }`}
           >
             {submitting ? (
@@ -988,7 +988,7 @@ export default function CheckoutPage() {
 
         {/* Sidebar Summary Panel */}
         <div className="lg:col-span-5 flex flex-col gap-6 sticky top-6">
-          <div className="bg-white p-6 md:p-7 rounded-3xl border border-slate-200 shadow-xl flex flex-col gap-5">
+          <div className="bg-white p-6 md:p-7 rounded-3xl border-2 border-yellow-300/80 shadow-xl flex flex-col gap-5">
             <div className="flex items-center justify-between border-b border-slate-200 pb-3.5">
               <h2 className="font-black text-slate-900 text-base uppercase tracking-wider flex items-center gap-2">
                 <span>🛒</span> Your Items

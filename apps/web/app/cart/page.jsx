@@ -56,8 +56,8 @@ export default function CartPage() {
           {/* Cart items list */}
           <div className="md:col-span-2 flex flex-col gap-4">
             {cart.map((item) => (
-              <div key={item.productId} className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400/80 transition-colors">
-                <div className="w-16 h-16 bg-slate-50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-slate-100">
+              <div key={item.productId} className="bg-white rounded-2xl border-2 border-yellow-200/80 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400 hover:shadow-md transition-all">
+                <div className="w-16 h-16 bg-yellow-50/50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-yellow-200">
                   <img
                     src={item.coverImage?.startsWith('http') ? item.coverImage : `http://localhost:5000${item.coverImage}`}
                     alt={item.name ? `${item.name} — cart medicine item` : 'Medicine thumbnail'}
@@ -70,7 +70,7 @@ export default function CartPage() {
                 </div>
 
                 <div className="flex-grow min-w-0">
-                  <Link href={`/products/${item.productId}`} className="font-bold text-sm text-slate-900 hover:text-yellow-600 line-clamp-1 transition-colors">
+                  <Link href={`/products/${item.productId}`} className="font-bold text-sm text-slate-900 hover:text-amber-800 line-clamp-1 transition-colors">
                     {item.name}
                   </Link>
                   <p className="text-xs text-slate-500 mt-0.5 font-bold">
@@ -85,20 +85,20 @@ export default function CartPage() {
                 </div>
 
                 {/* Quantity Controls */}
-                <div className="flex items-center border border-slate-300 rounded-xl bg-slate-50">
+                <div className="flex items-center border-2 border-yellow-300 rounded-xl bg-yellow-50/50">
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                    className="px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 rounded-l-xl transition-colors text-sm font-bold disabled:opacity-30 cursor-pointer"
+                    className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-yellow-200/80 rounded-l-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity <= 1}
                   >
                     -
                   </button>
-                  <span className="px-2 py-1 text-xs font-black w-7 text-center select-none text-slate-900">
+                  <span className="px-2 py-1 text-xs font-black w-7 text-center select-none text-slate-950">
                     {item.quantity}
                   </span>
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                    className="px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 rounded-r-xl transition-colors text-sm font-bold disabled:opacity-30 cursor-pointer"
+                    className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-yellow-200/80 rounded-r-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity >= 99}
                   >
                     +
@@ -118,8 +118,8 @@ export default function CartPage() {
           </div>
 
           {/* Cart Summary */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-md flex flex-col gap-4 h-fit">
-            <h3 className="font-black text-slate-900 text-base border-b border-slate-200 pb-3 uppercase tracking-wider">Order Summary</h3>
+          <div className="bg-white rounded-3xl border-2 border-yellow-300/90 p-6 shadow-xl flex flex-col gap-4 h-fit">
+            <h3 className="font-black text-slate-950 text-base border-b-2 border-yellow-100 pb-3 uppercase tracking-wider">Order Summary</h3>
             <div className="flex justify-between text-sm">
               <span className="text-slate-600 font-medium">Subtotal</span>
               <span className="font-black text-slate-950">PKR {cartTotal.toFixed(2)}</span>
@@ -127,12 +127,12 @@ export default function CartPage() {
             <div className="flex justify-between text-sm items-center">
               <span className="text-slate-600 font-medium flex items-center gap-1.5">
                 <span>Platform Fee</span>
-                <span className="bg-amber-100 text-amber-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">Medikart Care</span>
+                <span className="bg-yellow-100 text-amber-900 border border-yellow-300 text-[10px] font-bold px-1.5 py-0.5 rounded-full">Medikart Care</span>
               </span>
               <span className="font-bold text-slate-900">PKR 10.00</span>
             </div>
             
-            <div className="text-xs text-slate-500 italic mt-1 leading-relaxed border-t border-slate-200 pt-3">
+            <div className="text-xs text-slate-500 italic mt-1 leading-relaxed border-t border-slate-100 pt-3">
               * Delivery charges will be computed during checkout based on your destination city.
             </div>
 
@@ -146,9 +146,9 @@ export default function CartPage() {
               <Link
                 href="/checkout"
                 onClick={handleProceedCheckout}
-                className="w-full inline-block text-center py-3.5 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm hover:shadow-md border border-yellow-500/50 active:scale-[0.98]"
+                className="w-full inline-block text-center py-3.5 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-lg border-2 border-yellow-500 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               >
-                Proceed to Checkout
+                Proceed to Checkout →
               </Link>
             </div>
           </div>

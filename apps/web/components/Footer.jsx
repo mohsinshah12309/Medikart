@@ -167,13 +167,13 @@ export default function Footer({
 
   // Verified active routes for Support column
   const supportLinks = [
-    { label: "Terms & Conditions", href: "/terms-and-conditions" },
-    { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Contact Support", href: "/contact" },
     { label: "Prescription Help", href: "/instant-order" },
     { label: "Refill Inquiries", href: "/refill" },
     { label: "FAQs", href: "/faqs" },
     { label: "Return & Refund Policy", href: "/return-refund-policy" },
+    { label: "Terms & Conditions", href: "/terms-and-conditions" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
   ];
 
   // Display up to top 7 categories in the footer column

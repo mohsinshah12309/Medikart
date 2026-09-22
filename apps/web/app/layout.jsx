@@ -241,7 +241,7 @@ export default async function RootLayout({ children }) {
             <AnalyticsProvider />
 
             {/* Main Brand Sticky Header */}
-            <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xs transition-all">
+            <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-yellow-300/80 shadow-xs transition-all">
               <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-18 sm:h-20 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
                   {/* Official Interactive Logo */}

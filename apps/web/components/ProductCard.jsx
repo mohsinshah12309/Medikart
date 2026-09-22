@@ -55,9 +55,9 @@ function ProductCardComponent({ product }) {
   }, [toggleWishlist, product._id]);
 
   return (
-    <TiltCard3D className="bg-white border border-[#F3EFE6] rounded-2xl overflow-hidden hover:shadow-warm-card hover:border-amber-300 flex flex-col h-full relative group transition-all duration-200">
+    <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-yellow-400 flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1">
       {/* Product Image Link Container */}
-      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-[#F3EFE6]">
+      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
         {/* Discount Badge */}
         {hasDiscount && (
           <span className="absolute top-1.5 left-1.5 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md tracking-wider uppercase shadow-xs">
@@ -205,11 +205,11 @@ function ProductCardComponent({ product }) {
             {/* Below: View Details Secondary Button */}
             <Link
               href={`/products/${product._id}`}
-              className="w-full inline-flex items-center justify-center gap-1.5 text-center bg-amber-50/80 hover:bg-amber-100 text-amber-950 text-[11px] sm:text-xs font-bold py-1.5 px-2 rounded-xl border border-amber-300/80 hover:border-amber-400 transition-all duration-150 shadow-2xs group hover:shadow-xs active:scale-98"
+              className="w-full inline-flex items-center justify-center gap-1.5 text-center bg-yellow-50 hover:bg-yellow-100 text-slate-950 text-[11px] sm:text-xs font-bold py-1.5 px-2 rounded-xl border border-yellow-300 hover:border-yellow-400 transition-all duration-150 shadow-2xs group hover:shadow-xs active:scale-98"
             >
-              <Eye className="w-3.5 h-3.5 text-amber-700 group-hover:text-amber-900 transition-colors" />
+              <Eye className="w-3.5 h-3.5 text-amber-800 group-hover:text-slate-950 transition-colors" />
               <span>View Details</span>
-              <span className="text-[11px] text-amber-600 group-hover:text-amber-950 transition-transform group-hover:translate-x-0.5">&rarr;</span>
+              <span className="text-[11px] text-amber-800 group-hover:text-slate-950 transition-transform group-hover:translate-x-0.5">&rarr;</span>
             </Link>
           </div>
         </div>

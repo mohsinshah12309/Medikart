@@ -33,24 +33,29 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="max-w-4xl mx-auto py-8 sm:py-12 px-4 sm:px-6">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 rounded-3xl border border-amber-200/70 p-6 sm:p-10 mb-8 shadow-xs">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wider mb-4">
-          <span>🛡️ Patient Data Protection</span>
+    <div className="max-w-4xl mx-auto py-8 sm:py-12 px-4 sm:px-6 flex flex-col gap-8 pb-16">
+      {/* Header Banner - Brand Yellow Dominant */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#FFF352] via-[#FFF866] to-[#FFE51A] rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-[#F7E53B]">
+        {/* Ambient Glow Accents */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/40 blur-[90px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-yellow-300/30 blur-[80px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col gap-4 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFF352] w-fit shadow-md">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFF352] animate-pulse shadow-[0_0_8px_#fff352]" />
+            Patient Data Protection &amp; Confidentiality
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 leading-tight">
+            Privacy Policy
+          </h1>
+          <p className="text-base sm:text-lg text-slate-900 leading-relaxed font-semibold">
+            Last updated: September 2026. Your health information, prescription records, and personal privacy are safeguarded with 256-bit encryption and strict medical confidentiality.
+          </p>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 font-heading tracking-tight mb-3">
-          Privacy Policy
-        </h1>
-        <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-          Last updated: September 2026. Your health information and privacy are
-          protected with 256-bit encryption and strict medical confidentiality
-          standards.
-        </p>
       </div>
 
       {/* Main Content Sections */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-8 text-slate-700 text-sm leading-relaxed">
+      <div className="bg-white rounded-3xl border-2 border-yellow-300/80 shadow-xl p-6 sm:p-10 space-y-8 text-slate-700 text-sm leading-relaxed">
         {/* Important Platform & Pharmacy Sourcing Clarification Box */}
         <section className="bg-amber-50/80 border-2 border-amber-300/80 rounded-2xl p-5 sm:p-6 space-y-3">
           <div className="flex items-center gap-2 text-amber-950 font-black text-base">
@@ -215,7 +220,7 @@ export default function PrivacyPolicyPage() {
             handling, or data security, please reach out to our privacy
             compliance officer:
           </p>
-          <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs space-y-1">
+          <div className="bg-yellow-50/70 rounded-2xl p-4 border-2 border-yellow-200 text-xs space-y-1">
             <p>
               <strong>Medikart Privacy &amp; Healthcare Compliance</strong>
             </p>
@@ -223,7 +228,7 @@ export default function PrivacyPolicyPage() {
               Email:{" "}
               <a
                 href="mailto:medikart.com@gmail.com"
-                className="text-amber-700 font-bold hover:underline"
+                className="text-amber-800 font-bold hover:underline"
               >
                 medikart.com@gmail.com
               </a>
@@ -232,7 +237,7 @@ export default function PrivacyPolicyPage() {
               Support Hotline / WhatsApp:{" "}
               <a
                 href="https://wa.me/923244489159"
-                className="text-amber-700 font-bold hover:underline"
+                className="text-amber-800 font-bold hover:underline"
               >
                 +92 324 4489159
               </a>
@@ -245,7 +250,7 @@ export default function PrivacyPolicyPage() {
         <div className="pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
           <Link
             href="/"
-            className="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black text-xs transition-all shadow-xs"
+            className="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black text-xs transition-all shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer"
           >
             ← Back to Storefront
           </Link>
