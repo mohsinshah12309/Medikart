@@ -64,8 +64,8 @@ function buildCatalogFallbackResponse(message = "", products = []) {
       `You can set up or manage your refill schedule anytime at **[Monthly Refill](/refill)**.`;
   } else if (queryLower.includes("contact") || queryLower.includes("support") || queryLower.includes("phone") || queryLower.includes("whatsapp") || queryLower.includes("email") || queryLower.includes("help") || queryLower.includes("agent") || queryLower.includes("human") || queryLower.includes("call")) {
     reply = `**Contact Medikart Customer Care & Pharmacist Support**:\n\n` +
-      `• **WhatsApp / Phone**: +92 324 4489159\n` +
-      `• **Email**: support@medikart.pk\n` +
+      `• **WhatsApp / Phone**: +92 324 4489159 / 03244489159\n` +
+      `• **Email**: medikart.com@gmail.com\n` +
       `• **Store Contact Page**: **[Contact Us](/contact)**\n` +
       `• **FAQs**: **[Frequently Asked Questions](/faqs)**\n` +
       `• **Support Hours**: Monday – Saturday, 9:00 AM – 10:00 PM PKT (Emergency & online orders processed 24/7).\n\n` +
@@ -223,7 +223,7 @@ YOUR CORE RESPONSIBILITIES:
 1. STOREFRONT & POLICY ASSISTANT:
    - Answer all questions regarding Medikart services, ordering, delivery, payments, prescriptions, policies, and FAQs accurately, warmly, and concisely.
    - Proactively provide relevant page links (e.g., [Instant Order](/instant-order), [Monthly Refill](/refill), [FAQs](/faqs), [Return & Refund Policy](/return-refund-policy), [Contact Us](/contact)).
-   - Provide customer support contact options (WhatsApp: +92 324 4489159, Email: support@medikart.pk) whenever the user needs personalized human assistance or wants to talk to a representative.
+    - Provide customer support contact options (WhatsApp: +92 324 4489159 / 03244489159, Email: medikart.com@gmail.com) whenever the user needs personalized human assistance or wants to talk to a representative.
 
 2. MEDICINE AVAILABILITY & SYMPTOM CHECKER:
    - Check medicine availability and suggest safe Over-The-Counter (OTC) products strictly from the ALLOWED CATALOG below.
@@ -263,11 +263,11 @@ MEDIKART STOREFRONT KNOWLEDGE BASE & BUSINESS RULES:
    - **Pre-Dispatch Cancellations**: Orders can be cancelled prior to dispatch without penalty, except for a nominal non-refundable store service fee of Rs. 10 and any non-refundable card payment processing fees/taxes charged by banking networks.
    - **Delivered Medicines**: For patient safety and strict drug regulatory standards, delivered medications cannot be returned or reused. Returns are only accepted if products arrive damaged, defective, expired, or incorrectly dispatched.
    - **Reporting Window**: Damaged or incorrect items must be reported within 24 hours of delivery with photographic evidence.
-   - **Refund Processing**: Approved refunds are issued to the original payment method or bank account within 2 to 5 business days.
+   - **Refund Processing**: Approved refunds are issued to the original payment method or bank account within 2 business days.
 
 6. CUSTOMER SUPPORT & CONTACT ([/contact](/contact)):
-   - **WhatsApp Support**: +92 324 4489159
-   - **Email**: support@medikart.pk
+   - **WhatsApp Support**: +92 324 4489159 / 03244489159
+   - **Email**: medikart.com@gmail.com
    - **Contact Form**: [/contact](/contact)
    - **FAQs**: [/faqs](/faqs)
    - Support team available Monday – Saturday, 9:00 AM – 10:00 PM PKT (emergency and digital orders processed 24/7).

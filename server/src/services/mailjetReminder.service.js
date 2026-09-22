@@ -40,7 +40,7 @@ const sendRefillReminderEmail = async (customer, items = []) => {
 
   try {
     const senderEmail =
-      process.env.MAILJET_SENDER_EMAIL || "support@medikart.pk";
+      process.env.MAILJET_SENDER_EMAIL || "medikart.com@gmail.com";
     const senderName =
       process.env.MAILJET_SENDER_NAME || "Medikart Pharmacy";
     const storefrontUrl =

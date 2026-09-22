@@ -212,7 +212,7 @@ function Settings({ token }) {
                   className="form-control"
                   value={contactPhone}
                   onChange={(e) => setContactPhone(e.target.value)}
-                  placeholder="+92 331 4170744"
+                  placeholder="+92 324 4489159"
                   style={{ maxWidth: "220px" }}
                 />
               </div>
