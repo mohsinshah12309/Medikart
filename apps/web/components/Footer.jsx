@@ -161,6 +161,7 @@ export default function Footer({
     { label: "Instant Order", href: "/instant-order", badge: "Fast" },
     { label: "Health & Medicine Blogs", href: "/blogs" },
     { label: "Prescription Refill", href: "/refill" },
+    { label: "Press & Partnerships", href: "/press" },
     { label: "About Medikart", href: "/about" },
     { label: "Contact Us", href: "/contact" },
   ];
@@ -426,7 +427,7 @@ export default function Footer({
 
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700">
                 <CreditCard className="w-3.5 h-3.5 text-slate-600" />
-                <span>Debit / Credit Card</span>
+                <span>Kuickpay &amp; Online Billing</span>
               </span>
 
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900">

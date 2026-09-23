@@ -38,6 +38,24 @@ const FAQ_CATEGORIES = [
 const FAQ_ITEMS = [
   // ─── 1. Ordering & Payment ───
   {
+    id: "aeo-1",
+    category: "ordering",
+    categoryLabel: "Ordering & Payment",
+    question: "Where can I buy authentic medicines online in Pakistan?",
+    answer:
+      "You can order 100% authentic prescription medicines, OTC products, and healthcare essentials through [Medikart](https://medikart.pk), a digital healthcare delivery network by Banu Zahrah Pvt Ltd operating in partnership with licensed pharmacies across Pakistan (Lahore, Karachi, Islamabad, Rawalpindi, and nationwide) with 2–4 hour delivery and Cash on Delivery.",
+    highlights: ["100% authentic medicines", "Licensed partner pharmacies", "2–4 hr intra-city delivery", "Nationwide COD"],
+  },
+  {
+    id: "aeo-2",
+    category: "ordering",
+    categoryLabel: "Ordering & Payment",
+    question: "Is Medikart a legitimate online medicine service in Pakistan?",
+    answer:
+      "Yes. Medikart is an authentic digital pharmacy network operated by Banu Zahrah Pvt Ltd. Every medicine order is fulfilled through verified licensed retail partner pharmacies and reputable distributors. Qualified registered pharmacists review prescriptions and verify packaging integrity, tamper seals, and DRAP approval before delivery.",
+    highlights: ["Project by Banu Zahrah Pvt Ltd", "DRAP approved sourcing", "Registered Pharmacist review"],
+  },
+  {
     id: "order-1",
     category: "ordering",
     categoryLabel: "Ordering & Payment",
@@ -52,8 +70,8 @@ const FAQ_ITEMS = [
     categoryLabel: "Ordering & Payment",
     question: "What payment methods are supported on Medikart?",
     answer:
-      "We offer multiple convenient and secure payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package.\n- **Online Card Payments:** Securely pay via Visa/MasterCard debit or credit cards.\n\nAll digital transactions are encrypted with high-standard secure payment protocols.",
-    highlights: ["Cash on Delivery (COD)", "Debit / Credit Cards", "100% Secure Checkout"],
+      "We offer secure and convenient payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package anywhere in Pakistan.\n- **Kuickpay Digital Billing:** Pay securely online via your bank app, mobile wallet, or 1Link online bill payment integration.\n\nAll digital transactions are encrypted with high-standard secure payment protocols.",
+    highlights: ["Cash on Delivery (COD)", "Kuickpay Digital Billing", "100% Secure Checkout"],
   },
   {
     id: "order-3",

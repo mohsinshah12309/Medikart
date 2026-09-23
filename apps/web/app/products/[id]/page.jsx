@@ -378,17 +378,33 @@ export default async function ProductDetailPage({ params }) {
 
       {/* ─── AEO / GEO Clinical & Pharmacy Information Section ─── */}
       <section className="bg-slate-50/80 rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-6">
-        <h2 className="text-xl sm:text-2xl font-black font-heading text-slate-900">
-          About {product.name} — Essential Medicine &amp; Delivery Facts
-        </h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black font-heading text-slate-900">
+              About {product.name} — Essential Medicine &amp; Delivery Facts
+            </h2>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Verified clinical and delivery facts for patients across Pakistan
+            </p>
+          </div>
+          {firstCategory && (
+            <Link
+              href={`/?category=${firstCategory.slug || firstCategory._id}#store-catalog`}
+              className="text-xs font-bold text-amber-800 bg-amber-100/70 hover:bg-amber-100 border border-amber-300/80 px-3 py-1.5 rounded-xl transition-colors shrink-0"
+            >
+              Browse all {firstCategory.name} →
+            </Link>
+          )}
+        </div>
 
+        {/* 3-Pillar Information Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-3xs space-y-2">
             <div className="text-amber-700 font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5">
               <span>🛡️</span> Genuine Quality Assurance
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Every unit of {product.name} is procured directly through licensed pharmaceutical distributors and partner pharmacies across Pakistan. Stored in certified temperature-monitored conditions.
+              Every unit of {product.name} is procured directly through licensed pharmaceutical distributors and partner retail pharmacies across Pakistan. Stored in certified temperature-monitored conditions.
             </p>
           </div>
 
@@ -397,7 +413,7 @@ export default async function ProductDetailPage({ params }) {
               <span>⚡</span> Fast Nationwide Delivery
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Dispatched in 2–4 hours within major metropolitan hubs (Lahore, Karachi, Islamabad &amp; Rawalpindi) and 24–48 hours nationwide with Cash on Delivery (COD).
+              Dispatched in 2–4 hours within major metropolitan hubs (Lahore, Karachi, Islamabad &amp; Rawalpindi) and 24–48 hours nationwide with Cash on Delivery (COD) and Kuickpay digital billing.
             </p>
           </div>
 
@@ -411,9 +427,44 @@ export default async function ProductDetailPage({ params }) {
           </div>
         </div>
 
+        {/* Product Specification & Context Matrix */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
+          <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 font-heading">
+            Quick Specification &amp; Sourcing Details
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <span className="text-slate-400 font-medium block text-[10px] uppercase">Product Name</span>
+              <span className="font-bold text-slate-900 truncate block mt-0.5">{product.name}</span>
+            </div>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <span className="text-slate-400 font-medium block text-[10px] uppercase">Active Ingredient</span>
+              {product.genericName ? (
+                <Link href={`/?search=${encodeURIComponent(product.genericName)}#store-catalog`} className="font-bold text-amber-800 hover:underline truncate block mt-0.5">
+                  {product.genericName}
+                </Link>
+              ) : (
+                <span className="font-bold text-slate-700 block mt-0.5">Standard Formulation</span>
+              )}
+            </div>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <span className="text-slate-400 font-medium block text-[10px] uppercase">Availability</span>
+              <span className="font-bold text-emerald-700 block mt-0.5">
+                {isOutOfStock ? 'Out of Stock' : 'Genuine Stock Available'}
+              </span>
+            </div>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <span className="text-slate-400 font-medium block text-[10px] uppercase">Health Guides</span>
+              <Link href="/blogs" className="font-bold text-amber-800 hover:underline block mt-0.5">
+                Read Health Guides →
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* Advisory / Disclaimer */}
         <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-xs text-slate-600 leading-relaxed">
-          <strong className="text-slate-900">Pharmacist Note:</strong> Use {product.name} only as advised by your physician or healthcare practitioner. Keep out of reach of children. Store in a cool, dry place away from direct sunlight. For questions regarding dosage or drug interactions, reach out to our 24/7 helpline on WhatsApp at <a href="https://wa.me/923244489159" className="text-amber-800 font-bold underline">+92 324 4489159</a>.
+          <strong className="text-slate-900">Pharmacist Note:</strong> Sourced in compliance with DRAP (Drug Regulatory Authority of Pakistan) standards through licensed partner pharmacies. Use {product.name} strictly as directed by your prescribing physician or healthcare provider. Keep out of reach of children. Store in a cool, dry place. For dosage questions or prescription assistance, reach out to our pharmacy support on WhatsApp at <a href="https://wa.me/923244489159" className="text-amber-800 font-bold underline">+92 324 4489159</a>.
         </div>
       </section>
 

@@ -8,10 +8,19 @@ async function updateSuperAdmin() {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("[DB] Connected successfully.");
 
-    const AdminUser = require("../src/modules/admin-users/adminUser.model");
+    const args = process.argv.slice(2);
+    const getArg = (name) => {
+      const idx = args.indexOf(`--${name}`);
+      return idx !== -1 ? args[idx + 1] : null;
+    };
 
-    const targetEmail = "alishahmohsin938@gmail.com";
-    const targetPassword = "medikart@03314170744Abdullah";
+    const targetEmail = getArg("email") || process.env.SUPER_ADMIN_EMAIL || process.env.SEED_SUPER_ADMIN_EMAIL;
+    const targetPassword = getArg("password") || process.env.SUPER_ADMIN_PASSWORD || process.env.SUPER_ADMIN_PASS || process.env.SEED_SUPER_ADMIN_PASSWORD;
+
+    if (!targetEmail || !targetPassword) {
+      console.error("Error: Please provide --email and --password CLI arguments, or set SUPER_ADMIN_EMAIL and SUPER_ADMIN_PASSWORD in .env.");
+      process.exit(1);
+    }
     const passwordHash = await bcrypt.hash(targetPassword, 12);
 
     const admin = await AdminUser.findOneAndUpdate(

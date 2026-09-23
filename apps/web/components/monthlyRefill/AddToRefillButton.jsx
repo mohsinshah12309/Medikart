@@ -99,26 +99,28 @@ export default function AddToRefillButton({
     );
   }
 
-  // Compact icon button for ProductCard
+  // Compact prominent icon button for ProductCard
   return (
     <button
       type="button"
       onClick={handleClick}
       disabled={loading}
-      className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150 shadow-xs cursor-pointer select-none ${
+      className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-2xs cursor-pointer select-none relative group/refill ${
         saved
-          ? "bg-[#fff850] text-[#1a1a1a] border border-[#fae845] scale-105 shadow-sm"
-          : "bg-white/95 text-slate-400 hover:text-amber-800 hover:bg-[#fffde0] border border-slate-200 hover:border-[#fae845] hover:scale-110 opacity-85 group-hover:opacity-100"
+          ? "bg-[#FFF352] text-slate-950 border-2 border-[#F5D800] scale-105 shadow-md ring-2 ring-yellow-300/70"
+          : "bg-amber-100/95 text-amber-950 hover:text-slate-950 hover:bg-[#FFF352] border-1.5 border-amber-300 hover:border-amber-400 hover:scale-110 shadow-xs"
       } ${className}`}
-      aria-label={saved ? "Remove from monthly refill" : "Add to monthly refill"}
-      title={saved ? "Saved in Monthly Refill" : "Add to Monthly Refill"}
+      aria-label={saved ? "Remove from monthly refill" : "Add to monthly refill reminder"}
+      title={saved ? "Saved in Monthly Refill (Click to remove)" : "Add to Monthly Refill Reminder"}
     >
       {loading ? (
-        <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-700" />
+        <Loader2 className="w-4 h-4 animate-spin text-amber-800" />
       ) : saved ? (
-        <CalendarSync className="w-3.5 h-3.5 text-[#1a1a1a] fill-[#fff850]" />
+        <Check className="w-4 h-4 text-emerald-900 stroke-[3]" />
+      ) : justAdded ? (
+        <Check className="w-4 h-4 text-emerald-700 stroke-[3] animate-bounce" />
       ) : (
-        <CalendarSync className="w-3.5 h-3.5" />
+        <CalendarSync className="w-4 h-4 text-amber-950 stroke-[2.25] group-hover/refill:scale-110 transition-transform" />
       )}
     </button>
   );

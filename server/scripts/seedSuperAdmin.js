@@ -27,10 +27,13 @@ const args = process.argv.slice(2);
 const getArg = (name) => {
   const idx = args.indexOf(`--${name}`);
   return idx !== -1 ? args[idx + 1] : null;
-};
+const email = getArg("email") || process.env.SUPER_ADMIN_EMAIL || process.env.SEED_SUPER_ADMIN_EMAIL;
+const password = getArg("password") || process.env.SUPER_ADMIN_PASSWORD || process.env.SUPER_ADMIN_PASS || process.env.SEED_SUPER_ADMIN_PASSWORD;
 
-const email = getArg("email") || "alishahmohsin938@gmail.com";
-const password = getArg("password") || "medikart@03314170744Abdullah";
+if (!email || !password) {
+  console.error("Error: Please provide --email and --password CLI arguments, or set SUPER_ADMIN_EMAIL and SUPER_ADMIN_PASSWORD in .env.");
+  process.exit(1);
+}
 
 // Basic email sanity check
 if (!/^\S+@\S+\.\S+$/.test(email)) {

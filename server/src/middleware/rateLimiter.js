@@ -31,9 +31,12 @@ const createRateLimiter = ({
 } = {}) => {
   return async (req, res, next) => {
     try {
-      // Prefer X-Forwarded-For (proxy/load-balancer) then fall back to req.ip
+      // Prefer Cloudflare / reverse proxy headers, then fall back to req.ip
+      const rawXForwarded = req.headers["x-forwarded-for"];
+      const clientIpFromForwarded = typeof rawXForwarded === "string" ? rawXForwarded.split(",")[0].trim() : null;
       const ip =
-        req.headers["x-forwarded-for"] ||
+        req.headers["cf-connecting-ip"] ||
+        clientIpFromForwarded ||
         req.ip ||
         (req.connection && req.connection.remoteAddress) ||
         "127.0.0.1";

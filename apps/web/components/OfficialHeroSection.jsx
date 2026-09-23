@@ -473,54 +473,100 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────
-          2. RECTANGULAR PRESCRIPTION SERVICE BANNER
+          2. RECTANGULAR PRESCRIPTION SERVICE BANNER (Yellowish Gradient & Beautiful Badges)
       ────────────────────────────────────────────────────────────────────── */}
       <div className="w-full relative z-10">
-        <div className="card-warm p-6 sm:p-8 bg-gradient-to-r from-[#FFFDF9] via-white to-amber-50/70 border-2 border-amber-200/80 rounded-3xl shadow-xs hover:shadow-md transition-shadow relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          {/* Subtle ℞ watermark */}
-          <div className="absolute -right-4 -bottom-6 text-9xl font-black text-amber-200/20 pointer-events-none select-none">
-            ℞
+        <div className="rounded-3xl bg-[#FFF352] bg-gradient-to-br from-[#FFFDE0] via-[#FFF352] to-[#FEE833] border-2 border-[#F7E53B] shadow-lg shadow-yellow-200/50 hover:shadow-xl hover:border-[#F7E53B] p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300">
+          
+          {/* Ambient Decorative Lighting & Watermark */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-white/50 rounded-full blur-3xl -mr-20 -mt-20" />
+            <div className="absolute bottom-0 left-10 w-60 h-60 bg-yellow-300/40 rounded-full blur-2xl" />
+            <div className="absolute left-1/2 top-4 opacity-15 text-2xl select-none font-black text-slate-900 pointer-events-none animate-float hidden sm:block">
+              💊
+            </div>
+            {/* Subtle ℞ watermark */}
+            <div className="absolute -right-4 -bottom-6 text-9xl sm:text-[140px] font-black text-amber-950/10 pointer-events-none select-none">
+              ℞
+            </div>
           </div>
 
           {/* Left Text Content */}
           <div className="relative z-10 max-w-2xl text-left">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-[10px] font-extrabold uppercase tracking-wider mb-2.5">
-              <span>🩺</span>
-              <span>Prescription Service</span>
+            {/* Tag / Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/95 backdrop-blur-sm border border-amber-300/90 shadow-2xs mb-2.5 hover:bg-white transition-all">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-[11px] font-black uppercase tracking-wider text-slate-950">
+                Prescription Service
+              </span>
+              <span className="text-amber-500 font-black">•</span>
+              <span className="text-[11px] font-bold text-amber-950">Pharmacist Verified</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black font-heading tracking-tight text-[#1E293B] leading-tight">
+
+            {/* Headline */}
+            <h2 className="text-2xl sm:text-3xl font-black font-heading tracking-tight text-slate-950 leading-tight">
               Order your prescription medicines with ease.
             </h2>
-            <p className="text-xs sm:text-sm text-[#475569] mt-2 leading-relaxed font-medium">
-              Upload your prescription, we'll handle the rest — licensed pharmacist verification and rapid fulfillment.
+
+            {/* Description */}
+            <p className="text-xs sm:text-sm text-slate-800 mt-2 leading-relaxed font-semibold max-w-xl">
+              Upload your prescription, we'll handle the rest — licensed pharmacist verification, cold-chain packing, and rapid door-to-door delivery.
             </p>
+
+            {/* Micro Trust & Feature Pills */}
+            <div className="flex flex-wrap items-center gap-2 mt-4 pt-0.5">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 hover:bg-white hover:scale-105 transition-all border border-amber-300 text-[11px] font-bold text-slate-900 shadow-2xs cursor-default">
+                <span className="text-amber-600 font-black">⚡</span>
+                <span>5-Min Review</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 hover:bg-white hover:scale-105 transition-all border border-amber-300 text-[11px] font-bold text-slate-900 shadow-2xs cursor-default">
+                <span className="text-emerald-600 font-black">🛡️</span>
+                <span>100% Genuine Medicine</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 hover:bg-white hover:scale-105 transition-all border border-amber-300 text-[11px] font-bold text-slate-900 shadow-2xs cursor-default">
+                <span className="text-blue-600 font-black">📦</span>
+                <span>Discreet Sealed Pack</span>
+              </div>
+            </div>
           </div>
 
           {/* Right Action Button & Illustration */}
           <div className="relative z-10 flex items-center gap-4 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
-            <div className="hidden lg:flex items-center gap-2 mr-2">
-              <div className="w-11 h-13 bg-white rounded-lg border border-amber-200 shadow-xs p-1.5 flex flex-col justify-between transform -rotate-3">
-                <span className="text-xs font-black text-amber-700">℞</span>
+            <div className="hidden lg:flex items-center gap-2.5 mr-2">
+              {/* 3D Prescription Pad Card */}
+              <div className="w-12 h-15 bg-white rounded-xl border-2 border-amber-300/90 shadow-md p-1.5 flex flex-col justify-between transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-amber-700">℞</span>
+                  <span className="text-[9px] text-emerald-600 font-black">✓</span>
+                </div>
                 <div className="space-y-1">
-                  <div className="h-0.5 bg-slate-200 rounded" />
-                  <div className="h-0.5 bg-slate-200 rounded w-3/4" />
-                  <div className="h-0.5 bg-amber-300 rounded w-1/2" />
+                  <div className="h-1 bg-slate-200 rounded-full w-full" />
+                  <div className="h-1 bg-slate-200 rounded-full w-3/4" />
+                  <div className="h-1 bg-amber-300 rounded-full w-1/2" />
                 </div>
               </div>
-              <div className="w-10 h-12 bg-amber-50 rounded-lg border border-amber-300 shadow-xs p-1 grid grid-cols-2 gap-1 items-center transform rotate-6">
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white border border-slate-200" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white border border-slate-200" />
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+
+              {/* 3D Medicine Blister Pack Card */}
+              <div className="w-11 h-14 bg-white/95 rounded-xl border-2 border-amber-300/90 shadow-md p-1.5 grid grid-cols-2 gap-1 items-center transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-200">
+                <div className="w-3 h-3 rounded-full bg-amber-400 shadow-2xs ring-1 ring-amber-300" />
+                <div className="w-3 h-3 rounded-full bg-white border border-slate-300 shadow-2xs" />
+                <div className="w-3 h-3 rounded-full bg-white border border-slate-300 shadow-2xs" />
+                <div className="w-3 h-3 rounded-full bg-amber-400 shadow-2xs ring-1 ring-amber-300" />
               </div>
             </div>
 
             <Link
               href="/instant-order"
-              className="btn-amber-gradient px-6 py-3 text-xs sm:text-sm font-extrabold shadow-amber-glow flex items-center gap-2 group whitespace-nowrap"
+              className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-900 text-white hover:text-[#FFF352] text-xs sm:text-sm font-black shadow-md hover:shadow-xl hover:scale-103 active:scale-97 flex items-center gap-2.5 transition-all group shrink-0"
             >
+              <span className="w-6 h-6 rounded-full bg-[#FFF352] text-slate-950 flex items-center justify-center font-black text-xs shadow-2xs group-hover:scale-110 transition-transform">
+                📄
+              </span>
               <span>Upload Prescription</span>
-              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+              <span className="transition-transform duration-200 group-hover:translate-x-1 font-bold">→</span>
             </Link>
           </div>
         </div>

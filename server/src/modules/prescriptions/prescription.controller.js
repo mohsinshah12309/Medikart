@@ -30,8 +30,9 @@ const getPrescription = async (req, res, next) => {
 
     // Object-level check: the filename must be tied to a real order's
     // prescriptionUrl. We never serve a file that isn't referenced by an order.
+    const escapedFilename = filename.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const order = await Order.findOne({
-      prescriptionUrl: { $regex: new RegExp(`${filename}$`) },
+      prescriptionUrl: { $regex: new RegExp(`${escapedFilename}$`) },
     });
 
     if (!order) {

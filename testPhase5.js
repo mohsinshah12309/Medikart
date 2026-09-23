@@ -11,9 +11,9 @@
 
 const BASE = "http://localhost:5000/api/v1";
 
-// Credentials seeded above
-const SUPER_ADMIN_EMAIL = "alishahmohsin938@gmail.com";
-const SUPER_ADMIN_PASSWORD = "medikart@03314170744Abdullah";
+// Credentials seeded or configured via env
+const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL || "admin@medikart.pk";
+const SUPER_ADMIN_PASSWORD = process.env.SUPER_ADMIN_PASSWORD || process.env.SUPER_ADMIN_PASS || "TestPassword123!";
 const WRONG_PASSWORD = "WrongPassword999!";
 
 let passed = 0;

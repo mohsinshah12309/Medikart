@@ -28,9 +28,13 @@ const PageLoader = () => (
 );
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("admin_token") || "");
+  const [token, setToken] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return sessionStorage.getItem("admin_token") || localStorage.getItem("admin_token") || "";
+  });
   const [adminUser, setAdminUser] = useState(() => {
-    const saved = localStorage.getItem("admin_user");
+    if (typeof window === "undefined") return null;
+    const saved = sessionStorage.getItem("admin_user") || localStorage.getItem("admin_user");
     return saved ? JSON.parse(saved) : null;
   });
   const [activeTab, setActiveTab] = useState("overview");
@@ -56,6 +60,8 @@ function App() {
   useEffect(() => {
     const handleExpired = (e) => {
       const msg = e?.detail?.message || "Your session has expired. Please sign in again.";
+      sessionStorage.removeItem("admin_token");
+      sessionStorage.removeItem("admin_user");
       localStorage.removeItem("admin_token");
       localStorage.removeItem("admin_user");
       setToken("");
@@ -88,9 +94,12 @@ function App() {
           const data = await res.json();
           if (data?.data?.admin) {
             setAdminUser(data.data.admin);
-            localStorage.setItem("admin_user", JSON.stringify(data.data.admin));
+            sessionStorage.setItem("admin_user", JSON.stringify(data.data.admin));
+            localStorage.removeItem("admin_user");
           }
         } else if (res.status === 401) {
+          sessionStorage.removeItem("admin_token");
+          sessionStorage.removeItem("admin_user");
           localStorage.removeItem("admin_token");
           localStorage.removeItem("admin_user");
           setToken("");
@@ -109,8 +118,10 @@ function App() {
   }, [token]);
 
   const handleLogin = (newToken, user) => {
-    localStorage.setItem("admin_token", newToken);
-    localStorage.setItem("admin_user", JSON.stringify(user));
+    sessionStorage.setItem("admin_token", newToken);
+    sessionStorage.setItem("admin_user", JSON.stringify(user));
+    localStorage.removeItem("admin_token");
+    localStorage.removeItem("admin_user");
     setToken(newToken);
     setAdminUser(user);
     setActiveTab("overview");
@@ -120,6 +131,8 @@ function App() {
   };
 
   const handleLogout = () => {
+    sessionStorage.removeItem("admin_token");
+    sessionStorage.removeItem("admin_user");
     localStorage.removeItem("admin_token");
     localStorage.removeItem("admin_user");
     setToken("");

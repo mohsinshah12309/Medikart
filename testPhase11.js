@@ -19,8 +19,8 @@ const { connectDB } = require("./server/src/config/db");
 const app = require("./server/src/app");
 
 const BASE = "http://localhost:5000/api/v1";
-const SUPER_ADMIN_EMAIL = "alishahmohsin938@gmail.com";
-const SUPER_ADMIN_PASS = "medikart@03314170744Abdullah";
+const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL || "admin@medikart.pk";
+const SUPER_ADMIN_PASS = process.env.SUPER_ADMIN_PASS || process.env.SUPER_ADMIN_PASSWORD || "TestPassword123!";
 
 let passed = 0;
 let failed = 0;

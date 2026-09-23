@@ -92,12 +92,13 @@ const getOrders = async (
   const isOrderCode = cleanTerm.toUpperCase().startsWith("MK-");
 
   if (cleanTerm) {
+    const escapedTerm = cleanTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const searchConditions = [
-      { orderCode: { $regex: cleanTerm, $options: "i" } },
-      { "customer.name": { $regex: cleanTerm, $options: "i" } },
-      { "customer.email": { $regex: cleanTerm, $options: "i" } },
-      { "customer.phone": { $regex: cleanTerm, $options: "i" } },
-      { "customer.city": { $regex: cleanTerm, $options: "i" } },
+      { orderCode: { $regex: escapedTerm, $options: "i" } },
+      { "customer.name": { $regex: escapedTerm, $options: "i" } },
+      { "customer.email": { $regex: escapedTerm, $options: "i" } },
+      { "customer.phone": { $regex: escapedTerm, $options: "i" } },
+      { "customer.city": { $regex: escapedTerm, $options: "i" } },
     ];
     if (isObjectId) {
       searchConditions.unshift({ _id: new mongoose.Types.ObjectId(cleanTerm) });

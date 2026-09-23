@@ -94,6 +94,7 @@ try {
 }
 
 const app = express();
+app.set("trust proxy", 1);
 const requestLogger = require("./middleware/requestLogger");
 
 // 1. Request ID / Traceability Middleware (Phase 22 / Step 17)

@@ -5,13 +5,15 @@ export const API_URL = import.meta.env.VITE_API_URL || "/api/v1";
 export const SESSION_EXPIRED_EVENT = "medikart_admin_session_expired";
 
 export function notifySessionExpired(message = "Your session has expired. Please sign in again.") {
+  sessionStorage.removeItem("admin_token");
+  sessionStorage.removeItem("admin_user");
   localStorage.removeItem("admin_token");
   localStorage.removeItem("admin_user");
   window.dispatchEvent(new CustomEvent(SESSION_EXPIRED_EVENT, { detail: { message } }));
 }
 
 export async function adminFetch(endpoint, options = {}) {
-  const token = localStorage.getItem("admin_token");
+  const token = sessionStorage.getItem("admin_token") || localStorage.getItem("admin_token");
   const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
 
   const headers = {

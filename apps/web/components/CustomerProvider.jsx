@@ -107,17 +107,23 @@ export function CustomerProvider({ children }) {
     }
   }, [apiUrl, token]);
 
-  // Initial token hydration from localStorage
+  // Initial token hydration from sessionStorage (strictly session-scoped, not persistent localStorage)
   useEffect(() => {
     try {
-      const storedToken = localStorage.getItem("customer_token");
-      const storedCustomer = localStorage.getItem("customer_user");
+      if (typeof window !== "undefined") {
+        // Clear any legacy persistent storage for security
+        localStorage.removeItem("customer_token");
+        localStorage.removeItem("customer_user");
 
-      if (storedToken && storedCustomer) {
-        setToken(storedToken);
-        setCustomer(JSON.parse(storedCustomer));
-        refreshWishlistIds(storedToken);
-        refreshRefill(storedToken);
+        const storedToken = sessionStorage.getItem("customer_token");
+        const storedCustomer = sessionStorage.getItem("customer_user");
+
+        if (storedToken && storedCustomer) {
+          setToken(storedToken);
+          setCustomer(JSON.parse(storedCustomer));
+          refreshWishlistIds(storedToken);
+          refreshRefill(storedToken);
+        }
       }
     } catch (e) {
       console.error("[CustomerProvider] Failed to hydrate customer auth:", e);
@@ -130,8 +136,13 @@ export function CustomerProvider({ children }) {
   const setSession = (tokenData, customerData) => {
     setToken(tokenData);
     setCustomer(customerData);
-    localStorage.setItem("customer_token", tokenData);
-    localStorage.setItem("customer_user", JSON.stringify(customerData));
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("customer_token", tokenData);
+      sessionStorage.setItem("customer_user", JSON.stringify(customerData));
+      // Ensure localStorage has no lingering auth tokens
+      localStorage.removeItem("customer_token");
+      localStorage.removeItem("customer_user");
+    }
     refreshWishlistIds(tokenData);
     refreshRefill(tokenData);
   };
@@ -143,8 +154,12 @@ export function CustomerProvider({ children }) {
     setWishlistItems([]);
     setWishlistCount(0);
     setRefillData({ items: [], count: 0, subtotal: 0, lastOrderedAt: null, nextReminderAt: null });
-    localStorage.removeItem("customer_token");
-    localStorage.removeItem("customer_user");
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("customer_token");
+      sessionStorage.removeItem("customer_user");
+      localStorage.removeItem("customer_token");
+      localStorage.removeItem("customer_user");
+    }
   };
 
   const parseAuthError = (data, defaultMessage) => {

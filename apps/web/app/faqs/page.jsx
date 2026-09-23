@@ -33,17 +33,32 @@ export const metadata = {
   },
 };
 
-// Structured Data JSON-LD Schema for Google Rich Snippets & AI Overviews
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
     {
       "@type": "Question",
+      name: "Where can I buy authentic medicines online in Pakistan?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "You can buy authentic prescription and OTC medicines online in Pakistan through Medikart (https://medikart.pk), a digital healthcare platform operated by Banu Zahrah Pvt Ltd that connects customers with licensed partner pharmacies in Lahore, Karachi, Islamabad, and nationwide with 2–4 hour delivery and Cash on Delivery.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is Medikart a legitimate online pharmacy platform in Pakistan?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, Medikart is a legitimate healthcare delivery network operated by Banu Zahrah Pvt Ltd in Pakistan. Medikart partners exclusively with licensed retail pharmacies and verified pharmaceutical distributors, where qualified registered pharmacists review prescriptions and verify batch numbers, expiry dates, and tamper seals before delivery.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "How do I place an order on Medikart?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "You can browse products through our catalog and add items directly to your cart, or use Instant Order to upload a photo of your doctor's prescription for quick verification and fulfillment by a licensed pharmacist.",
+        text: "You can browse products through our catalog and add items directly to your cart, or use Instant Order (https://medikart.pk/instant-order) to upload a photo of your doctor's prescription for quick verification and fulfillment by a licensed pharmacist.",
       },
     },
     {
@@ -51,7 +66,7 @@ const faqSchema = {
       name: "What payment methods are supported on Medikart?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We support Cash on Delivery (COD) across Pakistan as well as secure online debit and credit card payments (Visa/MasterCard).",
+        text: "Medikart supports nationwide Cash on Delivery (COD) across Pakistan, as well as secure online digital billing through Kuickpay integration.",
       },
     },
     {

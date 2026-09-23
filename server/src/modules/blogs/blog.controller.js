@@ -26,14 +26,16 @@ exports.getPublicBlogs = async (req, res, next) => {
 
     const filter = { active: true };
     if (category && category !== "all") {
-      filter.$or = [{ categorySlug: category }, { categoryName: new RegExp(category, "i") }];
+      const escapedCategory = category.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      filter.$or = [{ categorySlug: category }, { categoryName: { $regex: escapedCategory, $options: "i" } }];
     }
     if (search && search.trim()) {
       const cleanSearch = search.trim();
+      const escapedSearch = cleanSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       filter.$or = [
-        { title: { $regex: cleanSearch, $options: "i" } },
-        { summary: { $regex: cleanSearch, $options: "i" } },
-        { tags: { $in: [new RegExp(cleanSearch, "i")] } },
+        { title: { $regex: escapedSearch, $options: "i" } },
+        { summary: { $regex: escapedSearch, $options: "i" } },
+        { tags: { $in: [new RegExp(escapedSearch, "i")] } },
       ];
     }
 

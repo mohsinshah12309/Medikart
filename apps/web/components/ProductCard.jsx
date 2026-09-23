@@ -66,15 +66,15 @@ function ProductCardComponent({ product }) {
         )}
 
         {/* Quick Action Buttons: Monthly Refill + Wishlist */}
-        <div className="absolute top-1.5 right-1.5 z-30 flex items-center gap-1">
+        <div className="absolute top-2 right-2 z-30 flex items-center gap-1.5">
           <AddToRefillButton product={product} variant="icon" />
           <button
             type="button"
             onClick={handleWishlistToggle}
-            className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150 shadow-xs cursor-pointer ${
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-2xs cursor-pointer ${
               wishlisted
-                ? "bg-rose-50 text-rose-500 border border-rose-200 scale-105"
-                : "bg-white/95 text-slate-400 hover:text-rose-500 border border-slate-200 hover:border-rose-200 hover:scale-110 opacity-80 group-hover:opacity-100"
+                ? "bg-rose-50 text-rose-500 border-1.5 border-rose-300 scale-105 shadow-xs"
+                : "bg-white/95 text-slate-400 hover:text-rose-500 border border-slate-200 hover:border-rose-200 hover:scale-110 opacity-90 group-hover:opacity-100"
             }`}
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
             title={wishlisted ? "Saved in Wishlist" : "Save to Wishlist"}

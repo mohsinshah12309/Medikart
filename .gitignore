@@ -44,10 +44,15 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
-# Redis dump and temporary scratch scripts
+# Redis dump, temporary scratch scripts, and test runners
 dump.rdb
 server/dump.rdb
 screenshots/
 server/scratch/
 medikart/
 cloudflared.exe
+response.txt
+test*.js
+verify*.js
+server/test*.js
+server/verify*.js

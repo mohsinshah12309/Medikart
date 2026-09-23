@@ -174,6 +174,7 @@ export default async function RootLayout({ children }) {
     '@type': ['Pharmacy', 'MedicalBusiness', 'LocalBusiness'],
     'name': 'Medikart Online Pharmacy Pakistan',
     'alternateName': 'Medikart Pakistan',
+    'legalName': 'Banu Zahrah Pvt Ltd',
     'url': 'https://medikart.pk',
     'logo': 'https://medikart.pk/icon.png',
     'image': 'https://medikart.pk/og-image.png',
@@ -182,15 +183,21 @@ export default async function RootLayout({ children }) {
     'email': contactEmail,
     'priceRange': 'PKR',
     'currenciesAccepted': 'PKR',
-    'paymentAccepted': 'Cash on Delivery, Credit Card, Debit Card',
+    'paymentAccepted': 'Cash on Delivery, Kuickpay',
     'address': {
       '@type': 'PostalAddress',
-      'addressCountry': 'PK',
-      'addressRegion': 'Pakistan'
+      'addressLocality': 'Lahore',
+      'addressRegion': 'Punjab',
+      'addressCountry': 'PK'
     },
     'areaServed': {
       '@type': 'Country',
       'name': 'Pakistan'
+    },
+    'parentOrganization': {
+      '@type': 'Organization',
+      'name': 'Banu Zahrah Pvt Ltd',
+      'legalName': 'Banu Zahrah Pvt Ltd'
     },
     'contactPoint': {
       '@type': 'ContactPoint',
@@ -200,8 +207,11 @@ export default async function RootLayout({ children }) {
       'availableLanguage': ['English', 'Urdu']
     },
     'sameAs': [
-      'https://www.facebook.com/medikart.pk',
-      'https://www.instagram.com/medikart.pk'
+      'https://facebook.com/medikartpk',
+      'https://instagram.com/medikartpk',
+      'https://twitter.com/medikartpk',
+      'https://linkedin.com/company/medikart-pk',
+      'https://youtube.com/@medikartpk'
     ]
   };
 
