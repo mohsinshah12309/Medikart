@@ -270,7 +270,7 @@ export default async function RootLayout({ children }) {
             <HomeOnlyBanners categories={categories} />
 
             {/* Main App Page Wrapper */}
-            <main className="flex-grow max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-6 sm:py-8 w-full animate-fade-in-up z-10">
+            <main className="flex-grow max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-6 sm:py-8 w-full z-10">
               {children}
             </main>
 

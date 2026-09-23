@@ -147,17 +147,28 @@ export function CustomerProvider({ children }) {
     localStorage.removeItem("customer_user");
   };
 
+  const parseAuthError = (data, defaultMessage) => {
+    let msg = defaultMessage;
+    if (data?.details && Array.isArray(data.details) && data.details.length > 0) {
+      msg = data.details.map((d) => d.message).join(". ");
+    } else if (data?.message) {
+      msg = data.message;
+    }
+    const err = new Error(msg);
+    if (data?.code) err.code = data.code;
+    if (data?.details) err.details = data.details;
+    return err;
+  };
+
   const login = async (email, password) => {
     const res = await fetch(`${apiUrl}/auth/customer/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      const err = new Error(data.message || "Login failed");
-      err.code = data.code;
-      throw err;
+      throw parseAuthError(data, "Invalid email or password");
     }
     setSession(data.token, data.customer);
     return data;
@@ -169,9 +180,9 @@ export function CustomerProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.message || "Registration failed");
+      throw parseAuthError(data, "Registration failed. Please verify your details.");
     }
     return data;
   };
@@ -182,9 +193,9 @@ export function CustomerProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, code }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.message || "Verification failed");
+      throw parseAuthError(data, "Verification failed. Code may be invalid or expired.");
     }
     setSession(data.token, data.customer);
     return data;
@@ -196,9 +207,9 @@ export function CustomerProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, overrideSuggestion }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.message || "Failed to resend code");
+      throw parseAuthError(data, "Failed to resend verification code.");
     }
     return data;
   };
@@ -209,9 +220,9 @@ export function CustomerProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.message || "Failed to submit request");
+      throw parseAuthError(data, "Failed to submit password reset request.");
     }
     return data;
   };
@@ -222,9 +233,9 @@ export function CustomerProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: resetToken, password }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(data.message || "Failed to reset password");
+      throw parseAuthError(data, "Failed to reset password. Link may be invalid or expired.");
     }
     return data;
   };
@@ -276,9 +287,13 @@ export function CustomerProvider({ children }) {
 
   // Check if product is in refill list
   const isRefillSaved = useCallback((productId) => {
-    if (!refillData?.items) return false;
+    if (!refillData?.items || !productId) return false;
+    const targetId = String(productId?._id || productId);
     return refillData.items.some(
-      (it) => it.productId === productId || it.productId?._id === productId
+      (it) =>
+        String(it.productId) === targetId ||
+        String(it.productId?._id) === targetId ||
+        String(it._id) === targetId
     );
   }, [refillData]);
 

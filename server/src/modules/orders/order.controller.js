@@ -152,7 +152,7 @@ const getOrders = async (req, res, next) => {
  */
 const getOrderStats = async (req, res, next) => {
   try {
-    const stats = await orderService.getOrderStats(req.admin);
+    const stats = await orderService.getOrderStats(req.query, req.admin);
     res.status(200).json({
       status: "success",
       data: stats,

@@ -26,7 +26,8 @@ export default function AddToRefillButton({
   // Controlled narcotics cannot be added to automated refills
   if (product.isNarcotic) return null;
 
-  const saved = isRefillSaved(product._id);
+  const prodId = product._id || product.productId || product.id;
+  const saved = isRefillSaved(prodId);
 
   const handleClick = async (e) => {
     if (e) {
@@ -40,14 +41,21 @@ export default function AddToRefillButton({
       setLoading(true);
       if (saved) {
         const item = refillItems.find(
-          (it) => it.productId === product._id || it.productId?._id === product._id
+          (it) =>
+            String(it.productId) === String(prodId) ||
+            String(it.productId?._id) === String(prodId) ||
+            String(it._id) === String(prodId)
         );
         if (item) {
           await removeFromRefill(item._id);
         }
       } else {
-        await addToRefill(product._id, 1);
-        trackAddToRefill(product);
+        await addToRefill(prodId, 1);
+        try {
+          trackAddToRefill(product);
+        } catch (e) {
+          console.warn("[analytics] trackAddToRefill error:", e);
+        }
         setJustAdded(true);
         setTimeout(() => setJustAdded(false), 1600);
       }

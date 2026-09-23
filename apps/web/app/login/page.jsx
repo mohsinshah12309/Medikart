@@ -22,22 +22,78 @@ function LoginForm() {
   const { login } = useCustomer();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const validateInputs = () => {
+    const errors = {};
+    const trimmedEmail = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!trimmedEmail) {
+      errors.email = "Please enter your email address.";
+    } else if (!emailRegex.test(trimmedEmail)) {
+      errors.email = "Please provide a valid email address (e.g., name@example.com).";
+    }
+
+    if (!password) {
+      errors.password = "Please enter your password.";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleEmailChange = (val) => {
+    setEmail(val);
+    if (fieldErrors.email) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next.email;
+        return next;
+      });
+    }
+    if (error) setError("");
+  };
+
+  const handlePasswordChange = (val) => {
+    setPassword(val);
+    if (fieldErrors.password) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next.password;
+        return next;
+      });
+    }
+    if (error) setError("");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (!validateInputs()) {
+      return;
+    }
+
     setLoading(true);
 
     try {
-      await login(email, password);
+      await login(email.trim().toLowerCase(), password);
       router.push(redirect);
     } catch (err) {
       if (err.code === "EMAIL_NOT_VERIFIED") {
-        router.push(`/verify-email?email=${encodeURIComponent(email)}&unverified=true`);
+        router.push(`/verify-email?email=${encodeURIComponent(email.trim().toLowerCase())}&unverified=true`);
       } else {
-        setError(err.message || "Invalid email or password");
+        if (err.details && Array.isArray(err.details)) {
+          const mapped = {};
+          err.details.forEach((d) => {
+            if (d.field) mapped[d.field] = d.message;
+          });
+          setFieldErrors(mapped);
+        }
+        setError(err.message || "Invalid email or password. Please check your credentials.");
       }
     } finally {
       setLoading(false);
@@ -78,18 +134,21 @@ function LoginForm() {
           badgeSubtitle="Sign in to access your Wishlist, prescriptions, and orders"
           floatTags={[
             { text: "💊 100% Genuine Meds", position: "top-left", delay: "0s" },
-            { text: "🔒 256-Bit SSL Encrypted", position: "top-right", delay: "1.2s" },
+            { text: "🔒 100% Secure & Protected", position: "top-right", delay: "1.2s" },
             { text: "❤️ Persistent Wishlist", position: "bottom-right", delay: "0.6s" },
           ]}
         >
           {error && (
             <div className="mb-5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-xs text-rose-800 animate-in fade-in">
               <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-              <span>{error}</span>
+              <div className="flex-1">
+                <span className="font-bold block">Sign In Failed</span>
+                <span className="text-[11px] leading-relaxed text-rose-700">{error}</span>
+              </div>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Email Address
@@ -99,12 +158,23 @@ function LoginForm() {
                   type="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => handleEmailChange(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-xs text-slate-800 placeholder:text-slate-400 transition-all shadow-xs group-hover:border-amber-300"
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs text-slate-800 placeholder:text-slate-400 transition-all shadow-xs ${
+                    fieldErrors.email
+                      ? "border-rose-300 bg-rose-50/40 focus:ring-2 focus:ring-rose-400 focus:border-rose-400"
+                      : "border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 group-hover:border-amber-300"
+                  }`}
                 />
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors group-hover:text-amber-500" />
+                <Mail className={`w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors ${
+                  fieldErrors.email ? "text-rose-500" : "text-slate-400 group-hover:text-amber-500"
+                }`} />
               </div>
+              {fieldErrors.email && (
+                <p className="text-[11px] text-rose-600 font-semibold mt-1 flex items-center gap-1">
+                  <span>⚠️</span> {fieldErrors.email}
+                </p>
+              )}
             </div>
 
             <div>
@@ -123,13 +193,18 @@ function LoginForm() {
                 id="login-password"
                 name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handlePasswordChange(e.target.value)}
                 placeholder="••••••••"
                 required
                 disabled={loading}
                 leadingIcon={<Lock className="w-4 h-4" />}
                 autoComplete="current-password"
               />
+              {fieldErrors.password && (
+                <p className="text-[11px] text-rose-600 font-semibold mt-1 flex items-center gap-1">
+                  <span>⚠️</span> {fieldErrors.password}
+                </p>
+              )}
             </div>
 
             <button
@@ -164,7 +239,7 @@ function LoginForm() {
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3 text-emerald-600" /> 256-Bit Protection
+              <ShieldCheck className="w-3 h-3 text-emerald-600" /> Secure & Protected
             </span>
           </div>
         </AuthCard3D>

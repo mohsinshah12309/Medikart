@@ -444,7 +444,7 @@ shadow-yellow: 0 4px 14px rgba(234,179,8,0.35);
 ### 6.10 Footer
 - **Layout:** Clean white background, 3-column grid
 - **Content:** Navigation links, compliance badges ("Cash on Delivery", "Online Payments", "Narcotics Compliance Active"), copyright
-- **Trust Seals:** Pharmacy license, HIPAA-compliant data handling, 256-bit SSL encryption
+- **Trust Seals:** Pharmacy verification, data protection, 100% Secure Checkout
 
 ---
 

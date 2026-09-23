@@ -131,7 +131,7 @@ const faqSchema = {
       name: "Is my medical and prescription data kept private?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Your prescriptions, order details, and personal contact info are encrypted using bank-grade 256-bit SSL protocols. Prescriptions are accessible only to licensed pharmacists reviewing your order.",
+        text: "Yes. Your prescriptions, order details, and personal contact info are fully encrypted and kept strictly confidential. Prescriptions are accessible only to licensed pharmacists reviewing your order.",
       },
     },
     {

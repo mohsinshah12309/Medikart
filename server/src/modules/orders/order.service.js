@@ -49,6 +49,7 @@ const getOrders = async (
     startDate,
     endDate,
     pharmacyId,
+    paymentMethod,
     page = 1,
     limit = 20,
   } = {},
@@ -57,6 +58,17 @@ const getOrders = async (
   const query = {};
   if (type) query.type = type;
   if (status) query.status = status;
+
+  if (paymentMethod) {
+    const pm = paymentMethod.toLowerCase().trim();
+    if (pm === "cc" || pm === "card" || pm === "credit_card" || pm === "debit_card") {
+      query.paymentMethod = "card";
+    } else if (pm === "cod" || pm === "cash") {
+      query.paymentMethod = "cod";
+    } else {
+      query.paymentMethod = pm;
+    }
+  }
 
   // Enforce role-based pharmacy scoping
   if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
@@ -133,7 +145,14 @@ const getOrders = async (
  *
  * @returns {{ todayOrders, totalOrders, narcoticsPending, pricingPending }}
  */
-const getOrderStats = async (admin = null) => {
+const getOrderStats = async (query = {}, admin = null) => {
+  // Support both (query, admin) and (admin) invocation signatures
+  if (query && (query.role || query._id) && !admin) {
+    admin = query;
+    query = {};
+  }
+  const { paymentMethod, pharmacyId } = query || {};
+
   // PKT is UTC+5. Midnight PKT = yesterday 19:00 UTC (i.e. now − ms_since_midnight_PKT).
   const now = new Date();
   // Shift now by +5h to get "current PKT time", then floor to midnight, then shift back.
@@ -144,42 +163,114 @@ const getOrderStats = async (admin = null) => {
   );
   const todayStartUTC = new Date(midnightPKT.getTime() - PKT_OFFSET_MS);
 
-  const pharmacyMatch =
-    admin && admin.role !== "super_admin" && admin.assignedPharmacyId
-      ? [{ $match: { assignedPharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) } }]
-      : [];
+  // Pharmacy matching (role-scoped subadmin or query-filtered super admin)
+  let pharmacyMatch = [];
+  let targetPharmacyId = null;
+
+  if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {
+    targetPharmacyId = admin.assignedPharmacyId;
+    pharmacyMatch = [{ $match: { assignedPharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) } }];
+  } else if (pharmacyId) {
+    if (pharmacyId === "assigned") {
+      pharmacyMatch = [{ $match: { assignedPharmacyId: { $exists: true, $ne: null } } }];
+    } else if (pharmacyId === "unassigned") {
+      pharmacyMatch = [{ $match: { $or: [{ assignedPharmacyId: { $exists: false } }, { assignedPharmacyId: null }] } }];
+    } else if (mongoose.Types.ObjectId.isValid(pharmacyId)) {
+      targetPharmacyId = pharmacyId;
+      pharmacyMatch = [{ $match: { assignedPharmacyId: new mongoose.Types.ObjectId(pharmacyId) } }];
+    }
+  }
+
+  // Optional Payment Method filtering for top-level stats
+  let paymentMatch = [];
+  if (paymentMethod) {
+    const pm = paymentMethod.toLowerCase().trim();
+    const normalizedPm = (pm === "cc" || pm === "card" || pm === "credit_card" || pm === "debit_card")
+      ? "card"
+      : (pm === "cod" || pm === "cash" ? "cod" : pm);
+    paymentMatch = [{ $match: { paymentMethod: normalizedPm } }];
+  }
+
+  const filteredMatch = [...pharmacyMatch, ...paymentMatch];
 
   const [result] = await Order.aggregate([
     {
       $facet: {
+        // Filtered overall metrics
         todayOrders: [
-          ...pharmacyMatch,
+          ...filteredMatch,
           { $match: { createdAt: { $gte: todayStartUTC } } },
           { $count: "count" },
         ],
-        totalOrders: [...pharmacyMatch, { $count: "count" }],
+        totalOrders: [...filteredMatch, { $count: "count" }],
         narcoticsPending: [
-          ...pharmacyMatch,
+          ...filteredMatch,
           { $match: { status: "pending_verification" } },
           { $count: "count" },
         ],
         pricingPending: [
-          ...pharmacyMatch,
+          ...filteredMatch,
           { $match: { status: "awaiting-pharmacist-pricing" } },
           { $count: "count" },
         ],
         totalSale: [
-          ...pharmacyMatch,
+          ...filteredMatch,
           { $match: { status: { $nin: ["cancelled", "rejected"] } } },
           { $group: { _id: null, total: { $sum: "$totals.total" } } },
         ],
         todaySale: [
-          ...pharmacyMatch,
+          ...filteredMatch,
           { $match: { createdAt: { $gte: todayStartUTC }, status: { $nin: ["cancelled", "rejected"] } } },
           { $group: { _id: null, total: { $sum: "$totals.total" } } },
         ],
-        medikartCommission: [
+
+        // Dedicated COD (Cash on Delivery) breakdown
+        totalCodOrders: [
           ...pharmacyMatch,
+          { $match: { paymentMethod: "cod" } },
+          { $count: "count" },
+        ],
+        todayCodOrders: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "cod", createdAt: { $gte: todayStartUTC } } },
+          { $count: "count" },
+        ],
+        totalCodSale: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "cod", status: { $nin: ["cancelled", "rejected"] } } },
+          { $group: { _id: null, total: { $sum: "$totals.total" } } },
+        ],
+        todayCodSale: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "cod", createdAt: { $gte: todayStartUTC }, status: { $nin: ["cancelled", "rejected"] } } },
+          { $group: { _id: null, total: { $sum: "$totals.total" } } },
+        ],
+
+        // Dedicated CC (Credit/Debit Card) breakdown
+        totalCardOrders: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "card" } },
+          { $count: "count" },
+        ],
+        todayCardOrders: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "card", createdAt: { $gte: todayStartUTC } } },
+          { $count: "count" },
+        ],
+        totalCardSale: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "card", status: { $nin: ["cancelled", "rejected"] } } },
+          { $group: { _id: null, total: { $sum: "$totals.total" } } },
+        ],
+        todayCardSale: [
+          ...pharmacyMatch,
+          { $match: { paymentMethod: "card", createdAt: { $gte: todayStartUTC }, status: { $nin: ["cancelled", "rejected"] } } },
+          { $group: { _id: null, total: { $sum: "$totals.total" } } },
+        ],
+
+        // Medikart Commission
+        medikartCommission: [
+          ...filteredMatch,
           { $match: { status: { $nin: ["cancelled", "rejected"] } } },
           {
             $lookup: {
@@ -213,15 +304,10 @@ const getOrderStats = async (admin = null) => {
 
   const commissionPaidQuery = {
     status: "verified",
-    ...(admin && admin.role !== "super_admin" && admin.assignedPharmacyId
-      ? { pharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) }
-      : {}),
+    ...(targetPharmacyId ? { pharmacyId: new mongoose.Types.ObjectId(targetPharmacyId) } : {}),
   };
 
-  const balanceMatch =
-    admin && admin.role !== "super_admin" && admin.assignedPharmacyId
-      ? { pharmacyId: new mongoose.Types.ObjectId(admin.assignedPharmacyId) }
-      : {};
+  const balanceMatch = targetPharmacyId ? { pharmacyId: new mongoose.Types.ObjectId(targetPharmacyId) } : {};
 
   const [balanceAgg, paidAgg] = await Promise.all([
     CommissionBalance.aggregate([
@@ -258,6 +344,16 @@ const getOrderStats = async (admin = null) => {
       ? Math.max(balancePaid, paymentsPaid)
       : paymentsPaid;
 
+  const totalCodSale = Math.round(result.totalCodSale[0]?.total ?? 0);
+  const todayCodSale = Math.round(result.todayCodSale[0]?.total ?? 0);
+  const totalCodOrders = result.totalCodOrders[0]?.count ?? 0;
+  const todayCodOrders = result.todayCodOrders[0]?.count ?? 0;
+
+  const totalCardSale = Math.round(result.totalCardSale[0]?.total ?? 0);
+  const todayCardSale = Math.round(result.todayCardSale[0]?.total ?? 0);
+  const totalCardOrders = result.totalCardOrders[0]?.count ?? 0;
+  const todayCardOrders = result.todayCardOrders[0]?.count ?? 0;
+
   return {
     todayOrders: result.todayOrders[0]?.count ?? 0,
     totalOrders: result.totalOrders[0]?.count ?? 0,
@@ -267,6 +363,24 @@ const getOrderStats = async (admin = null) => {
     todaySale: Math.round(result.todaySale[0]?.total ?? 0),
     medikartCommission: Math.round(computedCommission),
     totalCommissionPaid: Math.round(computedPaid),
+    cod: {
+      totalOrders: totalCodOrders,
+      todayOrders: todayCodOrders,
+      totalSale: totalCodSale,
+      todaySale: todayCodSale,
+    },
+    card: {
+      totalOrders: totalCardOrders,
+      todayOrders: todayCardOrders,
+      totalSale: totalCardSale,
+      todaySale: todayCardSale,
+    },
+    cc: {
+      totalOrders: totalCardOrders,
+      todayOrders: todayCardOrders,
+      totalSale: totalCardSale,
+      todaySale: todayCardSale,
+    },
   };
 };
 
@@ -847,12 +961,24 @@ const exportOrdersToExcel = async (
     startDate,
     endDate,
     pharmacyId,
+    paymentMethod,
   } = {},
   admin = null
 ) => {
   const query = {};
   if (type) query.type = type;
   if (status) query.status = status;
+
+  if (paymentMethod) {
+    const pm = paymentMethod.toLowerCase().trim();
+    if (pm === "cc" || pm === "card" || pm === "credit_card" || pm === "debit_card") {
+      query.paymentMethod = "card";
+    } else if (pm === "cod" || pm === "cash") {
+      query.paymentMethod = "cod";
+    } else {
+      query.paymentMethod = pm;
+    }
+  }
 
   // Enforce role-based pharmacy scoping
   if (admin && admin.role !== "super_admin" && admin.assignedPharmacyId) {

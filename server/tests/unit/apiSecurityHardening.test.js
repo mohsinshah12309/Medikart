@@ -332,7 +332,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.status).toBe("error");
-      expect(res.body.message).toMatch(/Validation failed/i);
+      expect(res.body.message).toMatch(/Validation failed|invalid|greater than/i);
     });
 
     test("11. excessive page size capped/rejected", async () => {
@@ -342,7 +342,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.status).toBe("error");
-      expect(res.body.message).toMatch(/Validation failed/i);
+      expect(res.body.message).toMatch(/Validation failed|Limit cannot exceed/i);
     });
   });
 

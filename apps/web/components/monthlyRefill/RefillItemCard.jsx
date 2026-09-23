@@ -3,7 +3,9 @@
 import React, { useState, useCallback, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Trash2, Plus, Minus, Loader2, AlertCircle } from "lucide-react";
+import { Trash2, Plus, Minus, Loader2, AlertCircle, ShoppingCart, Check } from "lucide-react";
+import { useCart } from "../CartProvider";
+import { trackAddToCart } from "../../lib/analytics";
 import "./monthlyRefill.css";
 
 // Pure helpers hoisted outside component to avoid recreation on every render
@@ -23,11 +25,18 @@ const getFullUrl = (path) => {
 };
 
 function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
+  const { addToCart, cart } = useCart();
   const [isRemoving, setIsRemoving] = useState(false);
   const [isPulsing, setIsPulsing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [cartSuccess, setCartSuccess] = useState(false);
 
   const [imgSrc, setImgSrc] = useState(getFullUrl(item.coverImage));
+
+  const isAlreadyInCart = cart?.some(
+    (c) => (c.productId || c._id) === (item.productId || item._id)
+  );
 
   const handleQtyChange = useCallback(async (newQty) => {
     if (newQty < 1 || loading) return;
@@ -56,6 +65,34 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
       }
     }, 280);
   }, [item._id, loading, onRemove]);
+
+  const handleAddToCartClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isAddingToCart || isOutOfStock) return;
+
+    try {
+      setIsAddingToCart(true);
+      const productObj = {
+        _id: item.productId || item._id,
+        productId: item.productId || item._id,
+        name: item.name,
+        price: item.effectivePrice !== undefined ? item.effectivePrice : item.price,
+        effectivePrice: item.effectivePrice !== undefined ? item.effectivePrice : item.price,
+        coverImage: item.coverImage,
+        isNarcotic: Boolean(item.isNarcotic),
+      };
+
+      await addToCart(productObj, item.quantity || 1);
+      trackAddToCart(productObj, item.quantity || 1);
+      setCartSuccess(true);
+      setTimeout(() => setCartSuccess(false), 2000);
+    } catch (err) {
+      console.error("Failed to add refill item to cart:", err);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
 
   const isOutOfStock = item.stockStatus === "out_of_stock";
 
@@ -107,7 +144,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
             </p>
           )}
 
-          <div className="flex items-center gap-2 mt-1.5">
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
             <span className="text-xs font-bold text-slate-700">
               PKR {formatPrice(item.effectivePrice)}
             </span>
@@ -126,10 +163,36 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
         </div>
       </div>
 
-      {/* Right: Quantity Stepper, Subtotal & Remove Action */}
-      <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-6 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+      {/* Right: Add to Cart, Quantity Stepper, Subtotal & Remove Action */}
+      <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 flex-wrap sm:flex-nowrap">
+        {/* Quick Add to Cart Button */}
+        <button
+          type="button"
+          onClick={handleAddToCartClick}
+          disabled={isAddingToCart || isOutOfStock}
+          className={`px-3 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer select-none ${
+            cartSuccess
+              ? "bg-emerald-600 text-white border border-emerald-600"
+              : isAlreadyInCart
+              ? "bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100"
+              : "bg-[#fff850] hover:bg-[#fae845] text-slate-900 border border-[#fae845]"
+          }`}
+          title="Add this saved medicine into active Shopping Cart"
+        >
+          {isAddingToCart ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          ) : cartSuccess ? (
+            <Check className="w-3.5 h-3.5 stroke-[3]" />
+          ) : (
+            <ShoppingCart className="w-3.5 h-3.5" />
+          )}
+          <span>
+            {cartSuccess ? "Added to Cart!" : isAlreadyInCart ? "In Cart (+Qty)" : "Add to Cart"}
+          </span>
+        </button>
+
         {/* Stepper */}
-        <div className="flex items-center gap-1.5 bg-[#FFFBEB] p-1 rounded-xl border border-amber-200/90">
+        <div className="flex items-center gap-1 bg-[#FFFBEB] p-1 rounded-xl border border-amber-200/90">
           <button
             type="button"
             onClick={() => handleQtyChange(item.quantity - 1)}
@@ -142,7 +205,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
           </button>
 
           <span
-            className={`w-8 text-center text-xs font-black text-slate-900 select-none ${
+            className={`w-7 text-center text-xs font-black text-slate-900 select-none ${
               isPulsing ? "refill-qty-pulsing" : ""
             }`}
           >
@@ -162,7 +225,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
         </div>
 
         {/* Subtotal */}
-        <div className="text-right min-w-[90px]">
+        <div className="text-right min-w-[80px]">
           <span className="text-[10px] uppercase font-bold text-slate-400 block leading-none">
             Subtotal
           </span>
@@ -176,7 +239,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
           type="button"
           onClick={handleRemoveClick}
           disabled={loading}
-          className="p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all cursor-pointer"
+          className="p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all cursor-pointer shrink-0"
           title="Remove from Monthly Refill"
           aria-label="Remove item"
         >

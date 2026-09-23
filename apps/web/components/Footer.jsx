@@ -411,7 +411,7 @@ export default function Footer({
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 pt-2 border-t border-slate-100">
             {/* Copyright */}
             <div className="text-center md:text-left font-medium">
-              <p>© {new Date().getFullYear()} Medikart. All rights reserved.</p>
+              <p>© {new Date().getFullYear()} Medikart. All rights reserved. <span className="text-slate-400 font-normal">A project by Banu Zahrah Pvt Ltd.</span></p>
               <p className="text-[11px] text-slate-400 mt-0.5">
                 Pakistan's licensed e-pharmacy network. Powered by authentic local pharmacies.
               </p>
@@ -431,7 +431,7 @@ export default function Footer({
 
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900">
                 <Lock className="w-3.5 h-3.5 text-emerald-600" />
-                <span>256-Bit SSL Encrypted</span>
+                <span>100% Secure & Protected</span>
               </span>
             </div>
           </div>

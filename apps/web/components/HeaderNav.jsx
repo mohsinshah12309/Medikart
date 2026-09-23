@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,12 +27,28 @@ export default function HeaderNav({ initialCategories = [] }) {
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const hoverTimeoutRef = useRef(null);
   const accountTimeoutRef = useRef(null);
   const pathname = usePathname();
   const router = useRouter();
 
   const { customer, isAuthenticated, logout, wishlistCount, refillCount } = useCustomer();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const orig = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = orig;
+      };
+    }
+  }, [isMobileMenuOpen]);
 
   // Load categories if not passed down from server layout
   useEffect(() => {
@@ -98,6 +115,308 @@ export default function HeaderNav({ initialCategories = [] }) {
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const mobileDrawerContent = isMobileMenuOpen && mounted ? (
+    <div className="fixed inset-0 z-[100] md:hidden">
+      {/* Backdrop overlay */}
+      <div
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-200"
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Slide-out Drawer Panel (Pinned to full viewport) */}
+      <aside
+        className="fixed top-0 left-0 bottom-0 w-[310px] max-w-[85vw] h-full max-h-screen bg-white shadow-2xl flex flex-col z-10 border-r border-slate-200 overflow-hidden animate-in slide-in-from-left duration-200"
+      >
+        {/* Drawer Top Header (Fixed shrink-0) */}
+        <div className="shrink-0 p-4 border-b border-slate-200 flex items-center justify-between bg-white shadow-2xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-[#FFCB05] flex items-center justify-center text-slate-950 font-black text-sm shadow-xs">
+              🛒
+            </div>
+            <div>
+              <h3 className="font-black text-base text-slate-900 font-heading leading-tight">
+                Medikart Menu
+              </h3>
+              <p className="text-[10px] text-slate-500 font-medium">Genuine Online Pharmacy</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-950 transition-colors cursor-pointer"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Drawer Scrollable Navigation Links (flex-1 min-h-0 for proper scrolling) */}
+        <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2 scrollbar-thin">
+          {/* 1. Home */}
+          <Link
+            href="/"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <span className="flex items-center gap-3">
+              <span className="text-base">🏠</span>
+              <span>Home</span>
+            </span>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
+
+          {/* 2. Instant Order */}
+          <Link
+            href="/instant-order"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/instant-order"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">⚡</span>
+              <span>Instant Order</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-200 text-slate-950 font-black">
+                Rapid
+              </span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
+
+          {/* 3. Categories Accordion */}
+          <div className="rounded-xl bg-slate-50/80 border border-slate-200 overflow-hidden shadow-2xs">
+            <button
+              type="button"
+              onClick={() => setIsMobileCategoriesOpen(!isMobileCategoriesOpen)}
+              className="w-full flex items-center justify-between px-3.5 py-3 font-bold text-sm text-slate-900 hover:bg-amber-50/60 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-base">📁</span>
+                <span>Categories</span>
+                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300/60">
+                  {categories.length}
+                </span>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-slate-500 transition-transform ${
+                  isMobileCategoriesOpen ? "rotate-180 text-amber-600" : ""
+                }`}
+              />
+            </button>
+
+            {isMobileCategoriesOpen && (
+              <div className="px-2 pb-2.5 pt-1 space-y-1 border-t border-slate-200/60 max-h-60 overflow-y-auto bg-white">
+                <Link
+                  href="/#store-catalog"
+                  onClick={(e) => {
+                    setIsMobileMenuOpen(false);
+                    if (pathname === "/") {
+                      e.preventDefault();
+                      window.dispatchEvent(new CustomEvent("select-category", { detail: "" }));
+                      const el = document.getElementById("store-catalog");
+                      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
+                  className="flex items-center justify-between p-2 rounded-lg text-xs font-black text-amber-800 bg-amber-50/80 hover:bg-amber-100 transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <span>📦</span>
+                    <span>All Products</span>
+                  </span>
+                  <span className="text-xs">→</span>
+                </Link>
+
+                {categories.map((cat) => {
+                  const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                  const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
+
+                  return (
+                    <div
+                      key={cat._id}
+                      onClick={(e) => handleCategorySelect(cat._id, e)}
+                      className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-yellow-50 text-xs font-bold text-slate-800 hover:text-slate-950 cursor-pointer transition-colors"
+                    >
+                      <div className="w-6 h-6 rounded-md bg-amber-50 border border-amber-200 relative overflow-hidden shrink-0 flex items-center justify-center">
+                        {imgSrc ? (
+                          <Image
+                            src={imgSrc}
+                            alt={cat.name}
+                            fill
+                            sizes="24px"
+                            className="object-cover"
+                          />
+                        ) : (
+                          <Pill className="w-3.5 h-3.5 text-amber-600" />
+                        )}
+                      </div>
+                      <span className="line-clamp-1 flex-1">{cat.name}</span>
+                      <span className="text-xs text-slate-400">→</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* 4. Wishlist */}
+          <Link
+            href="/wishlist"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/wishlist"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <Heart className={`w-4 h-4 ${wishlistCount > 0 ? "text-rose-500 fill-rose-500" : "text-rose-500"}`} />
+              <span>Wishlist</span>
+            </div>
+            {wishlistCount > 0 ? (
+              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
+                {wishlistCount}
+              </span>
+            ) : (
+              <ChevronRight className="w-4 h-4 text-slate-400" />
+            )}
+          </Link>
+
+          {/* 5. Monthly Refill */}
+          <Link
+            href="/refill"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/refill"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <CalendarSync className="w-4 h-4 text-amber-700" />
+              <span>Monthly Refill</span>
+            </div>
+            {refillCount > 0 ? (
+              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-yellow-400 text-slate-950">
+                {refillCount}
+              </span>
+            ) : (
+              <ChevronRight className="w-4 h-4 text-slate-400" />
+            )}
+          </Link>
+
+          {/* 6. Health Blogs */}
+          <Link
+            href="/blogs"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/blogs"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">📰</span>
+              <span>Health Blogs</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
+
+          {/* 7. About Medikart */}
+          <Link
+            href="/about"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/about"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">ℹ️</span>
+              <span>About Medikart</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
+
+          {/* 8. Contact Support */}
+          <Link
+            href="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/contact"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">📞</span>
+              <span>Contact Support</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
+        </div>
+
+        {/* Drawer Bottom Actions (Fixed shrink-0) */}
+        <div className="shrink-0 p-4 border-t border-slate-200 bg-white space-y-2.5 shadow-md">
+          {isAuthenticated ? (
+            <div className="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/80 flex items-center justify-between">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs shrink-0">
+                  {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-slate-900 truncate">{customer?.name}</p>
+                  <p className="text-[10px] text-slate-500 truncate">{customer?.email}</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  logout();
+                }}
+                className="p-1.5 rounded-lg bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 cursor-pointer shadow-2xs"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-black text-xs shadow-xs transition-colors"
+            >
+              <User className="w-4 h-4 text-yellow-400" />
+              <span>Sign In / Register</span>
+            </Link>
+          )}
+
+          <Link
+            href="/instant-order"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="w-full btn-amber-gradient py-2.5 rounded-xl font-black text-xs shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>Upload Prescription</span>
+            <span>→</span>
+          </Link>
+          <div className="text-center pt-0.5">
+            <span className="text-[10px] text-slate-400 font-medium">
+              A project by Banu Zahrah Pvt Ltd
+            </span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -184,7 +503,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                               onClick={(e) => handleCategorySelect(cat._id, e)}
                               className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all cursor-pointer"
                             >
-                              <div className="w-10 h-10 rounded-lg bg-amber-50/80 border border-amber-100 flex items-center justify-center relative overflow-hidden flex-shrink-0 group-hover:scale-105 group-hover:border-amber-300 transition-all">
+                              <div className="w-10 h-10 rounded-lg bg-amber-50/80 border border-amber-100 flex items-center justify-center relative overflow-hidden shrink-0 group-hover:scale-105 group-hover:border-amber-300 transition-all">
                                 {imgSrc ? (
                                   <Image
                                     src={imgSrc}
@@ -204,7 +523,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                                 </p>
                               </div>
 
-                              <ChevronRight className="w-3.5 h-3.5 text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                              <ChevronRight className="w-3.5 h-3.5 text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                             </div>
                           );
                         })}
@@ -372,238 +691,16 @@ export default function HeaderNav({ initialCategories = [] }) {
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
-          className="p-2 rounded-xl bg-white border border-[#F3EFE6] text-slate-800 hover:text-amber-600 shadow-2xs active:scale-95 transition-all cursor-pointer"
+          className="w-10 h-10 rounded-xl bg-white border border-yellow-300 text-slate-800 hover:text-amber-700 shadow-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer"
         >
-          {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {isMobileMenuOpen ? <X className="w-5 h-5 text-slate-900" /> : <Menu className="w-5 h-5 text-slate-900" />}
         </button>
       </div>
 
-      {/* 3. MOBILE ASIDE DRAWER */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden flex">
-          <div
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-
-          <aside className="relative w-[310px] max-w-[85vw] bg-[#FAF8F5] h-full shadow-2xl flex flex-col z-10 border-r border-[#F3EFE6]">
-            <div className="p-4 border-b border-[#F3EFE6] flex items-center justify-between bg-white">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🛒</span>
-                <span className="font-extrabold text-base text-slate-900 font-heading">
-                  Medikart Menu
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsMobileMenuOpen(false)}
-                aria-label="Close menu"
-                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-4 space-y-2">
-              <Link
-                href="/"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
-                  pathname === "/" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <span>Home</span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </Link>
-
-              <Link
-                href="/instant-order"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
-                  pathname === "/instant-order" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <span>Instant Order</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 font-extrabold">
-                    ⚡ Fast
-                  </span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </Link>
-
-              {/* Categories Accordion */}
-              <div className="rounded-xl bg-white border border-[#F3EFE6] overflow-hidden">
-                <button
-                  type="button"
-                  onClick={() => setIsMobileCategoriesOpen(!isMobileCategoriesOpen)}
-                  className="w-full flex items-center justify-between px-3.5 py-3 font-bold text-sm text-slate-800 hover:bg-amber-50/50 transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-amber-500">📁</span>
-                    <span>Categories</span>
-                    <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800">
-                      {categories.length}
-                    </span>
-                  </div>
-                  <ChevronDown
-                    className={`w-4 h-4 text-slate-400 transition-transform ${
-                      isMobileCategoriesOpen ? "rotate-180 text-amber-600" : ""
-                    }`}
-                  />
-                </button>
-
-                {isMobileCategoriesOpen && (
-                  <div className="px-3 pb-3 pt-1 space-y-1 border-t border-slate-100 max-h-60 overflow-y-auto">
-                    {categories.map((cat) => {
-                      const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-                      const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
-
-                      return (
-                        <div
-                          key={cat._id}
-                          onClick={(e) => handleCategorySelect(cat._id, e)}
-                          className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-amber-50 text-xs font-semibold text-slate-700 cursor-pointer transition-colors"
-                        >
-                          <div className="w-7 h-7 rounded-md bg-amber-50 border border-amber-200 relative overflow-hidden flex-shrink-0">
-                            {imgSrc ? (
-                              <Image
-                                src={imgSrc}
-                                alt={cat.name}
-                                fill
-                                sizes="28px"
-                                className="object-cover"
-                              />
-                            ) : (
-                              <Pill className="w-4 h-4 text-amber-600" />
-                            )}
-                          </div>
-                          <span className="line-clamp-1">{cat.name}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              {/* Wishlist Mobile Link */}
-              <Link
-                href="/wishlist"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
-                  pathname === "/wishlist" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Heart className={`w-4 h-4 ${wishlistCount > 0 ? "text-rose-500 fill-rose-500" : "text-slate-400"}`} />
-                  <span>My Wishlist</span>
-                </div>
-                {wishlistCount > 0 ? (
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
-                    {wishlistCount}
-                  </span>
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
-                )}
-              </Link>
-
-              {/* Monthly Refill Mobile Link */}
-              <Link
-                href="/refill"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
-                  pathname === "/refill" ? "bg-yellow-100/80 text-amber-950 font-black" : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <CalendarSync className="w-4 h-4 text-amber-700" />
-                  <span>Monthly Refill</span>
-                </div>
-                {refillCount > 0 ? (
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#fff850] text-[#1a1a1a] border border-[#fae845]">
-                    {refillCount}
-                  </span>
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
-                )}
-              </Link>
-
-              <Link
-                href="/about"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
-                  pathname === "/about" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <span>About Us</span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </Link>
-
-              <Link
-                href="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm ${
-                  pathname === "/contact" ? "bg-amber-100/70 text-amber-900" : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                <span>Contact</span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </Link>
-            </div>
-
-            {/* Aside Drawer Footer */}
-            <div className="p-4 border-t border-[#F3EFE6] bg-white space-y-2.5">
-              {isAuthenticated ? (
-                <div className="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/80 flex items-center justify-between">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs flex-shrink-0">
-                      {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-slate-900 truncate">{customer?.name}</p>
-                      <p className="text-[10px] text-slate-500 truncate">{customer?.email}</p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      logout();
-                    }}
-                    className="p-1.5 rounded-lg bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 cursor-pointer shadow-2xs"
-                    title="Sign Out"
-                  >
-                    <LogOut className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <Link
-                  href="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-colors"
-                >
-                  <User className="w-4 h-4 text-yellow-400" />
-                  <span>Sign In / Register</span>
-                </Link>
-              )}
-
-              <Link
-                href="/instant-order"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full btn-amber-gradient py-2.5 rounded-xl font-bold text-xs shadow-xs flex items-center justify-center gap-1.5"
-              >
-                <span>Upload Prescription</span>
-                <span>→</span>
-              </Link>
-              <div className="text-center pt-0.5">
-                <span className="text-[10px] text-slate-400 font-medium">
-                  Licensed Partner Pharmacies • 100% Genuine
-                </span>
-              </div>
-            </div>
-          </aside>
-        </div>
-      )}
+      {/* 3. MOBILE ASIDE DRAWER (Rendered via React Portal directly into document.body) */}
+      {mounted && typeof document !== "undefined" && mobileDrawerContent
+        ? createPortal(mobileDrawerContent, document.body)
+        : null}
     </>
   );
 }

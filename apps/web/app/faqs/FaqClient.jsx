@@ -52,8 +52,8 @@ const FAQ_ITEMS = [
     categoryLabel: "Ordering & Payment",
     question: "What payment methods are supported on Medikart?",
     answer:
-      "We offer multiple convenient and secure payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package.\n- **Online Card Payments:** Securely pay via Visa/MasterCard debit or credit cards.\n\nAll digital transactions are encrypted with industry-standard 256-bit SSL protocols.",
-    highlights: ["Cash on Delivery (COD)", "Debit / Credit Cards", "256-bit SSL Encryption"],
+      "We offer multiple convenient and secure payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package.\n- **Online Card Payments:** Securely pay via Visa/MasterCard debit or credit cards.\n\nAll digital transactions are encrypted with high-standard secure payment protocols.",
+    highlights: ["Cash on Delivery (COD)", "Debit / Credit Cards", "100% Secure Checkout"],
   },
   {
     id: "order-3",
@@ -157,8 +157,8 @@ const FAQ_ITEMS = [
     categoryLabel: "Account & Security",
     question: "Is my medical and prescription data kept private?",
     answer:
-      "Medikart takes patient confidentiality very seriously. Your prescriptions, order details, and personal contact info are encrypted using bank-grade 256-bit SSL protocols. Prescription images are accessible only to qualified licensed pharmacists reviewing your order and are never sold or shared with advertisers.",
-    highlights: ["256-bit SSL encryption", "Confidential pharmacist-only access"],
+      "Medikart takes patient confidentiality very seriously. Your prescriptions, order details, and personal contact info are fully encrypted and confidential. Prescription images are accessible only to qualified licensed pharmacists reviewing your order and are never sold or shared with advertisers.",
+    highlights: ["Encrypted Data Protection", "Confidential pharmacist-only access"],
   },
 
   // ─── 5. Prescriptions & Narcotics ───

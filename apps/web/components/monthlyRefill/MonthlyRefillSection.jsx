@@ -3,13 +3,17 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCustomer } from "../CustomerProvider";
+import { useCart } from "../CartProvider";
 import RefillItemCard from "./RefillItemCard";
 import ReorderBar from "./ReorderBar";
 import AddToRefillButton from "./AddToRefillButton";
+import { trackBeginCheckout } from "../../lib/analytics";
 import {
   CalendarSync,
   ShoppingBag,
+  ShoppingCart,
   Bell,
   Sparkles,
   Loader2,
@@ -76,6 +80,8 @@ export default function MonthlyRefillSection({
   initialProducts = [],
   isStandalonePage = false,
 }) {
+  const router = useRouter();
+  const { addToCart } = useCart();
   const {
     customer,
     token,
@@ -93,8 +99,9 @@ export default function MonthlyRefillSection({
   } = useCustomer();
 
   const [clearing, setClearing] = useState(false);
+  const [transferringToCart, setTransferringToCart] = useState(false);
   const [popularMedicines, setPopularMedicines] = useState(
-    initialProducts.length > 0 ? initialProducts.slice(0, 6) : FALLBACK_POPULAR_REFILLS
+    FALLBACK_POPULAR_REFILLS
   );
 
   useEffect(() => {
@@ -103,19 +110,23 @@ export default function MonthlyRefillSection({
     }
   }, [isAuthenticated, refreshRefill]);
 
-  // If initialProducts wasn't supplied, load active OTC products
+  // Load dynamic most-searched and trending recurring products
   useEffect(() => {
-    if (initialProducts.length === 0) {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
-      fetch(`${apiUrl}/products?limit=6&isNarcotic=false`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.data?.products && data.data.products.length > 0) {
-            setPopularMedicines(data.data.products);
-          }
-        })
-        .catch(() => {});
-    }
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+    fetch(`${apiUrl}/trending-searches?limit=12`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data?.trendingProducts && data.data.trendingProducts.length > 0) {
+          setPopularMedicines(data.data.trendingProducts.slice(0, 8));
+        } else if (initialProducts.length > 0) {
+          setPopularMedicines(initialProducts.slice(0, 6));
+        }
+      })
+      .catch(() => {
+        if (initialProducts.length > 0) {
+          setPopularMedicines(initialProducts.slice(0, 6));
+        }
+      });
   }, [initialProducts]);
 
   const handleClearAll = async () => {
@@ -128,6 +139,34 @@ export default function MonthlyRefillSection({
       } finally {
         setClearing(false);
       }
+    }
+  };
+
+  const handleAddAllToCartAndCheckout = async () => {
+    if (!refillItems || refillItems.length === 0) return;
+
+    try {
+      setTransferringToCart(true);
+      for (const it of refillItems) {
+        const prodObj = {
+          _id: it.productId || it._id,
+          productId: it.productId || it._id,
+          name: it.name,
+          price: it.effectivePrice !== undefined ? it.effectivePrice : it.price,
+          effectivePrice: it.effectivePrice !== undefined ? it.effectivePrice : it.price,
+          coverImage: it.coverImage,
+          isNarcotic: Boolean(it.isNarcotic),
+        };
+        await addToCart(prodObj, it.quantity || 1);
+      }
+
+      trackBeginCheckout(refillItems, refillData?.subtotal || 0);
+      router.push("/checkout");
+    } catch (err) {
+      console.error("Failed to add all refill items to cart:", err);
+      router.push("/cart");
+    } finally {
+      setTransferringToCart(false);
     }
   };
 
@@ -197,16 +236,33 @@ export default function MonthlyRefillSection({
             )}
 
             {isAuthenticated && refillCount > 0 && (
-              <button
-                type="button"
-                onClick={handleClearAll}
-                disabled={clearing}
-                className="text-xs font-bold text-slate-500 hover:text-red-600 px-3 py-1.5 rounded-xl bg-white/80 hover:bg-red-50 transition-colors flex items-center gap-1 border border-slate-200 hover:border-red-200 cursor-pointer shadow-2xs"
-                title="Clear all saved refill medicines"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span>Clear</span>
-              </button>
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={handleAddAllToCartAndCheckout}
+                  disabled={transferringToCart}
+                  className="btn-refill-primary px-4 py-2 rounded-xl text-xs uppercase tracking-wider font-black shadow-xs flex items-center gap-1.5 cursor-pointer"
+                  title="Transfer all saved refill medicines to cart and proceed to checkout"
+                >
+                  {transferringToCart ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                  )}
+                  <span>{transferringToCart ? "Adding to Cart..." : "Add All to Cart & Checkout"}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleClearAll}
+                  disabled={clearing}
+                  className="text-xs font-bold text-slate-500 hover:text-red-600 px-3 py-2 rounded-xl bg-white/80 hover:bg-red-50 transition-colors flex items-center gap-1 border border-slate-200 hover:border-red-200 cursor-pointer shadow-2xs"
+                  title="Clear all saved refill medicines"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Clear</span>
+                </button>
+              </div>
             )}
 
             {!isAuthenticated && (

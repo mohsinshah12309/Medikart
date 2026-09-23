@@ -84,7 +84,7 @@ export default function ChatbotWidget() {
       {/* ─────────────────────────────────────────────────────────────────
           1. FLOATING CHAT BUTTON (Ultra-Prominent 3D Medi Owl Doctor)
       ────────────────────────────────────────────────────────────────── */}
-      <div className="fixed bottom-6 right-4 sm:right-8 z-50 flex items-center select-none">
+      <div className="fixed bottom-20 md:bottom-8 right-3 md:right-8 z-50 flex items-center select-none">
         
         {/* Irresistible High-Visibility Greeting Speech Bubble */}
         {!isOpen && showTooltip && (
@@ -132,27 +132,27 @@ export default function ChatbotWidget() {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_12px_40px_rgba(248,186,3,0.65)] hover:shadow-[0_18px_50px_rgba(248,186,3,0.85)] ring-4 ring-amber-300 ring-offset-2 ring-offset-white hover:ring-amber-500 transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center h-20 w-20 sm:h-22 sm:w-22 cursor-pointer border-2 border-white overflow-visible group"
+          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_8px_30px_rgba(248,186,3,0.55)] hover:shadow-[0_18px_50px_rgba(248,186,3,0.85)] ring-3 sm:ring-4 ring-amber-300 ring-offset-2 ring-offset-white hover:ring-amber-500 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center h-14 w-14 sm:h-20 sm:w-20 cursor-pointer border-2 border-white overflow-visible group"
           title="Medi - Your Personal AI Assistant"
           aria-label="Open Medi AI Assistant"
         >
           {isOpen ? (
-            <span className="text-3xl font-black text-slate-900 leading-none">✕</span>
+            <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">✕</span>
           ) : (
             <>
               {/* Pulsing Active Online Badge */}
-              <span className="absolute -top-2.5 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
+              <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
                 Ask Medi
               </span>
 
               {/* 3D Owl Doctor Character Image with Ambient Glow */}
-              <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+              <div className="relative w-11 h-11 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                 <Image
                   src="/images/ai-med-bot.png"
                   alt="Medi AI Assistant"
                   fill
-                  sizes="96px"
+                  sizes="(max-width: 640px) 48px, 96px"
                   priority
                   className="object-cover object-center drop-shadow-md"
                 />
@@ -166,7 +166,7 @@ export default function ChatbotWidget() {
           2. CHAT WINDOW PANEL
       ────────────────────────────────────────────────────────────────── */}
       {isOpen && (
-        <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[440px] h-[520px] max-h-[80vh] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-20 sm:bottom-28 right-2 sm:right-6 left-2 sm:left-auto w-auto sm:w-[420px] max-w-[440px] h-[calc(100vh-140px)] sm:h-[540px] max-h-[620px] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           
           {/* Header with 3D Owl Avatar */}
           <div className="bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">

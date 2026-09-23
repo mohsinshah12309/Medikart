@@ -16,6 +16,9 @@ function Orders({ token, adminUser, initialFilter }) {
   // Filter & Search State
   const [filterType, setFilterType] = useState(initialFilter?.filterType || "");
   const [filterStatus, setFilterStatus] = useState(initialFilter?.filterStatus || "");
+  const [filterPaymentMethod, setFilterPaymentMethod] = useState(
+    initialFilter?.filterPaymentMethod || initialFilter?.paymentMethod || ""
+  );
   const [searchQuery, setSearchQuery] = useState(initialFilter?.searchQuery || "");
   const [activeSearch, setActiveSearch] = useState(initialFilter?.searchQuery || "");
   const [dateFilter, setDateFilter] = useState(initialFilter?.dateFilter || "today"); // 'today' | 'yesterday' | '7days' | 'month' | 'custom' | 'all'
@@ -70,6 +73,7 @@ function Orders({ token, adminUser, initialFilter }) {
   const [exportEndDate, setExportEndDate] = useState("");
   const [exportStatus, setExportStatus] = useState("");
   const [exportType, setExportType] = useState("");
+  const [exportPaymentMethod, setExportPaymentMethod] = useState("");
   const [exportLoading, setExportLoading] = useState(false);
 
   // Calculate PKT dates helper
@@ -104,6 +108,7 @@ function Orders({ token, adminUser, initialFilter }) {
     }
     setExportStatus(filterStatus);
     setExportType(filterType);
+    setExportPaymentMethod(filterPaymentMethod);
     setIsExportModalOpen(true);
   };
 
@@ -160,6 +165,7 @@ function Orders({ token, adminUser, initialFilter }) {
       if (eDate) params.push(`endDate=${encodeURIComponent(eDate)}`);
       if (exportStatus) params.push(`status=${encodeURIComponent(exportStatus)}`);
       if (exportType) params.push(`type=${encodeURIComponent(exportType)}`);
+      if (exportPaymentMethod) params.push(`paymentMethod=${encodeURIComponent(exportPaymentMethod)}`);
       if (isScopedAdmin) {
         params.push(`pharmacyId=${encodeURIComponent(scopedPharmacyId)}`);
       } else if (filterPharmacyId) {
@@ -213,6 +219,8 @@ function Orders({ token, adminUser, initialFilter }) {
     if (initialFilter) {
       if (initialFilter.filterStatus !== undefined) setFilterStatus(initialFilter.filterStatus);
       if (initialFilter.filterType !== undefined) setFilterType(initialFilter.filterType);
+      if (initialFilter.filterPaymentMethod !== undefined) setFilterPaymentMethod(initialFilter.filterPaymentMethod);
+      if (initialFilter.paymentMethod !== undefined) setFilterPaymentMethod(initialFilter.paymentMethod);
       if (initialFilter.dateFilter !== undefined) setDateFilter(initialFilter.dateFilter);
       if (initialFilter.startDate !== undefined) setStartDate(initialFilter.startDate);
       if (initialFilter.endDate !== undefined) setEndDate(initialFilter.endDate);
@@ -231,7 +239,7 @@ function Orders({ token, adminUser, initialFilter }) {
 
   useEffect(() => {
     fetchOrders();
-  }, [filterType, filterStatus, activeSearch, dateFilter, startDate, endDate, filterPharmacyId, page]);
+  }, [filterType, filterStatus, filterPaymentMethod, activeSearch, dateFilter, startDate, endDate, filterPharmacyId, page]);
 
   useEffect(() => {
     fetchProducts();
@@ -275,6 +283,7 @@ function Orders({ token, adminUser, initialFilter }) {
       let endpoint = `/admin/orders?page=${page}&limit=${limit}`;
       if (filterType) endpoint += `&type=${filterType}`;
       if (filterStatus) endpoint += `&status=${filterStatus}`;
+      if (filterPaymentMethod) endpoint += `&paymentMethod=${filterPaymentMethod}`;
       if (filterPharmacyId) endpoint += `&pharmacyId=${filterPharmacyId}`;
       if (activeSearch.trim()) endpoint += `&search=${encodeURIComponent(activeSearch.trim())}`;
 
@@ -661,6 +670,7 @@ function Orders({ token, adminUser, initialFilter }) {
   const handleResetFilters = () => {
     setFilterType("");
     setFilterStatus("");
+    setFilterPaymentMethod("");
     setDateFilter("all");
     setStartDate("");
     setEndDate("");
@@ -911,6 +921,54 @@ function Orders({ token, adminUser, initialFilter }) {
         </div>
       )}
 
+      {/* Active Payment Method Filter Banner */}
+      {filterPaymentMethod && (
+        <div
+          style={{
+            background: filterPaymentMethod === "cod" ? "#f0fdf4" : "#eff6ff",
+            border: `1px solid ${filterPaymentMethod === "cod" ? "#86efac" : "#bfdbfe"}`,
+            borderRadius: "8px",
+            padding: "0.5rem 0.75rem",
+            marginBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            fontSize: "0.85rem",
+            color: filterPaymentMethod === "cod" ? "#166534" : "#1e40af",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span>{filterPaymentMethod === "cod" ? "💵" : "💳"}</span>
+            <span>
+              <strong>Filtered by Payment Method:</strong>{" "}
+              {filterPaymentMethod === "cod"
+                ? "Cash on Delivery (COD)"
+                : "Credit / Debit Card (CC - Habib Metro)"}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setFilterPaymentMethod("");
+              setPage(1);
+            }}
+            style={{
+              background: filterPaymentMethod === "cod" ? "#dcfce7" : "#dbeafe",
+              border: `1px solid ${filterPaymentMethod === "cod" ? "#86efac" : "#bfdbfe"}`,
+              borderRadius: "4px",
+              padding: "0.15rem 0.5rem",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              color: filterPaymentMethod === "cod" ? "#15803d" : "#1d4ed8",
+              cursor: "pointer",
+            }}
+            title="Clear payment method filter"
+          >
+            Clear Payment Filter ✕
+          </button>
+        </div>
+      )}
+
       {/* Active Search Banner */}
       {activeSearch && (
         <div
@@ -963,7 +1021,7 @@ function Orders({ token, adminUser, initialFilter }) {
               setFilterType(e.target.value);
               setPage(1);
             }}
-            style={{ width: "auto", minWidth: "140px" }}
+            style={{ width: "auto", minWidth: "130px" }}
           >
             <option value="">All Types</option>
             <option value="standard">Standard</option>
@@ -978,7 +1036,7 @@ function Orders({ token, adminUser, initialFilter }) {
               setFilterStatus(e.target.value);
               setPage(1);
             }}
-            style={{ width: "auto", minWidth: "160px" }}
+            style={{ width: "auto", minWidth: "150px" }}
           >
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
@@ -989,6 +1047,20 @@ function Orders({ token, adminUser, initialFilter }) {
             <option value="awaiting-pharmacist-pricing">Pricing Pending</option>
             <option value="cancelled">Cancelled</option>
             <option value="rejected">Rejected</option>
+          </select>
+
+          <select
+            className="form-control"
+            value={filterPaymentMethod}
+            onChange={(e) => {
+              setFilterPaymentMethod(e.target.value);
+              setPage(1);
+            }}
+            style={{ width: "auto", minWidth: "160px" }}
+          >
+            <option value="">All Payment Methods</option>
+            <option value="cod">💵 Cash on Delivery (COD)</option>
+            <option value="card">💳 Card / CC (Habib Metro)</option>
           </select>
         </div>
 
@@ -1044,6 +1116,7 @@ function Orders({ token, adminUser, initialFilter }) {
                   <th>Order Code</th>
                   <th>Customer & City</th>
                   <th>Type</th>
+                  <th>Payment</th>
                   <th>Total</th>
                   <th>Branch Assignment</th>
                   <th>Status</th>
@@ -1076,6 +1149,57 @@ function Orders({ token, adminUser, initialFilter }) {
                       </div>
                     </td>
                     <td style={{ textTransform: "capitalize", fontSize: "0.85rem" }}>{order.type}</td>
+                    <td>
+                      {order.paymentMethod === "cod" ? (
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "3px",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            padding: "0.2rem 0.5rem",
+                            borderRadius: "6px",
+                            background: "#ecfdf5",
+                            color: "#065f46",
+                            border: "1px solid #a7f3d0",
+                            whiteSpace: "nowrap",
+                          }}
+                          title="Cash on Delivery"
+                        >
+                          <span>💵</span> COD
+                          {order.paymentState === "paid" && (
+                            <span style={{ fontSize: "0.65rem", background: "#10b981", color: "#fff", padding: "1px 4px", borderRadius: "3px", marginLeft: "2px" }}>
+                              Paid
+                            </span>
+                          )}
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "3px",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            padding: "0.2rem 0.5rem",
+                            borderRadius: "6px",
+                            background: "#eff6ff",
+                            color: "#1e40af",
+                            border: "1px solid #bfdbfe",
+                            whiteSpace: "nowrap",
+                          }}
+                          title="Habib Metro Card Payment"
+                        >
+                          <span>💳</span> Card (CC)
+                          {order.paymentState === "paid" && (
+                            <span style={{ fontSize: "0.65rem", background: "#2563eb", color: "#fff", padding: "1px 4px", borderRadius: "3px", marginLeft: "2px" }}>
+                              Paid
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </td>
                     <td>
                       {order.totals?.total !== undefined ? (
                         <strong>PKR {order.totals.total.toLocaleString()}</strong>
@@ -1902,10 +2026,10 @@ function Orders({ token, adminUser, initialFilter }) {
                 </div>
 
                 {/* Filter Options */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
-                      Order Status Filter (Optional):
+                      Order Status:
                     </label>
                     <select
                       className="form-control"
@@ -1927,7 +2051,7 @@ function Orders({ token, adminUser, initialFilter }) {
 
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
-                      Order Type Filter (Optional):
+                      Order Type:
                     </label>
                     <select
                       className="form-control"
@@ -1935,10 +2059,26 @@ function Orders({ token, adminUser, initialFilter }) {
                       onChange={(e) => setExportType(e.target.value)}
                       style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
                     >
-                      <option value="">All Order Types</option>
-                      <option value="standard">Standard Catalog Orders</option>
-                      <option value="instant">Instant Prescription Orders</option>
-                      <option value="narcotics">Narcotics Prescription Orders</option>
+                      <option value="">All Types</option>
+                      <option value="standard">Standard Catalog</option>
+                      <option value="instant">Instant Prescription</option>
+                      <option value="narcotics">Narcotics Prescription</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
+                      Payment Method:
+                    </label>
+                    <select
+                      className="form-control"
+                      value={exportPaymentMethod}
+                      onChange={(e) => setExportPaymentMethod(e.target.value)}
+                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
+                    >
+                      <option value="">All Methods</option>
+                      <option value="cod">💵 Cash on Delivery (COD)</option>
+                      <option value="card">💳 Card / CC</option>
                     </select>
                   </div>
                 </div>

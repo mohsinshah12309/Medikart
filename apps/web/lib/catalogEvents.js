@@ -64,17 +64,25 @@ export function triggerFilterReset() {
 }
 
 /**
- * Scroll smoothly to the store catalog section
+ * Scroll smoothly to the store catalog section with sticky header offset
  */
-export function scrollToCatalog() {
+export function scrollToCatalog(customOffset = 90) {
   if (typeof window === "undefined") return;
 
   setTimeout(() => {
     const catalogEl =
+      document.getElementById("catalog-products-container") ||
       document.getElementById("store-catalog") ||
       document.getElementById("catalog");
     if (catalogEl) {
-      catalogEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      const rect = catalogEl.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const targetTop = rect.top + scrollTop - customOffset;
+      window.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: "smooth",
+      });
     }
-  }, 60);
+  }, 40);
 }
+

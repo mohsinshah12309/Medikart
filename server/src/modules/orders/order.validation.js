@@ -164,6 +164,7 @@ const adminOrderQuerySchema = z.object({
   startDate: z.string().trim().optional(),
   endDate: z.string().trim().optional(),
   pharmacyId: z.string().trim().optional(),
+  paymentMethod: z.string().trim().optional(),
   page: z.coerce.number().int().min(1).optional().default(1),
   limit: z.coerce.number().int().min(1).max(100).optional().default(20),
 });
@@ -199,6 +200,7 @@ const exportOrdersExcelQuerySchema = z.object({
   startDate: z.string().trim().optional(),
   endDate: z.string().trim().optional(),
   pharmacyId: z.string().trim().optional(),
+  paymentMethod: z.string().trim().optional(),
 });
 
 module.exports = {

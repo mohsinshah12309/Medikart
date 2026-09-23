@@ -10,6 +10,12 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
   const canViewOrders = canAccess("view_orders", "manage_orders");
   const canViewProducts = canAccess("view_products", "manage_products");
 
+  const [filterPaymentMethod, setFilterPaymentMethod] = useState("");
+  const [filterPharmacyId, setFilterPharmacyId] = useState(
+    !isSuperAdmin && adminUser?.assignedPharmacyId ? adminUser.assignedPharmacyId : ""
+  );
+  const [pharmacies, setPharmacies] = useState([]);
+
   const [stats, setStats] = useState({
     todayOrders: 0,
     totalOrders: 0,
@@ -20,6 +26,8 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
     todaySale: 0,
     medikartCommission: 0,
     totalCommissionPaid: 0,
+    cod: { totalOrders: 0, todayOrders: 0, totalSale: 0, todaySale: 0 },
+    card: { totalOrders: 0, todayOrders: 0, totalSale: 0, todaySale: 0 },
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -44,6 +52,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
   const [exportEndDate, setExportEndDate] = useState("");
   const [exportStatus, setExportStatus] = useState("");
   const [exportType, setExportType] = useState("");
+  const [exportPaymentMethod, setExportPaymentMethod] = useState("");
   const [exportLoading, setExportLoading] = useState(false);
 
   // Calculate PKT dates helper
@@ -117,6 +126,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
     setExportEndDate(getPKTDate(0));
     setExportStatus("");
     setExportType("");
+    setExportPaymentMethod(filterPaymentMethod || "");
     setIsExportModalOpen(true);
   };
 
@@ -173,6 +183,12 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
       if (eDate) params.push(`endDate=${encodeURIComponent(eDate)}`);
       if (exportStatus) params.push(`status=${encodeURIComponent(exportStatus)}`);
       if (exportType) params.push(`type=${encodeURIComponent(exportType)}`);
+      if (exportPaymentMethod) params.push(`paymentMethod=${encodeURIComponent(exportPaymentMethod)}`);
+      if (!isSuperAdmin && adminUser?.assignedPharmacyId) {
+        params.push(`pharmacyId=${encodeURIComponent(adminUser.assignedPharmacyId)}`);
+      } else if (filterPharmacyId) {
+        params.push(`pharmacyId=${encodeURIComponent(filterPharmacyId)}`);
+      }
 
       let endpoint = `/admin/orders/export/excel${params.length > 0 ? `?${params.join("&")}` : ""}`;
       const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
@@ -215,8 +231,16 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
   };
 
   useEffect(() => {
+    if (isSuperAdmin) {
+      adminFetch("/admin/pharmacies")
+        .then((res) => setPharmacies(res.data?.pharmacies || []))
+        .catch(() => {});
+    }
+  }, [isSuperAdmin]);
+
+  useEffect(() => {
     fetchStats();
-  }, [adminUser]);
+  }, [adminUser, filterPaymentMethod, filterPharmacyId]);
 
   const fetchStats = async () => {
     try {
@@ -231,13 +255,20 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
         totalSale: 0,
         todaySale: 0,
         medikartCommission: 0,
+        totalCommissionPaid: 0,
+        cod: { totalOrders: 0, todayOrders: 0, totalSale: 0, todaySale: 0 },
+        card: { totalOrders: 0, todayOrders: 0, totalSale: 0, todaySale: 0 },
       };
       let productCount = 0;
 
       // 1. Fetch order stats only if authorized
       if (canViewOrders || canAccess("view_pharmacies", "manage_pharmacies")) {
         try {
-          const dataStats = await adminFetch("/admin/orders/stats");
+          const params = new URLSearchParams();
+          if (filterPaymentMethod) params.append("paymentMethod", filterPaymentMethod);
+          if (filterPharmacyId && isSuperAdmin) params.append("pharmacyId", filterPharmacyId);
+
+          const dataStats = await adminFetch(`/admin/orders/stats${params.toString() ? `?${params.toString()}` : ""}`);
           if (dataStats.data) {
             orderStats = dataStats.data;
           }
@@ -266,6 +297,8 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
         medikartCommission: orderStats.medikartCommission ?? 0,
         totalCommissionPaid: orderStats.totalCommissionPaid ?? 0,
         totalProducts: productCount,
+        cod: orderStats.cod || { totalOrders: 0, todayOrders: 0, totalSale: 0, todaySale: 0 },
+        card: orderStats.card || { totalOrders: 0, todayOrders: 0, totalSale: 0, todaySale: 0 },
       });
     } catch (err) {
       setError("Failed to fetch dashboard statistics: " + err.message);
@@ -308,6 +341,97 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
 
       {error && <div className="alert alert-danger">{error}</div>}
 
+      {/* Global Dashboard Filters Bar (Payment Method & Branch Scoping) */}
+      <div
+        style={{
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          borderRadius: "10px",
+          padding: "0.85rem 1.25rem",
+          marginBottom: "1.5rem",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "1rem",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+        }}
+      >
+        {/* Payment Method Filter */}
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
+          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#334155", display: "flex", alignItems: "center", gap: "4px" }}>
+            💳 Payment Filter:
+          </span>
+          {[
+            { key: "", label: "All Payment Methods" },
+            { key: "cod", label: "💵 Cash on Delivery (COD)" },
+            { key: "card", label: "💳 Card / CC (Credit/Debit)" },
+          ].map((item) => (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => setFilterPaymentMethod(item.key)}
+              style={{
+                border: "1px solid",
+                borderColor: filterPaymentMethod === item.key ? "#0284c7" : "#cbd5e1",
+                background: filterPaymentMethod === item.key ? "#e0f2fe" : "#ffffff",
+                color: filterPaymentMethod === item.key ? "#0369a1" : "#475569",
+                fontWeight: filterPaymentMethod === item.key ? 700 : 500,
+                borderRadius: "6px",
+                padding: "0.3rem 0.65rem",
+                fontSize: "0.8rem",
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+              }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Pharmacy Branch Scoping Filter (Super Admin Only) or Branch Badge (Subadmin) */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+          {isSuperAdmin ? (
+            <>
+              <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#334155" }}>
+                🏥 Pharmacy Branch:
+              </span>
+              <select
+                className="form-control"
+                value={filterPharmacyId}
+                onChange={(e) => setFilterPharmacyId(e.target.value)}
+                style={{ fontSize: "0.85rem", padding: "0.3rem 0.6rem", width: "auto", minWidth: "180px" }}
+              >
+                <option value="">All Pharmacy Branches</option>
+                {pharmacies.map((ph) => (
+                  <option key={ph._id} value={ph._id}>
+                    {ph.name} ({ph.code})
+                  </option>
+                ))}
+              </select>
+            </>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.3rem 0.75rem",
+                borderRadius: "6px",
+                background: "#f0fdf4",
+                border: "1px solid #bbf7d0",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                color: "#166534",
+              }}
+            >
+              <span>🏥 Branch Scope:</span>
+              <span>{adminUser?.assignedPharmacyName || "Designated Pharmacy"}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
       {loading ? (
         <div style={{ padding: "3rem", textAlign: "center", fontSize: "1.2rem", color: "#64748b" }}>
           Loading dashboard metrics...
@@ -332,7 +456,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                     👋 Welcome, {adminUser?.name || "Sub-Admin"}
                   </h4>
                   <p style={{ margin: "0.2rem 0 0 0", fontSize: "0.8rem", color: "#64748b" }}>
-                    Your account is configured with specific role-based permissions granted by the Super Admin.
+                    Your account metrics are scoped specifically to your assigned pharmacy branch.
                   </p>
                 </div>
                 <span
@@ -383,7 +507,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 className="card"
                 role="button"
                 tabIndex={0}
-                onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "today", filterStatus: "", filterType: "" })}
+                onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "today", filterStatus: "", filterType: "", filterPaymentMethod })}
                 style={{
                   padding: "1.5rem",
                   borderLeft: "5px solid #eab308",
@@ -421,7 +545,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 className="card"
                 role="button"
                 tabIndex={0}
-                onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterStatus: "", filterType: "" })}
+                onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterStatus: "", filterType: "", filterPaymentMethod })}
                 style={{
                   padding: "1.5rem",
                   borderLeft: "5px solid #facc15",
@@ -683,8 +807,236 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 </div>
               </div>
             )}
-
           </div>
+
+          {/* COD vs CC Sales & Order Performance Breakdown */}
+          {canViewOrders && (
+            <div className="card" style={{ padding: "1.75rem", background: "#ffffff", marginBottom: "2rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem", marginBottom: "1.25rem" }}>
+                <div>
+                  <h3 style={{ margin: 0, color: "#0f172a", fontSize: "1.2rem", fontWeight: 800, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <span>💳</span> Payment Methods & Sales Analysis (COD vs CC)
+                  </h3>
+                  <p style={{ margin: "0.25rem 0 0 0", color: "#64748b", fontSize: "0.85rem" }}>
+                    Comparative breakdown of Cash on Delivery (COD) vs Habib Metro Credit/Debit Card (CC) fulfillment and volume.
+                  </p>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    style={{ fontSize: "0.75rem", padding: "0.25rem 0.6rem" }}
+                    onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterPaymentMethod: "" })}
+                  >
+                    View All Orders →
+                  </button>
+                </div>
+              </div>
+
+              {/* Dual Cards: COD vs CC */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem", marginBottom: "1.25rem" }}>
+                {/* COD Card */}
+                <div
+                  style={{
+                    background: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
+                    border: "1px solid #86efac",
+                    borderRadius: "12px",
+                    padding: "1.25rem",
+                    position: "relative",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
+                    <div>
+                      <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "#166534", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                        Payment Method
+                      </span>
+                      <h4 style={{ margin: "0.15rem 0 0 0", color: "#14532d", fontSize: "1.15rem", fontWeight: 900, display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span>💵</span> Cash on Delivery (COD)
+                      </h4>
+                    </div>
+                    <span
+                      style={{
+                        background: "#16a34a",
+                        color: "#ffffff",
+                        fontSize: "0.7rem",
+                        fontWeight: 800,
+                        padding: "0.2rem 0.55rem",
+                        borderRadius: "9999px",
+                      }}
+                    >
+                      {((stats.cod?.totalOrders || 0) + (stats.card?.totalOrders || 0)) > 0
+                        ? `${Math.round(((stats.cod?.totalOrders || 0) / ((stats.cod?.totalOrders || 0) + (stats.card?.totalOrders || 0))) * 100)}% of orders`
+                        : "COD"}
+                    </span>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <div style={{ background: "rgba(255,255,255,0.7)", padding: "0.75rem", borderRadius: "8px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "#166534", fontWeight: 700 }}>Total COD Sale</div>
+                      <div style={{ fontSize: "1.35rem", fontWeight: 900, color: "#14532d", marginTop: "0.2rem" }}>
+                        PKR {(stats.cod?.totalSale || 0).toLocaleString()}
+                      </div>
+                      <div style={{ fontSize: "0.7rem", color: "#15803d", marginTop: "0.15rem" }}>
+                        Today: <strong>PKR {(stats.cod?.todaySale || 0).toLocaleString()}</strong>
+                      </div>
+                    </div>
+
+                    <div style={{ background: "rgba(255,255,255,0.7)", padding: "0.75rem", borderRadius: "8px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "#166534", fontWeight: 700 }}>Total COD Orders</div>
+                      <div style={{ fontSize: "1.35rem", fontWeight: 900, color: "#14532d", marginTop: "0.2rem" }}>
+                        {stats.cod?.totalOrders || 0}
+                      </div>
+                      <div style={{ fontSize: "0.7rem", color: "#15803d", marginTop: "0.15rem" }}>
+                        Today: <strong>{stats.cod?.todayOrders || 0} placed</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterPaymentMethod: "cod" })}
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      background: "#16a34a",
+                      color: "#ffffff",
+                      border: "none",
+                      borderRadius: "6px",
+                      fontWeight: 700,
+                      fontSize: "0.8rem",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.3rem",
+                      transition: "background 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#15803d")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#16a34a")}
+                  >
+                    <span>View COD Orders</span>
+                    <span>→</span>
+                  </button>
+                </div>
+
+                {/* CC / Card Card */}
+                <div
+                  style={{
+                    background: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
+                    border: "1px solid #93c5fd",
+                    borderRadius: "12px",
+                    padding: "1.25rem",
+                    position: "relative",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
+                    <div>
+                      <span style={{ fontSize: "0.75rem", fontWeight: 800, color: "#1e40af", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                        Payment Method
+                      </span>
+                      <h4 style={{ margin: "0.15rem 0 0 0", color: "#1e3a8a", fontSize: "1.15rem", fontWeight: 900, display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span>💳</span> Card / CC (Credit/Debit)
+                      </h4>
+                    </div>
+                    <span
+                      style={{
+                        background: "#2563eb",
+                        color: "#ffffff",
+                        fontSize: "0.7rem",
+                        fontWeight: 800,
+                        padding: "0.2rem 0.55rem",
+                        borderRadius: "9999px",
+                      }}
+                    >
+                      {((stats.cod?.totalOrders || 0) + (stats.card?.totalOrders || 0)) > 0
+                        ? `${Math.round(((stats.card?.totalOrders || 0) / ((stats.cod?.totalOrders || 0) + (stats.card?.totalOrders || 0))) * 100)}% of orders`
+                        : "CC"}
+                    </span>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <div style={{ background: "rgba(255,255,255,0.7)", padding: "0.75rem", borderRadius: "8px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "#1e40af", fontWeight: 700 }}>Total CC Sale</div>
+                      <div style={{ fontSize: "1.35rem", fontWeight: 900, color: "#1e3a8a", marginTop: "0.2rem" }}>
+                        PKR {(stats.card?.totalSale || 0).toLocaleString()}
+                      </div>
+                      <div style={{ fontSize: "0.7rem", color: "#1d4ed8", marginTop: "0.15rem" }}>
+                        Today: <strong>PKR {(stats.card?.todaySale || 0).toLocaleString()}</strong>
+                      </div>
+                    </div>
+
+                    <div style={{ background: "rgba(255,255,255,0.7)", padding: "0.75rem", borderRadius: "8px" }}>
+                      <div style={{ fontSize: "0.75rem", color: "#1e40af", fontWeight: 700 }}>Total CC Orders</div>
+                      <div style={{ fontSize: "1.35rem", fontWeight: 900, color: "#1e3a8a", marginTop: "0.2rem" }}>
+                        {stats.card?.totalOrders || 0}
+                      </div>
+                      <div style={{ fontSize: "0.7rem", color: "#1d4ed8", marginTop: "0.15rem" }}>
+                        Today: <strong>{stats.card?.todayOrders || 0} placed</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterPaymentMethod: "card" })}
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      background: "#2563eb",
+                      color: "#ffffff",
+                      border: "none",
+                      borderRadius: "6px",
+                      fontWeight: 700,
+                      fontSize: "0.8rem",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.3rem",
+                      transition: "background 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#1d4ed8")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#2563eb")}
+                  >
+                    <span>View Card / CC Orders</span>
+                    <span>→</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Revenue Distribution Comparison Bar */}
+              {((stats.cod?.totalSale || 0) + (stats.card?.totalSale || 0)) > 0 && (
+                <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "8px", padding: "0.85rem 1rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", fontWeight: 700, marginBottom: "0.4rem" }}>
+                    <span style={{ color: "#166534" }}>
+                      💵 COD Revenue: {Math.round(((stats.cod?.totalSale || 0) / ((stats.cod?.totalSale || 0) + (stats.card?.totalSale || 0))) * 100)}% (PKR {(stats.cod?.totalSale || 0).toLocaleString()})
+                    </span>
+                    <span style={{ color: "#1e40af" }}>
+                      💳 CC Revenue: {Math.round(((stats.card?.totalSale || 0) / ((stats.cod?.totalSale || 0) + (stats.card?.totalSale || 0))) * 100)}% (PKR {(stats.card?.totalSale || 0).toLocaleString()})
+                    </span>
+                  </div>
+                  <div style={{ height: "10px", width: "100%", background: "#e2e8f0", borderRadius: "9999px", overflow: "hidden", display: "flex" }}>
+                    <div
+                      style={{
+                        height: "100%",
+                        width: `${Math.round(((stats.cod?.totalSale || 0) / ((stats.cod?.totalSale || 0) + (stats.card?.totalSale || 0))) * 100)}%`,
+                        background: "#16a34a",
+                      }}
+                      title="COD Share"
+                    />
+                    <div
+                      style={{
+                        height: "100%",
+                        width: `${Math.round(((stats.card?.totalSale || 0) / ((stats.cod?.totalSale || 0) + (stats.card?.totalSale || 0))) * 100)}%`,
+                        background: "#2563eb",
+                      }}
+                      title="CC Card Share"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Quick Info & Action Needed Summary (Only for Order managers) */}
           {canViewOrders && (
@@ -803,10 +1155,10 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 </div>
 
                 {/* Filter Options */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
-                      Order Status Filter (Optional):
+                      Order Status:
                     </label>
                     <select
                       className="form-control"
@@ -828,7 +1180,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
 
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
-                      Order Type Filter (Optional):
+                      Order Type:
                     </label>
                     <select
                       className="form-control"
@@ -836,10 +1188,26 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                       onChange={(e) => setExportType(e.target.value)}
                       style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
                     >
-                      <option value="">All Order Types</option>
-                      <option value="standard">Standard Catalog Orders</option>
-                      <option value="instant">Instant Prescription Orders</option>
-                      <option value="narcotics">Narcotics Prescription Orders</option>
+                      <option value="">All Types</option>
+                      <option value="standard">Standard Catalog</option>
+                      <option value="instant">Instant Prescription</option>
+                      <option value="narcotics">Narcotics Prescription</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.25rem", color: "#475569" }}>
+                      Payment Method:
+                    </label>
+                    <select
+                      className="form-control"
+                      value={exportPaymentMethod}
+                      onChange={(e) => setExportPaymentMethod(e.target.value)}
+                      style={{ fontSize: "0.85rem", padding: "0.4rem 0.6rem" }}
+                    >
+                      <option value="">All Methods</option>
+                      <option value="cod">💵 Cash on Delivery (COD)</option>
+                      <option value="card">💳 Card / CC</option>
                     </select>
                   </div>
                 </div>

@@ -45,7 +45,7 @@ export default function AboutPage() {
     loadData();
   }, []);
 
-  const defaultText = "Welcome to Medikart, Pakistan's trusted digital pharmacy network and healthcare delivery platform. We are committed to solving medicine accessibility by providing 100% authentic prescription medicines, OTC remedies, mother & baby essentials, and healthcare supplies delivered safely to your doorstep.\n\nEvery medication on Medikart is sourced from licensed pharmaceutical distributors and partner retail pharmacies. Orders are reviewed and fulfilled with care and strict adherence to medicine safety standards.";
+  const defaultText = "Welcome to Medikart, a healthcare initiative by Banu Zahrah Pvt Ltd connecting patients with Pakistan's trusted digital pharmacy network and healthcare delivery platform. We are committed to solving medicine accessibility by providing 100% authentic prescription medicines, OTC remedies, mother & baby essentials, and healthcare supplies delivered safely to your doorstep.\n\nEvery medication on Medikart is sourced from licensed pharmaceutical distributors and partner retail pharmacies. Orders are reviewed and fulfilled with care and strict adherence to medicine safety standards.";
 
   const formattedProductCount = totalProducts.toLocaleString();
 
@@ -268,7 +268,7 @@ export default function AboutPage() {
                       <td className="py-3.5 px-5 font-bold text-slate-950 flex items-center gap-2">
                         <span>🛡️</span> Data Privacy & Records
                       </td>
-                      <td className="py-3.5 px-5 text-slate-800 font-semibold">AES-256 GCM Encrypted Medical Data & HIPAA-Compliant Architecture</td>
+                      <td className="py-3.5 px-5 text-slate-800 font-semibold">Encrypted Patient Data Storage & Medical Confidentiality Protocol</td>
                       <td className="py-3.5 px-5 text-slate-600">Zero plain-text banking or prescription leak; strict staff RBAC</td>
                       <td className="py-3.5 px-5">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-300">
@@ -375,6 +375,11 @@ export default function AboutPage() {
             </div>
           </>
         )}
+      </div>
+
+      {/* Subtle Corporate Entity Footer Note */}
+      <div className="text-center text-xs text-slate-400 font-medium">
+        Medikart is a digital healthcare platform by Banu Zahrah Pvt Ltd, operated in partnership with licensed pharmacies across Pakistan.
       </div>
     </div>
   );

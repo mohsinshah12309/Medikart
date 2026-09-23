@@ -74,7 +74,7 @@ function VerifyEmailContent() {
           badgeSubtitle={`We sent a 6-digit code to ${email || "your registered email"}`}
           floatTags={[
             { text: "⚡ 6-Digit PIN", position: "top-left", delay: "0s" },
-            { text: "🔒 SSL Secured", position: "top-right", delay: "1.2s" },
+            { text: "🔒 100% Protected", position: "top-right", delay: "1.2s" },
           ]}
         >
           {error && (

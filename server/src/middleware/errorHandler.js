@@ -28,22 +28,31 @@ const errorHandler = (err, req, res, next) => {
       field: e.path.join("."),
       message: e.message,
     }));
+    const primaryMessage = details.length > 0
+      ? details.map((d) => d.message).join(". ")
+      : "Validation failed";
+
     return res.status(400).json({
       status: "error",
-      message: "Validation failed",
+      message: primaryMessage,
       details,
     });
   }
 
   // For Mongoose validation errors
   if (err.name === "ValidationError" && err.errors) {
+    const details = Object.values(err.errors).map((e) => ({
+      field: e.path,
+      message: e.message,
+    }));
+    const primaryMessage = details.length > 0
+      ? details.map((d) => d.message).join(". ")
+      : "Validation failed";
+
     return res.status(400).json({
       status: "error",
-      message: "Validation failed",
-      details: Object.values(err.errors).map((e) => ({
-        field: e.path,
-        message: e.message,
-      })),
+      message: primaryMessage,
+      details,
     });
   }
 

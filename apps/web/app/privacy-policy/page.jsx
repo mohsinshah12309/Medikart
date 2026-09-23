@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Privacy Policy & Patient Data Protection | Medikart Pakistan",
   description:
-    "Learn how Medikart safeguards patient medical records, prescriptions, and health data with 256-bit encryption and strict medical confidentiality standards in Pakistan.",
+    "Learn how Medikart safeguards patient medical records, prescriptions, and health data with strict confidentiality and advanced data security in Pakistan.",
   keywords: [
     "Medikart privacy policy",
     "patient data privacy Pakistan",
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="text-base sm:text-lg text-slate-900 leading-relaxed font-semibold">
-            Last updated: September 2026. Your health information, prescription records, and personal privacy are safeguarded with 256-bit encryption and strict medical confidentiality.
+            Last updated: September 2026. Your health information, prescription records, and personal privacy are safeguarded with end-to-end security and strict medical confidentiality.
           </p>
         </div>
       </div>
@@ -191,9 +191,9 @@ export default function PrivacyPolicyPage() {
             </li>
           </ul>
           <p className="pt-2">
-            All data in transit is protected using industry-standard 256-bit
-            TLS/SSL encryption and stored on secure cloud servers with
-            restricted role-based access.
+            All data in transit is protected using secure encrypted connections
+            and stored on protected cloud infrastructure with restricted
+            role-based access.
           </p>
         </section>
 

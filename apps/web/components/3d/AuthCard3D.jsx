@@ -10,8 +10,8 @@ export default function AuthCard3D({
   badgeSubtitle = "",
   floatTags = [
     { text: "💊 Genuine Meds", position: "top-left", delay: "0s" },
-    { text: "🔒 256-Bit SSL", position: "top-right", delay: "1.5s" },
-    { text: "⚡ Fast 2-4h Delivery", position: "bottom-right", delay: "0.8s" },
+    { text: "🔒 Secure & Protected", position: "top-right", delay: "1.5s" },
+    { text: "⚡ Fast Delivery", position: "bottom-right", delay: "0.8s" },
   ],
 }) {
   const cardRef = useRef(null);

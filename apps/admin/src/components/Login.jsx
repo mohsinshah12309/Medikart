@@ -39,10 +39,14 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
         body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        throw new Error(data.message || "Invalid credentials");
+        let errorMsg = data.message || "Invalid credentials";
+        if (data.details && Array.isArray(data.details) && data.details.length > 0) {
+          errorMsg = data.details.map((d) => d.message).join(". ");
+        }
+        throw new Error(errorMsg);
       }
 
       // Successful login
@@ -54,7 +58,7 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
         throw new Error("Invalid response format from server");
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to sign in. Please check your credentials.");
     } finally {
       setLoading(false);
     }

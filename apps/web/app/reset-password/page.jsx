@@ -104,7 +104,7 @@ function ResetPasswordForm() {
             badgeTitle="Create New Password"
             badgeSubtitle="Choose a strong, unique password for your account"
             floatTags={[
-              { text: "🔑 Strong Hash", position: "top-left", delay: "0s" },
+              { text: "🔑 Secure Password", position: "top-left", delay: "0s" },
               { text: "🛡️ Instant Update", position: "top-right", delay: "1.2s" },
             ]}
           >

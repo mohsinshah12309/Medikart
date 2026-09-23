@@ -43,11 +43,29 @@ export default function CatalogSection({
 }) {
   const [search, setSearch] = useState(initialSearch);
   const [activeCategoryId, setActiveCategoryId] = useState(initialCategoryId);
+  const [categoriesList, setCategoriesList] = useState(Array.isArray(categories) ? categories : []);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [products, setProducts] = useState(initialProducts);
   const [pagination, setPagination] = useState(initialPagination);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    if (Array.isArray(categories) && categories.length > 0) {
+      setCategoriesList(categories);
+    } else {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+      fetch(`${apiUrl}/categories`)
+        .then((res) => res.json())
+        .then((data) => {
+          const list = data?.data?.categories || data?.categories || (Array.isArray(data?.data) ? data.data : []);
+          if (Array.isArray(list) && list.length > 0) {
+            setCategoriesList(list);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [categories]);
 
   const searchRef = useRef(search);
   const categoryIdRef = useRef(activeCategoryId);
@@ -151,6 +169,7 @@ export default function CatalogSection({
       setActiveCategoryId(catId);
       setCurrentPage(1);
       fetchCatalog(newSearch, catId, 1);
+      scrollToCatalog(80);
     };
 
     const handleResetCustomEvent = () => {
@@ -158,6 +177,7 @@ export default function CatalogSection({
       setActiveCategoryId('');
       setCurrentPage(1);
       fetchCatalog('', '', 1);
+      scrollToCatalog(80);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -181,28 +201,29 @@ export default function CatalogSection({
     e.preventDefault();
     setCurrentPage(1);
     fetchCatalog(search, activeCategoryId, 1);
+    scrollToCatalog(80);
   };
 
   const handleClearSearch = () => {
     setSearch('');
     setCurrentPage(1);
-    triggerCatalogSearch('');
     fetchCatalog('', activeCategoryId, 1);
+    scrollToCatalog(80);
   };
 
   const handleSelectCategory = (catId) => {
     setActiveCategoryId(catId);
     setSearch('');
     setCurrentPage(1);
-    triggerCategorySelect(catId, true);
     fetchCatalog('', catId, 1);
+    scrollToCatalog(80);
   };
 
   const handleClearCategory = () => {
     setActiveCategoryId('');
     setCurrentPage(1);
-    triggerCategorySelect('', false);
     fetchCatalog(search, '', 1);
+    scrollToCatalog(80);
   };
 
   const handleResetAll = () => {
@@ -211,21 +232,19 @@ export default function CatalogSection({
     setCurrentPage(1);
     triggerFilterReset();
     fetchCatalog('', '', 1);
+    scrollToCatalog(80);
   };
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > pagination.pages) return;
     setCurrentPage(newPage);
     fetchCatalog(search, activeCategoryId, newPage);
-
-    // Smooth scroll to top of catalog section without full page refresh
-    const el = document.getElementById('store-catalog');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    scrollToCatalog(80);
   };
 
-  const activeCategoryObj = categories.find((c) => c._id === activeCategoryId);
+  const activeCategoryObj = (categoriesList || []).find(
+    (c) => c._id === activeCategoryId || c.slug === activeCategoryId
+  );
   const activeCategoryName = activeCategoryObj ? activeCategoryObj.name : '';
 
   return (
@@ -234,14 +253,14 @@ export default function CatalogSection({
       <span id="catalog" className="sr-only" />
       {/* Responsive Categories Side Bar */}
       <CategorySidebar
-        categories={categories}
+        categories={categoriesList}
         activeCategoryId={activeCategoryId}
         searchQuery={search}
         onSelectCategory={handleSelectCategory}
       />
 
       {/* Main Catalog Area */}
-      <div className="md:col-span-3 flex flex-col gap-6">
+      <div id="catalog-products-container" className="md:col-span-3 flex flex-col gap-6 scroll-mt-24">
         {/* Search Bar & Stats Header */}
         <div className="flex flex-col gap-3">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
