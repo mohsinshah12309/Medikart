@@ -8,27 +8,34 @@ import MonthlyRefillSection from './monthlyRefill/MonthlyRefillSection';
 
 const DEFAULT_CITIES = ['Lahore'];
 
+// In-memory module cache to eliminate redundant network hits across navigations
+let cachedCities = null;
+let cachedTrending = null;
+
 export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [], initialProducts = [] }) {
   const [selectedCity, setSelectedCity] = useState(initialCity);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
-  const [cities, setCities] = useState(DEFAULT_CITIES);
+  const [cities, setCities] = useState(cachedCities || DEFAULT_CITIES);
 
   // Dynamic trending searches state with rich pharmacy staples
-  const [trendingSearches, setTrendingSearches] = useState([
-    { icon: '💊', name: 'Panadol' },
-    { icon: '💊', name: 'Augmentin' },
-    { icon: '✨', name: 'Surbex Z' },
-    { icon: '🍼', name: 'Baby Diapers' },
-    { icon: '✨', name: 'Centrum' },
-    { icon: '🌿', name: 'Nexum' },
-    { icon: '💊', name: 'Brufen' },
-    { icon: '✨', name: 'CAC 1000 Plus' },
-    { icon: '🩹', name: 'First Aid' },
-    { icon: '🧴', name: 'Facewash' },
-  ]);
+  const [trendingSearches, setTrendingSearches] = useState(
+    cachedTrending || [
+      { icon: '💊', name: 'Panadol' },
+      { icon: '💊', name: 'Augmentin' },
+      { icon: '✨', name: 'Surbex Z' },
+      { icon: '🍼', name: 'Baby Diapers' },
+      { icon: '✨', name: 'Centrum' },
+      { icon: '🌿', name: 'Nexum' },
+      { icon: '💊', name: 'Brufen' },
+      { icon: '✨', name: 'CAC 1000 Plus' },
+      { icon: '🩹', name: 'First Aid' },
+      { icon: '🧴', name: 'Facewash' },
+    ]
+  );
 
   // Fetch dynamic active cities from backend API (strictly from DB)
   useEffect(() => {
+    if (cachedCities) return;
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
     fetch(`${apiUrl}/cities`)
       .then((res) => res.json())
@@ -36,37 +43,45 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
         if (data?.data?.cities && data.data.cities.length > 0) {
           const apiCityNames = data.data.cities.map((c) => c.name?.trim()).filter(Boolean);
           if (apiCityNames.length > 0) {
+            cachedCities = apiCityNames;
             setCities(apiCityNames);
             setSelectedCity((prev) => (apiCityNames.includes(prev) ? prev : apiCityNames[0]));
           }
         }
       })
-      .catch((err) => {
-        console.warn('Could not load dynamic cities, using defaults:', err);
-      });
+      .catch(() => {});
   }, []);
 
-  // Fetch dynamic trending searches from backend API with strict safety verification
+  // Fetch dynamic trending searches from backend API with deferred idle execution
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
-    fetch(`${apiUrl}/trending-searches?limit=12`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data?.trendingSearches && Array.isArray(data.data.trendingSearches)) {
-          // Filter out any inappropriate, abusive, or non-product terms
-          const abusiveRegex = /(pen\s*di|lul|lund|chutiya|gandu|bhosd|kameena|harami|gashti|dall[ae]|madarchod|behenchod|\bbc\b|\bmc\b|\bsex\b|\bporn\b|\bnude\b|\bbitch\b|\basshole\b|\bfuck\b|\bshit\b|\bdick\b|\bpussy\b|\bcock\b)/i;
-          const cleanSearches = data.data.trendingSearches.filter((item) => {
-            const name = typeof item === 'string' ? item : item?.name;
-            return name && typeof name === 'string' && name.trim().length >= 2 && !abusiveRegex.test(name);
-          });
-          if (cleanSearches.length > 0) {
-            setTrendingSearches(cleanSearches);
+    if (cachedTrending) return;
+    const loadTrending = () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+      fetch(`${apiUrl}/trending-searches?limit=12`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.data?.trendingSearches && Array.isArray(data.data.trendingSearches)) {
+            const corporateOrAbusiveRegex = /(pen\s*di|lul|lund|chutiya|gandu|bhosd|kameena|harami|gashti|dall[ae]|madarchod|behenchod|\bbc\b|\bmc\b|\bsex\b|\bporn\b|\bnude\b|\bbitch\b|\basshole\b|\bfuck\b|\bshit\b|\bdick\b|\bpussy\b|\bcock\b|martin\s*dow|glaxosmithkline|gsk|abbott|searl|ferozsons|pharmevo|ccl\s*pharm|highnoon|barrett|hilton\s*pharma|sami\s*pharm|getz\s*pharma|atco\s*lab|laboratories|pharmaceuticals)/i;
+            const cleanSearches = data.data.trendingSearches.filter((item) => {
+              const name = typeof item === 'string' ? item : item?.name;
+              return name && typeof name === 'string' && name.trim().length >= 2 && !corporateOrAbusiveRegex.test(name);
+            });
+            if (cleanSearches.length > 0) {
+              cachedTrending = cleanSearches;
+              setTrendingSearches(cleanSearches);
+            }
           }
-        }
-      })
-      .catch((err) => {
-        console.warn('Could not load dynamic trending searches:', err);
-      });
+        })
+        .catch(() => {});
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(loadTrending, { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
+    } else {
+      const timer = setTimeout(loadTrending, 1200);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // Helper: Find MongoDB category ID by slug or fuzzy name

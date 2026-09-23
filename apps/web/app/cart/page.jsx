@@ -59,12 +59,12 @@ export default function CartPage() {
               <div key={item.productId} className="bg-white rounded-2xl border-2 border-yellow-200/80 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400 hover:shadow-md transition-all">
                 <div className="w-16 h-16 bg-yellow-50/50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-yellow-200">
                   <img
-                    src={item.coverImage?.startsWith('http') ? item.coverImage : `http://localhost:5000${item.coverImage}`}
+                    src={item.coverImage ? (item.coverImage.startsWith('http') || item.coverImage.startsWith('/') ? item.coverImage : `/uploads/${item.coverImage}`) : '/uploads/placeholder.webp'}
                     alt={item.name ? `${item.name} — cart medicine item` : 'Medicine thumbnail'}
                     loading="lazy"
                     className="max-h-full max-w-full object-contain"
                     onError={(e) => {
-                      e.target.src = "http://localhost:5000/uploads/placeholder.webp";
+                      e.target.src = "/uploads/placeholder.webp";
                     }}
                   />
                 </div>

@@ -124,7 +124,7 @@ const initiateCharge = async (order) => {
 
   if (isMockMode()) {
     const mockTxnId = `TXN-KP-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const frontendUrl = process.env.FRONTEND_URL || process.env.STOREFRONT_URL || 'https://medikart.pk';
     return {
       redirectUrl: `${config.baseUrl}/pay/checkout?token=${mockTxnId}&orderId=${order._id.toString()}&amount=${order.totals?.total || 0}`,
       transactionId: mockTxnId,
@@ -134,6 +134,7 @@ const initiateCharge = async (order) => {
   }
 
   const endpoint = `${config.baseUrl}/v1/checkout`;
+  const returnUrlBase = process.env.FRONTEND_URL || process.env.STOREFRONT_URL || 'https://medikart.pk';
   const payload = {
     merchantId: config.merchantId,
     orderId: order._id.toString(),
@@ -141,7 +142,7 @@ const initiateCharge = async (order) => {
     currency: 'PKR',
     customerEmail: order.customer?.email,
     customerPhone: order.customer?.phone,
-    returnUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/order-confirmation/${order._id.toString()}`,
+    returnUrl: `${returnUrlBase}/order-confirmation/${order._id.toString()}`,
   };
 
   const response = await axios.post(endpoint, payload, {

@@ -60,11 +60,45 @@ const escapeRegex = (str = "") => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
+// Exclude pharmaceutical manufacturer / corporate names from trending searches
+const MANUFACTURER_BLOCKLIST = [
+  /martin\s*dow/i,
+  /glaxosmithkline/i,
+  /gsk/i,
+  /abbott/i,
+  /searl/i,
+  /ferozsons/i,
+  /pharmevo/i,
+  /ccl\s*pharm/i,
+  /highnoon/i,
+  /barrett\s*hodgson/i,
+  /hilton/i,
+  /sami\s*pharm/i,
+  /getz/i,
+  /atco/i,
+  /high-q/i,
+  /laboratories/i,
+  /pharmaceuticals/i,
+];
+
 /**
- * Verifies if the search query matches at least one active product or brand in the DB
+ * Checks if a search term is a corporate manufacturer rather than a product name
+ */
+const isManufacturerOrCorporate = (term = "") => {
+  for (const pat of MANUFACTURER_BLOCKLIST) {
+    if (pat.test(term)) return true;
+  }
+  return false;
+};
+
+/**
+ * Verifies if the search query matches an active product NAME or GENERIC NAME in the DB
  */
 const validateProductMatches = async (term = "") => {
   try {
+    if (isManufacturerOrCorporate(term)) {
+      return false;
+    }
     const escaped = escapeRegex(term.trim());
     const regex = new RegExp(escaped, "i");
     const count = await Product.countDocuments({
@@ -72,8 +106,6 @@ const validateProductMatches = async (term = "") => {
       $or: [
         { name: regex },
         { genericName: regex },
-        { brand: regex },
-        { description: regex },
       ],
     });
     return count > 0;

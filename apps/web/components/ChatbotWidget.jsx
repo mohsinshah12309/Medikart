@@ -17,7 +17,15 @@ export default function ChatbotWidget() {
   const [input, setInput] = useState('');
   const [conversationId, setConversationId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  // Defer greeting bubble so it doesn't compete with initial mobile render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTooltip(true);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const messagesEndRef = useRef(null);
 
@@ -140,9 +148,9 @@ export default function ChatbotWidget() {
             <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">✕</span>
           ) : (
             <>
-              {/* Pulsing Active Online Badge */}
-              <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md animate-pulse">
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+              {/* Active Online Indicator */}
+              <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-white" />
                 Ask Medi
               </span>
 
@@ -153,7 +161,6 @@ export default function ChatbotWidget() {
                   alt="Medi AI Assistant"
                   fill
                   sizes="(max-width: 640px) 48px, 96px"
-                  priority
                   className="object-cover object-center drop-shadow-md"
                 />
               </div>

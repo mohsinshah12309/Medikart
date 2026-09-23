@@ -71,7 +71,7 @@ const pressSchema = {
     },
     "sameAs": [
       "https://facebook.com/medikartpk",
-      "https://instagram.com/medikartpk",
+      "https://www.instagram.com/medikart.pakistan",
       "https://twitter.com/medikartpk",
       "https://linkedin.com/company/medikart-pk",
       "https://youtube.com/@medikartpk"

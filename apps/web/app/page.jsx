@@ -134,48 +134,31 @@ export default async function Home({ searchParams }) {
     limit: 20,
   };
 
-  let productsData = { products: [], pagination: {} };
-  let categoriesData = { categories: [] };
-  let heroBanners = [];
-  let midBanners = [];
-  let conditions = [];
+  const [productsRes, categoriesRes, heroRes, midRes, condRes] = await Promise.all([
+    getProducts(queryParams).catch((err) => {
+      console.error("Failed to load products:", err);
+      return null;
+    }),
+    getCategories().catch((err) => {
+      console.error("Failed to load categories:", err);
+      return null;
+    }),
+    getBanners('hero').catch(() => null),
+    getBanners('mid-page').catch(() => null),
+    getConditions().catch(() => null),
+  ]);
 
-  try {
-    const productsRes = await getProducts(queryParams);
-    if (productsRes) {
-      productsData = {
-        products: productsRes.data?.products || [],
-        pagination: productsRes.pagination || {},
-      };
-    }
-  } catch (err) {
-    console.error("Failed to load products:", err);
-  }
+  const productsData = productsRes?.data?.products ? {
+    products: productsRes.data.products,
+    pagination: productsRes.pagination || {},
+  } : { products: [], pagination: {} };
 
-  try {
-    const categoriesRes = await getCategories();
-    if (categoriesRes && categoriesRes.data) {
-      categoriesData = categoriesRes.data;
-    }
-  } catch (err) {
-    console.error("Failed to load categories:", err);
-  }
-
-  try {
-    const [heroRes, midRes, condRes] = await Promise.all([
-      getBanners('hero').catch(() => null),
-      getBanners('mid-page').catch(() => null),
-      getConditions().catch(() => null),
-    ]);
-    if (heroRes?.data?.banners) heroBanners = heroRes.data.banners;
-    if (midRes?.data?.banners) midBanners = midRes.data.banners;
-    if (condRes?.data?.conditions) conditions = condRes.data.conditions;
-  } catch (err) {
-    console.error("Failed to load promotional banners or conditions:", err);
-  }
+  const categories = categoriesRes?.data?.categories || [];
+  const heroBanners = heroRes?.data?.banners || [];
+  const midBanners = midRes?.data?.banners || [];
+  const conditions = condRes?.data?.conditions || [];
 
   const { products = [], pagination = {} } = productsData;
-  const { categories = [] } = categoriesData;
 
   return (
     <div className="flex flex-col xl:flex-row gap-6 lg:gap-8 items-start w-full relative">

@@ -20,6 +20,7 @@ import {
 
 import { useCustomer } from "./CustomerProvider";
 import { triggerCategorySelect, scrollToCatalog } from "../lib/catalogEvents";
+import InstallAppButton from "./pwa/InstallAppButton";
 
 export default function HeaderNav({ initialCategories = [] }) {
   const [categories, setCategories] = useState(initialCategories);
@@ -154,6 +155,11 @@ export default function HeaderNav({ initialCategories = [] }) {
 
         {/* Drawer Scrollable Navigation Links (flex-1 min-h-0 for proper scrolling) */}
         <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2 scrollbar-thin">
+          {/* Download / Install App Banner Card */}
+          <div className="pb-1">
+            <InstallAppButton variant="mobile-drawer" />
+          </div>
+
           {/* 1. Home */}
           <Link
             href="/"
@@ -588,6 +594,9 @@ export default function HeaderNav({ initialCategories = [] }) {
           )}
         </Link>
 
+        {/* Download App Desktop Pill Button */}
+        <InstallAppButton variant="navbar" />
+
         {/* Customer Account Dropdown / Sign In Button */}
         {isAuthenticated ? (
           <div
@@ -685,8 +694,9 @@ export default function HeaderNav({ initialCategories = [] }) {
         )}
       </nav>
 
-      {/* 2. MOBILE HAMBURGER BUTTON */}
-      <div className="flex items-center md:hidden">
+      {/* 2. MOBILE HAMBURGER BUTTON & QUICK APP BADGE */}
+      <div className="flex items-center gap-2 md:hidden">
+        <InstallAppButton variant="compact" />
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

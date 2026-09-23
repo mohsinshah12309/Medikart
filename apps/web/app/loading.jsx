@@ -2,32 +2,25 @@ import React from 'react';
 
 export default function Loading() {
   return (
-    <div className="flex flex-col gap-8 animate-pulse max-w-7xl mx-auto w-full">
+    <div className="flex flex-col gap-6 animate-pulse max-w-[1600px] 2xl:max-w-[1720px] mx-auto w-full py-4 px-2">
       {/* Hero Skeleton */}
-      <div className="h-64 bg-slate-200/70 rounded-3xl w-full" />
-
-      {/* Catalog Skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
-        {/* Sidebar Skeleton */}
-        <div className="hidden md:flex flex-col gap-3 bg-white p-5 rounded-2xl border border-slate-200">
-          <div className="h-5 bg-slate-200 rounded w-1/2 mb-2" />
-          <div className="h-8 bg-slate-100 rounded-xl w-full" />
-          <div className="h-8 bg-slate-100 rounded-xl w-full" />
-          <div className="h-8 bg-slate-100 rounded-xl w-full" />
-          <div className="h-8 bg-slate-100 rounded-xl w-full" />
+      <div className="h-44 sm:h-64 bg-gradient-to-r from-amber-50 via-yellow-100/60 to-amber-50 rounded-3xl w-full border border-amber-200/60 flex items-center justify-center">
+        <div className="flex items-center gap-2 text-amber-700 font-bold text-xs">
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+          <span>Loading Medikart Storefront...</span>
         </div>
+      </div>
 
-        {/* Product Cards Grid Skeleton */}
-        <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col gap-4">
-              <div className="aspect-square bg-slate-100 rounded-xl w-full" />
-              <div className="h-4 bg-slate-200 rounded w-3/4" />
-              <div className="h-3 bg-slate-100 rounded w-1/2" />
-              <div className="h-8 bg-slate-100 rounded-xl mt-auto w-full" />
-            </div>
-          ))}
-        </div>
+      {/* Categories & Products Skeleton */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="bg-white border border-amber-100 rounded-2xl p-3 flex flex-col gap-2.5 shadow-2xs">
+            <div className="aspect-square bg-amber-50/80 rounded-xl w-full" />
+            <div className="h-3.5 bg-slate-100 rounded w-3/4" />
+            <div className="h-3 bg-slate-100 rounded w-1/2" />
+            <div className="h-7 bg-amber-100/70 rounded-xl mt-auto w-full" />
+          </div>
+        ))}
       </div>
     </div>
   );

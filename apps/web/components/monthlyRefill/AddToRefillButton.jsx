@@ -50,7 +50,7 @@ export default function AddToRefillButton({
           await removeFromRefill(item._id);
         }
       } else {
-        await addToRefill(prodId, 1);
+        await addToRefill(prodId, 1, product);
         try {
           trackAddToRefill(product);
         } catch (e) {

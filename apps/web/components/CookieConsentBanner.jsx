@@ -18,8 +18,8 @@ export default function CookieConsentBanner() {
     // Check if consent has already been given
     const consent = getCookieConsent();
     if (!consent) {
-      // Show after short gentle delay
-      const timer = setTimeout(() => setIsVisible(true), 800);
+      // Defer appearance so it never blocks mobile FCP or user taps during initial load
+      const timer = setTimeout(() => setIsVisible(true), 3200);
       return () => clearTimeout(timer);
     }
   }, []);

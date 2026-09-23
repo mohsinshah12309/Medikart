@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import InteractiveLogo from "./InteractiveLogo";
 import { triggerCategorySelect, scrollToCatalog } from "../lib/catalogEvents";
+import InstallAppButton from "./pwa/InstallAppButton";
 
 // SVG Brand Social Icons
 function FacebookIcon({ className = "w-4 h-4" }) {
@@ -138,7 +139,7 @@ export default function Footer({
     {
       name: "Instagram",
       icon: InstagramIcon,
-      href: "https://instagram.com/medikartpk",
+      href: "https://www.instagram.com/medikart.pakistan",
       hoverColor: "hover:bg-[#E4405F] hover:text-white hover:border-[#E4405F]",
     },
     {
@@ -308,6 +309,9 @@ export default function Footer({
                     </Link>
                   </li>
                 ))}
+                <li className="pt-1">
+                  <InstallAppButton variant="footer" />
+                </li>
               </ul>
             </div>
 

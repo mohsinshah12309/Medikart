@@ -423,7 +423,7 @@ export default function DvagoSearchBar({ className = "" }) {
             {/* Rotating Animated Placeholder */}
             {!query && (
               <div
-                className={`pointer-events-none absolute left-0 right-3 text-xs sm:text-[13px] text-slate-400 truncate transition-opacity duration-200 ${
+                className={`pointer-events-none absolute left-0 right-2 text-xs sm:text-[13px] text-slate-400 truncate transition-opacity duration-200 ${
                   isFading ? "opacity-0 -translate-y-1" : "opacity-100 translate-y-0"
                 }`}
               >
@@ -439,7 +439,7 @@ export default function DvagoSearchBar({ className = "" }) {
               e.stopPropagation();
               handleOpenModal();
             }}
-            className="hidden sm:inline-flex items-center justify-center px-3.5 py-1.5 mr-1.5 rounded-full text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 transition-colors shadow-2xs cursor-pointer"
+            className="hidden lg:inline-flex items-center justify-center shrink-0 px-3.5 py-1.5 mr-1.5 rounded-full text-xs font-black bg-amber-400 hover:bg-amber-500 text-slate-950 transition-colors shadow-2xs cursor-pointer"
           >
             Search
           </button>

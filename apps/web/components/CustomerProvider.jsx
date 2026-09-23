@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import RefillToast from "./monthlyRefill/RefillToast";
 
 const CustomerContext = createContext(null);
 
@@ -81,6 +82,34 @@ export function CustomerProvider({ children }) {
     nextReminderAt: null,
   });
   const [isRefillLoading, setIsRefillLoading] = useState(false);
+
+  // Friendly Refill Popup Toast State
+  const [refillToast, setRefillToast] = useState({
+    show: false,
+    product: null,
+    title: "Added to Monthly Refill!",
+    message: "Your 30-day recurring refill routine has been updated.",
+  });
+
+  const showRefillToast = useCallback(
+    ({
+      product = null,
+      title = "Added to Monthly Refill!",
+      message = "Your 30-day recurring refill routine has been updated.",
+    } = {}) => {
+      setRefillToast({
+        show: true,
+        product,
+        title,
+        message,
+      });
+    },
+    []
+  );
+
+  const hideRefillToast = useCallback(() => {
+    setRefillToast((prev) => ({ ...prev, show: false }));
+  }, []);
 
   // Fetch customer's full Monthly Refill list
   const refreshRefill = useCallback(async (authToken = token) => {
@@ -313,7 +342,7 @@ export function CustomerProvider({ children }) {
   }, [refillData]);
 
   // Add item to monthly refill
-  const addToRefill = async (productId, quantity = 1) => {
+  const addToRefill = async (productId, quantity = 1, productObj = null) => {
     if (!token) {
       router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
       return false;
@@ -332,6 +361,13 @@ export function CustomerProvider({ children }) {
       if (res.ok) {
         const json = await res.json();
         setRefillData(json?.data || refillData);
+        showRefillToast({
+          product: productObj || { _id: productId },
+          title: "Added to Monthly Refill!",
+          message: productObj?.name
+            ? `${productObj.name} saved to your 30-day recurring routine.`
+            : "Medicine added to your 30-day recurring routine.",
+        });
         return true;
       }
       const errJson = await res.json().catch(() => ({}));
@@ -480,9 +516,18 @@ export function CustomerProvider({ children }) {
         updateRefillQuantity,
         removeFromRefill,
         clearRefill,
+        showRefillToast,
+        hideRefillToast,
       }}
     >
       {children}
+      <RefillToast
+        show={refillToast.show}
+        product={refillToast.product}
+        title={refillToast.title}
+        message={refillToast.message}
+        onClose={hideRefillToast}
+      />
     </CustomerContext.Provider>
   );
 }
