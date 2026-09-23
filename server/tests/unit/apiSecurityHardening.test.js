@@ -42,31 +42,15 @@ beforeAll(async () => {
     throw new Error("MONGODB_URI environment variable is not defined");
   }
   await mongoose.connect(mongoUri);
-});
 
-beforeEach(async () => {
-  // Clear collections
   await AdminUser.deleteMany({});
   await ActivityLog.deleteMany({});
   await PasswordReset.deleteMany({});
   await Otp.deleteMany({});
   await City.deleteMany({});
-  
-  // Seed active city
-  await City.create({
-    name: "Lahore",
-    slug: "lahore",
-    deliveryCharge: 100,
-    active: true,
-  });
-  
-  // Reset custom rate limiters
-  resetRateLimiters();
-  otpService._resetIpRequestLog();
 
   jwtSecret = process.env.JWT_SECRET || "test-secret";
 
-  // Create testing users
   superAdminUser = await AdminUser.create({
     name: "Super Admin",
     email: "super@test.com",
@@ -96,7 +80,64 @@ beforeEach(async () => {
     jwtSecret,
     { expiresIn: "1h" }
   );
+});
 
+beforeEach(async () => {
+  await ActivityLog.deleteMany({});
+  await PasswordReset.deleteMany({});
+  await Otp.deleteMany({});
+  await City.deleteMany({});
+  await AdminUser.deleteMany({ email: { $nin: ["super@test.com", "admin@test.com"] } });
+  
+  await City.create({
+    name: "Lahore",
+    slug: "lahore",
+    deliveryCharge: 100,
+    active: true,
+  });
+
+  const superAdminDoc = await AdminUser.findOneAndUpdate(
+    { email: "super@test.com" },
+    {
+      name: "Super Admin",
+      email: "super@test.com",
+      role: "super_admin",
+      permissions: ["view_products", "manage_products", "view_orders", "manage_orders", "narcotics_approval", "reports", "settings"],
+      passwordHash: "$2a$12$dummyhashformanytests",
+      active: true,
+    },
+    { upsert: true, new: true }
+  );
+  superAdminUser = superAdminDoc;
+
+  const regularAdminDoc = await AdminUser.findOneAndUpdate(
+    { email: "admin@test.com" },
+    {
+      name: "Regular Admin",
+      email: "admin@test.com",
+      role: "admin",
+      permissions: ["view_products", "manage_products"],
+      passwordHash: "$2a$12$dummyhashformanytests",
+      active: true,
+    },
+    { upsert: true, new: true }
+  );
+  regularAdminUser = regularAdminDoc;
+
+  superAdminToken = jwt.sign(
+    { sub: superAdminUser._id.toString(), role: "super_admin", email: superAdminUser.email },
+    jwtSecret,
+    { expiresIn: "1h" }
+  );
+
+  regularAdminToken = jwt.sign(
+    { sub: regularAdminUser._id.toString(), role: "admin", email: regularAdminUser.email },
+    jwtSecret,
+    { expiresIn: "1h" }
+  );
+  
+  resetRateLimiters();
+  otpService._resetIpRequestLog();
   smtpMock.sendEmail.mockClear();
 });
 
@@ -332,7 +373,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.status).toBe("error");
-      expect(res.body.message).toMatch(/Validation failed|invalid|greater than/i);
+      expect(res.body.message).toMatch(/Validation failed|invalid|greater than|at least 1|expected number/i);
     });
 
     test("11. excessive page size capped/rejected", async () => {

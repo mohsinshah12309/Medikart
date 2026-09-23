@@ -4,8 +4,10 @@ const API_URL = typeof window !== 'undefined'
 
 export async function fetchApi(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
+  const signal = options.signal || (typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(12000) : undefined);
   const res = await fetch(url, {
     ...options,
+    signal,
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -77,9 +79,11 @@ export async function getContent() {
 
 async function postFormData(endpoint, formData) {
   const url = `${API_URL}${endpoint}`;
+  const signal = typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(30000) : undefined; // 30s for file uploads
   const res = await fetch(url, {
     method: 'POST',
     body: formData,
+    signal,
   });
   if (!res.ok) {
     let errorMsg = `API request failed with status ${res.status}`;

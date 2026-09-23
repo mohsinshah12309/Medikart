@@ -5,7 +5,6 @@ import { useCart } from '../../components/CartProvider';
 import { getDeliveryCharge, requestOtp, verifyOtp, placeStandardOrder, getCities, placeNarcoticsOrder, initiatePayment } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import CardFlip3D from '../../components/3d/CardFlip3D';
 import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
 import { trackPurchase } from '../../lib/analytics';
 
@@ -26,15 +25,6 @@ export default function CheckoutPage() {
     address: '',
     city: 'Lahore'
   });
-
-  // 3D Card details for interactive preview
-  const [cardDetails, setCardDetails] = useState({
-    number: '',
-    holder: '',
-    expiry: '',
-    cvv: '',
-  });
-  const [isCardFlipped, setIsCardFlipped] = useState(false);
 
   const [deliveryCharge, setDeliveryCharge] = useState(200); // default delivery charge
   const [loadingCharge, setLoadingCharge] = useState(false);
