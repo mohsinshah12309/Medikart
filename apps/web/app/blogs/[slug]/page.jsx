@@ -105,11 +105,16 @@ export async function generateMetadata({ params }) {
     title,
     description,
     keywords: [
+      blog.title,
+      `${blog.title} Pakistan`,
       blog.categoryName || blog.category || 'Health Guide',
+      ...(Array.isArray(blog.tags) ? blog.tags : []),
       'health tips Pakistan',
       'medicine guide Pakistan',
-      'Medikart blog',
-    ],
+      'clinical healthcare Pakistan',
+      'Medikart health guide',
+      'online pharmacy Pakistan',
+    ].filter(Boolean),
     alternates: {
       canonical: canonicalUrl,
     },
