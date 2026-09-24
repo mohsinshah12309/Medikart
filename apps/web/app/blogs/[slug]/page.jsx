@@ -285,7 +285,6 @@ export default async function BlogPostPage({ params }) {
           alt={blog.title}
           className="w-full h-full object-cover"
           loading="eager"
-          onError={(e) => { e.target.src = '/uploads/placeholder.webp'; }}
         />
       </div>
 
