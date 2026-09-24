@@ -1505,13 +1505,38 @@ function Orders({ token, adminUser, initialFilter }) {
 
               {selectedOrder.prescriptionUrl && (
                 <div style={{ marginBottom: "1rem", padding: "0.75rem", background: "#f8fafc", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
-                  <h4 style={{ margin: "0 0 0.5rem 0", fontSize: "0.9rem" }}>Doctor's Prescription</h4>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                    <h4 style={{ margin: 0, fontSize: "0.9rem", color: "#0f172a" }}>Doctor's Prescription</h4>
+                    {prescriptionBlobUrl && (
+                      <a
+                        href={prescriptionBlobUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-sm btn-outline"
+                        style={{ padding: "0.25rem 0.6rem", fontSize: "0.75rem" }}
+                      >
+                        {selectedOrder.prescriptionUrl.toLowerCase().includes(".pdf") ? "📄 Open PDF in New Tab ↗" : "🔍 View Full Image ↗"}
+                      </a>
+                    )}
+                  </div>
                   {prescriptionLoading ? (
-                    <p style={{ fontSize: "0.85rem", color: "#64748b" }}>Loading secure prescription...</p>
+                    <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0.5rem 0" }}>Loading secure prescription...</p>
                   ) : prescriptionBlobUrl ? (
-                    <img src={prescriptionBlobUrl} alt="Prescription" style={{ maxHeight: "220px", borderRadius: "6px", objectFit: "contain" }} />
+                    selectedOrder.prescriptionUrl.toLowerCase().includes(".pdf") ? (
+                      <div style={{ marginTop: "0.5rem" }}>
+                        <iframe
+                          src={prescriptionBlobUrl}
+                          title="Doctor's Prescription PDF"
+                          style={{ width: "100%", height: "350px", border: "1px solid #cbd5e1", borderRadius: "6px", background: "#ffffff" }}
+                        />
+                      </div>
+                    ) : (
+                      <a href={prescriptionBlobUrl} target="_blank" rel="noreferrer" style={{ display: "inline-block", cursor: "zoom-in" }}>
+                        <img src={prescriptionBlobUrl} alt="Doctor's Prescription" style={{ maxHeight: "240px", maxWidth: "100%", borderRadius: "6px", objectFit: "contain", border: "1px solid #e2e8f0" }} />
+                      </a>
+                    )
                   ) : (
-                    <p style={{ fontSize: "0.85rem", color: "#dc2626" }}>Unable to preview prescription file.</p>
+                    <p style={{ fontSize: "0.85rem", color: "#dc2626", margin: "0.5rem 0" }}>Unable to preview prescription file.</p>
                   )}
                 </div>
               )}
@@ -1610,14 +1635,22 @@ function Orders({ token, adminUser, initialFilter }) {
                             rel="noreferrer"
                             style={{ fontSize: "0.75rem", color: "#2563eb", fontWeight: 600, textDecoration: "underline" }}
                           >
-                            Open Full Image ↗
+                            {pricingOrder?.prescriptionUrl?.toLowerCase()?.includes(".pdf") ? "📄 Open PDF in New Tab ↗" : "🔍 Open Full Image ↗"}
                           </a>
                         </div>
-                        <img
-                          src={pricingPrescriptionBlobUrl}
-                          alt="Prescription"
-                          style={{ width: "100%", maxHeight: "160px", objectFit: "contain", borderRadius: "4px", background: "#ffffff" }}
-                        />
+                        {pricingOrder?.prescriptionUrl?.toLowerCase()?.includes(".pdf") ? (
+                          <iframe
+                            src={pricingPrescriptionBlobUrl}
+                            title="Pricing Prescription PDF"
+                            style={{ width: "100%", height: "240px", border: "1px solid #cbd5e1", borderRadius: "4px", background: "#ffffff" }}
+                          />
+                        ) : (
+                          <img
+                            src={pricingPrescriptionBlobUrl}
+                            alt="Prescription"
+                            style={{ width: "100%", maxHeight: "180px", objectFit: "contain", borderRadius: "4px", background: "#ffffff" }}
+                          />
+                        )}
                       </div>
                     )}
 

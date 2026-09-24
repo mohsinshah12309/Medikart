@@ -14,7 +14,15 @@ export function notifySessionExpired(message = "Your session has expired. Please
 
 export async function adminFetch(endpoint, options = {}) {
   const token = sessionStorage.getItem("admin_token") || localStorage.getItem("admin_token");
-  const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
+  
+  let normalizedEndpoint = endpoint;
+  if (normalizedEndpoint.startsWith("/api/v1/")) {
+    normalizedEndpoint = normalizedEndpoint.replace(/^\/api\/v1/, "");
+  }
+  
+  const baseApiUrl = API_URL.replace(/\/$/, "");
+  const cleanEndpoint = normalizedEndpoint.startsWith("/") ? normalizedEndpoint : `/${normalizedEndpoint}`;
+  const fullUrl = endpoint.startsWith("http") ? endpoint : `${baseApiUrl}${cleanEndpoint}`;
 
   const headers = {
     "Content-Type": "application/json",
