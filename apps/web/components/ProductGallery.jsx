@@ -65,7 +65,7 @@ export default function ProductGallery({
     if (!path || path === "/images/placeholder-product.png" || imgError) {
       return fallback;
     }
-    return path.startsWith('http') || path.startsWith('/') ? path : `http://localhost:5000${path}`;
+    return path.startsWith('http') || path.startsWith('/') ? path : `/${path}`;
   };
 
   return (
@@ -130,7 +130,7 @@ export default function ProductGallery({
             <div className="flex gap-2.5 overflow-x-auto pb-1.5 scrollbar-thin">
               {images.map((img, index) => {
                 const isSelected = img.path === activeImage;
-                const thumbUrl = img.path?.startsWith('http') ? img.path : `http://localhost:5000${img.path}`;
+                const thumbUrl = getFullUrl(img.path);
                 return (
                   <button
                     key={img._id || index}

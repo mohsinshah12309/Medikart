@@ -406,13 +406,9 @@ export default function Banners({ token }) {
                   <div style={{ marginTop: "0.5rem", padding: "0.5rem", background: "#f8fafc", borderRadius: "8px", border: "1px solid #e2e8f0", textAlign: "center" }}>
                     <div style={{ fontSize: "0.75rem", color: "#64748b", marginBottom: "0.25rem" }}>Live Image Preview:</div>
                     <img
-                      src={formData.imageUrl.startsWith("http") ? formData.imageUrl : `http://localhost:5000${formData.imageUrl}`}
+                      src={formData.imageUrl}
                       alt="Banner Preview"
                       style={{ maxHeight: "110px", maxWidth: "100%", borderRadius: "6px", objectFit: "cover" }}
-                      onError={(e) => {
-                        // If direct port 5000 fails, try relative or web asset
-                        e.target.src = formData.imageUrl;
-                      }}
                     />
                   </div>
                 )}

@@ -131,7 +131,7 @@ const sendMonthlyRefillOrderEmail = async (order, nextReminderDate = null) => {
   const storefrontUrl =
     process.env.STOREFRONT_URL ||
     process.env.NEXT_PUBLIC_STOREFRONT_URL ||
-    "http://localhost:3000";
+    "https://medikart.pk";
   const refillManageUrl = `${storefrontUrl}/refill`;
 
   const itemRows = (order.items || [])
@@ -259,7 +259,7 @@ const sendRefillReminderEmail = async (customer, items = []) => {
   const storefrontUrl =
     process.env.STOREFRONT_URL ||
     process.env.NEXT_PUBLIC_STOREFRONT_URL ||
-    "http://localhost:3000";
+    "https://medikart.pk";
   const refillUrl = `${storefrontUrl}/refill`;
 
   const itemsTextList = items

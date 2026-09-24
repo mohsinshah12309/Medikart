@@ -132,9 +132,15 @@ app.use(
 );
 
 // 3. CORS Security (Phase 22 / Step 8)
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
+const defaultAllowedOrigins = [
+  "https://medikart.pk",
+  "https://www.medikart.pk",
+  "https://admin.medikart.pk",
+];
+const envOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
   : [];
+const allowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...envOrigins]));
 
 const corsOptions = {
   origin: (origin, callback) => {

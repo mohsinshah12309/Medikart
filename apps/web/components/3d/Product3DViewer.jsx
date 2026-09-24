@@ -29,7 +29,7 @@ export default function Product3DViewer({ productName = "Product Showcase", imag
   const getAbsoluteUrl = (url) => {
     if (!url) return "";
     if (url.startsWith("http")) return url;
-    return url.startsWith("/") ? url : `http://localhost:5000${url}`;
+    return url.startsWith("/") ? url : `/${url}`;
   };
 
   useEffect(() => {
