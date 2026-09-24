@@ -112,10 +112,11 @@ function VerifyEmailContent() {
             )}
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5 text-center">
+              <label htmlFor="otp-code" className="block text-xs font-bold text-slate-700 mb-1.5 text-center">
                 Enter 6-Digit Code
               </label>
               <input
+                id="otp-code"
                 type="text"
                 required
                 maxLength={6}

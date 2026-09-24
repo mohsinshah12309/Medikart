@@ -51,6 +51,7 @@ function Products({ token }) {
   // Selected files for upload
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadingImages, setUploadingImages] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   // Pagination State
   const [page, setPage] = useState(1);
@@ -162,54 +163,46 @@ function Products({ token }) {
     };
 
     try {
+      setSaving(true);
       const url = isEditMode
-        ? `${API_URL}/admin/products/${editId}`
-        : `${API_URL}/admin/products`;
+        ? `/admin/products/${editId}`
+        : `/admin/products`;
 
       const method = isEditMode ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      const data = await adminFetch(url, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || `Failed to ${isEditMode ? "update" : "create"} product`);
+      const newProductId = data._id || data.data?.product?._id || data.data?._id;
+      const wasEditMode = isEditMode;
+      
+      if (!wasEditMode && newProductId) {
+        setIsEditMode(true);
+        setEditId(newProductId);
       }
 
-      const newProductId = data._id;
-      if (!isEditMode && newProductId && formFiles.length > 0) {
+      if (!wasEditMode && newProductId && formFiles.length > 0) {
         const imageFormData = new FormData();
         formFiles.forEach((file) => {
           imageFormData.append("images", file);
         });
 
-        const imgRes = await fetch(`${API_URL}/admin/products/${newProductId}/images`, {
+        await adminFetch(`/admin/products/${newProductId}/images`, {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           body: imageFormData,
         });
-
-        const imgData = await imgRes.json();
-        if (!imgRes.ok) {
-          throw new Error(imgData.message || "Product created, but image upload failed.");
-        }
       }
 
-      setSuccessMsg(`Product successfully ${isEditMode ? "updated" : "created"}!`);
+      setSuccessMsg(`Product successfully ${wasEditMode ? "updated" : "created"}!`);
       setIsProductModalOpen(false);
       setFormFiles([]);
       fetchProducts();
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -219,13 +212,9 @@ function Products({ token }) {
     setSuccessMsg("");
 
     try {
-      const res = await fetch(`${API_URL}/admin/products/${id}`, {
+      await adminFetch(`/admin/products/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to delete product");
 
       setSuccessMsg("Product deleted successfully.");
       fetchProducts();
@@ -240,17 +229,10 @@ function Products({ token }) {
     const newNarcoticState = !product.isNarcotic;
 
     try {
-      const res = await fetch(`${API_URL}/admin/products/${product._id}/narcotics`, {
+      await adminFetch(`/admin/products/${product._id}/narcotics`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ isNarcotic: newNarcoticState }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to toggle narcotic status");
 
       setSuccessMsg(`Narcotics status for ${product.name} updated to ${newNarcoticState ? "ON" : "OFF"}`);
       fetchProducts();
@@ -776,6 +758,7 @@ function Products({ token }) {
             </div>
             <form onSubmit={handleProductSubmit}>
               <div className="modal-body">
+                {error && <div className="alert alert-danger">{error}</div>}
                 <div className="form-group">
                   <label htmlFor="prod-name">Product Name *</label>
                   <input
@@ -920,10 +903,10 @@ function Products({ token }) {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setIsProductModalOpen(false)}>
+                <button type="button" className="btn btn-secondary" onClick={() => setIsProductModalOpen(false)} disabled={saving}>
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" disabled={saving}>
                   {isEditMode ? "Save Changes" : "Create Product"}
                 </button>
               </div>

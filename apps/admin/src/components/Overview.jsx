@@ -191,12 +191,8 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
       }
 
       let endpoint = `/admin/orders/export/excel${params.length > 0 ? `?${params.join("&")}` : ""}`;
-      const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
-
-      const res = await fetch(fullUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const res = await adminFetch(endpoint, {
+        returnRawResponse: true,
       });
 
       if (!res.ok) {

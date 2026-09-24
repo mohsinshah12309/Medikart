@@ -31,6 +31,8 @@ function Categories({ token }) {
     value: 0,
     active: false,
   });
+  
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     fetchCategories();
@@ -103,6 +105,7 @@ function Categories({ token }) {
     };
 
     try {
+      setSaving(true);
       const endpoint = isEditMode
         ? `/admin/categories/${editId}`
         : `/admin/categories`;
@@ -118,6 +121,8 @@ function Categories({ token }) {
       fetchCategories();
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -150,6 +155,7 @@ function Categories({ token }) {
     setSuccessMsg("");
 
     try {
+      setSaving(true);
       await adminFetch(`/admin/categories/${selectedCategory._id}/discount`, {
         method: "PATCH",
         body: JSON.stringify({
@@ -163,6 +169,8 @@ function Categories({ token }) {
       fetchCategories();
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -345,10 +353,10 @@ function Categories({ token }) {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setIsCategoryModalOpen(false)}>
+                <button type="button" className="btn btn-secondary" onClick={() => setIsCategoryModalOpen(false)} disabled={saving}>
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" disabled={saving}>
                   {isEditMode ? "Save Changes" : "Create Category"}
                 </button>
               </div>
@@ -398,10 +406,10 @@ function Categories({ token }) {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setIsDiscountModalOpen(false)}>
+                <button type="button" className="btn btn-secondary" onClick={() => setIsDiscountModalOpen(false)} disabled={saving}>
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" disabled={saving}>
                   Update Discount
                 </button>
               </div>

@@ -20,6 +20,14 @@ function Layout({ adminUser, onLogout, activeTab, onTabChange, children }) {
       key={tab}
       className={`nav-item ${activeTab === tab ? "active" : ""}`}
       onClick={() => handleTabClick(tab)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleTabClick(tab);
+        }
+      }}
     >
       {label}
     </div>

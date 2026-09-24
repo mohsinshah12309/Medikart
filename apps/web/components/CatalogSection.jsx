@@ -72,10 +72,14 @@ export default function CatalogSection({
   searchRef.current = search;
   categoryIdRef.current = activeCategoryId;
 
+  const abortRef = useRef(null);
+
   // Fetch catalog data asynchronously without full page reload
   const fetchCatalog = async (searchQuery, categoryId, pageNum = 1) => {
     setLoading(true);
     setErrorMsg(null);
+    abortRef.current?.abort();
+    abortRef.current = new AbortController();
 
     try {
       const params = new URLSearchParams();
@@ -86,7 +90,7 @@ export default function CatalogSection({
 
       // Call public products API
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
-      const res = await fetch(`${apiUrl}/products?${params.toString()}`);
+      const res = await fetch(`${apiUrl}/products?${params.toString()}`, { signal: abortRef.current.signal });
       
       if (!res.ok) {
         throw new Error(`API error: ${res.statusText}`);
@@ -112,6 +116,7 @@ export default function CatalogSection({
       const newUrl = urlParams.toString() ? `/?${urlParams.toString()}#store-catalog` : '/#store-catalog';
       window.history.pushState({}, '', newUrl);
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.error('Catalog fetch failed:', err);
       setErrorMsg('Failed to load products. Please check server connection.');
     } finally {
@@ -273,6 +278,7 @@ export default function CatalogSection({
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search all 6,112 medicines, generic names..."
+                  aria-label="Search medicines and health products"
                   className="w-full bg-transparent px-3 py-2 text-sm outline-none text-slate-900 placeholder:text-slate-400"
                 />
                 {search && (
@@ -513,6 +519,7 @@ export default function CatalogSection({
                           key={pageNum}
                           type="button"
                           onClick={() => handlePageChange(pageNum)}
+                          aria-current={isCurrent ? 'page' : undefined}
                           className={`w-8 h-8 flex items-center justify-center text-xs font-black rounded-lg transition-all cursor-pointer ${
                             isCurrent
                               ? 'bg-yellow-400 text-slate-950 shadow-xs border border-yellow-500'

@@ -54,7 +54,7 @@ const forgotPasswordSchema = z
 
 const resetPasswordSchema = z
   .object({
-    token: z.string().regex(/^[0-9a-fA-F]{64}$/, "Invalid or malformed reset token"),
+    token: z.string().regex(/^[0-9a-fA-F]{64}$/, "This password reset link is invalid or has expired. Please request a new one."),
     password: passwordRule,
   })
   .strict();

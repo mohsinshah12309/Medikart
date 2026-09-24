@@ -145,13 +145,19 @@ const initiateCharge = async (order) => {
     returnUrl: `${returnUrlBase}/order-confirmation/${order._id.toString()}`,
   };
 
-  const response = await axios.post(endpoint, payload, {
-    headers: {
-      Authorization: `Bearer ${config.apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    timeout: 10000,
-  });
+  let response;
+  try {
+    response = await axios.post(endpoint, payload, {
+      headers: {
+        Authorization: `Bearer ${config.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      timeout: 10000,
+    });
+  } catch (error) {
+    const { AppError } = require('../../utils/errors');
+    throw new AppError('Payment gateway is temporarily unavailable. Please try again or choose Cash on Delivery.', 503);
+  }
 
   return {
     redirectUrl: response.data.redirectUrl || response.data.paymentUrl,

@@ -317,6 +317,7 @@ export default function DvagoSearchBar({ className = "" }) {
               alt={prod.name}
               className="w-full h-full object-contain group-hover:scale-105 transition-transform"
               loading="lazy"
+              onError={(e) => { e.target.src = '/uploads/placeholder.webp'; }}
             />
           </div>
           <div className="flex-1 min-w-0">
@@ -467,6 +468,7 @@ export default function DvagoSearchBar({ className = "" }) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search for Medicines & more..."
+                  aria-label="Search medicines and health products"
                   className="w-full bg-transparent text-sm sm:text-base font-semibold text-slate-900 placeholder-slate-400 outline-none"
                 />
                 {query && (

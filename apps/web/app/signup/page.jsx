@@ -95,6 +95,7 @@ function SignupForm() {
   };
 
   const handleSubmit = async (e, override = false) => {
+    if (loading) return;
     if (e) e.preventDefault();
     setError("");
 
@@ -228,11 +229,12 @@ function SignupForm() {
           <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-3.5" noValidate>
             {/* Full Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label htmlFor="signup-name" className="block text-xs font-bold text-slate-700 mb-1.5">
                 Full Name <span className="text-rose-500">*</span>
               </label>
               <div className="relative group">
                 <input
+                  id="signup-name"
                   type="text"
                   required
                   value={formData.name}
@@ -257,11 +259,12 @@ function SignupForm() {
 
             {/* Email Address */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label htmlFor="signup-email" className="block text-xs font-bold text-slate-700 mb-1.5">
                 Email Address <span className="text-rose-500">*</span>
               </label>
               <div className="relative group">
                 <input
+                  id="signup-email"
                   type="email"
                   required
                   value={formData.email}
@@ -286,11 +289,12 @@ function SignupForm() {
 
             {/* Phone Number */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label htmlFor="signup-phone" className="block text-xs font-bold text-slate-700 mb-1.5">
                 Phone Number <span className="text-slate-400 font-normal">(Optional)</span>
               </label>
               <div className="relative group">
                 <input
+                  id="signup-phone"
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}

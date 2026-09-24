@@ -57,10 +57,29 @@ export default function CheckoutPage() {
 
   // Resend timer effect
   useEffect(() => {
+    const stored = sessionStorage.getItem('otpCooldownUntil');
+    if (stored) {
+      const remaining = Math.floor((parseInt(stored, 10) - Date.now()) / 1000);
+      if (remaining > 0) {
+        setResendTimer(remaining);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (resendTimer === 60) {
+      sessionStorage.setItem('otpCooldownUntil', Date.now() + 60000);
+    }
+  }, [resendTimer]);
+
+  useEffect(() => {
     let timer;
     if (resendTimer > 0) {
       timer = setInterval(() => {
-        setResendTimer(prev => prev - 1);
+        setResendTimer(prev => {
+          if (prev <= 1) sessionStorage.removeItem('otpCooldownUntil');
+          return prev - 1;
+        });
       }, 1000);
     }
     return () => clearInterval(timer);
@@ -117,6 +136,7 @@ export default function CheckoutPage() {
   // Redirect if cart is empty and order not just confirmed
   useEffect(() => {
     if (isLoaded && cart.length === 0 && !confirmedOrderId) {
+      alert('Your cart is empty. Redirecting to the store...');
       router.push('/');
     }
   }, [cart, isLoaded, confirmedOrderId, router]);
@@ -279,6 +299,7 @@ export default function CheckoutPage() {
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
+    if (submitting) return;
     if (!customer.name || !customer.email || !customer.phone || !customer.address || !customer.city) {
       setErrorMsg("Please fill out all required shipping fields.");
       return;
@@ -361,13 +382,17 @@ export default function CheckoutPage() {
           type: hasNarcotics ? 'narcotics' : 'standard',
         });
         setConfirmedOrderId(orderId);
-        clearCart();
         
         if (paymentMethod === 'card' && !hasNarcotics) {
           try {
             const payRes = await initiatePayment(orderId);
             if (payRes && payRes.redirectUrl) {
+              clearCart();
               window.location.href = payRes.redirectUrl;
+              return;
+            } else {
+              setErrorMsg("Payment gateway error: Missing redirect URL.");
+              setConfirmedOrderId(null);
               return;
             }
           } catch (payErr) {
@@ -375,6 +400,8 @@ export default function CheckoutPage() {
             router.push(`/order-confirmation/${orderId}?paymentFailed=true`);
             return;
           }
+        } else {
+          clearCart();
         }
       }
     } catch (err) {
@@ -862,89 +889,8 @@ export default function CheckoutPage() {
 
             {/* 3D Interactive Card Flip UI for online payment */}
             {paymentMethod === 'card' && !hasNarcotics && (
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col gap-4 mt-1 animate-fadeIn">
-                <div className="text-center">
-                  <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center justify-center gap-1.5">
-                    <span>💳</span> 3D Interactive Card Preview
-                  </h3>
-                  <p className="text-[11px] text-slate-500 mt-0.5">
-                    Interactive 3D card animation from design.md. Focusing CVV flips to security back.
-                  </p>
-                </div>
-
-                {/* 3D Realistic Flipping Card */}
-                <CardFlip3D
-                  cardNumber={cardDetails.number}
-                  cardHolder={cardDetails.holder}
-                  cardExpiry={cardDetails.expiry}
-                  cardCvv={cardDetails.cvv}
-                  isFlipped={isCardFlipped}
-                  onFlipToggle={() => setIsCardFlipped(!isCardFlipped)}
-                />
-
-                {/* Card input helper fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
-                  <div className="sm:col-span-2">
-                    <label className="text-[11px] font-bold text-slate-700 block mb-1">Card Number</label>
-                    <input
-                      type="text"
-                      maxLength={19}
-                      value={cardDetails.number}
-                      onFocus={() => setIsCardFlipped(false)}
-                      onChange={(e) => {
-                        const v = e.target.value.replace(/\D/g, '').slice(0, 16);
-                        setCardDetails(prev => ({ ...prev, number: v }));
-                      }}
-                      placeholder="•••• •••• •••• ••••"
-                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
-                    />
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label className="text-[11px] font-bold text-slate-700 block mb-1">Cardholder Name</label>
-                    <input
-                      type="text"
-                      value={cardDetails.holder}
-                      onFocus={() => setIsCardFlipped(false)}
-                      onChange={(e) => setCardDetails(prev => ({ ...prev, holder: e.target.value.toUpperCase() }))}
-                      placeholder="ALI AHMED"
-                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-slate-700 block mb-1">Expiration (MM/YY)</label>
-                    <input
-                      type="text"
-                      maxLength={5}
-                      value={cardDetails.expiry}
-                      onFocus={() => setIsCardFlipped(false)}
-                      onChange={(e) => {
-                        let v = e.target.value.replace(/\D/g, '').slice(0, 4);
-                        if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
-                        setCardDetails(prev => ({ ...prev, expiry: v }));
-                      }}
-                      placeholder="12/28"
-                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-slate-700 block mb-1">CVV / Security Code</label>
-                    <input
-                      type="password"
-                      maxLength={4}
-                      value={cardDetails.cvv}
-                      onFocus={() => setIsCardFlipped(true)}
-                      onChange={(e) => {
-                        const v = e.target.value.replace(/\D/g, '').slice(0, 4);
-                        setCardDetails(prev => ({ ...prev, cvv: v }));
-                      }}
-                      placeholder="•••"
-                      className="w-full border border-slate-300 bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500"
-                    />
-                  </div>
-                </div>
+              <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: '#FFF9E6', borderRadius: '8px', border: '1px solid #F0E68C' }}>
+                <p style={{ margin: 0, fontSize: '0.95rem', color: '#555' }}>💳 You will be securely redirected to our payment partner to complete your card payment after placing the order.</p>
               </div>
             )}
           </div>

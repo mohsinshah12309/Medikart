@@ -88,6 +88,7 @@ export default function CartPage() {
                 <div className="flex items-center border-2 border-yellow-300 rounded-xl bg-yellow-50/50">
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                    aria-label="Decrease quantity"
                     className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-yellow-200/80 rounded-l-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity <= 1}
                   >
@@ -98,6 +99,7 @@ export default function CartPage() {
                   </span>
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                    aria-label="Increase quantity"
                     className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-yellow-200/80 rounded-r-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity >= 99}
                   >
@@ -107,7 +109,8 @@ export default function CartPage() {
 
                 {/* Remove Button */}
                 <button
-                  onClick={() => removeFromCart(item.productId)}
+                  onClick={() => { if (window.confirm('Remove this item from your cart?')) removeFromCart(item.productId); }}
+                  aria-label="Remove item from cart"
                   className="text-slate-400 hover:text-red-600 p-2 text-sm transition-colors cursor-pointer"
                   title="Remove item"
                 >

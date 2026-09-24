@@ -20,6 +20,7 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
+    if (loading) return;
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -82,11 +83,12 @@ export default function ForgotPasswordPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label htmlFor="reset-email" className="block text-xs font-bold text-slate-700 mb-1.5">
                   Email Address
                 </label>
                 <div className="relative group">
                   <input
+                    id="reset-email"
                     type="email"
                     required
                     value={email}

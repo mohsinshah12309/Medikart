@@ -20,8 +20,14 @@ export default function RefillPage() {
   }, [isAuthenticated, isLoading, refreshRefill, router]);
 
   return (
-    <div className="py-4 sm:py-6">
-      {/* Top back navigation */}
+    <>
+      {isLoading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+          <div className="animate-spin" style={{ width: 40, height: 40, border: '3px solid #e5e7eb', borderTop: '3px solid #DBBC04', borderRadius: '50%' }} />
+        </div>
+      ) : (
+        <div className="py-4 sm:py-6">
+          {/* Top back navigation */}
       <div className="flex items-center justify-between mb-4">
         <Link
           href="/#store-catalog"
@@ -42,5 +48,7 @@ export default function RefillPage() {
       {/* Main Refill Section */}
       <MonthlyRefillSection />
     </div>
+    )}
+    </>
   );
 }

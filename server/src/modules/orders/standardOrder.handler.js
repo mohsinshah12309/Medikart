@@ -60,7 +60,7 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
   // ── Validate existence and stock for every requested item ──────────────────
   for (const item of items) {
     const product = products.find((p) => p._id.toString() === item.productId);
-    if (!product) throw new NotFoundError(`Product not found: ${item.productId}`);
+    if (!product) throw new NotFoundError("One of the products in your cart is no longer available. Please review your cart.");
     if (product.stockStatus === 'out_of_stock') {
       throw new BadRequestError(`Product "${product.name}" is currently out of stock`);
     }

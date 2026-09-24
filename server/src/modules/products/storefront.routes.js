@@ -22,7 +22,7 @@ router.get("/products", async (req, res, next) => {
   try {
     const { search, categoryId, condition, isNarcotic, page = 1, limit = 20 } = req.query;
     const p = parseInt(page, 10) || 1;
-    const l = parseInt(limit, 10) || 20;
+    const l = Math.min(parseInt(limit, 10) || 20, 100);
 
     // Track search query popularity asynchronously in background
     if (search && search.trim()) {
@@ -189,7 +189,7 @@ router.get("/products/:id", async (req, res, next) => {
     ]);
 
     if (!product) {
-      return res.status(404).json({ status: "fail", message: "Product not found" });
+      return res.status(404).json({ status: "error", message: "Product not found" });
     }
 
     const formatted = formatProductWithImages(product);
@@ -460,7 +460,7 @@ router.post("/search/record", async (req, res, next) => {
   try {
     const { query } = req.body || {};
     if (!query || typeof query !== "string" || !query.trim()) {
-      return res.status(400).json({ status: "fail", message: "Query string is required" });
+      return res.status(400).json({ status: "error", message: "Query string is required" });
     }
 
     const recorded = await recordSearch(query);
@@ -530,7 +530,7 @@ router.get("/delivery-charge", async (req, res, next) => {
   try {
     const { city } = req.query;
     if (!city) {
-      return res.status(400).json({ status: "fail", message: "City query parameter is required" });
+      return res.status(400).json({ status: "error", message: "City query parameter is required" });
     }
     const charge = await getDeliveryCharge(city);
     res.status(200).json({

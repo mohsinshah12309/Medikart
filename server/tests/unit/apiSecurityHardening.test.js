@@ -466,7 +466,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
           status: "error",
-          message: "Invalid id: invalid-id",
+          message: expect.stringMatching(/Invalid id: invalid-id|The requested resource was not found/i),
         })
       );
     });
@@ -539,7 +539,7 @@ describe("API Security Hardening, Rate Limiting & Abuse Protection", () => {
         .attach("prescription", largeBuffer, "prescription.jpg");
 
       expect(res.status).toBe(400);
-      expect(res.body.message).toMatch(/File too large/i);
+      expect(res.body.message).toMatch(/File (too large|size exceeds)/i);
     });
 
     test("23. invalid file type rejected", async () => {

@@ -16,6 +16,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [cartError, setCartError] = useState(null);
   const { token, isAuthenticated } = useCustomer();
   const prevTokenRef = useRef(token);
 
@@ -93,6 +94,7 @@ export function CartProvider({ children }) {
   const addToCart = async (product, quantity = 1) => {
     const qty = Math.max(1, parseInt(quantity, 10) || 1);
     const prodId = product._id || product.productId;
+    const previousCart = [...cart];
 
     // 1. Optimistic local update
     setCart((prevCart) => {
@@ -130,7 +132,11 @@ export function CartProvider({ children }) {
         localStorage.setItem("medikart_cart", JSON.stringify(res.data.items));
       }
     } catch (err) {
-      console.warn("[CartProvider] Server add error, keeping optimistic state:", err.message);
+      console.warn("[CartProvider] Server add error, rolling back:", err.message);
+      setCart(previousCart);
+      localStorage.setItem("medikart_cart", JSON.stringify(previousCart));
+      setCartError(err.message || 'Failed to update cart');
+      setTimeout(() => setCartError(null), 5000);
     }
   };
 
@@ -138,6 +144,7 @@ export function CartProvider({ children }) {
   const updateQuantity = async (productId, quantity) => {
     const qty = parseInt(quantity, 10);
     if (isNaN(qty)) return;
+    const previousCart = [...cart];
 
     // 1. Optimistic local update
     setCart((prevCart) => {
@@ -164,12 +171,17 @@ export function CartProvider({ children }) {
         localStorage.setItem("medikart_cart", JSON.stringify(res.data.items));
       }
     } catch (err) {
-      console.warn("[CartProvider] Server update error, keeping optimistic state:", err.message);
+      console.warn("[CartProvider] Server update error, rolling back:", err.message);
+      setCart(previousCart);
+      localStorage.setItem("medikart_cart", JSON.stringify(previousCart));
+      setCartError(err.message || 'Failed to update cart');
+      setTimeout(() => setCartError(null), 5000);
     }
   };
 
   // Optimistic Remove From Cart
   const removeFromCart = async (productId) => {
+    const previousCart = [...cart];
     // 1. Optimistic local update
     setCart((prevCart) => {
       const updated = prevCart.filter((item) => (item.productId || item._id) !== productId);
@@ -186,7 +198,11 @@ export function CartProvider({ children }) {
         localStorage.setItem("medikart_cart", JSON.stringify(res.data.items));
       }
     } catch (err) {
-      console.warn("[CartProvider] Server remove error:", err.message);
+      console.warn("[CartProvider] Server remove error, rolling back:", err.message);
+      setCart(previousCart);
+      localStorage.setItem("medikart_cart", JSON.stringify(previousCart));
+      setCartError(err.message || 'Failed to update cart');
+      setTimeout(() => setCartError(null), 5000);
     }
   };
 
@@ -210,6 +226,8 @@ export function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cart,
+        cartError,
+        setCartError,
         addToCart,
         updateQuantity,
         removeFromCart,

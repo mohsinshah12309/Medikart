@@ -86,6 +86,7 @@ export default function BlogsDirectoryPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search articles (e.g. Panadol dosage, diabetes, pediatric flu)..."
+                aria-label="Search health articles"
                 className="w-full bg-transparent text-xs sm:text-sm font-semibold text-slate-950 placeholder:text-slate-400 outline-none"
               />
               {searchQuery && (
@@ -124,6 +125,9 @@ export default function BlogsDirectoryPage() {
       </div>
 
       {/* ─── Articles Grid ─── */}
+      {loading && blogs.length > 0 && (
+        <div className="flex justify-center py-4"><div className="animate-spin w-8 h-8 border-4 border-slate-200 border-t-amber-500 rounded-full" /></div>
+      )}
       {filteredBlogs.length === 0 ? (
         <div className="text-center py-16 bg-white rounded-3xl border border-slate-200">
           <p className="text-sm font-bold text-slate-600 mb-2">No health articles match your filter.</p>

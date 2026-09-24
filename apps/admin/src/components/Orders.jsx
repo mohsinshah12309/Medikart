@@ -176,12 +176,8 @@ function Orders({ token, adminUser, initialFilter }) {
       }
 
       let endpoint = `/admin/orders/export/excel${params.length > 0 ? `?${params.join("&")}` : ""}`;
-      const fullUrl = endpoint.startsWith("http") ? endpoint : `${API_URL}${endpoint}`;
-
-      const res = await fetch(fullUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const res = await adminFetch(endpoint, {
+        returnRawResponse: true,
       });
 
       if (!res.ok) {
@@ -409,11 +405,8 @@ function Orders({ token, adminUser, initialFilter }) {
 
     setPrescriptionLoading(true);
     try {
-      const baseApiUrl = API_URL.replace("/api/v1", "");
-      const fullUrl = prescriptionUrl.startsWith("http") ? prescriptionUrl : `${baseApiUrl}${prescriptionUrl}`;
-
-      const res = await fetch(fullUrl, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await adminFetch(prescriptionUrl, {
+        returnRawResponse: true,
       });
 
       if (!res.ok) throw new Error("Unauthorized or invalid prescription access");
@@ -489,12 +482,8 @@ function Orders({ token, adminUser, initialFilter }) {
     // Fetch prescription if present
     if (order?.prescriptionUrl) {
       try {
-        const baseApiUrl = API_URL.replace("/api/v1", "");
-        const fullUrl = order.prescriptionUrl.startsWith("http")
-          ? order.prescriptionUrl
-          : `${baseApiUrl}${order.prescriptionUrl}`;
-        const res = await fetch(fullUrl, {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await adminFetch(order.prescriptionUrl, {
+          returnRawResponse: true,
         });
         if (res.ok) {
           const blob = await res.blob();
@@ -623,7 +612,7 @@ function Orders({ token, adminUser, initialFilter }) {
   const handleCancelSubmit = async (e) => {
     e.preventDefault();
     if (!cancelReason.trim()) {
-      alert("Please enter a reason note for cancelling this order.");
+      setError("Please enter a reason note for cancelling this order.");
       return;
     }
 
@@ -1389,6 +1378,12 @@ function Orders({ token, adminUser, initialFilter }) {
             </table>
           </div>
         )}
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+          <button className="btn btn-outline" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page <= 1}>← Previous</button>
+          <span>Page {page}</span>
+          <button className="btn btn-outline" onClick={() => setPage(p => p + 1)} disabled={orders.length < 20}>Next →</button>
+        </div>
       </div>
 
       {/* Detail Modal */}

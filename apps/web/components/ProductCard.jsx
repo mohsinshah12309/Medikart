@@ -40,11 +40,12 @@ function ProductCardComponent({ product }) {
       e.preventDefault();
       e.stopPropagation();
     }
+    if (added) return;
     addToCart(product, 1);
     trackAddToCart(product, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
-  }, [addToCart, product]);
+  }, [addToCart, product, added]);
 
   const handleWishlistToggle = useCallback((e) => {
     if (e) {
@@ -71,7 +72,7 @@ function ProductCardComponent({ product }) {
           <button
             type="button"
             onClick={handleWishlistToggle}
-            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-2xs cursor-pointer ${
+            className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-2xs cursor-pointer ${
               wishlisted
                 ? "bg-rose-50 text-rose-500 border-1.5 border-rose-300 scale-105 shadow-xs"
                 : "bg-white/95 text-slate-400 hover:text-rose-500 border border-slate-200 hover:border-rose-200 hover:scale-110 opacity-90 group-hover:opacity-100"

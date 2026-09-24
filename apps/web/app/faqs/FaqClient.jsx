@@ -365,6 +365,7 @@ export default function FaqClient() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search questions (e.g. card payment, delivery time, insulin cold pack, prescription)..."
+            aria-label="Search frequently asked questions"
             className="w-full pl-12 pr-10 py-3.5 sm:py-4 rounded-2xl bg-yellow-50/50 border-2 border-yellow-200 text-slate-950 placeholder:text-slate-400 font-medium text-sm sm:text-base focus:outline-none focus:ring-4 focus:ring-yellow-400/25 focus:border-yellow-500 focus:bg-white transition-all shadow-inner"
           />
           {searchQuery && (
@@ -497,7 +498,7 @@ export default function FaqClient() {
                         {faq.categoryLabel}
                       </span>
                     </div>
-                    <h3 className="text-sm sm:text-base md:text-lg font-black text-slate-900 leading-snug">
+                    <h3 id={`faq-heading-${faq.id}`} className="text-sm sm:text-base md:text-lg font-black text-slate-900 leading-snug">
                       {faq.question}
                     </h3>
                   </div>
@@ -515,7 +516,7 @@ export default function FaqClient() {
 
                 {/* Accordion Content */}
                 {isExpanded && (
-                  <div className="px-5 pb-6 sm:px-6 sm:pb-7 pt-1 border-t border-yellow-100 bg-gradient-to-b from-yellow-50/30 via-white to-white">
+                  <div role="region" aria-labelledby={`faq-heading-${faq.id}`} className="px-5 pb-6 sm:px-6 sm:pb-7 pt-1 border-t border-yellow-100 bg-gradient-to-b from-yellow-50/30 via-white to-white">
                     {/* Render Formatted Markdown */}
                     <div className="pt-3">{renderFormattedText(faq.answer)}</div>
 

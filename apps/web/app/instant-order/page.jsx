@@ -125,12 +125,23 @@ export default function InstantOrderPage() {
 
     // Create thumbnail preview if image
     if (fileType.startsWith('image/')) {
-      const url = URL.createObjectURL(file);
-      setFilePreviewUrl(url);
+      setFilePreviewUrl(prev => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(file);
+      });
     } else {
-      setFilePreviewUrl(null);
+      setFilePreviewUrl(prev => {
+        if (prev) URL.revokeObjectURL(prev);
+        return null;
+      });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (filePreviewUrl) URL.revokeObjectURL(filePreviewUrl);
+    };
+  }, [filePreviewUrl]);
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
@@ -157,7 +168,10 @@ export default function InstantOrderPage() {
   const removeFile = () => {
     if (fileInputRef.current) fileInputRef.current.value = '';
     setPrescriptionFile(null);
-    setFilePreviewUrl(null);
+    setFilePreviewUrl(prev => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
   };
 
   const handleSendOtp = async (overrideSuggestion = false, emailToUse = null) => {

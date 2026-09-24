@@ -175,7 +175,7 @@ export default function MonthlyRefillSection({
   const getFullUrl = (path) => {
     const fallback = "/uploads/placeholder.webp";
     if (!path || path === "/images/placeholder-product.png") return fallback;
-    return path.startsWith("http") || path.startsWith("/") ? path : `http://localhost:5000${path}`;
+    return path.startsWith("http") || path.startsWith("/") ? path : `${(process.env.NEXT_PUBLIC_API_URL || "")}${path}`;
   };
 
   const nextReminderFormatted = refillData?.nextReminderAt
@@ -417,7 +417,10 @@ export default function MonthlyRefillSection({
                       sizes="120px"
                       className="object-contain p-1 transition-transform duration-200 group-hover:scale-105"
                       onError={(e) => {
-                        e.target.src = "/uploads/placeholder.webp";
+                        if (!e.target.dataset.error) {
+                          e.target.dataset.error = true;
+                          e.target.srcset = "/uploads/placeholder.webp 1x";
+                        }
                       }}
                     />
                     {prod.discountPercent > 0 && (

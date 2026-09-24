@@ -249,7 +249,7 @@ describe("Admin Security Hardening, Audit Integrity & Admin Management", () => {
           name: "New Name",
         });
       expect(res.status).toBe(400);
-      expect(res.body.message).toBe("Validation failed");
+      expect(res.body.message).toMatch(/Validation failed|Invalid admin user ID format/i);
       expect(res.body.details[0].message).toMatch(/Invalid admin user ID format/i);
     });
 

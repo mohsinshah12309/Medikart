@@ -22,7 +22,7 @@ const placeStandardOrderSchema = z.object({
       .email("Valid email address is required")
       .trim()
       .toLowerCase(),
-    phone: z.string().min(1, "Phone number is required").trim(),
+    phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
     address: z.string().min(1, "Delivery address is required").trim(),
     city: z.string().min(1, "City is required").trim(),
   }),
@@ -40,7 +40,7 @@ const placeStandardOrderSchema = z.object({
       }),
     )
     .min(1, "At least one item is required"),
-  paymentMethod: z.enum(["cod", "card"]),
+  paymentMethod: z.enum(['cod', 'card'], { errorMap: () => ({ message: 'Please select a valid payment method (Cash on Delivery or Card).' }) }),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
     code: z
@@ -62,11 +62,11 @@ const placeInstantOrderSchema = z.object({
       .email("Valid email address is required")
       .trim()
       .toLowerCase(),
-    phone: z.string().min(1, "Phone number is required").trim(),
+    phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
     address: z.string().min(1, "Delivery address is required").trim(),
     city: z.string().min(1, "City is required").trim(),
   }),
-  paymentMethod: z.enum(["cod", "card"]),
+  paymentMethod: z.enum(['cod', 'card'], { errorMap: () => ({ message: 'Please select a valid payment method (Cash on Delivery or Card).' }) }),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
     code: z
@@ -88,7 +88,7 @@ const placeNarcoticsOrderSchema = z.object({
       .email("Valid email address is required")
       .trim()
       .toLowerCase(),
-    phone: z.string().min(1, "Phone number is required").trim(),
+    phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
     address: z.string().min(1, "Delivery address is required").trim(),
     city: z.string().min(1, "City is required").trim(),
   }),
@@ -106,7 +106,7 @@ const placeNarcoticsOrderSchema = z.object({
       }),
     )
     .min(1, "At least one item is required"),
-  paymentMethod: z.enum(["cod", "card"]),
+  paymentMethod: z.enum(['cod', 'card'], { errorMap: () => ({ message: 'Please select a valid payment method (Cash on Delivery or Card).' }) }),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
     code: z

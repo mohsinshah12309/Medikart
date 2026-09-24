@@ -205,7 +205,7 @@ const adminLimiter = createRateLimiter({
 const expensiveLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
   max: isTest ? 100 : (isDev ? 1000 : 300),
-  message: "Rate limit exceeded for resource-heavy operations. Please wait.",
+  message: "Rate limit exceeded. Please wait 15 minutes before trying again.",
 });
 
 const storefrontLimiter = createRateLimiter({

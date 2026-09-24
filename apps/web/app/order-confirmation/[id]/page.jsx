@@ -180,7 +180,7 @@ export default function OrderConfirmationPage() {
                   <div className="mt-4 pt-3 border-t border-amber-200/60">
                     <span className="text-[11px] font-bold text-amber-900 block mb-2">Uploaded Prescription Document:</span>
                     <a
-                      href={order.prescriptionUrl.startsWith("http") ? order.prescriptionUrl : `http://localhost:5000${order.prescriptionUrl}`}
+                      href={order.prescriptionUrl.startsWith("http") ? order.prescriptionUrl : `${(process.env.NEXT_PUBLIC_API_URL || "")}${order.prescriptionUrl}`}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-block text-xs font-semibold text-blue-700 hover:underline"

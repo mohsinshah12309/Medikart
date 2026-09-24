@@ -21,6 +21,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
   const [showModal, setShowModal] = useState(false);
   const [editingPharmacy, setEditingPharmacy] = useState(null);
   const [cityFilter, setCityFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     code: "",
@@ -153,8 +154,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
   const assignedPharmacyObj = allPharmacies.find((p) => p._id === assignedPharmacyId) ||
     (typeof adminUser?.assignedPharmacyId === "object" ? adminUser?.assignedPharmacyId : null);
 
-  // Filtered pharmacies for Directory tab based on selected city filter / branch scope
-  const filteredPharmacies = isBranchScoped
+  const baseFilteredPharmacies = isBranchScoped
     ? (assignedPharmacyObj
         ? [assignedPharmacyObj]
         : (allPharmacies.filter((p) => p._id === assignedPharmacyId).length > 0
@@ -169,6 +169,15 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
             });
           })
         : allPharmacies);
+
+  const filteredPharmacies = searchQuery.trim()
+    ? baseFilteredPharmacies.filter(p => {
+        const q = searchQuery.toLowerCase();
+        return (p.name && p.name.toLowerCase().includes(q)) || 
+               (p.code && p.code.toLowerCase().includes(q)) || 
+               (p.phone && p.phone.toLowerCase().includes(q));
+      })
+    : baseFilteredPharmacies;
 
   const fetchReports = async () => {
     try {
@@ -609,6 +618,15 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
             }}
           >
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+              <input
+                type="text"
+                placeholder="Search pharmacy..."
+                className="form-control"
+                style={{ minWidth: "200px", margin: 0, padding: "0.45rem 0.85rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             {isSuperAdmin ? (
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
                 <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1E293B", display: "flex", alignItems: "center", gap: "0.35rem" }}>
@@ -664,6 +682,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                 </span>
               </div>
             )}
+            </div>
 
             <div style={{ fontSize: "0.825rem", color: "#64748b", fontWeight: 600 }}>
               Showing <strong>{filteredPharmacies.length}</strong> {filteredPharmacies.length === 1 ? "pharmacy" : "pharmacies"}

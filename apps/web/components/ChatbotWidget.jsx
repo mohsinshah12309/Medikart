@@ -216,7 +216,7 @@ export default function ChatbotWidget() {
           </div>
 
           {/* Messages Body */}
-          <div className="flex-grow p-4 overflow-y-auto bg-slate-50/50 flex flex-col gap-3.5">
+          <div role="log" aria-live="polite" className="flex-grow p-4 overflow-y-auto bg-slate-50/50 flex flex-col gap-3.5">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -242,7 +242,14 @@ export default function ChatbotWidget() {
                       : 'bg-white text-slate-800 border border-amber-100/90 rounded-bl-none shadow-xs'
                   }`}
                 >
-                  {msg.content}
+                  {(() => {
+                    const parts = msg.content.split(/(\[.*?\]\(.*?\))/);
+                    return parts.map((part, i) => {
+                      const match = part.match(/\[(.*?)\]\((.*?)\)/);
+                      if (match) return <a key={i} href={match[2]} style={{ color: '#DBBC04', textDecoration: 'underline' }}>{match[1]}</a>;
+                      return part;
+                    });
+                  })()}
 
                   {/* Interactive Product Cards in Chat */}
                   {msg.suggestedProducts && msg.suggestedProducts.length > 0 && (
@@ -326,6 +333,7 @@ export default function ChatbotWidget() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about medicines, delivery, orders, policies..."
               disabled={loading}
+              aria-label="Type a message to Medi"
               className="flex-grow border border-amber-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 disabled:opacity-50 text-slate-900 placeholder:text-slate-400 bg-[#FAF8F5]"
             />
             <button

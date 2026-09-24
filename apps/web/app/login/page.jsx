@@ -70,6 +70,7 @@ function LoginForm() {
   };
 
   const handleSubmit = async (e) => {
+    if (loading) return;
     e.preventDefault();
     setError("");
 
@@ -150,11 +151,12 @@ function LoginForm() {
 
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label htmlFor="login-email" className="block text-xs font-bold text-slate-700 mb-1.5">
                 Email Address
               </label>
               <div className="relative group">
                 <input
+                  id="login-email"
                   type="email"
                   required
                   value={email}

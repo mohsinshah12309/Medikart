@@ -60,16 +60,19 @@ const errorHandler = (err, req, res, next) => {
   if (err.name === "CastError") {
     return res.status(400).json({
       status: "error",
-      message: `Invalid ${err.path}: ${err.value}`,
+      message: "The requested resource was not found",
     });
   }
 
   // For duplicate key errors (MongoDB unique constraint)
   if (err.code === 11000) {
     const field = Object.keys(err.keyPattern)[0];
+    const message = (field === 'email' || field === 'phone')
+      ? `An account with this ${field} already exists.`
+      : `A record with this ${field} already exists.`;
     return res.status(400).json({
       status: "error",
-      message: `Duplicate value for field: ${field}`,
+      message,
     });
   }
 
@@ -78,7 +81,7 @@ const errorHandler = (err, req, res, next) => {
     const isSizeLimit = err.code === "LIMIT_FILE_SIZE";
     return res.status(400).json({
       status: "error",
-      message: isSizeLimit ? "File too large" : err.message,
+      message: isSizeLimit ? "File size exceeds the maximum allowed limit. Please upload a smaller file." : "File upload error. Please try again with a valid file.",
     });
   }
 

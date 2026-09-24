@@ -197,7 +197,8 @@ function Cities({ token }) {
         <div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>Loading cities...</div>
       ) : (
         <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-          <table className="table" style={{ margin: 0 }}>
+          <div className="table-responsive">
+            <table className="table" style={{ margin: 0 }}>
             <thead>
               <tr>
                 <th>City Name</th>
@@ -284,6 +285,7 @@ function Cities({ token }) {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

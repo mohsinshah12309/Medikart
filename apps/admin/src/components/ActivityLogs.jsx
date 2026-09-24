@@ -104,7 +104,8 @@ function ActivityLogs({ token }) {
       ) : (
         <>
           <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-            <table className="table" style={{ margin: 0, fontSize: "0.85rem" }}>
+            <div className="table-responsive">
+              <table className="table" style={{ margin: 0, fontSize: "0.85rem" }}>
               <thead>
                 <tr>
                   <th style={{ whiteSpace: "nowrap" }}>Timestamp (PKT)</th>
@@ -164,6 +165,7 @@ function ActivityLogs({ token }) {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
 
           {/* Pagination */}

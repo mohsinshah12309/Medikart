@@ -155,9 +155,10 @@ function App() {
     <div style={{ padding: "3rem", textAlign: "center", background: "#ffffff", borderRadius: "12px", border: "1px solid #e2e8f0" }}>
       <span style={{ fontSize: "2.5rem" }}>🔒</span>
       <h3 style={{ margin: "0.75rem 0 0.25rem 0", color: "#0f172a", fontWeight: 800 }}>Access Restricted</h3>
-      <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
+      <p style={{ color: "#64748b", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
         You do not have permission to access or manage this module. Please contact the Super Admin for access.
       </p>
+      <button className="btn btn-primary" onClick={() => setActiveTab('overview')}>Return to Dashboard</button>
     </div>
   );
 

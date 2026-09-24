@@ -100,9 +100,7 @@ function AdminUsers({ token, adminUser }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${API_URL}/admin/users`, { headers });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to load admin users");
+      const data = await adminFetch(`/admin/users`);
       setUsers(data.data || []);
     } catch (err) {
       flash(err.message, true);
@@ -113,11 +111,8 @@ function AdminUsers({ token, adminUser }) {
 
   const fetchPharmacies = async () => {
     try {
-      const res = await fetch(`${API_URL}/admin/pharmacies`, { headers });
-      const data = await res.json();
-      if (res.ok) {
-        setPharmacies(data.data?.pharmacies || []);
-      }
+      const data = await adminFetch(`/admin/pharmacies`);
+      setPharmacies(data.data?.pharmacies || []);
     } catch (err) {
       console.error("fetchPharmacies error:", err);
     }
@@ -152,13 +147,10 @@ function AdminUsers({ token, adminUser }) {
       if (createForm.assignedPharmacyId) {
         payload.assignedPharmacyId = createForm.assignedPharmacyId;
       }
-      const res = await fetch(`${API_URL}/admin/users`, {
+      await adminFetch(`/admin/users`, {
         method: "POST",
-        headers,
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Create failed");
       flash(`✅ Admin user created successfully.`);
       setShowCreate(false);
       setCreateForm({
@@ -193,9 +185,8 @@ function AdminUsers({ token, adminUser }) {
   const handleSave = async (id) => {
     setSaving(true);
     try {
-      const res = await fetch(`${API_URL}/admin/users/${id}`, {
+      await adminFetch(`/admin/users/${id}`, {
         method: "PUT",
-        headers,
         body: JSON.stringify({
           name: editForm.name.trim(),
           email: editForm.email.trim().toLowerCase(),
@@ -205,8 +196,6 @@ function AdminUsers({ token, adminUser }) {
           permissions: editForm.permissions,
         }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Update failed");
       flash("✅ Admin user access & details updated successfully.");
       setEditId(null);
       fetchUsers();
@@ -220,12 +209,9 @@ function AdminUsers({ token, adminUser }) {
   const handleDelete = async (id) => {
     setDeleting(true);
     try {
-      const res = await fetch(`${API_URL}/admin/users/${id}`, {
+      await adminFetch(`/admin/users/${id}`, {
         method: "DELETE",
-        headers,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Delete failed");
       flash("Admin user deleted");
       setDeleteId(null);
       fetchUsers();

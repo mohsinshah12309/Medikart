@@ -255,7 +255,7 @@ const verifyOtp = async (email, code, options = {}) => {
         "Maximum verification attempts exceeded. Please request a new code.",
       );
     }
-    throw new BadRequestError("Invalid verification code");
+    throw new BadRequestError(`Invalid verification code. ${4 - updatedDoc.attempts} attempt(s) remaining.`);
   }
 
   // 6. On match: mark verified, and atomically invalidate if consuming

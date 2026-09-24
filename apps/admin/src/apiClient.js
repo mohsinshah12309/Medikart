@@ -48,6 +48,10 @@ export async function adminFetch(endpoint, options = {}) {
     throw new Error(errMsg);
   }
 
+  if (options.returnRawResponse) {
+    return res;
+  }
+
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {

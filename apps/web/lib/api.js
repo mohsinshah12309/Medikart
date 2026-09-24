@@ -5,22 +5,35 @@ const API_URL = typeof window !== 'undefined'
 export async function fetchApi(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
   const signal = options.signal || (typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(12000) : undefined);
-  const res = await fetch(url, {
-    ...options,
-    signal,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      ...options,
+      signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  } catch (err) {
+    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+      throw new Error('Request timed out. Please check your internet connection and try again.');
+    }
+    throw err;
+  }
 
   if (!res.ok) {
     let errorMsg = `API request failed with status ${res.status}`;
+    let details = null;
     try {
       const errBody = await res.json();
       errorMsg = errBody.message || errBody.error || errorMsg;
+      details = errBody.details || errBody.errors || null;
     } catch (_) {}
-    throw new Error(errorMsg);
+    const error = new Error(errorMsg);
+    error.details = details;
+    error.status = res.status;
+    throw error;
   }
 
   return res.json();

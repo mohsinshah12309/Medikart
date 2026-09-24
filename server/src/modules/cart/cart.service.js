@@ -15,7 +15,7 @@ const getScopeFilter = ({ customerId, guestId }) => {
   if (guestId) {
     return { guestId, customerId: null };
   }
-  throw new BadRequestError("Cart identifier is required (customerId or guestId)");
+  throw new BadRequestError("Unable to identify your cart session. Please refresh the page.");
 };
 
 /**
@@ -74,12 +74,12 @@ const getCart = async (scope) => {
  */
 const addItem = async (scope, { productId, quantity = 1 }) => {
   if (!productId) {
-    throw new BadRequestError("productId is required");
+    throw new BadRequestError("Please select a product to add.");
   }
 
   const qty = parseInt(quantity, 10);
   if (isNaN(qty) || qty < 1) {
-    throw new BadRequestError("quantity must be a positive integer");
+    throw new BadRequestError("Please enter a valid quantity (1 or more).");
   }
 
   // 1. Fetch active product and discount
@@ -95,6 +95,10 @@ const addItem = async (scope, { productId, quantity = 1 }) => {
     throw new NotFoundError("Product not found or unavailable");
   }
 
+  if (product.stockStatus === 'out_of_stock') {
+    throw new BadRequestError('This product is currently out of stock and cannot be added to your cart.');
+  }
+
   const category = product.categoryIds?.[0] || null;
   const { effectivePrice } = getEffectivePrice(product, category, storewidePercent);
 
@@ -105,11 +109,14 @@ const addItem = async (scope, { productId, quantity = 1 }) => {
     (item) => item.productId.toString() === productId.toString()
   );
 
+  let limitMessage = null;
   if (existingIndex > -1) {
     const currentQty = cart.items[existingIndex].quantity;
+    if (currentQty + qty > 99) limitMessage = "Quantity capped at maximum limit (99).";
     cart.items[existingIndex].quantity = Math.min(currentQty + qty, 99);
     cart.items[existingIndex].price = effectivePrice; // Refresh to current effective price
   } else {
+    if (qty > 99) limitMessage = "Quantity capped at maximum limit (99).";
     cart.items.push({
       productId: product._id,
       name: product.name,
@@ -121,7 +128,11 @@ const addItem = async (scope, { productId, quantity = 1 }) => {
   }
 
   await cart.save();
-  return formatCartResponse(cart);
+  const formattedCart = formatCartResponse(cart);
+  if (limitMessage) {
+    formattedCart.message = limitMessage;
+  }
+  return formattedCart;
 };
 
 /**

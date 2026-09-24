@@ -179,6 +179,7 @@ function Login({ onLoginSuccess, sessionExpiredMessage = "" }) {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="username"
+                  disabled={loading}
                 />
               </div>
 

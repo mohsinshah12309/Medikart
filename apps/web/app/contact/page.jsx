@@ -49,6 +49,7 @@ export default function ContactPage() {
   };
 
   const handleSubmit = async (e) => {
+    if (loading) return;
     e.preventDefault();
     setErrorMsg('');
     
