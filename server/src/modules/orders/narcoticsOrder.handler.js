@@ -191,10 +191,11 @@ const { generateStandardOrderPlacedTemplate } = require("../../utils/emailTempla
 
 const sendNarcoticsOrderConfirmationEmail = async (order) => {
   const template = generateStandardOrderPlacedTemplate({ order });
+  const orderCode = order.orderCode || (order._id ? `MK-${String(order._id).slice(-6).toUpperCase()}` : "MK-ORDER");
 
   await smtp.sendEmail({
     to: order.customer.email,
-    subject: `Order Received (Prescription Verification) — Medikart (#${String(order._id).slice(-6).toUpperCase()})`,
+    subject: `Order Received (Prescription Verification) — Medikart (#${orderCode})`,
     html: template.html,
     text: template.text,
     purpose: "order_placed",

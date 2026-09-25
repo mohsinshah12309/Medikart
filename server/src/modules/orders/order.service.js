@@ -19,6 +19,10 @@ const { getStorewideDiscount } = require("../settings/settings.service");
 const { getDeliveryCharge } = require("../cities/city.service");
 const { logActivity } = require("../activity-logs/activityLog.service");
 const smtp = require("../../integrations/smtp");
+const {
+  generateInstantOrderPricedTemplate,
+  generateOrderDeliveredTemplate,
+} = require("../../utils/emailTemplates");
 const XLSX = require("xlsx");
 const {
   BadRequestError,
@@ -89,7 +93,7 @@ const getOrders = async (
   const rawTerm = search ? search.trim() : "";
   const cleanTerm = rawTerm.replace(/^#/, "").trim();
   const isObjectId = mongoose.Types.ObjectId.isValid(cleanTerm) && cleanTerm.length === 24;
-  const isOrderCode = cleanTerm.toUpperCase().startsWith("MK-");
+  const isOrderCode = cleanTerm.toUpperCase().startsWith("MK-") || /^[A-Z0-9]{4,8}$/i.test(cleanTerm);
 
   if (cleanTerm) {
     const escapedTerm = cleanTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -107,9 +111,9 @@ const getOrders = async (
   }
 
   // Date Filtering:
-  // If user searched for a specific Order ID or Order Code, bypass date restrictions to find the exact order.
+  // If user searched for a specific Order ID or Order Code, bypass date restrictions to find the exact order across all history.
   // Otherwise parse PKT midnight (+05:00) so UTC+5 orders placed today match accurately.
-  if ((startDate || endDate) && !isObjectId && !isOrderCode) {
+  if ((startDate || endDate) && !isObjectId && !isOrderCode && !cleanTerm) {
     query.createdAt = {};
     if (startDate) {
       query.createdAt.$gte = /^\d{4}-\d{2}-\d{2}$/.test(startDate)
@@ -389,11 +393,24 @@ const getOrderStats = async (query = {}, admin = null) => {
  * Get a single order by MongoDB ID or orderCode.
  */
 const getOrderById = async (orderIdOrCode, admin = null) => {
+  const cleanIdOrCode = String(orderIdOrCode || "").replace(/^#/, "").trim();
   let query = {};
-  if (mongoose.Types.ObjectId.isValid(orderIdOrCode)) {
-    query = { $or: [{ _id: orderIdOrCode }, { orderCode: orderIdOrCode }] };
+  if (mongoose.Types.ObjectId.isValid(cleanIdOrCode) && cleanIdOrCode.length === 24) {
+    query = {
+      $or: [
+        { _id: new mongoose.Types.ObjectId(cleanIdOrCode) },
+        { orderCode: cleanIdOrCode },
+        { orderCode: cleanIdOrCode.toUpperCase() },
+      ],
+    };
   } else {
-    query = { orderCode: orderIdOrCode };
+    query = {
+      $or: [
+        { orderCode: cleanIdOrCode },
+        { orderCode: cleanIdOrCode.toUpperCase() },
+        { orderCode: { $regex: new RegExp(`^${cleanIdOrCode}$`, "i") } },
+      ],
+    };
   }
   const order = await Order.findOne(query).populate("assignedPharmacyId", "name code phone address city");
   if (!order) throw new NotFoundError("Order not found");
@@ -507,6 +524,13 @@ const priceInstantOrder = async (orderId, { items }, admin = null) => {
   order.status = requiresVerification ? "pending_verification" : "pending";
 
   await order.save();
+
+  // Send itemized quotation & pricing email to customer (non-blocking)
+  sendInstantOrderPricedEmail(order).catch((err) => {
+    console.error(
+      `[orders] Pricing quotation email failed for order ${order._id}: ${err.message}`
+    );
+  });
 
   return order;
 };
@@ -834,6 +858,36 @@ const sendOrderCancellationEmail = async (order) => {
 };
 
 /**
+ * Sends an email to the customer when their instant prescription order is priced.
+ */
+const sendInstantOrderPricedEmail = async (order) => {
+  const template = generateInstantOrderPricedTemplate({ order });
+  await smtp.sendEmail({
+    to: order.customer.email,
+    subject: template.subject,
+    html: template.html,
+    text: template.text,
+    purpose: "order_confirmed",
+    fromName: "Medikart Orders",
+  });
+};
+
+/**
+ * Sends an email to the customer when their order is marked as delivered.
+ */
+const sendOrderDeliveredEmail = async (order) => {
+  const template = generateOrderDeliveredTemplate({ order });
+  await smtp.sendEmail({
+    to: order.customer.email,
+    subject: template.subject,
+    html: template.html,
+    text: template.text,
+    purpose: "order_confirmed",
+    fromName: "Medikart Orders",
+  });
+};
+
+/**
  * Admin updates order status (pending, packed, shipped, delivered/completed, cancelled).
  *
  * @param {string} orderId
@@ -901,6 +955,15 @@ const updateOrderStatus = async (orderId, { status, reason, admin }) => {
   }
 
   await order.save();
+
+  // If delivered, send delivery confirmation email to customer (non-blocking)
+  if (targetStatus === "delivered" && previousStatus !== "delivered") {
+    sendOrderDeliveredEmail(order).catch((err) => {
+      console.error(
+        `[orders] Delivery notification email failed for order ${order._id}: ${err.message}`
+      );
+    });
+  }
 
   await logActivity({
     actor: {
