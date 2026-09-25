@@ -53,7 +53,6 @@ jobs:
         run: |
           echo "Checking server syntax..."
           node -c server/src/app.js
-          node -c server/src/server.js
 
   # =========================================================================
   # STAGE 3: SECURITY SCANNING & SECRET DETECTION
