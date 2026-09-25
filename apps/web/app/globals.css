@@ -6,6 +6,8 @@
   color-scheme: light !important;
   forced-color-adjust: none;
   -webkit-text-size-adjust: 100%;
+  max-width: 100vw;
+  overflow-x: clip !important;
 }
 
 :root {

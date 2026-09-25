@@ -246,7 +246,7 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-white text-slate-900 relative overflow-x-hidden font-body pb-16 md:pb-0">
+      <body className="min-h-screen flex flex-col bg-white text-slate-900 relative overflow-x-clip font-body pb-16 md:pb-0">
         <PwaInstallProvider>
           <CustomerProvider>
             <CartProvider>
@@ -254,27 +254,27 @@ export default async function RootLayout({ children }) {
               <AnalyticsProvider />
 
               {/* Main Brand Sticky Header */}
-              <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-yellow-300/80 shadow-xs transition-all">
-                <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-18 sm:h-20 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-4 lg:gap-8 flex-1 min-w-0">
-                    {/* Official Interactive Logo */}
-                    <Link href="/" className="flex items-center flex-shrink-0" aria-label="Medikart Home">
-                      <InteractiveLogo />
-                    </Link>
+              <header className="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b-2 border-yellow-300/80 shadow-xs transition-all w-full overflow-visible">
+                <div className="max-w-[1720px] mx-auto px-2.5 sm:px-6 lg:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-2 sm:gap-3 lg:gap-4 xl:gap-6">
+                  {/* Left: Official Brand Logo */}
+                  <Link href="/" className="flex items-center shrink-0 min-w-0" aria-label="Medikart Home">
+                    <InteractiveLogo />
+                  </Link>
 
-                    {/* Dvago Top Search Bar with Continuously Cycling Animated Placeholder */}
-                    <DvagoSearchBar className="hidden md:flex flex-1 max-w-sm lg:max-w-md" />
+                  {/* Center: Top Search Bar (on Desktop) */}
+                  <div className="hidden lg:flex flex-1 max-w-md xl:max-w-lg 2xl:max-w-xl mx-2 min-w-0">
+                    <DvagoSearchBar className="w-full" />
                   </div>
 
-                  <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0">
-                    {/* Header Navigation: Home | Instant Order | Categories ▾ | About | Contact */}
+                  {/* Right: Actions (Instant Order, Categories, Wishlist, App, Account, Cart) */}
+                  <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-4 shrink-0">
                     <HeaderNav initialCategories={categories} />
                     <NavbarCartIcon />
                   </div>
                 </div>
 
-                {/* Mobile Search Bar Row (visible on small mobile screens) */}
-                <div className="md:hidden px-4 pb-2.5 pt-0.5">
+                {/* Mobile/Tablet Search Bar Row (visible below lg:) */}
+                <div className="lg:hidden px-3 sm:px-4 pb-2.5 pt-0.5 w-full">
                   <DvagoSearchBar className="w-full" />
                 </div>
               </header>

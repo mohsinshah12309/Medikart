@@ -148,64 +148,18 @@ const sendOrderConfirmationEmailOnce = async (order) => {
 
 // ─── Confirmation email template ───────────────────────────────────────────────
 
-const sendOrderConfirmationEmail = async (order) => {
-  const itemRows = order.items
-    .map(
-      (i) => `<tr>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;">${i.name}</td>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:center;">${i.quantity}</td>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;">PKR ${i.price.toFixed(2)}</td>
-      </tr>`
-    )
-    .join('');
+const { generateStandardOrderPlacedTemplate } = require("../../utils/emailTemplates");
 
-  const html = `
-    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-      <h2 style="color:#0d9488;">Order Confirmed — Medikart</h2>
-      <p>Hello ${order.customer.name},</p>
-      <p>Thank you for your order. We have received it and it is being processed.</p>
-      <p><strong>Order ID:</strong> ${order._id}</p>
-      <table style="width:100%;border-collapse:collapse;margin:16px 0;">
-        <thead>
-          <tr style="background:#f3f4f6;">
-            <th style="padding:8px 12px;text-align:left;">Product</th>
-            <th style="padding:8px 12px;text-align:center;">Qty</th>
-            <th style="padding:8px 12px;text-align:right;">Price</th>
-          </tr>
-        </thead>
-        <tbody>${itemRows}</tbody>
-      </table>
-      <table style="width:100%;margin-top:8px;">
-        <tr>
-          <td style="padding:4px 12px;">Subtotal</td>
-          <td style="padding:4px 12px;text-align:right;">PKR ${order.totals.subtotal.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td style="padding:4px 12px;">Delivery Fee</td>
-          <td style="padding:4px 12px;text-align:right;">PKR ${order.totals.deliveryCharge.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td style="padding:4px 12px;">Platform Fee</td>
-          <td style="padding:4px 12px;text-align:right;">PKR ${(order.totals.platformFee !== undefined ? order.totals.platformFee : 10).toFixed(2)}</td>
-        </tr>
-        <tr style="font-weight:bold;font-size:1.05em;">
-          <td style="padding:8px 12px;">Total</td>
-          <td style="padding:8px 12px;text-align:right;">PKR ${order.totals.total.toFixed(2)}</td>
-        </tr>
-      </table>
-      <hr style="margin:16px 0;">
-      <p><strong>Delivery to:</strong> ${order.customer.address}, ${order.customer.city}</p>
-      <p><strong>Payment:</strong> Cash on Delivery</p>
-      <p style="color:#6b7280;font-size:0.875em;">
-        Questions? Contact us. Thank you for shopping with Medikart.
-      </p>
-    </div>`;
+const sendOrderConfirmationEmail = async (order) => {
+  const template = generateStandardOrderPlacedTemplate({ order });
 
   await smtp.sendEmail({
     to: order.customer.email,
-    subject: `Order Confirmed — Medikart (#${order._id})`,
-    html,
-    text: `Order confirmed! Order ID: ${order._id}. Total: PKR ${order.totals.total.toFixed(2)}. Payment: Cash on Delivery. Delivery to: ${order.customer.address}, ${order.customer.city}.`,
+    subject: template.subject,
+    html: template.html,
+    text: template.text,
+    purpose: "order_placed",
+    fromName: "Medikart Orders",
   });
 };
 

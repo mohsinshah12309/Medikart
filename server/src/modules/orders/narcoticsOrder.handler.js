@@ -187,62 +187,18 @@ const sendNarcoticsOrderConfirmationEmailOnce = async (order) => {
 };
 
 // ─── Confirmation email template ───────────────────────────────────────────────
-const sendNarcoticsOrderConfirmationEmail = async (order) => {
-  const itemRows = order.items
-    .map(
-      (i) => `<tr>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;">${i.name}</td>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:center;">${i.quantity}</td>
-        <td style="padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;">PKR ${i.price.toFixed(2)}</td>
-      </tr>`,
-    )
-    .join("");
+const { generateStandardOrderPlacedTemplate } = require("../../utils/emailTemplates");
 
-  const html = `
-    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-      <h2 style="color:#0d9488;">Order Received — Medikart</h2>
-      <p>Hello ${order.customer.name},</p>
-      <p>Your order contains one or more prescription-controlled products. Our pharmacist will verify the uploaded prescription before fulfillment begins.</p>
-      <p><strong>Order ID:</strong> ${order._id}</p>
-      <p><strong>Status:</strong> Pending verification</p>
-      <table style="width:100%;border-collapse:collapse;margin:16px 0;">
-        <thead>
-          <tr style="background:#f3f4f6;">
-            <th style="padding:8px 12px;text-align:left;">Product</th>
-            <th style="padding:8px 12px;text-align:center;">Qty</th>
-            <th style="padding:8px 12px;text-align:right;">Price</th>
-          </tr>
-        </thead>
-        <tbody>${itemRows}</tbody>
-      </table>
-      <table style="width:100%;margin-top:8px;">
-        <tr>
-          <td>Subtotal</td>
-          <td>PKR ${order.totals.subtotal.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td>Delivery Fee</td>
-          <td>PKR ${order.totals.deliveryCharge.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td>Platform Fee</td>
-          <td>PKR ${(order.totals.platformFee !== undefined ? order.totals.platformFee : 10).toFixed(2)}</td>
-        </tr>
-        <tr style="font-weight:bold;font-size:1.05em;">
-          <td>Total</td>
-          <td>PKR ${order.totals.total.toFixed(2)}</td>
-        </tr>
-      </table>
-      <p style="color:#6b7280;font-size:0.875em;">
-        Questions? Contact us. Thank you for shopping with Medikart.
-      </p>
-    </div>`;
+const sendNarcoticsOrderConfirmationEmail = async (order) => {
+  const template = generateStandardOrderPlacedTemplate({ order });
 
   await smtp.sendEmail({
     to: order.customer.email,
-    subject: `Order Received — Medikart (#${order._id})`,
-    html,
-    text: `Your order has been received. Order ID: ${order._id}. It is pending pharmacist verification. Total: PKR ${order.totals.total.toFixed(2)}.`,
+    subject: `Order Received (Prescription Verification) — Medikart (#${String(order._id).slice(-6).toUpperCase()})`,
+    html: template.html,
+    text: template.text,
+    purpose: "order_placed",
+    fromName: "Medikart Orders",
   });
 };
 

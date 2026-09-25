@@ -37,12 +37,58 @@ export function trackEvent(eventName, eventParams = {}) {
   }
 }
 
+// Referrer & Traffic Attribution Helper
+export function detectReferrerSource() {
+  if (typeof document === 'undefined' || !document.referrer) {
+    return { source: 'direct', platform: null };
+  }
+  const ref = document.referrer.toLowerCase();
+
+  if (ref.includes('chatgpt.com') || ref.includes('chat.openai.com')) {
+    return { source: 'ai_search', platform: 'ChatGPT' };
+  }
+  if (ref.includes('perplexity.ai')) {
+    return { source: 'ai_search', platform: 'Perplexity' };
+  }
+  if (ref.includes('claude.ai') || ref.includes('anthropic.com')) {
+    return { source: 'ai_search', platform: 'Claude' };
+  }
+  if (ref.includes('copilot.microsoft.com') || ref.includes('bing.com/chat')) {
+    return { source: 'ai_search', platform: 'Copilot' };
+  }
+  if (ref.includes('gemini.google.com')) {
+    return { source: 'ai_search', platform: 'Gemini' };
+  }
+  if (ref.includes('google.')) {
+    return { source: 'search_engine', platform: 'Google' };
+  }
+  if (ref.includes('bing.')) {
+    return { source: 'search_engine', platform: 'Bing' };
+  }
+  try {
+    return { source: 'referral', platform: new URL(document.referrer).hostname };
+  } catch {
+    return { source: 'referral', platform: 'external' };
+  }
+}
+
 // Predefined Key E-Commerce Tracking Handlers
 export function trackPageView(url) {
+  const refInfo = detectReferrerSource();
   trackEvent('page_view', {
     page_location: url || (typeof window !== 'undefined' ? window.location.href : ''),
     page_title: typeof document !== 'undefined' ? document.title : '',
+    referrer_source_type: refInfo.source,
+    referrer_platform: refInfo.platform || undefined,
   });
+
+  if (refInfo.source === 'ai_search') {
+    trackEvent('ai_search_visit', {
+      ai_platform: refInfo.platform,
+      landing_page: url || (typeof window !== 'undefined' ? window.location.pathname : ''),
+      timestamp: new Date().toISOString(),
+    });
+  }
 }
 
 export function trackAddToCart(product, quantity = 1) {

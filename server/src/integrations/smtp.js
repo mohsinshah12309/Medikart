@@ -1,12 +1,14 @@
 /**
- * Email Integration — Dual Transporter: SMTP (Brevo Relay) & Mailjet Send API v3.1.
+ * Email Integration — Intelligent Multi-Provider Router.
  *
- * Enhanced for Primary Inbox Deliverability & Reliability:
- * 1. Prioritizes authenticated SMTP relay (Brevo) with verified sender credentials.
- * 2. Automatic fallback to Mailjet API v3.1 if SMTP is unavailable.
- * 3. Injects transactional RFC 3834 & priority headers (Auto-Submitted, X-Priority, Importance).
- * 4. Disables tracking redirects and tracking pixels to prevent spam / phishing flags.
- * 5. Supports contextual Sender Names ("Medikart Verification" vs "Medikart Security").
+ * Implements dedicated traffic segregation with automatic cross-provider fallback:
+ * 1. Google SMTP: OTP Verification & Order Placed Receipts (Highest Primary Inbox Deliverability).
+ * 2. Brevo SMTP: Order Confirmation & Shipping Updates (Authenticated Domain Relay).
+ * 3. Mailjet API: Password Resets, Order Cancellations & Chronic Refill Alerts.
+ *
+ * High Availability:
+ * - If the designated primary provider fails or hits daily quota, it automatically
+ *   cascades to the remaining available providers so zero emails are dropped.
  */
 
 const crypto = require("crypto");
@@ -14,25 +16,53 @@ const nodemailer = require("nodemailer");
 const Mailjet = require("node-mailjet");
 const { AppError } = require("../utils/errors");
 
-let _smtpTransporter = null;
+let _gmailTransporter = null;
+let _brevoTransporter = null;
 let _mailjetClient = null;
 
 /**
- * Lazily initialize and cache the Nodemailer SMTP transporter.
+ * Lazily initialize and cache the Google Gmail SMTP transporter.
  */
-function getSmtpTransporter() {
-  if (_smtpTransporter) return _smtpTransporter;
+function getGmailTransporter() {
+  if (_gmailTransporter) return _gmailTransporter;
 
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_PASS;
+
+  if (!user || !pass) {
+    return null;
+  }
+
+  _gmailTransporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user,
+      pass,
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
+  });
+
+  return _gmailTransporter;
+}
+
+/**
+ * Lazily initialize and cache the Brevo SMTP transporter.
+ */
+function getBrevoTransporter() {
+  if (_brevoTransporter) return _brevoTransporter;
+
+  const host = process.env.BREVO_HOST || process.env.SMTP_HOST || "smtp-relay.brevo.com";
+  const user = process.env.BREVO_USER || process.env.SMTP_USER;
+  const pass = process.env.BREVO_PASS || process.env.SMTP_PASS;
+  const port = parseInt(process.env.BREVO_PORT || process.env.SMTP_PORT || "587", 10);
 
   if (!host || !user || !pass) {
     return null;
   }
 
-  _smtpTransporter = nodemailer.createTransport({
+  _brevoTransporter = nodemailer.createTransport({
     host,
     port,
     secure: port === 465,
@@ -45,7 +75,7 @@ function getSmtpTransporter() {
     socketTimeout: 15000,
   });
 
-  return _smtpTransporter;
+  return _brevoTransporter;
 }
 
 /**
@@ -66,137 +96,166 @@ function getMailjetClient() {
 }
 
 /**
- * Send an email with transactional deliverability headers and automatic fallback.
+ * Send via Google SMTP Transporter.
+ */
+async function sendViaGmail({ to, subject, text, html, senderName, headers }) {
+  const transporter = getGmailTransporter();
+  if (!transporter) throw new Error("Google SMTP credentials not configured");
+
+  const fromEmail = process.env.GMAIL_USER || "medikart.com@gmail.com";
+  const info = await transporter.sendMail({
+    from: `"${senderName}" <${fromEmail}>`,
+    to,
+    replyTo: fromEmail,
+    subject,
+    text,
+    html: html || text,
+    headers,
+  });
+
+  console.log(`[smtp:google] Delivered via Google SMTP to ${to} — messageId: ${info.messageId}`);
+  return { messageId: String(info.messageId), accepted: [to], provider: "google" };
+}
+
+/**
+ * Send via Brevo SMTP Relay.
+ */
+async function sendViaBrevo({ to, subject, text, html, senderName, headers, fromEmail }) {
+  const transporter = getBrevoTransporter();
+  if (!transporter) throw new Error("Brevo SMTP credentials not configured");
+
+  const sender = fromEmail || process.env.BREVO_FROM || process.env.SMTP_FROM || "noreply@medikart.pk";
+  const info = await transporter.sendMail({
+    from: `"${senderName}" <${sender}>`,
+    to,
+    replyTo: sender,
+    subject,
+    text,
+    html: html || text,
+    headers,
+  });
+
+  console.log(`[smtp:brevo] Delivered via Brevo SMTP to ${to} — messageId: ${info.messageId}`);
+  return { messageId: String(info.messageId), accepted: [to], provider: "brevo" };
+}
+
+/**
+ * Send via Mailjet API v3.1.
+ */
+async function sendViaMailjet({ to, subject, text, html, senderName, headers, fromEmail }) {
+  const client = getMailjetClient();
+  if (!client) throw new Error("Mailjet API credentials not configured");
+
+  const sender = fromEmail || process.env.MAILJET_SENDER_EMAIL || process.env.SMTP_FROM || "noreply@medikart.pk";
+  const result = await client.post("send", { version: "v3.1" }).request({
+    Messages: [
+      {
+        From: {
+          Email: sender,
+          Name: senderName,
+        },
+        To: [{ Email: to }],
+        ReplyTo: {
+          Email: sender,
+          Name: senderName,
+        },
+        Subject: subject,
+        TextPart: text,
+        HTMLPart: html || text,
+        TrackOpens: "disabled",
+        TrackClicks: "disabled",
+        Headers: headers,
+      },
+    ],
+  });
+
+  const msgStatus = result?.body?.Messages?.[0]?.Status;
+  const msgId = result?.body?.Messages?.[0]?.To?.[0]?.MessageID || result?.body?.Messages?.[0]?.MessageID || "unknown";
+
+  console.log(`[smtp:mailjet] Delivered via Mailjet API to ${to} — status: ${msgStatus} — messageId: ${msgId}`);
+  return { messageId: String(msgId), accepted: [to], provider: "mailjet" };
+}
+
+/**
+ * Multi-Provider Email Router Dispatcher.
  *
  * @param {Object}   options
  * @param {string}   options.to          - Recipient email address
  * @param {string}   options.subject     - Email subject line
- * @param {string}   options.text        - Plain-text body (required fallback)
- * @param {string}   [options.html]      - HTML body (used if provided)
- * @param {string}   [options.fromName]  - Optional contextual sender display name
- * @param {string}   [options.fromEmail] - Optional sender email override
- * @returns {Promise<{ messageId: string, accepted: string[] }>}
+ * @param {string}   options.text        - Plain-text body
+ * @param {string}   [options.html]      - HTML body
+ * @param {string}   [options.fromName]  - Sender display name
+ * @param {string}   [options.fromEmail] - Sender email override
+ * @param {string}   [options.purpose]   - 'otp' | 'order_placed' | 'order_confirmed' | 'order_cancelled' | 'password_reset' | 'refill'
+ * @returns {Promise<{ messageId: string, accepted: string[], provider: string }>}
  */
-const sendEmail = async ({ to, subject, text, html, fromName, fromEmail }) => {
-  // ── Test environment: skip real network call ──────────────────────────────
+const sendEmail = async ({ to, subject, text, html, fromName, fromEmail, purpose = "general" }) => {
   if (process.env.NODE_ENV === "test") {
-    return { messageId: "test-mock-id", accepted: [to] };
+    return { messageId: "test-mock-id", accepted: [to], provider: "mock" };
   }
 
-  const senderEmail =
-    fromEmail ||
-    process.env.SMTP_FROM ||
-    "medikart.com@gmail.com";
+  const senderName = fromName || "Medikart Pharmacy";
+  const entityRefId = crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString("hex");
 
-  const senderName =
-    fromName ||
-    "Medikart Pharmacy";
-
-  const entityRefId = crypto.randomUUID
-    ? crypto.randomUUID()
-    : crypto.randomBytes(16).toString("hex");
-
-  // High-deliverability headers to guarantee Primary Inbox categorization
-  const deliverabilityHeaders = {
-    "Auto-Submitted": "auto-generated",
-    "X-Auto-Response-Suppress": "All",
-    "X-Priority": "1 (Highest)",
-    Priority: "urgent",
-    Importance: "high",
-    "X-MSMail-Priority": "High",
+  // Clean, spam-safe transactional headers (no spam-score penalty headers)
+  const transactionalHeaders = {
     "X-Entity-Ref-ID": entityRefId,
   };
 
-  const smtpTransporter = getSmtpTransporter();
-  const mailjetClient = getMailjetClient();
+  const payload = { to, subject, text, html, senderName, fromEmail, headers: transactionalHeaders };
 
-  // 1. Primary: SMTP Transporter (Brevo Authenticated Relay)
-  if (smtpTransporter) {
+  // Define multi-provider routing hierarchy based on traffic segregation rules:
+  // 1. OTP & Order Placed -> Google SMTP (primary) -> Brevo -> Mailjet
+  // 2. Order Confirmed / Shipped -> Brevo SMTP (primary) -> Google SMTP -> Mailjet
+  // 3. Password Reset / Order Cancelled / Refill -> Mailjet (primary) -> Brevo -> Google SMTP
+  let providersQueue = [];
+
+  const normPurpose = String(purpose).toLowerCase();
+  if (normPurpose.includes("otp") || normPurpose.includes("order_placed") || normPurpose.includes("placed")) {
+    providersQueue = [
+      { name: "google", fn: () => sendViaGmail(payload) },
+      { name: "brevo", fn: () => sendViaBrevo(payload) },
+      { name: "mailjet", fn: () => sendViaMailjet(payload) },
+    ];
+  } else if (normPurpose.includes("confirm") || normPurpose.includes("ship")) {
+    providersQueue = [
+      { name: "brevo", fn: () => sendViaBrevo(payload) },
+      { name: "google", fn: () => sendViaGmail(payload) },
+      { name: "mailjet", fn: () => sendViaMailjet(payload) },
+    ];
+  } else if (normPurpose.includes("password") || normPurpose.includes("cancel") || normPurpose.includes("refill")) {
+    providersQueue = [
+      { name: "mailjet", fn: () => sendViaMailjet(payload) },
+      { name: "brevo", fn: () => sendViaBrevo(payload) },
+      { name: "google", fn: () => sendViaGmail(payload) },
+    ];
+  } else {
+    // Default fallback order
+    providersQueue = [
+      { name: "google", fn: () => sendViaGmail(payload) },
+      { name: "brevo", fn: () => sendViaBrevo(payload) },
+      { name: "mailjet", fn: () => sendViaMailjet(payload) },
+    ];
+  }
+
+  const errors = [];
+  for (const provider of providersQueue) {
     try {
-      const info = await smtpTransporter.sendMail({
-        from: `"${senderName}" <${senderEmail}>`,
-        to,
-        replyTo: senderEmail,
-        subject,
-        text,
-        html: html || text,
-        headers: deliverabilityHeaders,
-      });
-
-      console.log(
-        `[smtp] Email delivered via Brevo SMTP to ${to} — messageId: ${info.messageId}`
-      );
-
-      return { messageId: String(info.messageId), accepted: [to] };
-    } catch (smtpErr) {
-      console.warn(
-        `[smtp] Brevo SMTP delivery failed to ${to}: ${smtpErr.message}. Attempting Mailjet fallback...`
-      );
+      const result = await provider.fn();
+      return result;
+    } catch (err) {
+      console.warn(`[smtp:${provider.name}] Attempt failed for ${to} (${purpose}): ${err.message}. Trying next provider...`);
+      errors.push(`${provider.name}: ${err.message}`);
     }
   }
 
-  // 2. Secondary / Fallback: Mailjet Send API v3.1
-  if (mailjetClient) {
-    try {
-      const result = await mailjetClient.post("send", { version: "v3.1" }).request({
-        Messages: [
-          {
-            From: {
-              Email: senderEmail,
-              Name: senderName,
-            },
-            To: [
-              {
-                Email: to,
-              },
-            ],
-            ReplyTo: {
-              Email: senderEmail,
-              Name: senderName,
-            },
-            Subject: subject,
-            TextPart: text,
-            HTMLPart: html || text,
-            TrackOpens: "disabled",
-            TrackClicks: "disabled",
-            Headers: deliverabilityHeaders,
-          },
-        ],
-      });
-
-      const msgStatus = result?.body?.Messages?.[0]?.Status;
-      const msgId =
-        result?.body?.Messages?.[0]?.To?.[0]?.MessageID ||
-        result?.body?.Messages?.[0]?.MessageID ||
-        "unknown";
-
-      console.log(
-        `[smtp] Email delivered via Mailjet fallback to ${to} — subject: "${subject}" — status: ${msgStatus}`
-      );
-
-      return { messageId: String(msgId), accepted: [to] };
-    } catch (error) {
-      const detail =
-        error?.response?.data?.ErrorMessage ||
-        error?.ErrorMessage ||
-        error?.message ||
-        "Unknown Mailjet error";
-
-      console.error(`[smtp] Mailjet delivery also failed to ${to}:`, detail);
-      throw new AppError(`Failed to send email: ${detail}`, 500);
-    }
-  }
-
-  // ── No credentials configured at all ──────────────────────────────────────
-  if (!smtpTransporter && !mailjetClient) {
-    console.warn(
-      `[smtp] Neither SMTP nor Mailjet credentials configured — skipping email to ${to}. ` +
-        "Set SMTP_HOST, SMTP_USER, SMTP_PASS or MAILJET_API_KEY, MAILJET_API_SECRET in .env."
-    );
-    return { messageId: "no-credentials-skipped", accepted: [] };
-  }
-
-  throw new AppError("All email delivery methods failed.", 500);
+  console.error(`[smtp] All email delivery providers failed for ${to}:`, errors);
+  throw new AppError(`All email delivery methods failed (${errors.join("; ")})`, 500);
 };
 
-module.exports = { sendEmail };
+module.exports = {
+  sendEmail,
+  sendViaGmail,
+  sendViaBrevo,
+  sendViaMailjet,
+};

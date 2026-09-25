@@ -110,11 +110,8 @@ export default function HeaderNav({ initialCategories = [] }) {
   };
 
   const navLinks = [
-    { name: "Home", href: "/" },
     { name: "Instant Order", href: "/instant-order" },
     { name: "Categories", href: "#categories", isDropdown: true },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
   ];
 
   const mobileDrawerContent = isMobileMenuOpen && mounted ? (
@@ -427,7 +424,7 @@ export default function HeaderNav({ initialCategories = [] }) {
   return (
     <>
       {/* 1. DESKTOP NAVIGATION BAR */}
-      <nav className="hidden md:flex items-center gap-5 lg:gap-6 relative">
+      <nav className="hidden lg:flex items-center gap-2 xl:gap-3 2xl:gap-4 relative">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
 
@@ -557,14 +554,29 @@ export default function HeaderNav({ initialCategories = [] }) {
             );
           }
 
+          if (link.name === "Instant Order") {
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`h-10 px-3.5 xl:px-4 rounded-full transition-all flex items-center gap-1.5 shadow-2xs whitespace-nowrap text-xs font-black uppercase tracking-wider ${
+                  isActive
+                    ? "bg-amber-400 text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
+                    : "bg-[#FFF3B0] hover:bg-amber-400 text-[#7A5800] hover:text-slate-950 border border-amber-300"
+                }`}
+              >
+                <span className="text-sm">⚡</span>
+                <span>INSTANT ORDER</span>
+              </Link>
+            );
+          }
+
           return (
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-bold transition-colors relative py-1 ${
+              className={`h-10 px-2.5 text-sm font-bold transition-colors flex items-center ${
                 isActive ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
-              } after:content-[''] after:absolute after:bottom-[-18px] after:left-0 after:h-[2.5px] after:bg-amber-500 hover:after:w-full after:transition-all ${
-                isActive ? "after:w-full" : "after:w-0"
               }`}
             >
               {link.name}
@@ -575,7 +587,7 @@ export default function HeaderNav({ initialCategories = [] }) {
         {/* Wishlist Link */}
         <Link
           href="/wishlist"
-          className={`text-sm font-bold transition-colors relative py-1 flex items-center gap-1.5 ${
+          className={`h-10 px-2 text-sm font-bold transition-colors flex items-center gap-1.5 ${
             pathname === "/wishlist" ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
           }`}
         >
@@ -686,7 +698,7 @@ export default function HeaderNav({ initialCategories = [] }) {
         ) : (
           <Link
             href="/login"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-amber-200 text-slate-800 hover:border-amber-400 hover:bg-amber-50/50 text-xs font-bold transition-all shadow-2xs cursor-pointer"
+            className="h-10 px-3.5 xl:px-4 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
           >
             <User className="w-3.5 h-3.5 text-amber-600" />
             <span>Sign In</span>
@@ -695,15 +707,15 @@ export default function HeaderNav({ initialCategories = [] }) {
       </nav>
 
       {/* 2. MOBILE HAMBURGER BUTTON & QUICK APP BADGE */}
-      <div className="flex items-center gap-2 md:hidden">
+      <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
         <InstallAppButton variant="compact" />
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
-          className="w-10 h-10 rounded-xl bg-white border border-yellow-300 text-slate-800 hover:text-amber-700 shadow-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-yellow-300 text-slate-800 hover:text-amber-700 shadow-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer"
         >
-          {isMobileMenuOpen ? <X className="w-5 h-5 text-slate-900" /> : <Menu className="w-5 h-5 text-slate-900" />}
+          {isMobileMenuOpen ? <X className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-slate-900" /> : <Menu className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-slate-900" />}
         </button>
       </div>
 

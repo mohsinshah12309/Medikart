@@ -205,7 +205,7 @@ export default function CheckoutPage() {
       setOtpSent(true);
       setOtpFeedback({ 
         type: 'success', 
-        msg: `OTP verification code sent to ${targetEmail}. Please check your inbox.` 
+        msg: `OTP verification code sent to ${targetEmail}. Please check your Inbox (or Spam/Junk folder).` 
       });
       setResendTimer(60);
       setTimeout(() => {

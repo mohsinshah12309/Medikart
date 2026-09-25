@@ -217,48 +217,18 @@ const sendInstantOrderConfirmationEmailOnce = async (order) => {
 };
 
 // ── Email Template ────────────────────────────────────────────────────────────
+const { generateInstantOrderPlacedTemplate } = require("../../utils/emailTemplates");
+
 const sendInstantOrderConfirmationEmail = async (order) => {
-  const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #2c5282; color: white; padding: 20px; text-align: center; }
-    .content { padding: 20px; background: #f7fafc; }
-    .order-id { font-size: 18px; font-weight: bold; color: #2c5282; }
-    .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #cbd5e0; font-size: 12px; color: #718096; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>Instant Order Received</h1>
-    </div>
-    <div class="content">
-      <p>Dear ${order.customer.name},</p>
-      <p>We have received your prescription and order details.</p>
-      <p class="order-id">Order ID: ${order._id}</p>
-      <p><strong>Status:</strong> Awaiting pharmacist review and pricing</p>
-      <p><strong>Delivery Address:</strong><br>${order.customer.address}<br>${order.customer.city}</p>
-      <p><strong>Payment Method:</strong> ${order.paymentMethod.toUpperCase()}</p>
-      <p>Our pharmacist will review your prescription and contact you with pricing details shortly.</p>
-      <div class="footer">
-        <p>If you have any questions, please contact us.</p>
-        <p>&copy; ${new Date().getFullYear()} Medikart. All rights reserved.</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-  `;
+  const template = generateInstantOrderPlacedTemplate({ order });
 
   await smtp.sendEmail({
     to: order.customer.email,
-    subject: `Instant Order Received - ${order._id}`,
-    html,
+    subject: template.subject,
+    html: template.html,
+    text: template.text,
+    purpose: "order_placed",
+    fromName: "Medikart Orders",
   });
 };
 

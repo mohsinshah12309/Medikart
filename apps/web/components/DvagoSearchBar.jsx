@@ -397,20 +397,20 @@ export default function DvagoSearchBar({ className = "" }) {
     <>
       {/* ── TOP NAVBAR SEARCH BAR TRIGGER ───────────────────────────────── */}
       <div
-        className={`relative flex items-center w-full max-w-md lg:max-w-lg transition-all ${className}`}
+        className={`relative flex items-center w-full transition-all ${className}`}
         role="search"
       >
         <div
           onClick={handleOpenModal}
-          className="relative w-full flex items-center bg-white rounded-full border border-slate-200/90 hover:border-amber-400 transition-all duration-200 shadow-2xs cursor-pointer py-1"
+          className="relative w-full h-10 sm:h-11 flex items-center bg-slate-50 hover:bg-white rounded-full border border-slate-200/90 hover:border-amber-400 transition-all duration-200 shadow-2xs cursor-pointer pl-3.5 sm:pl-4 pr-1.5 group"
         >
           {/* Magnifying Glass */}
-          <div className="pl-3.5 pr-2 py-1 text-slate-400 flex items-center justify-center pointer-events-none">
+          <div className="text-slate-400 group-hover:text-amber-500 flex items-center justify-center pointer-events-none transition-colors mr-2.5 shrink-0">
             <Search className="w-4 h-4" />
           </div>
 
-          {/* Dummy search input trigger */}
-          <div className="relative flex-1 h-8 sm:h-9 flex items-center overflow-hidden pr-3">
+          {/* Dummy search input trigger with animated placeholder */}
+          <div className="relative flex-1 h-full flex items-center overflow-hidden min-w-0 pr-2">
             <input
               ref={searchInputRef}
               type="text"
@@ -424,7 +424,7 @@ export default function DvagoSearchBar({ className = "" }) {
             {/* Rotating Animated Placeholder */}
             {!query && (
               <div
-                className={`pointer-events-none absolute left-0 right-2 text-xs sm:text-[13px] text-slate-400 truncate transition-opacity duration-200 ${
+                className={`pointer-events-none absolute left-0 right-0 text-xs sm:text-[13px] text-slate-400 font-medium truncate transition-all duration-200 ${
                   isFading ? "opacity-0 -translate-y-1" : "opacity-100 translate-y-0"
                 }`}
               >
@@ -433,17 +433,12 @@ export default function DvagoSearchBar({ className = "" }) {
             )}
           </div>
 
-          {/* Quick Search Action Button on Desktop */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleOpenModal();
-            }}
-            className="hidden lg:inline-flex items-center justify-center shrink-0 px-3.5 py-1.5 mr-1.5 rounded-full text-xs font-black bg-amber-400 hover:bg-amber-500 text-slate-950 transition-colors shadow-2xs cursor-pointer"
-          >
-            Search
-          </button>
+          {/* Docked Search Button inside search bar */}
+          <div className="flex items-center shrink-0">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#FFF3B0] text-[#7A5800] border border-amber-300 group-hover:bg-[#FFCB05] group-hover:text-slate-950 transition-colors shadow-2xs">
+              SEARCH
+            </span>
+          </div>
         </div>
       </div>
 

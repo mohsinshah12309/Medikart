@@ -314,6 +314,7 @@ const forgotPassword = async (payload) => {
       html: template.html,
       text: template.text,
       fromName: "Medikart Security",
+      purpose: "password_reset",
     });
 
     return {

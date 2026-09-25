@@ -825,9 +825,11 @@ const sendOrderCancellationEmail = async (order) => {
 
   await smtp.sendEmail({
     to: order.customer.email,
-    subject: `Order Cancelled — Medikart (#${order._id})`,
+    subject: `Order Cancelled #${String(order._id).slice(-6).toUpperCase()} — Medikart`,
     html,
     text: `Hello ${order.customer.name},\n\nYour order #${order._id} has been cancelled.\nReason: ${reasonNote}\n${refundNoteText}\n\nIf you have any questions, please contact us at medikart.com@gmail.com or WhatsApp: 03244489159.\n\nTeam Medikart`,
+    purpose: "order_cancelled",
+    fromName: "Medikart Support",
   });
 };
 

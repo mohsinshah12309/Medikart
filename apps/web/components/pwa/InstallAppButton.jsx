@@ -19,25 +19,23 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
       <button
         type="button"
         onClick={triggerInstall}
-        className={`group relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black transition-all duration-200 cursor-pointer border ${
+        className={`h-10 px-3.5 xl:px-4 rounded-full text-xs font-black transition-all duration-200 cursor-pointer border flex items-center gap-1.5 shadow-2xs whitespace-nowrap ${
           isInstalled
             ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
-            : "bg-gradient-to-r from-[#FFF352] to-[#FFCB05] text-slate-950 border-amber-300 hover:shadow-md hover:scale-[1.03] active:scale-95"
+            : "bg-[#FFCB05] hover:bg-yellow-400 text-slate-950 border-amber-300 hover:shadow-xs hover:scale-[1.02] active:scale-95"
         } ${className}`}
         title={isInstalled ? "Medikart App Installed" : "Download & Install Medikart App"}
       >
         {isInstalled ? (
           <>
             <Check className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="hidden xl:inline">App Installed</span>
-            <span className="xl:hidden">Installed</span>
+            <span>App Installed</span>
           </>
         ) : (
           <>
-            <Smartphone className="w-3.5 h-3.5 text-slate-950 group-hover:animate-bounce" />
-            <span className="hidden xl:inline">Download App</span>
-            <span className="xl:hidden">Get App</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse" />
+            <Smartphone className="w-3.5 h-3.5 text-slate-950" />
+            <span>Download App</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse ml-0.5" />
           </>
         )}
       </button>
