@@ -151,7 +151,7 @@ const requestTestOtp = async (email) => {
 const makeCustomer = (email) => ({
   name: "Narcotics Customer",
   email,
-  phone: "0300-1234567",
+  phone: "03001234567",
   address: "123 Test Street",
   city: city.name,
 });

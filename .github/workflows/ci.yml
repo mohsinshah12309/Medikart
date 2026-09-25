@@ -1,0 +1,228 @@
+name: Medikart CI/CD & Production Readiness Gate
+
+on:
+  push:
+    branches: [ master, main, production ]
+  pull_request:
+    branches: [ master, main, production ]
+  schedule:
+    # Daily at 04:00 UTC for automated ongoing dependency vulnerability scans (NFR-SEC-12)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # =========================================================================
+  # STAGE 1 & 5: ENVIRONMENT, SECRETS, LINT & CONFIGURATION VALIDATION
+  # =========================================================================
+  lint-and-validate:
+    name: "Stage 1 & 5: Lint & Config Validation"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: |
+            server/package.json
+            apps/web/package.json
+            apps/admin/package.json
+
+      - name: Install Monorepo Dependencies
+        run: |
+          echo "📦 Installing Server dependencies..."
+          cd server && npm ci
+          echo "📦 Installing Web dependencies..."
+          cd ../apps/web && npm ci
+          echo "📦 Installing Admin dependencies..."
+          cd ../apps/admin && npm ci
+          cd ../
+
+      - name: Validate Environment Documentation, Secret Leakage & Dev URLs
+        run: |
+          node server/src/scripts/ci-env-and-secret-check.js
+
+      - name: Verify JavaScript Syntax & Compilation
+        run: |
+          echo "Checking server syntax..."
+          node -c server/src/app.js
+          node -c server/src/server.js
+
+  # =========================================================================
+  # STAGE 3: SECURITY SCANNING & SECRET DETECTION
+  # =========================================================================
+  security-scan:
+    name: "Stage 3: Security & Secret Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase (Full History for Secret Scan)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks Secret Detection
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Dependency Audit (Server)
+        run: |
+          cd server
+          npm audit --production || true
+        continue-on-error: true
+
+      - name: Run Dependency Audit (Web)
+        run: |
+          cd apps/web
+          npm audit --production || true
+        continue-on-error: true
+
+      - name: Run Dependency Audit (Admin)
+        run: |
+          cd apps/admin
+          npm audit --production || true
+        continue-on-error: true
+
+  # =========================================================================
+  # STAGE 2: AUTOMATED TESTS (NFR-TEST-01 / NFR-TEST-02)
+  # =========================================================================
+  test-backend:
+    name: "Stage 2: Backend Unit & Integration Tests"
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: server/package.json
+
+      - name: Install Server Dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Run Critical Business Logic & Workflow Test Suites
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://localhost:27017/medikart_test
+          JWT_SECRET: test_secret_key_at_least_32_characters_long_for_ci_pipeline
+        run: |
+          cd server
+          echo "Running critical business logic tests: Discount precedence, Delivery charges, Narcotics gate, OTP..."
+          npx jest tests/unit/discount.test.js tests/unit/deliveryCharge.test.js tests/unit/narcoticsGate.test.js tests/unit/otp.test.js tests/integration/cartIsolation.test.js --forceExit --runInBand --verbose
+
+  # =========================================================================
+  # STAGE 4: PRODUCTION BUILD VERIFICATION
+  # =========================================================================
+  build-frontends:
+    name: "Stage 4: Frontend Production Builds"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: |
+            apps/web/package.json
+            apps/admin/package.json
+
+      - name: Install Web Dependencies
+        run: |
+          cd apps/web
+          npm ci
+
+      - name: Build Next.js Storefront (apps/web)
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_API_URL: https://medikart.pk
+        run: |
+          cd apps/web
+          node --max-old-space-size=4096 node_modules/next/dist/bin/next build
+
+      - name: Install Admin Dependencies
+        run: |
+          cd apps/admin
+          npm ci
+
+      - name: Build React Vite Dashboard (apps/admin)
+        env:
+          NODE_ENV: production
+        run: |
+          cd apps/admin
+          npm run build
+
+      - name: Check Bundle Sizes
+        run: |
+          echo "=== Admin Assets Size ==="
+          ls -lh apps/admin/dist/assets/ || true
+
+  # =========================================================================
+  # STAGE 6: PRODUCTION READINESS SUMMARY
+  # =========================================================================
+  production-readiness-summary:
+    name: "Stage 6: Production Readiness Scorecard"
+    runs-on: ubuntu-latest
+    needs: [lint-and-validate, security-scan, test-backend, build-frontends]
+    if: always()
+    steps:
+      - name: Generate Production Readiness Markdown Scorecard
+        run: |
+          STATUS_LINT="${{ needs.lint-and-validate.result }}"
+          STATUS_SEC="${{ needs.security-scan.result }}"
+          STATUS_TEST="${{ needs.test-backend.result }}"
+          STATUS_BUILD="${{ needs.build-frontends.result }}"
+
+          OVERALL_STATUS="READY"
+          if [[ "$STATUS_LINT" != "success" || "$STATUS_TEST" != "success" || "$STATUS_BUILD" != "success" ]]; then
+            OVERALL_STATUS="BLOCKED"
+          fi
+
+          cat << EOF >> $GITHUB_STEP_SUMMARY
+          # 🏥 Medikart Production Readiness Report
+
+          **Overall Status:** $([ "$OVERALL_STATUS" == "READY" ] && echo "🟢 **PRODUCTION READY**" || echo "🔴 **ACTION REQUIRED (DEPLOYMENT BLOCKED)**")
+
+          ---
+
+          ### Pipeline Verification Results
+
+          | Stage | Check | Status | Gate Type | Notes |
+          | :--- | :--- | :---: | :---: | :--- |
+          | **Stage 1 & 5** | Lint, Env Variables & Secret Exposure Scan | $([ "$STATUS_LINT" == "success" ] && echo "✅ PASSED" || echo "❌ FAILED") | **BLOCKING** | Validates .env.example, blocks NEXT_PUBLIC_ secret leaks, scans for dev URLs |
+          | **Stage 2** | Automated Tests (Discounts, Narcotics, OTP, Cart Isolation) | $([ "$STATUS_TEST" == "success" ] && echo "✅ PASSED" || echo "❌ FAILED") | **BLOCKING** | Runs isolated tests against local MongoDB test container |
+          | **Stage 3** | Dependency Vulnerability & Secret Scan | $([ "$STATUS_SEC" == "success" ] && echo "✅ PASSED" || echo "⚠️ WARNING") | **AUDIT / NON-BLOCKING** | Gitleaks scan & npm audit for runtime packages |
+          | **Stage 4** | Production Builds (Next.js & Vite Admin) | $([ "$STATUS_BUILD" == "success" ] && echo "✅ PASSED" || echo "❌ FAILED") | **BLOCKING** | Verifies next build & vite build with NODE_ENV=production |
+
+          ---
+
+          ### Pre-Launch Manual Review Requirements
+          - [ ] **OWASP ZAP Baseline Scan (NFR-SEC-13):** Must be executed against the staging deployment domain before public DNS switch.
+          - [ ] **Payment Gateway Verification:** Habib Metro / Kuickpay live merchant credentials confirmation.
+          - [ ] **Email DNS (SPF / DKIM / DMARC):** Ensure Mailjet/Brevo domain verification records are active on Cloudflare DNS.
+          EOF
