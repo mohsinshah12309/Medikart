@@ -413,7 +413,7 @@ export default async function ProductDetailPage({ params }) {
               <span>⚡</span> Fast Nationwide Delivery
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Dispatched in 2–4 hours within major metropolitan hubs (Lahore, Karachi, Islamabad &amp; Rawalpindi) and 24–48 hours nationwide with Cash on Delivery (COD) and Kuickpay digital billing.
+              Dispatched in 2–4 hours within major metropolitan hubs (Lahore, Karachi, Islamabad &amp; Rawalpindi) and 24–48 hours nationwide with Cash on Delivery (COD) and Credit Card payments accepted.
             </p>
           </div>
 

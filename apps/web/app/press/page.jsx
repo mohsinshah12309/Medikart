@@ -159,9 +159,9 @@ export default function PressPage() {
               <span className="text-[11px] font-black uppercase tracking-wider text-amber-900 block">
                 Confirmed Payment Methods
               </span>
-              <p className="font-bold text-slate-900">Cash on Delivery (COD) &amp; Kuickpay</p>
+              <p className="font-bold text-slate-900">Cash on Delivery (COD) &amp; Credit Card</p>
               <p className="text-slate-600 text-xs leading-relaxed">
-                Nationwide Cash on Delivery at customer doorstep, alongside secure online digital billing through Kuickpay integration.
+                Nationwide Cash on Delivery at customer doorstep, alongside secure online Credit Card and Debit Card payments.
               </p>
             </div>
 
@@ -206,7 +206,7 @@ export default function PressPage() {
                 Full Executive Overview (100 Words)
               </span>
               <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
-                &ldquo;Medikart is a Pakistani e-pharmacy platform and healthcare logistics network by Banu Zahrah Pvt Ltd. Connecting patients with verified partner retail pharmacies across Lahore, Karachi, Islamabad, and nationwide, Medikart provides genuine medicines, qualified pharmacist prescription review, 30-day chronic medicine refill subscriptions, and specialized cold-chain handling for vaccines and insulin. Medikart supports nationwide Cash on Delivery and online digital billing through Kuickpay.&rdquo;
+                &ldquo;Medikart is a Pakistani e-pharmacy platform and healthcare logistics network by Banu Zahrah Pvt Ltd. Connecting patients with verified partner retail pharmacies across Lahore, Karachi, Islamabad, and nationwide, Medikart provides genuine medicines, qualified pharmacist prescription review, 30-day chronic medicine refill subscriptions, and specialized cold-chain handling for vaccines and insulin. Medikart supports nationwide Cash on Delivery and online Credit Card payments.&rdquo;
               </p>
             </div>
           </div>

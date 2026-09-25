@@ -185,7 +185,7 @@ export default async function RootLayout({ children }) {
     'email': contactEmail,
     'priceRange': 'PKR',
     'currenciesAccepted': 'PKR',
-    'paymentAccepted': 'Cash on Delivery, Kuickpay',
+    'paymentAccepted': 'Cash on Delivery, Credit Card, Debit Card',
     'address': {
       '@type': 'PostalAddress',
       'addressLocality': 'Lahore',
@@ -262,12 +262,12 @@ export default async function RootLayout({ children }) {
                   </Link>
 
                   {/* Center: Top Search Bar (on Desktop) */}
-                  <div className="hidden lg:flex flex-1 max-w-md xl:max-w-lg 2xl:max-w-xl mx-2 min-w-0">
+                  <div className="hidden lg:flex flex-1 min-w-[200px] xl:min-w-[280px] max-w-sm xl:max-w-md 2xl:max-w-xl mx-2">
                     <DvagoSearchBar className="w-full" />
                   </div>
 
                   {/* Right: Actions (Instant Order, Categories, Wishlist, App, Account, Cart) */}
-                  <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-4 shrink-0">
+                  <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 xl:gap-3 shrink-0">
                     <HeaderNav initialCategories={categories} />
                     <NavbarCartIcon />
                   </div>

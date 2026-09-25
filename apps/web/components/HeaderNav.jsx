@@ -110,8 +110,11 @@ export default function HeaderNav({ initialCategories = [] }) {
   };
 
   const navLinks = [
+    { name: "Home", href: "/" },
     { name: "Instant Order", href: "/instant-order" },
     { name: "Categories", href: "#categories", isDropdown: true },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const mobileDrawerContent = isMobileMenuOpen && mounted ? (
@@ -424,7 +427,7 @@ export default function HeaderNav({ initialCategories = [] }) {
   return (
     <>
       {/* 1. DESKTOP NAVIGATION BAR */}
-      <nav className="hidden lg:flex items-center gap-2 xl:gap-3 2xl:gap-4 relative">
+      <nav className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 relative">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
 
@@ -432,26 +435,26 @@ export default function HeaderNav({ initialCategories = [] }) {
             return (
               <div
                 key={link.name}
-                className="relative py-2"
+                className="relative py-1"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
                 <button
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`text-sm font-bold transition-colors flex items-center gap-1.5 cursor-pointer relative py-1 ${
+                  className={`h-9 px-1.5 xl:px-2.5 text-xs xl:text-sm font-bold transition-colors flex items-center gap-1 xl:gap-1.5 cursor-pointer relative py-1 ${
                     isDropdownOpen ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
                   }`}
                 >
                   <span>Categories</span>
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
+                    className={`w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200 ${
                       isDropdownOpen ? "rotate-180 text-amber-500" : "text-slate-400"
                     }`}
                   />
                   <span
-                    className={`absolute bottom-[-18px] left-0 h-[2.5px] bg-amber-500 transition-all duration-200 ${
-                      isDropdownOpen ? "w-full" : "w-0"
+                    className={`absolute bottom-[2px] left-1.5 right-1.5 h-[2.5px] bg-amber-500 transition-all duration-200 ${
+                      isDropdownOpen ? "w-[calc(100%-12px)]" : "w-0"
                     }`}
                   />
                 </button>
@@ -559,13 +562,13 @@ export default function HeaderNav({ initialCategories = [] }) {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`h-10 px-3.5 xl:px-4 rounded-full transition-all flex items-center gap-1.5 shadow-2xs whitespace-nowrap text-xs font-black uppercase tracking-wider ${
+                className={`h-9 px-2.5 xl:px-3.5 rounded-full transition-all flex items-center gap-1 xl:gap-1.5 shadow-2xs whitespace-nowrap text-[11px] xl:text-xs font-black uppercase tracking-wider ${
                   isActive
                     ? "bg-amber-400 text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
                     : "bg-[#FFF3B0] hover:bg-amber-400 text-[#7A5800] hover:text-slate-950 border border-amber-300"
                 }`}
               >
-                <span className="text-sm">⚡</span>
+                <span className="text-xs xl:text-sm">⚡</span>
                 <span>INSTANT ORDER</span>
               </Link>
             );
@@ -575,11 +578,14 @@ export default function HeaderNav({ initialCategories = [] }) {
             <Link
               key={link.name}
               href={link.href}
-              className={`h-10 px-2.5 text-sm font-bold transition-colors flex items-center ${
-                isActive ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
+              className={`h-9 px-1.5 xl:px-2.5 text-xs xl:text-sm font-bold transition-colors flex items-center whitespace-nowrap relative ${
+                isActive ? "text-amber-700 font-black" : "text-slate-700 hover:text-amber-600"
               }`}
             >
-              {link.name}
+              <span>{link.name}</span>
+              {isActive && (
+                <span className="absolute bottom-[2px] left-1.5 right-1.5 h-[2.5px] bg-amber-500 rounded-full" />
+              )}
             </Link>
           );
         })}
@@ -587,9 +593,10 @@ export default function HeaderNav({ initialCategories = [] }) {
         {/* Wishlist Link */}
         <Link
           href="/wishlist"
-          className={`h-10 px-2 text-sm font-bold transition-colors flex items-center gap-1.5 ${
+          className={`h-9 px-1.5 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center gap-1.5 ${
             pathname === "/wishlist" ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
           }`}
+          title="Wishlist"
         >
           <Heart
             className={`w-4 h-4 ${
@@ -598,16 +605,18 @@ export default function HeaderNav({ initialCategories = [] }) {
                 : "text-slate-400"
             }`}
           />
-          <span>Wishlist</span>
+          <span className="hidden xl:inline">Wishlist</span>
           {wishlistCount > 0 && (
-            <span className="min-w-[18px] h-[18px] flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full px-1 shadow-xs">
+            <span className="min-w-[17px] h-[17px] flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full px-1 shadow-xs">
               {wishlistCount > 99 ? "99+" : wishlistCount}
             </span>
           )}
         </Link>
 
-        {/* Download App Desktop Pill Button */}
-        <InstallAppButton variant="navbar" />
+        {/* Download App Desktop Pill Button (shown on ultra-wide / 2xl desktop) */}
+        <div className="hidden 2xl:block">
+          <InstallAppButton variant="navbar" />
+        </div>
 
         {/* Customer Account Dropdown / Sign In Button */}
         {isAuthenticated ? (
@@ -624,12 +633,12 @@ export default function HeaderNav({ initialCategories = [] }) {
             <button
               type="button"
               onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-              className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 hover:border-amber-400 text-slate-800 transition-all cursor-pointer shadow-2xs"
+              className="flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 rounded-full bg-amber-50 border border-amber-200/80 hover:border-amber-400 text-slate-800 transition-all cursor-pointer shadow-2xs"
             >
               <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs">
                 {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
               </div>
-              <span className="text-xs font-bold max-w-[100px] truncate">
+              <span className="text-xs font-bold max-w-[80px] xl:max-w-[100px] truncate">
                 {customer?.name ? customer.name.split(" ")[0] : "Account"}
               </span>
               <ChevronDown
@@ -698,7 +707,7 @@ export default function HeaderNav({ initialCategories = [] }) {
         ) : (
           <Link
             href="/login"
-            className="h-10 px-3.5 xl:px-4 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+            className="h-9 px-3 xl:px-4 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
           >
             <User className="w-3.5 h-3.5 text-amber-600" />
             <span>Sign In</span>

@@ -280,7 +280,7 @@ export default function InstantOrderPage() {
       }
 
       if (res && res.status !== 'fail') {
-        const orderId = res._id || res.data?.order?._id;
+        const orderId = res.data?.order?.orderCode || res.orderCode || res._id || res.data?.order?._id;
         setPlacedOrderSummary({
           total: "Awaiting Pharmacist Pricing",
           customer: { ...customer },

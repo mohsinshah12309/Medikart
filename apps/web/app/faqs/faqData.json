@@ -173,11 +173,11 @@
     "category": "payment",
     "categoryLabel": "Payment & Billing",
     "question": "What payment methods are supported on Medikart Pakistan?",
-    "answer": "Medikart supports nationwide Cash on Delivery (COD) across Pakistan as well as secure online digital banking and debit/credit card payments via Kuickpay integration.",
+    "answer": "Medikart supports nationwide Cash on Delivery (COD) across Pakistan as well as secure online Credit Card and Debit Card payments (Visa, Mastercard, PayPak, etc.).",
     "highlights": [
       "Cash on Delivery (COD)",
-      "Kuickpay Digital Payments",
-      "Debit & Credit Cards"
+      "Credit Card Payments",
+      "Debit & Digital Payments"
     ]
   },
   {
@@ -196,12 +196,12 @@
     "id": "pay-3",
     "category": "payment",
     "categoryLabel": "Payment & Billing",
-    "question": "Can I pay online via JazzCash, Easypaisa, or 1Link banking apps?",
-    "answer": "Yes. By selecting Kuickpay at checkout, a unique 1Bill / Kuickpay consumer number is generated for your order, allowing instant payment via Easypaisa, JazzCash, Nayapay, Sadapay, and all Pakistani bank apps.",
+    "question": "Are Credit Card and Debit Card payments accepted on Medikart?",
+    "answer": "Yes. Credit Card and Debit Card payments are accepted online at checkout. You can securely pay using any local or international Visa, Mastercard, or UnionPay card.",
     "highlights": [
-      "Easypaisa & JazzCash support",
-      "1Bill / 1Link integration",
-      "All Pakistani bank mobile apps"
+      "Credit Card Accepted",
+      "Visa & Mastercard",
+      "Instant Online Checkout"
     ]
   },
   {
@@ -245,10 +245,10 @@
     "category": "payment",
     "categoryLabel": "Payment & Billing",
     "question": "Can I pay with credit card on delivery at my doorstep?",
-    "answer": "Currently, doorstep payments are accepted in cash. If you prefer card payment, select online card/Kuickpay payment at online checkout prior to rider dispatch.",
+    "answer": "Currently, doorstep payments are accepted in cash. Credit card payments are accepted online at checkout prior to rider dispatch.",
     "highlights": [
       "Cash at doorstep",
-      "Online card checkout",
+      "Online Credit Card Checkout",
       "Digital pre-payment"
     ]
   },
@@ -605,10 +605,10 @@
     "category": "refill",
     "categoryLabel": "Monthly Refill & Chronic Care",
     "question": "What payment methods are available for Monthly Refill?",
-    "answer": "You can pay via Cash on Delivery each month upon rider arrival, or set up automated digital payments through Kuickpay.",
+    "answer": "You can pay via Cash on Delivery each month upon rider arrival, or pay online with your Credit Card or Debit Card.",
     "highlights": [
       "Cash on Delivery monthly",
-      "Online Kuickpay billing",
+      "Credit Card Online Payment",
       "Flexible payment choices"
     ]
   },
