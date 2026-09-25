@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { adminFetch, API_URL } from "../apiClient";
+import SearchableSelect from "./SearchableSelect";
 
 export default function Pharmacies({ token, adminUser, initialTab, onNavigateToOrders }) {
   const isSuperAdmin = adminUser?.role === "super_admin";
@@ -171,13 +172,58 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
         : allPharmacies);
 
   const filteredPharmacies = searchQuery.trim()
-    ? baseFilteredPharmacies.filter(p => {
+    ? baseFilteredPharmacies.filter((p) => {
         const q = searchQuery.toLowerCase();
-        return (p.name && p.name.toLowerCase().includes(q)) || 
-               (p.code && p.code.toLowerCase().includes(q)) || 
-               (p.phone && p.phone.toLowerCase().includes(q));
+        return (
+          (p.name && p.name.toLowerCase().includes(q)) ||
+          (p.code && p.code.toLowerCase().includes(q)) ||
+          (p.phone && p.phone.toLowerCase().includes(q)) ||
+          (p.contactPerson && p.contactPerson.toLowerCase().includes(q)) ||
+          (p.email && p.email.toLowerCase().includes(q)) ||
+          (p.address && p.address.toLowerCase().includes(q)) ||
+          (p.city && p.city.toLowerCase().includes(q))
+        );
       })
     : baseFilteredPharmacies;
+
+  const pharmacyReportOptions = useMemo(() => {
+    return [
+      { value: "", label: "All Pharmacies", icon: "🌐" },
+      ...allPharmacies.map((ph) => ({
+        value: ph._id,
+        label: `${ph.name} (${ph.code || "Branch"})`,
+        sublabel: ph.city ? `${ph.city} ${ph.address ? `• ${ph.address}` : ""}` : ph.address || "",
+        badge: ph.active ? "Active" : "Inactive",
+        icon: "🏥",
+        code: ph.code,
+        city: ph.city,
+      })),
+    ];
+  }, [allPharmacies]);
+
+  const citySelectOptions = useMemo(() => {
+    return [
+      { value: "", label: "All Cities (Show All)", icon: "🏙️" },
+      ...cities.map((c) => ({
+        value: c._id,
+        label: c.name,
+        badge: c.code || "",
+        icon: "📍",
+      })),
+    ];
+  }, [cities]);
+
+  const commPharmacyOptions = useMemo(() => {
+    return allPharmacies.map((ph) => ({
+      value: ph._id,
+      label: `${ph.name} (${ph.code || "Branch"})`,
+      sublabel: ph.city ? `${ph.city} ${ph.address ? `• ${ph.address}` : ""}` : ph.address || "",
+      badge: ph.active ? "Active" : "Inactive",
+      icon: "🏥",
+      code: ph.code,
+      city: ph.city,
+    }));
+  }, [allPharmacies]);
 
   const fetchReports = async () => {
     try {
@@ -618,59 +664,42 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
             }}
           >
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-              <input
-                type="text"
-                placeholder="Search pharmacy..."
-                className="form-control"
-                style={{ minWidth: "200px", margin: 0, padding: "0.45rem 0.85rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", flex: 1 }}>
+              <div style={{ position: "relative", minWidth: "240px", flex: 1, maxWidth: "420px" }}>
+                <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+                <input
+                  type="text"
+                  placeholder="Search branch name, code, contact, phone, city..."
+                  className="form-control"
+                  style={{ width: "100%", margin: 0, padding: "0.45rem 2rem 0.45rem 2.2rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    style={{ position: "absolute", right: "0.6rem", top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "0.8rem" }}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
             {isSuperAdmin ? (
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
                 <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1E293B", display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                  🏙️ Filter by City:
+                  🏙️ City:
                 </span>
-                <select
-                  className="form-control"
-                  style={{
-                    padding: "0.45rem 0.85rem",
-                    fontSize: "0.875rem",
-                    borderRadius: "8px",
-                    border: "1px solid #cbd5e1",
-                    minWidth: "180px",
-                    maxWidth: "260px",
-                    fontWeight: 600,
-                  }}
+                <SearchableSelect
+                  options={citySelectOptions}
                   value={cityFilter}
-                  onChange={(e) => setCityFilter(e.target.value)}
-                >
-                  <option value="">All Cities (Show All)</option>
-                  {cities.map((city) => (
-                    <option key={city._id} value={city._id}>
-                      {city.name} {city.code ? `(${city.code})` : ""}
-                    </option>
-                  ))}
-                </select>
-
-                {cityFilter && (
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => setCityFilter("")}
-                    style={{
-                      padding: "0.4rem 0.75rem",
-                      fontSize: "0.8rem",
-                      borderRadius: "8px",
-                      fontWeight: 600,
-                      background: "#f1f5f9",
-                      color: "#475569",
-                    }}
-                  >
-                    ✕ Clear Filter
-                  </button>
-                )}
+                  onChange={(val) => setCityFilter(val)}
+                  placeholder="All Cities (Show All)"
+                  searchPlaceholder="Search city..."
+                  size="md"
+                  minWidth="200px"
+                  maxWidth="260px"
+                />
               </div>
             ) : (
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -973,36 +1002,30 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                   <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#475569" }}>🏙️ City:</span>
-                  <select
-                    className="form-control"
-                    style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                  <SearchableSelect
+                    options={citySelectOptions}
                     value={cityFilter}
-                    onChange={(e) => setCityFilter(e.target.value)}
-                  >
-                    <option value="">All Cities</option>
-                    {cities.map((city) => (
-                      <option key={city._id} value={city._id}>
-                        {city.name} {city.code ? `(${city.code})` : ""}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) => setCityFilter(val)}
+                    placeholder="All Cities"
+                    searchPlaceholder="Search city..."
+                    size="sm"
+                    minWidth="180px"
+                    maxWidth="240px"
+                  />
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                   <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#475569" }}>🏥 Pharmacy:</span>
-                  <select
-                    className="form-control"
-                    style={{ padding: "0.35rem 0.75rem", fontSize: "0.85rem" }}
+                  <SearchableSelect
+                    options={pharmacyReportOptions}
                     value={selectedPharmacyFilter}
-                    onChange={(e) => setSelectedPharmacyFilter(e.target.value)}
-                  >
-                    <option value="">All Pharmacies</option>
-                    {allPharmacies.map((ph) => (
-                      <option key={ph._id} value={ph._id}>
-                        {ph.name} ({ph.code})
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) => setSelectedPharmacyFilter(val)}
+                    placeholder="All Pharmacies"
+                    searchPlaceholder="Search pharmacy name, code, city..."
+                    size="sm"
+                    minWidth="200px"
+                    maxWidth="280px"
+                  />
                 </div>
               </div>
             ) : (
@@ -1266,25 +1289,20 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                 🏥 Select Pharmacy Branch:
               </span>
               {isSuperAdmin ? (
-                <select
-                  className="form-control"
-                  style={{
-                    padding: "0.5rem 0.85rem",
-                    fontSize: "0.9rem",
-                    borderRadius: "8px",
-                    border: "1px solid #cbd5e1",
-                    minWidth: "240px",
-                    fontWeight: 700,
-                  }}
+                <SearchableSelect
+                  options={commPharmacyOptions}
                   value={selectedCommPharmacy}
-                  onChange={(e) => setSelectedCommPharmacy(e.target.value)}
-                >
-                  {allPharmacies.map((ph) => (
-                    <option key={ph._id} value={ph._id}>
-                      {ph.name} ({ph.code})
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => {
+                    setSelectedCommPharmacy(val);
+                    fetchCommissionData(val);
+                  }}
+                  placeholder="Select Pharmacy Branch..."
+                  searchPlaceholder="Search branch name, code, city..."
+                  size="md"
+                  minWidth="240px"
+                  maxWidth="340px"
+                  showClear={false}
+                />
               ) : (
                 <div style={{ background: "#f1f5f9", padding: "0.4rem 0.75rem", borderRadius: "8px", fontWeight: 700, color: "#0f172a", fontSize: "0.9rem" }}>
                   {activePharmacyObj ? `${activePharmacyObj.name} (${activePharmacyObj.code})` : "Your Assigned Branch"}

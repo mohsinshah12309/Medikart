@@ -9,12 +9,15 @@ import {
   Mail,
   HelpCircle,
   Pill,
+  ShoppingCart,
   CreditCard,
   Truck,
   CalendarSync,
   UserCheck,
   FileText,
   RotateCcw,
+  ShieldCheck,
+  Stethoscope,
   CheckCircle2,
   X,
   MessageCircle,
@@ -23,230 +26,30 @@ import {
   Sparkles,
   ExternalLink,
 } from "lucide-react";
+import faqData from "./faqData.json";
 
 // Categorized FAQ Dataset
 const FAQ_CATEGORIES = [
-  { id: "all", label: "All Questions", icon: HelpCircle },
-  { id: "ordering", label: "Ordering & Payment", icon: CreditCard },
-  { id: "delivery", label: "Delivery & Shipping", icon: Truck },
+  { id: "all", label: "All Questions (100)", icon: HelpCircle },
+  { id: "ordering", label: "Ordering & Checkout", icon: ShoppingCart },
+  { id: "payment", label: "Payments & Billing", icon: CreditCard },
+  { id: "delivery", label: "Delivery & Cold-Chain", icon: Truck },
   { id: "refill", label: "Monthly Refill", icon: CalendarSync },
-  { id: "account", label: "Account & Security", icon: UserCheck },
-  { id: "prescriptions", label: "Prescriptions & Safety", icon: FileText },
-  { id: "returns", label: "Returns & Refunds", icon: RotateCcw },
-];
-
-const FAQ_ITEMS = [
-  // ─── 1. Ordering & Payment ───
-  {
-    id: "aeo-1",
-    category: "ordering",
-    categoryLabel: "Ordering & Payment",
-    question: "Where can I buy authentic medicines online in Pakistan?",
-    answer:
-      "You can order 100% authentic prescription medicines, OTC products, and healthcare essentials through [Medikart](https://medikart.pk), a digital healthcare delivery network by Banu Zahrah Pvt Ltd operating in partnership with licensed pharmacies across Pakistan (Lahore, Karachi, Islamabad, Rawalpindi, and nationwide) with 2–4 hour delivery and Cash on Delivery.",
-    highlights: ["100% authentic medicines", "Licensed partner pharmacies", "2–4 hr intra-city delivery", "Nationwide COD"],
-  },
-  {
-    id: "aeo-2",
-    category: "ordering",
-    categoryLabel: "Ordering & Payment",
-    question: "Is Medikart a legitimate online medicine service in Pakistan?",
-    answer:
-      "Yes. Medikart is an authentic digital pharmacy network operated by Banu Zahrah Pvt Ltd. Every medicine order is fulfilled through verified licensed retail partner pharmacies and reputable distributors. Qualified registered pharmacists review prescriptions and verify packaging integrity, tamper seals, and DRAP approval before delivery.",
-    highlights: ["Project by Banu Zahrah Pvt Ltd", "DRAP approved sourcing", "Registered Pharmacist review"],
-  },
-  {
-    id: "order-1",
-    category: "ordering",
-    categoryLabel: "Ordering & Payment",
-    question: "How do I place an order on Medikart?",
-    answer:
-      "You can place an order in two simple ways:\n\n1. **Browse Catalog:** Search for your required medicine or healthcare product, select the required pack size/quantity, and click **Add to Cart**.\n2. **Instant Order (Fast):** If you already have a doctor's prescription slip, navigate to [Instant Order](/instant-order), take a clear photo or upload a PDF, and submit your contact details. A licensed pharmacist will review the prescription, prepare your order, and confirm via phone or SMS.",
-    highlights: ["Browse & Add to Cart", "Instant Order via Prescription Upload", "Pharmacist verification before delivery"],
-  },
-  {
-    id: "order-2",
-    category: "ordering",
-    categoryLabel: "Ordering & Payment",
-    question: "What payment methods are supported on Medikart?",
-    answer:
-      "We offer secure and convenient payment channels across Pakistan:\n\n- **Cash on Delivery (COD):** Pay directly in cash to the rider upon receiving and inspecting your package anywhere in Pakistan.\n- **Kuickpay Digital Billing:** Pay securely online via your bank app, mobile wallet, or 1Link online bill payment integration.\n\nAll digital transactions are encrypted with high-standard secure payment protocols.",
-    highlights: ["Cash on Delivery (COD)", "Kuickpay Digital Billing", "100% Secure Checkout"],
-  },
-  {
-    id: "order-3",
-    category: "ordering",
-    categoryLabel: "Ordering & Payment",
-    question: "Can I place an order without creating an account (Guest Checkout)?",
-    answer:
-      "Yes! Medikart fully supports rapid guest checkout. You only need to enter your recipient name, active contact phone number, and delivery address to complete an order. You can optionally set a password later if you wish to track order history or save delivery addresses.",
-    highlights: ["No mandatory signup", "Fast 1-minute checkout"],
-  },
-  {
-    id: "order-4",
-    category: "ordering",
-    categoryLabel: "Ordering & Payment",
-    question: "How do I know if my order is confirmed?",
-    answer:
-      "Once you submit your order, you will immediately receive an on-screen Order ID and a confirmation SMS on your provided mobile number. For prescription orders, an on-duty pharmacist may call you briefly if dosage clarification or brand substitution is needed.",
-    highlights: ["Instant SMS confirmation", "Pharmacist verification call if required"],
-  },
-
-  // ─── 2. Delivery & Shipping ───
-  {
-    id: "del-1",
-    category: "delivery",
-    categoryLabel: "Delivery & Shipping",
-    question: "How fast is delivery and which cities are covered?",
-    answer:
-      "Medikart connects you with partner pharmacies nationwide across Pakistan:\n\n- **Rapid Intra-City Delivery:** In major metropolitan hubs (Lahore, Karachi, Islamabad/Rawalpindi), emergency and regular orders are dispatched from nearby licensed partner pharmacies within 2 to 4 hours.\n- **Nationwide Courier Delivery:** For other cities and regions across Pakistan, orders are securely packed and dispatched via express courier, typically arriving within 24 to 48 business hours.",
-    highlights: ["2–4 Hour Rapid Intra-City Delivery", "Nationwide Express Courier across Pakistan"],
-  },
-  {
-    id: "del-2",
-    category: "delivery",
-    categoryLabel: "Delivery & Shipping",
-    question: "How are temperature-sensitive medicines (Insulin, Vaccines, Biologics) handled?",
-    answer:
-      "We strictly adhere to clinical cold-chain guidelines. All temperature-sensitive medications (such as Insulin vials/pens, biological eye drops, and vaccines) are packed in insulated thermal packaging with calibrated ice packs and dispatched via high-priority delivery to guarantee product potency and safety.",
-    highlights: ["Insulated thermal cold packs", "Cold-chain temperature control"],
-  },
-  {
-    id: "del-3",
-    category: "delivery",
-    categoryLabel: "Delivery & Shipping",
-    question: "What are the shipping charges?",
-    answer:
-      "Standard intra-city delivery fees typically range between PKR 100 to PKR 250 depending on distance and delivery zone. Free delivery promotions may apply for qualifying cart amounts or active [Monthly Refill](/refill) subscribers.",
-    highlights: ["Nominal flat delivery rates", "Free shipping for Monthly Refill subscribers"],
-  },
-  {
-    id: "del-4",
-    category: "delivery",
-    categoryLabel: "Delivery & Shipping",
-    question: "How can I track my parcel status?",
-    answer:
-      "You will receive live tracking updates via SMS as soon as your parcel is packed and handed over to the delivery partner. You can also message our 24/7 WhatsApp helpline with your Order ID for real-time rider location updates.",
-    highlights: ["SMS status alerts", "Instant WhatsApp live tracking"],
-  },
-
-  // ─── 3. Monthly Refill ───
-  {
-    id: "ref-1",
-    category: "refill",
-    categoryLabel: "Monthly Refill",
-    question: "What is the Medikart Monthly Refill service?",
-    answer:
-      "The [Monthly Refill](/refill) program is designed for patients taking regular maintenance medications (e.g., for Diabetes, Blood Pressure, Cholesterol, Thyroid, or Heart health). It automates your 30-day medicine supply so you never miss a dose or run out of critical medicines.",
-    highlights: ["Automated 30-day scheduled delivery", "Never run out of chronic medications"],
-  },
-  {
-    id: "ref-2",
-    category: "refill",
-    categoryLabel: "Monthly Refill",
-    question: "Are there discounts or perks with Monthly Refill?",
-    answer:
-      "Yes! Enrolling in Monthly Refill grants you priority order fulfillment, specialized cold-chain packaging at no extra cost, periodic discount perks, and free delivery on scheduled monthly cycles.",
-    highlights: ["Priority dispatch", "Free recurring delivery", "Exclusive subscriber savings"],
-  },
-  {
-    id: "ref-3",
-    category: "refill",
-    categoryLabel: "Monthly Refill",
-    question: "Can I pause, reschedule, or cancel my Monthly Refill plan?",
-    answer:
-      "Yes, you have complete control over your subscription. You can pause deliveries if you are traveling, change your scheduled delivery date, update medicine quantities, or cancel anytime with zero lock-in contracts or penalty fees.",
-    highlights: ["Zero cancellation fee", "Flexible pause & reschedule anytime"],
-  },
-
-  // ─── 4. Account & Security ───
-  {
-    id: "acc-1",
-    category: "account",
-    categoryLabel: "Account & Security",
-    question: "How do I create an account or reset my password?",
-    answer:
-      "You can create an account by clicking **Sign In / Register** in the top navigation bar. If you ever forget your password, simply click [Forgot Password](/forgot-password) on the sign-in page, enter your registered email address, and follow the password reset link sent to your inbox.",
-    highlights: ["Quick email signup", "Instant automated password reset"],
-  },
-  {
-    id: "acc-2",
-    category: "account",
-    categoryLabel: "Account & Security",
-    question: "Is my medical and prescription data kept private?",
-    answer:
-      "Medikart takes patient confidentiality very seriously. Your prescriptions, order details, and personal contact info are fully encrypted and confidential. Prescription images are accessible only to qualified licensed pharmacists reviewing your order and are never sold or shared with advertisers.",
-    highlights: ["Encrypted Data Protection", "Confidential pharmacist-only access"],
-  },
-
-  // ─── 5. Prescriptions & Narcotics ───
-  {
-    id: "rx-1",
-    category: "prescriptions",
-    categoryLabel: "Prescriptions & Safety",
-    question: "Which medicines require a doctor's prescription?",
-    answer:
-      "All Schedule G and prescription-only medications (including antibiotics, antihypertensives, cardiac drugs, hormonal treatments, and specialized injections) require a valid prescription signed by a qualified doctor. General OTC items, vitamins, dietary supplements, and surgical goods do not require a prescription.",
-    highlights: ["Prescription required for scheduled medicines", "OTC remedies available directly"],
-  },
-  {
-    id: "rx-2",
-    category: "prescriptions",
-    categoryLabel: "Prescriptions & Safety",
-    question: "Does Medikart dispense controlled substances or narcotics online?",
-    answer:
-      "**Strictly No.** In full compliance with national drug laws and provincial health directives, Medikart does not dispense or deliver controlled narcotics, habit-forming sedatives, or restricted Schedule X substances through digital channels.",
-    highlights: ["Strict anti-narcotics compliance", "Zero tolerance for illegal restricted drugs"],
-  },
-  {
-    id: "rx-3",
-    category: "prescriptions",
-    categoryLabel: "Prescriptions & Safety",
-    question: "Are all medicines authentic and genuine?",
-    answer:
-      "Yes, 100%. Medikart partners exclusively with verified, licensed retail pharmacies and reputable pharmaceutical distributors. Every product batch is inspected for tamper-evident seals, correct expiration dates, and genuine manufacturer packaging.",
-    highlights: ["100% Genuine & Authentic", "Licensed partner pharmacies"],
-  },
-
-  // ─── 6. Returns & Refunds ───
-  {
-    id: "ret-1",
-    category: "returns",
-    categoryLabel: "Returns & Refunds",
-    question: "Can I cancel my order before it is delivered?",
-    answer:
-      "Yes. You can cancel your order free of charge at any stage before the partner pharmacy dispatches the delivery rider. Please contact our support helpline or WhatsApp hotline immediately with your Order ID if you need to cancel.",
-    highlights: ["Free cancellation before dispatch", "Instant support assistance"],
-  },
-  {
-    id: "ret-2",
-    category: "returns",
-    categoryLabel: "Returns & Refunds",
-    question: "What is the return policy for delivered medicines?",
-    answer:
-      "In adherence to health and drug safety standards, medicines once delivered and unsealed cannot be returned or resold. However, if you receive a product that is damaged in transit, defective, or incorrect compared to your order, notify our support team within 24 hours with a photograph for an immediate free replacement or refund.",
-    highlights: ["24-Hour window for damaged/incorrect items", "Immediate replacement guarantee"],
-  },
-  {
-    id: "ret-3",
-    category: "returns",
-    categoryLabel: "Returns & Refunds",
-    question: "How and when are refunds processed for online payments?",
-    answer:
-      "For orders paid online via debit/credit card that are cancelled prior to dispatch, refunds are initiated immediately with merchant gateway settlement completed within 2 business days.",
-    highlights: ["Immediate refund initiation", "Merchant settlement within 2 business days"],
-  },
+  { id: "prescriptions", label: "Prescription & Narcotics", icon: FileText },
+  { id: "safety", label: "Authenticity & Storage", icon: ShieldCheck },
+  { id: "clinical", label: "Clinical Guidance & OTC", icon: Stethoscope },
+  { id: "returns", label: "Returns & Support", icon: RotateCcw },
 ];
 
 export default function FaqClient() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [expandedIds, setExpandedIds] = useState(new Set(["order-1", "del-1"]));
+  const [expandedIds, setExpandedIds] = useState(new Set(["ord-1", "del-1", "rx-1"]));
   const [feedbackState, setFeedbackState] = useState({});
 
   // Filter items based on active category & search query
   const filteredFaqs = useMemo(() => {
-    return FAQ_ITEMS.filter((item) => {
+    return faqData.filter((item) => {
       const matchesCategory = activeCategory === "all" || item.category === activeCategory;
       if (!matchesCategory) return false;
 

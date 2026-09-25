@@ -9,6 +9,11 @@ function Categories({ token }) {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
+  // Search & Filter State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all"); // 'all' | 'active' | 'disabled'
+  const [filterNarcotic, setFilterNarcotic] = useState("all"); // 'all' | 'narcotic' | 'standard'
+
   // Modals Visibility
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
@@ -187,6 +192,20 @@ function Categories({ token }) {
     }
   };
 
+  const filteredCategories = categories.filter((c) => {
+    if (filterStatus === "active" && !c.active) return false;
+    if (filterStatus === "disabled" && c.active) return false;
+    if (filterNarcotic === "narcotic" && !c.isNarcotic) return false;
+    if (filterNarcotic === "standard" && c.isNarcotic) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchName = c.name && c.name.toLowerCase().includes(q);
+      const matchSlug = c.slug && c.slug.toLowerCase().includes(q);
+      return matchName || matchSlug;
+    }
+    return true;
+  });
+
   return (
     <div>
       <div className="page-header">
@@ -199,11 +218,84 @@ function Categories({ token }) {
       {error && <div className="alert alert-danger">{error}</div>}
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
 
+      {/* Search & Filter Toolbar */}
+      <div
+        className="card"
+        style={{
+          padding: "0.85rem 1.25rem",
+          marginBottom: "1.25rem",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "0.75rem",
+        }}
+      >
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center", flex: 1 }}>
+          <div style={{ position: "relative", minWidth: "220px", flex: 1, maxWidth: "360px" }}>
+            <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+            <input
+              type="text"
+              placeholder="Search category name or slug..."
+              className="form-control"
+              style={{ width: "100%", margin: 0, padding: "0.45rem 2rem 0.45rem 2.2rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                style={{ position: "absolute", right: "0.6rem", top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "0.8rem" }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Status:</span>
+            <select
+              className="form-control"
+              style={{ padding: "0.35rem 0.6rem", fontSize: "0.8rem", width: "auto" }}
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              <option value="all">All Statuses</option>
+              <option value="active">Active Only</option>
+              <option value="disabled">Disabled Only</option>
+            </select>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Type:</span>
+            <select
+              className="form-control"
+              style={{ padding: "0.35rem 0.6rem", fontSize: "0.8rem", width: "auto" }}
+              value={filterNarcotic}
+              onChange={(e) => setFilterNarcotic(e.target.value)}
+            >
+              <option value="all">All Types</option>
+              <option value="standard">Standard</option>
+              <option value="narcotic">Narcotic Default</option>
+            </select>
+          </div>
+        </div>
+
+        <div style={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 600 }}>
+          Showing <strong style={{ color: "#0f172a" }}>{filteredCategories.length}</strong> of {categories.length} categories
+        </div>
+      </div>
+
       <div className="card">
         {loading ? (
           <div style={{ padding: "2rem", textAlign: "center" }}>Loading categories...</div>
-        ) : categories.length === 0 ? (
-          <div style={{ padding: "2rem", textAlign: "center" }}>No categories found. Add some to get started.</div>
+        ) : filteredCategories.length === 0 ? (
+          <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>
+            {searchQuery || filterStatus !== "all" || filterNarcotic !== "all"
+              ? "No categories match the active search/filters."
+              : "No categories found. Add some to get started."}
+          </div>
         ) : (
           <div className="table-responsive">
             <table>
@@ -218,7 +310,7 @@ function Categories({ token }) {
                 </tr>
               </thead>
               <tbody>
-                {categories.map((category) => (
+                {filteredCategories.map((category) => (
                   <tr key={category._id}>
                     <td style={{ fontWeight: 600 }}>{category.name}</td>
                     <td><code>{category.slug}</code></td>

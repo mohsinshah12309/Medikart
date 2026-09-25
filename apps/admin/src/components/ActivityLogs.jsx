@@ -17,9 +17,10 @@ function ActivityLogs({ token }) {
   const [error, setError] = useState("");
 
   const [filterEntityType, setFilterEntityType] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const ENTITY_TYPES = ["product", "category", "order", "admin_user", "settings", "city"];
+  const ENTITY_TYPES = ["product", "category", "order", "admin_user", "settings", "city", "pharmacy", "banner", "condition"];
 
   useEffect(() => {
     fetchLogs();
@@ -65,6 +66,16 @@ function ActivityLogs({ token }) {
     return { background: "#dbeafe", color: "#1e40af" };
   };
 
+  const filteredLogs = logs.filter((log) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    const matchActor = (log.actorEmail && log.actorEmail.toLowerCase().includes(q)) || (log.actor && String(log.actor).toLowerCase().includes(q));
+    const matchAction = log.action && log.action.toLowerCase().includes(q);
+    const matchEntity = log.entityType && log.entityType.toLowerCase().includes(q);
+    const matchDetails = JSON.stringify(log).toLowerCase().includes(q);
+    return matchActor || matchAction || matchEntity || matchDetails;
+  });
+
   return (
     <div>
       <div className="page-header">
@@ -81,21 +92,48 @@ function ActivityLogs({ token }) {
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      {/* Filters */}
-      <div className="card" style={{ padding: "1rem", marginBottom: "1.5rem", display: "flex", gap: "1.5rem", alignItems: "flex-end", flexWrap: "wrap" }}>
-        <div>
-          <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, marginBottom: "0.25rem" }}>Filter by Entity Type</label>
-          <select
-            className="form-control"
-            value={filterEntityType}
-            onChange={(e) => { setFilterEntityType(e.target.value); setCurrentPage(1); }}
-            style={{ minWidth: "160px" }}
-          >
-            <option value="">All Types</option>
-            {ENTITY_TYPES.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </select>
+      {/* Filters & Search Toolbar */}
+      <div className="card" style={{ padding: "0.85rem 1.25rem", marginBottom: "1.25rem", display: "flex", gap: "1rem", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center", flex: 1 }}>
+          <div style={{ position: "relative", minWidth: "240px", flex: 1, maxWidth: "380px" }}>
+            <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+            <input
+              type="text"
+              placeholder="Search by actor email, action, details..."
+              className="form-control"
+              style={{ width: "100%", margin: 0, padding: "0.45rem 2rem 0.45rem 2.2rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                style={{ position: "absolute", right: "0.6rem", top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "0.8rem" }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <label style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Entity:</label>
+            <select
+              className="form-control"
+              value={filterEntityType}
+              onChange={(e) => { setFilterEntityType(e.target.value); setCurrentPage(1); }}
+              style={{ minWidth: "150px", padding: "0.35rem 0.6rem", fontSize: "0.8rem" }}
+            >
+              <option value="">All Types</option>
+              {ENTITY_TYPES.map((t) => (
+                <option key={t} value={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div style={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 600 }}>
+          Showing <strong style={{ color: "#0f172a" }}>{filteredLogs.length}</strong> of {logs.length} loaded logs
         </div>
       </div>
 
@@ -117,13 +155,15 @@ function ActivityLogs({ token }) {
                 </tr>
               </thead>
               <tbody>
-                {logs.length === 0 ? (
+                {filteredLogs.length === 0 ? (
                   <tr>
                     <td colSpan={6} style={{ textAlign: "center", color: "#64748b", padding: "2rem" }}>
-                      No activity logs found.
+                      {searchQuery || filterEntityType
+                        ? "No activity logs match the active search/filters."
+                        : "No activity logs recorded yet."}
                     </td>
                   </tr>
-                ) : logs.map((log) => (
+                ) : filteredLogs.map((log) => (
                   <tr key={log._id}>
                     <td style={{ whiteSpace: "nowrap", color: "#64748b", fontSize: "0.8rem" }}>
                       {formatDate(log.timestamp)}

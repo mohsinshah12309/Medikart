@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { adminFetch, API_URL } from "../apiClient";
+import SearchableSelect from "./SearchableSelect";
 
 function Orders({ token, adminUser, initialFilter }) {
 
@@ -699,6 +700,50 @@ function Orders({ token, adminUser, initialFilter }) {
 
   const scopedPharmacy = pharmacies.find((p) => String(p._id) === String(scopedPharmacyId));
 
+  const branchFilterOptions = useMemo(() => {
+    return [
+      { value: "", label: "All Branches", icon: "🌐" },
+      { value: "assigned", label: "Assigned to Any Branch", icon: "🏢" },
+      { value: "unassigned", label: "Unassigned Orders", icon: "⏳", badge: "Pending" },
+      ...pharmacies.map((ph) => ({
+        value: ph._id,
+        label: `${ph.name} (${ph.code || "PH"})`,
+        sublabel: ph.city ? `${ph.city} ${ph.address ? `• ${ph.address}` : ""}` : ph.address || "",
+        badge: ph.active ? "Active" : "Inactive",
+        icon: "🏥",
+        code: ph.code,
+        city: ph.city,
+      })),
+    ];
+  }, [pharmacies]);
+
+  const rowPharmacyOptions = useMemo(() => {
+    return [
+      { value: "", label: "Unassigned", icon: "⏳" },
+      ...pharmacies.map((ph) => ({
+        value: ph._id,
+        label: `${ph.code || "PH"} - ${ph.name}`,
+        sublabel: ph.city,
+        badge: ph.active ? "" : "Inactive",
+        icon: "🏥",
+        code: ph.code,
+        city: ph.city,
+      })),
+    ];
+  }, [pharmacies]);
+
+  const pricingCategoryOptions = useMemo(() => {
+    return [
+      { value: "", label: "All Categories", icon: "📁" },
+      ...categories.map((c) => ({
+        value: c._id,
+        label: c.name,
+        badge: c.isNarcotic ? "Narcotic" : "",
+        icon: "💊",
+      })),
+    ];
+  }, [categories]);
+
   return (
     <div>
       {/* Top Header */}
@@ -834,25 +879,20 @@ function Orders({ token, adminUser, initialFilter }) {
           </div>
         ) : (
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Branch:</span>
-            <select
-              className="form-control"
-              style={{ padding: "0.25rem 0.5rem", fontSize: "0.8rem" }}
+            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569", flexShrink: 0 }}>Branch:</span>
+            <SearchableSelect
+              options={branchFilterOptions}
               value={filterPharmacyId}
-              onChange={(e) => {
-                setFilterPharmacyId(e.target.value);
+              onChange={(val) => {
+                setFilterPharmacyId(val);
                 setPage(1);
               }}
-            >
-              <option value="">All Branches</option>
-              <option value="assigned">Assigned to Any Branch</option>
-              <option value="unassigned">Unassigned Orders</option>
-              {pharmacies.map((ph) => (
-                <option key={ph._id} value={ph._id}>
-                  {ph.name} ({ph.code})
-                </option>
-              ))}
-            </select>
+              placeholder="All Branches"
+              searchPlaceholder="Search branch name, code, city..."
+              size="sm"
+              minWidth="220px"
+              maxWidth="320px"
+            />
           </div>
         )}
       </div>
@@ -1214,21 +1254,18 @@ function Orders({ token, adminUser, initialFilter }) {
                           🏥 {typeof order.assignedPharmacyId === "object" ? `${order.assignedPharmacyId?.code || "Branch"} - ${order.assignedPharmacyId?.name}` : (scopedPharmacy ? `${scopedPharmacy.code || "Branch"} - ${scopedPharmacy.name}` : "Assigned Branch")}
                         </span>
                       ) : (
-                        <select
-                          className="form-control"
-                          style={{ fontSize: "0.75rem", padding: "0.2rem 0.4rem", width: "auto" }}
+                        <SearchableSelect
+                          options={rowPharmacyOptions}
                           value={typeof order.assignedPharmacyId === "object" ? order.assignedPharmacyId?._id || "" : order.assignedPharmacyId || ""}
                           disabled={isOrderLockedForUser}
-                          title={isOrderLockedForUser ? "Cannot reassign branch on a locked order" : "Assign pharmacy branch"}
-                          onChange={(e) => handleAssignPharmacy(order._id, e.target.value)}
-                        >
-                          <option value="">Unassigned</option>
-                          {pharmacies.map((ph) => (
-                            <option key={ph._id} value={ph._id}>
-                              {ph.code} - {ph.name}
-                            </option>
-                          ))}
-                        </select>
+                          onChange={(val) => handleAssignPharmacy(order._id, val)}
+                          placeholder="Unassigned"
+                          searchPlaceholder="Search branch..."
+                          size="sm"
+                          minWidth="140px"
+                          maxWidth="200px"
+                          showClear={false}
+                        />
                       )}
                     </td>
                     <td>
@@ -1662,19 +1699,16 @@ function Orders({ token, adminUser, initialFilter }) {
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "0.5rem" }}>
                         {/* Category Filter */}
                         <div>
-                          <select
-                            className="form-control"
+                          <SearchableSelect
+                            options={pricingCategoryOptions}
                             value={pricingCategoryFilter}
-                            onChange={(e) => setPricingCategoryFilter(e.target.value)}
-                            style={{ fontSize: "0.8rem", width: "100%", padding: "0.45rem" }}
-                          >
-                            <option value="">All Categories ({categories.length})</option>
-                            {categories.map((c) => (
-                              <option key={c._id} value={c._id}>
-                                {c.name}
-                              </option>
-                            ))}
-                          </select>
+                            onChange={(val) => setPricingCategoryFilter(val)}
+                            placeholder={`All Categories (${categories.length})`}
+                            searchPlaceholder="Search category..."
+                            size="sm"
+                            minWidth="100%"
+                            maxWidth="100%"
+                          />
                         </div>
 
                         {/* Search Query Input */}

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { adminFetch, API_URL } from "../apiClient";
+import SearchableSelect from "./SearchableSelect";
 
 const FALLBACK_IMAGE = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>`;
 
@@ -58,6 +59,27 @@ function Products({ token }) {
   const [limit] = useState(20);
   const [total, setTotal] = useState(0);
   const [pages, setPages] = useState(1);
+
+  const categoryFilterOptions = useMemo(() => {
+    return [
+      { value: "", label: `All Categories (${categories.length})`, icon: "📁" },
+      ...categories.map((c) => ({
+        value: c._id,
+        label: c.name,
+        badge: c.isNarcotic ? "Narcotic" : "",
+        icon: "💊",
+      })),
+    ];
+  }, [categories]);
+
+  const modalCategoryOptions = useMemo(() => {
+    return categories.map((c) => ({
+      value: c._id,
+      label: c.name,
+      badge: c.isNarcotic ? "Narcotic" : "",
+      icon: "💊",
+    }));
+  }, [categories]);
 
   useEffect(() => {
     fetchProducts(1);
@@ -497,31 +519,27 @@ function Products({ token }) {
           </form>
 
           {/* Category Filter */}
-          <div className="filter-controls-group">
-            <label htmlFor="cat-filter" className="filter-label-text">
-              Filter by Category:
+          <div className="filter-controls-group" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <label className="filter-label-text" style={{ flexShrink: 0 }}>
+              Category:
             </label>
-            <select
-              id="cat-filter"
-              className="form-control"
+            <SearchableSelect
+              options={categoryFilterOptions}
               value={selectedCategoryFilter}
-              onChange={(e) => setSelectedCategoryFilter(e.target.value)}
-              style={{ margin: 0, minWidth: "170px" }}
-            >
-              <option value="">All Categories</option>
-              {categories.map((c) => (
-                <option key={c._id} value={c._id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setSelectedCategoryFilter(val)}
+              placeholder={`All Categories (${categories.length})`}
+              searchPlaceholder="Search category name..."
+              size="md"
+              minWidth="200px"
+              maxWidth="300px"
+            />
 
             {/* Clear Filters */}
             {(searchQuery || selectedCategoryFilter) && (
               <button
                 onClick={handleClearFilters}
                 className="btn btn-secondary"
-                style={{ padding: "0.4rem 0.85rem" }}
+                style={{ padding: "0.4rem 0.85rem", whiteSpace: "nowrap" }}
               >
                 Clear Filters
               </button>
@@ -800,39 +818,38 @@ function Products({ token }) {
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                   <div className="form-group">
-                    <label htmlFor="prod-cat-primary">Primary Category *</label>
-                    <select
-                      id="prod-cat-primary"
-                      className="form-control"
+                    <label>Primary Category *</label>
+                    <SearchableSelect
+                      options={categories.map((c) => ({
+                        value: c._id,
+                        label: c.name,
+                        sublabel: c.slug,
+                      }))}
                       value={formData.primaryCategoryId}
-                      onChange={(e) => setFormData({ ...formData, primaryCategoryId: e.target.value })}
-                      required
-                    >
-                      <option value="" disabled>Select Primary Category</option>
-                      {categories.map((c) => (
-                        <option key={c._id} value={c._id}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </select>
+                      onChange={(val) => setFormData({ ...formData, primaryCategoryId: val })}
+                      placeholder="Search & select primary category..."
+                      searchPlaceholder="Search categories..."
+                    />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="prod-cat-secondary">Secondary Category (Optional)</label>
-                    <select
-                      id="prod-cat-secondary"
-                      className="form-control"
-                      value={formData.secondaryCategoryId}
-                      onChange={(e) => setFormData({ ...formData, secondaryCategoryId: e.target.value })}
-                    >
-                      <option value="">-- None (Single Category) --</option>
-                      {categories
-                        .filter((c) => c._id !== formData.primaryCategoryId)
-                        .map((c) => (
-                          <option key={c._id} value={c._id}>
-                            {c.name}
-                          </option>
-                        ))}
-                    </select>
+                    <label>Secondary Category (Optional)</label>
+                    <SearchableSelect
+                      options={[
+                        { value: "", label: "-- None (Single Category) --" },
+                        ...categories
+                          .filter((c) => c._id !== formData.primaryCategoryId)
+                          .map((c) => ({
+                            value: c._id,
+                            label: c.name,
+                            sublabel: c.slug,
+                          })),
+                      ]}
+                      value={formData.secondaryCategoryId || ""}
+                      onChange={(val) => setFormData({ ...formData, secondaryCategoryId: val })}
+                      placeholder="Search & select secondary category..."
+                      searchPlaceholder="Search categories..."
+                      allowClear
+                    />
                   </div>
                 </div>
                 <div className="form-group">

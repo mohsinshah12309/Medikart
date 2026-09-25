@@ -56,3 +56,5 @@ test*.js
 verify*.js
 server/test*.js
 server/verify*.js
+*.xlsx
+

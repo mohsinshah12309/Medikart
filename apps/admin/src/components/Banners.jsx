@@ -8,6 +8,7 @@ export default function Banners({ token }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [filterPlacement, setFilterPlacement] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Modal states
   const [showModal, setShowModal] = useState(false);
@@ -131,8 +132,15 @@ export default function Banners({ token }) {
   };
 
   const filteredBanners = banners.filter((b) => {
-    if (filterPlacement === "all") return true;
-    return b.placement === filterPlacement;
+    if (filterPlacement !== "all" && b.placement !== filterPlacement) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchTitle = b.title && b.title.toLowerCase().includes(q);
+      const matchSubtitle = b.subtitle && b.subtitle.toLowerCase().includes(q);
+      const matchLink = b.linkUrl && b.linkUrl.toLowerCase().includes(q);
+      return matchTitle || matchSubtitle || matchLink;
+    }
+    return true;
   });
 
   return (
@@ -160,31 +168,72 @@ export default function Banners({ token }) {
       {error && <div className="alert alert-danger" style={{ marginBottom: "1rem" }}>{error}</div>}
       {success && <div className="alert alert-success" style={{ marginBottom: "1rem" }}>{success}</div>}
 
-      {/* Filter Tabs */}
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-        {[
-          { key: "all", label: "All Banners" },
-          { key: "hero", label: "Hero Carousel" },
-          { key: "mid-page", label: "Mid-Page Promo" },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            type="button"
-            onClick={() => setFilterPlacement(tab.key)}
-            style={{
-              padding: "0.4rem 0.9rem",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              background: filterPlacement === tab.key ? "#0f172a" : "#ffffff",
-              color: filterPlacement === tab.key ? "#ffffff" : "#475569",
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
+      {/* Search & Filter Toolbar */}
+      <div
+        className="card"
+        style={{
+          padding: "0.85rem 1.25rem",
+          marginBottom: "1.25rem",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "0.75rem",
+        }}
+      >
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center", flex: 1 }}>
+          <div style={{ position: "relative", minWidth: "220px", flex: 1, maxWidth: "360px" }}>
+            <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+            <input
+              type="text"
+              placeholder="Search banner title, subtitle, link..."
+              className="form-control"
+              style={{ width: "100%", margin: 0, padding: "0.45rem 2rem 0.45rem 2.2rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                style={{ position: "absolute", right: "0.6rem", top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "0.8rem" }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Placement Tabs */}
+          <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+            {[
+              { key: "all", label: "All Banners" },
+              { key: "hero", label: "Hero Carousel" },
+              { key: "mid-page", label: "Mid-Page Promo" },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => setFilterPlacement(tab.key)}
+                style={{
+                  padding: "0.35rem 0.75rem",
+                  borderRadius: "8px",
+                  border: "1px solid #cbd5e1",
+                  fontSize: "0.8rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  background: filterPlacement === tab.key ? "#0f172a" : "#ffffff",
+                  color: filterPlacement === tab.key ? "#ffffff" : "#475569",
+                }}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 600 }}>
+          Showing <strong style={{ color: "#0f172a" }}>{filteredBanners.length}</strong> of {banners.length} banners
+        </div>
       </div>
 
       {/* Table */}
@@ -192,7 +241,11 @@ export default function Banners({ token }) {
         <div style={{ padding: "2rem", textAlign: "center", color: "#64748b" }}>Loading banners...</div>
       ) : filteredBanners.length === 0 ? (
         <div style={{ padding: "3rem", textAlign: "center", background: "#f8fafc", borderRadius: "12px", border: "1px dashed #cbd5e1" }}>
-          <p style={{ color: "#64748b", fontWeight: 500 }}>No banners found for the selected filter.</p>
+          <p style={{ color: "#64748b", fontWeight: 500 }}>
+            {searchQuery || filterPlacement !== "all"
+              ? "No banners match the active search/filter."
+              : "No banners found. Click '+ Add New Banner' to create one."}
+          </p>
         </div>
       ) : (
         <div className="table-responsive" style={{ background: "white", borderRadius: "12px", border: "1px solid #e2e8f0" }}>

@@ -15,6 +15,10 @@ function Cities({ token }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Search & Filter State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all"); // 'all' | 'active' | 'disabled'
+
   // Form state for create
   const [showCreate, setShowCreate] = useState(false);
   const [createForm, setCreateForm] = useState({ name: "", deliveryCharge: "", active: true });
@@ -115,6 +119,18 @@ function Cities({ token }) {
     }
   };
 
+  const filteredCities = cities.filter((c) => {
+    if (filterStatus === "active" && !c.active) return false;
+    if (filterStatus === "disabled" && c.active) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchName = c.name && c.name.toLowerCase().includes(q);
+      const matchCharge = c.deliveryCharge !== undefined && String(c.deliveryCharge).includes(q);
+      return matchName || matchCharge;
+    }
+    return true;
+  });
+
   return (
     <div>
       <div className="page-header">
@@ -126,6 +142,61 @@ function Cities({ token }) {
 
       {error && <div className="alert alert-danger">{error}</div>}
       {success && <div className="alert alert-success">{success}</div>}
+
+      {/* Search & Filter Toolbar */}
+      <div
+        className="card"
+        style={{
+          padding: "0.85rem 1.25rem",
+          marginBottom: "1.25rem",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "0.75rem",
+        }}
+      >
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center", flex: 1 }}>
+          <div style={{ position: "relative", minWidth: "220px", flex: 1, maxWidth: "360px" }}>
+            <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+            <input
+              type="text"
+              placeholder="Search city name or delivery charge..."
+              className="form-control"
+              style={{ width: "100%", margin: 0, padding: "0.45rem 2rem 0.45rem 2.2rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                style={{ position: "absolute", right: "0.6rem", top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "0.8rem" }}
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#475569" }}>Status:</span>
+            <select
+              className="form-control"
+              style={{ padding: "0.35rem 0.6rem", fontSize: "0.8rem", width: "auto" }}
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              <option value="all">All Statuses</option>
+              <option value="active">Active Only</option>
+              <option value="disabled">Disabled Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div style={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 600 }}>
+          Showing <strong style={{ color: "#0f172a" }}>{filteredCities.length}</strong> of {cities.length} cities
+        </div>
+      </div>
 
       {/* Create Form */}
       {showCreate && (
@@ -208,13 +279,15 @@ function Cities({ token }) {
               </tr>
             </thead>
             <tbody>
-              {cities.length === 0 ? (
+              {filteredCities.length === 0 ? (
                 <tr>
                   <td colSpan={4} style={{ textAlign: "center", color: "#64748b", padding: "2rem" }}>
-                    No cities found. Add one above.
+                    {searchQuery || filterStatus !== "all"
+                      ? "No cities match the active search/filters."
+                      : "No cities found. Add one above."}
                   </td>
                 </tr>
-              ) : cities.map((city) => (
+              ) : filteredCities.map((city) => (
                 <tr key={city._id}>
                   {editId === city._id ? (
                     <>

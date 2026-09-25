@@ -6,6 +6,7 @@ function Messages({ token }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeMessage, setActiveMessage] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchMessages();
@@ -34,6 +35,17 @@ function Messages({ token }) {
     });
   };
 
+  const filteredMessages = messages.filter((msg) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    const matchName = msg.name && msg.name.toLowerCase().includes(q);
+    const matchEmail = msg.email && msg.email.toLowerCase().includes(q);
+    const matchPhone = msg.phone && msg.phone.toLowerCase().includes(q);
+    const matchSubject = msg.subject && msg.subject.toLowerCase().includes(q);
+    const matchMessage = msg.message && msg.message.toLowerCase().includes(q);
+    return matchName || matchEmail || matchPhone || matchSubject || matchMessage;
+  });
+
   return (
     <div>
       <div className="page-header">
@@ -45,16 +57,59 @@ function Messages({ token }) {
 
       {error && <div className="alert alert-danger">{error}</div>}
 
+      {/* Search Toolbar */}
+      <div
+        className="card"
+        style={{
+          padding: "0.85rem 1.25rem",
+          marginBottom: "1.25rem",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "0.75rem",
+        }}
+      >
+        <div style={{ position: "relative", minWidth: "240px", flex: 1, maxWidth: "420px" }}>
+          <span style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+          <input
+            type="text"
+            placeholder="Search customer name, email, phone, message..."
+            className="form-control"
+            style={{ width: "100%", margin: 0, padding: "0.45rem 2rem 0.45rem 2.2rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              style={{ position: "absolute", right: "0.6rem", top: "50%", transform: "translateY(-50%)", background: "transparent", border: "none", color: "#94a3b8", cursor: "pointer", fontSize: "0.8rem" }}
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        <div style={{ fontSize: "0.8rem", color: "#64748b", fontWeight: 600 }}>
+          Showing <strong style={{ color: "#0f172a" }}>{filteredMessages.length}</strong> of {messages.length} messages
+        </div>
+      </div>
+
       {loading ? (
         <div style={{ padding: "3rem", textAlign: "center", color: "#64748b" }}>
           Loading messages...
         </div>
-      ) : messages.length === 0 ? (
+      ) : filteredMessages.length === 0 ? (
         <div className="card" style={{ padding: "3rem", textAlign: "center" }}>
           <span style={{ fontSize: "3rem" }}>✉️</span>
-          <h3 style={{ margin: "1rem 0 0.5rem 0", color: "#f1f5f9" }}>No messages found</h3>
+          <h3 style={{ margin: "1rem 0 0.5rem 0", color: "#334155" }}>
+            {searchQuery ? "No matching messages found" : "No messages found"}
+          </h3>
           <p style={{ color: "#94a3b8", fontSize: "0.9rem", margin: 0 }}>
-            Customer queries submitted via the contact form will show up here.
+            {searchQuery
+              ? `No messages matched "${searchQuery}".`
+              : "Customer queries submitted via the contact form will show up here."}
           </p>
         </div>
       ) : (
@@ -71,7 +126,7 @@ function Messages({ token }) {
                 </tr>
               </thead>
               <tbody>
-                {messages.map((msg) => (
+                {filteredMessages.map((msg) => (
                   <tr key={msg._id}>
                     <td>
                       <span style={{ fontWeight: 700, color: "#0f172a" }}>{msg.name}</span>
