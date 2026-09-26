@@ -717,20 +717,61 @@ function Orders({ token, adminUser, initialFilter }) {
     ];
   }, [pharmacies]);
 
-  const rowPharmacyOptions = useMemo(() => {
+  const getPharmacyOptionsForOrder = (order) => {
+    const rawCity = (order?.customer?.city || "").trim();
+    const orderCity = rawCity.toLowerCase();
+
+    // Filter pharmacies that are registered in this order's city
+    const matchedPharmacies = pharmacies.filter((ph) => {
+      // 1. Check cityIds array (populated City objects { _id, name } or string names)
+      if (Array.isArray(ph.cityIds) && ph.cityIds.length > 0) {
+        const hasCity = ph.cityIds.some((c) => {
+          if (typeof c === "object" && c !== null && c.name) {
+            return c.name.trim().toLowerCase() === orderCity;
+          }
+          if (typeof c === "string") {
+            return c.trim().toLowerCase() === orderCity;
+          }
+          return false;
+        });
+        if (hasCity) return true;
+      }
+      // 2. Check ph.city if present as string
+      if (ph.city && typeof ph.city === "string" && ph.city.trim().toLowerCase() === orderCity) {
+        return true;
+      }
+      // 3. Keep currently assigned pharmacy in options so the assigned label is always shown
+      const currentAssignedId = typeof order?.assignedPharmacyId === "object"
+        ? order?.assignedPharmacyId?._id?.toString()
+        : order?.assignedPharmacyId?.toString();
+      if (currentAssignedId && String(ph._id) === currentAssignedId) {
+        return true;
+      }
+      return false;
+    });
+
+    // If matching pharmacies found for order's city, show only those; otherwise fallback to all pharmacies
+    const listToRender = matchedPharmacies.length > 0 ? matchedPharmacies : pharmacies;
+
     return [
       { value: "", label: "Unassigned", icon: "⏳" },
-      ...pharmacies.map((ph) => ({
-        value: ph._id,
-        label: `${ph.code || "PH"} - ${ph.name}`,
-        sublabel: ph.city,
-        badge: ph.active ? "" : "Inactive",
-        icon: "🏥",
-        code: ph.code,
-        city: ph.city,
-      })),
+      ...listToRender.map((ph) => {
+        const cityNames = ph.cityIds && Array.isArray(ph.cityIds)
+          ? ph.cityIds.map((c) => (typeof c === "object" ? c.name : c)).filter(Boolean).join(", ")
+          : ph.city || "";
+        const isMatchedCity = rawCity && cityNames.toLowerCase().includes(orderCity);
+        return {
+          value: ph._id,
+          label: `${ph.code || "PH"} - ${ph.name}`,
+          sublabel: cityNames ? `${cityNames}${ph.address ? ` • ${ph.address}` : ""}` : ph.address || "",
+          badge: ph.active ? (isMatchedCity ? `📍 ${rawCity}` : "") : "Inactive",
+          icon: "🏥",
+          code: ph.code,
+          city: cityNames,
+        };
+      }),
     ];
-  }, [pharmacies]);
+  };
 
   const pricingCategoryOptions = useMemo(() => {
     return [
@@ -1255,12 +1296,12 @@ function Orders({ token, adminUser, initialFilter }) {
                         </span>
                       ) : (
                         <SearchableSelect
-                          options={rowPharmacyOptions}
+                          options={getPharmacyOptionsForOrder(order)}
                           value={typeof order.assignedPharmacyId === "object" ? order.assignedPharmacyId?._id || "" : order.assignedPharmacyId || ""}
                           disabled={isOrderLockedForUser}
                           onChange={(val) => handleAssignPharmacy(order._id, val)}
                           placeholder="Unassigned"
-                          searchPlaceholder="Search branch..."
+                          searchPlaceholder={order.customer?.city ? `Search ${order.customer.city} branch...` : "Search branch..."}
                           size="sm"
                           minWidth="140px"
                           maxWidth="200px"
@@ -1479,7 +1520,38 @@ function Orders({ token, adminUser, initialFilter }) {
                 <div>
                   <h4 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem" }}>Order Details</h4>
                   <p style={{ margin: "0.2rem 0", fontSize: "0.85rem" }}><strong>Type:</strong> <span style={{ textTransform: "capitalize", fontWeight: 600 }}>{selectedOrder.type}</span></p>
-                  <p style={{ margin: "0.2rem 0", fontSize: "0.85rem" }}><strong>Payment:</strong> <span style={{ textTransform: "uppercase" }}>{selectedOrder.paymentMethod}</span> ({selectedOrder.paymentState})</p>
+                  <div style={{ margin: "0.4rem 0", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <strong style={{ fontSize: "0.85rem" }}>Branch:</strong>
+                    {isScopedAdmin ? (
+                      <span style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px",
+                        fontSize: "0.8rem",
+                        fontWeight: 700,
+                        padding: "0.2rem 0.5rem",
+                        borderRadius: "6px",
+                        background: "#eff6ff",
+                        color: "#1e40af",
+                        border: "1px solid #bfdbfe",
+                      }}>
+                        🏥 {typeof selectedOrder.assignedPharmacyId === "object" ? `${selectedOrder.assignedPharmacyId?.code || "Branch"} - ${selectedOrder.assignedPharmacyId?.name}` : (scopedPharmacy ? `${scopedPharmacy.code || "Branch"} - ${scopedPharmacy.name}` : "Assigned Branch")}
+                      </span>
+                    ) : (
+                      <SearchableSelect
+                        options={getPharmacyOptionsForOrder(selectedOrder)}
+                        value={typeof selectedOrder.assignedPharmacyId === "object" ? selectedOrder.assignedPharmacyId?._id || "" : selectedOrder.assignedPharmacyId || ""}
+                        disabled={((selectedOrder.status === "delivered" || selectedOrder.status === "cancelled") && adminUser?.role !== "super_admin")}
+                        onChange={(val) => handleAssignPharmacy(selectedOrder._id, val)}
+                        placeholder="Unassigned"
+                        searchPlaceholder={selectedOrder.customer?.city ? `Search ${selectedOrder.customer.city} branch...` : "Search branch..."}
+                        size="sm"
+                        minWidth="160px"
+                        maxWidth="240px"
+                        showClear={false}
+                      />
+                    )}
+                  </div>
                   <div style={{ margin: "0.4rem 0", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
                     <strong style={{ fontSize: "0.85rem" }}>Change Status:</strong>
                     <select
