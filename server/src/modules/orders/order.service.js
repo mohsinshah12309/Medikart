@@ -289,14 +289,9 @@ const getOrderStats = async (query = {}, admin = null) => {
           {
             $project: {
               commissionAmount: {
-                $add: [
-                  {
-                    $multiply: [
-                      { $ifNull: ["$totals.subtotal", 0] },
-                      { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 0] }, 100] },
-                    ],
-                  },
-                  { $ifNull: ["$totals.platformFee", 10] },
+                $multiply: [
+                  { $ifNull: ["$totals.total", 0] },
+                  { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 5] }, 100] },
                 ],
               },
             },
@@ -349,13 +344,13 @@ const getOrderStats = async (query = {}, admin = null) => {
       ? Math.max(balancePaid, paymentsPaid)
       : paymentsPaid;
 
-  const totalCodSale = Math.round(result.totalCodSale[0]?.total ?? 0);
-  const todayCodSale = Math.round(result.todayCodSale[0]?.total ?? 0);
+  const totalCodSale = Math.round((result.totalCodSale[0]?.total ?? 0) * 100) / 100;
+  const todayCodSale = Math.round((result.todayCodSale[0]?.total ?? 0) * 100) / 100;
   const totalCodOrders = result.totalCodOrders[0]?.count ?? 0;
   const todayCodOrders = result.todayCodOrders[0]?.count ?? 0;
 
-  const totalCardSale = Math.round(result.totalCardSale[0]?.total ?? 0);
-  const todayCardSale = Math.round(result.todayCardSale[0]?.total ?? 0);
+  const totalCardSale = Math.round((result.totalCardSale[0]?.total ?? 0) * 100) / 100;
+  const todayCardSale = Math.round((result.todayCardSale[0]?.total ?? 0) * 100) / 100;
   const totalCardOrders = result.totalCardOrders[0]?.count ?? 0;
   const todayCardOrders = result.todayCardOrders[0]?.count ?? 0;
 
@@ -364,10 +359,10 @@ const getOrderStats = async (query = {}, admin = null) => {
     totalOrders: result.totalOrders[0]?.count ?? 0,
     narcoticsPending: result.narcoticsPending[0]?.count ?? 0,
     pricingPending: result.pricingPending[0]?.count ?? 0,
-    totalSale: Math.round(result.totalSale[0]?.total ?? 0),
-    todaySale: Math.round(result.todaySale[0]?.total ?? 0),
-    medikartCommission: Math.round(computedCommission),
-    totalCommissionPaid: Math.round(computedPaid),
+    totalSale: Math.round((result.totalSale[0]?.total ?? 0) * 100) / 100,
+    todaySale: Math.round((result.todaySale[0]?.total ?? 0) * 100) / 100,
+    medikartCommission: Math.round(computedCommission * 100) / 100,
+    totalCommissionPaid: Math.round(computedPaid * 100) / 100,
     cod: {
       totalOrders: totalCodOrders,
       todayOrders: todayCodOrders,

@@ -68,12 +68,12 @@ const getPharmacyBalance = async (pharmacyId, adminUser) => {
     });
   }
 
-  // 2. Query delivered orders for this pharmacy
+  // 2. Query revenue for this pharmacy from all valid assigned orders
   const orderStats = await Order.aggregate([
     {
       $match: {
         assignedPharmacyId: pId,
-        status: "delivered",
+        status: { $nin: ["cancelled", "rejected"] },
       },
     },
     {
@@ -87,7 +87,7 @@ const getPharmacyBalance = async (pharmacyId, adminUser) => {
 
   const deliveredRevenue = orderStats.length > 0 ? (orderStats[0].totalRevenue || 0) : 0;
   const medikartPercentage = Number(pharmacy.medikartPercentage) || 0;
-  const accruedFromOrders = Math.round((deliveredRevenue * medikartPercentage) / 100);
+  const accruedFromOrders = Math.round(((deliveredRevenue * medikartPercentage) / 100) * 100) / 100;
 
   // 3. Query verified payments
   const paymentStats = await CommissionPayment.aggregate([

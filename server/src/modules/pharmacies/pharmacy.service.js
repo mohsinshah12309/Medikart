@@ -275,9 +275,10 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
       cancelledOrders: 0,
       pendingOrders: 0,
     };
+    const totalRevenue = stats.totalRevenue || 0;
     const deliveredRevenue = stats.deliveredRevenue || (stats.deliveredOrders > 0 ? stats.totalRevenue : 0);
     const medikartPercentage = Number(ph.medikartPercentage) || 0;
-    const medikartRevenueShare = Math.round((deliveredRevenue * medikartPercentage) / 100);
+    const medikartRevenueShare = Math.round(((totalRevenue * medikartPercentage) / 100) * 100) / 100;
 
     return {
       pharmacyId: ph._id,
@@ -289,14 +290,14 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
       medikartPercentage,
       medikartRevenueShare,
       totalOrders: stats.totalOrders,
-      totalRevenue: stats.totalRevenue,
-      deliveredRevenue,
+      totalRevenue: Math.round(stats.totalRevenue * 100) / 100,
+      deliveredRevenue: Math.round(deliveredRevenue * 100) / 100,
       deliveredOrders: stats.deliveredOrders,
       cancelledOrders: stats.cancelledOrders,
       pendingOrders: stats.pendingOrders,
       averageOrderValue:
         stats.totalOrders > 0
-          ? Math.round(stats.totalRevenue / stats.totalOrders)
+          ? Math.round((stats.totalRevenue / stats.totalOrders) * 100) / 100
           : 0,
     };
   });
@@ -304,8 +305,8 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
   const summary = detailedReports.reduce(
     (acc, curr) => ({
       totalAssignedOrders: acc.totalAssignedOrders + curr.totalOrders,
-      totalRevenueSum: acc.totalRevenueSum + curr.totalRevenue,
-      totalMedikartShare: acc.totalMedikartShare + curr.medikartRevenueShare,
+      totalRevenueSum: Math.round((acc.totalRevenueSum + curr.totalRevenue) * 100) / 100,
+      totalMedikartShare: Math.round((acc.totalMedikartShare + curr.medikartRevenueShare) * 100) / 100,
       totalDelivered: acc.totalDelivered + curr.deliveredOrders,
       totalCancelled: acc.totalCancelled + curr.cancelledOrders,
     }),

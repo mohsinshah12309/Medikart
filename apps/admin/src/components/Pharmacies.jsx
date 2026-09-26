@@ -185,6 +185,11 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
   const assignedPharmacyObj = allPharmacies.find((p) => p._id === assignedPharmacyId) ||
     (typeof adminUser?.assignedPharmacyId === "object" ? adminUser?.assignedPharmacyId : null);
 
+  // Selected pharmacy for Reports tab
+  const activeReportPharmacy = allPharmacies.find(
+    (p) => String(p._id) === String(isBranchScoped ? assignedPharmacyId : selectedPharmacyFilter)
+  );
+
   const baseFilteredPharmacies = isBranchScoped
     ? (assignedPharmacyObj
         ? [assignedPharmacyObj]
@@ -1077,6 +1082,91 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                 </span>
               </div>
             )}
+
+            {/* Selected Pharmacy Bank & Account Details Card */}
+            {activeReportPharmacy && (
+              <div
+                style={{
+                  background: "#f8fafc",
+                  border: "1.5px solid #cbd5e1",
+                  borderRadius: "10px",
+                  padding: "0.4rem 0.85rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  flexWrap: "wrap",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
+                }}
+              >
+                {/* Pharmacy Name & Code */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.05rem", borderRight: "1px solid #e2e8f0", paddingRight: "0.75rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                    <span style={{ fontSize: "0.85rem" }}>🏥</span>
+                    <span style={{ fontWeight: 800, color: "#0f172a", fontSize: "0.85rem" }}>
+                      {activeReportPharmacy.name}
+                    </span>
+                    <span style={{ background: "#fef08a", color: "#854d0e", fontWeight: 700, fontSize: "0.68rem", padding: "0.1rem 0.35rem", borderRadius: "4px" }}>
+                      {activeReportPharmacy.code}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "0.72rem", color: "#64748b" }}>
+                    Commission: <strong style={{ color: "#d97706" }}>{activeReportPharmacy.medikartPercentage}%</strong>
+                  </div>
+                </div>
+
+                {/* Bank Name */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.05rem" }}>
+                  <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#64748b", textTransform: "uppercase" }}>
+                    Bank Name
+                  </span>
+                  <span style={{ fontWeight: 700, color: "#047857", fontSize: "0.82rem", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                    <span>🏦</span> <span>{activeReportPharmacy.bankName || "Not Set"}</span>
+                  </span>
+                </div>
+
+                {/* Account Title */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.05rem" }}>
+                  <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#64748b", textTransform: "uppercase" }}>
+                    Account Title
+                  </span>
+                  <span style={{ fontWeight: 700, color: "#1e293b", fontSize: "0.82rem" }}>
+                    {activeReportPharmacy.accountTitle ? `🏛️ ${activeReportPharmacy.accountTitle}` : "Not Set"}
+                  </span>
+                </div>
+
+                {/* Account Number */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.05rem" }}>
+                  <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#64748b", textTransform: "uppercase" }}>
+                    Account Number
+                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                    <span style={{ fontFamily: "monospace", fontWeight: 800, color: "#0f172a", fontSize: "0.85rem", background: "#ffffff", padding: "0.15rem 0.45rem", borderRadius: "4px", border: "1px solid #e2e8f0" }}>
+                      {revealedAccounts[activeReportPharmacy._id] || (activeReportPharmacy.accountNumberLast4 ? `•••• ${activeReportPharmacy.accountNumberLast4}` : "Not Set")}
+                    </span>
+                    {isSuperAdmin && activeReportPharmacy.accountNumberLast4 && !revealedAccounts[activeReportPharmacy._id] && (
+                      <button
+                        type="button"
+                        onClick={() => handleRevealAccount(activeReportPharmacy._id)}
+                        disabled={revealingId === activeReportPharmacy._id}
+                        style={{
+                          background: "#eff6ff",
+                          border: "1px solid #bfdbfe",
+                          color: "#1d4ed8",
+                          borderRadius: "4px",
+                          padding: "0.15rem 0.4rem",
+                          fontSize: "0.68rem",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                        }}
+                        title="Reveal full encrypted account number"
+                      >
+                        {revealingId === activeReportPharmacy._id ? "..." : "👁️ Reveal"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* KPI Summary Cards */}
@@ -1138,7 +1228,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               <div style={{ background: "white", padding: "1.25rem", borderRadius: "12px", border: "1px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
                 <span style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" }}>Total Revenue Fulfilled</span>
                 <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#16a34a", marginTop: "0.25rem" }}>
-                  PKR {reportsData.summary.totalRevenueSum.toLocaleString()}
+                  PKR {Number(reportsData.summary.totalRevenueSum || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
               </div>
 
@@ -1146,7 +1236,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
               <div style={{ background: "white", padding: "1.25rem", borderRadius: "12px", border: "1px solid #e2e8f0", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
                 <span style={{ color: "#854d0e", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase" }}>Medikart Commission Share</span>
                 <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#d97706", marginTop: "0.25rem" }}>
-                  PKR {(reportsData.summary.totalMedikartShare || 0).toLocaleString()}
+                  PKR {Number(reportsData.summary.totalMedikartShare || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
               </div>
 
@@ -1273,11 +1363,11 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                       </td>
                       <td style={{ padding: "0.75rem 1rem", fontWeight: 700 }}>{r.assignedOrders}</td>
                       <td style={{ padding: "0.75rem 1rem", color: "#16a34a", fontWeight: 700 }}>
-                        PKR {r.totalRevenue.toLocaleString()}
+                        PKR {Number(r.totalRevenue || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td style={{ padding: "0.75rem 1rem" }}>{r.medikartPercentage}%</td>
                       <td style={{ padding: "0.75rem 1rem", fontWeight: 900, color: "#b45309" }}>
-                        PKR {r.medikartRevenueShare.toLocaleString()}
+                        PKR {Number(r.medikartRevenueShare || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td style={{ padding: "0.75rem 1rem", textAlign: "right", whiteSpace: "nowrap" }}>
                         <button

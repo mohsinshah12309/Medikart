@@ -641,7 +641,7 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                   <span style={{ fontSize: "0.75rem", color: "#4f46e5", fontWeight: 700 }}>Branches →</span>
                 </div>
                 <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#3730a3", margin: "0.5rem 0" }}>
-                  PKR {stats.medikartCommission ? stats.medikartCommission.toLocaleString() : "0"}
+                  PKR {Number(stats.medikartCommission || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
                 <div style={{ fontSize: "0.75rem", color: "#4338ca", fontWeight: 500 }}>
                   Platform share from partner fulfillment
