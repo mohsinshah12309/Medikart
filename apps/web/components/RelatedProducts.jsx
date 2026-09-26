@@ -3,75 +3,57 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import { Sparkles, Pill, ArrowRight, Stethoscope } from "lucide-react";
+import { Sparkles, ArrowRight, Stethoscope } from "lucide-react";
 
 export default function RelatedProducts({ currentProduct }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!currentProduct) return;
+    if (!currentProduct?._id) return;
 
+    let isMounted = true;
     const fetchRelated = async () => {
       setLoading(true);
       try {
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
-        
-        // Strategy 1: Find by primary category
+        const res = await fetch(`${apiUrl}/products/${currentProduct._id}/related?limit=6`);
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && data?.data?.products && data.data.products.length > 0) {
+            setRelatedProducts(data.data.products);
+            return;
+          }
+        }
+
+        // Fallback strategy if needed
         let categoryId = "";
         if (currentProduct.categoryIds && currentProduct.categoryIds.length > 0) {
           const firstCat = currentProduct.categoryIds[0];
           categoryId = typeof firstCat === "object" ? firstCat._id : firstCat;
         }
 
-        let matched = [];
-
-        // Query by category
         if (categoryId) {
-          const res = await fetch(`${apiUrl}/products?categoryId=${categoryId}&limit=12`);
-          if (res.ok) {
-            const data = await res.json();
-            matched = (data?.data?.products || []).filter(
+          const fallbackRes = await fetch(`${apiUrl}/products?categoryId=${categoryId}&limit=8`);
+          if (fallbackRes.ok) {
+            const fallbackData = await fallbackRes.json();
+            const matched = (fallbackData?.data?.products || []).filter(
               (p) => String(p._id) !== String(currentProduct._id)
             );
+            if (isMounted) setRelatedProducts(matched.slice(0, 6));
           }
         }
-
-        // Strategy 2: If few matches, also query by generic name or search keyword
-        if (matched.length < 6 && currentProduct.genericName) {
-          const searchWord = currentProduct.genericName.split(" ")[0];
-          if (searchWord && searchWord.length > 2) {
-            const res = await fetch(`${apiUrl}/products?search=${encodeURIComponent(searchWord)}&limit=10`);
-            if (res.ok) {
-              const data = await res.json();
-              const additional = (data?.data?.products || []).filter(
-                (p) => String(p._id) !== String(currentProduct._id) && !matched.some((m) => String(m._id) === String(p._id))
-              );
-              matched = [...matched, ...additional];
-            }
-          }
-        }
-
-        // Strategy 3: Fallback to general catalog if still empty
-        if (matched.length === 0) {
-          const res = await fetch(`${apiUrl}/products?limit=10`);
-          if (res.ok) {
-            const data = await res.json();
-            matched = (data?.data?.products || []).filter(
-              (p) => String(p._id) !== String(currentProduct._id)
-            );
-          }
-        }
-
-        setRelatedProducts(matched.slice(0, 6));
       } catch (err) {
         console.warn("Could not load related products:", err);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchRelated();
+    return () => {
+      isMounted = false;
+    };
   }, [currentProduct]);
 
   if (!loading && relatedProducts.length === 0) {
@@ -97,7 +79,7 @@ export default function RelatedProducts({ currentProduct }) {
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-              Customers viewing this medicine also considered these authentic alternatives and wellness items
+              Customers viewing this item also considered these brand variants, authentic alternatives and healthcare essentials
             </p>
           </div>
 

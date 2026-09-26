@@ -61,10 +61,13 @@ const getAllProducts = async (filters = {}, page = 1, limit = 20) => {
     query.categoryIds = filters.categoryId;
   }
   if (filters.search) {
-    const escapedSearch = filters.search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedSearch = filters.search.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     query.$or = [
       { name: { $regex: escapedSearch, $options: "i" } },
-      { genericName: { $regex: escapedSearch, $options: "i" } }
+      { genericName: { $regex: escapedSearch, $options: "i" } },
+      { description: { $regex: escapedSearch, $options: "i" } },
+      { keywords: { $regex: escapedSearch, $options: "i" } },
+      { tags: { $regex: escapedSearch, $options: "i" } },
     ];
   }
 

@@ -18,7 +18,7 @@ export default function HomeOnlyBanners({ categories = [] }) {
   }
 
   return (
-    <div className="w-full bg-white relative z-20 border-b border-[#F3EFE6] transition-all">
+    <div className="w-full bg-white/95 backdrop-blur-md relative z-20 border-t border-[#F3EFE6] transition-all">
       <CategorySubBar categories={categories} />
     </div>
   );

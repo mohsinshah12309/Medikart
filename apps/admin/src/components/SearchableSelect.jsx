@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 /**
  * SearchableSelect - A robust, accessible dropdown with instant text search
- * Ideal for selecting from hundreds of pharmacy branches, categories, cities, or users.
+ * Features wide horizontal dropdown formatting for clear pharmacy/store display.
  */
 export default function SearchableSelect({
   options = [],
@@ -12,6 +12,8 @@ export default function SearchableSelect({
   searchPlaceholder = "Type to search...",
   minWidth = "220px",
   maxWidth = "360px",
+  dropdownMinWidth = "380px",
+  dropdownMaxWidth = "520px",
   size = "md", // 'sm' | 'md'
   disabled = false,
   className = "",
@@ -106,8 +108,8 @@ export default function SearchableSelect({
           background: disabled ? "#f1f5f9" : "#ffffff",
           border: isOpen ? "1.5px solid #eab308" : "1px solid #cbd5e1",
           borderRadius: "8px",
-          padding: isSmall ? "0.25rem 0.6rem" : "0.45rem 0.75rem",
-          fontSize: isSmall ? "0.8rem" : "0.875rem",
+          padding: isSmall ? "0.3rem 0.65rem" : "0.45rem 0.75rem",
+          fontSize: isSmall ? "0.82rem" : "0.875rem",
           fontWeight: 600,
           color: selectedOption ? "#0f172a" : "#94a3b8",
           cursor: disabled ? "not-allowed" : "pointer",
@@ -167,19 +169,21 @@ export default function SearchableSelect({
         </div>
       </div>
 
-      {/* Floating Dropdown Panel */}
+      {/* Floating Dropdown Panel (Wider horizontally with rich details) */}
       {isOpen && (
         <div
           style={{
             position: "absolute",
             top: "calc(100% + 4px)",
             left: 0,
-            right: 0,
+            minWidth: dropdownMinWidth || "max(100%, 380px)",
+            maxWidth: dropdownMaxWidth || "520px",
+            width: "max-content",
             background: "#ffffff",
-            border: "1px solid #e2e8f0",
+            border: "1px solid #cbd5e1",
             borderRadius: "10px",
-            boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-            zIndex: 9999,
+            boxShadow: "0 12px 30px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+            zIndex: 99999,
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
@@ -189,7 +193,7 @@ export default function SearchableSelect({
           {/* Search Input Box */}
           <div
             style={{
-              padding: "0.5rem",
+              padding: "0.55rem 0.65rem",
               background: "#f8fafc",
               borderBottom: "1px solid #e2e8f0",
               display: "flex",
@@ -197,7 +201,7 @@ export default function SearchableSelect({
               gap: "0.4rem",
             }}
           >
-            <span style={{ fontSize: "0.85rem", color: "#64748b" }}>🔍</span>
+            <span style={{ fontSize: "0.9rem", color: "#64748b" }}>🔍</span>
             <input
               ref={inputRef}
               type="text"
@@ -208,8 +212,8 @@ export default function SearchableSelect({
                 width: "100%",
                 border: "1px solid #cbd5e1",
                 borderRadius: "6px",
-                padding: "0.35rem 0.55rem",
-                fontSize: "0.8rem",
+                padding: "0.4rem 0.6rem",
+                fontSize: "0.825rem",
                 outline: "none",
                 background: "#ffffff",
                 color: "#0f172a",
@@ -228,8 +232,8 @@ export default function SearchableSelect({
                   border: "none",
                   color: "#94a3b8",
                   cursor: "pointer",
-                  fontSize: "0.8rem",
-                  padding: "0 0.2rem",
+                  fontSize: "0.85rem",
+                  padding: "0 0.25rem",
                 }}
               >
                 ✕
@@ -240,9 +244,9 @@ export default function SearchableSelect({
           {/* Options List */}
           <div
             style={{
-              maxHeight: "260px",
+              maxHeight: "280px",
               overflowY: "auto",
-              padding: "0.3rem",
+              padding: "0.35rem",
             }}
           >
             {filteredOptions.length === 0 ? (
@@ -250,7 +254,7 @@ export default function SearchableSelect({
                 style={{
                   padding: "1.2rem 0.75rem",
                   textAlign: "center",
-                  fontSize: "0.8rem",
+                  fontSize: "0.825rem",
                   color: "#94a3b8",
                   fontStyle: "italic",
                 }}
@@ -265,19 +269,19 @@ export default function SearchableSelect({
                     key={opt.value}
                     onClick={() => handleSelect(opt.value)}
                     style={{
-                      padding: "0.45rem 0.65rem",
-                      borderRadius: "6px",
+                      padding: "0.55rem 0.75rem",
+                      borderRadius: "7px",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      gap: "0.5rem",
-                      fontSize: "0.825rem",
+                      gap: "0.75rem",
+                      fontSize: "0.85rem",
                       fontWeight: isSelected ? 700 : 500,
                       background: isSelected ? "#fef08a" : "transparent",
                       color: isSelected ? "#854d0e" : "#1e293b",
                       transition: "background 0.12s ease",
-                      marginBottom: "1px",
+                      marginBottom: "2px",
                     }}
                     onMouseEnter={(e) => {
                       if (!isSelected) e.currentTarget.style.background = "#f1f5f9";
@@ -289,37 +293,37 @@ export default function SearchableSelect({
                     {renderOption ? (
                       renderOption(opt, isSelected)
                     ) : (
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.1rem", overflow: "hidden", minWidth: 0 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                          {opt.icon && <span>{opt.icon}</span>}
-                          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem", overflow: "hidden", minWidth: 0, flex: 1 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                          {opt.icon && <span style={{ flexShrink: 0 }}>{opt.icon}</span>}
+                          <span style={{ fontWeight: isSelected ? 700 : 600, color: isSelected ? "#854d0e" : "#0f172a", whiteSpace: "nowrap" }}>
                             {opt.label}
                           </span>
                         </div>
                         {opt.sublabel && (
-                          <span style={{ fontSize: "0.72rem", color: isSelected ? "#a16207" : "#64748b" }}>
+                          <span style={{ fontSize: "0.74rem", color: isSelected ? "#a16207" : "#64748b", whiteSpace: "normal", lineHeight: 1.35 }}>
                             {opt.sublabel}
                           </span>
                         )}
                       </div>
                     )}
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", flexShrink: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", flexShrink: 0 }}>
                       {opt.badge && (
                         <span
                           style={{
-                            fontSize: "0.68rem",
-                            padding: "0.1rem 0.35rem",
+                            fontSize: "0.7rem",
+                            padding: "0.12rem 0.45rem",
                             borderRadius: "4px",
                             background: isSelected ? "#fde047" : "#e2e8f0",
-                            color: isSelected ? "#713f12" : "#475569",
+                            color: isSelected ? "#713f12" : "#334155",
                             fontWeight: 700,
                           }}
                         >
                           {opt.badge}
                         </span>
                       )}
-                      {isSelected && <span style={{ color: "#854d0e", fontWeight: "bold" }}>✓</span>}
+                      {isSelected && <span style={{ color: "#854d0e", fontWeight: "bold", fontSize: "0.9rem" }}>✓</span>}
                     </div>
                   </div>
                 );
@@ -330,11 +334,11 @@ export default function SearchableSelect({
           {/* Footer count indicator */}
           <div
             style={{
-              padding: "0.3rem 0.6rem",
+              padding: "0.35rem 0.65rem",
               background: "#f8fafc",
               borderTop: "1px solid #e2e8f0",
-              fontSize: "0.7rem",
-              color: "#94a3b8",
+              fontSize: "0.72rem",
+              color: "#64748b",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -344,7 +348,7 @@ export default function SearchableSelect({
             {value && (
               <span
                 onClick={handleClear}
-                style={{ color: "#ca8a04", cursor: "pointer", fontWeight: 600 }}
+                style={{ color: "#ca8a04", cursor: "pointer", fontWeight: 700 }}
               >
                 Reset selection
               </span>

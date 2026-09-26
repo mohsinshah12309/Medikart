@@ -30,11 +30,15 @@ const imageSchema = z.object({
 const createProductSchema = z
   .object({
     name: z.string().min(1, "Product name is required").trim(),
+    genericName: z.string().optional().default(""),
     description: z.string().optional().default(""),
+    keywords: z.array(z.string()).optional().default([]),
+    tags: z.array(z.string()).optional().default([]),
     price: z.number().min(0, "Price must be non-negative"),
     sku: z.string().min(1, "SKU is required").trim(),
     categoryIds: z.array(z.string()).optional().default([]),
     isNarcotic: z.boolean().optional().default(false),
+    requiresPrescription: z.boolean().optional().default(false),
     stockStatus: z.enum(["in_stock", "out_of_stock"]).optional(),
     images: z.array(imageSchema).optional().default([]),
     discount: discountSchema,
@@ -47,11 +51,15 @@ const createProductSchema = z
 const updateProductSchema = z
   .object({
     name: z.string().min(1).trim().optional(),
+    genericName: z.string().optional(),
     description: z.string().optional(),
+    keywords: z.array(z.string()).optional(),
+    tags: z.array(z.string()).optional(),
     price: z.number().min(0).optional(),
     sku: z.string().min(1).trim().optional(),
     categoryIds: z.array(z.string()).optional(),
     isNarcotic: z.boolean().optional(),
+    requiresPrescription: z.boolean().optional(),
     stockStatus: z.enum(["in_stock", "out_of_stock"]).optional(),
     images: z.array(imageSchema).optional(),
     discount: discountSchema,

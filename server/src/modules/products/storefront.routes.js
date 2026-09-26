@@ -63,24 +63,25 @@ router.get("/products", async (req, res, next) => {
       const escapedSearch = trimmedSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       const tokens = trimmedSearch.split(/\s+/).filter((t) => t.length >= 2).map((t) => t.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
 
+      const buildFieldMatches = (term) => [
+        { name: { $regex: term, $options: "i" } },
+        { genericName: { $regex: term, $options: "i" } },
+        { description: { $regex: term, $options: "i" } },
+        { keywords: { $regex: term, $options: "i" } },
+        { tags: { $regex: term, $options: "i" } },
+      ];
+
       if (tokens.length > 1) {
         const tokenConditions = tokens.map((token) => ({
-          $or: [
-            { name: { $regex: token, $options: "i" } },
-            { genericName: { $regex: token, $options: "i" } },
-          ],
+          $or: buildFieldMatches(token),
         }));
 
         query.$or = [
-          { name: { $regex: escapedSearch, $options: "i" } },
-          { genericName: { $regex: escapedSearch, $options: "i" } },
+          ...buildFieldMatches(escapedSearch),
           { $and: tokenConditions },
         ];
       } else {
-        query.$or = [
-          { name: { $regex: escapedSearch, $options: "i" } },
-          { genericName: { $regex: escapedSearch, $options: "i" } },
-        ];
+        query.$or = buildFieldMatches(escapedSearch);
       }
     }
 
@@ -128,7 +129,7 @@ router.get("/products", async (req, res, next) => {
     // Parallelize independent DB reads (Product.find, storewide discount, countDocuments)
     let [products, storewidePercent, totalCount] = await Promise.all([
       Product.find(query)
-        .select("name genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+        .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
         .populate("categoryIds", "name slug discount active")
         .sort({ name: 1 })
         .skip(skip)
@@ -145,6 +146,9 @@ router.get("/products", async (req, res, next) => {
         const relaxedOr = tokens.flatMap((token) => [
           { name: { $regex: token, $options: "i" } },
           { genericName: { $regex: token, $options: "i" } },
+          { description: { $regex: token, $options: "i" } },
+          { keywords: { $regex: token, $options: "i" } },
+          { tags: { $regex: token, $options: "i" } },
         ]);
         const relaxedQuery = {
           ...query,
@@ -153,7 +157,7 @@ router.get("/products", async (req, res, next) => {
 
         const [fallbackProducts, fallbackCount] = await Promise.all([
           Product.find(relaxedQuery)
-            .select("name genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
             .populate("categoryIds", "name slug discount active")
             .sort({ name: 1 })
             .skip(skip)
@@ -273,6 +277,191 @@ router.get("/products/:id", async (req, res, next) => {
   }
 });
 
+// GET /api/v1/products/:id/related - AI / Smart Brand Line & Contextual Related Products
+router.get("/products/:id/related", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const limit = Math.min(parseInt(req.query.limit, 10) || 12, 24);
+
+    const cacheKey = `cache:storefront:product:${id}:related:limit:${limit}`;
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (_) {}
+
+    if (cached) {
+      return res.status(200).json(JSON.parse(cached));
+    }
+
+    const currentProduct = await Product.findOne({ _id: id, active: true }).lean();
+    if (!currentProduct) {
+      return res.status(404).json({ status: "error", message: "Product not found" });
+    }
+
+    const storewidePercent = await getStorewideDiscount();
+
+    // 1. Extract clean brand root name (e.g. "Ensure", "Panadol", "Aptamil", "Augmentin")
+    const cleanName = currentProduct.name.replace(/[\(\)\[\]]/g, " ");
+    const nameWords = cleanName.split(/\s+/).filter(Boolean);
+    const stopWords = new Set([
+      "the", "and", "for", "with", "plus", "extra", "forte", "tablet", "tablets", "capsule", "capsules",
+      "syrup", "suspension", "drops", "drop", "injection", "infusion", "cream", "gel", "lotion", "ointment",
+      "powder", "powdered", "milk", "sachet", "sachets", "solution", "spray", "oil", "shampoo", "wash",
+      "pack", "box", "bottle", "strip", "tube", "jar", "tin", "mg", "ml", "gm", "g", "kg", "mcg", "iu"
+    ]);
+
+    const brandCandidates = nameWords.filter(
+      (w) => !stopWords.has(w.toLowerCase()) && !/^\d+/.test(w) && w.length >= 3
+    );
+    const brandRoot = brandCandidates[0] || nameWords[0] || "";
+
+    const relatedMap = new Map();
+
+    const addProductsWithScore = (productsList, scoreBoost) => {
+      productsList.forEach((prod) => {
+        if (String(prod._id) === String(id)) return;
+        const key = String(prod._id);
+        const existing = relatedMap.get(key);
+        if (existing) {
+          existing.score += scoreBoost;
+        } else {
+          relatedMap.set(key, { product: prod, score: scoreBoost });
+        }
+      });
+    };
+
+    const queries = [];
+
+    // Tier 1: Brand Line / Same product family / Flavor & size variants (Highest priority)
+    if (brandRoot && brandRoot.length >= 3) {
+      const brandRegex = new RegExp(`(^|\\s|\\()${brandRoot.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}`, "i");
+      queries.push(
+        Product.find({
+          _id: { $ne: id },
+          active: true,
+          name: brandRegex,
+        })
+          .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .populate("categoryIds", "name slug discount active")
+          .limit(20)
+          .lean()
+          .then((res) => addProductsWithScore(res, 1000))
+      );
+    }
+
+    // Tier 2: Same Active Ingredient / Generic Equivalent (Second priority)
+    if (currentProduct.genericName && currentProduct.genericName.trim().length > 3) {
+      const genericWord = currentProduct.genericName.trim().split(/[,;+\/]/)[0].trim();
+      if (genericWord.length >= 3) {
+        const genRegex = new RegExp(genericWord.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), "i");
+        queries.push(
+          Product.find({
+            _id: { $ne: id },
+            active: true,
+            genericName: genRegex,
+          })
+            .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .populate("categoryIds", "name slug discount active")
+            .limit(15)
+            .lean()
+            .then((res) => addProductsWithScore(res, 500))
+        );
+      }
+    }
+
+    // Tier 3: Matching Keywords / Indications (Third priority)
+    if (Array.isArray(currentProduct.keywords) && currentProduct.keywords.length > 0) {
+      queries.push(
+        Product.find({
+          _id: { $ne: id },
+          active: true,
+          keywords: { $in: currentProduct.keywords },
+        })
+          .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .populate("categoryIds", "name slug discount active")
+          .limit(15)
+          .lean()
+          .then((res) => addProductsWithScore(res, 250))
+      );
+    }
+
+    // Tier 4: Same Specific Primary Category Alternatives & Substitutes (Complementary variety)
+    const primaryCatId = currentProduct.categoryIds?.[0];
+    if (primaryCatId) {
+      queries.push(
+        Product.find({
+          _id: { $ne: id },
+          active: true,
+          categoryIds: primaryCatId,
+        })
+          .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .populate("categoryIds", "name slug discount active")
+          .sort({ name: 1 })
+          .limit(20)
+          .lean()
+          .then((res) => addProductsWithScore(res, 50))
+      );
+    }
+
+    await Promise.all(queries);
+
+    // Fallback if empty
+    if (relatedMap.size === 0) {
+      const fallbackList = await Product.find({ _id: { $ne: id }, active: true })
+        .populate("categoryIds", "name slug discount active")
+        .limit(limit)
+        .lean();
+      addProductsWithScore(fallbackList, 10);
+    }
+
+    // Sort by score descending, then by stockStatus (in-stock first), then alphabetically
+    const scoredList = Array.from(relatedMap.values());
+    scoredList.sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const aInStock = a.product.stockStatus !== "out_of_stock";
+      const bInStock = b.product.stockStatus !== "out_of_stock";
+      if (aInStock && !bInStock) return -1;
+      if (!aInStock && bInStock) return 1;
+      return (a.product.name || "").localeCompare(b.product.name || "");
+    });
+
+    const finalProducts = scoredList.slice(0, limit).map(({ product: prod }) => {
+      const formatted = formatProductWithImages(prod);
+      const category = formatted.categoryIds?.[0] ?? null;
+      const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+        formatted,
+        category,
+        storewidePercent
+      );
+      return {
+        ...formatted,
+        effectivePrice,
+        appliedDiscount,
+        discountPercent,
+      };
+    });
+
+    const responseBody = {
+      status: "success",
+      results: finalProducts.length,
+      data: {
+        brandRoot,
+        products: finalProducts,
+      },
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
+    } catch (_) {}
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET /api/v1/categories - Public category listing with Redis caching (1 hour TTL)
 router.get("/categories", async (req, res, next) => {
   try {
@@ -372,7 +561,13 @@ const getSuggestionsHandler = async (req, res, next) => {
     const [rawProducts, rawCategories] = await Promise.all([
       Product.find({
         active: true,
-        $or: [{ name: regex }, { genericName: regex }, { tags: regex }],
+        $or: [
+          { name: regex },
+          { genericName: regex },
+          { description: regex },
+          { keywords: regex },
+          { tags: regex },
+        ],
       })
         .populate("categoryIds", "name slug discount active")
         .limit(40),
@@ -387,7 +582,9 @@ const getSuggestionsHandler = async (req, res, next) => {
       let score = 0;
       const nameLower = (prod.name || "").toLowerCase();
       const genericLower = (prod.genericName || "").toLowerCase();
-      const tagsString = Array.isArray(prod.tags) ? prod.tags.join(" ").toLowerCase() : "";
+      const descLower = (prod.description || "").toLowerCase();
+      const keywordsString = Array.isArray(prod.keywords) ? prod.keywords.join(" ").toLowerCase() : (typeof prod.keywords === "string" ? prod.keywords.toLowerCase() : "");
+      const tagsString = Array.isArray(prod.tags) ? prod.tags.join(" ").toLowerCase() : (typeof prod.tags === "string" ? prod.tags.toLowerCase() : "");
 
       // 1. Exact match on name
       if (nameLower === cleanQ) score += 1000;
@@ -404,8 +601,12 @@ const getSuggestionsHandler = async (req, res, next) => {
       else if (wordBoundaryRegex.test(prod.genericName || "")) score += 80;
       else if (genericLower.includes(cleanQ)) score += 40;
 
-      // 6. Tags match
-      if (tagsString.includes(cleanQ)) score += 20;
+      // 6. Keywords & Tags match
+      if (keywordsString.includes(cleanQ)) score += 100;
+      if (tagsString.includes(cleanQ)) score += 50;
+
+      // 7. Description match
+      if (descLower.includes(cleanQ)) score += 30;
 
       // In-stock preference
       if (prod.stockStatus !== "out_of_stock" && (prod.stock ?? 1) > 0) score += 10;

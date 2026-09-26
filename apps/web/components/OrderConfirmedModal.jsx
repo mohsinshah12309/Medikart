@@ -158,11 +158,11 @@ export function OrderConfirmedCard({
 
       {/* Delivery timeframe notice */}
       <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 w-full text-xs text-amber-900 text-left flex items-start gap-3 mb-6">
-        <span className="text-xl">🕒</span>
+        <span className="text-xl">⚡</span>
         <div>
-          <p className="font-bold">Estimated Delivery: 24 – 48 Hours</p>
+          <p className="font-bold">Fastest Medicine Delivery • Priority Dispatch</p>
           <p className="text-amber-800/90 text-[11px] mt-0.5 leading-relaxed">
-            A confirmation receipt has been sent to <strong>{customer?.email || 'your email'}</strong>. Our delivery rider will contact you upon dispatch.
+            A confirmation receipt has been sent to <strong>{customer?.email || 'your email'}</strong>. Our pharmacy rider will contact you upon dispatch.
           </p>
         </div>
       </div>

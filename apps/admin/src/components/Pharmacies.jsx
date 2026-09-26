@@ -32,6 +32,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     address: "",
     cityIds: [],
     medikartPercentage: 5,
+    bankName: "",
     accountTitle: "",
     accountNumber: "",
     active: true,
@@ -114,6 +115,15 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     }
   }, [activeTab, selectedCommPharmacy, assignedPharmacyId, isBranchScoped]);
 
+  // When cityFilter changes, ensure selectedPharmacyFilter still belongs to the selected city
+  useEffect(() => {
+    if (!cityFilter || !selectedPharmacyFilter) return;
+    const selectedPh = allPharmacies.find((p) => String(p._id) === String(selectedPharmacyFilter));
+    if (selectedPh && !isPharmacyInCity(selectedPh, cityFilter)) {
+      setSelectedPharmacyFilter("");
+    }
+  }, [cityFilter, selectedPharmacyFilter, allPharmacies, cities]);
+
   // Cleanup reveal timers on unmount
   useEffect(() => {
     return () => {
@@ -151,6 +161,26 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     }
   };
 
+  // Helper to check if pharmacy is assigned to the selected city
+  const isPharmacyInCity = (p, targetCityId) => {
+    if (!targetCityId) return true;
+    if (!p) return false;
+    if (Array.isArray(p.cityIds) && p.cityIds.length > 0) {
+      const matched = p.cityIds.some((c) => {
+        const cId = c && typeof c === "object" ? String(c._id) : String(c);
+        return cId === String(targetCityId);
+      });
+      if (matched) return true;
+    }
+    if (p.city) {
+      const cityObj = cities.find((c) => String(c._id) === String(targetCityId));
+      if (cityObj && String(p.city).toLowerCase().includes(cityObj.name.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   // Matched assigned pharmacy object
   const assignedPharmacyObj = allPharmacies.find((p) => p._id === assignedPharmacyId) ||
     (typeof adminUser?.assignedPharmacyId === "object" ? adminUser?.assignedPharmacyId : null);
@@ -162,13 +192,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
             ? allPharmacies.filter((p) => p._id === assignedPharmacyId)
             : allPharmacies.slice(0, 1)))
     : (cityFilter
-        ? allPharmacies.filter((p) => {
-            if (!Array.isArray(p.cityIds)) return false;
-            return p.cityIds.some((c) => {
-              const cId = c && typeof c === "object" ? c._id : c;
-              return cId === cityFilter;
-            });
-          })
+        ? allPharmacies.filter((p) => isPharmacyInCity(p, cityFilter))
         : allPharmacies);
 
   const filteredPharmacies = searchQuery.trim()
@@ -187,9 +211,18 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
     : baseFilteredPharmacies;
 
   const pharmacyReportOptions = useMemo(() => {
+    const eligiblePharmacies = cityFilter
+      ? allPharmacies.filter((ph) => isPharmacyInCity(ph, cityFilter))
+      : allPharmacies;
+
+    const selectedCityObj = cities.find((c) => String(c._id) === String(cityFilter));
+    const allOptionLabel = selectedCityObj
+      ? `All Pharmacies in ${selectedCityObj.name} (${eligiblePharmacies.length})`
+      : "All Pharmacies";
+
     return [
-      { value: "", label: "All Pharmacies", icon: "🌐" },
-      ...allPharmacies.map((ph) => ({
+      { value: "", label: allOptionLabel, icon: "🌐" },
+      ...eligiblePharmacies.map((ph) => ({
         value: ph._id,
         label: `${ph.name} (${ph.code || "Branch"})`,
         sublabel: ph.city ? `${ph.city} ${ph.address ? `• ${ph.address}` : ""}` : ph.address || "",
@@ -199,7 +232,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
         city: ph.city,
       })),
     ];
-  }, [allPharmacies]);
+  }, [allPharmacies, cityFilter, cities]);
 
   const citySelectOptions = useMemo(() => {
     return [
@@ -334,6 +367,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
       address: "",
       cityIds: [],
       medikartPercentage: 5,
+      bankName: "",
       accountTitle: "",
       accountNumber: "",
       active: true,
@@ -352,6 +386,7 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
       address: p.address || "",
       cityIds: p.cityIds ? p.cityIds.map((c) => (typeof c === "object" ? c._id : c)) : [],
       medikartPercentage: p.medikartPercentage !== undefined ? p.medikartPercentage : 5,
+      bankName: p.bankName || "",
       accountTitle: p.accountTitle || "",
       accountNumber: "", // Keep blank so we don't accidentally wipe it unless admin explicitly types a new one
       active: p.active !== false,
@@ -771,8 +806,13 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                       </td>
                       {/* Secure Bank Account Cell */}
                       <td style={{ padding: "0.75rem 1rem", minWidth: "160px" }}>
+                        {p.bankName && (
+                          <div style={{ fontWeight: 700, color: "#047857", fontSize: "0.82rem", marginBottom: "0.15rem", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                            <span>🏦</span> <span>{p.bankName}</span>
+                          </div>
+                        )}
                         {p.accountTitle && (
-                          <div style={{ fontWeight: 600, color: "#1e293b", fontSize: "0.82rem", marginBottom: "0.2rem" }}>
+                          <div style={{ fontWeight: 600, color: "#1e293b", fontSize: "0.8rem", marginBottom: "0.2rem" }}>
                             🏛️ {p.accountTitle}
                           </div>
                         )}
@@ -1023,8 +1063,9 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                     placeholder="All Pharmacies"
                     searchPlaceholder="Search pharmacy name, code, city..."
                     size="sm"
-                    minWidth="200px"
-                    maxWidth="280px"
+                    minWidth="220px"
+                    maxWidth="300px"
+                    dropdownMinWidth="400px"
                   />
                 </div>
               </div>
@@ -1299,8 +1340,9 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                   placeholder="Select Pharmacy Branch..."
                   searchPlaceholder="Search branch name, code, city..."
                   size="md"
-                  minWidth="240px"
-                  maxWidth="340px"
+                  minWidth="260px"
+                  maxWidth="360px"
+                  dropdownMinWidth="420px"
                   showClear={false}
                 />
               ) : (
@@ -1753,6 +1795,21 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                     <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", color: "#64748b", fontWeight: 800, fontSize: "0.85rem" }}>%</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Bank Name Field */}
+              <div className="form-group" style={{ marginBottom: "0.75rem" }}>
+                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.25rem" }}>
+                  Bank Name / Financial Institution
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ width: "100%", padding: "0.5rem", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                  value={formData.bankName}
+                  onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
+                  placeholder="e.g. Meezan Bank, HBL, Standard Chartered, Bank Alfalah"
+                />
               </div>
 
               {/* Bank Account Title Field */}

@@ -20,6 +20,11 @@ const pharmacySchema = new mongoose.Schema(
       min: 0,
       max: 100,
     },
+    bankName: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     accountTitle: {
       type: String,
       trim: true,

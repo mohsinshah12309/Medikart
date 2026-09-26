@@ -417,12 +417,12 @@ export default function CategorySubBar({ categories = [] }) {
 
   return (
     <div
-      className="w-full bg-white border-b border-[#F3EFE6] relative z-30 transition-all"
+      className="w-full bg-white relative z-30 transition-all"
       onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="max-w-[1720px] mx-auto px-2 sm:px-4 lg:px-6 xl:px-8 2xl:px-10">
         {/* Horizontal Category Sub-Navbar with Mobile All-Categories Trigger */}
-        <div className="relative flex items-center py-1.5 sm:py-2">
+        <div className="relative flex items-center justify-between w-full py-1.5 sm:py-2">
           
           {/* Mobile All Categories / Sidebar View Trigger Button */}
           <button
@@ -435,10 +435,10 @@ export default function CategorySubBar({ categories = [] }) {
             <span>All Categories</span>
           </button>
 
-          {/* Scrollable category pills with swipe support */}
+          {/* Full horizontal width category pills across the bar */}
           <nav
             aria-label="Healthcare Department navigation"
-            className="flex items-center flex-1 overflow-x-auto scrollbar-none gap-1.5 sm:gap-2.5 lg:gap-4 snap-x snap-mandatory pr-6"
+            className="flex items-center justify-between w-full overflow-x-auto scrollbar-none gap-1 sm:gap-2 lg:gap-2.5 xl:gap-3 snap-x snap-mandatory"
           >
             {DEPARTMENTS.map((dept) => {
               const isOpen = activeDeptId === dept.id;
@@ -447,7 +447,7 @@ export default function CategorySubBar({ categories = [] }) {
               return (
                 <div
                   key={dept.id}
-                  className="relative py-1 flex-shrink-0 snap-start"
+                  className="relative py-1 flex-shrink-0 md:flex-1 flex justify-center snap-start"
                   onMouseEnter={() => handleMouseEnterDept(dept.id)}
                 >
                   <button
@@ -460,17 +460,17 @@ export default function CategorySubBar({ categories = [] }) {
                       }
                     }}
                     aria-expanded={isOpen}
-                    className={`group inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 rounded-xl text-xs sm:text-[13px] font-semibold transition-all cursor-pointer ${
+                    className={`w-full justify-center group inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 xl:px-3 py-1.5 rounded-xl text-xs sm:text-[13px] font-semibold transition-all cursor-pointer text-center ${
                       isOpen
-                        ? "text-amber-600 bg-amber-50/90 font-bold shadow-2xs ring-1 ring-amber-200"
-                        : "text-slate-700 hover:text-amber-600 hover:bg-amber-50/50 bg-slate-50/70 sm:bg-transparent"
+                        ? "text-amber-700 bg-amber-50/90 font-bold shadow-2xs ring-1 ring-amber-200"
+                        : "text-slate-700 hover:text-amber-700 hover:bg-amber-50/60 bg-slate-50/70 sm:bg-transparent"
                     }`}
                   >
                     <span className="text-xs sm:hidden">{dept.icon}</span>
                     <span className="whitespace-nowrap sm:hidden">{dept.shortName || dept.name}</span>
-                    <span className="whitespace-nowrap hidden sm:inline">{dept.name}</span>
+                    <span className="whitespace-nowrap hidden sm:inline truncate">{dept.name}</span>
                     <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform duration-200 hidden sm:block ${
+                      className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 hidden sm:block ${
                         isOpen
                           ? "rotate-180 text-amber-500"
                           : "text-slate-400 group-hover:text-amber-500"
