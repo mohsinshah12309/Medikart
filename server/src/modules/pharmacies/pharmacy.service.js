@@ -254,6 +254,42 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
               ],
             },
           },
+          codOrders: {
+            $sum: {
+              $cond: [
+                { $in: ["$paymentMethod", ["cod", "cash"]] },
+                1,
+                0,
+              ],
+            },
+          },
+          codRevenue: {
+            $sum: {
+              $cond: [
+                { $in: ["$paymentMethod", ["cod", "cash"]] },
+                "$totals.total",
+                0,
+              ],
+            },
+          },
+          cardOrders: {
+            $sum: {
+              $cond: [
+                { $in: ["$paymentMethod", ["card", "cc", "credit_card", "debit_card"]] },
+                1,
+                0,
+              ],
+            },
+          },
+          cardRevenue: {
+            $sum: {
+              $cond: [
+                { $in: ["$paymentMethod", ["card", "cc", "credit_card", "debit_card"]] },
+                "$totals.total",
+                0,
+              ],
+            },
+          },
         },
       },
     ]),
@@ -274,6 +310,10 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
       deliveredOrders: 0,
       cancelledOrders: 0,
       pendingOrders: 0,
+      codOrders: 0,
+      codRevenue: 0,
+      cardOrders: 0,
+      cardRevenue: 0,
     };
     const totalRevenue = stats.totalRevenue || 0;
     const deliveredRevenue = stats.deliveredRevenue || (stats.deliveredOrders > 0 ? stats.totalRevenue : 0);
@@ -295,6 +335,10 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
       deliveredOrders: stats.deliveredOrders,
       cancelledOrders: stats.cancelledOrders,
       pendingOrders: stats.pendingOrders,
+      codOrders: stats.codOrders || 0,
+      codRevenue: Math.round((stats.codRevenue || 0) * 100) / 100,
+      cardOrders: stats.cardOrders || 0,
+      cardRevenue: Math.round((stats.cardRevenue || 0) * 100) / 100,
       averageOrderValue:
         stats.totalOrders > 0
           ? Math.round((stats.totalRevenue / stats.totalOrders) * 100) / 100
@@ -309,6 +353,10 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
       totalMedikartShare: Math.round((acc.totalMedikartShare + curr.medikartRevenueShare) * 100) / 100,
       totalDelivered: acc.totalDelivered + curr.deliveredOrders,
       totalCancelled: acc.totalCancelled + curr.cancelledOrders,
+      totalCodOrders: acc.totalCodOrders + (curr.codOrders || 0),
+      totalCodRevenue: Math.round((acc.totalCodRevenue + (curr.codRevenue || 0)) * 100) / 100,
+      totalCardOrders: acc.totalCardOrders + (curr.cardOrders || 0),
+      totalCardRevenue: Math.round((acc.totalCardRevenue + (curr.cardRevenue || 0)) * 100) / 100,
     }),
     {
       totalAssignedOrders: 0,
@@ -316,6 +364,10 @@ const getPharmacyReports = async ({ pharmacyId, city, startDate, endDate } = {},
       totalMedikartShare: 0,
       totalDelivered: 0,
       totalCancelled: 0,
+      totalCodOrders: 0,
+      totalCodRevenue: 0,
+      totalCardOrders: 0,
+      totalCardRevenue: 0,
     }
   );
 

@@ -1329,6 +1329,102 @@ export default function Pharmacies({ token, adminUser, initialTab, onNavigateToO
                   {reportsData.summary.totalCancelled}
                 </div>
               </div>
+
+              {/* COD Orders */}
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  if (onNavigateToOrders) {
+                    onNavigateToOrders({
+                      pharmacyId: selectedPharmacyFilter || "assigned",
+                      paymentMethod: "cod",
+                      dateFilter: dateFilter || "all",
+                      startDate: dateFilter === "custom" ? startDate : "",
+                      endDate: dateFilter === "custom" ? endDate : "",
+                    });
+                  }
+                }}
+                style={{
+                  background: "white",
+                  padding: "1.25rem",
+                  borderRadius: "12px",
+                  border: "1px solid #e2e8f0",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  transition: "transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+                  e.currentTarget.style.borderColor = "#059669";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "none";
+                  e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
+                  e.currentTarget.style.borderColor = "#e2e8f0";
+                }}
+                title="Click to view Cash on Delivery (COD) orders in Orders queue"
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" }}>COD Orders</span>
+                  <span style={{ fontSize: "0.75rem", color: "#059669", fontWeight: 700 }}>Open &rarr;</span>
+                </div>
+                <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#059669", marginTop: "0.25rem" }}>
+                  {reportsData.summary.totalCodOrders || 0}
+                </div>
+                <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#64748b", marginTop: "0.2rem" }}>
+                  PKR {Number(reportsData.summary.totalCodRevenue || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
+              </div>
+
+              {/* CC (Card) Orders */}
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  if (onNavigateToOrders) {
+                    onNavigateToOrders({
+                      pharmacyId: selectedPharmacyFilter || "assigned",
+                      paymentMethod: "card",
+                      dateFilter: dateFilter || "all",
+                      startDate: dateFilter === "custom" ? startDate : "",
+                      endDate: dateFilter === "custom" ? endDate : "",
+                    });
+                  }
+                }}
+                style={{
+                  background: "white",
+                  padding: "1.25rem",
+                  borderRadius: "12px",
+                  border: "1px solid #e2e8f0",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  transition: "transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-3px)";
+                  e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0,0,0,0.1)";
+                  e.currentTarget.style.borderColor = "#6366f1";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "none";
+                  e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
+                  e.currentTarget.style.borderColor = "#e2e8f0";
+                }}
+                title="Click to view Credit / Debit Card (CC) orders in Orders queue"
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase" }}>CC (Card) Orders</span>
+                  <span style={{ fontSize: "0.75rem", color: "#6366f1", fontWeight: 700 }}>Open &rarr;</span>
+                </div>
+                <div style={{ fontSize: "1.75rem", fontWeight: 900, color: "#6366f1", marginTop: "0.25rem" }}>
+                  {reportsData.summary.totalCardOrders || 0}
+                </div>
+                <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#64748b", marginTop: "0.2rem" }}>
+                  PKR {Number(reportsData.summary.totalCardRevenue || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
+              </div>
             </div>
           )}
 
