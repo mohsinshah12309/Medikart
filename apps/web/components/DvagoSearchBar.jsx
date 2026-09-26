@@ -23,7 +23,7 @@ const ROTATING_PLACEHOLDERS = [
   'Search for "Blood Pressure & Glucometers"...',
   'Search for "ORS & Energy Hydration"...',
   'Search for "Medicated Sunscreens & Skincare"...',
-  'Search for "Insulin & Cold-Chain Items"...',
+  'Search for "Diabetes Care & Insulin"...',
   'Search for "Diapers & Infant Milk Powder"...',
   'Search for "Cough & Cold Syrups"...',
 ];
@@ -305,6 +305,7 @@ export default function DvagoSearchBar({ className = "" }) {
         {/* Clickable Product Info */}
         <Link
           href={`/products/${prod._id}`}
+          prefetch={true}
           onClick={() => {
             saveRecentSearch(prod.name);
             setIsOpen(false);

@@ -273,12 +273,6 @@ export default function InstantOrderPage() {
 
       const res = await placeInstantOrder(formData);
 
-      // Ensure placing animation displays for at least 1000ms
-      const elapsed = Date.now() - startTime;
-      if (elapsed < 1000) {
-        await new Promise((r) => setTimeout(r, 1000 - elapsed));
-      }
-
       if (res && res.status !== 'fail') {
         const orderId = res.data?.order?.orderCode || res.orderCode || res._id || res.data?.order?._id;
         setPlacedOrderSummary({

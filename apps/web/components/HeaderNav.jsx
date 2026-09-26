@@ -38,7 +38,14 @@ export default function HeaderNav({ initialCategories = [] }) {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    // Instant route prefetching for lightning-fast sub-millisecond page transitions
+    const routesToPrefetch = ['/', '/instant-order', '/cart', '/checkout', '/wishlist', '/refill', '/about', '/contact', '/login'];
+    routesToPrefetch.forEach((route) => {
+      try {
+        router.prefetch(route);
+      } catch (_) {}
+    });
+  }, [router]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -427,7 +434,7 @@ export default function HeaderNav({ initialCategories = [] }) {
   return (
     <>
       {/* 1. DESKTOP NAVIGATION BAR */}
-      <nav className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 relative">
+      <nav className="hidden lg:flex items-center gap-0.5 sm:gap-1 xl:gap-1.5 2xl:gap-2.5 relative shrink-0">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
 
@@ -435,14 +442,14 @@ export default function HeaderNav({ initialCategories = [] }) {
             return (
               <div
                 key={link.name}
-                className="relative py-1"
+                className="relative flex items-center"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
                 <button
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`h-9 px-1.5 xl:px-2.5 text-xs xl:text-sm font-bold transition-colors flex items-center gap-1 xl:gap-1.5 cursor-pointer relative py-1 ${
+                  className={`h-8.5 px-1 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center gap-0.5 xl:gap-1 cursor-pointer relative ${
                     isDropdownOpen ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
                   }`}
                 >
@@ -453,8 +460,8 @@ export default function HeaderNav({ initialCategories = [] }) {
                     }`}
                   />
                   <span
-                    className={`absolute bottom-[2px] left-1.5 right-1.5 h-[2.5px] bg-amber-500 transition-all duration-200 ${
-                      isDropdownOpen ? "w-[calc(100%-12px)]" : "w-0"
+                    className={`absolute bottom-0 left-1 right-1 h-[2.5px] bg-amber-500 rounded-full transition-all duration-200 ${
+                      isDropdownOpen ? "w-[calc(100%-8px)]" : "w-0"
                     }`}
                   />
                 </button>
@@ -462,7 +469,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                 {/* Categories Dropdown */}
                 {isDropdownOpen && (
                   <div
-                    className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[780px] lg:w-[860px] max-w-[92vw] z-50 transition-all duration-200"
+                    className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[720px] lg:w-[800px] xl:w-[860px] max-w-[90vw] z-50 transition-all duration-200"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
@@ -539,7 +546,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                         <div className="flex items-center gap-2 text-xs text-slate-700">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                           <span className="font-semibold">Have a doctor's prescription?</span>
-                          <span className="text-slate-500 hidden sm:inline">Pharmacist verifies within minutes</span>
+                          <span className="text-slate-500 hidden sm:inline">Pharmacist verified &amp; reviewed</span>
                         </div>
                         <Link
                           href="/instant-order"
@@ -562,7 +569,8 @@ export default function HeaderNav({ initialCategories = [] }) {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`h-9 px-2.5 xl:px-3.5 rounded-full transition-all flex items-center gap-1 xl:gap-1.5 shadow-2xs whitespace-nowrap text-[11px] xl:text-xs font-black uppercase tracking-wider ${
+                prefetch={true}
+                className={`h-8.5 px-2 xl:px-3 rounded-full transition-all flex items-center gap-1 xl:gap-1.5 shadow-2xs whitespace-nowrap text-[10.5px] xl:text-xs font-black uppercase tracking-wider ${
                   isActive
                     ? "bg-amber-400 text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
                     : "bg-[#FFF3B0] hover:bg-amber-400 text-[#7A5800] hover:text-slate-950 border border-amber-300"
@@ -578,13 +586,16 @@ export default function HeaderNav({ initialCategories = [] }) {
             <Link
               key={link.name}
               href={link.href}
-              className={`h-9 px-1.5 xl:px-2.5 text-xs xl:text-sm font-bold transition-colors flex items-center whitespace-nowrap relative ${
+              prefetch={true}
+              className={`h-8.5 px-1 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center whitespace-nowrap relative ${
+                link.name === "About" || link.name === "Contact" ? "hidden 2xl:flex" : ""
+              } ${
                 isActive ? "text-amber-700 font-black" : "text-slate-700 hover:text-amber-600"
               }`}
             >
               <span>{link.name}</span>
               {isActive && (
-                <span className="absolute bottom-[2px] left-1.5 right-1.5 h-[2.5px] bg-amber-500 rounded-full" />
+                <span className="absolute bottom-0 left-1 right-1 h-[2.5px] bg-amber-500 rounded-full" />
               )}
             </Link>
           );
@@ -593,7 +604,8 @@ export default function HeaderNav({ initialCategories = [] }) {
         {/* Wishlist Link */}
         <Link
           href="/wishlist"
-          className={`h-9 px-1.5 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center gap-1.5 ${
+          prefetch={true}
+          className={`h-8.5 px-1 xl:px-1.5 text-xs xl:text-sm font-bold transition-colors flex items-center gap-1 ${
             pathname === "/wishlist" ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
           }`}
           title="Wishlist"
@@ -605,7 +617,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                 : "text-slate-400"
             }`}
           />
-          <span className="hidden xl:inline">Wishlist</span>
+          <span className="hidden 2xl:inline">Wishlist</span>
           {wishlistCount > 0 && (
             <span className="min-w-[17px] h-[17px] flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full px-1 shadow-xs">
               {wishlistCount > 99 ? "99+" : wishlistCount}
@@ -613,8 +625,8 @@ export default function HeaderNav({ initialCategories = [] }) {
           )}
         </Link>
 
-        {/* Download App Desktop Pill Button (shown on ultra-wide / 2xl desktop) */}
-        <div className="hidden 2xl:block">
+        {/* Download Medikart Desktop Pill Button */}
+        <div className="hidden lg:block">
           <InstallAppButton variant="navbar" />
         </div>
 
@@ -659,6 +671,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                   </div>
                   <Link
                     href="/wishlist"
+                    prefetch={true}
                     onClick={() => setIsAccountMenuOpen(false)}
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition-colors"
                   >
@@ -672,6 +685,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                   </Link>
                   <Link
                     href="/refill"
+                    prefetch={true}
                     onClick={() => setIsAccountMenuOpen(false)}
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-yellow-50 hover:text-amber-900 transition-colors"
                   >
@@ -707,7 +721,8 @@ export default function HeaderNav({ initialCategories = [] }) {
         ) : (
           <Link
             href="/login"
-            className="h-9 px-3 xl:px-4 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+            prefetch={true}
+            className="h-8.5 px-2.5 xl:px-3.5 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1 whitespace-nowrap"
           >
             <User className="w-3.5 h-3.5 text-amber-600" />
             <span>Sign In</span>

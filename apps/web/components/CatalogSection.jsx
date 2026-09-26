@@ -158,9 +158,9 @@ export default function CatalogSection({
       const query = e.detail?.search !== undefined ? e.detail.search : (typeof e.detail === 'string' ? e.detail : '');
       const catId = e.detail?.categoryId !== undefined ? e.detail.categoryId : '';
       setSearch(query);
-      if (catId) setActiveCategoryId(catId);
+      setActiveCategoryId(catId);
       setCurrentPage(1);
-      fetchCatalog(query, catId || (query ? '' : categoryIdRef.current), 1);
+      fetchCatalog(query, catId, 1);
     };
 
     const handleCategoryCustomEvent = (e) => {

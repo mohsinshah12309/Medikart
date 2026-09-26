@@ -255,19 +255,19 @@ export default async function RootLayout({ children }) {
 
               {/* Main Brand Sticky Header */}
               <header className="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b-2 border-yellow-300/80 shadow-xs transition-all w-full overflow-visible">
-                <div className="max-w-[1720px] mx-auto px-2.5 sm:px-6 lg:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-2 sm:gap-3 lg:gap-4 xl:gap-6">
+                <div className="max-w-[1720px] mx-auto px-2 sm:px-3 lg:px-3 xl:px-6 2xl:px-8 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-1 sm:gap-2 lg:gap-2 xl:gap-4 2xl:gap-6">
                   {/* Left: Official Brand Logo */}
                   <Link href="/" className="flex items-center shrink-0 min-w-0" aria-label="Medikart Home">
                     <InteractiveLogo />
                   </Link>
 
                   {/* Center: Top Search Bar (on Desktop) */}
-                  <div className="hidden lg:flex flex-1 min-w-[200px] xl:min-w-[280px] max-w-sm xl:max-w-md 2xl:max-w-xl mx-2">
+                  <div className="hidden lg:flex flex-1 min-w-[100px] max-w-[180px] xl:max-w-xs 2xl:max-w-md mx-1 xl:mx-2">
                     <DvagoSearchBar className="w-full" />
                   </div>
 
                   {/* Right: Actions (Instant Order, Categories, Wishlist, App, Account, Cart) */}
-                  <div className="flex items-center gap-1 sm:gap-2 lg:gap-2.5 xl:gap-3 shrink-0">
+                  <div className="flex items-center gap-0.5 sm:gap-1.5 lg:gap-1 xl:gap-2 2xl:gap-3 shrink-0">
                     <HeaderNav initialCategories={categories} />
                     <NavbarCartIcon />
                   </div>

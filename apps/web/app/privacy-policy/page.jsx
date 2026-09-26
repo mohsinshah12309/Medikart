@@ -82,8 +82,7 @@ export default function PrivacyPolicyPage() {
               100% authentic, genuine, unadulterated, and strictly
               non-counterfeit
             </strong>
-            , stored under certified temperature-controlled conditions prior to
-            dispatch.
+            , handled in compliance with Drug Regulatory Authority of Pakistan standards.
           </p>
         </section>
 

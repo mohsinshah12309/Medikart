@@ -19,22 +19,22 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
       <button
         type="button"
         onClick={triggerInstall}
-        className={`h-10 px-3.5 xl:px-4 rounded-full text-xs font-black transition-all duration-200 cursor-pointer border flex items-center gap-1.5 shadow-2xs whitespace-nowrap ${
+        className={`h-8.5 px-2.5 xl:px-3 rounded-full text-[11px] xl:text-xs font-black transition-all duration-200 cursor-pointer border flex items-center gap-1 shadow-2xs whitespace-nowrap ${
           isInstalled
             ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
             : "bg-[#FFCB05] hover:bg-yellow-400 text-slate-950 border-amber-300 hover:shadow-xs hover:scale-[1.02] active:scale-95"
         } ${className}`}
-        title={isInstalled ? "Medikart App Installed" : "Download & Install Medikart App"}
+        title={isInstalled ? "Medikart App Installed" : "Download Medikart"}
       >
         {isInstalled ? (
           <>
-            <Check className="w-3.5 h-3.5 text-emerald-600" />
+            <Check className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-emerald-600" />
             <span>App Installed</span>
           </>
         ) : (
           <>
-            <Smartphone className="w-3.5 h-3.5 text-slate-950" />
-            <span>Download App</span>
+            <Smartphone className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-slate-950" />
+            <span>Download Medikart</span>
             <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse ml-0.5" />
           </>
         )}

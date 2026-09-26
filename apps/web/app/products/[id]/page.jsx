@@ -315,11 +315,15 @@ export default async function ProductDetailPage({ params }) {
                 {isOutOfStock ? 'Out of Stock' : 'In Stock'}
               </span>
 
-              {product.isNarcotic && (
+              {product.isNarcotic ? (
                 <span className="bg-amber-100 text-amber-900 border border-amber-300 text-xs px-2.5 py-1 rounded-lg font-bold">
                   Rx ONLY
                 </span>
-              )}
+              ) : product.requiresPrescription ? (
+                <span className="bg-rose-50 text-rose-700 border border-rose-200 text-xs px-2.5 py-1 rounded-lg font-bold">
+                  Rx ONLY
+                </span>
+              ) : null}
             </div>
           </div>
 

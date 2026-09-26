@@ -41,11 +41,11 @@
     "category": "ordering",
     "categoryLabel": "Ordering & Checkout",
     "question": "How do I upload a doctor's prescription slip on Medikart?",
-    "answer": "Go to https://medikart.pk/instant-order, click the upload box to attach a clear smartphone photo (JPG, PNG) or PDF of your doctor's prescription, enter your delivery address, and click Submit. A licensed PharmD pharmacist will review your slip within 15 minutes.",
+    "answer": "Go to https://medikart.pk/instant-order, click the upload box to attach a clear smartphone photo (JPG, PNG) or PDF of your doctor's prescription, enter your delivery address, and click Submit. A licensed PharmD pharmacist will review your prescription slip promptly upon receipt.",
     "highlights": [
       "Instant prescription upload",
       "Supports JPG, PNG, PDF",
-      "15-minute pharmacist review"
+      "Licensed pharmacist review"
     ]
   },
   {
@@ -173,11 +173,11 @@
     "category": "payment",
     "categoryLabel": "Payment & Billing",
     "question": "What payment methods are supported on Medikart Pakistan?",
-    "answer": "Medikart supports nationwide Cash on Delivery (COD) across Pakistan as well as secure online Credit Card and Debit Card payments (Visa, Mastercard, PayPak, etc.).",
+    "answer": "Medikart supports nationwide Cash on Delivery (COD) across Pakistan as well as secure online Credit Card and Debit Card payments (Visa and Mastercard).",
     "highlights": [
       "Cash on Delivery (COD)",
       "Credit Card Payments",
-      "Debit & Digital Payments"
+      "Visa & Mastercard"
     ]
   },
   {
@@ -340,12 +340,12 @@
     "id": "del-3",
     "category": "delivery",
     "categoryLabel": "Delivery & Shipping",
-    "question": "How are temperature-sensitive medicines (Insulin, Vaccines) transported?",
-    "answer": "All cold-chain medications (such as Lantus, Humalog, Mixtard, biologicals, vaccines, and specialized eye drops) are packaged in specialized insulated thermal boxes with calibrated ice packs maintaining 2°C to 8°C throughout transit.",
+    "question": "How are fragile and specialized medicines packaged for delivery?",
+    "answer": "All medications (including glass vials, syrup bottles, and sensitive formulations) are packaged in tamper-evident sealed packaging with protective cushioning to prevent breakage and contamination during transit.",
     "highlights": [
-      "Calibrated 2°C to 8°C packaging",
-      "Insulated thermal boxes",
-      "Ice gel pack protection"
+      "Tamper-evident sealed packaging",
+      "Protective cushioning",
+      "Discreet and secure handling"
     ]
   },
   {
@@ -521,10 +521,10 @@
     "category": "refill",
     "categoryLabel": "Monthly Refill & Chronic Care",
     "question": "Are there extra discounts or free shipping for Monthly Refill subscribers?",
-    "answer": "Yes. Monthly Refill members receive special chronic care discounts, complimentary priority packaging, zero-cost cold-chain packaging for insulin, and free home delivery on scheduled cycles.",
+    "answer": "Yes. Monthly Refill members receive dedicated chronic care priority fulfillment, priority dispatch scheduling, and free home delivery on their recurring monthly medicine cycles.",
     "highlights": [
       "Free home delivery",
-      "Complimentary cold-chain storage",
+      "Priority order fulfillment",
       "Special subscriber discounts"
     ]
   },
@@ -580,12 +580,12 @@
     "id": "ref-9",
     "category": "refill",
     "categoryLabel": "Monthly Refill & Chronic Care",
-    "question": "How is insulin delivered on a monthly refill schedule?",
-    "answer": "Insulin vials and pens are packed in certified thermal insulated pouches with reusable ice gel packs calibrated to maintain 2°C–8°C from pharmacy dispatch to home handover.",
+    "question": "How are recurring monthly maintenance medicines dispatched on refill schedules?",
+    "answer": "Your chronic maintenance medications are pre-allocated and securely packed at partner pharmacies 3 days prior to your monthly cycle date, ensuring timely handover with zero dosage disruptions.",
     "highlights": [
-      "Insulated cold-chain packs",
-      "2°C to 8°C temperature control",
-      "Delivered safely every month"
+      "Pre-allocated inventory",
+      "Zero dosage disruption",
+      "Delivered on your cycle date"
     ]
   },
   {
@@ -785,11 +785,11 @@
     "category": "safety",
     "categoryLabel": "Authenticity & Quality",
     "question": "How are medicines stored in partner pharmacies before delivery?",
-    "answer": "All partner pharmacies maintain temperature-controlled environments (below 25°C for general medicines and 2°C–8°C for refrigerators) in full compliance with Good Pharmacy Practice (GPP) standards.",
+    "answer": "All partner pharmacies maintain certified pharmaceutical storage facilities in strict compliance with the Drug Regulatory Authority of Pakistan (DRAP) and Good Pharmacy Practice (GPP) standards.",
     "highlights": [
-      "Temperature-controlled storage",
+      "DRAP compliant storage",
       "Good Pharmacy Practice (GPP)",
-      "24/7 climate monitoring"
+      "Licensed pharmacy premises"
     ]
   },
   {
@@ -808,12 +808,12 @@
     "id": "qua-4",
     "category": "safety",
     "categoryLabel": "Authenticity & Quality",
-    "question": "What is cold-chain delivery and why is it essential for insulin?",
-    "answer": "Cold-chain delivery maintains biologically active medications (like insulin, hormones, and vaccines) between 2°C and 8°C during transit to prevent protein denaturation and loss of therapeutic potency caused by Pakistani summer heat.",
+    "question": "How does Medikart guarantee that medicines are 100% genuine and authentic?",
+    "answer": "Medikart works exclusively with licensed retail pharmacies and authorized manufacturer distributors across Pakistan. Every item features authentic manufacturer batch codes, verifiable bar codes, and intact tamper seals.",
     "highlights": [
-      "Prevents insulin breakdown",
-      "Crucial for summer heat",
-      "Thermal ice pack preservation"
+      "100% Genuine manufacturer stock",
+      "Verifiable batch numbers",
+      "Licensed distributor sourcing"
     ]
   },
   {

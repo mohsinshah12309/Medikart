@@ -283,7 +283,7 @@ export const BLOGS_DATA = [
     "tags": [
       "Insulin Storage",
       "Summer Heat",
-      "Cold Chain",
+      "Insulin Care",
       "Diabetes"
     ],
     "content": "Insulin is a delicate protein hormone that degrades rapidly when exposed to temperatures above 30°C or direct sunlight. Unopened vials and pens must remain refrigerated between 2°C and 8°C. During summer power outages in Pakistan, store insulin in an insulated thermo-flask with frozen gel packs or a cool earthen pot (matka) lined with damp cloth."

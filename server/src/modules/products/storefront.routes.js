@@ -59,11 +59,29 @@ router.get("/products", async (req, res, next) => {
     };
 
     if (search) {
-      const escapedSearch = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      query.$or = [
-        { name: { $regex: escapedSearch, $options: "i" } },
-        { genericName: { $regex: escapedSearch, $options: "i" } }
-      ];
+      const trimmedSearch = search.trim();
+      const escapedSearch = trimmedSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const tokens = trimmedSearch.split(/\s+/).filter((t) => t.length >= 2).map((t) => t.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+
+      if (tokens.length > 1) {
+        const tokenConditions = tokens.map((token) => ({
+          $or: [
+            { name: { $regex: token, $options: "i" } },
+            { genericName: { $regex: token, $options: "i" } },
+          ],
+        }));
+
+        query.$or = [
+          { name: { $regex: escapedSearch, $options: "i" } },
+          { genericName: { $regex: escapedSearch, $options: "i" } },
+          { $and: tokenConditions },
+        ];
+      } else {
+        query.$or = [
+          { name: { $regex: escapedSearch, $options: "i" } },
+          { genericName: { $regex: escapedSearch, $options: "i" } },
+        ];
+      }
     }
 
     if (categoryId) {
@@ -108,7 +126,7 @@ router.get("/products", async (req, res, next) => {
     const skip = (p - 1) * l;
 
     // Parallelize independent DB reads (Product.find, storewide discount, countDocuments)
-    const [products, storewidePercent, totalCount] = await Promise.all([
+    let [products, storewidePercent, totalCount] = await Promise.all([
       Product.find(query)
         .select("name genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
         .populate("categoryIds", "name slug discount active")
@@ -119,6 +137,37 @@ router.get("/products", async (req, res, next) => {
       getStorewideDiscount(),
       Product.countDocuments(query),
     ]);
+
+    // Relaxed search fallback: If a multi-word search produced 0 results, match any word so users always get relevant results
+    if (totalCount === 0 && search) {
+      const tokens = search.trim().split(/\s+/).filter((t) => t.length >= 2).map((t) => t.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+      if (tokens.length > 1) {
+        const relaxedOr = tokens.flatMap((token) => [
+          { name: { $regex: token, $options: "i" } },
+          { genericName: { $regex: token, $options: "i" } },
+        ]);
+        const relaxedQuery = {
+          ...query,
+          $or: relaxedOr,
+        };
+
+        const [fallbackProducts, fallbackCount] = await Promise.all([
+          Product.find(relaxedQuery)
+            .select("name genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .populate("categoryIds", "name slug discount active")
+            .sort({ name: 1 })
+            .skip(skip)
+            .limit(l)
+            .lean(),
+          Product.countDocuments(relaxedQuery),
+        ]);
+
+        if (fallbackCount > 0) {
+          products = fallbackProducts;
+          totalCount = fallbackCount;
+        }
+      }
+    }
 
     const formattedProducts = products.map((prod) => {
       const formatted = formatProductWithImages(prod);

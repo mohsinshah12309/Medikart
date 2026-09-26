@@ -162,10 +162,10 @@ export default function AboutPage() {
                 </div>
 
                 <div className="p-6 bg-yellow-50/70 border-2 border-yellow-200 rounded-2xl flex flex-col gap-3 transition-all hover:border-yellow-400 hover:shadow-md hover:bg-yellow-50">
-                  <span className="text-3xl">❄️</span>
-                  <h4 className="font-black text-base text-slate-950">Cold-Chain Storage</h4>
+                  <span className="text-3xl">🏛️</span>
+                  <h4 className="font-black text-base text-slate-950">Licensed Pharmacy Storage</h4>
                   <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Dedicated 2°C - 8°C temperature-monitored refrigeration for vaccines, insulin, and biological products.
+                    Medicines sourced directly from licensed retail pharmacies adhering to strict Drug Regulatory Authority of Pakistan (DRAP) standards.
                   </p>
                 </div>
 

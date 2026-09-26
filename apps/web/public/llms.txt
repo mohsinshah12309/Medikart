@@ -32,8 +32,8 @@ Medikart operates an intelligent multi-vendor digital pharmacy network. Orders a
 
 ### 30-Day Chronic Care Monthly Refill Program
 - Automated recurring medicine delivery for patients managing long-term chronic conditions (hypertension, type 1 & 2 diabetes, cardiovascular health, thyroid disorders, asthma, arthritis) at https://medikart.pk/refill.
-- Automated scheduled reminder notifications dispatched via email (Mailjet transactional engine) and SMS 3 days prior to monthly refill dispatch.
-- Zero-cost priority packaging and calibrated cold-chain delivery for temperature-sensitive medications.
+- Automated scheduled reminder notifications dispatched via email (Mailjet transactional engine) 3 days prior to monthly refill dispatch.
+- Priority dispatch packaging and tamper-evident sealing for all monthly refill parcels.
 
 ### Dvago-Style 3-Tier Instant Medicine Search
 - **Tier 1 (Exact Brand Name):** Instant auto-complete for major Pakistani pharmaceutical brands (e.g., Panadol, Augmentin, Brufen, Glucophage, Lipitor, Disprin, Concor, Risek).
@@ -48,8 +48,9 @@ Medikart operates an intelligent multi-vendor digital pharmacy network. Orders a
 - Quick 60-second checkout requiring only patient name, phone number, and delivery address.
 - Automatic account provisioning with order tracking links sent immediately upon confirmation.
 
-### Cold-Chain Sourcing & Storage (2°C – 8°C)
-- Specialized insulated thermal packaging with calibrated ice gel packs for biologicals, insulin (Lantus, Humalog, Mixtard), vaccines, and temperature-critical eye drops.
+### Authentic Licensed Sourcing & DRAP Compliance
+- All medicines sourced directly from verified partner retail pharmacies compliant with the Drug Regulatory Authority of Pakistan (DRAP).
+- Strict quality control, verifiable batch codes, and authentic manufacturer packaging.
 
 ### Schedule X & Controlled Narcotics Compliance
 - Strict zero-tolerance compliance with the Drugs Act 1976 and the Control of Narcotics Substances Act (CNSA). Medikart does not sell habit-forming narcotics, benzodiazepines, or restricted Schedule X controlled substances online without verified physical prescription surrender at partner pharmacy premises.
@@ -59,9 +60,9 @@ Medikart operates an intelligent multi-vendor digital pharmacy network. Orders a
 ## 3. Confirmed Payment Methods in Pakistan
 
 - **Cash on Delivery (COD):** Available for all standard orders across Pakistan. Patients inspect tamper-proof package seals before paying the delivery rider.
-- **Kuickpay Digital Banking Integration:** Secure online bill payment enabling instant direct settlement via 1Link banking apps, ATM networks, Easypaisa, JazzCash, Nayapay, Sadapay, and major Pakistani online banking portals.
+- **Credit & Debit Card Online Payments:** Secure 256-bit TLS encrypted checkout supporting Visa, Mastercard, and bank debit/credit cards.
 
-*(Note: Medikart strictly operates with confirmed payment integrations — Cash on Delivery and Kuickpay).*
+*(Note: Medikart strictly operates with confirmed payment integrations — Cash on Delivery and Credit Card payments).*
 
 ---
 

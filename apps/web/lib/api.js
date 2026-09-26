@@ -83,11 +83,11 @@ export async function placeStandardOrder(payload) {
 }
 
 export async function getCities() {
-  return fetchApi('/cities', { cache: 'no-store' });
+  return fetchApi('/cities', { next: { revalidate: 300 } });
 }
 
 export async function getContent() {
-  return fetchApi('/content', { cache: 'no-store' });
+  return fetchApi('/content', { next: { revalidate: 300 } });
 }
 
 async function postFormData(endpoint, formData) {

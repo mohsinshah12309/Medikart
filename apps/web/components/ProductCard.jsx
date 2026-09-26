@@ -32,6 +32,17 @@ function ProductCardComponent({ product }) {
   const wishlisted = isWishlisted(product._id);
   const hasDiscount = product.discountPercent > 0;
   const isOutOfStock = product.stockStatus === 'out_of_stock' || product.stock <= 0;
+  const isOtc = Boolean(
+    product.isOtc ||
+    (Array.isArray(product.categoryIds) && product.categoryIds.some(c => 
+      typeof c === 'object' 
+        ? c?.slug === 'otc' || c?.name?.toLowerCase().includes('otc')
+        : c === '6a9ca4cfa446f5140dbdcb46' || c === 'otc'
+    )) ||
+    product.category?.slug === 'otc' ||
+    (typeof product.category === 'string' && product.category.toLowerCase().includes('otc')) ||
+    (typeof product.category === 'object' && product.category?.name?.toLowerCase().includes('otc'))
+  );
 
   const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
 
@@ -58,7 +69,7 @@ function ProductCardComponent({ product }) {
   return (
     <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-yellow-400 flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1">
       {/* Product Image Link Container */}
-      <Link href={`/products/${product._id}`} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
+      <Link href={`/products/${product._id}`} prefetch={true} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
         {/* Discount Badge */}
         {hasDiscount && (
           <span className="absolute top-1.5 left-1.5 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md tracking-wider uppercase shadow-xs">
@@ -84,18 +95,20 @@ function ProductCardComponent({ product }) {
           </button>
         </div>
         
-        {/* Narcotics Badge vs OTC Badge */}
+        {/* Narcotics Badge vs Prescription Badge vs OTC Badge */}
         {product.isNarcotic ? (
           <span className="absolute bottom-1.5 left-1.5 z-10 bg-amber-100 text-amber-900 border border-amber-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-2xs">
             Rx ONLY
           </span>
-        ) : (
-          !isOutOfStock && (
-            <span className="absolute bottom-1.5 left-1.5 z-10 bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded-md border border-emerald-200">
-              OTC
-            </span>
-          )
-        )}
+        ) : product.requiresPrescription ? (
+          <span className="absolute bottom-1.5 left-1.5 z-10 bg-rose-50 text-rose-700 border border-rose-200 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-2xs">
+            Rx ONLY
+          </span>
+        ) : isOtc && !isOutOfStock ? (
+          <span className="absolute bottom-1.5 left-1.5 z-10 bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded-md border border-emerald-200">
+            OTC
+          </span>
+        ) : null}
 
         {/* 3D View Hover Badge */}
         <span className="absolute bottom-1.5 right-1.5 z-10 bg-slate-900/90 text-yellow-400 text-[8px] font-bold px-2 py-0.5 rounded-full uppercase border border-yellow-400/40 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
@@ -134,7 +147,7 @@ function ProductCardComponent({ product }) {
               {product.genericName}
             </p>
           )}
-          <Link href={`/products/${product._id}`} className="block">
+          <Link href={`/products/${product._id}`} prefetch={true} className="block">
             <h3 className="font-bold text-slate-800 text-xs sm:text-[13px] hover:text-yellow-600 line-clamp-2 min-h-[32px] sm:min-h-[36px] leading-tight transition-colors">
               {product.name}
             </h3>

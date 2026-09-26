@@ -40,13 +40,12 @@ function buildCatalogFallbackResponse(message = "", products = []) {
     reply = `**Medikart Delivery Timelines & Shipping**:\n\n` +
       `• **Rapid Intra-City Delivery (2–4 Hours)**: Available in major metropolitan hubs (Lahore, Karachi, Islamabad/Rawalpindi) dispatched from our nearest licensed partner pharmacy.\n` +
       `• **Nationwide Express Delivery (24–48 Hours)**: Covering all other cities, towns, and regions across Pakistan.\n` +
-      `• **Cold-Chain Guarantee**: Sensitive medications (insulin, vaccines, biologics) are handled with temperature-controlled packaging.\n\n` +
+      `• **Authentic Packaging**: Tamper-evident sealed packaging for patient safety and privacy.\n\n` +
       `You can track your order status live on our **[Track Order](/track)** page or browse our **[FAQs](/faqs)**.`;
-  } else if (queryLower.includes("payment") || queryLower.includes("pay") || queryLower.includes("cod") || queryLower.includes("cash on delivery") || queryLower.includes("card") || queryLower.includes("easypaisa") || queryLower.includes("jazzcash") || queryLower.includes("1bill") || queryLower.includes("bank")) {
+  } else if (queryLower.includes("payment") || queryLower.includes("pay") || queryLower.includes("cod") || queryLower.includes("cash on delivery") || queryLower.includes("card")) {
     reply = `**Accepted Payment Methods at Medikart**:\n\n` +
       `• **Cash on Delivery (COD)**: Available nationwide across Pakistan.\n` +
-      `• **Debit & Credit Cards**: Visa and MasterCard accepted securely.\n` +
-      `• **Digital Wallets & Online Banking**: JazzCash, Easypaisa, 1Bill, and direct bank transfers.\n\n` +
+      `• **Debit & Credit Cards**: Visa and MasterCard accepted securely online.\n\n` +
       `All online transactions are processed through 100% encrypted, secure channels. For more details, explore our **[FAQs](/faqs)**.`;
   } else if (queryLower.includes("prescription") || queryLower.includes("upload") || queryLower.includes("instant order") || queryLower.includes("doctor slip") || queryLower.includes("rx")) {
     reply = `**How to Order with a Prescription (Instant Order)**:\n\n` +
@@ -252,12 +251,12 @@ MEDIKART STOREFRONT KNOWLEDGE BASE & BUSINESS RULES:
 3. DELIVERY & SHIPPING:
    - **Rapid Intra-City Delivery (2 to 4 Hours)**: In major metropolitan hubs (Lahore, Karachi, Islamabad / Rawalpindi) via our localized partner pharmacy network.
    - **Nationwide Express Delivery (24 to 48 Hours)**: Covering all other cities, towns, and regions across Pakistan.
-   - **Cold-Chain Guarantee**: Temperature-sensitive items (insulin, vaccines, eye drops, biologics) are dispatched in insulated, temperature-monitored packaging.
+   - **Quality Packaging**: Tamper-evident, discreet sealed packaging for all deliveries.
 
 4. PAYMENT METHODS:
    - **Cash on Delivery (COD)**: Available nationwide across Pakistan.
-   - **Online & Digital Payments**: Visa and MasterCard (Debit/Credit Cards), 1Bill, Internet Banking, and Digital Wallets (JazzCash, Easypaisa).
-   - *STRICT CONFIDENTIALITY RULE*: NEVER mention internal payment gateway vendor names, processor brands, merchant IDs, endpoints, or API keys. Always describe payment options simply as "Debit/Credit Card, Internet Banking, 1Bill, JazzCash, Easypaisa, or Cash on Delivery".
+   - **Online Card Payments**: Visa and MasterCard (Debit/Credit Cards).
+   - *STRICT CONFIDENTIALITY RULE*: NEVER mention internal payment gateway vendor names, processor brands, merchant IDs, endpoints, or API keys. Always describe payment options simply as "Debit/Credit Card (Visa/MasterCard) or Cash on Delivery".
 
 5. RETURN & REFUND POLICY ([/return-refund-policy](/return-refund-policy)):
    - **Pre-Dispatch Cancellations**: Orders can be cancelled prior to dispatch without penalty, except for a nominal non-refundable store service fee of Rs. 10 and any non-refundable card payment processing fees/taxes charged by banking networks.

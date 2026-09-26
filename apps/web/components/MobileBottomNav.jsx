@@ -36,6 +36,7 @@ export default function MobileBottomNav() {
               <Link
                 key={tab.href}
                 href={tab.href}
+                prefetch={true}
                 className="flex flex-col items-center justify-center -mt-4 relative"
               >
                 <div
@@ -61,6 +62,7 @@ export default function MobileBottomNav() {
             <Link
               key={tab.href}
               href={tab.href}
+              prefetch={true}
               className="flex flex-col items-center justify-center pt-2 pb-1 relative min-w-[56px]"
             >
               <div className="relative">

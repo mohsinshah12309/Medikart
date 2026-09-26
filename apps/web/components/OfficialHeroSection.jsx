@@ -528,14 +528,14 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
 
             {/* Description */}
             <p className="text-xs sm:text-sm text-slate-800 mt-2 leading-relaxed font-semibold max-w-xl">
-              Upload your prescription, we'll handle the rest — licensed pharmacist verification, cold-chain packing, and rapid door-to-door delivery.
+              Upload your prescription, we'll handle the rest — licensed pharmacist verification, tamper-evident packing, and rapid door-to-door delivery.
             </p>
 
             {/* Micro Trust & Feature Pills */}
             <div className="flex flex-wrap items-center gap-2 mt-4 pt-0.5">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 hover:bg-white hover:scale-105 transition-all border border-amber-300 text-[11px] font-bold text-slate-900 shadow-2xs cursor-default">
-                <span className="text-amber-600 font-black">⚡</span>
-                <span>5-Min Review</span>
+                <span className="text-amber-600 font-black">🩺</span>
+                <span>Pharmacist Verified</span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 hover:bg-white hover:scale-105 transition-all border border-amber-300 text-[11px] font-bold text-slate-900 shadow-2xs cursor-default">
                 <span className="text-emerald-600 font-black">🛡️</span>

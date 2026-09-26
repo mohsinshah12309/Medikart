@@ -148,6 +148,7 @@ export default function CartPage() {
             <div className="mt-4">
               <Link
                 href="/checkout"
+                prefetch={true}
                 onClick={handleProceedCheckout}
                 className="w-full inline-block text-center py-3.5 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-lg border-2 border-yellow-500 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               >

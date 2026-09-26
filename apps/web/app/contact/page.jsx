@@ -107,7 +107,7 @@ export default function ContactPage() {
           </div>
           <div>
             <h4 className="font-black text-slate-950 text-sm sm:text-base">Rapid Response</h4>
-            <p className="text-xs text-slate-600 font-medium mt-0.5">Average reply under 15 minutes</p>
+            <p className="text-xs text-slate-600 font-medium mt-0.5">Dedicated patient support team</p>
           </div>
         </div>
 

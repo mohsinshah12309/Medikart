@@ -28,6 +28,8 @@ const productSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     genericName: { type: String, default: "" },
     description: { type: String, default: "" },
+    keywords: [{ type: String, trim: true }],
+    tags: [{ type: String, trim: true }],
     price: { type: Number, required: true, min: 0 },
     sku: { type: String, required: true, trim: true, unique: true },
     categoryIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
@@ -56,11 +58,13 @@ const productSchema = new mongoose.Schema(
 );
 
 // Indexes for fields searched/filtered (NFR-PERF-04).
-productSchema.index({ name: "text", genericName: "text" });
+productSchema.index({ name: "text", genericName: "text", description: "text", keywords: "text", tags: "text" });
 productSchema.index({ isNarcotic: 1 });
 productSchema.index({ active: 1 });
 productSchema.index({ categoryIds: 1 });
 productSchema.index({ genericName: 1 });
+productSchema.index({ keywords: 1 });
+productSchema.index({ tags: 1 });
 productSchema.index({ active: 1, name: 1 });
 productSchema.index({ active: 1, categoryIds: 1, name: 1 });
 productSchema.index({ active: 1, isNarcotic: 1, createdAt: -1 });

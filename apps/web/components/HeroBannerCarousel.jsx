@@ -40,8 +40,8 @@ const FALLBACK_BANNERS = [
   },
   {
     _id: "hero-4",
-    title: "Doorstep Medicine Delivery in 30 Mins",
-    subtitle: "Fast, secure, temperature-controlled delivery with Cash on Delivery across Pakistan.",
+    title: "Rapid Doorstep Medicine Delivery",
+    subtitle: "Fast, secure delivery with Cash on Delivery and online card payment across Pakistan.",
     badgeText: "Express Doorstep Service",
     ctaText: "Order Now",
     ctaLink: "/instant-order",

@@ -15,15 +15,28 @@ import {
   ShieldAlert,
 } from "lucide-react";
 
+import { triggerCatalogSearch, scrollToCatalog } from "../lib/catalogEvents";
+
+const CONDITION_MAPPINGS = {
+  "hair-fall": { search: "Hair", name: "Hair Fall" },
+  "cough-and-cold": { search: "Cough", name: "Cough & Cold" },
+  "bones-and-joints-pain": { search: "Joint", name: "Bones & Joints Pain" },
+  "acne-and-skin-care": { search: "Acne", name: "Acne & Skin Care" },
+  "pain-and-body-aches": { search: "Pain", name: "Pain & Body Aches" },
+  "sleep-disorders": { search: "Sleep", name: "Sleep Disorders" },
+  "digestive-health": { search: "Digest", name: "Digestive Health" },
+  "diabetes-care": { search: "Diab", name: "Diabetes Care" },
+};
+
 const FALLBACK_CONDITIONS = [
-  { _id: "c-1", name: "Hair Fall", slug: "hair-fall", imageUrl: "/images/conditions/hair-fall.svg", icon: "hair" },
-  { _id: "c-2", name: "Cough & Cold", slug: "cough-and-cold", imageUrl: "/images/conditions/cough-and-cold.svg", icon: "cough" },
-  { _id: "c-3", name: "Bones & Joints Pain", slug: "bones-and-joints-pain", imageUrl: "/images/conditions/bones-and-joints-pain.svg", icon: "bone" },
-  { _id: "c-4", name: "Acne & Skin Care", slug: "acne-and-skin-care", imageUrl: "/images/conditions/acne-and-skin-care.svg", icon: "skin" },
-  { _id: "c-5", name: "Pain & Body Aches", slug: "pain-and-body-aches", imageUrl: "/images/conditions/pain-and-body-aches.svg", icon: "pain" },
-  { _id: "c-6", name: "Sleep Disorders", slug: "sleep-disorders", imageUrl: "/images/conditions/sleep-disorders.svg", icon: "sleep" },
-  { _id: "c-7", name: "Digestive Health", slug: "digestive-health", imageUrl: "/images/conditions/digestive-health.svg", icon: "digestion" },
-  { _id: "c-8", name: "Diabetes Care", slug: "diabetes-care", imageUrl: "/images/conditions/diabetes-care.svg", icon: "diabetes" },
+  { _id: "c-1", name: "Hair Fall", slug: "hair-fall", searchQuery: "Hair", imageUrl: "/images/conditions/hair-fall.svg", icon: "hair" },
+  { _id: "c-2", name: "Cough & Cold", slug: "cough-and-cold", searchQuery: "Cough", imageUrl: "/images/conditions/cough-and-cold.svg", icon: "cough" },
+  { _id: "c-3", name: "Bones & Joints Pain", slug: "bones-and-joints-pain", searchQuery: "Joint", imageUrl: "/images/conditions/bones-and-joints-pain.svg", icon: "bone" },
+  { _id: "c-4", name: "Acne & Skin Care", slug: "acne-and-skin-care", searchQuery: "Acne", imageUrl: "/images/conditions/acne-and-skin-care.svg", icon: "skin" },
+  { _id: "c-5", name: "Pain & Body Aches", slug: "pain-and-body-aches", searchQuery: "Pain", imageUrl: "/images/conditions/pain-and-body-aches.svg", icon: "pain" },
+  { _id: "c-6", name: "Sleep Disorders", slug: "sleep-disorders", searchQuery: "Sleep", imageUrl: "/images/conditions/sleep-disorders.svg", icon: "sleep" },
+  { _id: "c-7", name: "Digestive Health", slug: "digestive-health", searchQuery: "Digest", imageUrl: "/images/conditions/digestive-health.svg", icon: "digestion" },
+  { _id: "c-8", name: "Diabetes Care", slug: "diabetes-care", searchQuery: "Diab", imageUrl: "/images/conditions/diabetes-care.svg", icon: "diabetes" },
 ];
 
 export default function CareByConditionSection({ initialConditions = [], onSelectCondition }) {
@@ -55,15 +68,30 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
     setIsPaused(false);
   };
 
-  const handleItemClick = (slug, e) => {
+  const handleItemClick = (item, e) => {
     if (e) e.preventDefault();
+    const slug = typeof item === "string" ? item : (item?.slug || "");
+    const name = typeof item === "object" ? item?.name : "";
+    const mapping = CONDITION_MAPPINGS[slug] || {};
+    const searchTerm = mapping.search || item?.searchQuery || name || slug;
+
+    // Trigger catalog search for this specific condition
+    triggerCatalogSearch(searchTerm, "");
+
+    // Update browser URL query
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("search", searchTerm);
+      url.searchParams.delete("category");
+      url.searchParams.delete("page");
+      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
+    }
+
     if (onSelectCondition) {
       onSelectCondition(slug);
-    } else {
-      window.dispatchEvent(new CustomEvent("select-condition", { detail: slug }));
     }
-    const el = document.getElementById("store-catalog") || document.getElementById("catalog");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    scrollToCatalog(80);
   };
 
   const renderConditionIcon = (slugOrName = "") => {
@@ -156,7 +184,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
               <a
                 key={`${item._id || item.slug}-${idx}`}
                 href="#store-catalog"
-                onClick={(e) => handleItemClick(item.slug, e)}
+                onClick={(e) => handleItemClick(item, e)}
                 className="flex-shrink-0 w-28 sm:w-32 md:w-36 flex flex-col items-center group/card cursor-pointer transition-transform duration-200 hover:-translate-y-1"
               >
                 {/* Top Circular Photo Container */}

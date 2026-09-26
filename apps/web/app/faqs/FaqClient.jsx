@@ -33,7 +33,7 @@ const FAQ_CATEGORIES = [
   { id: "all", label: "All Questions (100)", icon: HelpCircle },
   { id: "ordering", label: "Ordering & Checkout", icon: ShoppingCart },
   { id: "payment", label: "Payments & Billing", icon: CreditCard },
-  { id: "delivery", label: "Delivery & Cold-Chain", icon: Truck },
+  { id: "delivery", label: "Delivery & Shipping", icon: Truck },
   { id: "refill", label: "Monthly Refill", icon: CalendarSync },
   { id: "prescriptions", label: "Prescription & Narcotics", icon: FileText },
   { id: "safety", label: "Authenticity & Storage", icon: ShieldCheck },
@@ -151,7 +151,7 @@ export default function FaqClient() {
           </h1>
 
           <p className="text-base sm:text-lg text-slate-900 leading-relaxed font-semibold">
-            Everything you need to know about placing orders, prescription verification, cold-chain delivery, payment options, and monthly refills across Pakistan.
+            Everything you need to know about placing orders, pharmacist prescription verification, rapid nationwide delivery, payment options, and monthly refills across Pakistan.
           </p>
         </div>
       </div>
