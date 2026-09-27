@@ -135,10 +135,14 @@ export default function HeaderNav({ initialCategories = [] }) {
 
       {/* Slide-out Drawer Panel (Pinned to full viewport) */}
       <aside
+        style={{ backgroundColor: "#ffffff", colorScheme: "light" }}
         className="fixed top-0 left-0 bottom-0 w-[310px] max-w-[85vw] h-full max-h-screen bg-white shadow-2xl flex flex-col z-10 border-r border-slate-200 overflow-hidden animate-in slide-in-from-left duration-200"
       >
         {/* Drawer Top Header (Fixed shrink-0) */}
-        <div className="shrink-0 p-4 border-b border-slate-200 flex items-center justify-between bg-white shadow-2xs">
+        <div
+          style={{ backgroundColor: "#ffffff" }}
+          className="shrink-0 p-4 border-b border-slate-200 flex items-center justify-between bg-white shadow-2xs"
+        >
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-[#FFCB05] flex items-center justify-center text-slate-950 font-black text-sm shadow-xs">
               🛒
@@ -147,7 +151,6 @@ export default function HeaderNav({ initialCategories = [] }) {
               <h3 className="font-black text-base text-slate-900 font-heading leading-tight">
                 Medikart Menu
               </h3>
-              <p className="text-[10px] text-slate-500 font-medium">Genuine Online Pharmacy</p>
             </div>
           </div>
           <button
@@ -161,7 +164,10 @@ export default function HeaderNav({ initialCategories = [] }) {
         </div>
 
         {/* Drawer Scrollable Navigation Links (flex-1 min-h-0 for proper scrolling) */}
-        <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2 scrollbar-thin">
+        <div
+          style={{ backgroundColor: "#ffffff" }}
+          className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2 scrollbar-thin bg-white"
+        >
           {/* Download / Install App Banner Card */}
           <div className="pb-1">
             <InstallAppButton variant="mobile-drawer" />
@@ -378,7 +384,10 @@ export default function HeaderNav({ initialCategories = [] }) {
         </div>
 
         {/* Drawer Bottom Actions (Fixed shrink-0) */}
-        <div className="shrink-0 p-4 border-t border-slate-200 bg-white space-y-2.5 shadow-md">
+        <div
+          style={{ backgroundColor: "#ffffff" }}
+          className="shrink-0 p-4 border-t border-slate-200 bg-white space-y-2.5 shadow-md"
+        >
           {isAuthenticated ? (
             <div className="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/80 flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">

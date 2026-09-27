@@ -43,6 +43,10 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     throw new BadRequestError('OTP email must match the customer email');
   }
 
+  if (customer.city && customer.city.trim().toLowerCase() === 'other' && paymentMethod === 'cod') {
+    throw new BadRequestError("Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment.");
+  }
+
   const productIds = items.map((i) => i.productId);
 
   // ── Steps 1 + 4 + storewide discount: all three are independent DB reads.

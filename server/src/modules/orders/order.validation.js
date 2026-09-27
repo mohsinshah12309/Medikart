@@ -48,7 +48,19 @@ const placeStandardOrderSchema = z.object({
       .length(6, "OTP code must be exactly 6 digits")
       .regex(/^\d{6}$/, "OTP code must contain digits only"),
   }),
-});
+}).refine(
+  (data) => {
+    const city = (data.customer?.city || "").trim().toLowerCase();
+    if (city === "other" && data.paymentMethod === "cod") {
+      return false;
+    }
+    return true;
+  },
+  {
+    message: "Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment.",
+    path: ["paymentMethod"],
+  }
+);
 
 // POST /api/v1/orders/instant — customer-facing, no auth, multipart/form-data
 // Note: The JSON fields (customer, otp) arrive as strings in multipart form
@@ -75,7 +87,19 @@ const placeInstantOrderSchema = z.object({
       .regex(/^\d{6}$/, "OTP code must contain digits only"),
   }),
   branchDescription: z.string().optional(),
-});
+}).refine(
+  (data) => {
+    const city = (data.customer?.city || "").trim().toLowerCase();
+    if (city === "other" && data.paymentMethod === "cod") {
+      return false;
+    }
+    return true;
+  },
+  {
+    message: "Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment.",
+    path: ["paymentMethod"],
+  }
+);
 
 // POST /api/v1/orders/narcotics — customer-facing, no auth, multipart/form-data
 // Same JSON-field parsing applies (Fix 3). Mirrors placeStandardOrderSchema;
@@ -114,7 +138,19 @@ const placeNarcoticsOrderSchema = z.object({
       .length(6, "OTP code must be exactly 6 digits")
       .regex(/^\d{6}$/, "OTP code must contain digits only"),
   }),
-});
+}).refine(
+  (data) => {
+    const city = (data.customer?.city || "").trim().toLowerCase();
+    if (city === "other" && data.paymentMethod === "cod") {
+      return false;
+    }
+    return true;
+  },
+  {
+    message: "Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment.",
+    path: ["paymentMethod"],
+  }
+);
 
 // PATCH /api/v1/admin/orders/:id/items — admin pricing endpoint (Phase 14 / FR-AD-19)
 // SECURITY: Only items array is writable — totals computed server-side

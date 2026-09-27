@@ -60,10 +60,15 @@ export default function InstantOrderPage() {
       try {
         const res = await getCities();
         if (res && res.data && res.data.cities) {
-          setCitiesList(res.data.cities.map(c => c.name));
+          const names = res.data.cities.map(c => c.name);
+          if (!names.some(n => n.trim().toLowerCase() === 'other')) {
+            names.push('Other');
+          }
+          setCitiesList(names);
         }
       } catch (err) {
         console.error("Failed to load cities:", err);
+        setCitiesList(['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Other']);
       }
     }
     loadCities();
