@@ -20,6 +20,7 @@ const adminUserController = require("./adminUser.controller");
 const passwordResetController = require("./passwordReset.controller");
 const { validate } = require("../../middleware/validate");
 const auth = require("../../middleware/auth");
+const { createRateLimiter } = require("../../middleware/rateLimiter");
 const {
   loginSchema,
   verify2FASchema,
@@ -31,8 +32,18 @@ const {
   resetPasswordSchema,
 } = require("./passwordReset.validation");
 
+const isDev = process.env.NODE_ENV === "development";
+const isTest = process.env.NODE_ENV === "test";
+
+// Admin Login Limiter (Max 10 attempts / 15 min in production)
+const adminLoginLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: isTest ? 5 : (isDev ? 100 : 10),
+  message: "Too many admin login attempts. Please try again in 15 minutes.",
+});
+
 // POST /api/v1/auth/admin/login — Phase 5
-router.post("/login", validate(loginSchema), adminUserController.login);
+router.post("/login", adminLoginLimiter, validate(loginSchema), adminUserController.login);
 
 // GET /api/v1/auth/admin/me — returns current authenticated admin profile & live permissions
 router.get("/me", auth, (req, res) => {
@@ -52,7 +63,7 @@ router.get("/me", auth, (req, res) => {
 });
 
 // POST /api/v1/auth/admin/verify-2fa — Phase 28
-router.post("/verify-2fa", validate(verify2FASchema), adminUserController.verify2FA);
+router.post("/verify-2fa", adminLoginLimiter, validate(verify2FASchema), adminUserController.verify2FA);
 
 // GET /api/v1/auth/admin/2fa/setup — Phase 28 (auth required)
 router.get("/2fa/setup", auth, adminUserController.setup2FA);
@@ -66,6 +77,7 @@ router.post("/2fa/disable", auth, validate(disable2FASchema), adminUserControlle
 // POST /api/v1/auth/admin/forgot-password — Phase 6
 router.post(
   "/forgot-password",
+  adminLoginLimiter,
   validate(forgotPasswordSchema),
   passwordResetController.forgotPassword
 );
@@ -73,6 +85,7 @@ router.post(
 // POST /api/v1/auth/admin/reset-password — Phase 6
 router.post(
   "/reset-password",
+  adminLoginLimiter,
   validate(resetPasswordSchema),
   passwordResetController.resetPassword
 );

@@ -97,6 +97,7 @@ const app = express();
 app.set("trust proxy", 1);
 const requestLogger = require("./middleware/requestLogger");
 const securityShield = require("./middleware/securityShield");
+const botProtection = require("./middleware/botProtection");
 
 // 1. Request ID / Traceability Middleware (Phase 22 / Step 17)
 app.use((req, res, next) => {
@@ -107,6 +108,9 @@ app.use((req, res, next) => {
 
 // 1.2. Security Shield (HTTPS Enforcer, Scanner/Exploit Probing Blocker, Real-IP Normalizer)
 app.use(securityShield);
+
+// 1.3. Anti-Bot & Anti-Scraping Shield
+app.use(botProtection);
 
 // 1.5. Secure Request Logger (Sensitive data scrubbed)
 app.use(requestLogger);
@@ -224,6 +228,13 @@ const storefrontLimiter = createRateLimiter({
   message: "Too many requests. Please try again in 15 minutes.",
 });
 
+// Anti-scraping rate limiter for product catalog, categories, search, and health blogs
+const antiScrapingLimiter = createRateLimiter({
+  windowMs: 10 * 60 * 1000,
+  max: isTest ? 500 : (isDev ? 1000 : 120),
+  message: "High browsing volume detected. Please slow down your requests.",
+});
+
 // Public static serving with 7-day browser caching & ETag support.
 // Prescriptions are NEVER served statically — they are only reachable through
 // the authenticated admin route GET /api/v1/admin/prescriptions/:filename.
@@ -295,14 +306,14 @@ app.use(
   "/api/v1",
   (req, res, next) => {
     if (req.path.startsWith("/admin")) return next();
-    storefrontLimiter(req, res, (err) => {
+    antiScrapingLimiter(req, res, (err) => {
       if (err) return next(err);
       publicCacheControl(req, res, next);
     });
   },
   storefrontRoutes
 );
-app.use("/api/v1", publicCacheControl, blogRoutes);
+app.use("/api/v1", antiScrapingLimiter, publicCacheControl, blogRoutes);
 app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
