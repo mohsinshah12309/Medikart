@@ -194,6 +194,10 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 app.use(cookieParser);
 
+const inputSanitizer = require("./middleware/inputSanitizer");
+// 4.5. Universal Input Sanitization & Anti-Injection Middleware (NoSQL, XSS, Prototype Pollution)
+app.use(inputSanitizer);
+
 // 5. Rate Limiters Setup (Phase 22 / Step 2)
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "test";
@@ -313,8 +317,11 @@ app.use(
   },
   storefrontRoutes
 );
+const { createMessageSchema } = require("./modules/contact-messages/contactMessage.validation");
+const { validate } = require("./middleware/validate");
+
 app.use("/api/v1", antiScrapingLimiter, publicCacheControl, blogRoutes);
-app.post("/api/v1/contact-messages", storefrontLimiter, contactController.createMessage);
+app.post("/api/v1/contact-messages", storefrontLimiter, validate(createMessageSchema), contactController.createMessage);
 
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route
