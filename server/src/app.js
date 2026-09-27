@@ -96,6 +96,7 @@ try {
 const app = express();
 app.set("trust proxy", 1);
 const requestLogger = require("./middleware/requestLogger");
+const securityShield = require("./middleware/securityShield");
 
 // 1. Request ID / Traceability Middleware (Phase 22 / Step 17)
 app.use((req, res, next) => {
@@ -103,6 +104,9 @@ app.use((req, res, next) => {
   res.setHeader("X-Request-Id", req.id);
   next();
 });
+
+// 1.2. Security Shield (HTTPS Enforcer, Scanner/Exploit Probing Blocker, Real-IP Normalizer)
+app.use(securityShield);
 
 // 1.5. Secure Request Logger (Sensitive data scrubbed)
 app.use(requestLogger);

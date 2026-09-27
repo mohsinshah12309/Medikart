@@ -68,6 +68,11 @@ function validateEnv() {
       `Missing critical production environment variables: ${missing.join(", ")}`,
     );
   }
+
+  // Ensure MONGODB_URI uses TLS / Atlas in production
+  if (process.env.MONGODB_URI.startsWith("mongodb://") && !process.env.MONGODB_URI.includes("tls=true") && !process.env.MONGODB_URI.includes("ssl=true")) {
+    console.warn("⚠️ [SECURITY WARNING] Production MONGODB_URI is using unencrypted connection. Please enable TLS/SSL (mongodb+srv:// or ?tls=true).");
+  }
 }
 
 module.exports = { validateEnv };

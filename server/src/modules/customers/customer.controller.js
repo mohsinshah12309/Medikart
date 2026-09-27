@@ -12,15 +12,32 @@
  */
 
 const customerService = require("./customer.service");
+const { logAuthEvent } = require("../../utils/securityLogger");
 
 const signup = async (req, res, next) => {
   try {
     const result = await customerService.signup(req.body);
+    logAuthEvent({
+      action: "CUSTOMER_SIGNUP",
+      status: "SUCCESS",
+      identifier: req.body.email,
+      userId: result.customer?.id,
+      role: "customer",
+      req,
+    });
     res.status(201).json({
       status: "success",
       ...result,
     });
   } catch (error) {
+    logAuthEvent({
+      action: "CUSTOMER_SIGNUP",
+      status: "FAILED",
+      identifier: req.body.email,
+      role: "customer",
+      req,
+      reason: error.message,
+    });
     next(error);
   }
 };
@@ -28,11 +45,26 @@ const signup = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
   try {
     const result = await customerService.verifyEmail(req.body);
+    logAuthEvent({
+      action: "CUSTOMER_VERIFY_EMAIL",
+      status: "SUCCESS",
+      identifier: req.body.email,
+      role: "customer",
+      req,
+    });
     res.status(200).json({
       status: "success",
       ...result,
     });
   } catch (error) {
+    logAuthEvent({
+      action: "CUSTOMER_VERIFY_EMAIL",
+      status: "FAILED",
+      identifier: req.body.email,
+      role: "customer",
+      req,
+      reason: error.message,
+    });
     next(error);
   }
 };
@@ -52,11 +84,27 @@ const resendVerification = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const result = await customerService.login(req.body);
+    logAuthEvent({
+      action: "CUSTOMER_LOGIN",
+      status: "SUCCESS",
+      identifier: req.body.email,
+      userId: result.customer?.id,
+      role: "customer",
+      req,
+    });
     res.status(200).json({
       status: "success",
       ...result,
     });
   } catch (error) {
+    logAuthEvent({
+      action: "CUSTOMER_LOGIN",
+      status: "FAILED",
+      identifier: req.body.email,
+      role: "customer",
+      req,
+      reason: error.message,
+    });
     next(error);
   }
 };
@@ -64,6 +112,13 @@ const login = async (req, res, next) => {
 const forgotPassword = async (req, res, next) => {
   try {
     const result = await customerService.forgotPassword(req.body);
+    logAuthEvent({
+      action: "CUSTOMER_FORGOT_PASSWORD",
+      status: "SUCCESS",
+      identifier: req.body.email,
+      role: "customer",
+      req,
+    });
     res.status(200).json({
       status: "success",
       ...result,
@@ -76,11 +131,25 @@ const forgotPassword = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   try {
     const result = await customerService.resetPassword(req.body);
+    logAuthEvent({
+      action: "CUSTOMER_RESET_PASSWORD",
+      status: "SUCCESS",
+      identifier: result.customer?.email,
+      role: "customer",
+      req,
+    });
     res.status(200).json({
       status: "success",
       ...result,
     });
   } catch (error) {
+    logAuthEvent({
+      action: "CUSTOMER_RESET_PASSWORD",
+      status: "FAILED",
+      role: "customer",
+      req,
+      reason: error.message,
+    });
     next(error);
   }
 };

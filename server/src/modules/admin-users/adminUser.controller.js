@@ -6,6 +6,7 @@
  */
 
 const adminUserService = require("./adminUser.service");
+const { logAuthEvent } = require("../../utils/securityLogger");
 
 /**
  * POST /api/v1/auth/admin/login
@@ -13,11 +14,27 @@ const adminUserService = require("./adminUser.service");
 const login = async (req, res, next) => {
   try {
     const result = await adminUserService.login(req.body);
+    logAuthEvent({
+      action: "ADMIN_LOGIN",
+      status: "SUCCESS",
+      identifier: req.body.email,
+      userId: result.admin?.id,
+      role: result.admin?.role || "admin",
+      req,
+    });
     res.status(200).json({
       status: "success",
       data: result,
     });
   } catch (error) {
+    logAuthEvent({
+      action: "ADMIN_LOGIN",
+      status: "FAILED",
+      identifier: req.body.email,
+      role: "admin",
+      req,
+      reason: error.message,
+    });
     next(error);
   }
 };
@@ -86,11 +103,26 @@ const deleteAdminUser = async (req, res, next) => {
 const verify2FA = async (req, res, next) => {
   try {
     const result = await adminUserService.verify2FA(req.body);
+    logAuthEvent({
+      action: "ADMIN_2FA_VERIFY",
+      status: "SUCCESS",
+      identifier: result.admin?.email,
+      userId: result.admin?.id,
+      role: result.admin?.role || "admin",
+      req,
+    });
     res.status(200).json({
       status: "success",
       data: result,
     });
   } catch (error) {
+    logAuthEvent({
+      action: "ADMIN_2FA_VERIFY",
+      status: "FAILED",
+      role: "admin",
+      req,
+      reason: error.message,
+    });
     next(error);
   }
 };

@@ -10,8 +10,12 @@
  */
 
 const { AppError } = require("../utils/errors");
+const { logApiError } = require("../utils/securityLogger");
 
 const errorHandler = (err, req, res, next) => {
+  const status = err.statusCode || err.status || (err.isOperational ? 400 : 500);
+  logApiError({ req, error: err, statusCode: status });
+
   // If it's one of our known operational errors (AppError subclasses)
   if (err.isOperational) {
     return res.status(err.statusCode).json({

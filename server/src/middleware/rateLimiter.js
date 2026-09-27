@@ -15,6 +15,7 @@
  */
 
 const redisClient = require("../config/redisClient");
+const { logSecurityAlert } = require("../utils/securityLogger");
 
 /**
  * Creates an Express middleware for rate limiting.
@@ -80,6 +81,14 @@ const createRateLimiter = ({
       const currentCount = results[1][1];
 
       if (currentCount >= max) {
+        logSecurityAlert({
+          alertType: "RATE_LIMIT_BREACH",
+          message: `Rate limit of ${max} requests per ${windowMs / 1000}s exceeded`,
+          req,
+          ip,
+          details: { currentCount, max, routeKey, key },
+        });
+
         // Calculate dynamic Retry-After header (seconds until oldest entry in current window expires)
         const oldestVal = results[3] && results[3][1] && results[3][1][0];
         let oldestTimestamp = now;
