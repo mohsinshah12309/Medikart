@@ -6,6 +6,7 @@ import AddToCartButton from '../../../components/AddToCartButton';
 import AddToRefillButton from '../../../components/monthlyRefill/AddToRefillButton';
 import RelatedProducts from '../../../components/RelatedProducts';
 import ProductStickyMobileCta from '../../../components/ProductStickyMobileCta';
+import BackButton from '../../../components/BackButton';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -259,26 +260,30 @@ export default async function ProductDetailPage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       
-      {/* ─── Breadcrumb Navigation ─── */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-        <Link href="/" className="hover:text-amber-700 transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        {firstCategory ? (
-          <Link href={`/?category=${firstCategory.slug || firstCategory._id}#store-catalog`} className="hover:text-amber-700 transition-colors">
-            {firstCategory.name}
+      {/* ─── Breadcrumb & Back Navigation ─── */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <BackButton fallbackHref={firstCategory ? `/?category=${firstCategory.slug || firstCategory._id}#store-catalog` : "/#store-catalog"} />
+        
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-slate-500 overflow-x-auto py-1 scrollbar-none">
+          <Link href="/" className="hover:text-amber-700 transition-colors whitespace-nowrap">
+            Home
           </Link>
-        ) : (
-          <Link href="/#store-catalog" className="hover:text-amber-700 transition-colors">
-            Medicines
-          </Link>
-        )}
-        <span>/</span>
-        <span className="text-slate-900 font-bold truncate max-w-[200px] sm:max-w-none">
-          {product.name}
-        </span>
-      </nav>
+          <span>/</span>
+          {firstCategory ? (
+            <Link href={`/?category=${firstCategory.slug || firstCategory._id}#store-catalog`} className="hover:text-amber-700 transition-colors whitespace-nowrap">
+              {firstCategory.name}
+            </Link>
+          ) : (
+            <Link href="/#store-catalog" className="hover:text-amber-700 transition-colors whitespace-nowrap">
+              Medicines
+            </Link>
+          )}
+          <span>/</span>
+          <span className="text-slate-900 font-bold truncate max-w-[200px] sm:max-w-md">
+            {product.name}
+          </span>
+        </nav>
+      </div>
 
       <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10 relative overflow-hidden">
         {/* Left Column - Gallery */}
