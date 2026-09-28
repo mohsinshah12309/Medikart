@@ -99,7 +99,9 @@ const getProductById = async (productId) => {
   return formatProductWithImages(product);
 };
 
-/** Helper: invalidate product storefront cache in Redis */
+const { triggerStorefrontRevalidation } = require("../../utils/revalidate");
+
+/** Helper: invalidate product storefront cache in Redis and trigger Next.js ISR revalidation */
 const invalidateProductCache = async (productId) => {
   try {
     const delPromises = [];
@@ -110,11 +112,21 @@ const invalidateProductCache = async (productId) => {
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:products:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:suggestions:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:trending-searches:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:sitemap:*"));
     } else if (typeof redisClient.keys === "function") {
       const keys = await redisClient.keys("cache:storefront:products:*");
       if (keys && keys.length > 0) delPromises.push(redisClient.del(...keys));
     }
     await Promise.allSettled(delPromises);
+
+    // Trigger on-demand ISR revalidation in Next.js storefront
+    const paths = ["/", "/sitemap.xml"];
+    const tags = ["products"];
+    if (productId) {
+      paths.push(`/products/${productId}`);
+      tags.push(`product-${productId}`);
+    }
+    triggerStorefrontRevalidation({ paths, tags });
   } catch (err) {
     console.error("[Cache] Product invalidation error:", err.message);
   }

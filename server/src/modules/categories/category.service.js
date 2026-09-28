@@ -12,12 +12,15 @@ const Category = require("./category.model");
 const { NotFoundError } = require("../../utils/errors");
 const redisClient = require("../../config/redisClient");
 
+const { triggerStorefrontRevalidation } = require("../../utils/revalidate");
+
 const invalidateCategoryCache = async () => {
   try {
     const delPromises = [redisClient.del("cache:storefront:categories")];
     if (typeof redisClient.deleteKeysByPattern === "function") {
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:products:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:suggestions:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:sitemap:*"));
     } else if (typeof redisClient.keys === "function") {
       const productKeys = await redisClient.keys("cache:storefront:products:*");
       if (productKeys && productKeys.length > 0) {
@@ -25,6 +28,12 @@ const invalidateCategoryCache = async () => {
       }
     }
     await Promise.allSettled(delPromises);
+
+    // Trigger on-demand ISR revalidation in Next.js storefront
+    triggerStorefrontRevalidation({
+      paths: ["/", "/sitemap.xml"],
+      tags: ["categories", "products"],
+    });
   } catch (err) {
     console.error("[Cache] Category invalidation error:", err.message);
   }

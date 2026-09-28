@@ -1,5 +1,5 @@
 import React from 'react';
-import { getProduct } from '../../../lib/api';
+import { getProduct, getProducts } from '../../../lib/api';
 import ProductGallery from '../../../components/ProductGallery';
 import NarcoticsBlock from '../../../components/NarcoticsBlock';
 import AddToCartButton from '../../../components/AddToCartButton';
@@ -9,6 +9,24 @@ import ProductStickyMobileCta from '../../../components/ProductStickyMobileCta';
 import BackButton from '../../../components/BackButton';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+
+export const revalidate = 3600;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  try {
+    const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
+    const res = await fetch(`${apiUrl}/products?limit=50`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const data = await res.json();
+      const products = data?.data?.products || [];
+      return products.map((p) => ({ id: p._id }));
+    }
+  } catch (err) {
+    // Return empty array during offline builds
+  }
+  return [];
+}
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;

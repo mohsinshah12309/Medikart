@@ -17,6 +17,14 @@ import {
 import { BLOGS_DATA, getBlogBySlug } from "../../../data/blogsData";
 import ProductCard from "../../../components/ProductCard";
 
+export const revalidate = 3600;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const staticSlugs = BLOGS_DATA.map((b) => ({ slug: b.slug }));
+  return staticSlugs;
+}
+
 const getFullUrl = (path) => {
   const fallback = "/uploads/placeholder.webp";
   if (!path || path === "/images/placeholder-product.png") {

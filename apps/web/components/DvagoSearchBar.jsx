@@ -64,6 +64,7 @@ export default function DvagoSearchBar({ className = "" }) {
   const searchInputRef = useRef(null);
   const modalInputRef = useRef(null);
   const debounceTimerRef = useRef(null);
+  const searchAbortRef = useRef(null);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
@@ -138,19 +139,25 @@ export default function DvagoSearchBar({ className = "" }) {
         setPlaceholderIndex((prev) => (prev + 1) % ROTATING_PLACEHOLDERS.length);
         setIsFading(false);
       }, 250);
-    }, 2000);
+    }, 3200);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [query, isOpen]);
 
-  // Fetch suggestions from API (debounced)
+  // Fetch suggestions from API (debounced + abortable)
   const fetchSuggestions = useCallback(async (searchTerm) => {
+    if (searchAbortRef.current) {
+      searchAbortRef.current.abort();
+    }
+    const abortController = new AbortController();
+    searchAbortRef.current = abortController;
+
     try {
       setLoading(true);
       const endpoint = `${apiUrl}/search/suggestions?q=${encodeURIComponent(searchTerm || "")}`;
-      const res = await fetch(endpoint);
+      const res = await fetch(endpoint, { signal: abortController.signal });
       if (res.ok) {
         const json = await res.json();
         if (json.data) {
@@ -164,9 +171,13 @@ export default function DvagoSearchBar({ className = "" }) {
         }
       }
     } catch (err) {
-      console.error("[SearchSuggestions] fetch error:", err);
+      if (err.name !== "AbortError") {
+        console.error("[SearchSuggestions] fetch error:", err);
+      }
     } finally {
-      setLoading(false);
+      if (searchAbortRef.current === abortController) {
+        setLoading(false);
+      }
     }
   }, [apiUrl]);
 

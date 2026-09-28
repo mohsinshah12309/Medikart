@@ -17,6 +17,47 @@ const logCache = (type, key) => {
   }
 };
 
+// GET /api/v1/sitemap/products - Ultra-fast endpoint for complete SEO sitemap generation
+router.get("/sitemap/products", async (req, res, next) => {
+  try {
+    const cacheKey = "cache:storefront:sitemap:products";
+    let cached = null;
+    try {
+      if (req.query.bypassCache !== "true") {
+        cached = await redisClient.get(cacheKey);
+      }
+    } catch (_) {}
+
+    if (cached) {
+      logCache("HIT", cacheKey);
+      return res.status(200).json(JSON.parse(cached));
+    }
+    logCache("MISS", cacheKey);
+
+    const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
+    const activeCategoryIds = activeCategories.map((c) => c._id);
+
+    const products = await Product.find(
+      { active: true, categoryIds: { $in: activeCategoryIds } },
+      { _id: 1, updatedAt: 1 }
+    ).lean();
+
+    const responseBody = {
+      status: "success",
+      total: products.length,
+      data: { products },
+    };
+
+    try {
+      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 3600); // 1 hour TTL
+    } catch (_) {}
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET /api/v1/products - Public listing/browsing
 router.get("/products", async (req, res, next) => {
   try {
@@ -564,17 +605,21 @@ const getSuggestionsHandler = async (req, res, next) => {
         $or: [
           { name: regex },
           { genericName: regex },
-          { description: regex },
           { keywords: regex },
           { tags: regex },
         ],
       })
+        .select("name genericName price sku isNarcotic requiresPrescription stockStatus images discount active categoryIds")
         .populate("categoryIds", "name slug discount active")
-        .limit(40),
+        .limit(30)
+        .lean(),
       Category.find({
         active: true,
         $or: [{ name: regex }, { slug: regex }],
-      }).limit(6),
+      })
+        .select("name slug image icon active")
+        .limit(6)
+        .lean(),
     ]);
 
     // Relevance scoring function

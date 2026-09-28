@@ -9,7 +9,11 @@ export default async function sitemap() {
   let dynamicBlogs = [];
   
   try {
-    const prodRes = await fetch(`${apiUrl}/products?limit=5000`, { next: { revalidate: 3600 } });
+    // Ultra-fast dedicated sitemap endpoint returning all active products
+    let prodRes = await fetch(`${apiUrl}/sitemap/products`, { next: { revalidate: 3600, tags: ['products'] } });
+    if (!prodRes.ok) {
+      prodRes = await fetch(`${apiUrl}/products?limit=100`, { next: { revalidate: 3600 } });
+    }
     if (prodRes.ok) {
       const prodBody = await prodRes.json();
       products = prodBody?.data?.products || [];

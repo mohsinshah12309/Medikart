@@ -9,15 +9,21 @@ import HeaderNav from '../components/HeaderNav';
 import DvagoSearchBar from '../components/DvagoSearchBar';
 import HomeOnlyBanners from '../components/HomeOnlyBanners';
 import Footer from '../components/Footer';
-import CookieConsentBanner from '../components/CookieConsentBanner';
 import AnalyticsProvider from '../components/AnalyticsProvider';
 import { PwaInstallProvider } from '../components/pwa/PwaInstallProvider';
-import InstallModal from '../components/pwa/InstallModal';
 import dynamic from 'next/dynamic';
 import { Plus_Jakarta_Sans, Inter, Caveat } from 'next/font/google';
 
-// Code-split Chatbot widget so it does not block initial main thread hydration
+// Code-split heavy interactive widgets so they do not block initial page hydration
 const ChatbotWidget = dynamic(() => import('../components/ChatbotWidget'), {
+  ssr: false,
+});
+
+const InstallModal = dynamic(() => import('../components/pwa/InstallModal'), {
+  ssr: false,
+});
+
+const CookieConsentBanner = dynamic(() => import('../components/CookieConsentBanner'), {
   ssr: false,
 });
 

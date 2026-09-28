@@ -9,15 +9,24 @@
 const Settings = require("./settings.model");
 const redisClient = require("../../config/redisClient");
 
+const { triggerStorefrontRevalidation } = require("../../utils/revalidate");
+
 const invalidateSettingsCache = async () => {
   try {
     await redisClient.del("cache:storefront:content");
-    if (typeof redisClient.keys === "function") {
+    if (typeof redisClient.deleteKeysByPattern === "function") {
+      await redisClient.deleteKeysByPattern("cache:storefront:products:*");
+      await redisClient.deleteKeysByPattern("cache:storefront:suggestions:*");
+    } else if (typeof redisClient.keys === "function") {
       const productKeys = await redisClient.keys("cache:storefront:products:*");
       if (productKeys && productKeys.length > 0) {
         await redisClient.del(...productKeys);
       }
     }
+    triggerStorefrontRevalidation({
+      paths: ["/", "/about", "/contact"],
+      tags: ["products", "content"],
+    });
   } catch (err) {
     console.error("[Cache] Settings invalidation error:", err.message);
   }

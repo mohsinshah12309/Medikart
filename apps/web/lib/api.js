@@ -1,3 +1,5 @@
+import { cache } from 'react';
+
 const API_URL = typeof window !== 'undefined'
   ? (process.env.NEXT_PUBLIC_API_URL || '/api/v1')
   : (process.env.INTERNAL_API_URL || 'http://localhost:5000/api/v1');
@@ -46,15 +48,20 @@ export async function getProducts(params = {}) {
   if (params.page) query.append('page', params.page);
   if (params.limit) query.append('limit', params.limit);
 
-  return fetchApi(`/products?${query.toString()}`, { cache: 'no-store' });
+  return fetchApi(`/products?${query.toString()}`, {
+    next: { revalidate: 300, tags: ['products'] },
+  });
 }
 
-export async function getProduct(id) {
-  return fetchApi(`/products/${id}`, { cache: 'no-store' });
-}
+// React.cache deduplicates getProduct across generateMetadata and ProductDetailPage
+export const getProduct = cache(async (id) => {
+  return fetchApi(`/products/${id}`, {
+    next: { revalidate: 3600, tags: [`product-${id}`, 'products'] },
+  });
+});
 
 export async function getCategories() {
-  return fetchApi('/categories', { next: { revalidate: 60 } });
+  return fetchApi('/categories', { next: { revalidate: 3600, tags: ['categories'] } });
 }
 
 export async function getDeliveryCharge(city) {
@@ -83,11 +90,11 @@ export async function placeStandardOrder(payload) {
 }
 
 export async function getCities() {
-  return fetchApi('/cities', { next: { revalidate: 300 } });
+  return fetchApi('/cities', { next: { revalidate: 3600, tags: ['cities'] } });
 }
 
 export async function getContent() {
-  return fetchApi('/content', { next: { revalidate: 300 } });
+  return fetchApi('/content', { next: { revalidate: 3600, tags: ['content'] } });
 }
 
 async function postFormData(endpoint, formData) {
@@ -139,11 +146,11 @@ export async function sendContactMessage(payload) {
 
 export async function getBanners(placement) {
   const query = placement ? `?placement=${placement}` : '';
-  return fetchApi(`/banners${query}`, { next: { revalidate: 60 } });
+  return fetchApi(`/banners${query}`, { next: { revalidate: 3600, tags: ['banners'] } });
 }
 
 export async function getConditions() {
-  return fetchApi('/conditions', { next: { revalidate: 60 } });
+  return fetchApi('/conditions', { next: { revalidate: 3600, tags: ['conditions'] } });
 }
 
 // ─── Cart API ───────────────────────────────────────────────────────────────
