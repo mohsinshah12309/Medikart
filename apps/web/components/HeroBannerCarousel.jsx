@@ -7,9 +7,9 @@ import Image from "next/image";
 const FALLBACK_BANNERS = [
   {
     _id: "hero-1",
-    title: "100% Genuine Certified Medicines",
-    subtitle: "Consult with licensed pharmacists and order authentic prescription & OTC medicines.",
-    badgeText: "Licensed Pharmacy Partner",
+    title: "100% Genuine Pharmacy Sourced Medicines",
+    subtitle: "Consult with registered pharmacists and order authentic prescription & OTC medicines.",
+    badgeText: "Licensed Pharmacy Partners",
     ctaText: "Upload Prescription",
     ctaLink: "/instant-order",
     secondaryText: "Browse Catalog",

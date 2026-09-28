@@ -26,7 +26,7 @@ export async function generateMetadata({ searchParams }) {
         );
         if (category) {
           const title = `${category.name} Online in Pakistan | Medikart`;
-          const description = `Buy authentic ${category.name} online in Pakistan. Licensed pharmacy sourcing, 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Order now on Medikart.`;
+          const description = `Buy authentic ${category.name} online in Pakistan. Sourced from licensed partner pharmacies, 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Order now on Medikart.`;
           const canonicalUrl = `${siteUrl}/?category=${category.slug || category._id}`;
 
           return {
@@ -82,7 +82,7 @@ export async function generateMetadata({ searchParams }) {
   }
 
   const homepageTitle = 'Medikart | Online Pharmacy Pakistan - Genuine Medicines';
-  const homepageDesc = 'Pakistan\'s trusted licensed online pharmacy. Order 100% genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).';
+  const homepageDesc = 'Pakistan\'s trusted online pharmacy platform by Banu Zahrah Pvt Ltd. Order 100% authentic medicines sourced from licensed partner pharmacies, Panadol, Augmentin, vitamins, baby care & OTC health essentials with fast 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).';
 
   return {
     title: {
@@ -111,7 +111,7 @@ export async function generateMetadata({ searchParams }) {
     },
     openGraph: {
       title: homepageTitle,
-      description: 'Pakistan\'s trusted licensed online pharmacy. Buy genuine prescription medicines, vitamins, baby care & OTC health essentials with 2–4 hr delivery & Cash on Delivery.',
+      description: 'Pakistan\'s trusted online pharmacy platform by Banu Zahrah Pvt Ltd. Sourcing authentic medicines from licensed partner pharmacies, vitamins, baby care & OTC health essentials with 2–4 hr delivery & Cash on Delivery.',
       url: siteUrl,
       siteName: 'Medikart - Authentic Online Pharmacy',
       locale: 'en_PK',
@@ -120,7 +120,7 @@ export async function generateMetadata({ searchParams }) {
     twitter: {
       card: 'summary_large_image',
       title: homepageTitle,
-      description: 'Order genuine prescription & OTC medicines online with fast 2–4 hr delivery and Cash on Delivery across Pakistan.',
+      description: 'Order authentic prescription & OTC medicines online with fast 2–4 hr delivery and Cash on Delivery across Pakistan.',
     },
   };
 }

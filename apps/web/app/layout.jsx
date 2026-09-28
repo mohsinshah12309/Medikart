@@ -67,7 +67,7 @@ export const metadata = {
     default: 'Medikart | Online Pharmacy Pakistan - Fast Delivery',
     template: '%s | Medikart Online Pharmacy Pakistan',
   },
-  description: 'Pakistan\'s trusted licensed online pharmacy. Order 100% genuine prescription medicines, Panadol, Augmentin, vitamins, baby care & OTC health essentials with 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
+  description: 'Pakistan\'s trusted online pharmacy platform by Banu Zahrah Pvt Ltd. Order 100% authentic medicines sourced from licensed partner pharmacies, Panadol, Augmentin, vitamins, baby care & OTC health essentials with fast 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
   keywords: [
     'online pharmacy Pakistan',
     'buy medicine online Pakistan',

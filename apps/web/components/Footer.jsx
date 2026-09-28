@@ -418,7 +418,7 @@ export default function Footer({
             <div className="text-center md:text-left font-medium">
               <p>© {new Date().getFullYear()} Medikart. All rights reserved. <span className="text-slate-400 font-normal">A project by Banu Zahrah Pvt Ltd.</span></p>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Pakistan's licensed e-pharmacy network. Powered by authentic local pharmacies.
+                Pakistan's digital healthcare network. Powered by licensed partner pharmacies.
               </p>
             </div>
 
