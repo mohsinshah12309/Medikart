@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { adminFetch, API_URL } from "../apiClient";
+import SearchableSelect from "./SearchableSelect";
 
 function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, onNavigateToPharmacies }) {
 
@@ -303,6 +304,16 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
     }
   };
 
+  const pharmacyOptions = useMemo(() => [
+    { value: "", label: "All Pharmacy Branches", subtext: "Aggregated metrics across all partner branches" },
+    ...pharmacies.map((ph) => ({
+      value: ph._id,
+      label: `${ph.name} (${ph.code || "No Code"})`,
+      subtext: `${ph.address?.city || "Pakistan"}${ph.phone ? ` • ${ph.phone}` : ""}`,
+      badge: ph.active ? "Active" : "Inactive",
+    })),
+  ], [pharmacies]);
+
   return (
     <div>
       <div className="page-header">
@@ -389,22 +400,22 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
           {isSuperAdmin ? (
             <>
-              <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#334155" }}>
+              <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#334155", whiteSpace: "nowrap" }}>
                 🏥 Pharmacy Branch:
               </span>
-              <select
-                className="form-control"
+              <SearchableSelect
+                options={pharmacyOptions}
                 value={filterPharmacyId}
-                onChange={(e) => setFilterPharmacyId(e.target.value)}
-                style={{ fontSize: "0.85rem", padding: "0.3rem 0.6rem", width: "auto", minWidth: "180px" }}
-              >
-                <option value="">All Pharmacy Branches</option>
-                {pharmacies.map((ph) => (
-                  <option key={ph._id} value={ph._id}>
-                    {ph.name} ({ph.code})
-                  </option>
-                ))}
-              </select>
+                onChange={(val) => setFilterPharmacyId(val || "")}
+                placeholder="All Pharmacy Branches"
+                searchPlaceholder="Search branch name, code, city..."
+                minWidth="220px"
+                maxWidth="280px"
+                dropdownMinWidth="320px"
+                dropdownMaxWidth="420px"
+                size="sm"
+                showClear={true}
+              />
             </>
           ) : (
             <div
