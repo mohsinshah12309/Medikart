@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * SearchableSelect - A robust, accessible dropdown with instant text search
- * Features wide horizontal dropdown formatting for clear pharmacy/store display.
+ * Features portal-based floating display so it is never clipped by table overflow or cards.
  */
 export default function SearchableSelect({
   options = [],
@@ -23,25 +24,64 @@ export default function SearchableSelect({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [coords, setCoords] = useState({ top: 0, left: 0, width: 380, placement: "bottom" });
+
   const dropdownRef = useRef(null);
+  const panelRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Close on outside click
+  // Recalculate portal popup position relative to viewport
+  const updatePosition = useCallback(() => {
+    if (!dropdownRef.current) return;
+    const rect = dropdownRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const estimatedHeight = 340;
+    const openUpward = spaceBelow < estimatedHeight && rect.top > estimatedHeight;
+
+    const minW = parseInt(dropdownMinWidth, 10) || 380;
+    const maxW = parseInt(dropdownMaxWidth, 10) || 520;
+    let computedWidth = Math.max(rect.width, minW);
+    if (computedWidth > maxW) computedWidth = maxW;
+
+    let left = rect.left;
+    if (left + computedWidth > window.innerWidth - 12) {
+      left = Math.max(12, window.innerWidth - computedWidth - 12);
+    }
+
+    setCoords({
+      top: openUpward ? rect.top - 6 : rect.bottom + 6,
+      left: Math.max(12, left),
+      width: computedWidth,
+      placement: openUpward ? "top" : "bottom",
+    });
+  }, [dropdownMinWidth, dropdownMaxWidth]);
+
+  // Handle outside click across trigger & portal panel
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      const isInsideTrigger = dropdownRef.current && dropdownRef.current.contains(e.target);
+      const isInsidePanel = panelRef.current && panelRef.current.contains(e.target);
+      if (!isInsideTrigger && !isInsidePanel) {
         setIsOpen(false);
       }
     };
+
     if (isOpen) {
+      updatePosition();
       document.addEventListener("mousedown", handleOutsideClick);
-      // Auto focus input when opened
-      setTimeout(() => inputRef.current?.focus(), 50);
+      window.addEventListener("scroll", updatePosition, true);
+      window.addEventListener("resize", updatePosition);
+
+      // Focus input when opened
+      const timer = setTimeout(() => inputRef.current?.focus(), 50);
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener("mousedown", handleOutsideClick);
+        window.removeEventListener("scroll", updatePosition, true);
+        window.removeEventListener("resize", updatePosition);
+      };
     }
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [isOpen]);
+  }, [isOpen, updatePosition]);
 
   // Close on Escape key
   useEffect(() => {
@@ -169,25 +209,27 @@ export default function SearchableSelect({
         </div>
       </div>
 
-      {/* Floating Dropdown Panel (Wider horizontally with rich details) */}
-      {isOpen && (
+      {/* Portal Floating Dropdown Panel */}
+      {isOpen && typeof document !== "undefined" && createPortal(
         <div
+          ref={panelRef}
           style={{
-            position: "absolute",
-            top: "calc(100% + 4px)",
-            left: 0,
-            minWidth: dropdownMinWidth || "max(100%, 380px)",
+            position: "fixed",
+            top: coords.placement === "top" ? "auto" : `${coords.top}px`,
+            bottom: coords.placement === "top" ? `${window.innerHeight - coords.top}px` : "auto",
+            left: `${coords.left}px`,
+            width: `${coords.width}px`,
+            minWidth: dropdownMinWidth || "380px",
             maxWidth: dropdownMaxWidth || "520px",
-            width: "max-content",
             background: "#ffffff",
             border: "1px solid #cbd5e1",
             borderRadius: "10px",
-            boxShadow: "0 12px 30px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-            zIndex: 99999,
+            boxShadow: "0 20px 40px -5px rgba(0, 0, 0, 0.25), 0 10px 15px -3px rgba(0, 0, 0, 0.12)",
+            zIndex: 9999999,
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
-            animation: "fadeIn 0.15s ease-out",
+            animation: "fadeIn 0.12s ease-out",
           }}
         >
           {/* Search Input Box */}
@@ -212,7 +254,7 @@ export default function SearchableSelect({
                 width: "100%",
                 border: "1px solid #cbd5e1",
                 borderRadius: "6px",
-                padding: "0.4rem 0.6rem",
+                padding: "0.45rem 0.65rem",
                 fontSize: "0.825rem",
                 outline: "none",
                 background: "#ffffff",
@@ -244,7 +286,7 @@ export default function SearchableSelect({
           {/* Options List */}
           <div
             style={{
-              maxHeight: "280px",
+              maxHeight: "260px",
               overflowY: "auto",
               padding: "0.35rem",
             }}
@@ -354,7 +396,8 @@ export default function SearchableSelect({
               </span>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
