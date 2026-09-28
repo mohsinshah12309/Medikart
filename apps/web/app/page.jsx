@@ -131,7 +131,7 @@ export default async function Home({ searchParams }) {
     search: resolvedParams?.search || '',
     categoryId: resolvedParams?.category || '',
     page: parseInt(resolvedParams?.page, 10) || 1,
-    limit: 20,
+    limit: 24,
   };
 
   const [productsRes, categoriesRes, heroRes, midRes, condRes] = await Promise.all([

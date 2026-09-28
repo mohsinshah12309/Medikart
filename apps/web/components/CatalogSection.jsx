@@ -35,7 +35,7 @@ function ProductCardSkeleton() {
 
 export default function CatalogSection({
   initialProducts = [],
-  initialPagination = { page: 1, limit: 20, total: 0, pages: 1 },
+  initialPagination = { page: 1, limit: 24, total: 0, pages: 1 },
   categories = [],
   initialSearch = '',
   initialCategoryId = '',
@@ -86,7 +86,7 @@ export default function CatalogSection({
       if (searchQuery) params.append('search', searchQuery);
       if (categoryId) params.append('categoryId', categoryId);
       params.append('page', pageNum || 1);
-      params.append('limit', 20);
+      params.append('limit', 24);
 
       // Call public products API
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
@@ -370,8 +370,8 @@ export default function CatalogSection({
               </button>
             </div>
           ) : loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5 animate-pulse">
-              {Array.from({ length: 12 }).map((_, i) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-2.5 sm:gap-3.5 animate-pulse">
+              {Array.from({ length: 24 }).map((_, i) => (
                 <div key={i} className="bg-white border border-slate-200 rounded-xl p-2.5 flex flex-col gap-2">
                   <div className="aspect-square bg-slate-100 rounded-lg w-full" />
                   <div className="h-3 bg-slate-200 rounded w-3/4" />
@@ -467,14 +467,14 @@ export default function CatalogSection({
               </div>
             </div>
           ) : loading && products.length === 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5">
-              {Array.from({ length: 12 }).map((_, i) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-2.5 sm:gap-3.5">
+              {Array.from({ length: 24 }).map((_, i) => (
                 <ProductCardSkeleton key={`skeleton-${i}`} />
               ))}
             </div>
           ) : (
             <>
-              <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 min-[1800px]:grid-cols-7 gap-2.5 sm:gap-3.5 transition-opacity duration-150 ${loading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+              <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-2.5 sm:gap-3.5 transition-opacity duration-150 ${loading ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
                 {products.map((prod) => (
                   <ProductCard key={prod._id} product={prod} />
                 ))}
