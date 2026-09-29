@@ -34,9 +34,7 @@ const nextConfig = {
     ],
   },
   experimental: {
-    workerThreads: false,
-    cpus: 1,
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'three'],
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,

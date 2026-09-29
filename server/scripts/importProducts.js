@@ -34,7 +34,7 @@ const DEFAULT_CATEGORIES = [
   { name: "Surgical Items", slug: "surgical-items" },
   { name: "Dermatology", slug: "dermatology" },
   { name: "Diagnostics", slug: "diagnostics" },
-  { name: "Diapers & Napkins", slug: "diapers-napkins" },
+  { name: "Diapers & BabyCare", slug: "diapers-napkins" },
   { name: "Patient Supports", slug: "patient-supports" },
   { name: "General Items", slug: "general-items" },
   { name: "Beverages", slug: "beverages" },

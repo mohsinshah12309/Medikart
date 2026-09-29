@@ -37,7 +37,7 @@
 | **Surgical Items** | `/category/surgical-items` | Buy Surgical Items Online Pakistan | **110 Keywords** |
 | **Dermatology** | `/category/dermatology` | Buy Dermatology Online Pakistan | **110 Keywords** |
 | **Diagnostics** | `/category/diagnostics` | Buy Diagnostics Online Pakistan | **110 Keywords** |
-| **Diapers & Napkins** | `/category/diapers-napkins` | Buy Diapers & Napkins Online Pakistan | **110 Keywords** |
+| **Diapers & BabyCare** | `/category/diapers-napkins` | Buy Diapers & BabyCare Online Pakistan | **110 Keywords** |
 | **Patient Supports** | `/category/patient-supports` | Buy Patient Supports Online Pakistan | **110 Keywords** |
 | **General Items** | `/category/general-items` | Buy General Items Online Pakistan | **110 Keywords** |
 | **Beverages** | `/category/beverages` | Buy Beverages Online Pakistan | **110 Keywords** |
