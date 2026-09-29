@@ -145,7 +145,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
   let contactPhone = '923244489159';
-  let contactEmail = 'medikart.com@gmail.com';
+  let contactEmail = 'support@medikart.pk';
   let aboutText = 'Medikart connects customers with licensed partner pharmacies across Pakistan to deliver 100% genuine prescription and OTC medicines, vitamins, and healthcare essentials with 2–4 hr express delivery and nationwide Cash on Delivery.';
   let categories = [];
 

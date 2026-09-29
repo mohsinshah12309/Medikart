@@ -226,10 +226,10 @@ export default function PrivacyPolicyPage() {
             <p>
               Email:{" "}
               <a
-                href="mailto:medikart.com@gmail.com"
+                href="mailto:support@medikart.pk"
                 className="text-amber-800 font-bold hover:underline"
               >
-                medikart.com@gmail.com
+                support@medikart.pk
               </a>
             </p>
             <p>

@@ -199,7 +199,7 @@ function Settings({ token }) {
                   className="form-control"
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
-                  placeholder="medikart.com@gmail.com"
+                  placeholder="support@medikart.pk"
                   style={{ maxWidth: "320px" }}
                 />
               </div>

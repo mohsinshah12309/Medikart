@@ -21,7 +21,7 @@ export default function SecurityAnnouncementTicker({ contactPhone = "+92 324 448
       <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white border border-slate-300/90 shadow-2xs text-[11.5px] font-bold text-slate-800">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
         <span className="text-slate-500 font-medium">Official Domain:</span>
-        <span className="font-extrabold text-amber-700 tracking-tight">medikart.com</span>
+        <span className="font-extrabold text-amber-700 tracking-tight">medikart.pk</span>
       </span>
 
       <span className="text-amber-400 text-xs font-black">✦</span>

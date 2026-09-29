@@ -61,7 +61,7 @@ const pressSchema = {
     "legalName": "Banu Zahrah Pvt Ltd",
     "url": "https://medikart.pk",
     "logo": "https://medikart.pk/icon.png",
-    "email": "medikart.com@gmail.com",
+    "email": "info@medikart.pk",
     "telephone": "+923244489159",
     "address": {
       "@type": "PostalAddress",
@@ -228,7 +228,7 @@ export default function PressPage() {
 
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
             <a
-              href="mailto:medikart.com@gmail.com?subject=Press%20/%20Partnership%20Inquiry%20-%20Medikart"
+              href="mailto:info@medikart.pk?subject=Press%20/%20Partnership%20Inquiry%20-%20Medikart"
               className="btn-amber-gradient px-6 py-3 rounded-xl text-xs sm:text-sm font-black shadow-md flex items-center gap-2 cursor-pointer"
             >
               <Mail className="w-4 h-4" />

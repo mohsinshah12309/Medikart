@@ -54,7 +54,7 @@ const sendMailjetEmail = async ({ to, toName, subject, text, html }) => {
     return { success: false, error: "MAILJET_CREDENTIALS_NOT_CONFIGURED" };
   }
 
-  const senderEmail = process.env.MAILJET_SENDER_EMAIL || "medikart.com@gmail.com";
+  const senderEmail = process.env.MAILJET_SENDER_EMAIL || "support@medikart.pk";
   const senderName = process.env.MAILJET_SENDER_NAME || "Medikart Monthly Refill";
 
   const entityRefId = crypto.randomUUID

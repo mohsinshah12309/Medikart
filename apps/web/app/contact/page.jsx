@@ -74,7 +74,7 @@ export default function ContactPage() {
     }
   };
 
-  const defaultEmail = "medikart.com@gmail.com";
+  const defaultEmail = "contact@medikart.pk";
   const defaultPhone = "+92 324 4489159";
 
   return (

@@ -102,7 +102,7 @@ async function sendViaGmail({ to, subject, text, html, senderName, headers }) {
   const transporter = getGmailTransporter();
   if (!transporter) throw new Error("Google SMTP credentials not configured");
 
-  const fromEmail = process.env.GMAIL_USER || "medikart.com@gmail.com";
+  const fromEmail = process.env.GMAIL_USER || "support@medikart.pk";
   const info = await transporter.sendMail({
     from: `"${senderName}" <${fromEmail}>`,
     to,

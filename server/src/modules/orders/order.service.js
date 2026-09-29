@@ -836,7 +836,7 @@ const sendOrderCancellationEmail = async (order) => {
       <div style="font-size:12px;color:#64748b;line-height:1.6;">
         <p style="margin:0 0 6px 0;">If you have any questions or require assistance reordering, please reach out to us:</p>
         <p style="margin:0;">
-          ✉️ Email: <a href="mailto:medikart.com@gmail.com" style="color:#0284c7;text-decoration:none;">medikart.com@gmail.com</a> | 
+          ✉️ Email: <a href="mailto:support@medikart.pk" style="color:#0284c7;text-decoration:none;">support@medikart.pk</a> | 
           💬 WhatsApp: <a href="https://wa.me/923244489159" style="color:#16a34a;text-decoration:none;">03244489159</a>
         </p>
       </div>
@@ -846,7 +846,7 @@ const sendOrderCancellationEmail = async (order) => {
     to: order.customer.email,
     subject: `Order Cancelled #${String(order._id).slice(-6).toUpperCase()} — Medikart`,
     html,
-    text: `Hello ${order.customer.name},\n\nYour order #${order._id} has been cancelled.\nReason: ${reasonNote}\n${refundNoteText}\n\nIf you have any questions, please contact us at medikart.com@gmail.com or WhatsApp: 03244489159.\n\nTeam Medikart`,
+    text: `Hello ${order.customer.name},\n\nYour order #${order._id} has been cancelled.\nReason: ${reasonNote}\n${refundNoteText}\n\nIf you have any questions, please contact us at support@medikart.pk or WhatsApp: 03244489159.\n\nTeam Medikart`,
     purpose: "order_cancelled",
     fromName: "Medikart Support",
   });

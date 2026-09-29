@@ -751,8 +751,8 @@ FAQ_100_DATASET = [
         "category": "returns",
         "categoryLabel": "Returns & Customer Support",
         "question": "How can I contact Medikart customer support?",
-        "answer": "You can reach Medikart customer support 24/7 via WhatsApp (+92 324 4489159), email (medikart.com@gmail.com), or through our contact page at https://medikart.pk/contact.",
-        "highlights": ["24/7 WhatsApp: +92 324 4489159", "Email: medikart.com@gmail.com", "Online contact form"]
+        "answer": "You can reach Medikart customer support 24/7 via WhatsApp (+92 324 4489159), email (support@medikart.pk), or through our contact page at https://medikart.pk/contact.",
+        "highlights": ["24/7 WhatsApp: +92 324 4489159", "Email: support@medikart.pk", "Online contact form"]
     },
     {
         "id": "ret-5",
@@ -767,7 +767,7 @@ FAQ_100_DATASET = [
         "category": "returns",
         "categoryLabel": "Returns & Customer Support",
         "question": "Can I request deletion of my account and personal data?",
-        "answer": "Yes. You can request complete deletion of your account and personal profile by emailing medikart.com@gmail.com or messaging support on WhatsApp.",
+        "answer": "Yes. You can request complete deletion of your account and personal profile by emailing support@medikart.pk or messaging support on WhatsApp.",
         "highlights": ["Full data deletion on request", "GDPR-aligned privacy rights", "Simple email request"]
     },
     {
