@@ -35,23 +35,23 @@ const MobileBottomNav = dynamic(() => import('../components/MobileBottomNav'), {
 // Design System Typography — Plus Jakarta Sans for headings, Inter for body/UI, Caveat for annotations
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['600', '700', '800'],
   variable: '--font-heading',
   display: 'swap',
+  adjustFontFallback: false,
 });
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   variable: '--font-body',
   display: 'swap',
+  adjustFontFallback: false,
 });
 
 const caveat = Caveat({
   subsets: ['latin'],
-  weight: ['600', '700'],
   variable: '--font-script',
   display: 'swap',
+  adjustFontFallback: false,
 });
 
 export const viewport = {
