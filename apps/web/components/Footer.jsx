@@ -133,7 +133,7 @@ export default function Footer({
     {
       name: "Facebook",
       icon: FacebookIcon,
-      href: "https://facebook.com/medikartpk",
+      href: "https://www.facebook.com/share/1GcQvQBE41/",
       hoverColor: "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]",
     },
     {

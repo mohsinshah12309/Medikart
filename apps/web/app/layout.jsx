@@ -215,7 +215,7 @@ export default async function RootLayout({ children }) {
       'availableLanguage': ['English', 'Urdu']
     },
     'sameAs': [
-      'https://facebook.com/medikartpk',
+      'https://www.facebook.com/share/1GcQvQBE41/',
       'https://instagram.com/medikartpk',
       'https://twitter.com/medikartpk',
       'https://linkedin.com/company/medikart-pk',

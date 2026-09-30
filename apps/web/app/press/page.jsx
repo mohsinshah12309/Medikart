@@ -70,7 +70,7 @@ const pressSchema = {
       "addressCountry": "PK"
     },
     "sameAs": [
-      "https://facebook.com/medikartpk",
+      "https://www.facebook.com/share/1GcQvQBE41/",
       "https://www.instagram.com/medikart.pakistan",
       "https://twitter.com/medikartpk",
       "https://linkedin.com/company/medikart-pk",
