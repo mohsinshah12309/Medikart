@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { BLOGS_DATA, getBlogBySlug } from "../../../data/blogsData";
 import ProductCard from "../../../components/ProductCard";
+import BlogInteractiveArticle from "../../../components/BlogInteractiveArticle";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -319,196 +320,64 @@ export default async function BlogPostPage({ params }) {
       </header>
 
       {/* ─── Branded 1200x630 Hero Thumbnail Banner ─── */}
-      <div className="relative w-full aspect-[1.91/1] rounded-3xl overflow-hidden shadow-warm-card border border-amber-200/80 bg-slate-950">
+      <div className="group relative w-full aspect-[1.91/1] rounded-3xl overflow-hidden shadow-warm-card border border-amber-200/90 bg-slate-950">
         <img
           src={bannerImg}
           alt={blog.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
           loading="eager"
         />
+        {/* Subtle overlay gradient & verified pill */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 text-amber-300 backdrop-blur-md text-[11px] font-black uppercase tracking-wider border border-amber-400/40 shadow-md">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <span>Medikart Clinical Guide</span>
+          </span>
+        </div>
       </div>
 
       {/* ─── Clinical Summary Callout ─── */}
-      <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 via-yellow-50/50 to-white border border-amber-200/90 shadow-2xs">
-        <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-900 mb-1.5">
-          <Sparkles className="w-4 h-4 text-amber-600" />
-          <span>Key Clinical Takeaway</span>
+      <div className="relative p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-50/90 via-yellow-50/40 to-white border-2 border-amber-300/80 shadow-warm-card overflow-hidden">
+        <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber-300/20 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative z-10 flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-300 text-slate-950 flex items-center justify-center font-bold shadow-3xs flex-shrink-0 mt-0.5 border border-amber-300">
+            <Sparkles className="w-5 h-5 text-slate-950" />
+          </div>
+          <div className="space-y-1">
+            <span className="text-xs font-black uppercase tracking-wider text-amber-950">
+              Key Clinical Takeaway
+            </span>
+            <p className="text-sm sm:text-base font-semibold text-slate-800 leading-relaxed">
+              {blog.summary}
+            </p>
+          </div>
         </div>
-        <p className="text-sm sm:text-base font-semibold text-slate-800 leading-relaxed">
-          {blog.summary}
-        </p>
       </div>
 
-      {/* ─── Structured Article Body (contentBlocks) ─── */}
-      <div className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed">
-        {blog.contentBlocks && blog.contentBlocks.length > 0 ? (
-          blog.contentBlocks.map((block, idx) => {
-            if (block.type === "heading") {
-              const HeadingTag = block.level === 3 ? "h3" : "h2";
-              return (
-                <HeadingTag
-                  key={idx}
-                  className={`${
-                    block.level === 3 ? "text-lg sm:text-xl font-extrabold" : "text-xl sm:text-2xl font-black"
-                  } font-heading text-slate-900 pt-3 flex items-center gap-2`}
-                >
-                  <span className="w-1.5 h-5 bg-amber-500 rounded-full inline-block flex-shrink-0" />
-                  <span>{block.text}</span>
-                </HeadingTag>
-              );
-            }
+      {/* ─── Interactive Blog Article (Reading Progress, TOC, Rich Markdown, FAQs, E-E-A-T) ─── */}
+      <BlogInteractiveArticle blog={blog} siteUrl={siteUrl} />
 
-            if (block.type === "paragraph") {
-              return (
-                <p key={idx} className="leading-relaxed text-slate-700">
-                  {block.text}
-                </p>
-              );
-            }
-
-            if (block.type === "table" && block.tableData) {
-              const { headers = [], rows = [] } = block.tableData;
-              return (
-                <div key={idx} className="my-6">
-                  {block.text && (
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                      <TableIcon className="w-4 h-4 text-amber-600" />
-                      <span>{block.text}</span>
-                    </div>
-                  )}
-                  <div className="overflow-x-auto rounded-2xl border border-amber-200 shadow-3xs bg-white">
-                    <table className="w-full text-left border-collapse text-xs sm:text-sm">
-                      {headers.length > 0 && (
-                        <thead className="bg-amber-100/80 text-amber-950 font-extrabold uppercase tracking-wider text-[11px] border-b border-amber-200">
-                          <tr>
-                            {headers.map((h, hIdx) => (
-                              <th key={hIdx} className="py-3 px-3 sm:px-4">
-                                {h}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                      )}
-                      <tbody className="divide-y divide-slate-100 text-slate-700">
-                        {rows.map((row, rIdx) => (
-                          <tr
-                            key={rIdx}
-                            className={rIdx % 2 === 0 ? "bg-white hover:bg-amber-50/40" : "bg-amber-50/20 hover:bg-amber-50/50"}
-                          >
-                            {row.map((cell, cIdx) => (
-                              <td key={cIdx} className="py-2.5 px-3 sm:px-4 font-medium">
-                                {cell}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              );
-            }
-
-            if (block.type === "callout") {
-              return (
-                <div
-                  key={idx}
-                  className="p-4 sm:p-5 rounded-2xl bg-amber-50/90 border border-amber-300 text-slate-800 my-5 shadow-2xs flex items-start gap-3"
-                >
-                  <ShieldCheck className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div className="text-xs sm:text-sm font-semibold leading-relaxed">
-                    {block.text}
-                  </div>
-                </div>
-              );
-            }
-
-            if (block.type === "faq" && block.faqItems && block.faqItems.length > 0) {
-              return (
-                <div key={idx} className="my-6 space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-800 mb-2">
-                    <HelpCircle className="w-4 h-4 text-emerald-600" />
-                    <span>Frequently Asked Questions</span>
-                  </div>
-                  {block.faqItems.map((faq, fIdx) => (
-                    <div
-                      key={fIdx}
-                      className="p-4 rounded-xl bg-white border border-slate-200 shadow-3xs space-y-1.5"
-                    >
-                      <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                        <span className="text-amber-600 font-black">Q:</span>
-                        <span>{faq.question}</span>
-                      </h4>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-5">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              );
-            }
-
-            if (block.type === "disclaimer") {
-              return (
-                <div
-                  key={idx}
-                  className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 text-xs my-4 leading-relaxed italic"
-                >
-                  {block.text}
-                </div>
-              );
-            }
-
-            return null;
-          })
-        ) : (
-          <p>{blog.content}</p>
-        )}
-
-        {/* ─── FAQ Section (AEO / Google Rich Results) ─── */}
-        {faqItems.length > 0 && (
-          <div className="my-6 space-y-3 pt-4 border-t border-slate-100">
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-800 mb-3">
-              <HelpCircle className="w-4 h-4 text-emerald-600" />
-              <span>Frequently Asked Questions</span>
-            </div>
-            {faqItems.map((faq, fIdx) => (
-              <div
-                key={fIdx}
-                className="p-4 rounded-xl bg-white border border-slate-200 shadow-3xs space-y-1.5"
+      {/* ─── Related Tags Pill Strip ─── */}
+      {blog.tags && blog.tags.length > 0 && (
+        <div className="pt-2">
+          <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+            <Tag className="w-3.5 h-3.5 text-slate-400" />
+            <span>Related Topics &amp; Search Tags</span>
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {blog.tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/blogs?q=${encodeURIComponent(tag)}`}
+                className="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-950 border border-slate-200 hover:border-amber-300 transition-all hover:scale-105 shadow-3xs"
               >
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 flex items-start gap-2">
-                  <span className="text-amber-600 font-black flex-shrink-0">Q:</span>
-                  <span>{faq.question}</span>
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-5">
-                  {faq.answer}
-                </p>
-              </div>
+                #{tag}
+              </Link>
             ))}
           </div>
-        )}
-
-        {/* Tags */}
-        {blog.tags && blog.tags.length > 0 && (
-          <div className="pt-3">
-            <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <Tag className="w-3.5 h-3.5 text-slate-400" />
-              <span>Related Topics &amp; Tags</span>
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {blog.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
 
       {/* ─── Instant Prescription Order Callout Banner ─── */}
