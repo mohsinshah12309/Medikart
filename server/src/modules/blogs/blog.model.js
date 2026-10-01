@@ -124,6 +124,12 @@ const BlogSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    faqSchema: [
+      {
+        question: { type: String, required: true },
+        answer: { type: String, required: true },
+      },
+    ],
     active: {
       type: Boolean,
       default: true,

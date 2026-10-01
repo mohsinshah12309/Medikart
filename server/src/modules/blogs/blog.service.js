@@ -177,9 +177,6 @@ async function updateBlog(id, data) {
  */
 async function seedInitialBlogsIfEmpty() {
   try {
-    const count = await Blog.countDocuments();
-    if (count > 0) return;
-
     // Load static blogs data from apps/web
     const blogsDataPath = path.resolve(__dirname, "../../../../apps/web/data/blogsData.js");
     if (!fs.existsSync(blogsDataPath)) return;
@@ -190,7 +187,7 @@ async function seedInitialBlogsIfEmpty() {
     if (!match) return;
 
     const rawData = eval(match[1]);
-    console.log(`[BlogService] Seeding ${rawData.length} initial healthcare blogs into MongoDB...`);
+    console.log(`[BlogService] Checking / syncing ${rawData.length} healthcare blogs into MongoDB...`);
 
     for (const item of rawData) {
       const contentBlocks = [
@@ -207,6 +204,16 @@ async function seedInitialBlogsIfEmpty() {
           type: "paragraph",
           text: "Healthcare management in Pakistan requires balancing cultural lifestyle habits with modern evidence-based clinical protocols. Whether preparing meals, administering pediatric formulations, or taking chronic daily prescription therapies, consistency and patient education are the most effective tools for preventing acute complications.",
         },
+      ];
+
+      if (Array.isArray(item.faqSchema) && item.faqSchema.length > 0) {
+        contentBlocks.push({
+          type: "faq",
+          faqItems: item.faqSchema,
+        });
+      }
+
+      contentBlocks.push(
         {
           type: "callout",
           text: "Licensed Pharmacist Advisory: Always inspect medicine packaging for DRAP registration numbers (D-Reg), lot numbers, and intact tamper seals. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
@@ -214,10 +221,10 @@ async function seedInitialBlogsIfEmpty() {
         {
           type: "disclaimer",
           text: "Medical Disclaimer: The information provided in this article is for educational purposes only and does not substitute for professional medical advice, clinical diagnosis, or treatment. Always seek the advice of a qualified healthcare provider or licensed pharmacist regarding any medical condition or prescription regimen in Pakistan.",
-        },
-      ];
+        }
+      );
 
-      await Blog.create({
+      const updateData = {
         title: item.title,
         slug: item.slug,
         summary: item.summary,
@@ -226,17 +233,26 @@ async function seedInitialBlogsIfEmpty() {
         categoryName: item.category,
         categorySlug: item.categorySlug,
         author: item.author,
+        authorTitle: item.authorTitle || "Medikart Clinical Editorial — Reviewed by Licensed Pakistani Pharmacists & Clinicians",
         readTimeMinutes: parseInt(item.readTime) || 4,
         tags: item.tags || [],
         relatedProductTags: (item.tags || []).map((t) => t.toLowerCase()),
         contentBlocks,
         content: item.content,
+        faqSchema: item.faqSchema || [],
+        metaDescription: item.metaDescription || item.summary,
         active: true,
         publishedAt: new Date(item.date || Date.now()),
-      });
+      };
+
+      await Blog.findOneAndUpdate(
+        { slug: item.slug },
+        { $set: updateData },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
     }
 
-    console.log("[BlogService] Initial blogs seeded successfully.");
+    console.log("[BlogService] Initial blogs seeded and synced successfully.");
   } catch (err) {
     console.warn("[BlogService] Seed initial blogs error:", err.message);
   }
