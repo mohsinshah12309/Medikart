@@ -57,6 +57,8 @@ async function getBlogData(slug) {
         categorySlug: staticBlog.categorySlug,
         readTimeMinutes: parseInt(staticBlog.readTime) || 4,
         publishedAt: staticBlog.date,
+        metaDescription: staticBlog.metaDescription || null,
+        faqSchema: staticBlog.faqSchema || [],
         contentBlocks: [
           { type: "paragraph", text: staticBlog.content },
           { type: "heading", level: 2, text: "Doctor & Pharmacist Guidance for Pakistani Families" },
@@ -64,6 +66,10 @@ async function getBlogData(slug) {
             type: "paragraph",
             text: "Healthcare management in Pakistan requires balancing cultural lifestyle habits with modern evidence-based clinical protocols. Whether preparing meals, administering pediatric formulations, or taking chronic daily prescription therapies, consistency and patient education are the most effective tools for preventing acute complications.",
           },
+          ...(staticBlog.faqSchema && staticBlog.faqSchema.length > 0 ? [{
+            type: "faq",
+            faqItems: staticBlog.faqSchema,
+          }] : []),
           {
             type: "callout",
             text: "Pharmacist Advisory: Always inspect medicine packaging for intact tamper seals, verified batch numbers, and correct expiration dates. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
@@ -104,7 +110,7 @@ export async function generateMetadata({ params }) {
   }
 
   const title = `${blog.title} | Medikart Health Guide`;
-  const description = blog.summary || (blog.content ? blog.content.slice(0, 150) + '...' : `Read ${blog.title} on Medikart Pakistan.`);
+  const description = blog.metaDescription || blog.summary || (blog.content ? blog.content.slice(0, 155) + '...' : `Read ${blog.title} on Medikart Pakistan.`);
   const canonicalUrl = `${siteUrl}/blogs/${slug}`;
   const bannerImg = blog.thumbnailUrl || blog.image || `${siteUrl}/og-image.png`;
   const fullBannerUrl = bannerImg.startsWith('http') ? bannerImg : `${siteUrl}${bannerImg.startsWith('/') ? '' : '/'}${bannerImg}`;
@@ -184,14 +190,16 @@ export default async function BlogPostPage({ params }) {
     'description': blog.summary || blog.title,
     'image': [fullBannerUrl],
     'datePublished': blog.publishedAt || blog.date || '2026-09-01',
-    'dateModified': blog.publishedAt || blog.date || '2026-09-01',
+    'dateModified': blog.updatedAt || blog.publishedAt || blog.date || '2026-09-01',
     'author': {
       '@type': 'Organization',
       'name': blog.author || 'Medikart Health Team',
+      'url': siteUrl,
     },
     'publisher': {
       '@type': 'Organization',
       'name': 'Medikart',
+      'url': siteUrl,
       'logo': {
         '@type': 'ImageObject',
         'url': `${siteUrl}/icon.png`,
@@ -201,7 +209,25 @@ export default async function BlogPostPage({ params }) {
       '@type': 'WebPage',
       '@id': canonicalUrl,
     },
+    'keywords': Array.isArray(blog.tags) ? blog.tags.join(', ') : '',
+    'articleSection': blog.categoryName || 'Health & Wellness',
+    'inLanguage': 'en-PK',
   };
+
+  // AEO: FAQPage schema for Google AI Overviews & rich snippet FAQ results
+  const faqItems = blog.faqSchema || [];
+  const faqJsonLd = faqItems.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': faqItems.map((faq) => ({
+      '@type': 'Question',
+      'name': faq.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': faq.answer,
+      },
+    })),
+  } : null;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -238,6 +264,12 @@ export default async function BlogPostPage({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       {/* ─── Top Breadcrumb Navigation ─── */}
       <div className="flex items-center justify-between pt-2">
         <Link
@@ -433,6 +465,30 @@ export default async function BlogPostPage({ params }) {
           <p>{blog.content}</p>
         )}
 
+        {/* ─── FAQ Section (AEO / Google Rich Results) ─── */}
+        {faqItems.length > 0 && (
+          <div className="my-6 space-y-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-800 mb-3">
+              <HelpCircle className="w-4 h-4 text-emerald-600" />
+              <span>Frequently Asked Questions</span>
+            </div>
+            {faqItems.map((faq, fIdx) => (
+              <div
+                key={fIdx}
+                className="p-4 rounded-xl bg-white border border-slate-200 shadow-3xs space-y-1.5"
+              >
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 flex items-start gap-2">
+                  <span className="text-amber-600 font-black flex-shrink-0">Q:</span>
+                  <span>{faq.question}</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pl-5">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Tags */}
         {blog.tags && blog.tags.length > 0 && (
           <div className="pt-3">
@@ -453,6 +509,7 @@ export default async function BlogPostPage({ params }) {
           </div>
         )}
       </div>
+
 
       {/* ─── Instant Prescription Order Callout Banner ─── */}
       <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-500 via-amber-500 to-yellow-500 text-slate-950 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-amber-glow">
