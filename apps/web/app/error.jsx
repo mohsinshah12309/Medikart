@@ -32,13 +32,15 @@ export default function Error({ error, reset }) {
             </p>
 
             {/* Developer debug info: strictly hidden in production to prevent information disclosure */}
-            {isDev && error?.message && (
-              <details className="mt-3 text-left bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 max-w-md mx-auto">
+            {isDev && (
+              <details open className="mt-3 text-left bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 max-w-md mx-auto">
                 <summary className="cursor-pointer font-bold text-amber-800 select-none">
                   Developer Debug Details (Development Only)
                 </summary>
-                <div className="mt-2 font-mono text-[11px] text-red-600 bg-red-50 p-2 rounded-lg break-all">
-                  {error.message}
+                <div className="mt-2 font-mono text-[11px] text-red-600 bg-red-50 p-2 rounded-lg break-all whitespace-pre-wrap">
+                  {error?.message || "No error message provided"}
+                  {error?.digest && `\nDigest: ${error.digest}`}
+                  {error?.stack && `\n\nStack:\n${error.stack}`}
                 </div>
               </details>
             )}

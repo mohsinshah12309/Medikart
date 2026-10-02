@@ -18,20 +18,25 @@ export function PwaInstallProvider({ children }) {
   const [showInstallModal, setShowInstallModal] = useState(false);
 
   useEffect(() => {
-    // 1. Register Service Worker for PWA
+    // 1. Register Service Worker for PWA (Production Only)
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then((reg) => {
-          if (process.env.NODE_ENV !== "production") {
-            console.log("[PWA] Service worker registered with scope:", reg.scope);
-          }
-        })
-        .catch((err) => {
-          if (process.env.NODE_ENV !== "production") {
+      if (process.env.NODE_ENV === "production") {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .catch((err) => {
             console.warn("[PWA] Service worker registration failed:", err);
-          }
+          });
+      } else {
+        // In development, unregister any existing service worker and purge caches to prevent chunk caching issues
+        navigator.serviceWorker.getRegistrations().then((regs) => {
+          regs.forEach((r) => r.unregister());
         });
+        if (typeof window !== "undefined" && "caches" in window) {
+          caches.keys().then((keys) => {
+            keys.forEach((key) => caches.delete(key));
+          });
+        }
+      }
     }
 
     // 2. Check if already running in standalone mode (installed PWA)

@@ -12,13 +12,13 @@ import {
   ShoppingBag,
   Layers,
   CheckCircle2,
+  BookOpen,
+  MessageCircle,
+  HelpCircle,
+  ChevronDown,
 } from "lucide-react";
 import { BLOGS_DATA, getBlogBySlug } from "../../../data/blogsData";
 import ProductCard from "../../../components/ProductCard";
-import ReadingProgressBar from "../../../components/blog/ReadingProgressBar";
-import BlogShareBar from "../../../components/blog/BlogShareBar";
-import BlogTableOfContents from "../../../components/blog/BlogTableOfContents";
-import BlogFaqAccordion from "../../../components/blog/BlogFaqAccordion";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -292,8 +292,7 @@ export default async function BlogPostPage({ params }) {
     'inLanguage': 'en-PK',
   };
 
-  // AEO: FAQPage schema for Google AI Overviews & rich snippet FAQ results
-  const faqItems = blog.faqSchema || [];
+  const faqItems = Array.isArray(blog.faqSchema) ? blog.faqSchema : [];
   const faqJsonLd = faqItems.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -371,6 +370,7 @@ export default async function BlogPostPage({ params }) {
     }));
 
   const wordCount = rawContent.split(/\s+/).filter(Boolean).length;
+  const articleUrl = `${siteUrl}/blogs/${slug}`;
 
   return (
     <article className="max-w-4xl mx-auto flex flex-col gap-8 pb-16 text-left animate-fade-in-up">
@@ -388,9 +388,6 @@ export default async function BlogPostPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
-
-      {/* ─── Reading Progress Bar (Client Island) ─── */}
-      <ReadingProgressBar />
 
       {/* ─── Top Breadcrumb Navigation ─── */}
       <div className="flex items-center justify-between pt-2">
@@ -448,7 +445,6 @@ export default async function BlogPostPage({ params }) {
           className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
           loading="eager"
         />
-        {/* Subtle overlay gradient & verified pill */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
         <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex items-center gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 text-amber-300 backdrop-blur-md text-[11px] font-black uppercase tracking-wider border border-amber-400/40 shadow-md">
@@ -476,17 +472,85 @@ export default async function BlogPostPage({ params }) {
         </div>
       </div>
 
-      {/* ─── Engagement & Share Bar (Client Island) ─── */}
-      <BlogShareBar
-        title={blog.title}
-        slug={slug}
-        wordCount={wordCount}
-        readTimeMinutes={blog.readTimeMinutes || 6}
-        siteUrl={siteUrl}
-      />
+      {/* ─── Engagement & Share Bar (Native Static HTML) ─── */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4 my-2 rounded-2xl bg-gradient-to-r from-amber-50/80 via-white to-amber-50/50 border border-amber-200/80 shadow-3xs">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>DRAP &amp; PMDC Verified</span>
+          </div>
 
-      {/* ─── Table of Contents (Client Island) ─── */}
-      <BlogTableOfContents tocItems={tocItems} />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-700 border border-slate-200 font-semibold shadow-3xs">
+            <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+            <span>{wordCount.toLocaleString()} words</span>
+          </div>
+
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-slate-700 border border-slate-200 font-semibold shadow-3xs">
+            <Clock className="w-3.5 h-3.5 text-amber-600" />
+            <span>{blog.readTimeMinutes || 6} min deep read</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+              `Read "${blog.title}" on Medikart: ${articleUrl}`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-3xs hover:scale-105 transition-all"
+            title="Share on WhatsApp"
+            aria-label="Share on WhatsApp"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>Share on WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+      {/* ─── Table of Contents (Native Smooth Jump Grid) ─── */}
+      {tocItems.length > 0 && (
+        <nav
+          aria-label="Table of contents"
+          className="my-6 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white p-5 sm:p-6 border border-amber-400/30 shadow-warm-card relative overflow-hidden"
+        >
+          <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center font-bold text-sm border border-amber-400/30">
+                <Layers className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-sm sm:text-base font-black tracking-tight text-white flex items-center gap-2">
+                  <span>In This Medical Guide</span>
+                  <span className="text-[11px] font-bold text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-full border border-amber-400/30">
+                    {tocItems.length} Key Topics
+                  </span>
+                </h2>
+                <p className="text-[11px] text-slate-400">
+                  Click any chapter to jump directly
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+            {tocItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="text-left p-2.5 rounded-xl transition-all duration-200 flex items-start gap-2.5 text-xs font-semibold cursor-pointer border bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border-white/5 hover:border-amber-400/40"
+              >
+                <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md flex-shrink-0 mt-0.5 bg-white/10 text-amber-300">
+                  {String(item.index).padStart(2, "0")}
+                </span>
+                <span className="line-clamp-2 leading-snug">{item.text}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
 
       {/* ─── Server Rendered Structured Article Body ─── */}
       <div className="space-y-8 my-6">
@@ -605,8 +669,48 @@ export default async function BlogPostPage({ params }) {
         </div>
       </div>
 
-      {/* ─── Interactive FAQ Accordion (Client Island) ─── */}
-      <BlogFaqAccordion faqItems={blog.faqSchema || []} />
+      {/* ─── Interactive FAQ Accordion (Native <details> Accordion) ─── */}
+      {faqItems.length > 0 && (
+        <section className="my-8 pt-6 border-t-2 border-slate-200 space-y-4">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-800 mb-1">
+              <HelpCircle className="w-4 h-4 text-emerald-600" />
+              <span>Google AI &amp; AEO Answers</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black font-heading text-slate-900">
+              Frequently Asked Questions ({faqItems.length})
+            </h3>
+          </div>
+
+          <div className="space-y-3 pt-1">
+            {faqItems.map((faq, fIdx) => (
+              <details
+                key={faq._id || fIdx}
+                className="group rounded-2xl border border-slate-200 bg-white hover:bg-slate-50/80 transition-all shadow-3xs overflow-hidden open:bg-amber-50/40 open:border-amber-300 open:shadow-2xs"
+              >
+                <summary className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-3 cursor-pointer list-none select-none">
+                  <div className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-amber-100 text-amber-900 font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5 border border-amber-200">
+                      Q
+                    </span>
+                    <h4 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
+                      {faq.question}
+                    </h4>
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-slate-100 group-open:bg-amber-200 group-open:text-amber-950 flex items-center justify-center text-slate-600 flex-shrink-0 transition-transform duration-200 group-open:rotate-180">
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </summary>
+                <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-amber-200/60 bg-white/60">
+                  <div className="pl-9 space-y-2">
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ─── E-E-A-T Author & Reviewer Card ─── */}
       <div className="my-8 p-5 rounded-2xl bg-white border border-slate-200 shadow-3xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
