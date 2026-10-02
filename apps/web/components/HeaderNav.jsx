@@ -120,7 +120,6 @@ export default function HeaderNav({ initialCategories = [] }) {
     { name: "Home", href: "/" },
     { name: "Instant Order", href: "/instant-order" },
     { name: "Categories", href: "#categories", isDropdown: true },
-    { name: "Blogs", href: "/blogs" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];

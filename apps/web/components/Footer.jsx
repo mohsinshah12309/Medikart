@@ -161,7 +161,7 @@ export default function Footer({
   const navigateLinks = [
     { label: "Home", href: "/" },
     { label: "Instant Order", href: "/instant-order", badge: "Fast" },
-    { label: "Health & Medicine Blogs", href: "/blogs", badge: "Guides" },
+    { label: "Health & Medicine Blogs", href: "/blogs" },
     { label: "Prescription Refill", href: "/refill" },
     { label: "Press & Partnerships", href: "/press" },
     { label: "About Medikart", href: "/about" },
@@ -205,18 +205,6 @@ export default function Footer({
               <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium max-w-sm">
                 Connecting Pakistani families with licensed neighborhood pharmacies for authentic prescription medicines, clinical devices, and daily wellness delivered rapidly to your doorstep.
               </p>
-
-              {/* Health Blogs Quick Action Button */}
-              <div className="pt-0.5">
-                <Link
-                  href="/blogs"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-yellow-400 hover:text-yellow-300 font-black text-xs shadow-xs hover:shadow-md transition-all hover:scale-[1.02] active:scale-95 border border-yellow-400/40 group cursor-pointer"
-                >
-                  <BookOpen className="w-4 h-4 text-yellow-400 group-hover:scale-110 transition-transform" />
-                  <span>Explore Health &amp; Medicine Blogs</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-yellow-400 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </div>
 
               {/* Follow Us Section */}
               <div className="pt-2 flex flex-col gap-2.5 w-full">
@@ -322,19 +310,7 @@ export default function Footer({
                     </Link>
                   </li>
                 ))}
-                <li className="pt-2 flex flex-col gap-2">
-                  <Link
-                    href="/blogs"
-                    className="inline-flex items-center justify-between w-full px-3 py-2 rounded-xl bg-white/90 hover:bg-white text-slate-950 font-black text-xs border border-amber-300 shadow-2xs hover:shadow-xs transition-all hover:scale-[1.02] active:scale-95 group cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-                      <span>Health Blogs</span>
-                    </div>
-                    <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-[#FFCB05] text-slate-950 group-hover:translate-x-0.5 transition-transform">
-                      60+ Articles →
-                    </span>
-                  </Link>
+                <li className="pt-1">
                   <InstallAppButton variant="footer" />
                 </li>
               </ul>
