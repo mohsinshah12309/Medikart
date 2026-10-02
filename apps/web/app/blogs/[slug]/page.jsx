@@ -8,15 +8,17 @@ import {
   ShieldCheck,
   Sparkles,
   ArrowRight,
-  HelpCircle,
-  Table as TableIcon,
   Tag,
   ShoppingBag,
   Layers,
+  CheckCircle2,
 } from "lucide-react";
 import { BLOGS_DATA, getBlogBySlug } from "../../../data/blogsData";
 import ProductCard from "../../../components/ProductCard";
-import BlogInteractiveArticle from "../../../components/BlogInteractiveArticle";
+import ReadingProgressBar from "../../../components/blog/ReadingProgressBar";
+import BlogShareBar from "../../../components/blog/BlogShareBar";
+import BlogTableOfContents from "../../../components/blog/BlogTableOfContents";
+import BlogFaqAccordion from "../../../components/blog/BlogFaqAccordion";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -60,26 +62,6 @@ async function getBlogData(slug) {
         publishedAt: staticBlog.date,
         metaDescription: staticBlog.metaDescription || null,
         faqSchema: staticBlog.faqSchema || [],
-        contentBlocks: [
-          { type: "paragraph", text: staticBlog.content },
-          { type: "heading", level: 2, text: "Doctor & Pharmacist Guidance for Pakistani Families" },
-          {
-            type: "paragraph",
-            text: "Healthcare management in Pakistan requires balancing cultural lifestyle habits with modern evidence-based clinical protocols. Whether preparing meals, administering pediatric formulations, or taking chronic daily prescription therapies, consistency and patient education are the most effective tools for preventing acute complications.",
-          },
-          ...(staticBlog.faqSchema && staticBlog.faqSchema.length > 0 ? [{
-            type: "faq",
-            faqItems: staticBlog.faqSchema,
-          }] : []),
-          {
-            type: "callout",
-            text: "Pharmacist Advisory: Always inspect medicine packaging for intact tamper seals, verified batch numbers, and correct expiration dates. If symptoms persist beyond 48 hours or you observe high fever, dyspnea, or severe pain, consult your physician immediately.",
-          },
-          {
-            type: "disclaimer",
-            text: "Medical Disclaimer: The information provided in this article is for educational purposes only and does not substitute for professional medical advice, clinical diagnosis, or treatment. Always seek the advice of a qualified healthcare provider regarding any medical condition or prescription regimen.",
-          },
-        ],
       },
       relatedBlogs: BLOGS_DATA.filter((b) => b.categorySlug === staticBlog.categorySlug && b.slug !== staticBlog.slug).slice(0, 3),
       relatedCategories: [
@@ -158,6 +140,101 @@ export async function generateMetadata({ params }) {
       images: [fullBannerUrl],
     },
   };
+}
+
+// Helpers for Server-Side Markdown Parsing
+function slugifyHeading(text) {
+  return (text || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function renderBoldText(text) {
+  if (!text) return null;
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="font-extrabold text-slate-900">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
+function renderRichText(text) {
+  if (!text) return null;
+
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIdx = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    if (match.index > lastIdx) {
+      parts.push({ type: "text", content: text.slice(lastIdx, match.index) });
+    }
+    parts.push({
+      type: "link",
+      text: match[1],
+      url: match[2],
+    });
+    lastIdx = linkRegex.lastIndex;
+  }
+
+  if (lastIdx < text.length) {
+    parts.push({ type: "text", content: text.slice(lastIdx) });
+  }
+
+  return (
+    <>
+      {parts.map((p, idx) => {
+        if (p.type === "link") {
+          const isInternal =
+            p.url.includes("medikart.pk") || p.url.startsWith("/");
+          const cleanUrl = p.url.replace("https://medikart.pk", "") || "/";
+
+          if (isInternal) {
+            return (
+              <Link
+                key={idx}
+                href={cleanUrl}
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 mx-1 font-bold text-xs sm:text-sm text-slate-900 bg-gradient-to-r from-amber-200/90 via-yellow-200 to-amber-100 hover:from-amber-300 hover:to-yellow-300 rounded-lg border border-amber-300/80 shadow-3xs hover:shadow-2xs transition-all duration-200 hover:-translate-y-0.5 group/link"
+              >
+                <span className="text-amber-800 text-xs">💊</span>
+                <span className="underline decoration-amber-500/50 underline-offset-2">
+                  {p.text}
+                </span>
+                <span className="text-amber-800 opacity-70 group-hover/link:opacity-100 group-hover/link:translate-x-0.5 transition-all text-xs">
+                  →
+                </span>
+              </Link>
+            );
+          }
+
+          return (
+            <a
+              key={idx}
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 mx-1 font-semibold text-emerald-800 hover:text-emerald-950 underline decoration-emerald-400 decoration-2 underline-offset-2 hover:decoration-emerald-700 transition-colors"
+            >
+              <span>{p.text}</span>
+              <span className="text-[11px] text-emerald-600 font-bold">↗</span>
+            </a>
+          );
+        }
+
+        return <span key={idx}>{renderBoldText(p.content)}</span>;
+      })}
+    </>
+  );
 }
 
 export default async function BlogPostPage({ params }) {
@@ -255,6 +332,46 @@ export default async function BlogPostPage({ params }) {
     ],
   };
 
+  // Server-side parsing of ## headings and paragraphs
+  const rawContent = blog.content || "";
+  const lines = rawContent.split("\n");
+  const parsedSections = [];
+  let currentHeading = null;
+  let currentParagraphs = [];
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("## ")) {
+      if (currentHeading || currentParagraphs.length > 0) {
+        parsedSections.push({
+          heading: currentHeading,
+          paragraphs: currentParagraphs,
+        });
+      }
+      currentHeading = trimmed.replace(/^##\s+/, "");
+      currentParagraphs = [];
+    } else if (trimmed.length > 0) {
+      currentParagraphs.push(trimmed);
+    }
+  });
+
+  if (currentHeading || currentParagraphs.length > 0) {
+    parsedSections.push({
+      heading: currentHeading,
+      paragraphs: currentParagraphs,
+    });
+  }
+
+  const tocItems = parsedSections
+    .filter((s) => Boolean(s.heading))
+    .map((s, idx) => ({
+      id: slugifyHeading(s.heading),
+      text: s.heading,
+      index: idx + 1,
+    }));
+
+  const wordCount = rawContent.split(/\s+/).filter(Boolean).length;
+
   return (
     <article className="max-w-4xl mx-auto flex flex-col gap-8 pb-16 text-left animate-fade-in-up">
       <script
@@ -271,6 +388,10 @@ export default async function BlogPostPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
+
+      {/* ─── Reading Progress Bar (Client Island) ─── */}
+      <ReadingProgressBar />
+
       {/* ─── Top Breadcrumb Navigation ─── */}
       <div className="flex items-center justify-between pt-2">
         <Link
@@ -307,7 +428,7 @@ export default async function BlogPostPage({ params }) {
 
           <div className="flex items-center gap-1.5">
             <Clock className="w-4 h-4 text-slate-400" />
-            <span>{blog.readTimeMinutes || 4} min read</span>
+            <span>{blog.readTimeMinutes || 6} min read</span>
           </div>
 
           <span className="text-slate-300">•</span>
@@ -355,8 +476,167 @@ export default async function BlogPostPage({ params }) {
         </div>
       </div>
 
-      {/* ─── Interactive Blog Article (Reading Progress, TOC, Rich Markdown, FAQs, E-E-A-T) ─── */}
-      <BlogInteractiveArticle blog={blog} siteUrl={siteUrl} />
+      {/* ─── Engagement & Share Bar (Client Island) ─── */}
+      <BlogShareBar
+        title={blog.title}
+        slug={slug}
+        wordCount={wordCount}
+        readTimeMinutes={blog.readTimeMinutes || 6}
+        siteUrl={siteUrl}
+      />
+
+      {/* ─── Table of Contents (Client Island) ─── */}
+      <BlogTableOfContents tocItems={tocItems} />
+
+      {/* ─── Server Rendered Structured Article Body ─── */}
+      <div className="space-y-8 my-6">
+        {parsedSections.map((section, sIdx) => {
+          const headingId = section.heading
+            ? slugifyHeading(section.heading)
+            : `section-${sIdx}`;
+
+          return (
+            <section
+              key={sIdx}
+              id={headingId}
+              className="scroll-mt-24 space-y-4 group/section"
+            >
+              {section.heading && (
+                <div className="pt-4 border-t border-slate-200/80">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-md border border-amber-300/80 shadow-3xs">
+                      Section {String(sIdx + 1).padStart(2, "0")}
+                    </span>
+                    <span className="h-px flex-1 bg-gradient-to-r from-amber-300/60 to-transparent" />
+                  </div>
+
+                  <h2 className="text-xl sm:text-2xl lg:text-[26px] font-black font-heading text-slate-900 tracking-tight leading-snug flex items-center justify-between group">
+                    <span>{section.heading}</span>
+                    <a
+                      href={`#${headingId}`}
+                      className="opacity-0 group-hover:opacity-100 text-amber-600 hover:text-amber-700 text-sm font-bold transition-opacity p-1.5"
+                      title="Link to this section"
+                      aria-label={`Link to section ${section.heading}`}
+                    >
+                      #
+                    </a>
+                  </h2>
+                </div>
+              )}
+
+              {/* Render Section Paragraphs */}
+              <div className="space-y-4 text-slate-700 leading-relaxed text-[15px] sm:text-[16.5px]">
+                {section.paragraphs.map((p, pIdx) => {
+                  if (p.startsWith("- ") || p.startsWith("* ")) {
+                    return (
+                      <div
+                        key={pIdx}
+                        className="flex items-start gap-3 p-3 rounded-xl bg-amber-50/40 border border-amber-200/60 text-slate-800 shadow-3xs"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-1" />
+                        <div className="leading-snug">
+                          {renderRichText(p.replace(/^[-*]\s+/, ""))}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  const isLead = sIdx === 0 && pIdx === 0;
+
+                  return (
+                    <p
+                      key={pIdx}
+                      className={`leading-relaxed text-slate-700 ${
+                        isLead
+                          ? "text-base sm:text-lg font-medium text-slate-800 bg-gradient-to-r from-amber-50/60 via-white to-transparent p-4 rounded-2xl border-l-4 border-amber-400 shadow-3xs"
+                          : ""
+                      }`}
+                    >
+                      {renderRichText(p)}
+                    </p>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      {/* ─── DRAP Pharmacist Advisory Card ─── */}
+      <div className="my-8 p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-50 via-yellow-50/40 to-white border-2 border-amber-300 shadow-warm-card relative overflow-hidden">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold shadow-md flex-shrink-0">
+            <ShieldCheck className="w-6 h-6 text-slate-950" />
+          </div>
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black uppercase tracking-wider text-amber-950 bg-amber-200 px-2 py-0.5 rounded-full border border-amber-300">
+                DRAP Clinical Standard
+              </span>
+              <span className="text-xs text-slate-500 font-semibold">
+                Licensed Pharmacist Verification
+              </span>
+            </div>
+            <h3 className="text-base sm:text-lg font-black text-slate-900">
+              Need Help Choosing Authentic Medicines in Pakistan?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              Always verify genuine DRAP registration codes (D-Reg), batch numbers,
+              and temperature storage seals on all pharmaceutical products. Our
+              licensed pharmacists are on standby to verify your prescription
+              online.
+            </p>
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <Link
+                href="/instant-order"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950 hover:bg-slate-900 text-white text-xs font-bold shadow-sm transition-all hover:scale-105"
+              >
+                <span>Upload Doctor Prescription</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-amber-50 text-slate-900 text-xs font-bold border border-slate-200 shadow-3xs transition-all"
+              >
+                <span>Consult Pharmacist</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Interactive FAQ Accordion (Client Island) ─── */}
+      <BlogFaqAccordion faqItems={blog.faqSchema || []} />
+
+      {/* ─── E-E-A-T Author & Reviewer Card ─── */}
+      <div className="my-8 p-5 rounded-2xl bg-white border border-slate-200 shadow-3xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-yellow-300 text-slate-950 font-black text-lg flex items-center justify-center shadow-3xs border border-amber-300">
+            👨‍⚕️
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h4 className="font-extrabold text-slate-900 text-sm">
+                {blog.author || "Medikart Health Team"}
+              </h4>
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300">
+                ✓ Verified Clinical Team
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {blog.authorTitle ||
+                "Medikart Clinical Editorial — Reviewed by Licensed Pakistani Pharmacists & Clinicians"}
+            </p>
+          </div>
+        </div>
+
+        <Link
+          href="/faqs"
+          className="text-xs font-bold text-amber-800 hover:text-amber-950 bg-amber-50 hover:bg-amber-100 px-3.5 py-2 rounded-xl border border-amber-200 transition-colors whitespace-nowrap"
+        >
+          View Editorial Guidelines &rarr;
+        </Link>
+      </div>
 
       {/* ─── Related Tags Pill Strip ─── */}
       {blog.tags && blog.tags.length > 0 && (
@@ -378,7 +658,6 @@ export default async function BlogPostPage({ params }) {
           </div>
         </div>
       )}
-
 
       {/* ─── Instant Prescription Order Callout Banner ─── */}
       <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-500 via-amber-500 to-yellow-500 text-slate-950 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-amber-glow">
