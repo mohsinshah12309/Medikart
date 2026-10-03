@@ -140,7 +140,7 @@ export default function Footer({
     {
       name: "Instagram",
       icon: InstagramIcon,
-      href: "https://www.instagram.com/medikart.pakistan",
+      href: "https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl",
       hoverColor: "hover:bg-[#E4405F] hover:text-white hover:border-[#E4405F]",
     },
     {

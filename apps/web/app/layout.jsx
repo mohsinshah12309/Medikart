@@ -216,7 +216,7 @@ export default async function RootLayout({ children }) {
     },
     'sameAs': [
       'https://www.facebook.com/share/1GcQvQBE41/',
-      'https://instagram.com/medikartpk',
+      'https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl',
       'https://twitter.com/medikartpk',
       'https://linkedin.com/company/medikart-pk',
       'https://youtube.com/@medikartpk'

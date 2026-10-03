@@ -205,6 +205,31 @@ export default function ContactPage() {
                   <span className="text-slate-600 font-medium">Monday — Sunday: 24/7 Nationwide Digital Ordering &amp; Customer Support</span>
                 </div>
               </div>
+
+              {/* Official Instagram Channel */}
+              <div className="p-4 bg-gradient-to-r from-amber-50 via-yellow-50 to-white border-2 border-yellow-200 rounded-2xl flex items-center justify-between gap-3 shadow-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] flex items-center justify-center text-white text-lg shadow-xs">
+                    📸
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase tracking-wider font-black text-slate-900 block">
+                      Official Instagram
+                    </span>
+                    <span className="text-[11px] text-slate-600 font-semibold">
+                      @medikartpakistan
+                    </span>
+                  </div>
+                </div>
+                <a
+                  href="https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 bg-slate-950 hover:bg-slate-900 text-yellow-400 hover:text-yellow-300 text-xs font-black rounded-xl shadow-xs transition-transform hover:scale-105 active:scale-95"
+                >
+                  Follow →
+                </a>
+              </div>
             </div>
           )}
         </div>
