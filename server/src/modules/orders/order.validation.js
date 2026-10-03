@@ -13,19 +13,22 @@
 
 const { z } = require("zod");
 
+const customerSchema = z.object({
+  name: z.string().min(1, "Customer name is required").max(200, "Customer name cannot exceed 200 characters").trim(),
+  email: z
+    .string()
+    .email("Valid email address is required")
+    .max(254, "Email cannot exceed 254 characters")
+    .trim()
+    .toLowerCase(),
+  phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
+  address: z.string().min(1, "Delivery address is required").max(500, "Delivery address cannot exceed 500 characters").trim(),
+  city: z.string().min(1, "City is required").max(100, "City cannot exceed 100 characters").trim(),
+});
+
 // POST /api/v1/orders/standard — customer-facing, no auth
 const placeStandardOrderSchema = z.object({
-  customer: z.object({
-    name: z.string().min(1, "Customer name is required").trim(),
-    email: z
-      .string()
-      .email("Valid email address is required")
-      .trim()
-      .toLowerCase(),
-    phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
-    address: z.string().min(1, "Delivery address is required").trim(),
-    city: z.string().min(1, "City is required").trim(),
-  }),
+  customer: customerSchema,
   items: z
     .array(
       z.object({
@@ -67,17 +70,7 @@ const placeStandardOrderSchema = z.object({
 // data. They are parsed and then validated against this schema inside the
 // controller after multer processes the file (Fix 3).
 const placeInstantOrderSchema = z.object({
-  customer: z.object({
-    name: z.string().min(1, "Customer name is required").trim(),
-    email: z
-      .string()
-      .email("Valid email address is required")
-      .trim()
-      .toLowerCase(),
-    phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
-    address: z.string().min(1, "Delivery address is required").trim(),
-    city: z.string().min(1, "City is required").trim(),
-  }),
+  customer: customerSchema,
   paymentMethod: z.enum(['cod', 'card'], { errorMap: () => ({ message: 'Please select a valid payment method (Cash on Delivery or Card).' }) }),
   otp: z.object({
     email: z.string().email("Valid OTP email is required").trim().toLowerCase(),
@@ -105,17 +98,7 @@ const placeInstantOrderSchema = z.object({
 // Same JSON-field parsing applies (Fix 3). Mirrors placeStandardOrderSchema;
 // items are required with a min of 1, quantity bounded 1-99.
 const placeNarcoticsOrderSchema = z.object({
-  customer: z.object({
-    name: z.string().min(1, "Customer name is required").trim(),
-    email: z
-      .string()
-      .email("Valid email address is required")
-      .trim()
-      .toLowerCase(),
-    phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
-    address: z.string().min(1, "Delivery address is required").trim(),
-    city: z.string().min(1, "City is required").trim(),
-  }),
+  customer: customerSchema,
   items: z
     .array(
       z.object({

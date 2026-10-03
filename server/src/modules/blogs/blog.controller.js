@@ -10,10 +10,14 @@ const redisClient = require("../../config/redisClient");
  */
 exports.getPublicBlogs = async (req, res, next) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 12;
-    const category = req.query.category;
-    const search = req.query.search;
+    const parsedPage = parseInt(req.query.page, 10);
+    const page = !isNaN(parsedPage) && parsedPage >= 1 ? parsedPage : 1;
+    const parsedLimit = parseInt(req.query.limit, 10);
+    const limit = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 100) : 12;
+    const rawCategory = typeof req.query.category === "string" ? req.query.category : "";
+    const rawSearch = typeof req.query.search === "string" ? req.query.search : "";
+    const category = rawCategory.trim();
+    const search = rawSearch.trim();
     const skip = (page - 1) * limit;
 
     const cacheKey = `cache:storefront:blogs:p:${page}:l:${limit}:c:${category || ""}:s:${search || ""}`;
@@ -138,9 +142,12 @@ exports.getPublicBlogBySlug = async (req, res, next) => {
  */
 exports.getAdminBlogs = async (req, res, next) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
-    const search = req.query.search;
+    const parsedPage = parseInt(req.query.page, 10);
+    const page = !isNaN(parsedPage) && parsedPage >= 1 ? parsedPage : 1;
+    const parsedLimit = parseInt(req.query.limit, 10);
+    const limit = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 100) : 20;
+    const rawSearch = typeof req.query.search === "string" ? req.query.search : "";
+    const search = rawSearch.trim();
     const skip = (page - 1) * limit;
 
     const filter = {};

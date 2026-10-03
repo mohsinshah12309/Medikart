@@ -29,13 +29,13 @@ const imageSchema = z.object({
 // POST /admin/products — create new product
 const createProductSchema = z
   .object({
-    name: z.string().min(1, "Product name is required").trim(),
-    genericName: z.string().optional().default(""),
-    description: z.string().optional().default(""),
-    keywords: z.array(z.string()).optional().default([]),
-    tags: z.array(z.string()).optional().default([]),
-    price: z.number().min(0, "Price must be non-negative"),
-    sku: z.string().min(1, "SKU is required").trim(),
+    name: z.string().min(1, "Product name is required").max(500, "Product name cannot exceed 500 characters").trim(),
+    genericName: z.string().max(500).optional().default(""),
+    description: z.string().max(50000).optional().default(""),
+    keywords: z.array(z.string().max(100)).optional().default([]),
+    tags: z.array(z.string().max(100)).optional().default([]),
+    price: z.number().min(0, "Price must be non-negative").max(10000000, "Price cannot exceed 10,000,000"),
+    sku: z.string().min(1, "SKU is required").max(100, "SKU cannot exceed 100 characters").trim(),
     categoryIds: z.array(z.string()).optional().default([]),
     isNarcotic: z.boolean().optional().default(false),
     requiresPrescription: z.boolean().optional().default(false),
@@ -50,13 +50,13 @@ const createProductSchema = z
 // Allow-list: only the fields that should be editable in an update
 const updateProductSchema = z
   .object({
-    name: z.string().min(1).trim().optional(),
-    genericName: z.string().optional(),
-    description: z.string().optional(),
-    keywords: z.array(z.string()).optional(),
-    tags: z.array(z.string()).optional(),
-    price: z.number().min(0).optional(),
-    sku: z.string().min(1).trim().optional(),
+    name: z.string().min(1).max(500).trim().optional(),
+    genericName: z.string().max(500).optional(),
+    description: z.string().max(50000).optional(),
+    keywords: z.array(z.string().max(100)).optional(),
+    tags: z.array(z.string().max(100)).optional(),
+    price: z.number().min(0).max(10000000).optional(),
+    sku: z.string().min(1).max(100).trim().optional(),
     categoryIds: z.array(z.string()).optional(),
     isNarcotic: z.boolean().optional(),
     requiresPrescription: z.boolean().optional(),

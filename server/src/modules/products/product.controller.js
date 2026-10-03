@@ -59,8 +59,8 @@ const getAllProducts = async (req, res, next) => {
       productService.getAllProducts(filters, page, limit),
     ]);
     
-    const p = parseInt(page, 10) || 1;
-    const l = parseInt(limit, 10) || 20;
+    const p = Math.max(1, parseInt(page, 10) || 1);
+    const l = Math.min(Math.max(1, parseInt(limit, 10) || 20), 100);
 
     res.status(200).json({
       status: "success",

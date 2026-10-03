@@ -18,10 +18,11 @@ const discountSchema = z
 // POST /admin/categories — create new category
 const createCategorySchema = z
   .object({
-    name: z.string().min(1, "Category name is required").trim(),
+    name: z.string().min(1, "Category name is required").max(200, "Category name cannot exceed 200 characters").trim(),
     slug: z
       .string()
       .min(1, "Slug is required")
+      .max(100, "Slug cannot exceed 100 characters")
       .trim()
       .regex(
         /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
@@ -36,10 +37,11 @@ const createCategorySchema = z
 // PUT /admin/categories/:id — update existing category
 const updateCategorySchema = z
   .object({
-    name: z.string().min(1).trim().optional(),
+    name: z.string().min(1).max(200).trim().optional(),
     slug: z
       .string()
       .min(1)
+      .max(100)
       .trim()
       .regex(
         /^[a-z0-9]+(?:-[a-z0-9]+)*$/,

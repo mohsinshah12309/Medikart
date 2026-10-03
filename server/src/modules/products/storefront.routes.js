@@ -61,12 +61,22 @@ router.get("/sitemap/products", async (req, res, next) => {
 // GET /api/v1/products - Public listing/browsing
 router.get("/products", async (req, res, next) => {
   try {
-    const { search, categoryId, condition, isNarcotic, page = 1, limit = 20 } = req.query;
-    const p = parseInt(page, 10) || 1;
-    const l = Math.min(parseInt(limit, 10) || 20, 100);
+    const rawSearch = typeof req.query.search === "string" ? req.query.search : "";
+    const rawCategoryId = typeof req.query.categoryId === "string" ? req.query.categoryId : "";
+    const rawCondition = typeof req.query.condition === "string" ? req.query.condition : "";
+    const { isNarcotic, page = 1, limit = 20 } = req.query;
+
+    const parsedPage = parseInt(page, 10);
+    const p = !isNaN(parsedPage) && parsedPage >= 1 ? parsedPage : 1;
+    const parsedLimit = parseInt(limit, 10);
+    const l = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 100) : 20;
+
+    const search = rawSearch.trim();
+    const categoryId = rawCategoryId.trim();
+    const condition = rawCondition.trim();
 
     // Track search query popularity asynchronously in background
-    if (search && search.trim()) {
+    if (search) {
       recordSearch(search).catch((err) =>
         console.error("[SearchTracking] Error recording search:", err.message)
       );
@@ -322,7 +332,8 @@ router.get("/products/:id", async (req, res, next) => {
 router.get("/products/:id/related", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const limit = Math.min(parseInt(req.query.limit, 10) || 12, 24);
+    const parsedLimit = parseInt(req.query.limit, 10);
+    const limit = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 24) : 12;
 
     const cacheKey = `cache:storefront:product:${id}:related:limit:${limit}`;
     let cached = null;
@@ -544,7 +555,8 @@ router.get("/categories", async (req, res, next) => {
 // GET /api/v1/search/suggestions and /api/v1/products/suggestions (Dvago-style Autocomplete & Trending)
 const getSuggestionsHandler = async (req, res, next) => {
   try {
-    const q = (req.query.q || req.query.search || "").trim();
+    const rawQ = typeof req.query.q === "string" ? req.query.q : (typeof req.query.search === "string" ? req.query.search : "");
+    const q = rawQ.trim();
     const storewidePercent = await getStorewideDiscount();
 
     // Cache key for suggestions (short TTL 60s)
@@ -823,7 +835,7 @@ router.get("/trending-searches", async (req, res, next) => {
 // GET /api/v1/delivery-charge - Public delivery charge calculator
 router.get("/delivery-charge", async (req, res, next) => {
   try {
-    const { city } = req.query;
+    const city = typeof req.query.city === "string" ? req.query.city.trim() : "";
     if (!city) {
       return res.status(400).json({ status: "error", message: "City query parameter is required" });
     }

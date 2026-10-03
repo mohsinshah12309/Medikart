@@ -60,7 +60,7 @@ const getAllProducts = async (filters = {}, page = 1, limit = 20) => {
   if (filters.categoryId) {
     query.categoryIds = filters.categoryId;
   }
-  if (filters.search) {
+  if (filters.search && typeof filters.search === "string") {
     const escapedSearch = filters.search.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     query.$or = [
       { name: { $regex: escapedSearch, $options: "i" } },
@@ -71,13 +71,15 @@ const getAllProducts = async (filters = {}, page = 1, limit = 20) => {
     ];
   }
 
-  const skip = (page - 1) * limit;
+  const safePage = Math.max(1, parseInt(page, 10) || 1);
+  const safeLimit = Math.min(Math.max(1, parseInt(limit, 10) || 20), 100);
+  const skip = (safePage - 1) * safeLimit;
 
   const products = await Product.find(query)
     .populate("categoryIds", "name slug")
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit)
+    .limit(safeLimit)
     .lean();
 
   return products.map(formatProductWithImages);

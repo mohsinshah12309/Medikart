@@ -62,13 +62,15 @@ const getActivityLogs = async ({ entityType, entityId, page = 1, limit = 50 }) =
     query.entityId = entityId;
   }
 
-  const skip = (Math.max(1, parseInt(page, 10)) - 1) * Math.max(1, parseInt(limit, 10));
+  const safePage = Math.max(1, parseInt(page, 10) || 1);
+  const safeLimit = Math.min(Math.max(1, parseInt(limit, 10) || 20), 100);
+  const skip = (safePage - 1) * safeLimit;
 
   const [logs, total] = await Promise.all([
     ActivityLog.find(query)
       .sort({ timestamp: -1 })
       .skip(skip)
-      .limit(parseInt(limit, 10)),
+      .limit(safeLimit),
     ActivityLog.countDocuments(query),
   ]);
 
@@ -76,9 +78,9 @@ const getActivityLogs = async ({ entityType, entityId, page = 1, limit = 50 }) =
     logs,
     pagination: {
       total,
-      page: parseInt(page, 10),
-      limit: parseInt(limit, 10),
-      totalPages: Math.ceil(total / limit),
+      page: safePage,
+      limit: safeLimit,
+      totalPages: Math.ceil(total / safeLimit),
     },
   };
 };

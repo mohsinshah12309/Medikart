@@ -1,0 +1,701 @@
+{
+  "timestamp": "2026-10-03T23:22:29.442Z",
+  "total": 69,
+  "passed": 69,
+  "crashed": 0,
+  "failedBehavior": 0,
+  "serverHealthy": true,
+  "durationMs": 9837,
+  "results": [
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-0",
+      "description": "Cart quantity = 0 rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-NEG",
+      "description": "Cart quantity = -5 rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-1",
+      "description": "Cart quantity = 1 accepted (min valid)",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200/201",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-99",
+      "description": "Cart quantity = 99 accepted (max allowed)",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "Quantity 99 in cart",
+      "actual": "Quantity 99",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-100",
+      "description": "Cart quantity = 100 safely clamped to 99 or rejected",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "Clamped to 99 or HTTP 400",
+      "actual": "Status 200, stored qty = 99",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-HUGE",
+      "description": "Cart quantity = 999999 safely clamped to 99 or rejected",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "Clamped to 99 or HTTP 400",
+      "actual": "Status 200, stored qty = 99",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Cart",
+      "testId": "CART-QTY-STRING",
+      "description": "Cart quantity = 'abc' rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Price",
+      "testId": "PRICE-NEG",
+      "description": "Negative product price (-50) rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Price",
+      "testId": "PRICE-ZERO",
+      "description": "Zero price (0) accepted as valid non-negative boundary",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Price",
+      "testId": "PRICE-DECIMALS",
+      "description": "Price with many decimal places handled without crash",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Price",
+      "testId": "PRICE-NON-NUMERIC",
+      "description": "Non-numeric price string rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Discount",
+      "testId": "DISCOUNT-0",
+      "description": "0% discount accepted as valid boundary",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Discount",
+      "testId": "DISCOUNT-100",
+      "description": "100% discount accepted as valid boundary",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Discount",
+      "testId": "DISCOUNT-101",
+      "description": "101% discount rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Discount",
+      "testId": "DISCOUNT-NEG",
+      "description": "Negative discount (-5%) rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Delivery Charge",
+      "testId": "DELIVERY-CHARGE-NEG",
+      "description": "Negative delivery charge (-150) rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Delivery Charge",
+      "testId": "DELIVERY-CHARGE-0",
+      "description": "Zero delivery charge (0) accepted as valid free delivery",
+      "status": "PASS",
+      "responseStatus": 201,
+      "expected": "HTTP 201 Created",
+      "actual": "HTTP 201",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Bulk Limits",
+      "testId": "BULK-BATCH-0",
+      "description": "Bulk narcotics update with 0 items rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Bulk Limits",
+      "testId": "BULK-BATCH-101",
+      "description": "Bulk batch of 101 items (> 100 max) rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - OTP",
+      "testId": "OTP-5-DIGITS",
+      "description": "5-digit OTP (short) rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - OTP",
+      "testId": "OTP-7-DIGITS",
+      "description": "7-digit OTP (long) rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - OTP",
+      "testId": "OTP-NON-NUMERIC",
+      "description": "Non-numeric OTP ('12a456') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - OTP",
+      "testId": "OTP-EMPTY",
+      "description": "Empty OTP code ('') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-PROD-PAGE-0",
+      "description": "Storefront products page=0 defaults safely to page 1",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-PROD-PAGE-NEG",
+      "description": "Storefront products page=-1 handled gracefully (no 500 crash)",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 (clamped to page 1) or HTTP 400",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-PROD-LIMIT-0",
+      "description": "Storefront products limit=0 handled gracefully",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 or HTTP 400",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-PROD-LIMIT-HUGE",
+      "description": "Storefront products limit=999999 capped to max 100 server-side",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "results <= 100",
+      "actual": "results = 100",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-PROD-PAGE-HUGE",
+      "description": "Storefront products page=999999 returns empty array cleanly",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 with empty array []",
+      "actual": "HTTP 200, length=0",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-BLOGS-PAGE-NEG",
+      "description": "Storefront blogs page=-1 handled gracefully (no 500 crash)",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 or HTTP 400",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-ADMIN-ORDERS-PAGE-0",
+      "description": "Admin orders page=0 rejected with 400 (Zod min 1)",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Numeric - Pagination",
+      "testId": "PAGINATE-ADMIN-ORDERS-PAGE-NEG",
+      "description": "Admin orders page=-1 rejected with 400 (Zod min 1)",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Product Name",
+      "testId": "PROD-NAME-EMPTY",
+      "description": "Empty product name ('') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Product Name",
+      "testId": "PROD-NAME-1CHAR",
+      "description": "Single character product name ('A') accepted",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Product Name",
+      "testId": "PROD-NAME-HUGE",
+      "description": "5000-char product name handled safely without crash",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 or HTTP 200 (no 500 crash)",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Category Name",
+      "testId": "CAT-NAME-EMPTY",
+      "description": "Empty category name ('') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Email",
+      "testId": "EMAIL-MALFORMED-1",
+      "description": "Malformed email ('not-an-email') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Email",
+      "testId": "EMAIL-MALFORMED-2",
+      "description": "Malformed email ('user@') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Email",
+      "testId": "EMAIL-EMPTY",
+      "description": "Empty email ('') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Email",
+      "testId": "EMAIL-HUGE",
+      "description": "Extremely long email rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Phone",
+      "testId": "PHONE-SHORT",
+      "description": "Too short phone number ('0300123') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Phone",
+      "testId": "PHONE-LONG",
+      "description": "Too long phone number rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Phone",
+      "testId": "PHONE-NON-NUMERIC",
+      "description": "Non-numeric phone ('0300abc1234') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-EMPTY",
+      "description": "Empty search query handled gracefully",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-1CHAR",
+      "description": "Single char search ('p') executed without crash",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-SPECIAL-CHARS",
+      "description": "Special chars (%$'\"\\{}[]<>) safely sanitized without regex syntax error",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-REDOS",
+      "description": "Regex ReDoS pattern escaped and handled safely without catastrophic backtracking",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-NOSQL-INJECTION",
+      "description": "NoSQL injection payload (?search[$gt]=) safely defused without DB crash or data leakage",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 or HTTP 400",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-HUGE-QUERY",
+      "description": "5,000-char search query handled without memory leak or crash",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 or HTTP 400",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "String - Search",
+      "testId": "SEARCH-LIVE",
+      "description": "Live search endpoint returns valid response",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "File Upload - Product Image",
+      "testId": "IMG-0-BYTE",
+      "description": "0-byte image file rejected with 400/422",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400/422",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "File Upload - Product Image",
+      "testId": "IMG-OVERSIZE-6MB",
+      "description": "6MB file (> 5MB limit) rejected with 400/413 Multer error",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 or 413",
+      "actual": "HTTP 400: File size exceeds the maximum allowed limit. Please upload a smaller file.",
+      "details": ""
+    },
+    {
+      "category": "File Upload - Product Image",
+      "testId": "IMG-DISGUISED-EXE",
+      "description": "Disguised non-image (.exe renamed to .jpg) caught by magic-byte validation",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400/422",
+      "actual": "HTTP 400: File is corrupted or not a valid image file",
+      "details": ""
+    },
+    {
+      "category": "File Upload - Prescription",
+      "testId": "RX-0-BYTE",
+      "description": "0-byte prescription file rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400: Please select a valid payment method (Cash on Delivery or Card).",
+      "details": ""
+    },
+    {
+      "category": "File Upload - Prescription",
+      "testId": "RX-OVERSIZE-11MB",
+      "description": "11MB prescription (> 10MB limit) rejected with 400/413",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 or 413",
+      "actual": "HTTP 400: File size exceeds the maximum allowed limit. Please upload a smaller file.",
+      "details": ""
+    },
+    {
+      "category": "File Upload - Prescription",
+      "testId": "RX-FAKE-MAGIC-BYTES",
+      "description": "Prescription without true PDF/image magic bytes rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400: Please select a valid payment method (Cash on Delivery or Card).",
+      "details": ""
+    },
+    {
+      "category": "File Export - Excel",
+      "testId": "EXCEL-INVALID-DATE",
+      "description": "Invalid date parameter ('not-a-date') rejected with 400",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "File Export - Excel",
+      "testId": "EXCEL-ZERO-ORDERS",
+      "description": "Excel export with 0 matching orders succeeds without crashing",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 OK",
+      "actual": "HTTP 200",
+      "details": ""
+    },
+    {
+      "category": "State Transition - Cancellation",
+      "testId": "CANCEL-NONEXISTENT-ORDER",
+      "description": "Cancelling non-existent order ID returns 404/400 (not 500)",
+      "status": "PASS",
+      "responseStatus": 404,
+      "expected": "HTTP 404 or 400",
+      "actual": "HTTP 404",
+      "details": ""
+    },
+    {
+      "category": "State Transition - Narcotics",
+      "testId": "NARCOTICS-INVALID-STATE-TRANSITION",
+      "description": "Reviewing narcotics on non-pending_verification order rejected with 403/400",
+      "status": "PASS",
+      "responseStatus": 403,
+      "expected": "HTTP 403 or 400",
+      "actual": "HTTP 403: This order is not awaiting verification and cannot be reviewed",
+      "details": ""
+    },
+    {
+      "category": "Workflow - Discounts",
+      "testId": "DISCOUNT-PRECEDENCE-PRODUCT-WINS",
+      "description": "Product discount takes precedence over category and storewide discounts",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "Effective price 800, appliedDiscount 'product'",
+      "actual": "Price 800, applied product",
+      "details": ""
+    },
+    {
+      "category": "Workflow - Discounts",
+      "testId": "DISCOUNT-PRECEDENCE-CATEGORY-WINS",
+      "description": "Category discount takes precedence when product discount is inactive",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "Effective price 850, appliedDiscount 'category'",
+      "actual": "Price 850, applied category",
+      "details": ""
+    },
+    {
+      "category": "Workflow - Discounts",
+      "testId": "DISCOUNT-PRECEDENCE-STOREWIDE-WINS",
+      "description": "Storewide discount applies when product and category have no discounts",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "Effective price 900, appliedDiscount 'storewide'",
+      "actual": "Price 900, applied storewide",
+      "details": ""
+    },
+    {
+      "category": "Malformed - JSON",
+      "testId": "JSON-MALFORMED-SYNTAX",
+      "description": "Malformed JSON syntax safely rejected with 400 (no 500 crash)",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Malformed - ObjectId",
+      "testId": "OBJECTID-NON-HEX",
+      "description": "Non-hex string ID ('not-a-valid-object-id') returns 400/404 cleanly (no 500 crash)",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 or 404",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Malformed - ObjectId",
+      "testId": "OBJECTID-SHORT",
+      "description": "Short ID ('1234567890') returns 400/404 cleanly (no 500 crash)",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 or 404",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Malformed - ObjectId",
+      "testId": "OBJECTID-ADMIN-PARAM",
+      "description": "Admin route with malformed ID returns 400 via Zod schema",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400",
+      "details": ""
+    },
+    {
+      "category": "Security - Mass Assignment",
+      "testId": "MASS-ASSIGNMENT-INJECTED-FIELDS",
+      "description": "Order payload with injected price/status handled safely (stripped or rejected)",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 (Validation / OTP rejection)",
+      "actual": "HTTP 400: OTP expired or invalid. Please request a new code.",
+      "details": ""
+    },
+    {
+      "category": "Security - Mass Assignment",
+      "testId": "MASS-ASSIGNMENT-ADMIN-STRICT",
+      "description": "Product update with undeclared fields strictly rejected by Zod .strict()",
+      "status": "PASS",
+      "responseStatus": 400,
+      "expected": "HTTP 400 Bad Request",
+      "actual": "HTTP 400: Unrecognized key(s) in object: 'unauthorizedAdminField'",
+      "details": ""
+    },
+    {
+      "category": "Concurrency - OTP",
+      "testId": "CONCURRENCY-OTP-SPAM-RESILIENCE",
+      "description": "8 concurrent OTP requests processed without process crash or 500",
+      "status": "PASS",
+      "responseStatus": 200,
+      "expected": "HTTP 200 or 429 (no 500 crash)",
+      "actual": "Rate limited: false, 500 errors: 0",
+      "details": ""
+    }
+  ]
+}

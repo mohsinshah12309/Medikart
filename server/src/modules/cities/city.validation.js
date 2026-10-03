@@ -23,10 +23,12 @@ const createCitySchema = z
     name: z
       .string({ required_error: "City name is required" })
       .min(1, "City name is required")
+      .max(100, "City name cannot exceed 100 characters")
       .trim(),
     deliveryCharge: z
       .number({ required_error: "Delivery charge is required" })
-      .min(0, "Delivery charge must be non-negative"),
+      .min(0, "Delivery charge must be non-negative")
+      .max(100000, "Delivery charge cannot exceed 100,000"),
     active: z.boolean().optional().default(true),
   })
   .strict();
@@ -34,8 +36,8 @@ const createCitySchema = z
 // PUT /api/v1/admin/cities/:id
 const updateCitySchema = z
   .object({
-    name: z.string().min(1).trim().optional(),
-    deliveryCharge: z.number().min(0).optional(),
+    name: z.string().min(1).max(100).trim().optional(),
+    deliveryCharge: z.number().min(0).max(100000).optional(),
     active: z.boolean().optional(),
   })
   .strict()
