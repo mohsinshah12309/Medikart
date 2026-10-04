@@ -1,5 +1,6 @@
 const axios = require('axios');
 const crypto = require('crypto');
+const BasePaymentGateway = require('./base.provider');
 
 /**
  * Kuickpay Payment Provider Configuration
@@ -214,11 +215,46 @@ const verifyTransaction = async (transactionId) => {
   };
 };
 
-module.exports = {
-  getKuickpayConfig,
-  isMockMode,
-  generateWebhookSignature,
-  verifyWebhookSignature,
-  initiateCharge,
-  verifyTransaction,
-};
+/**
+ * Concrete Kuickpay Payment Gateway implementation conforming to BasePaymentGateway
+ */
+class KuickpayPaymentGateway extends BasePaymentGateway {
+  constructor() {
+    super('kuickpay');
+  }
+
+  getKuickpayConfig() {
+    return getKuickpayConfig();
+  }
+
+  isMockMode() {
+    return isMockMode();
+  }
+
+  async initiateCharge(order) {
+    return await initiateCharge(order);
+  }
+
+  async verifyTransaction(transactionId) {
+    return await verifyTransaction(transactionId);
+  }
+
+  verifyWebhookSignature(req) {
+    return verifyWebhookSignature(req);
+  }
+
+  generateWebhookSignature(payload, secret) {
+    return generateWebhookSignature(payload, secret);
+  }
+}
+
+const kuickpayGateway = new KuickpayPaymentGateway();
+
+module.exports = kuickpayGateway;
+module.exports.KuickpayPaymentGateway = KuickpayPaymentGateway;
+module.exports.getKuickpayConfig = getKuickpayConfig;
+module.exports.isMockMode = isMockMode;
+module.exports.generateWebhookSignature = generateWebhookSignature;
+module.exports.verifyWebhookSignature = verifyWebhookSignature;
+module.exports.initiateCharge = initiateCharge;
+module.exports.verifyTransaction = verifyTransaction;

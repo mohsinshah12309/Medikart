@@ -1,31 +1,34 @@
-const kuickpayProvider = require('./providers/kuickpay.provider');
+const paymentGatewayFactory = require('./paymentGateway.factory');
 const Order = require('../orders/order.model');
 const { NotFoundError, BadRequestError } = require('../../utils/errors');
 
 /**
- * Initiates payment session with Kuickpay
+ * Initiates payment session via configured gateway
  */
-const initiateCharge = async (order) => {
-  return await kuickpayProvider.initiateCharge(order);
+const initiateCharge = async (order, gatewayName = 'kuickpay') => {
+  const gateway = paymentGatewayFactory.getGateway(gatewayName);
+  return await gateway.initiateCharge(order);
 };
 
 /**
- * Verifies transaction status with Kuickpay gateway API
+ * Verifies transaction status with gateway API
  */
-const verifyTransaction = async (transactionId) => {
-  return await kuickpayProvider.verifyTransaction(transactionId);
+const verifyTransaction = async (transactionId, gatewayName = 'kuickpay') => {
+  const gateway = paymentGatewayFactory.getGateway(gatewayName);
+  return await gateway.verifyTransaction(transactionId);
 };
 
 /**
  * Verifies cryptographic signature or secret of incoming webhook
  */
-const verifyWebhookSignature = (req) => {
-  return kuickpayProvider.verifyWebhookSignature(req);
+const verifyWebhookSignature = (req, gatewayName = 'kuickpay') => {
+  const gateway = paymentGatewayFactory.getGateway(gatewayName);
+  return gateway.verifyWebhookSignature(req);
 };
 
 /**
  * Status-Check API Fallback:
- * Queries Kuickpay directly for an order's payment status, updating the DB.
+ * Queries gateway directly for an order's payment status, updating the DB.
  * Used as a backup when webhooks are delayed, dropped, or for manual admin verification.
  */
 const checkOrderStatusFallback = async (orderId) => {
@@ -51,8 +54,9 @@ const checkOrderStatusFallback = async (orderId) => {
     };
   }
 
-  // Query Kuickpay gateway API
-  const gatewayResult = await kuickpayProvider.verifyTransaction(order.gatewayTransactionId);
+  // Resolve gateway dynamically via factory
+  const gateway = paymentGatewayFactory.getGateway('kuickpay');
+  const gatewayResult = await gateway.verifyTransaction(order.gatewayTransactionId);
 
   // If status changed and was pending, atomically update
   if (gatewayResult.status === 'paid' || gatewayResult.status === 'failed') {
@@ -77,5 +81,7 @@ module.exports = {
   verifyTransaction,
   verifyWebhookSignature,
   checkOrderStatusFallback,
-  generateWebhookSignature: kuickpayProvider.generateWebhookSignature,
+  generateWebhookSignature: (payload, secret) => paymentGatewayFactory.getGateway('kuickpay').generateWebhookSignature(payload, secret),
+  getPaymentGateway: (name) => paymentGatewayFactory.getGateway(name),
+  registerPaymentGateway: (name, gw) => paymentGatewayFactory.registerGateway(name, gw),
 };

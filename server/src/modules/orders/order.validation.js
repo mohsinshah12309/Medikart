@@ -21,7 +21,7 @@ const customerSchema = z.object({
     .max(254, "Email cannot exceed 254 characters")
     .trim()
     .toLowerCase(),
-  phone: z.string().regex(/^(\+92|0)?3[0-9]{9}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
+  phone: z.string().regex(/^(\+92[-\s]?|0)?3[0-9]{2}[-\s]?[0-9]{7}$/, { message: 'Please enter a valid Pakistani mobile number (e.g., 03001234567)' }).trim(),
   address: z.string().min(1, "Delivery address is required").max(500, "Delivery address cannot exceed 500 characters").trim(),
   city: z.string().min(1, "City is required").max(100, "City cannot exceed 100 characters").trim(),
 });
