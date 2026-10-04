@@ -4,7 +4,7 @@ import React from 'react';
 import { useCart } from '../../components/CartProvider';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { OrderPlacingOverlay, OrderConfirmedCard } from '../../components/OrderConfirmedModal';
+import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
 import { useCheckout } from './useCheckout';
 
 export default function CheckoutPage() {
