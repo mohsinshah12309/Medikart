@@ -68,17 +68,18 @@ const setStorewideDiscount = async (discountData) => {
  * Returns the content fields from the singleton Settings document.
  */
 const getPageContent = async () => {
-  const settings = await Settings.findOne().select("aboutText contactEmail contactPhone");
+  const settings = await Settings.findOne().select("aboutText contactEmail contactPhone contactAddress");
   return {
     aboutText: settings?.aboutText ?? "",
     contactEmail: settings?.contactEmail ?? "",
     contactPhone: settings?.contactPhone ?? "",
+    contactAddress: settings?.contactAddress ?? "92 G1 Johar Town, Lahore, Pakistan",
   };
 };
 
 /**
  * Set About / Contact page content (Phase 24).
- * @param {{ aboutText?: string, contactEmail?: string, contactPhone?: string }} contentData
+ * @param {{ aboutText?: string, contactEmail?: string, contactPhone?: string, contactAddress?: string }} contentData
  */
 const setPageContent = async (contentData) => {
   const settings = await Settings.findOneAndUpdate(
@@ -91,6 +92,7 @@ const setPageContent = async (contentData) => {
     aboutText: settings.aboutText ?? "",
     contactEmail: settings.contactEmail ?? "",
     contactPhone: settings.contactPhone ?? "",
+    contactAddress: settings.contactAddress ?? "92 G1 Johar Town, Lahore, Pakistan",
   };
 };
 

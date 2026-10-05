@@ -42,6 +42,11 @@ const settingsSchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
+    contactAddress: {
+      type: String,
+      default: "92 G1 Johar Town, Lahore, Pakistan",
+      trim: true,
+    },
   },
   { timestamps: true }
 );

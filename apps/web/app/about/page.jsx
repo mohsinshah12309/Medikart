@@ -378,8 +378,9 @@ export default function AboutPage() {
       </div>
 
       {/* Subtle Corporate Entity Footer Note */}
-      <div className="text-center text-xs text-slate-400 font-medium">
-        Medikart is a digital healthcare platform by Banu Zahrah Pvt Ltd, operated in partnership with licensed pharmacies across Pakistan.
+      <div className="text-center text-xs text-slate-500 font-medium space-y-1">
+        <p>Medikart is a digital healthcare platform by Banu Zahrah Pvt Ltd, operated in partnership with licensed pharmacies across Pakistan.</p>
+        <p className="text-slate-500">Official Headquarters &amp; Operations Center: <strong className="text-slate-700">92 G1 Johar Town, Lahore, Pakistan</strong></p>
       </div>
     </div>
   );

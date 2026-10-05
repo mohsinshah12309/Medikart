@@ -241,7 +241,7 @@ export default function PrivacyPolicyPage() {
                 +92 324 4489159
               </a>
             </p>
-            <p>Lahore / Karachi, Pakistan</p>
+            <p>Address: 92 G1 Johar Town, Lahore, Pakistan</p>
           </div>
         </section>
 

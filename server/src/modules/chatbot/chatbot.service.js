@@ -61,8 +61,9 @@ function buildCatalogFallbackResponse(message = "", products = []) {
       `• **Automated Reminders**: Timely WhatsApp & SMS notifications before dispatch.\n` +
       `• **Priority Sourcing**: Sourced fresh from verified, licensed distributors.\n\n` +
       `You can set up or manage your refill schedule anytime at **[Monthly Refill](/refill)**.`;
-  } else if (queryLower.includes("contact") || queryLower.includes("support") || queryLower.includes("phone") || queryLower.includes("whatsapp") || queryLower.includes("email") || queryLower.includes("help") || queryLower.includes("agent") || queryLower.includes("human") || queryLower.includes("call")) {
+  } else if (queryLower.includes("contact") || queryLower.includes("support") || queryLower.includes("phone") || queryLower.includes("whatsapp") || queryLower.includes("email") || queryLower.includes("help") || queryLower.includes("agent") || queryLower.includes("human") || queryLower.includes("call") || queryLower.includes("address") || queryLower.includes("location") || queryLower.includes("where are you") || queryLower.includes("head office")) {
     reply = `**Contact Medikart Customer Care & Pharmacist Support**:\n\n` +
+      `• **Official Address / Headquarters**: 92 G1 Johar Town, Lahore, Pakistan\n` +
       `• **WhatsApp / Phone**: +92 324 4489159 / 03244489159\n` +
       `• **Email**: support@medikart.pk\n` +
       `• **Store Contact Page**: **[Contact Us](/contact)**\n` +
@@ -265,6 +266,7 @@ MEDIKART STOREFRONT KNOWLEDGE BASE & BUSINESS RULES:
    - **Refund Processing**: Approved refunds are issued to the original payment method or bank account within 2 business days.
 
 6. CUSTOMER SUPPORT & CONTACT ([/contact](/contact)):
+   - **Official Address / Headquarters**: 92 G1 Johar Town, Lahore, Pakistan
    - **WhatsApp Support**: +92 324 4489159 / 03244489159
    - **Email**: support@medikart.pk
    - **Contact Form**: [/contact](/contact)

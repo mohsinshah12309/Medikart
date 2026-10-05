@@ -25,6 +25,7 @@ function Settings({ token }) {
   const [aboutText, setAboutText] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
+  const [contactAddress, setContactAddress] = useState("92 G1 Johar Town, Lahore, Pakistan");
   const [contentLoading, setContentLoading] = useState(true);
   const [contentSaving, setContentSaving] = useState(false);
 
@@ -67,6 +68,7 @@ function Settings({ token }) {
       setAboutText(data.data?.aboutText ?? "");
       setContactEmail(data.data?.contactEmail ?? "");
       setContactPhone(data.data?.contactPhone ?? "");
+      setContactAddress(data.data?.contactAddress ?? "92 G1 Johar Town, Lahore, Pakistan");
     } catch (err) {
       flash(err.message, true);
     } finally {
@@ -96,7 +98,7 @@ function Settings({ token }) {
     try {
       await adminFetch("/admin/settings/content", {
         method: "PUT",
-        body: JSON.stringify({ aboutText, contactEmail, contactPhone }),
+        body: JSON.stringify({ aboutText, contactEmail, contactPhone, contactAddress }),
       });
       flash("Page content updated");
     } catch (err) {
@@ -188,6 +190,19 @@ function Settings({ token }) {
                   onChange={(e) => setAboutText(e.target.value)}
                   placeholder="Write about Medikart — mission, values, clinical licensing, and history..."
                   style={{ resize: "vertical", fontFamily: "inherit" }}
+                />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.3rem" }}>
+                  Official Address &amp; Operations Hub
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={contactAddress}
+                  onChange={(e) => setContactAddress(e.target.value)}
+                  placeholder="92 G1 Johar Town, Lahore, Pakistan"
+                  style={{ maxWidth: "420px" }}
                 />
               </div>
               <div>

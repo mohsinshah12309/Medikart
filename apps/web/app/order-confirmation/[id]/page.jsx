@@ -107,7 +107,8 @@ export default function OrderConfirmationPage() {
             alt="Medikart"
             className="h-9 sm:h-10 mx-auto object-contain mb-1"
           />
-          <p className="text-xs text-slate-500 font-medium">Medicines. Faster to you.</p>
+          <p className="text-xs text-slate-600 font-semibold">Medicines. Faster to you.</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5">92 G1 Johar Town, Lahore, Pakistan | Helpline: +92 324 4489159</p>
         </div>
 
         {/* Loading State */}

@@ -146,6 +146,7 @@ export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
   let contactPhone = '923244489159';
   let contactEmail = 'support@medikart.pk';
+  let contactAddress = '92 G1 Johar Town, Lahore, Pakistan';
   let aboutText = 'Medikart connects customers with licensed partner pharmacies across Pakistan to deliver 100% genuine prescription and OTC medicines, vitamins, and healthcare essentials with 2–4 hr express delivery and nationwide Cash on Delivery.';
   let categories = [];
 
@@ -161,6 +162,7 @@ export default async function RootLayout({ children }) {
       if (body?.data) {
         if (body.data.contactPhone) contactPhone = body.data.contactPhone;
         if (body.data.contactEmail) contactEmail = body.data.contactEmail;
+        if (body.data.contactAddress) contactAddress = body.data.contactAddress;
         if (body.data.aboutText) aboutText = body.data.aboutText;
       }
     }
@@ -194,8 +196,10 @@ export default async function RootLayout({ children }) {
     'paymentAccepted': 'Cash on Delivery, Credit Card, Debit Card',
     'address': {
       '@type': 'PostalAddress',
+      'streetAddress': '92 G1 Johar Town',
       'addressLocality': 'Lahore',
       'addressRegion': 'Punjab',
+      'postalCode': '54770',
       'addressCountry': 'PK'
     },
     'areaServed': {
@@ -298,6 +302,7 @@ export default async function RootLayout({ children }) {
                 initialCategories={categories}
                 contactPhone={contactPhone}
                 contactEmail={contactEmail}
+                address={contactAddress}
               />
 
               {/* Cookie Consent Banner */}

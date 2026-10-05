@@ -76,6 +76,7 @@ export default function ContactPage() {
 
   const defaultEmail = "contact@medikart.pk";
   const defaultPhone = "+92 324 4489159";
+  const defaultAddress = "92 G1 Johar Town, Lahore, Pakistan";
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-10 pb-16 px-4 sm:px-6">
@@ -154,6 +155,17 @@ export default function ContactPage() {
             </div>
           ) : (
             <div className="flex flex-col gap-4">
+              {/* Official Registered Address */}
+              <div className="p-4 bg-yellow-50/70 border-2 border-yellow-200 rounded-2xl flex flex-col gap-1 transition-all hover:border-yellow-400 hover:bg-yellow-50">
+                <span className="text-xs uppercase tracking-wider font-black text-amber-900 flex items-center gap-1.5">
+                  <span>📍</span> Official Address &amp; Hub
+                </span>
+                <p className="font-extrabold text-sm text-slate-950 leading-snug">
+                  {content?.contactAddress || defaultAddress}
+                </p>
+                <span className="text-[11px] text-slate-600 font-medium">Headquarters &amp; Central Operations Hub</span>
+              </div>
+
               {/* Business Email */}
               <div className="p-4 bg-yellow-50/70 border-2 border-yellow-200 rounded-2xl flex flex-col gap-1 transition-all hover:border-yellow-400 hover:bg-yellow-50">
                 <span className="text-xs uppercase tracking-wider font-black text-amber-900 flex items-center gap-1.5">

@@ -149,7 +149,7 @@ function generateOtpEmailTemplate({
             <td style="background-color: #fafaf9; border-top: 1px solid #f1f5f9; padding: 18px 24px; text-align: center;">
               <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
                 &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.<br />
-                Your trusted digital pharmacy partner.
+                92 G1 Johar Town, Lahore, Pakistan &bull; Your trusted digital pharmacy partner.
               </p>
             </td>
           </tr>
@@ -248,8 +248,9 @@ function generateInstantOrderPlacedTemplate({ order }) {
 
           <tr>
             <td style="background-color: #fafaf9; border-top: 1px solid #f1f5f9; padding: 16px 20px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.
+              <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.<br />
+                92 G1 Johar Town, Lahore, Pakistan
               </p>
             </td>
           </tr>
@@ -390,8 +391,9 @@ function generateStandardOrderPlacedTemplate({ order }) {
 
           <tr>
             <td style="background-color: #fafaf9; border-top: 1px solid #f1f5f9; padding: 16px 20px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.
+              <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.<br />
+                92 G1 Johar Town, Lahore, Pakistan
               </p>
             </td>
           </tr>
@@ -508,8 +510,9 @@ function generatePasswordResetTemplate({
 
           <tr>
             <td style="background-color: #fafaf9; border-top: 1px solid #f1f5f9; padding: 16px 20px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.
+              <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.<br />
+                92 G1 Johar Town, Lahore, Pakistan
               </p>
             </td>
           </tr>
@@ -666,8 +669,9 @@ function generateInstantOrderPricedTemplate({ order }) {
 
           <tr>
             <td style="background-color: #fafaf9; border-top: 1px solid #f1f5f9; padding: 16px 20px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.
+              <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.<br />
+                92 G1 Johar Town, Lahore, Pakistan
               </p>
             </td>
           </tr>
@@ -811,8 +815,9 @@ function generateOrderDeliveredTemplate({ order }) {
 
           <tr>
             <td style="background-color: #fafaf9; border-top: 1px solid #f1f5f9; padding: 16px 20px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.
+              <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                &copy; ${new Date().getFullYear()} Medikart Healthcare. All rights reserved.<br />
+                92 G1 Johar Town, Lahore, Pakistan
               </p>
             </td>
           </tr>
