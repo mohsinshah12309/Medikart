@@ -16,11 +16,15 @@ const { triggerStorefrontRevalidation } = require("../../utils/revalidate");
 
 const invalidateCategoryCache = async () => {
   try {
-    const delPromises = [redisClient.del("cache:storefront:categories")];
+    const delPromises = [
+      redisClient.del("cache:storefront:categories"),
+      redisClient.del("lock:cache:storefront:categories"),
+    ];
     if (typeof redisClient.deleteKeysByPattern === "function") {
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:products:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:suggestions:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:sitemap:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("lock:cache:storefront:products:*"));
     } else if (typeof redisClient.keys === "function") {
       const productKeys = await redisClient.keys("cache:storefront:products:*");
       if (productKeys && productKeys.length > 0) {

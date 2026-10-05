@@ -109,12 +109,14 @@ const invalidateProductCache = async (productId) => {
     const delPromises = [];
     if (productId) {
       delPromises.push(redisClient.del(`cache:storefront:product:${productId}`));
+      delPromises.push(redisClient.del(`lock:cache:storefront:product:${productId}`));
     }
     if (typeof redisClient.deleteKeysByPattern === "function") {
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:products:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:suggestions:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:trending-searches:*"));
       delPromises.push(redisClient.deleteKeysByPattern("cache:storefront:sitemap:*"));
+      delPromises.push(redisClient.deleteKeysByPattern("lock:cache:storefront:products:*"));
     } else if (typeof redisClient.keys === "function") {
       const keys = await redisClient.keys("cache:storefront:products:*");
       if (keys && keys.length > 0) delPromises.push(redisClient.del(...keys));

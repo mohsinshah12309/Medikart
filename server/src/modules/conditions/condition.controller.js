@@ -1,33 +1,24 @@
 const conditionService = require("./condition.service");
 const redisClient = require("../../config/redisClient");
+const { cacheService, CACHE_POLICIES } = require("../../services/cache/cacheService");
 
 // Public list
 const getPublicConditions = async (req, res, next) => {
   try {
     const cacheKey = "cache:storefront:conditions:all";
-    let cached = null;
-    try {
-      cached = await redisClient.get(cacheKey);
-    } catch (err) {
-      console.error("[Cache] Condition read error:", err.message);
-    }
-
-    if (cached) {
-      return res.status(200).json(JSON.parse(cached));
-    }
-
-    const conditions = await conditionService.getConditions({ active: true });
-    const responseBody = {
-      status: "success",
-      results: conditions.length,
-      data: { conditions },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Condition write error:", err.message);
-    }
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.CONDITIONS,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const conditions = await conditionService.getConditions({ active: true });
+        return {
+          status: "success",
+          results: conditions.length,
+          data: { conditions },
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
@@ -39,29 +30,18 @@ const getPublicConditionDetail = async (req, res, next) => {
   try {
     const { idOrSlug } = req.params;
     const cacheKey = `cache:storefront:condition:${idOrSlug}`;
-
-    let cached = null;
-    try {
-      cached = await redisClient.get(cacheKey);
-    } catch (err) {
-      console.error("[Cache] Condition detail read error:", err.message);
-    }
-
-    if (cached) {
-      return res.status(200).json(JSON.parse(cached));
-    }
-
-    const condition = await conditionService.getConditionByIdOrSlug(idOrSlug);
-    const responseBody = {
-      status: "success",
-      data: { condition },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Condition detail write error:", err.message);
-    }
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.CONDITIONS,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const condition = await conditionService.getConditionByIdOrSlug(idOrSlug);
+        return {
+          status: "success",
+          data: { condition },
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {

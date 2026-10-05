@@ -382,13 +382,15 @@ if (require.main === module) {
     server = app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server is running on port ${PORT} (0.0.0.0)`);
     });
-    // Phase 19: Register cron jobs and seeds ONLY on primary cluster worker (instance 0)
-    // to prevent duplicate cron executions in PM2 cluster mode across multiple CPU cores.
+    // Phase 19: Register cron jobs, cache warmer and seeds ONLY on primary cluster worker (instance 0)
+    // to prevent duplicate executions in PM2 cluster mode across multiple CPU cores.
     const isPrimaryWorker = !process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === "0";
     if (isPrimaryWorker) {
       scheduleWeeklyReport();
       scheduleMonthlyRefillReminder();
       seedInitialBlogsIfEmpty();
+      const { initCacheWarmer } = require("./services/cache/cacheWarmer");
+      initCacheWarmer();
     }
     setupGracefulShutdown();
 
@@ -424,13 +426,16 @@ function setupGracefulShutdown() {
       });
     }
 
-    // 2. Stop cron jobs
+    // 2. Stop cron jobs & cache warmer
     try {
       const { stopWeeklyReport } = require("./jobs/weeklyReport.job");
+      const { stopMonthlyRefillReminder } = require("./jobs/monthlyRefillReminder.job");
+      const { stopCacheWarmer } = require("./services/cache/cacheWarmer");
       stopWeeklyReport();
       stopMonthlyRefillReminder();
+      stopCacheWarmer();
     } catch (err) {
-      console.error("[Server] Error stopping cron jobs:", err.message);
+      console.error("[Server] Error stopping background jobs:", err.message);
     }
 
     // 3. Stop retry queues (Google Sheets sync queue)

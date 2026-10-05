@@ -9,6 +9,8 @@ const { getDeliveryCharge } = require("../cities/city.service");
 const { formatProductWithImages } = require("./product.service");
 const { recordSearch, getTrendingSearches, getTrendingProducts } = require("../search/search.service");
 const redisClient = require("../../config/redisClient");
+const { cacheService, CACHE_POLICIES } = require("../../services/cache/cacheService");
+const cacheMetrics = require("../../services/cache/cacheMetrics");
 
 // Dev-only cache logger to avoid production event-loop and I/O overhead
 const logCache = (type, key) => {
@@ -21,36 +23,26 @@ const logCache = (type, key) => {
 router.get("/sitemap/products", async (req, res, next) => {
   try {
     const cacheKey = "cache:storefront:sitemap:products";
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (_) {}
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.SITEMAP,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
+        const activeCategoryIds = activeCategories.map((c) => c._id);
 
-    if (cached) {
-      logCache("HIT", cacheKey);
-      return res.status(200).json(JSON.parse(cached));
-    }
-    logCache("MISS", cacheKey);
+        const products = await Product.find(
+          { active: true, categoryIds: { $in: activeCategoryIds } },
+          { _id: 1, updatedAt: 1 }
+        ).lean();
 
-    const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
-    const activeCategoryIds = activeCategories.map((c) => c._id);
-
-    const products = await Product.find(
-      { active: true, categoryIds: { $in: activeCategoryIds } },
-      { _id: 1, updatedAt: 1 }
-    ).lean();
-
-    const responseBody = {
-      status: "success",
-      total: products.length,
-      data: { products },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 3600); // 1 hour TTL
-    } catch (_) {}
+        return {
+          status: "success",
+          total: products.length,
+          data: { products },
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
@@ -82,23 +74,13 @@ router.get("/products", async (req, res, next) => {
       );
     }
 
-    // Cache check (bypassable for load testing)
+    // Cache check with lease locking and SWR stampede protection
     const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}`;
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (err) {
-      console.error("[Cache] Read error:", err.message);
-    }
-
-    if (cached) {
-      logCache("HIT", cacheKey);
-      const data = JSON.parse(cached);
-      return res.status(200).json(data);
-    }
-    logCache("MISS", cacheKey);
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCTS_LISTING,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
 
     // Load active category IDs to filter out products in disabled categories
     const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
@@ -241,23 +223,19 @@ router.get("/products", async (req, res, next) => {
       };
     });
 
-    const responseBody = {
-      status: "success",
-      results: formattedProducts.length,
-      pagination: {
-        page: p,
-        limit: l,
-        total: totalCount,
-        pages: Math.ceil(totalCount / l),
+        return {
+          status: "success",
+          results: formattedProducts.length,
+          pagination: {
+            page: p,
+            limit: l,
+            total: totalCount,
+            pages: Math.ceil(totalCount / l),
+          },
+          data: { products: formattedProducts },
+        };
       },
-      data: { products: formattedProducts },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Write error:", err.message);
-    }
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
@@ -269,60 +247,49 @@ router.get("/products", async (req, res, next) => {
 router.get("/products/:id", async (req, res, next) => {
   try {
     const cacheKey = `cache:storefront:product:${req.params.id}`;
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (err) {
-      console.error("[Cache] Read error:", err.message);
-    }
+    const result = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCT_DETAIL,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const [product, storewidePercent] = await Promise.all([
+          Product.findOne({ _id: req.params.id, active: true })
+            .populate("categoryIds", "name slug discount active")
+            .lean(),
+          getStorewideDiscount(),
+        ]);
 
-    if (cached) {
-      logCache("HIT", cacheKey);
-      const data = JSON.parse(cached);
-      return res.status(200).json(data);
-    }
-    logCache("MISS", cacheKey);
+        if (!product) {
+          return null;
+        }
 
-    const [product, storewidePercent] = await Promise.all([
-      Product.findOne({ _id: req.params.id, active: true })
-        .populate("categoryIds", "name slug discount active")
-        .lean(),
-      getStorewideDiscount(),
-    ]);
+        const formatted = formatProductWithImages(product);
+        const category = formatted.categoryIds?.[0] ?? null;
+        const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+          formatted,
+          category,
+          storewidePercent
+        );
 
-    if (!product) {
+        return {
+          status: "success",
+          data: {
+            product: {
+              ...formatted,
+              effectivePrice,
+              appliedDiscount,
+              discountPercent,
+            },
+          },
+        };
+      },
+    });
+
+    if (!result) {
       return res.status(404).json({ status: "error", message: "Product not found" });
     }
 
-    const formatted = formatProductWithImages(product);
-    const category = formatted.categoryIds?.[0] ?? null;
-    const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
-      formatted,
-      category,
-      storewidePercent
-    );
-
-    const responseBody = {
-      status: "success",
-      data: {
-        product: {
-          ...formatted,
-          effectivePrice,
-          appliedDiscount,
-          discountPercent,
-        }
-      },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Write error:", err.message);
-    }
-
-    res.status(200).json(responseBody);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
@@ -336,21 +303,15 @@ router.get("/products/:id/related", async (req, res, next) => {
     const limit = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 24) : 12;
 
     const cacheKey = `cache:storefront:product:${id}:related:limit:${limit}`;
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (_) {}
-
-    if (cached) {
-      return res.status(200).json(JSON.parse(cached));
-    }
-
-    const currentProduct = await Product.findOne({ _id: id, active: true }).lean();
-    if (!currentProduct) {
-      return res.status(404).json({ status: "error", message: "Product not found" });
-    }
+    const result = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCT_RELATED,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const currentProduct = await Product.findOne({ _id: id, active: true }).lean();
+        if (!currentProduct) {
+          return null;
+        }
 
     const storewidePercent = await getStorewideDiscount();
 
@@ -495,56 +456,44 @@ router.get("/products/:id/related", async (req, res, next) => {
       };
     });
 
-    const responseBody = {
-      status: "success",
-      results: finalProducts.length,
-      data: {
-        brandRoot,
-        products: finalProducts,
+        return {
+          status: "success",
+          results: finalProducts.length,
+          data: {
+            brandRoot,
+            products: finalProducts,
+          },
+        };
       },
-    };
+    });
 
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (_) {}
+    if (!result) {
+      return res.status(404).json({ status: "error", message: "Product not found" });
+    }
 
-    res.status(200).json(responseBody);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
 });
 
-// GET /api/v1/categories - Public category listing with Redis caching (1 hour TTL)
+// GET /api/v1/categories - Public category listing with Redis caching (1 hour TTL, SWR & lease protection)
 router.get("/categories", async (req, res, next) => {
   try {
     const cacheKey = "cache:storefront:categories";
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (err) {
-      console.error("[Cache] Read error:", err.message);
-    }
-
-    if (cached) {
-      logCache("HIT", cacheKey);
-      return res.status(200).json(JSON.parse(cached));
-    }
-    logCache("MISS", cacheKey);
-
-    const categories = await Category.find({ active: true }).sort({ name: 1 }).lean();
-    const responseBody = {
-      status: "success",
-      results: categories.length,
-      data: { categories },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 3600); // 1 hour TTL
-    } catch (err) {
-      console.error("[Cache] Write error:", err.message);
-    }
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.CATEGORIES,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const categories = await Category.find({ active: true }).sort({ name: 1 }).lean();
+        return {
+          status: "success",
+          results: categories.length,
+          data: { categories },
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
@@ -557,26 +506,15 @@ const getSuggestionsHandler = async (req, res, next) => {
   try {
     const rawQ = typeof req.query.q === "string" ? req.query.q : (typeof req.query.search === "string" ? req.query.search : "");
     const q = rawQ.trim();
-    const storewidePercent = await getStorewideDiscount();
-
-    // Cache key for suggestions (short TTL 60s)
     const cacheKey = `cache:storefront:suggestions:${q ? q.toLowerCase() : "__trending__"}`;
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (err) {
-      console.error("[Cache] Read error:", err.message);
-    }
 
-    if (cached) {
-      logCache("HIT", cacheKey);
-      return res.status(200).json(JSON.parse(cached));
-    }
-    logCache("MISS", cacheKey);
-
-    if (!q) {
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.SEARCH_SUGGESTIONS,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const storewidePercent = await getStorewideDiscount();
+        if (!q) {
       // Return dynamic Trending Searches and expanded Trending Products
       const [trendingList, trendingProducts] = await Promise.all([
         getTrendingSearches(15),
@@ -598,12 +536,8 @@ const getSuggestionsHandler = async (req, res, next) => {
         },
       };
 
-      try {
-        await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 60);
-      } catch (_) {}
-
-      return res.status(200).json(responseBody);
-    }
+        return responseBody;
+      }
 
     const escapedQ = q.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
     const regex = new RegExp(escapedQ, "i");
@@ -737,21 +671,19 @@ const getSuggestionsHandler = async (req, res, next) => {
       image: c.image || null,
     }));
 
-    const responseBody = {
-      status: "success",
-      data: {
-        query: q,
-        matchingSearches,
-        matchingProducts,
-        matchingCategories,
-        trendingSearches: [],
-        trendingProducts: [],
+        return {
+          status: "success",
+          data: {
+            query: q,
+            matchingSearches,
+            matchingProducts,
+            matchingCategories,
+            trendingSearches: [],
+            trendingProducts: [],
+          },
+        };
       },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 60);
-    } catch (_) {}
+    });
 
     return res.status(200).json(responseBody);
   } catch (error) {
@@ -795,36 +727,26 @@ router.get("/trending-searches", async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit, 10) || 12;
     const cacheKey = `cache:storefront:trending-searches:limit:${limit}`;
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (_) {}
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.TRENDING_SEARCHES,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const storewidePercent = await getStorewideDiscount();
+        const [trendingSearches, trendingProducts] = await Promise.all([
+          getTrendingSearches(limit),
+          getTrendingProducts(10, storewidePercent),
+        ]);
 
-    if (cached) {
-      logCache("HIT", cacheKey);
-      return res.status(200).json(JSON.parse(cached));
-    }
-    logCache("MISS", cacheKey);
-
-    const storewidePercent = await getStorewideDiscount();
-    const [trendingSearches, trendingProducts] = await Promise.all([
-      getTrendingSearches(limit),
-      getTrendingProducts(10, storewidePercent),
-    ]);
-
-    const responseBody = {
-      status: "success",
-      data: {
-        trendingSearches,
-        trendingProducts,
+        return {
+          status: "success",
+          data: {
+            trendingSearches,
+            trendingProducts,
+          },
+        };
       },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 60);
-    } catch (_) {}
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
@@ -856,34 +778,20 @@ router.get("/delivery-charge", async (req, res, next) => {
 router.get("/cities", async (req, res, next) => {
   try {
     const cacheKey = "cache:storefront:cities";
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (err) {
-      console.error("[Cache] Read error:", err.message);
-    }
-
-    if (cached) {
-      logCache("HIT", cacheKey);
-      return res.status(200).json(JSON.parse(cached));
-    }
-    logCache("MISS", cacheKey);
-
-    const { getAllCities } = require("../cities/city.service");
-    const cities = await getAllCities({ active: true });
-    const responseBody = {
-      status: "success",
-      results: cities.length,
-      data: { cities },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Write error:", err.message);
-    }
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.CITIES,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const { getAllCities } = require("../cities/city.service");
+        const cities = await getAllCities({ active: true });
+        return {
+          status: "success",
+          results: cities.length,
+          data: { cities },
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
@@ -895,38 +803,32 @@ router.get("/cities", async (req, res, next) => {
 router.get("/content", async (req, res, next) => {
   try {
     const cacheKey = "cache:storefront:content";
-    let cached = null;
-    try {
-      if (req.query.bypassCache !== "true") {
-        cached = await redisClient.get(cacheKey);
-      }
-    } catch (err) {
-      console.error("[Cache] Read error:", err.message);
-    }
-
-    if (cached) {
-      logCache("HIT", cacheKey);
-      return res.status(200).json(JSON.parse(cached));
-    }
-    logCache("MISS", cacheKey);
-
-    const { getPageContent } = require("../settings/settings.service");
-    const content = await getPageContent();
-    const responseBody = {
-      status: "success",
-      data: content,
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Write error:", err.message);
-    }
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.CONTENT,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const { getPageContent } = require("../settings/settings.service");
+        const content = await getPageContent();
+        return {
+          status: "success",
+          data: content,
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {
     next(error);
   }
+});
+
+// GET /api/v1/cache/metrics - Live observability metrics for cache hits, misses, and lease contention
+router.get("/cache/metrics", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    data: cacheMetrics.getMetrics(),
+  });
 });
 
 module.exports = router;

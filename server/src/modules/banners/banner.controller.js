@@ -1,35 +1,25 @@
 const bannerService = require("./banner.service");
 const redisClient = require("../../config/redisClient");
+const { cacheService, CACHE_POLICIES } = require("../../services/cache/cacheService");
 
 // Public list (active banners by placement)
 const getPublicBanners = async (req, res, next) => {
   try {
     const { placement } = req.query;
     const cacheKey = `cache:storefront:banners:${placement || "all"}`;
-
-    let cached = null;
-    try {
-      cached = await redisClient.get(cacheKey);
-    } catch (err) {
-      console.error("[Cache] Banner read error:", err.message);
-    }
-
-    if (cached) {
-      return res.status(200).json(JSON.parse(cached));
-    }
-
-    const banners = await bannerService.getBanners({ placement, active: true });
-    const responseBody = {
-      status: "success",
-      results: banners.length,
-      data: { banners },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (err) {
-      console.error("[Cache] Banner write error:", err.message);
-    }
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.BANNERS,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const banners = await bannerService.getBanners({ placement, active: true });
+        return {
+          status: "success",
+          results: banners.length,
+          data: { banners },
+        };
+      },
+    });
 
     res.status(200).json(responseBody);
   } catch (error) {

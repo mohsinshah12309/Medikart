@@ -16,6 +16,17 @@ class InMemoryRedisStub {
   constructor() {
     this._store = new Map(); // key → Map<member, score>
     this._kvStore = new Map(); // key → string (for GET/SET cache)
+    this._expirations = new Map(); // key → timestamp ms
+  }
+
+  _isExpired(key) {
+    const exp = this._expirations.get(key);
+    if (exp && exp <= Date.now()) {
+      this._kvStore.delete(key);
+      this._expirations.delete(key);
+      return true;
+    }
+    return false;
   }
 
   _getSet(key) {
@@ -24,11 +35,46 @@ class InMemoryRedisStub {
   }
 
   async get(key) {
-    return this._kvStore.get(key) || null;
+    if (this._isExpired(key)) return null;
+    return this._kvStore.has(key) ? this._kvStore.get(key) : null;
   }
 
-  async set(key, value, mode, duration) {
+  async set(key, value, ...args) {
+    let nx = false;
+    let xx = false;
+    let ttlMs = null;
+
+    for (let i = 0; i < args.length; i++) {
+      const arg = String(args[i]).toUpperCase();
+      if (arg === "NX") {
+        nx = true;
+      } else if (arg === "XX") {
+        xx = true;
+      } else if (arg === "EX" && i + 1 < args.length) {
+        ttlMs = parseInt(args[i + 1], 10) * 1000;
+        i++;
+      } else if (arg === "PX" && i + 1 < args.length) {
+        ttlMs = parseInt(args[i + 1], 10);
+        i++;
+      }
+    }
+
+    const exists = this._kvStore.has(key) && !this._isExpired(key);
+
+    if (nx && exists) {
+      return null;
+    }
+    if (xx && !exists) {
+      return null;
+    }
+
     this._kvStore.set(key, String(value));
+    if (ttlMs && ttlMs > 0) {
+      this._expirations.set(key, Date.now() + ttlMs);
+    } else {
+      this._expirations.delete(key);
+    }
+
     return "OK";
   }
 
@@ -36,12 +82,16 @@ class InMemoryRedisStub {
     let count = 0;
     const flatKeys = keys.flat();
     for (const k of flatKeys) {
+      this._expirations.delete(k);
       if (this._kvStore.delete(k)) count++;
     }
     return count;
   }
 
   async keys(pattern) {
+    for (const k of [...this._kvStore.keys()]) {
+      this._isExpired(k);
+    }
     if (!pattern || pattern === "*") return [...this._kvStore.keys()];
     const regex = new RegExp("^" + pattern.replace(/\*/g, ".*") + "$");
     return [...this._kvStore.keys()].filter(k => regex.test(k));
@@ -73,6 +123,9 @@ class InMemoryRedisStub {
   }
 
   async scan(cursor, matchArg, pattern, countArg, count) {
+    for (const k of [...this._kvStore.keys()]) {
+      this._isExpired(k);
+    }
     const allKeys = [...this._kvStore.keys()];
     const pat = pattern || (matchArg && matchArg !== "MATCH" ? matchArg : "*");
     const regex = new RegExp("^" + pat.replace(/\*/g, ".*") + "$");
@@ -84,9 +137,23 @@ class InMemoryRedisStub {
     return 1; // no-op in memory
   }
 
+  async eval(script, numkeys, ...keysAndArgs) {
+    const keys = keysAndArgs.slice(0, numkeys);
+    const args = keysAndArgs.slice(numkeys);
+    const targetKey = keys[0];
+    const expectedValue = args[0];
+    const currentValue = await this.get(targetKey);
+    if (currentValue === String(expectedValue)) {
+      await this.del(targetKey);
+      return 1;
+    }
+    return 0;
+  }
+
   async flushdb() {
     this._store.clear();
     this._kvStore.clear();
+    this._expirations.clear();
     return "OK";
   }
 

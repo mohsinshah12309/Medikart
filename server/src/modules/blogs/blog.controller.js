@@ -4,6 +4,7 @@ const { createBlog, updateBlog, getRelatedProductsForBlog } = require("./blog.se
 const { generateStructuredBlogContent } = require("./blogAi.service");
 const { generateBrandedBlogThumbnail } = require("./blogThumbnail.service");
 const redisClient = require("../../config/redisClient");
+const { cacheService, CACHE_POLICIES } = require("../../services/cache/cacheService");
 
 /**
  * Public: GET /api/v1/blogs - List blogs with filtering and caching
@@ -21,53 +22,49 @@ exports.getPublicBlogs = async (req, res, next) => {
     const skip = (page - 1) * limit;
 
     const cacheKey = `cache:storefront:blogs:p:${page}:l:${limit}:c:${category || ""}:s:${search || ""}`;
-    try {
-      const cached = await redisClient.get(cacheKey);
-      if (cached && req.query.bypassCache !== "true") {
-        return res.status(200).json(JSON.parse(cached));
-      }
-    } catch (_) {}
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.BLOGS,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const filter = { active: true };
+        if (category && category !== "all") {
+          const escapedCategory = category.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          filter.$or = [{ categorySlug: category }, { categoryName: { $regex: escapedCategory, $options: "i" } }];
+        }
+        if (search && search.trim()) {
+          const cleanSearch = search.trim();
+          const escapedSearch = cleanSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          filter.$or = [
+            { title: { $regex: escapedSearch, $options: "i" } },
+            { summary: { $regex: escapedSearch, $options: "i" } },
+            { tags: { $in: [new RegExp(escapedSearch, "i")] } },
+          ];
+        }
 
-    const filter = { active: true };
-    if (category && category !== "all") {
-      const escapedCategory = category.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      filter.$or = [{ categorySlug: category }, { categoryName: { $regex: escapedCategory, $options: "i" } }];
-    }
-    if (search && search.trim()) {
-      const cleanSearch = search.trim();
-      const escapedSearch = cleanSearch.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      filter.$or = [
-        { title: { $regex: escapedSearch, $options: "i" } },
-        { summary: { $regex: escapedSearch, $options: "i" } },
-        { tags: { $in: [new RegExp(escapedSearch, "i")] } },
-      ];
-    }
+        const [blogs, total] = await Promise.all([
+          Blog.find(filter)
+            .select("title slug summary thumbnailUrl categoryName categorySlug author readTimeMinutes tags publishedAt")
+            .sort({ publishedAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
+          Blog.countDocuments(filter),
+        ]);
 
-    const [blogs, total] = await Promise.all([
-      Blog.find(filter)
-        .select("title slug summary thumbnailUrl categoryName categorySlug author readTimeMinutes tags publishedAt")
-        .sort({ publishedAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      Blog.countDocuments(filter),
-    ]);
-
-    const responseBody = {
-      status: "success",
-      results: blogs.length,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit),
+        return {
+          status: "success",
+          results: blogs.length,
+          pagination: {
+            page,
+            limit,
+            total,
+            pages: Math.ceil(total / limit),
+          },
+          data: { blogs },
+        };
       },
-      data: { blogs },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (_) {}
+    });
 
     return res.status(200).json(responseBody);
   } catch (error) {
@@ -83,53 +80,53 @@ exports.getPublicBlogBySlug = async (req, res, next) => {
     const { slug } = req.params;
     const cacheKey = `cache:storefront:blog:${slug}`;
 
-    try {
-      const cached = await redisClient.get(cacheKey);
-      if (cached && req.query.bypassCache !== "true") {
-        return res.status(200).json(JSON.parse(cached));
-      }
-    } catch (_) {}
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.BLOGS,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const blog = await Blog.findOne({ slug, active: true })
+          .populate("category", "name slug image")
+          .lean();
 
-    const blog = await Blog.findOne({ slug, active: true })
-      .populate("category", "name slug image")
-      .lean();
+        if (!blog) {
+          return null;
+        }
 
-    if (!blog) {
+        // 1. Fetch related articles in same category
+        const relatedBlogs = await Blog.find({
+          categorySlug: blog.categorySlug,
+          _id: { $ne: blog._id },
+          active: true,
+        })
+          .select("title slug summary thumbnailUrl categoryName readTimeMinutes publishedAt")
+          .limit(3)
+          .lean();
+
+        // 2. Fetch sibling related categories from Category model
+        const relatedCategories = await Category.find({ active: true })
+          .select("name slug image icon")
+          .limit(4)
+          .lean();
+
+        // 3. Fetch related products using existing product queries
+        const relatedProducts = await getRelatedProductsForBlog(blog);
+
+        return {
+          status: "success",
+          data: {
+            blog,
+            relatedBlogs,
+            relatedCategories,
+            relatedProducts,
+          },
+        };
+      },
+    });
+
+    if (!responseBody) {
       return res.status(404).json({ status: "fail", message: "Article not found" });
     }
-
-    // 1. Fetch related articles in same category
-    const relatedBlogs = await Blog.find({
-      categorySlug: blog.categorySlug,
-      _id: { $ne: blog._id },
-      active: true,
-    })
-      .select("title slug summary thumbnailUrl categoryName readTimeMinutes publishedAt")
-      .limit(3)
-      .lean();
-
-    // 2. Fetch sibling related categories from Category model
-    const relatedCategories = await Category.find({ active: true })
-      .select("name slug image icon")
-      .limit(4)
-      .lean();
-
-    // 3. Fetch related products using existing product queries
-    const relatedProducts = await getRelatedProductsForBlog(blog);
-
-    const responseBody = {
-      status: "success",
-      data: {
-        blog,
-        relatedBlogs,
-        relatedCategories,
-        relatedProducts,
-      },
-    };
-
-    try {
-      await redisClient.set(cacheKey, JSON.stringify(responseBody), "EX", 300);
-    } catch (_) {}
 
     return res.status(200).json(responseBody);
   } catch (error) {
