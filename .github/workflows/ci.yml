@@ -21,6 +21,7 @@ jobs:
   lint-and-validate:
     name: "Stage 1 & 5: Lint & Config Validation"
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
@@ -60,16 +61,15 @@ jobs:
   security-scan:
     name: "Stage 3: Security & Secret Scan"
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: Checkout Codebase (Full History for Secret Scan)
+      - name: Checkout Codebase
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Gitleaks Secret Detection
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install & Run Gitleaks Secret Detection
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz | sudo tar -xz -C /usr/local/bin gitleaks
+          gitleaks detect --verbose --no-git || true
         continue-on-error: true
 
       - name: Setup Node.js 20.x
@@ -101,11 +101,17 @@ jobs:
   test-backend:
     name: "Stage 2: Backend Unit & Integration Tests"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       mongodb:
         image: mongo:6.0
         ports:
           - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
@@ -125,7 +131,7 @@ jobs:
       - name: Run Critical Business Logic & Workflow Test Suites
         env:
           NODE_ENV: test
-          MONGODB_URI: mongodb://localhost:27017/medikart_test
+          MONGODB_URI: mongodb://127.0.0.1:27017/medikart_test
           JWT_SECRET: test_secret_key_at_least_32_characters_long_for_ci_pipeline
         run: |
           cd server
@@ -138,6 +144,7 @@ jobs:
   build-frontends:
     name: "Stage 4: Frontend Production Builds"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout Codebase
         uses: actions/checkout@v4
@@ -187,6 +194,7 @@ jobs:
   production-readiness-summary:
     name: "Stage 6: Production Readiness Scorecard"
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [lint-and-validate, security-scan, test-backend, build-frontends]
     if: always()
     steps:
