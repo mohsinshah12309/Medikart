@@ -218,9 +218,10 @@ const getOrderStats = async (query = {}, admin = null) => {
 
   // Optional Payment Method filtering for top-level stats
   let paymentMatch = [];
+  let normalizedPm = null;
   if (paymentMethod) {
     const pm = paymentMethod.toLowerCase().trim();
-    const normalizedPm = (pm === "cc" || pm === "card" || pm === "credit_card" || pm === "debit_card")
+    normalizedPm = (pm === "cc" || pm === "card" || pm === "credit_card" || pm === "debit_card")
       ? "card"
       : (pm === "cod" || pm === "cash" ? "cod" : pm);
     paymentMatch = [{ $match: { paymentMethod: normalizedPm } }];
@@ -319,9 +320,20 @@ const getOrderStats = async (query = {}, admin = null) => {
           {
             $project: {
               commissionAmount: {
-                $multiply: [
-                  { $ifNull: ["$totals.total", 0] },
-                  { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 5] }, 100] },
+                $cond: [
+                  {
+                    $and: [
+                      { $ifNull: ["$assignedPharmacyId", false] },
+                      { $gt: [{ $ifNull: ["$pharmacy.medikartPercentage", 0] }, 0] },
+                    ],
+                  },
+                  {
+                    $multiply: [
+                      { $ifNull: ["$totals.total", 0] },
+                      { $divide: [{ $ifNull: ["$pharmacy.medikartPercentage", 5] }, 100] },
+                    ],
+                  },
+                  { $ifNull: ["$totals.platformFee", 0] },
                 ],
               },
             },
@@ -362,10 +374,13 @@ const getOrderStats = async (query = {}, admin = null) => {
 
   const balanceAccrued = balanceAgg[0]?.totalAccrued;
   const orderAccrued = result.medikartCommission[0]?.total ?? 0;
-  const computedCommission =
-    balanceAccrued !== undefined && balanceAccrued > 0
-      ? Math.max(balanceAccrued, orderAccrued)
-      : orderAccrued;
+  // When filtering by a payment method (e.g. card or cod), accrued commission strictly
+  // reflects the orders matching that channel, rather than the un-filtered pharmacy lifetime ledger.
+  const computedCommission = normalizedPm
+    ? orderAccrued
+    : (balanceAccrued !== undefined && balanceAccrued > 0
+        ? Math.max(balanceAccrued, orderAccrued)
+        : orderAccrued);
 
   const balancePaid = balanceAgg[0]?.totalPaid;
   const paymentsPaid = paidAgg[0]?.total ?? 0;
@@ -373,6 +388,13 @@ const getOrderStats = async (query = {}, admin = null) => {
     balancePaid !== undefined && balancePaid > 0
       ? Math.max(balancePaid, paymentsPaid)
       : paymentsPaid;
+
+  // Unassigned orders have no partner pharmacy (0 paid receipts).
+  // Online Card / CC orders are collected directly at gateway by Medikart (pharmacies do not submit manual bank deposit slips).
+  let finalPaid = computedPaid;
+  if (pharmacyId === "unassigned" || normalizedPm === "card") {
+    finalPaid = 0;
+  }
 
   const totalCodSale = Math.round((result.totalCodSale[0]?.total ?? 0) * 100) / 100;
   const todayCodSale = Math.round((result.todayCodSale[0]?.total ?? 0) * 100) / 100;
@@ -392,7 +414,7 @@ const getOrderStats = async (query = {}, admin = null) => {
     totalSale: Math.round((result.totalSale[0]?.total ?? 0) * 100) / 100,
     todaySale: Math.round((result.todaySale[0]?.total ?? 0) * 100) / 100,
     medikartCommission: Math.round(computedCommission * 100) / 100,
-    totalCommissionPaid: Math.round(computedPaid * 100) / 100,
+    totalCommissionPaid: Math.round(finalPaid * 100) / 100,
     cod: {
       totalOrders: totalCodOrders,
       todayOrders: todayCodOrders,

@@ -516,10 +516,14 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 tabIndex={0}
                 onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "today", filterStatus: "", filterType: "", filterPaymentMethod })}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.25rem 1.5rem",
                   borderLeft: "5px solid #eab308",
                   background: "#ffffff",
                   cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "165px",
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -531,16 +535,18 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", minHeight: "2.2rem" }}>
+                  <div style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em", lineHeight: 1.3 }}>
                     Today's Orders
                   </div>
-                  <span style={{ fontSize: "0.75rem", color: "#ca8a04", fontWeight: 700 }}>Open →</span>
+                  <span style={{ fontSize: "0.7rem", color: "#ca8a04", fontWeight: 700, background: "#fefce8", border: "1px solid #fef08a", padding: "0.15rem 0.5rem", borderRadius: "4px", whiteSpace: "nowrap" }}>
+                    Open →
+                  </span>
                 </div>
-                <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#0f172a", margin: "0.5rem 0" }}>
+                <div style={{ fontSize: "2rem", fontWeight: 900, color: "#0f172a", margin: "0.4rem 0", lineHeight: 1.15 }}>
                   {stats.todayOrders}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500 }}>
+                <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500, minHeight: "1.2rem", display: "flex", alignItems: "center" }}>
                   Orders placed since midnight PKT
                 </div>
               </div>
@@ -554,10 +560,14 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 tabIndex={0}
                 onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterStatus: "", filterType: "", filterPaymentMethod })}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.25rem 1.5rem",
                   borderLeft: "5px solid #facc15",
                   background: "#ffffff",
                   cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "165px",
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -569,17 +579,19 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
-                    Total Orders (All Time)
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", minHeight: "2.2rem" }}>
+                  <div style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em", lineHeight: 1.3 }}>
+                    Total Orders
                   </div>
-                  <span style={{ fontSize: "0.75rem", color: "#ca8a04", fontWeight: 700 }}>Open →</span>
+                  <span style={{ fontSize: "0.7rem", color: "#ca8a04", fontWeight: 700, background: "#fefce8", border: "1px solid #fef08a", padding: "0.15rem 0.5rem", borderRadius: "4px", whiteSpace: "nowrap" }}>
+                    Open →
+                  </span>
                 </div>
-                <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#0f172a", margin: "0.5rem 0" }}>
+                <div style={{ fontSize: "2rem", fontWeight: 900, color: "#0f172a", margin: "0.4rem 0", lineHeight: 1.15 }}>
                   {stats.totalOrders}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500 }}>
-                  Cumulative order count in database
+                <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500, minHeight: "1.2rem", display: "flex", alignItems: "center" }}>
+                  Cumulative count in database
                 </div>
               </div>
             )}
@@ -592,10 +604,14 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 tabIndex={0}
                 onClick={() => onNavigateToOrders && onNavigateToOrders({ dateFilter: "all", filterStatus: "", filterType: "" })}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.25rem 1.5rem",
                   borderLeft: "5px solid #10b981",
                   background: "#ffffff",
                   cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "165px",
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -607,16 +623,18 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#065f46", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", minHeight: "2.2rem" }}>
+                  <div style={{ color: "#065f46", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em", lineHeight: 1.3 }}>
                     💰 Total Sale
                   </div>
-                  <span style={{ fontSize: "0.75rem", color: "#059669", fontWeight: 700 }}>Orders →</span>
+                  <span style={{ fontSize: "0.7rem", color: "#059669", fontWeight: 700, background: "#ecfdf5", border: "1px solid #a7f3d0", padding: "0.15rem 0.5rem", borderRadius: "4px", whiteSpace: "nowrap" }}>
+                    Orders →
+                  </span>
                 </div>
-                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#065f46", margin: "0.5rem 0" }}>
+                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#065f46", margin: "0.4rem 0", lineHeight: 1.15 }}>
                   PKR {stats.totalSale ? stats.totalSale.toLocaleString() : "0"}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 500 }}>
+                <div style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 500, minHeight: "1.2rem", display: "flex", alignItems: "center" }}>
                   Today: <strong>PKR {stats.todaySale ? stats.todaySale.toLocaleString() : "0"}</strong> • Gross revenue
                 </div>
               </div>
@@ -630,10 +648,14 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 tabIndex={0}
                 onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies("commissions") : (onNavigateToOrders && onNavigateToOrders({ dateFilter: "all" }))}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.25rem 1.5rem",
                   borderLeft: "5px solid #6366f1",
                   background: "#ffffff",
                   cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "165px",
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -645,16 +667,18 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#3730a3", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", minHeight: "2.2rem" }}>
+                  <div style={{ color: "#3730a3", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em", lineHeight: 1.3 }}>
                     📈 Commission Accrued
                   </div>
-                  <span style={{ fontSize: "0.75rem", color: "#4f46e5", fontWeight: 700 }}>Branches →</span>
+                  <span style={{ fontSize: "0.7rem", color: "#4f46e5", fontWeight: 700, background: "#eef2ff", border: "1px solid #c7d2fe", padding: "0.15rem 0.5rem", borderRadius: "4px", whiteSpace: "nowrap" }}>
+                    Branches →
+                  </span>
                 </div>
-                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#3730a3", margin: "0.5rem 0" }}>
+                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#3730a3", margin: "0.4rem 0", lineHeight: 1.15 }}>
                   PKR {Number(stats.medikartCommission || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#4338ca", fontWeight: 500 }}>
+                <div style={{ fontSize: "0.75rem", color: "#4338ca", fontWeight: 500, minHeight: "1.2rem", display: "flex", alignItems: "center" }}>
                   Platform share from partner fulfillment
                 </div>
               </div>
@@ -666,12 +690,16 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 className="card"
                 role="button"
                 tabIndex={0}
-                onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies("commissions") : null}
+                onClick={() => onNavigateToPharmacies ? onNavigateToPharmacies("commissions") : handleOpenCommissionPaidModal()}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.25rem 1.5rem",
                   borderLeft: "5px solid #059669",
                   background: "#ffffff",
                   cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "165px",
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -684,19 +712,23 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 }}
                 title="Click to open Pharmacy Commission & Payments section"
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#065f46", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", minHeight: "2.2rem" }}>
+                  <div style={{ color: "#065f46", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em", lineHeight: 1.3 }}>
                     💵 Commission Paid
                   </div>
-                  <span style={{ fontSize: "0.75rem", color: "#059669", fontWeight: 700, background: "#ecfdf5", padding: "0.15rem 0.45rem", borderRadius: "4px" }}>
+                  <span style={{ fontSize: "0.7rem", color: "#059669", fontWeight: 700, background: "#ecfdf5", border: "1px solid #a7f3d0", padding: "0.15rem 0.5rem", borderRadius: "4px", whiteSpace: "nowrap" }}>
                     Branches →
                   </span>
                 </div>
-                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#065f46", margin: "0.5rem 0" }}>
-                  PKR {stats.totalCommissionPaid ? stats.totalCommissionPaid.toLocaleString() : "0"}
+                <div style={{ fontSize: "1.85rem", fontWeight: 900, color: "#065f46", margin: "0.4rem 0", lineHeight: 1.15 }}>
+                  PKR {Number(stats.totalCommissionPaid || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 500 }}>
-                  Total verified receipts received • <strong>Click to manage</strong>
+                <div style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 500, minHeight: "1.2rem", display: "flex", alignItems: "center" }}>
+                  {filterPaymentMethod === "card"
+                    ? "Online card orders auto-settled via gateway"
+                    : filterPaymentMethod === "cod"
+                      ? "Verified branch deposits received for COD"
+                      : "Total verified receipts received • Click to manage"}
                 </div>
               </div>
             )}
@@ -709,10 +741,14 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                 tabIndex={0}
                 onClick={() => onNavigateToProducts && onNavigateToProducts()}
                 style={{
-                  padding: "1.5rem",
+                  padding: "1.25rem 1.5rem",
                   borderLeft: "5px solid #0f172a",
                   background: "#ffffff",
                   cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  minHeight: "165px",
                   transition: "transform 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -724,16 +760,18 @@ function Overview({ token, adminUser, onNavigateToOrders, onNavigateToProducts, 
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ color: "#64748b", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem", minHeight: "2.2rem" }}>
+                  <div style={{ color: "#64748b", fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em", lineHeight: 1.3 }}>
                     Total Products
                   </div>
-                  <span style={{ fontSize: "0.75rem", color: "#0f172a", fontWeight: 700 }}>Manage →</span>
+                  <span style={{ fontSize: "0.7rem", color: "#334155", fontWeight: 700, background: "#f1f5f9", border: "1px solid #cbd5e1", padding: "0.15rem 0.5rem", borderRadius: "4px", whiteSpace: "nowrap" }}>
+                    Manage →
+                  </span>
                 </div>
-                <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "#0f172a", margin: "0.5rem 0" }}>
+                <div style={{ fontSize: "2rem", fontWeight: 900, color: "#0f172a", margin: "0.4rem 0", lineHeight: 1.15 }}>
                   {stats.totalProducts}
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500 }}>
+                <div style={{ fontSize: "0.75rem", color: "#64748b", fontWeight: 500, minHeight: "1.2rem", display: "flex", alignItems: "center" }}>
                   Total active catalog size
                 </div>
               </div>
