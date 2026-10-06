@@ -289,21 +289,27 @@ export function CustomerProvider({ children }) {
     return wishlistIds.includes(productId);
   }, [wishlistIds]);
 
-  const toggleWishlist = async (productId) => {
+  const toggleWishlist = async (productId, productObj = null) => {
     if (!token) {
       router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
       return false;
     }
 
     const currentlyWishlisted = isWishlisted(productId);
+    const prevIds = [...wishlistIds];
+    const prevItems = [...wishlistItems];
+    const prevCount = wishlistCount;
 
     // Optimistic UI update
     if (currentlyWishlisted) {
       setWishlistIds((prev) => prev.filter((id) => id !== productId));
-      setWishlistItems((prev) => prev.filter((item) => item._id !== productId));
+      setWishlistItems((prev) => prev.filter((item) => (item._id || item.productId) !== productId));
       setWishlistCount((prev) => Math.max(0, prev - 1));
     } else {
       setWishlistIds((prev) => [...prev, productId]);
+      if (productObj) {
+        setWishlistItems((prev) => [...prev, productObj]);
+      }
       setWishlistCount((prev) => prev + 1);
     }
 
@@ -318,12 +324,18 @@ export function CustomerProvider({ children }) {
 
       if (!res.ok) {
         // Rollback on failure
+        setWishlistIds(prevIds);
+        setWishlistItems(prevItems);
+        setWishlistCount(prevCount);
         refreshWishlistIds(token);
         return false;
       }
       return !currentlyWishlisted;
     } catch (err) {
-      console.error("[CustomerProvider] Wishlist toggle failed:", err);
+      console.error("[CustomerProvider] Wishlist toggle failed, rolling back:", err);
+      setWishlistIds(prevIds);
+      setWishlistItems(prevItems);
+      setWishlistCount(prevCount);
       refreshWishlistIds(token);
       return false;
     }
@@ -348,6 +360,41 @@ export function CustomerProvider({ children }) {
       return false;
     }
 
+    const previousData = { ...refillData, items: [...(refillData?.items || [])] };
+    const effPrice = productObj?.effectivePrice !== undefined ? productObj.effectivePrice : (productObj?.price || 0);
+    const itemSubtotal = Math.round(effPrice * quantity * 100) / 100;
+    const tempItem = {
+      _id: `temp-${Date.now()}`,
+      productId: productId,
+      name: productObj?.name || "Medicine",
+      price: productObj?.price || effPrice,
+      effectivePrice: effPrice,
+      quantity,
+      subtotal: itemSubtotal,
+      coverImage: productObj?.coverImage || productObj?.images?.[0] || "",
+      isNarcotic: Boolean(productObj?.isNarcotic),
+    };
+
+    // Optimistic UI update
+    setRefillData((prev) => {
+      const updatedItems = [...(prev?.items || []), tempItem];
+      const newSubtotal = Math.round(updatedItems.reduce((acc, it) => acc + (it.subtotal || 0), 0) * 100) / 100;
+      return {
+        ...prev,
+        items: updatedItems,
+        count: updatedItems.length,
+        subtotal: newSubtotal,
+      };
+    });
+
+    showRefillToast({
+      product: productObj || { _id: productId },
+      title: "Added to Monthly Refill!",
+      message: productObj?.name
+        ? `${productObj.name} saved to your 30-day recurring routine.`
+        : "Medicine added to your 30-day recurring routine.",
+    });
+
     try {
       const res = await fetch(`${apiUrl}/customer/monthly-refill`, {
         method: "POST",
@@ -361,19 +408,15 @@ export function CustomerProvider({ children }) {
       if (res.ok) {
         const json = await res.json();
         setRefillData(json?.data || refillData);
-        showRefillToast({
-          product: productObj || { _id: productId },
-          title: "Added to Monthly Refill!",
-          message: productObj?.name
-            ? `${productObj.name} saved to your 30-day recurring routine.`
-            : "Medicine added to your 30-day recurring routine.",
-        });
         return true;
       }
+      // Revert on failure
+      setRefillData(previousData);
       const errJson = await res.json().catch(() => ({}));
       throw new Error(errJson.message || "Failed to add product to refill list");
     } catch (err) {
-      console.error("[CustomerProvider] Add to refill error:", err);
+      console.error("[CustomerProvider] Add to refill error, rolling back:", err);
+      setRefillData(previousData);
       throw err;
     }
   };

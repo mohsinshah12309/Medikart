@@ -73,13 +73,42 @@ export default function CatalogSection({
   categoryIdRef.current = activeCategoryId;
 
   const abortRef = useRef(null);
+  const prefetchCache = useRef(new Map());
+  const prefetchTimeoutRef = useRef(null);
 
-  // Fetch catalog data asynchronously without full page reload
+  const getCatalogCacheKey = (sq, cat, p) => `${sq || ''}::${cat || ''}::${p}`;
+
+  // Fetch catalog data asynchronously with instant pre-fetch cache & background next-page pre-fetch
   const fetchCatalog = async (searchQuery, categoryId, pageNum = 1) => {
-    setLoading(true);
     setErrorMsg(null);
     abortRef.current?.abort();
     abortRef.current = new AbortController();
+
+    const cacheKey = getCatalogCacheKey(searchQuery, categoryId, pageNum);
+
+    // 1. Instant Cache Retrieval: If next page was already pre-fetched in background, apply immediately (0ms wait)
+    if (prefetchCache.current.has(cacheKey)) {
+      const cached = prefetchCache.current.get(cacheKey);
+      setProducts(cached.products);
+      setPagination(cached.pagination);
+      setLoading(false);
+
+      // Smoothly update browser URL for bookmarking and deep linking
+      const urlParams = new URLSearchParams();
+      if (searchQuery) urlParams.append('search', searchQuery);
+      if (categoryId) urlParams.append('category', categoryId);
+      if (pageNum > 1) urlParams.append('page', pageNum);
+      const newUrl = urlParams.toString() ? `/?${urlParams.toString()}#store-catalog` : '/#store-catalog';
+      window.history.pushState({}, '', newUrl);
+
+      // Schedule background pre-fetch for the subsequent page (pageNum + 1)
+      if (cached.pagination.page < cached.pagination.pages) {
+        scheduleNextPagePrefetch(searchQuery, categoryId, pageNum + 1);
+      }
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const params = new URLSearchParams();
@@ -108,6 +137,12 @@ export default function CatalogSection({
       setProducts(fetchedProducts);
       setPagination(fetchedPagination);
 
+      // Store in memory cache
+      prefetchCache.current.set(cacheKey, {
+        products: fetchedProducts,
+        pagination: fetchedPagination,
+      });
+
       // Smoothly update browser URL
       const urlParams = new URLSearchParams();
       if (searchQuery) urlParams.append('search', searchQuery);
@@ -115,6 +150,11 @@ export default function CatalogSection({
       if (pageNum > 1) urlParams.append('page', pageNum);
       const newUrl = urlParams.toString() ? `/?${urlParams.toString()}#store-catalog` : '/#store-catalog';
       window.history.pushState({}, '', newUrl);
+
+      // 2. Pre-fetch the NEXT page (pageNum + 1) in the background so clicking 'Next' feels instant
+      if (fetchedPagination.page < fetchedPagination.pages) {
+        scheduleNextPagePrefetch(searchQuery, categoryId, pageNum + 1);
+      }
     } catch (err) {
       if (err.name === 'AbortError') return;
       console.error('Catalog fetch failed:', err);
@@ -122,6 +162,35 @@ export default function CatalogSection({
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper to pre-fetch strictly 1 page ahead in the background with modest delay
+  const scheduleNextPagePrefetch = (searchQuery, categoryId, nextP) => {
+    if (prefetchTimeoutRef.current) clearTimeout(prefetchTimeoutRef.current);
+    prefetchTimeoutRef.current = setTimeout(async () => {
+      const nextKey = getCatalogCacheKey(searchQuery, categoryId, nextP);
+      if (prefetchCache.current.has(nextKey)) return;
+
+      try {
+        const nextParams = new URLSearchParams();
+        if (searchQuery) nextParams.append('search', searchQuery);
+        if (categoryId) nextParams.append('categoryId', categoryId);
+        nextParams.append('page', nextP);
+        nextParams.append('limit', 24);
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+        const res = await fetch(`${apiUrl}/products?${nextParams.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.data?.products) {
+            prefetchCache.current.set(nextKey, {
+              products: data.data.products,
+              pagination: data.pagination,
+            });
+          }
+        }
+      } catch (_) {}
+    }, 400);
   };
 
   // Keep state in sync with URL search params and CustomEvents

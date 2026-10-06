@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { trackBeginCheckout } from '../../lib/analytics';
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeFromCart, cartTotal, isLoaded } = useCart();
+  const { cart, updateQuantity, removeFromCart, cartTotal, isLoaded, cartError, setCartError } = useCart();
+  const [removingId, setRemovingId] = React.useState(null);
 
   if (!isLoaded) {
     return (
@@ -23,9 +24,35 @@ export default function CartPage() {
     trackBeginCheckout(cart, cartTotal + 10);
   };
 
+  const handleRemove = (productId) => {
+    if (window.confirm('Remove this item from your cart?')) {
+      setRemovingId(productId);
+      setTimeout(() => {
+        removeFromCart(productId);
+        setRemovingId(null);
+      }, 250);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
       <h1 className="text-2xl font-black text-slate-900 tracking-tight">Shopping Cart</h1>
+
+      {/* Rollback & Error Feedback Banner */}
+      {cartError && (
+        <div className="bg-rose-50 border-2 border-rose-300 rounded-2xl p-4 text-rose-900 text-sm font-bold flex items-center justify-between shadow-sm animate-pulse">
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl">⚠️</span>
+            <span>{cartError}</span>
+          </div>
+          <button
+            onClick={() => setCartError(null)}
+            className="text-rose-600 hover:text-rose-950 font-black text-xs uppercase px-2 py-1 rounded bg-rose-100 hover:bg-rose-200 transition-colors"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {cart.length === 0 ? (
         <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-lg">
@@ -56,7 +83,12 @@ export default function CartPage() {
           {/* Cart items list */}
           <div className="md:col-span-2 flex flex-col gap-4">
             {cart.map((item) => (
-              <div key={item.productId} className="bg-white rounded-2xl border-2 border-yellow-200/80 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400 hover:shadow-md transition-all">
+              <div
+                key={item.productId}
+                className={`bg-white rounded-2xl border-2 border-yellow-200/80 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400 hover:shadow-md transition-all duration-300 ${
+                  removingId === item.productId ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100'
+                }`}
+              >
                 <div className="w-16 h-16 bg-yellow-50/50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-yellow-200">
                   <img
                     src={item.coverImage ? (item.coverImage.startsWith('http') || item.coverImage.startsWith('/') ? item.coverImage : `/uploads/${item.coverImage}`) : '/uploads/placeholder.webp'}
@@ -109,7 +141,7 @@ export default function CartPage() {
 
                 {/* Remove Button */}
                 <button
-                  onClick={() => { if (window.confirm('Remove this item from your cart?')) removeFromCart(item.productId); }}
+                  onClick={() => handleRemove(item.productId)}
                   aria-label="Remove item from cart"
                   className="text-slate-400 hover:text-red-600 p-2 text-sm transition-colors cursor-pointer"
                   title="Remove item"

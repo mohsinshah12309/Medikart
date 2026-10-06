@@ -267,6 +267,18 @@ function Orders({ token, adminUser, initialFilter }) {
     setSuccessMsg("");
     setStatusUpdatingId(orderId);
 
+    // Snapshot state for rollback
+    const prevOrders = [...orders];
+    const prevSelected = selectedOrder ? { ...selectedOrder } : null;
+
+    // 1. Optimistic UI update: status badge updates immediately in table and detail modal
+    setOrders((prev) =>
+      prev.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o))
+    );
+    if (selectedOrder && selectedOrder._id === orderId) {
+      setSelectedOrder((prev) => ({ ...prev, status: newStatus }));
+    }
+
     try {
       const res = await adminFetch(`/admin/orders/${orderId}/status`, {
         method: "PATCH",
@@ -274,11 +286,22 @@ function Orders({ token, adminUser, initialFilter }) {
       });
 
       setSuccessMsg(`Order status successfully updated to "${newStatus}".`);
-      await fetchOrders();
-      if (selectedOrder && selectedOrder._id === orderId) {
-        setSelectedOrder(res.data?.order || null);
+      if (res.data?.order) {
+        setOrders((prev) =>
+          prev.map((o) => (o._id === orderId ? { ...o, ...res.data.order } : o))
+        );
+        if (selectedOrder && selectedOrder._id === orderId) {
+          setSelectedOrder(res.data.order);
+        }
+      } else {
+        await fetchOrders();
       }
     } catch (err) {
+      // Revert optimistic update on failure
+      setOrders(prevOrders);
+      if (prevSelected) {
+        setSelectedOrder(prevSelected);
+      }
       setError(err.message || "Failed to update order status");
     } finally {
       setStatusUpdatingId(null);

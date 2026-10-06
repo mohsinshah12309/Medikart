@@ -135,18 +135,33 @@ export function CartProvider({ children }) {
       console.warn("[CartProvider] Server add error, rolling back:", err.message);
       setCart(previousCart);
       localStorage.setItem("medikart_cart", JSON.stringify(previousCart));
-      setCartError(err.message || 'Failed to update cart');
+      setCartError(err.message || 'Unable to add item to cart. Please try again.');
       setTimeout(() => setCartError(null), 5000);
     }
   };
 
-  // Optimistic Update Quantity
-  const updateQuantity = async (productId, quantity) => {
+  // Debounce refs for quantity stepper
+  const debouncedQuantityTimers = useRef({});
+  const baselineCartBeforeDebounce = useRef({});
+
+  // Cleanup pending timers on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(debouncedQuantityTimers.current).forEach((t) => clearTimeout(t));
+    };
+  }, []);
+
+  // Optimistic Update Quantity with Debounced Background Request
+  const updateQuantity = (productId, quantity) => {
     const qty = parseInt(quantity, 10);
     if (isNaN(qty)) return;
-    const previousCart = [...cart];
 
-    // 1. Optimistic local update
+    // Snapshot baseline before first rapid click if not already tracked
+    if (!baselineCartBeforeDebounce.current[productId]) {
+      baselineCartBeforeDebounce.current[productId] = [...cart];
+    }
+
+    // 1. Instant optimistic local update (immediate visual feedback on stepper & total)
     setCart((prevCart) => {
       let updated;
       if (qty <= 0) {
@@ -163,24 +178,41 @@ export function CartProvider({ children }) {
       return updated;
     });
 
-    // 2. Server API sync
-    try {
-      const res = await updateCartItemApi(productId, qty, token);
-      if (res && res.data && Array.isArray(res.data.items)) {
-        setCart(res.data.items);
-        localStorage.setItem("medikart_cart", JSON.stringify(res.data.items));
-      }
-    } catch (err) {
-      console.warn("[CartProvider] Server update error, rolling back:", err.message);
-      setCart(previousCart);
-      localStorage.setItem("medikart_cart", JSON.stringify(previousCart));
-      setCartError(err.message || 'Failed to update cart');
-      setTimeout(() => setCartError(null), 5000);
+    // 2. Debounce server request (350ms window batches multi-clicks)
+    if (debouncedQuantityTimers.current[productId]) {
+      clearTimeout(debouncedQuantityTimers.current[productId]);
     }
+
+    debouncedQuantityTimers.current[productId] = setTimeout(async () => {
+      const baseline = baselineCartBeforeDebounce.current[productId] || cart;
+      delete baselineCartBeforeDebounce.current[productId];
+      delete debouncedQuantityTimers.current[productId];
+
+      try {
+        const res = await updateCartItemApi(productId, qty, token);
+        if (res && res.data && Array.isArray(res.data.items)) {
+          setCart(res.data.items);
+          localStorage.setItem("medikart_cart", JSON.stringify(res.data.items));
+        }
+      } catch (err) {
+        console.warn("[CartProvider] Server update error, rolling back:", err.message);
+        setCart(baseline);
+        localStorage.setItem("medikart_cart", JSON.stringify(baseline));
+        setCartError(err.message || 'Unable to update item quantity. Restoring previous quantity.');
+        setTimeout(() => setCartError(null), 5000);
+      }
+    }, 350);
   };
 
   // Optimistic Remove From Cart
   const removeFromCart = async (productId) => {
+    // Cancel any pending debounced update for this product
+    if (debouncedQuantityTimers.current[productId]) {
+      clearTimeout(debouncedQuantityTimers.current[productId]);
+      delete debouncedQuantityTimers.current[productId];
+      delete baselineCartBeforeDebounce.current[productId];
+    }
+
     const previousCart = [...cart];
     // 1. Optimistic local update
     setCart((prevCart) => {
@@ -201,7 +233,7 @@ export function CartProvider({ children }) {
       console.warn("[CartProvider] Server remove error, rolling back:", err.message);
       setCart(previousCart);
       localStorage.setItem("medikart_cart", JSON.stringify(previousCart));
-      setCartError(err.message || 'Failed to update cart');
+      setCartError(err.message || 'Failed to remove item from cart. Restored.');
       setTimeout(() => setCartError(null), 5000);
     }
   };

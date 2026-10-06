@@ -63,8 +63,8 @@ function ProductCardComponent({ product }) {
       e.preventDefault();
       e.stopPropagation();
     }
-    toggleWishlist(product._id);
-  }, [toggleWishlist, product._id]);
+    toggleWishlist(product._id, product);
+  }, [toggleWishlist, product]);
 
   return (
     <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-yellow-400 flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1">

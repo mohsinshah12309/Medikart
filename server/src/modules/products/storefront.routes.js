@@ -56,7 +56,7 @@ router.get("/products", async (req, res, next) => {
     const rawSearch = typeof req.query.search === "string" ? req.query.search : "";
     const rawCategoryId = typeof req.query.categoryId === "string" ? req.query.categoryId : "";
     const rawCondition = typeof req.query.condition === "string" ? req.query.condition : "";
-    const { isNarcotic, page = 1, limit = 20 } = req.query;
+    const { isNarcotic, page = 1, limit = 20, cursor = "" } = req.query;
 
     const parsedPage = parseInt(page, 10);
     const p = !isNaN(parsedPage) && parsedPage >= 1 ? parsedPage : 1;
@@ -66,6 +66,7 @@ router.get("/products", async (req, res, next) => {
     const search = rawSearch.trim();
     const categoryId = rawCategoryId.trim();
     const condition = rawCondition.trim();
+    const cursorStr = typeof cursor === "string" ? cursor.trim() : "";
 
     // Track search query popularity asynchronously in background
     if (search) {
@@ -75,7 +76,7 @@ router.get("/products", async (req, res, next) => {
     }
 
     // Cache check with lease locking and SWR stampede protection
-    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}`;
+    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}:cursor:${cursorStr || ""}`;
     const responseBody = await cacheService.fetchWithCache({
       key: cacheKey,
       policy: CACHE_POLICIES.PRODUCTS_LISTING,
@@ -157,7 +158,31 @@ router.get("/products", async (req, res, next) => {
       query.isNarcotic = isNarcotic === "true";
     }
 
-    const skip = (p - 1) * l;
+    // Cursor-based seek support (NFR-PERF-02): avoids O(N) skip cost on large catalogs
+    let cursorFilter = null;
+    if (cursorStr) {
+      try {
+        const decoded = JSON.parse(Buffer.from(cursorStr, "base64").toString("utf8"));
+        if (decoded?.name && decoded?.id) {
+          cursorFilter = {
+            $or: [
+              { name: { $gt: decoded.name } },
+              { name: decoded.name, _id: { $gt: new mongoose.Types.ObjectId(decoded.id) } },
+            ],
+          };
+        }
+      } catch (_) {
+        if (mongoose.Types.ObjectId.isValid(cursorStr)) {
+          cursorFilter = { _id: { $gt: new mongoose.Types.ObjectId(cursorStr) } };
+        }
+      }
+    }
+
+    if (cursorFilter) {
+      query.$and = query.$and ? [...query.$and, cursorFilter] : [cursorFilter];
+    }
+
+    const skip = cursorFilter ? 0 : (p - 1) * l;
 
     // Parallelize independent DB reads (Product.find, storewide discount, countDocuments)
     let [products, storewidePercent, totalCount] = await Promise.all([
@@ -223,6 +248,11 @@ router.get("/products", async (req, res, next) => {
       };
     });
 
+        const lastProd = formattedProducts[formattedProducts.length - 1];
+        const nextCursor = lastProd
+          ? Buffer.from(JSON.stringify({ name: lastProd.name, id: String(lastProd._id) })).toString("base64")
+          : null;
+
         return {
           status: "success",
           results: formattedProducts.length,
@@ -231,6 +261,8 @@ router.get("/products", async (req, res, next) => {
             limit: l,
             total: totalCount,
             pages: Math.ceil(totalCount / l),
+            nextCursor: (cursorStr || formattedProducts.length === l) ? nextCursor : null,
+            hasMore: p < Math.ceil(totalCount / l),
           },
           data: { products: formattedProducts },
         };

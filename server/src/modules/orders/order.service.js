@@ -57,6 +57,7 @@ const getOrders = async (
     paymentMethod,
     page = 1,
     limit = 20,
+    cursor = null,
   } = {},
   admin = null
 ) => {
@@ -128,7 +129,31 @@ const getOrders = async (
     }
   }
 
-  const skip = (page - 1) * limit;
+  // Cursor-based seek support for deep orders pagination
+  let cursorFilter = null;
+  if (cursor) {
+    try {
+      const decoded = JSON.parse(Buffer.from(cursor, "base64").toString("utf8"));
+      if (decoded?.createdAt && decoded?.id) {
+        cursorFilter = {
+          $or: [
+            { createdAt: { $lt: new Date(decoded.createdAt) } },
+            { createdAt: new Date(decoded.createdAt), _id: { $lt: new mongoose.Types.ObjectId(decoded.id) } },
+          ],
+        };
+      }
+    } catch (_) {
+      if (mongoose.Types.ObjectId.isValid(cursor)) {
+        cursorFilter = { _id: { $lt: new mongoose.Types.ObjectId(cursor) } };
+      }
+    }
+  }
+
+  if (cursorFilter) {
+    query.$and = query.$and ? [...query.$and, cursorFilter] : [cursorFilter];
+  }
+
+  const skip = cursorFilter ? 0 : (page - 1) * limit;
   const [orders, total] = await Promise.all([
     Order.find(query)
       .populate("assignedPharmacyId", "name code phone address")
@@ -138,7 +163,12 @@ const getOrders = async (
     Order.countDocuments(query),
   ]);
 
-  return { orders, total, page, limit };
+  const lastOrder = orders[orders.length - 1];
+  const nextCursor = lastOrder
+    ? Buffer.from(JSON.stringify({ createdAt: lastOrder.createdAt, id: String(lastOrder._id) })).toString("base64")
+    : null;
+
+  return { orders, total, page, limit, nextCursor, hasMore: skip + orders.length < total };
 };
 
 /**

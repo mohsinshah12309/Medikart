@@ -53,6 +53,7 @@ function Products({ token }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savingNarcoticsId, setSavingNarcoticsId] = useState(null);
 
   // Pagination State
   const [page, setPage] = useState(1);
@@ -249,6 +250,13 @@ function Products({ token }) {
     setError("");
     setSuccessMsg("");
     const newNarcoticState = !product.isNarcotic;
+    const prevProducts = [...products];
+
+    // Optimistic UI update: toggle badge immediately
+    setProducts((prev) =>
+      prev.map((p) => (p._id === product._id ? { ...p, isNarcotic: newNarcoticState } : p))
+    );
+    setSavingNarcoticsId(product._id);
 
     try {
       await adminFetch(`/admin/products/${product._id}/narcotics`, {
@@ -256,10 +264,13 @@ function Products({ token }) {
         body: JSON.stringify({ isNarcotic: newNarcoticState }),
       });
 
-      setSuccessMsg(`Narcotics status for ${product.name} updated to ${newNarcoticState ? "ON" : "OFF"}`);
-      fetchProducts();
+      setSuccessMsg(`Narcotics status for ${product.name} updated to ${newNarcoticState ? "ON (Controlled)" : "OFF (Safe)"}`);
     } catch (err) {
-      setError(err.message);
+      // Revert optimistic update on failure
+      setProducts(prevProducts);
+      setError(err.message || "Failed to update narcotics flag");
+    } finally {
+      setSavingNarcoticsId(null);
     }
   };
 
@@ -274,17 +285,10 @@ function Products({ token }) {
     );
 
     try {
-      const res = await fetch(`${API_URL}/admin/products/${product._id}`, {
+      await adminFetch(`/admin/products/${product._id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({ active: newActiveState }),
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to toggle product status");
 
       setSuccessMsg(
         `Product "${product.name}" is now ${newActiveState ? "ENABLED (visible on storefront)" : "DISABLED (hidden from storefront)"}.`
@@ -294,7 +298,7 @@ function Products({ token }) {
       setProducts((prev) =>
         prev.map((p) => (p._id === product._id ? { ...p, active: product.active } : p))
       );
-      setError(err.message);
+      setError(err.message || "Failed to toggle product status");
     }
   };
 
@@ -662,11 +666,23 @@ function Products({ token }) {
                       <td className="td-center">
                         <span
                           className={`badge ${product.isNarcotic ? "badge-narcotic" : "badge-secondary"}`}
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleToggleNarcotic(product)}
-                          title="Click to toggle Narcotics flag"
+                          style={{
+                            cursor: savingNarcoticsId === product._id ? "wait" : "pointer",
+                            opacity: savingNarcoticsId === product._id ? 0.75 : 1,
+                            transition: "all 0.15s ease",
+                          }}
+                          onClick={() => {
+                            if (savingNarcoticsId !== product._id) {
+                              handleToggleNarcotic(product);
+                            }
+                          }}
+                          title={product.isNarcotic ? "Click to remove Narcotics flag" : "Click to set Narcotics flag"}
                         >
-                          {product.isNarcotic ? "Narcotic ⚠️" : "Safe"}
+                          {savingNarcoticsId === product._id
+                            ? "Saving..."
+                            : product.isNarcotic
+                            ? "Narcotic ⚠️"
+                            : "Safe"}
                         </span>
                       </td>
                       <td className="td-center">

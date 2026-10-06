@@ -158,15 +158,22 @@ const getPharmacyBalance = async (pharmacyId, adminUser) => {
  * List all commission payment records for a pharmacy.
  * (Super Admin can view all pharmacies; Subadmins can view their assigned branch).
  */
-const getPharmacyPayments = async (pharmacyId, adminUser) => {
+const getPharmacyPayments = async (pharmacyId, adminUser, options = {}) => {
   assertPharmacyAccess(adminUser, pharmacyId);
 
-  const payments = await CommissionPayment.find({ pharmacyId })
+  const query = CommissionPayment.find({ pharmacyId })
     .populate("submittedBy", "name email role")
     .populate("verifiedBy", "name email role")
     .populate("pharmacyId", "name code")
     .sort({ createdAt: -1 });
 
+  if (options.limit) {
+    const lim = Math.max(1, parseInt(options.limit, 10) || 20);
+    const p = Math.max(1, parseInt(options.page, 10) || 1);
+    query.skip((p - 1) * lim).limit(lim);
+  }
+
+  const payments = await query;
   return payments;
 };
 

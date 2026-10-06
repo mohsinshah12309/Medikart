@@ -295,7 +295,7 @@ export default function DvagoSearchBar({ className = "" }) {
       e.preventDefault();
       e.stopPropagation();
     }
-    toggleWishlist(prod._id);
+    toggleWishlist(prod._id, prod);
   };
 
   // Reusable Product Card Component for Search Results

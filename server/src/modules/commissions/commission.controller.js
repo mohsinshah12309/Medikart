@@ -152,7 +152,8 @@ const getPharmacyPayments = async (req, res, next) => {
   try {
     const payments = await commissionService.getPharmacyPayments(
       req.params.pharmacyId,
-      req.admin
+      req.admin,
+      req.query
     );
     res.status(200).json({
       status: "success",
