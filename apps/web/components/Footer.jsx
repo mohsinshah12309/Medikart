@@ -187,7 +187,7 @@ export default function Footer({
       {/* ─────────────────────────────────────────────────────────────────────
           1. MAIN BRAND YELLOW FOOTER BLOCK (4-Column + Brand Block)
       ────────────────────────────────────────────────────────────────────── */}
-      <div className="w-full bg-gradient-to-b from-[#FFFDE0] via-[#FFFEBB] to-[#FFF352]/90 border-t-2 border-[#F7E53B] shadow-inner py-12 sm:py-16">
+      <div className="w-full bg-[#FFEE45] bg-gradient-to-b from-[#FFFDE6] via-[#FFEE45] to-[#FFEE45] border-t-2 border-[#E5D322] shadow-inner py-12 sm:py-16">
         <div className="max-w-[1600px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 text-left">

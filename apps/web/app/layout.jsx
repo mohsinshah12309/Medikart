@@ -55,7 +55,7 @@ const caveat = Caveat({
 });
 
 export const viewport = {
-  themeColor: '#FFF352',
+  themeColor: '#FFEE45',
   colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
@@ -244,7 +244,7 @@ export default async function RootLayout({ children }) {
     <html lang="en-PK" className={`light ${plusJakarta.variable} ${inter.variable} ${caveat.variable}`} style={{ colorScheme: 'light' }}>
       <head>
         <meta name="color-scheme" content="light" />
-        <meta name="theme-color" content="#FFF352" />
+        <meta name="theme-color" content="#FFEE45" />
         <meta name="geo.region" content="PK" />
         <meta name="geo.placename" content="Pakistan" />
         <script

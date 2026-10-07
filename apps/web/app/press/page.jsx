@@ -89,10 +89,10 @@ export default function PressPage() {
 
       <div className="max-w-5xl mx-auto flex flex-col gap-10 pb-16 px-4 sm:px-6">
         {/* Header Hero Banner */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-[#FFF352] via-[#FFF866] to-[#FFE51A] rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-[#F7E53B]">
+        <div className="relative overflow-hidden bg-gradient-to-r from-[#FFEE45] via-[#FFFDE6] to-[#FDD835] rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-[#E5D322]">
           <div className="flex flex-col gap-3 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFF352] w-fit shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-[#FFF352] animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFEE45] w-fit shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#FFEE45] animate-pulse" />
               Verified Media &amp; Partnership Fact Sheet
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-950 font-heading tracking-tight leading-tight">

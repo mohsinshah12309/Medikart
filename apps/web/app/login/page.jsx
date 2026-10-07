@@ -117,7 +117,7 @@ function LoginForm() {
         <div className="flex items-center justify-center gap-1.5 p-1 bg-white/80 backdrop-blur-md rounded-2xl border border-amber-100 shadow-sm max-w-[280px] mx-auto mb-4">
           <button
             type="button"
-            className="flex-1 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-400 to-[#FFCB05] text-slate-950 shadow-xs transition-all"
+            className="flex-1 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-400 to-[#FFEE45] text-slate-950 shadow-xs transition-all"
           >
             Sign In
           </button>

@@ -28,11 +28,11 @@ export default function InstallModal() {
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border-2 border-yellow-300 overflow-hidden z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border-2 border-[#FFEE45] overflow-hidden z-10 animate-in zoom-in-95 duration-200">
         {/* Header Ribbon */}
-        <div className="bg-gradient-to-r from-[#FFF352] via-[#FFCB05] to-[#FFD84D] px-6 py-5 border-b border-amber-200 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-[#FFFDE6] via-[#FFEE45] to-[#FDD835] px-6 py-5 border-b border-[#E5D322]/80 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-slate-950 text-yellow-400 flex items-center justify-center font-black shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-slate-950 text-[#FFEE45] flex items-center justify-center font-black shadow-xs">
               <Smartphone className="w-5 h-5" />
             </div>
             <div>
@@ -87,7 +87,7 @@ export default function InstallModal() {
                 </div>
 
                 <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
-                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-yellow-400 flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-[#FFEE45] flex items-center justify-center shrink-0 shadow-xs">
                     <PlusSquare className="w-4 h-4" />
                   </div>
                   <div className="text-xs">
@@ -108,7 +108,7 @@ export default function InstallModal() {
 
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
-                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-yellow-400 flex items-center justify-center shrink-0 shadow-xs font-bold text-sm">
+                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-[#FFEE45] flex items-center justify-center shrink-0 shadow-xs font-bold text-sm">
                     1
                   </div>
                   <div className="text-xs">
@@ -120,7 +120,7 @@ export default function InstallModal() {
                 </div>
 
                 <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
-                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-yellow-400 flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-[#FFEE45] flex items-center justify-center shrink-0 shadow-xs">
                     <Download className="w-4 h-4" />
                   </div>
                   <div className="text-xs">
@@ -129,6 +129,13 @@ export default function InstallModal() {
                       Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong> to complete setup.
                     </span>
                   </div>
+                </div>
+
+                <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-blue-50/80 border border-blue-200 text-xs">
+                  <span className="text-sm shrink-0">🛡️</span>
+                  <span className="text-slate-700 font-medium leading-relaxed">
+                    If Android Play Protect prompts verification during testing, tap <strong>"More details" → "Install anyway"</strong> (100% verified &amp; safe).
+                  </span>
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@ function isWebGLAvailable() {
 /**
  * Creates a two-tone 3D medicine capsule with shiny finish and chrome belt
  */
-function createCapsule(primaryColor = 0xffcb05, secondaryColor = 0xffffff, radius = 0.5, length = 1.0) {
+function createCapsule(primaryColor = 0xffee45, secondaryColor = 0xffffff, radius = 0.5, length = 1.0) {
   const group = new THREE.Group();
 
   const halfLength = length / 2;
@@ -133,7 +133,7 @@ export default function Auth3DScene({ className = "", interactive = true }) {
       rimLight.position.set(-6, -4, -2);
       scene.add(rimLight);
 
-      const pointLight = new THREE.PointLight(0xffcb05, 1.8, 15);
+      const pointLight = new THREE.PointLight(0xffee45, 1.8, 15);
       pointLight.position.set(0, 2, 4);
       scene.add(pointLight);
 
@@ -141,7 +141,7 @@ export default function Auth3DScene({ className = "", interactive = true }) {
       const capsuleConfigs = [
         // Main Hero Pill (Amber/Yellow + White)
         {
-          color1: 0xffcb05,
+          color1: 0xffee45,
           color2: 0xffffff,
           radius: 0.65,
           length: 1.3,
@@ -205,7 +205,7 @@ export default function Auth3DScene({ className = "", interactive = true }) {
 
       // --- Translucent Glowing Vitamin Beads ---
       const sphereMat1 = new THREE.MeshPhysicalMaterial({
-        color: 0xffcb05,
+        color: 0xffee45,
         emissive: 0xf59e0b,
         emissiveIntensity: 0.3,
         roughness: 0.1,

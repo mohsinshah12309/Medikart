@@ -53,14 +53,14 @@ export default function RefillToast({
       aria-live="polite"
       className="fixed top-20 right-4 sm:right-6 md:top-24 z-50 max-w-sm w-[calc(100vw-2rem)] sm:w-96 animate-fade-in-up"
     >
-      <div className="relative rounded-2xl bg-slate-950/95 text-white backdrop-blur-md border-2 border-[#FFF352] shadow-2xl p-4 overflow-hidden">
+      <div className="relative rounded-2xl bg-slate-950/95 text-white backdrop-blur-md border-2 border-[#FFEE45] shadow-2xl p-4 overflow-hidden">
         {/* Top Glowing Ambient Highlight */}
-        <div className="absolute top-0 right-0 w-36 h-36 bg-[#FFF352]/20 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-36 h-36 bg-[#FFEE45]/20 rounded-full blur-2xl pointer-events-none" />
 
         <div className="flex items-start gap-3.5 relative z-10">
           {/* Left Icon / Product Image Thumbnail */}
           <div className="relative flex-shrink-0">
-            <div className="w-11 h-11 rounded-xl bg-[#FFF352] text-slate-950 border border-yellow-300 flex items-center justify-center shadow-md">
+            <div className="w-11 h-11 rounded-xl bg-[#FFEE45] text-slate-950 border border-yellow-300 flex items-center justify-center shadow-md">
               <CalendarSync className="w-5 h-5 text-slate-950 stroke-[2.5]" />
             </div>
             {/* Emerald Checkmark Badge */}
@@ -71,7 +71,7 @@ export default function RefillToast({
 
           {/* Middle Content */}
           <div className="flex-1 min-w-0 pr-1 text-left">
-            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-[#FFF352]">
+            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-[#FFEE45]">
               <Sparkles className="w-3 h-3 text-yellow-400 animate-pulse" />
               <span>30-Day Auto Refill</span>
             </div>
@@ -87,7 +87,7 @@ export default function RefillToast({
               <Link
                 href="/refill"
                 onClick={onClose}
-                className="inline-flex items-center gap-1 text-[11px] font-black text-[#FFF352] hover:text-yellow-200 transition-colors group cursor-pointer"
+                className="inline-flex items-center gap-1 text-[11px] font-black text-[#FFEE45] hover:text-yellow-200 transition-colors group cursor-pointer"
               >
                 <span>View Refill Routine</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -113,7 +113,7 @@ export default function RefillToast({
         {/* Animated Progress Timer Bar */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-800/80 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-amber-400 to-[#FFF352] transition-all duration-75 ease-linear"
+            className="h-full bg-gradient-to-r from-amber-400 to-[#FFEE45] transition-all duration-75 ease-linear"
             style={{ width: `${progress}%` }}
           />
         </div>

@@ -22,7 +22,7 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
         className={`h-8.5 px-2.5 xl:px-3 rounded-full text-[11px] xl:text-xs font-black transition-all duration-200 cursor-pointer border flex items-center gap-1 shadow-2xs whitespace-nowrap ${
           isInstalled
             ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
-            : "bg-[#FFCB05] hover:bg-yellow-400 text-slate-950 border-amber-300 hover:shadow-xs hover:scale-[1.02] active:scale-95"
+            : "bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 border-[#E5D322] hover:shadow-xs hover:scale-[1.02] active:scale-95"
         } ${className}`}
         title={isInstalled ? "Medikart App Installed" : "Download Medikart"}
       >
@@ -56,7 +56,7 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
         <div className="flex items-center gap-3">
           <div
             className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
-              isInstalled ? "bg-emerald-600 text-white" : "bg-slate-950 text-yellow-400"
+              isInstalled ? "bg-emerald-600 text-white" : "bg-slate-950 text-[#FFEE45]"
             }`}
           >
             {isInstalled ? <Check className="w-5 h-5" /> : <Smartphone className="w-5 h-5" />}
@@ -67,7 +67,7 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
                 {isInstalled ? "Medikart App Active" : "Download Medikart App"}
               </h4>
               {!isInstalled && (
-                <span className="text-[9px] px-1.5 py-0.2 bg-slate-950 text-yellow-400 rounded-md font-bold">
+                <span className="text-[9px] px-1.5 py-0.2 bg-slate-950 text-[#FFEE45] rounded-md font-bold">
                   Free
                 </span>
               )}
@@ -83,7 +83,7 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
           {isInstalled ? (
             <span className="text-emerald-700 text-xs font-bold">✓</span>
           ) : (
-            <div className="w-7 h-7 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xs shadow-2xs">
+            <div className="w-7 h-7 rounded-lg bg-[#FFEE45] text-slate-950 border border-[#E5D322] flex items-center justify-center font-black text-xs shadow-2xs">
               ↓
             </div>
           )}
@@ -100,7 +100,7 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
         className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black border transition-all cursor-pointer ${
           isInstalled
             ? "bg-emerald-50 text-emerald-800 border-emerald-300"
-            : "bg-amber-200/90 text-slate-950 border-amber-300 shadow-2xs hover:bg-amber-300"
+            : "bg-[#FFEE45] text-slate-950 border-[#E5D322] shadow-2xs hover:bg-[#FDD835]"
         } ${className}`}
         aria-label="Download Medikart App"
       >

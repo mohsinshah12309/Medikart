@@ -177,7 +177,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full items-stretch relative z-30">
         
         {/* ─── CARD 1 (Left): Compact & Rich Hero Proposition, Interactive Quick Searches & CTAs ─── */}
-        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFF352] bg-gradient-to-br from-[#FFFDE0] via-[#FFF352] to-[#FEE833] border-2 border-[#F7E53B] shadow-lg shadow-yellow-200/50 p-5 sm:p-7 lg:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#F7E53B]">
+        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFEE45] bg-gradient-to-br from-[#FFFDE6] via-[#FFEE45] to-[#FDD835] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 p-5 sm:p-7 lg:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#E5D322]">
           
           {/* Background Decorative Radiant Glow & Floating Micro Capsule */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
@@ -491,7 +491,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
           2. RECTANGULAR PRESCRIPTION SERVICE BANNER (Yellowish Gradient & Beautiful Badges)
       ────────────────────────────────────────────────────────────────────── */}
       <div className="w-full relative z-10">
-        <div className="rounded-3xl bg-[#FFF352] bg-gradient-to-br from-[#FFFDE0] via-[#FFF352] to-[#FEE833] border-2 border-[#F7E53B] shadow-lg shadow-yellow-200/50 hover:shadow-xl hover:border-[#F7E53B] p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300">
+        <div className="rounded-3xl bg-[#FFEE45] bg-gradient-to-br from-[#FFFDE6] via-[#FFEE45] to-[#FDD835] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 hover:shadow-xl hover:border-[#E5D322] p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300">
           
           {/* Ambient Decorative Lighting & Watermark */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
@@ -575,9 +575,9 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
 
             <Link
               href="/instant-order"
-              className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-900 text-white hover:text-[#FFF352] text-xs sm:text-sm font-black shadow-md hover:shadow-xl hover:scale-103 active:scale-97 flex items-center gap-2.5 transition-all group shrink-0"
+              className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-900 text-white hover:text-[#FFEE45] text-xs sm:text-sm font-black shadow-md hover:shadow-xl hover:scale-103 active:scale-97 flex items-center gap-2.5 transition-all group shrink-0"
             >
-              <span className="w-6 h-6 rounded-full bg-[#FFF352] text-slate-950 flex items-center justify-center font-black text-xs shadow-2xs group-hover:scale-110 transition-transform">
+              <span className="w-6 h-6 rounded-full bg-[#FFEE45] text-slate-950 flex items-center justify-center font-black text-xs shadow-2xs group-hover:scale-110 transition-transform">
                 📄
               </span>
               <span>Upload Prescription</span>

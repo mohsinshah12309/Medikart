@@ -11,19 +11,19 @@
 }
 
 :root {
-  --refill-yellow-primary: #FFF352;
-  --refill-yellow-light: #FFFDE0;
-  --refill-yellow-subtle: #FFFEBB;
-  --refill-yellow-border: #F7E53B;
-  --refill-yellow-hover: #FEE833;
+  --refill-yellow-primary: #FFEE45;
+  --refill-yellow-light: #FFFDE6;
+  --refill-yellow-subtle: #FFFBE6;
+  --refill-yellow-border: #E5D322;
+  --refill-yellow-hover: #FDD835;
   --refill-white: #FFFFFF;
   --refill-text-dark: #1A1A1A;
-  --brand-yellow-primary: #FFF352;
-  --brand-yellow-light: #FFFDE0;
-  --brand-yellow-subtle: #FFFEBB;
-  --brand-yellow-border: #F7E53B;
-  --brand-yellow-hover: #FEE833;
-  --brand-yellow-dark: #F5D800;
+  --brand-yellow-primary: #FFEE45;
+  --brand-yellow-light: #FFFDE6;
+  --brand-yellow-subtle: #FFFBE6;
+  --brand-yellow-border: #E5D322;
+  --brand-yellow-hover: #FDD835;
+  --brand-yellow-dark: #FDD835;
 }
 
 @theme {
@@ -31,21 +31,21 @@
   --color-primary-100: #fef9c3;
   --color-primary-200: #fef08a;
   --color-primary-300: #fde047;
-  --color-primary-400: #fff352;
-  --color-primary-500: #fff352;
-  --color-primary-600: #fee833;
-  --color-primary-700: #f5d800;
+  --color-primary-400: #FFEE45;
+  --color-primary-500: #FFEE45;
+  --color-primary-600: #FDD835;
+  --color-primary-700: #F5DE25;
   --color-primary-800: #d4b800;
   --color-primary-900: #8a7800;
 
   --color-brand-bg: #ffffff;
   --color-brand-surface: #ffffff;
   --color-brand-elevated: #ffffff;
-  --color-brand-amber: #f5d800;
-  --color-brand-gold: #fee833;
-  --color-brand-yellow: #fff352;
-  --color-brand-yellow-hover: #fee833;
-  --color-brand-yellow-light: #fffde0;
+  --color-brand-amber: #FFEE45;
+  --color-brand-gold: #FDD835;
+  --color-brand-yellow: #FFEE45;
+  --color-brand-yellow-hover: #FDD835;
+  --color-brand-yellow-light: #FFFDE6;
   --color-brand-navy: #1e293b;
   --color-brand-slate: #475569;
   --color-brand-green: #10b981;
@@ -61,8 +61,8 @@
     50% { transform: translateY(-5px); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(255, 243, 82, 0.35); }
-    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(255, 243, 82, 0.65); }
+    0%, 100% { opacity: 0.65; box-shadow: 0 0 15px rgba(255, 238, 69, 0.35); }
+    50% { opacity: 0.95; box-shadow: 0 0 25px rgba(255, 238, 69, 0.65); }
   }
   @keyframes fade-in-up {
     from {
@@ -100,7 +100,7 @@ body {
   border: 2px solid #f1f5f9;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffcb05;
+  background: #FFEE45;
 }
 
 .scrollbar-thin {
@@ -119,7 +119,7 @@ body {
   border-radius: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: #f59e0b;
+  background: #FFEE45;
 }
 
 /* Glassmorphism helpers for frosted-white card displays */
@@ -136,8 +136,8 @@ body {
 }
 .glass-panel-hover:hover {
   background: #ffffff;
-  border-color: rgba(255, 203, 5, 0.45);
-  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08), 0 0 20px rgba(255, 203, 5, 0.15);
+  border-color: rgba(255, 238, 69, 0.55);
+  box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08), 0 0 20px rgba(255, 238, 69, 0.25);
 }
 
 /* Plain clean white background */
@@ -159,7 +159,7 @@ body {
 /* ─── Accessibility: Focus States ─────────────────────────────────────────── */
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ffcb05;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #FFEE45;
   border-radius: 4px;
 }
 
@@ -167,13 +167,13 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: none;
-  border-color: #ffcb05;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ffcb05;
+  border-color: #FFEE45;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #FFEE45;
 }
 
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ffcb05;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #FFEE45;
 }
 
 /* ─── Accessibility: Reduced Motion ───────────────────────────────────────── */
@@ -197,16 +197,16 @@ button:focus-visible {
 .btn-amber-gradient,
 .btn-yellow-primary,
 .medikart-btn-primary {
-  background: linear-gradient(135deg, #FFF352 0%, #FFDE03 60%, #FED604 100%) !important;
+  background: linear-gradient(135deg, #FFEE45 0%, #FDD835 60%, #FACC15 100%) !important;
   color: #1A1A1A !important;
   font-weight: 900 !important;
-  box-shadow: 0 4px 14px rgba(255, 243, 82, 0.45) !important;
+  box-shadow: 0 4px 14px rgba(255, 238, 69, 0.45) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1.5px solid #F7E53B !important;
+  border: 1.5px solid #E5D322 !important;
   cursor: pointer;
 }
 
@@ -214,16 +214,16 @@ button:focus-visible {
 .btn-yellow-primary:hover,
 .medikart-btn-primary:hover {
   transform: translateY(-2px) !important;
-  background: linear-gradient(135deg, #FFF866 0%, #FFF352 60%, #FFE51A 100%) !important;
-  box-shadow: 0 8px 22px rgba(255, 243, 82, 0.6) !important;
-  filter: brightness(1.03) !important;
+  background: linear-gradient(135deg, #FFFDE6 0%, #FFEE45 60%, #FDD835 100%) !important;
+  box-shadow: 0 8px 22px rgba(255, 238, 69, 0.6) !important;
+  filter: brightness(1.02) !important;
 }
 
 .btn-amber-gradient:active,
 .btn-yellow-primary:active,
 .medikart-btn-primary:active {
   transform: translateY(0.5px) scale(0.98) !important;
-  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(255, 238, 69, 0.35) !important;
 }
 
 .btn-yellow-outline,
@@ -231,7 +231,7 @@ button:focus-visible {
   background-color: #FFFFFF !important;
   color: #1A1A1A !important;
   font-weight: 800 !important;
-  border: 2px solid #F7E53B !important;
+  border: 2px solid #E5D322 !important;
   border-radius: 9999px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   display: inline-flex;
@@ -242,21 +242,21 @@ button:focus-visible {
 
 .btn-yellow-outline:hover,
 .medikart-btn-outline:hover {
-  background-color: #FFFDE0 !important;
-  border-color: #F5D800 !important;
+  background-color: #FFFDE6 !important;
+  border-color: #FDD835 !important;
   transform: translateY(-1.5px) !important;
-  box-shadow: 0 4px 14px rgba(255, 243, 82, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(255, 238, 69, 0.35) !important;
 }
 
 .medikart-hero-banner {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #FFF352 0%, #FFF866 50%, #FFE51A 100%) !important;
-  border: 2px solid #F7E53B !important;
+  background: linear-gradient(135deg, #FFEE45 0%, #FFFDE6 50%, #FDD835 100%) !important;
+  border: 2px solid #E5D322 !important;
   border-radius: 1.5rem !important;
   padding: 2rem 2.5rem !important;
   color: #1A1A1A !important;
-  box-shadow: 0 10px 30px -5px rgba(255, 243, 82, 0.35) !important;
+  box-shadow: 0 10px 30px -5px rgba(255, 238, 69, 0.35) !important;
 }
 
 .medikart-card {
@@ -270,7 +270,7 @@ button:focus-visible {
 .medikart-card:hover {
   border-color: #FACC15 !important;
   transform: translateY(-3px) !important;
-  box-shadow: 0 14px 35px -5px rgba(255, 243, 82, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 14px 35px -5px rgba(255, 238, 69, 0.35), 0 8px 16px -6px rgba(0, 0, 0, 0.05) !important;
 }
 
 .medikart-badge-dark {
@@ -279,7 +279,7 @@ button:focus-visible {
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
   background-color: #0F172A !important;
-  color: #FFF352 !important;
+  color: #FFEE45 !important;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 900;
@@ -293,15 +293,15 @@ button:focus-visible {
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
-  background-color: #FFF352 !important;
+  background-color: #FFEE45 !important;
   color: #0F172A !important;
-  border: 1.5px solid #F7E53B !important;
+  border: 1.5px solid #E5D322 !important;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.4);
+  box-shadow: 0 2px 8px rgba(255, 238, 69, 0.4);
 }
 
 .card-warm {
@@ -314,7 +314,7 @@ button:focus-visible {
 .card-warm:hover {
   border-color: #FACC15;
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -5px rgba(255, 243, 82, 0.3), 0 10px 12px -6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 14px 30px -5px rgba(255, 238, 69, 0.3), 0 10px 12px -6px rgba(0, 0, 0, 0.04);
 }
 
 .trust-badge {
@@ -322,17 +322,17 @@ button:focus-visible {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.9rem;
-  background: #FFF352;
+  background: #FFEE45;
   color: #1E293B;
   border-radius: 9999px;
   font-size: 0.8125rem;
   font-weight: 800;
-  border: 1px solid #F7E53B;
-  box-shadow: 0 2px 8px rgba(255, 243, 82, 0.3);
+  border: 1px solid #E5D322;
+  box-shadow: 0 2px 8px rgba(255, 238, 69, 0.3);
   transition: all 0.2s ease;
 }
 .trust-badge:hover {
-  background: #FEE833;
+  background: #FDD835;
   transform: translateY(-1px);
 }
 

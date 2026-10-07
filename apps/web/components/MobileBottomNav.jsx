@@ -70,7 +70,7 @@ export default function MobileBottomNav() {
                   {tab.icon}
                 </span>
                 {tab.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] flex items-center justify-center bg-[#FFCB05] text-[10px] font-black text-slate-900 rounded-full px-1 shadow-xs border border-amber-300">
+                  <span className="absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] flex items-center justify-center bg-[#FFEE45] text-[10px] font-black text-slate-900 rounded-full px-1 shadow-xs border border-[#E5D322]">
                     {tab.badge > 99 ? "99+" : tab.badge}
                   </span>
                 )}
@@ -79,7 +79,7 @@ export default function MobileBottomNav() {
                 {tab.label}
               </span>
               {active && (
-                <span className="absolute bottom-0 w-5 h-[3px] bg-[#FFCB05] rounded-full" />
+                <span className="absolute bottom-0 w-5 h-[3px] bg-[#FFEE45] rounded-full" />
               )}
             </Link>
           );

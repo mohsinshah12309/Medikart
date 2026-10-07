@@ -59,7 +59,7 @@ export default function ProductStickyMobileCta({ product }) {
             <button
               type="button"
               onClick={handleAddToCart}
-              className="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-xs shadow-md flex items-center gap-1.5 border border-yellow-500/50 cursor-pointer active:scale-95 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-[#FFEE45] hover:bg-[#FDD835] active:bg-[#FACC15] text-slate-950 font-black text-xs shadow-md flex items-center gap-1.5 border border-[#E5D322] cursor-pointer active:scale-95 transition-all"
             >
               <ShoppingCart className="w-3.5 h-3.5" />
               <span>Add to Cart</span>

@@ -74,8 +74,8 @@ export default function AddToRefillButton({
         disabled={loading}
         className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black transition-all cursor-pointer select-none shadow-xs active:scale-98 ${
           saved
-            ? "bg-[#fff850] text-[#1a1a1a] border-2 border-[#fae845] hover:bg-[#fae432]"
-            : "bg-white text-slate-800 border-2 border-[#fef08a] hover:border-[#fae845] hover:bg-[#fffde0]"
+            ? "bg-[#FFEE45] text-slate-950 border-2 border-[#E5D322] hover:bg-[#FDD835]"
+            : "bg-white text-slate-800 border-2 border-[#fef08a] hover:border-[#FFEE45] hover:bg-[#FFFDE6]"
         } ${className}`}
         title={saved ? "Saved in your Monthly Refill" : "Add to Monthly Refill"}
       >
@@ -107,8 +107,8 @@ export default function AddToRefillButton({
       disabled={loading}
       className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 shadow-2xs cursor-pointer select-none relative group/refill ${
         saved
-          ? "bg-[#FFF352] text-slate-950 border-2 border-[#F5D800] scale-105 shadow-md ring-2 ring-yellow-300/70"
-          : "bg-amber-100/95 text-amber-950 hover:text-slate-950 hover:bg-[#FFF352] border-1.5 border-amber-300 hover:border-amber-400 hover:scale-110 shadow-xs"
+          ? "bg-[#FFEE45] text-slate-950 border-2 border-[#E5D322] scale-105 shadow-md ring-2 ring-yellow-300/70"
+          : "bg-amber-100/95 text-amber-950 hover:text-slate-950 hover:bg-[#FFEE45] border-1.5 border-amber-300 hover:border-amber-400 hover:scale-110 shadow-xs"
       } ${className}`}
       aria-label={saved ? "Remove from monthly refill" : "Add to monthly refill reminder"}
       title={saved ? "Saved in Monthly Refill (Click to remove)" : "Add to Monthly Refill Reminder"}

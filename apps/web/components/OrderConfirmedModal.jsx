@@ -28,12 +28,12 @@ export function OrderPlacingOverlay({ isPlacing, orderType = "standard" }) {
 
   return (
     <div className="fixed inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-center p-4 transition-all animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl p-8 sm:p-10 max-w-sm w-full text-center shadow-2xl border-2 border-yellow-400 flex flex-col items-center animate-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-3xl p-8 sm:p-10 max-w-sm w-full text-center shadow-2xl border-2 border-[#FFEE45] flex flex-col items-center animate-in zoom-in-95 duration-200">
         {/* Animated glowing spinner */}
         <div className="relative w-24 h-24 mb-6 flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full border-4 border-yellow-100 border-t-yellow-500 animate-spin"></div>
-          <div className="absolute inset-2 rounded-full border-4 border-amber-200/50 border-b-yellow-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.2s' }}></div>
-          <div className="w-14 h-14 rounded-full bg-yellow-400/20 flex items-center justify-center text-3xl animate-bounce select-none">
+          <div className="absolute inset-0 rounded-full border-4 border-yellow-100 border-t-[#FFEE45] animate-spin"></div>
+          <div className="absolute inset-2 rounded-full border-4 border-amber-200/50 border-b-[#FFEE45] animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.2s' }}></div>
+          <div className="w-14 h-14 rounded-full bg-[#FFEE45]/25 flex items-center justify-center text-3xl animate-bounce select-none">
             {orderType === "instant" ? "📄" : orderType === "narcotics" ? "🩺" : "💊"}
           </div>
         </div>
@@ -50,9 +50,9 @@ export function OrderPlacingOverlay({ isPlacing, orderType = "standard" }) {
 
         {/* Pulsing indicator dots */}
         <div className="flex gap-2 mt-5">
-          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping"></span>
-          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-pulse" style={{ animationDelay: '150ms' }}></span>
-          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-pulse" style={{ animationDelay: '300ms' }}></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FFEE45] animate-ping"></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FFEE45] animate-pulse" style={{ animationDelay: '150ms' }}></span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FFEE45] animate-pulse" style={{ animationDelay: '300ms' }}></span>
         </div>
       </div>
     </div>
@@ -85,11 +85,11 @@ export function OrderConfirmedCard({
   return (
     <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-2xl flex flex-col items-center text-center relative overflow-hidden animate-in zoom-in-95 fade-in duration-300">
       {/* Top golden gradient ribbon */}
-      <div className="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500"></div>
+      <div className="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-[#FFFDE6] via-[#FFEE45] to-[#FDD835]"></div>
 
       {/* Celebration Icon */}
       <div className="relative mb-4 mt-2">
-        <div className="w-20 h-20 rounded-full bg-yellow-400/20 border-4 border-yellow-400/40 flex items-center justify-center text-4xl shadow-inner animate-bounce">
+        <div className="w-20 h-20 rounded-full bg-[#FFEE45]/25 border-4 border-[#FFEE45] flex items-center justify-center text-4xl shadow-inner animate-bounce">
           🎉
         </div>
         <span className="absolute -top-1 -right-1 text-2xl animate-spin" style={{ animationDuration: '4s' }}>✨</span>
@@ -116,7 +116,7 @@ export function OrderConfirmedCard({
           <button
             type="button"
             onClick={handleCopyId}
-            className="text-xs font-bold px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 transition-all flex items-center gap-1 shadow-xs cursor-pointer active:scale-95"
+            className="text-xs font-bold px-3 py-1.5 rounded-lg bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 transition-all flex items-center gap-1 shadow-xs cursor-pointer active:scale-95 border border-[#E5D322]"
           >
             {copied ? "✓ Copied!" : "📋 Copy ID"}
           </button>
@@ -171,7 +171,7 @@ export function OrderConfirmedCard({
       <div className="flex flex-col sm:flex-row gap-3 w-full">
         <Link
           href={`/order-confirmation/${orderId}`}
-          className="flex-1 py-3.5 px-5 bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black text-sm rounded-xl transition-all shadow-md hover:shadow-lg text-center flex items-center justify-center gap-1.5"
+          className="flex-1 py-3.5 px-5 bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 font-black text-sm rounded-xl transition-all shadow-md hover:shadow-lg text-center flex items-center justify-center gap-1.5 border-2 border-[#E5D322]"
         >
           <span>View Invoice & Tracking</span>
           <span>→</span>

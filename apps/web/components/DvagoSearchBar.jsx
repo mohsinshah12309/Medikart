@@ -447,7 +447,7 @@ export default function DvagoSearchBar({ className = "" }) {
 
           {/* Docked Search Button inside search bar */}
           <div className="flex items-center shrink-0">
-            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#FFF3B0] text-[#7A5800] border border-amber-300 group-hover:bg-[#FFCB05] group-hover:text-slate-950 transition-colors shadow-2xs">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#FFEE45] text-slate-950 border border-[#E5D322] group-hover:bg-[#FDD835] transition-colors shadow-2xs">
               SEARCH
             </span>
           </div>

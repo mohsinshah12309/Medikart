@@ -5,7 +5,7 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "theme_color": "#FFF352",
+  "theme_color": "#FFEE45",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

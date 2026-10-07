@@ -316,14 +316,14 @@ export default function InstantOrderPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 pb-16">
       {/* Page Header - Storefront Yellow Dominant */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#FFF352] via-[#FFF866] to-[#FFE51A] rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-[#F7E53B]">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#FFEE45] via-[#FFFDE6] to-[#FDD835] rounded-3xl p-8 sm:p-12 text-slate-950 shadow-lg border-2 border-[#E5D322]">
         {/* Soft Ambient Accents */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/40 blur-[90px] rounded-full pointer-events-none" />
         <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-yellow-300/30 blur-[80px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 flex flex-col gap-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFF352] w-fit shadow-md">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FFF352] animate-pulse shadow-[0_0_8px_#fff352]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-slate-950 text-[#FFEE45] w-fit shadow-md">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFEE45] animate-pulse shadow-[0_0_8px_#ffee45]" />
             Fast-Track Doctor Prescription Fulfillment
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-950 leading-tight">

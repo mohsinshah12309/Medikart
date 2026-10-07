@@ -31,7 +31,7 @@ export default function ReadingProgressBar() {
       {/* Sticky top gradient progress indicator */}
       <div className="fixed top-0 left-0 right-0 h-1.5 z-50 bg-slate-200/50 backdrop-blur-xs">
         <div
-          className="h-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 transition-all duration-150 ease-out shadow-xs"
+          className="h-full bg-gradient-to-r from-amber-400 via-[#FFEE45] to-amber-500 transition-all duration-150 ease-out shadow-xs"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>

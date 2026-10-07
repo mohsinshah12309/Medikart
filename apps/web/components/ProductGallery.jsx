@@ -77,7 +77,7 @@ export default function ProductGallery({
           onClick={() => setViewMode("2d")}
           className={`flex-1 py-2.5 rounded-xl text-xs font-black border transition-all cursor-pointer ${
             viewMode === "2d"
-              ? 'bg-yellow-400 border-yellow-500 text-slate-950 shadow-sm'
+              ? 'bg-[#FFEE45] border-[#E5D322] text-slate-950 shadow-sm'
               : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900'
           }`}
         >
@@ -88,7 +88,7 @@ export default function ProductGallery({
           onClick={() => setViewMode("3d")}
           className={`flex-1 py-2.5 rounded-xl text-xs font-black border transition-all cursor-pointer ${
             viewMode === "3d"
-              ? 'bg-yellow-400 border-yellow-500 text-slate-950 shadow-sm'
+              ? 'bg-[#FFEE45] border-[#E5D322] text-slate-950 shadow-sm'
               : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900'
           }`}
         >
@@ -138,8 +138,8 @@ export default function ProductGallery({
                       setImgError(false);
                       setActiveImage(img.path);
                     }}
-                    className={`w-16 h-16 flex-shrink-0 border rounded-xl p-1.5 bg-white hover:border-yellow-400 transition-all cursor-pointer relative ${
-                      isSelected ? 'border-yellow-500 ring-2 ring-yellow-400/30' : 'border-slate-200'
+                    className={`w-16 h-16 flex-shrink-0 border rounded-xl p-1.5 bg-white hover:border-[#FFEE45] transition-all cursor-pointer relative ${
+                      isSelected ? 'border-[#E5D322] ring-2 ring-[#FFEE45]/40' : 'border-slate-200'
                     }`}
                   >
                     <Image

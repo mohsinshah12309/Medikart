@@ -59,7 +59,7 @@ export default function CartPage() {
           <span className="text-5xl block animate-float mb-4">🛒</span>
           <h2 className="text-lg font-bold text-slate-900 mt-4">Your cart is empty</h2>
           <p className="text-slate-600 text-sm mt-1">Browse our products and add them to your cart.</p>
-          <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm active:scale-[0.98]">
+          <Link href="/" className="inline-block mt-6 px-6 py-2.5 bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 font-black text-sm rounded-xl transition-all shadow-sm active:scale-[0.98] border border-[#E5D322]">
             Start Shopping
           </Link>
         </div>
@@ -85,11 +85,11 @@ export default function CartPage() {
             {cart.map((item) => (
               <div
                 key={item.productId}
-                className={`bg-white rounded-2xl border-2 border-yellow-200/80 p-4 shadow-sm flex gap-4 items-center relative group hover:border-yellow-400 hover:shadow-md transition-all duration-300 ${
+                className={`bg-white rounded-2xl border-2 border-yellow-200/80 p-4 shadow-sm flex gap-4 items-center relative group hover:border-[#FFEE45] hover:shadow-md transition-all duration-300 ${
                   removingId === item.productId ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100'
                 }`}
               >
-                <div className="w-16 h-16 bg-yellow-50/50 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-yellow-200">
+                <div className="w-16 h-16 bg-[#FFEE45]/15 rounded-xl p-2 flex items-center justify-center flex-shrink-0 border border-[#FFEE45]/40">
                   <img
                     src={item.coverImage ? (item.coverImage.startsWith('http') || item.coverImage.startsWith('/') ? item.coverImage : `/uploads/${item.coverImage}`) : '/uploads/placeholder.webp'}
                     alt={item.name ? `${item.name} — cart medicine item` : 'Medicine thumbnail'}
@@ -117,11 +117,11 @@ export default function CartPage() {
                 </div>
 
                 {/* Quantity Controls */}
-                <div className="flex items-center border-2 border-yellow-300 rounded-xl bg-yellow-50/50">
+                <div className="flex items-center border-2 border-[#FFEE45] rounded-xl bg-[#FFEE45]/15">
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                     aria-label="Decrease quantity"
-                    className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-yellow-200/80 rounded-l-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
+                    className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-[#FFEE45]/50 rounded-l-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity <= 1}
                   >
                     -
@@ -132,7 +132,7 @@ export default function CartPage() {
                   <button
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                     aria-label="Increase quantity"
-                    className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-yellow-200/80 rounded-r-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
+                    className="px-2.5 py-1 text-slate-700 hover:text-slate-950 hover:bg-[#FFEE45]/50 rounded-r-xl transition-colors text-sm font-black disabled:opacity-30 cursor-pointer"
                     disabled={item.quantity >= 99}
                   >
                     +
@@ -153,7 +153,7 @@ export default function CartPage() {
           </div>
 
           {/* Cart Summary */}
-          <div className="bg-white rounded-3xl border-2 border-yellow-300/90 p-6 shadow-xl flex flex-col gap-4 h-fit">
+          <div className="bg-white rounded-3xl border-2 border-[#FFEE45] p-6 shadow-xl flex flex-col gap-4 h-fit">
             <h3 className="font-black text-slate-950 text-base border-b-2 border-yellow-100 pb-3 uppercase tracking-wider">Order Summary</h3>
             <div className="flex justify-between text-sm">
               <span className="text-slate-600 font-medium">Subtotal</span>
@@ -162,7 +162,7 @@ export default function CartPage() {
             <div className="flex justify-between text-sm items-center">
               <span className="text-slate-600 font-medium flex items-center gap-1.5">
                 <span>Platform Fee</span>
-                <span className="bg-yellow-100 text-amber-900 border border-yellow-300 text-[10px] font-bold px-1.5 py-0.5 rounded-full">Medikart Care</span>
+                <span className="bg-[#FFEE45]/30 text-amber-950 border border-[#FFEE45] text-[10px] font-bold px-1.5 py-0.5 rounded-full">Medikart Care</span>
               </span>
               <span className="font-bold text-slate-900">PKR 10.00</span>
             </div>
@@ -182,7 +182,7 @@ export default function CartPage() {
                 href="/checkout"
                 prefetch={true}
                 onClick={handleProceedCheckout}
-                className="w-full inline-block text-center py-3.5 bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-lg border-2 border-yellow-500 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                className="w-full inline-block text-center py-3.5 bg-[#FFEE45] hover:bg-[#FDD835] active:bg-[#FACC15] text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-lg border-2 border-[#E5D322] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               >
                 Proceed to Checkout →
               </Link>

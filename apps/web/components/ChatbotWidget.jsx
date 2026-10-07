@@ -140,7 +140,7 @@ export default function ChatbotWidget() {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative bg-gradient-to-tr from-amber-400 via-[#FFCB05] to-yellow-200 hover:from-amber-500 hover:via-[#FFCB05] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_8px_30px_rgba(248,186,3,0.55)] hover:shadow-[0_18px_50px_rgba(248,186,3,0.85)] ring-3 sm:ring-4 ring-amber-300 ring-offset-2 ring-offset-white hover:ring-amber-500 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center h-14 w-14 sm:h-20 sm:w-20 cursor-pointer border-2 border-white overflow-visible group"
+          className="relative bg-gradient-to-tr from-amber-400 via-[#FFEE45] to-yellow-200 hover:from-amber-500 hover:via-[#FFEE45] hover:to-yellow-100 text-slate-950 rounded-full shadow-[0_8px_30px_rgba(255,238,69,0.55)] hover:shadow-[0_18px_50px_rgba(255,238,69,0.85)] ring-3 sm:ring-4 ring-amber-300 ring-offset-2 ring-offset-white hover:ring-amber-500 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center h-14 w-14 sm:h-20 sm:w-20 cursor-pointer border-2 border-white overflow-visible group"
           title="Medi - Your Personal AI Assistant"
           aria-label="Open Medi AI Assistant"
         >
@@ -176,7 +176,7 @@ export default function ChatbotWidget() {
         <div className="fixed bottom-20 sm:bottom-28 right-2 sm:right-6 left-2 sm:left-auto w-auto sm:w-[420px] max-w-[440px] h-[calc(100vh-140px)] sm:h-[540px] max-h-[620px] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           
           {/* Header with 3D Owl Avatar */}
-          <div className="bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">
+          <div className="bg-gradient-to-r from-amber-300 via-[#FFEE45] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full bg-white shadow-xs overflow-hidden border-2 border-white flex-shrink-0">
                 <Image
@@ -238,7 +238,7 @@ export default function ChatbotWidget() {
                 <div
                   className={`rounded-2xl px-4 py-3 text-xs leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-r from-amber-300 to-[#FFCB05] text-slate-950 font-semibold rounded-br-none shadow-xs'
+                      ? 'bg-gradient-to-r from-amber-300 to-[#FFEE45] text-slate-950 font-semibold rounded-br-none shadow-xs'
                       : 'bg-white text-slate-800 border border-amber-100/90 rounded-bl-none shadow-xs'
                   }`}
                 >

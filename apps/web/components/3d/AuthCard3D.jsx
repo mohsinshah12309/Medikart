@@ -87,13 +87,13 @@ export default function AuthCard3D({
         <div
           className="absolute inset-0 rounded-3xl pointer-events-none transition-opacity duration-300 z-30"
           style={{
-            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 203, 5, 0.08) 35%, transparent 70%)`,
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 238, 69, 0.12) 35%, transparent 70%)`,
             opacity: glare.opacity,
           }}
         />
 
         {/* Top 3D Glowing Accent Line */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-[#FFCB05] to-yellow-400 z-10" />
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-[#FFEE45] to-yellow-400 z-10" />
 
         {/* 3D Header Badge with Pop-out Depth */}
         {(badgeTitle || badgeIcon) && (

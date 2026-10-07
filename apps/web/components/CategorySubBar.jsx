@@ -428,7 +428,7 @@ export default function CategorySubBar({ categories = [] }) {
           <button
             type="button"
             onClick={() => setMobileDrawerOpen(true)}
-            className="md:hidden flex-shrink-0 mr-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF352] hover:bg-[#FFE01B] border border-amber-300 text-xs font-black text-slate-950 shadow-2xs active:scale-95 transition-all cursor-pointer"
+            className="md:hidden flex-shrink-0 mr-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFEE45] hover:bg-[#FDD835] border border-[#E5D322] text-xs font-black text-slate-950 shadow-2xs active:scale-95 transition-all cursor-pointer"
             aria-label="View all categories drawer"
           >
             <span className="text-sm">🗂️</span>
@@ -503,7 +503,7 @@ export default function CategorySubBar({ categories = [] }) {
           onMouseLeave={handleMouseLeave}
         >
           {/* Top Amber Brand Accent Strip */}
-          <div className="h-1 w-full bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300" />
+          <div className="h-1 w-full bg-gradient-to-r from-amber-300 via-[#FFEE45] to-yellow-300" />
 
           {(() => {
             const currentDept = DEPARTMENTS.find((d) => d.id === activeDeptId);
@@ -683,7 +683,7 @@ export default function CategorySubBar({ categories = [] }) {
             {/* Drawer Header */}
             <div className="p-4 bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 border-b border-amber-200/80 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-[#FFF352] border border-amber-300 flex items-center justify-center text-base shadow-2xs font-black">
+                <div className="w-8 h-8 rounded-lg bg-[#FFEE45] border border-[#E5D322] flex items-center justify-center text-base shadow-2xs font-black">
                   🗂️
                 </div>
                 <div>
@@ -834,7 +834,7 @@ export default function CategorySubBar({ categories = [] }) {
                   setMobileDrawerOpen(false);
                   scrollToCatalog();
                 }}
-                className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-[#FFF352] text-xs font-black text-center shadow-xs flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-[#FFEE45] text-xs font-black text-center shadow-xs flex items-center justify-center gap-1.5"
               >
                 <span>View Full Store Catalog</span>
                 <span>→</span>

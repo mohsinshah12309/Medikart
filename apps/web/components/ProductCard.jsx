@@ -67,7 +67,7 @@ function ProductCardComponent({ product }) {
   }, [toggleWishlist, product]);
 
   return (
-    <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-yellow-400 flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1">
+    <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-[#FFEE45] flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1">
       {/* Product Image Link Container */}
       <Link href={`/products/${product._id}`} prefetch={true} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
         {/* Discount Badge */}
@@ -219,7 +219,7 @@ function ProductCardComponent({ product }) {
             {/* Below: View Details Secondary Button */}
             <Link
               href={`/products/${product._id}`}
-              className="w-full inline-flex items-center justify-center gap-1.5 text-center bg-yellow-50 hover:bg-yellow-100 text-slate-950 text-[11px] sm:text-xs font-bold py-1.5 px-2 rounded-xl border border-yellow-300 hover:border-yellow-400 transition-all duration-150 shadow-2xs group hover:shadow-xs active:scale-98"
+              className="w-full inline-flex items-center justify-center gap-1.5 text-center bg-[#FFEE45]/15 hover:bg-[#FFEE45]/30 text-slate-950 text-[11px] sm:text-xs font-bold py-1.5 px-2 rounded-xl border border-[#FFEE45] hover:border-[#E5D322] transition-all duration-150 shadow-2xs group hover:shadow-xs active:scale-98"
             >
               <Eye className="w-3.5 h-3.5 text-amber-800 group-hover:text-slate-950 transition-colors" />
               <span>View Details</span>

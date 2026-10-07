@@ -1,12 +1,17 @@
 export default function manifest() {
   return {
+    id: '/?source=pwa',
     name: 'Medikart - Authentic Online Pharmacy',
     short_name: 'Medikart',
-    description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines.',
+    description: "Pakistan's trusted online pharmacy for authentic prescription and OTC medicines.",
     start_url: '/',
+    scope: '/',
     display: 'standalone',
+    orientation: 'portrait',
     background_color: '#FFFFFF',
-    theme_color: '#FFF352',
+    theme_color: '#FFEE45',
+    categories: ['shopping', 'medical', 'health'],
+    prefer_related_applications: false,
     icons: [
       {
         src: '/favicon-16x16.png',
@@ -22,11 +27,25 @@ export default function manifest() {
         src: '/android-chrome-192x192.png',
         sizes: '192x192',
         type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'maskable',
       },
       {
         src: '/android-chrome-512x512.png',
         sizes: '512x512',
         type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/android-chrome-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
       },
       {
         src: '/apple-touch-icon.png',

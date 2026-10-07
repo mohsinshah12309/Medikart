@@ -391,7 +391,7 @@ export default function HeaderNav({ initialCategories = [] }) {
           {isAuthenticated ? (
             <div className="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/80 flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs shrink-0">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFEE45] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs shrink-0">
                   {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
                 </div>
                 <div className="min-w-0">
@@ -483,7 +483,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                     onMouseLeave={handleMouseLeave}
                   >
                     <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200/90 overflow-hidden">
-                      <div className="h-1.5 w-full bg-gradient-to-r from-amber-300 via-[#FFCB05] to-yellow-300" />
+                      <div className="h-1.5 w-full bg-gradient-to-r from-amber-300 via-[#FFEE45] to-yellow-300" />
 
                       <div className="px-6 py-3.5 bg-[#FAF8F5] border-b border-amber-100 flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -581,8 +581,8 @@ export default function HeaderNav({ initialCategories = [] }) {
                 prefetch={true}
                 className={`h-8.5 px-2 xl:px-3 rounded-full transition-all flex items-center gap-1 xl:gap-1.5 shadow-2xs whitespace-nowrap text-[10.5px] xl:text-xs font-black uppercase tracking-wider ${
                   isActive
-                    ? "bg-amber-400 text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
-                    : "bg-[#FFF3B0] hover:bg-amber-400 text-[#7A5800] hover:text-slate-950 border border-amber-300"
+                    ? "bg-[#FFEE45] text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
+                    : "bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 border border-[#E5D322]"
                 }`}
               >
                 <span className="text-xs xl:text-sm">⚡</span>
@@ -656,7 +656,7 @@ export default function HeaderNav({ initialCategories = [] }) {
               onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
               className="flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 rounded-full bg-amber-50 border border-amber-200/80 hover:border-amber-400 text-slate-800 transition-all cursor-pointer shadow-2xs"
             >
-              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFCB05] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs">
+              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFEE45] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs">
                 {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
               </div>
               <span className="text-xs font-bold max-w-[80px] xl:max-w-[100px] truncate">
@@ -703,7 +703,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                       <span>Monthly Refill</span>
                     </span>
                     {refillCount > 0 ? (
-                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-[#fff850] text-[#1a1a1a] border border-[#fae845]">
+                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-[#FFEE45] text-slate-950 border border-[#E5D322]">
                         {refillCount}
                       </span>
                     ) : (
