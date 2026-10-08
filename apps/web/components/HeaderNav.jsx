@@ -579,6 +579,8 @@ export default function HeaderNav({ initialCategories = [] }) {
                 key={link.name}
                 href={link.href}
                 prefetch={true}
+                title="Upload your prescription"
+                aria-label="Instant Order — Upload your prescription"
                 className={`h-8.5 px-2 xl:px-3 rounded-full transition-all flex items-center gap-1 xl:gap-1.5 shadow-2xs whitespace-nowrap text-[10.5px] xl:text-xs font-black uppercase tracking-wider ${
                   isActive
                     ? "bg-[#FFEE45] text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
