@@ -194,8 +194,10 @@ app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 app.use(cookieParser);
 
+const mongoSanitize = require("express-mongo-sanitize");
 const inputSanitizer = require("./middleware/inputSanitizer");
 // 4.5. Universal Input Sanitization & Anti-Injection Middleware (NoSQL, XSS, Prototype Pollution)
+app.use(mongoSanitize({ replaceWith: "_" }));
 app.use(inputSanitizer);
 
 // 5. Rate Limiters Setup (Phase 22 / Step 2)

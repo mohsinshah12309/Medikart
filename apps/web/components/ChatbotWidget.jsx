@@ -48,11 +48,14 @@ export default function ChatbotWidget() {
     try {
       const res = await sendChatbotMessage(textToSend, conversationId);
       if (res && res.data) {
+        const cleanResponse = typeof res.data.response === 'string'
+          ? res.data.response.replace(/\*\*/g, '')
+          : '';
         setMessages(prev => [
           ...prev,
           {
             role: 'assistant',
-            content: res.data.response,
+            content: cleanResponse,
             suggestedProducts: res.data.suggestedProducts || [],
           }
         ]);
@@ -243,7 +246,8 @@ export default function ChatbotWidget() {
                   }`}
                 >
                   {(() => {
-                    const parts = msg.content.split(/(\[.*?\]\(.*?\))/);
+                    const cleanText = (msg.content || '').replace(/\*\*/g, '');
+                    const parts = cleanText.split(/(\[.*?\]\(.*?\))/);
                     return parts.map((part, i) => {
                       const match = part.match(/\[(.*?)\]\((.*?)\)/);
                       if (match) return <a key={i} href={match[2]} style={{ color: '#DBBC04', textDecoration: 'underline' }}>{match[1]}</a>;

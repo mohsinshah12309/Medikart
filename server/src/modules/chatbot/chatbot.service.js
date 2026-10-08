@@ -121,7 +121,7 @@ function buildCatalogFallbackResponse(message = "", products = []) {
   }
 
   reply += `\n\n${MEDICAL_DISCLAIMER}`;
-  return reply;
+  return reply.replace(/\*\*/g, "");
 }
 
 /**
@@ -295,7 +295,7 @@ RULES:
 1. ONLY suggest products that are explicitly listed in the ALLOWED CATALOG above. Never invent or suggest any products not listed.
 2. If the user sends a greeting or general conversational query without describing any symptoms or asking storefront questions:
    Reply warmly describing how you can help with medicines, delivery, payments, prescriptions, policies, and support.
-3. Keep suggestions concise, professional, warm, and easy to read with clean markdown formatting.
+3. Keep suggestions concise, professional, warm, and easy to read. Do NOT use markdown bold asterisks (**) anywhere in your response.
 4. You MUST include the medical disclaimer in your response:
    "${MEDICAL_DISCLAIMER}"
 5. DO NOT mention the names of any narcotic or controlled substances, even to explain why you cannot recommend them. Simply advise them to consult a physician.`;
@@ -363,6 +363,9 @@ RULES:
     const regex = new RegExp(`\\b${kw}\\b`, "gi");
     assistantReply = assistantReply.replace(regex, "[controlled substance]");
   });
+
+  // Strip markdown bold asterisks (**) from all assistant replies
+  assistantReply = assistantReply.replace(/\*\*/g, "");
 
   // 8. Save assistant message and update conversation
   conversation.messages.push({ role: "assistant", content: assistantReply });

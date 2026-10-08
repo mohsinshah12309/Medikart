@@ -12,7 +12,7 @@ const isTest = process.env.NODE_ENV === "test";
 const aiGenerationLimiter = createRateLimiter({
   windowMs: 10 * 60 * 1000,
   max: isTest ? 5 : (isDev ? 100 : 20),
-  message: "AI generation rate limit exceeded. Please wait a few minutes before sending another message.",
+  message: "Too many chatbot requests. Please wait a few minutes before sending another message.",
 });
 
 router.post("/", aiGenerationLimiter, chatbotController.handleChatbotMessage);

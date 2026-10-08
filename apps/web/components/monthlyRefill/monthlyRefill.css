@@ -8,6 +8,7 @@
 :root {
   color-scheme: light !important;
   --refill-yellow-primary: #FFEE45;
+  --refill-yellow-accent: #FFF352;
   --refill-yellow-light: #FFFDE6;
   --refill-yellow-subtle: #FFFBE6;
   --refill-yellow-border: #E5D322;

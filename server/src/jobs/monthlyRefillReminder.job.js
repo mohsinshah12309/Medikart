@@ -2,17 +2,18 @@
  * Monthly Refill Reminder Job — Daily Cron Scheduler.
  *
  * Runs daily:
- *   1. Queries MonthlyRefill where nextReminderAt <= now AND reminderSentAt is null.
+ *   1. Queries MonthlyRefill where nextReminderDate <= now AND lastNotifiedAt is null.
  *   2. Populates customer and active items.
- *   3. Calls sendRefillReminderEmail(customer, items).
- *   4. On success: sets reminderSentAt = now, saves doc.
- *   5. On failure: leaves reminderSentAt = null so it retries on the next day.
+ *   3. Dispatches via isolated Brevo Reminder Service (BREVO_REMINDER_API_KEY).
+ *   4. On success: sets lastNotifiedAt = now, saves doc.
+ *   5. On failure: leaves lastNotifiedAt = null so it retries on the next day.
  *   6. Logs summary (sent / failed counts) per run.
  */
 
 const cron = require("node-cron");
-const MonthlyRefill = require("../modules/customers/monthlyRefill.model");
-const { sendRefillReminderEmail } = require("../services/mailjet.service");
+const MonthlyRefill = require("../models/monthlyRefill.model");
+const { sendBrevoMonthlyRefillEmail } = require("../services/brevoReminder.service");
+const { sendRefillReminderEmail: sendMailjetReminder } = require("../services/mailjetReminder.service");
 
 let cronTask = null;
 
@@ -26,11 +27,16 @@ const runMonthlyRefillReminder = async () => {
 
   try {
     const eligibleLists = await MonthlyRefill.find({
-      nextReminderAt: { $lte: now, $ne: null },
-      reminderSentAt: null,
+      $or: [
+        { nextReminderDate: { $lte: now, $ne: null }, lastNotifiedAt: null },
+        { nextReminderAt: { $lte: now, $ne: null }, reminderSentAt: null },
+      ],
+      status: "active",
       "items.0": { $exists: true }, // Must have at least 1 item
     })
+      .populate("customer")
       .populate("customerId")
+      .populate("items.product")
       .populate("items.productId");
 
     console.log(`[refillReminder] Found ${eligibleLists.length} eligible refill lists for reminder`);
@@ -39,7 +45,7 @@ const runMonthlyRefillReminder = async () => {
     let failedCount = 0;
 
     for (const refill of eligibleLists) {
-      const customer = refill.customerId;
+      const customer = refill.customer || refill.customerId;
 
       // Skip if customer deleted, blocked, or not email-verified
       if (!customer || customer.isBlocked || !customer.emailVerified) {
@@ -51,26 +57,43 @@ const runMonthlyRefillReminder = async () => {
 
       // Format items for email
       const activeItems = (refill.items || [])
-        .filter((it) => it.productId && it.productId.active)
-        .map((it) => ({
-          name: it.productId.name,
-          quantity: it.quantity,
-          sku: it.productId.sku,
-        }));
+        .map((it) => {
+          const product = it.product || it.productId;
+          if (!product || product.active === false) return null;
+          return {
+            name: product.name,
+            quantity: it.quantity,
+            sku: product.sku,
+            unitPriceAtAddition: it.unitPriceAtAddition || product.price,
+            imageUrl: product.images?.[0]?.path,
+          };
+        })
+        .filter(Boolean);
 
       if (activeItems.length === 0) {
         console.warn(`[refillReminder] Skipping refill ${refill._id}: no active products in list`);
         continue;
       }
 
-      const res = await sendRefillReminderEmail(customer, activeItems);
+      let res = await sendBrevoMonthlyRefillEmail({
+        customer,
+        refill,
+        items: activeItems,
+      });
+
+      // Fallback to secondary mailjet reminder if Brevo key is absent
+      if (!res.success && process.env.MAILJET_API_KEY) {
+        res = await sendMailjetReminder(customer, activeItems);
+      }
 
       if (res.success) {
-        refill.reminderSentAt = new Date();
+        const timestamp = new Date();
+        refill.lastNotifiedAt = timestamp;
+        refill.reminderSentAt = timestamp;
         await refill.save();
         sentCount++;
       } else {
-        // Leave reminderSentAt = null so it retries next day
+        // Leave lastNotifiedAt = null so it retries next day
         failedCount++;
       }
     }

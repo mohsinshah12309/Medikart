@@ -42,11 +42,13 @@ const customerAuth = async (req, res, next) => {
       throw new UnauthorizedError("Authentication required");
     }
 
-    req.customer = {
+    req.user = {
       id: customer._id.toString(),
+      role: "customer",
       email: customer.email,
       name: customer.name,
     };
+    req.customer = req.user;
 
     next();
   } catch (error) {
@@ -57,4 +59,17 @@ const customerAuth = async (req, res, next) => {
   }
 };
 
+const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    const userRole = (req.user && req.user.role) || (req.customer ? "customer" : null);
+    if (!userRole || !roles.includes(userRole)) {
+      return next(new UnauthorizedError("Access forbidden: insufficient role permissions"));
+    }
+    next();
+  };
+};
+
 module.exports = customerAuth;
+module.exports.customerAuth = customerAuth;
+module.exports.verifyCustomerJWT = customerAuth;
+module.exports.authorizeRoles = authorizeRoles;
