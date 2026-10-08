@@ -2,13 +2,17 @@
 
 import { useRef, useState } from "react";
 
-export default function TiltCard3D({ children, className = "", style = {}, intensity = 12 }) {
+export default function TiltCard3D({ children, className = "", style = {}, intensity = 7 }) {
   const cardRef = useRef(null);
   const [transformStyle, setTransformStyle] = useState("");
   const [glareStyle, setGlareStyle] = useState({ opacity: 0, x: 50, y: 50 });
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
+    // Check if pointer is fine (mouse/trackpad with hover support)
+    if (typeof window !== "undefined" && window.matchMedia && !window.matchMedia("(hover: hover)").matches) {
+      return;
+    }
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;

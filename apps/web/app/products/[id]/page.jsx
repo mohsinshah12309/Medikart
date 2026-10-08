@@ -10,6 +10,7 @@ import BackButton from '../../../components/BackButton';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+// Dynamic revalidation for product page ISR
 export const revalidate = 3600;
 export const dynamicParams = true;
 

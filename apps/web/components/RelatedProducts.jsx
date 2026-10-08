@@ -94,7 +94,7 @@ export default function RelatedProducts({ currentProduct }) {
 
         {/* ─── Loading Skeleton ─── */}
         {loading && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4.5 auto-rows-max">
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <div
                 key={n}
@@ -113,11 +113,9 @@ export default function RelatedProducts({ currentProduct }) {
 
         {/* ─── Product Card Grid ─── */}
         {!loading && relatedProducts.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4.5 auto-rows-max items-stretch">
             {relatedProducts.map((p) => (
-              <div key={p._id} className="h-full">
-                <ProductCard product={p} />
-              </div>
+              <ProductCard key={p._id} product={p} />
             ))}
           </div>
         )}

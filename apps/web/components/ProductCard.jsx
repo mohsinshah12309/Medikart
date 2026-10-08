@@ -67,7 +67,7 @@ function ProductCardComponent({ product }) {
   }, [toggleWishlist, product]);
 
   return (
-    <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-[#FFEE45] flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1">
+    <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-[#FFEE45] flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1 w-full min-h-0">
       {/* Product Image Link Container */}
       <Link href={`/products/${product._id}`} prefetch={true} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
         {/* Discount Badge */}
@@ -140,7 +140,7 @@ function ProductCardComponent({ product }) {
       </Link>
 
       {/* Product Details Section */}
-      <div className="p-2.5 sm:p-3 flex flex-col flex-grow justify-between">
+      <div className="p-2.5 sm:p-3 flex flex-col flex-grow justify-between min-h-0">
         <div>
           {product.genericName && (
             <p className="text-[9px] sm:text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-0.5 line-clamp-1">
