@@ -193,20 +193,20 @@ export default function MonthlyRefillSection({
       aria-label="30-Day Monthly Medicine Refill"
     >
       {/* ─── 1. Main Showcase Section Card ─── */}
-      <div className="bg-gradient-to-br from-[#FFFDE0] via-[#ffffff] to-[#FFFBEB] rounded-3xl border-2 border-[#fae845] p-5 sm:p-8 shadow-sm relative overflow-hidden">
+      <div className="bg-[#FFEE45] rounded-3xl border-2 border-[#E5D322] p-5 sm:p-8 shadow-lg shadow-yellow-200/50 relative overflow-hidden" style={{ backgroundColor: '#FFEE45' }}>
         {/* Decorative corner glow */}
-        <div className="absolute -top-12 -right-12 w-44 h-44 bg-[#fff850]/40 rounded-full blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-12 -left-12 w-44 h-44 bg-amber-200/30 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -top-12 -right-12 w-44 h-44 bg-yellow-300/30 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-12 -left-12 w-44 h-44 bg-amber-300/20 rounded-full blur-2xl pointer-events-none" />
 
         {/* ─── Header: Brand Badge, Title & Routine Summary ─── */}
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-[#fef08a]">
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-[#E5D322]/80">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#fff850] border-2 border-[#fae845] flex items-center justify-center text-3xl shadow-sm text-slate-900 flex-shrink-0 font-black">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white border-2 border-[#E5D322] flex items-center justify-center text-3xl shadow-sm text-slate-900 flex-shrink-0 font-black">
               ⚡
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="refill-badge text-[11px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 uppercase tracking-wider">
+                <span className="refill-badge text-[11px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 uppercase tracking-wider bg-white/90 border border-[#E5D322] text-amber-950">
                   <Sparkles className="w-3 h-3 text-amber-800" />
                   <span>30-Day Auto Cycle</span>
                 </span>
@@ -217,10 +217,10 @@ export default function MonthlyRefillSection({
                   </span>
                 )}
               </div>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 font-heading tracking-tight mt-1">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-950 font-heading tracking-tight mt-1">
                 Monthly Medicine Refill
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl font-medium leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-800 mt-1 max-w-2xl font-medium leading-relaxed">
                 Never run out of essential doses. Save routine medicines to your 30-day queue, receive automated email reminders, and reorder in 1-click with Cash on Delivery or Card.
               </p>
             </div>
@@ -279,33 +279,33 @@ export default function MonthlyRefillSection({
 
         {/* ─── Feature Guarantee Strip ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 my-6">
-          <div className="bg-[#FFF176] p-4 sm:p-5 rounded-2xl border-2 border-[#fde047] flex items-center gap-3.5 sm:gap-4 shadow-sm hover:shadow-md hover:bg-[#FFE566] transition-all duration-200">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#fff850] text-[#1a1a1a] flex items-center justify-center font-black text-lg sm:text-xl flex-shrink-0 shadow-sm border border-[#fae845]">
+          <div className="bg-white/95 hover:bg-white p-4 sm:p-5 rounded-2xl border-2 border-[#E5D322] flex items-center gap-3.5 sm:gap-4 shadow-xs transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#FFEE45] text-slate-900 flex items-center justify-center font-black text-lg sm:text-xl flex-shrink-0 shadow-xs border border-[#E5D322]">
               ⚡
             </div>
             <div>
-              <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">1-Click Fast Reorder</p>
-              <p className="text-xs sm:text-[13px] text-slate-600 mt-0.5 leading-snug">Saved address & phone checkout</p>
+              <p className="text-sm sm:text-base text-slate-950 font-black tracking-tight leading-snug">1-Click Fast Reorder</p>
+              <p className="text-xs sm:text-[13px] text-slate-700 mt-0.5 leading-snug font-medium">Saved address & phone checkout</p>
             </div>
           </div>
 
-          <div className="bg-[#FFF176] p-4 sm:p-5 rounded-2xl border-2 border-[#fde047] flex items-center gap-3.5 sm:gap-4 shadow-sm hover:shadow-md hover:bg-[#FFE566] transition-all duration-200">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-200 text-amber-900 flex items-center justify-center flex-shrink-0 shadow-sm border border-amber-300">
+          <div className="bg-white/95 hover:bg-white p-4 sm:p-5 rounded-2xl border-2 border-[#E5D322] flex items-center gap-3.5 sm:gap-4 shadow-xs transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center flex-shrink-0 shadow-xs border border-amber-300">
               <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-amber-700" />
             </div>
             <div>
-              <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">Timely 30-Day Reminders</p>
-              <p className="text-xs sm:text-[13px] text-slate-600 mt-0.5 leading-snug">Direct email alert before you run out</p>
+              <p className="text-sm sm:text-base text-slate-950 font-black tracking-tight leading-snug">Timely 30-Day Reminders</p>
+              <p className="text-xs sm:text-[13px] text-slate-700 mt-0.5 leading-snug font-medium">Direct email alert before you run out</p>
             </div>
           </div>
 
-          <div className="bg-[#FFF176] p-4 sm:p-5 rounded-2xl border-2 border-[#fde047] flex items-center gap-3.5 sm:gap-4 shadow-sm hover:shadow-md hover:bg-[#FFE566] transition-all duration-200">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center flex-shrink-0 shadow-sm border border-emerald-200">
+          <div className="bg-white/95 hover:bg-white p-4 sm:p-5 rounded-2xl border-2 border-[#E5D322] flex items-center gap-3.5 sm:gap-4 shadow-xs transition-all duration-200">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center flex-shrink-0 shadow-xs border border-emerald-300">
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-700" />
             </div>
             <div>
-              <p className="text-sm sm:text-base text-slate-900 font-black tracking-tight leading-snug">Genuine & Discounted</p>
-              <p className="text-xs sm:text-[13px] text-slate-600 mt-0.5 leading-snug">100% authentic pharmacy stock</p>
+              <p className="text-sm sm:text-base text-slate-950 font-black tracking-tight leading-snug">Genuine & Discounted</p>
+              <p className="text-xs sm:text-[13px] text-slate-700 mt-0.5 leading-snug font-medium">100% authentic pharmacy stock</p>
             </div>
           </div>
         </div>
@@ -369,23 +369,23 @@ export default function MonthlyRefillSection({
         ) : null}
 
         {/* ─── 3. Quick-Add Popular Recurring Medicines Grid ─── */}
-        <div className="mt-6 pt-5 border-t border-[#fef08a]">
+        <div className="mt-6 pt-5 border-t border-[#E5D322]/80">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-sm font-black text-slate-900 tracking-tight flex items-center gap-2">
+              <h3 className="text-sm font-black text-slate-950 tracking-tight flex items-center gap-2">
                 <span>{isAuthenticated && refillCount > 0 ? "Add More Routine Medicines" : "Popular 30-Day Recurring Medicines"}</span>
-                <span className="text-[10px] font-bold text-amber-900 bg-[#fff850] px-2 py-0.5 rounded-full border border-[#fae845]">
+                <span className="text-[10px] font-bold text-amber-950 bg-white px-2 py-0.5 rounded-full border border-[#E5D322]">
                   Tap ⚡ to Save
                 </span>
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-800 mt-0.5 font-medium">
                 Vitamins, daily supplements, and routine chronic healthcare essentials.
               </p>
             </div>
 
             <Link
               href="/#store-catalog"
-              className="text-xs font-black text-amber-800 hover:text-amber-900 flex items-center gap-1 hover:underline"
+              className="text-xs font-black text-slate-950 hover:text-amber-950 flex items-center gap-1 hover:underline"
             >
               <span>Explore All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -467,7 +467,7 @@ export default function MonthlyRefillSection({
 
         {/* ─── 4. Guest Showcase Prompt (if not logged in) ─── */}
         {!isAuthenticated && (
-          <div className="mt-6 pt-5 border-t border-[#fef08a] bg-white/95 rounded-2xl p-5 sm:p-6 border border-[#fef08a] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mt-6 pt-5 border-t border-[#E5D322]/80 bg-white/95 rounded-2xl p-5 sm:p-6 border-2 border-[#E5D322] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-[#fff850] border border-[#fae845] flex items-center justify-center text-xl shadow-2xs font-black flex-shrink-0">
                 🗓️
