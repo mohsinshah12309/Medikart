@@ -177,12 +177,10 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full items-stretch relative z-30">
         
         {/* ─── CARD 1 (Left): Compact & Rich Hero Proposition, Interactive Quick Searches & CTAs ─── */}
-        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFEE45] bg-gradient-to-br from-[#FFFDE6] via-[#FFEE45] to-[#FDD835] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 p-5 sm:p-7 lg:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#E5D322]">
+        <div className="lg:col-span-7 w-full rounded-3xl bg-[#FFEE45] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 p-5 sm:p-7 lg:p-7 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#E5D322]" style={{ backgroundColor: '#FFEE45' }}>
           
-          {/* Background Decorative Radiant Glow & Floating Micro Capsule */}
+          {/* Background Decorative Floating Micro Capsule */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
-            <div className="absolute top-0 right-0 w-72 h-72 bg-white/45 rounded-full blur-3xl -mr-16 -mt-16" />
-            <div className="absolute bottom-0 left-1/4 w-60 h-60 bg-yellow-300/35 rounded-full blur-2xl" />
             {/* Subtle floating 3D medical decor in background */}
             <div className="absolute right-4 bottom-16 opacity-15 text-5xl select-none font-black text-slate-900 pointer-events-none animate-float">
               💊
@@ -491,12 +489,10 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
           2. RECTANGULAR PRESCRIPTION SERVICE BANNER (Yellowish Gradient & Beautiful Badges)
       ────────────────────────────────────────────────────────────────────── */}
       <div className="w-full relative z-10">
-        <div className="rounded-3xl bg-[#FFEE45] bg-gradient-to-br from-[#FFFDE6] via-[#FFEE45] to-[#FDD835] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 hover:shadow-xl hover:border-[#E5D322] p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300">
+        <div className="rounded-3xl bg-[#FFEE45] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 hover:shadow-xl hover:border-[#E5D322] p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 transition-all duration-300" style={{ backgroundColor: '#FFEE45' }}>
           
-          {/* Ambient Decorative Lighting & Watermark */}
+          {/* Ambient Decorative Watermark */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-white/50 rounded-full blur-3xl -mr-20 -mt-20" />
-            <div className="absolute bottom-0 left-10 w-60 h-60 bg-yellow-300/40 rounded-full blur-2xl" />
             <div className="absolute left-1/2 top-4 opacity-15 text-2xl select-none font-black text-slate-900 pointer-events-none animate-float hidden sm:block">
               💊
             </div>
