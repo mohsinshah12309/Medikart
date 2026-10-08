@@ -156,15 +156,27 @@ export default function ContactPage() {
           ) : (
             <div className="flex flex-col gap-4">
               {/* Official Registered Address */}
-              <div className="p-4 bg-yellow-50/70 border-2 border-yellow-200 rounded-2xl flex flex-col gap-1 transition-all hover:border-yellow-400 hover:bg-yellow-50">
-                <span className="text-xs uppercase tracking-wider font-black text-amber-900 flex items-center gap-1.5">
-                  <span>📍</span> Official Address &amp; Hub
-                </span>
-                <p className="font-extrabold text-sm text-slate-950 leading-snug">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(content?.contactAddress || defaultAddress)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Find Medikart location on Google Maps"
+                aria-label={`Find Medikart location on Google Maps: ${content?.contactAddress || defaultAddress}`}
+                className="p-4 bg-yellow-50/70 border-2 border-yellow-200 rounded-2xl flex flex-col gap-1 transition-all hover:border-yellow-400 hover:bg-yellow-50 group cursor-pointer"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase tracking-wider font-black text-amber-900 flex items-center gap-1.5">
+                    <span>📍</span> Official Address &amp; Hub
+                  </span>
+                  <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider group-hover:underline flex items-center gap-0.5">
+                    Open in Maps ↗
+                  </span>
+                </div>
+                <p className="font-extrabold text-sm text-slate-950 leading-snug group-hover:text-amber-900 group-hover:underline underline-offset-2">
                   {content?.contactAddress || defaultAddress}
                 </p>
                 <span className="text-[11px] text-slate-600 font-medium">Headquarters &amp; Central Operations Hub</span>
-              </div>
+              </a>
 
               {/* Business Email */}
               <div className="p-4 bg-yellow-50/70 border-2 border-yellow-200 rounded-2xl flex flex-col gap-1 transition-all hover:border-yellow-400 hover:bg-yellow-50">

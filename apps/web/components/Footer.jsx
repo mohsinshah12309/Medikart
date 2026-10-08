@@ -346,11 +346,20 @@ export default function Footer({
               </h3>
               
               <div className="flex flex-col gap-3 text-xs sm:text-sm text-slate-800 font-medium">
-                {/* Address */}
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-amber-800 flex-shrink-0 mt-0.5" />
-                  <span className="leading-snug">{address}</span>
-                </div>
+                {/* Address - Live Google Maps Link */}
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Find Medikart location on Google Maps"
+                  aria-label={`Find Medikart location on Google Maps: ${address}`}
+                  className="flex items-start gap-2 group text-slate-800 hover:text-amber-950 transition-colors cursor-pointer"
+                >
+                  <MapPin className="w-4 h-4 text-amber-800 group-hover:text-amber-950 group-hover:scale-110 flex-shrink-0 mt-0.5 transition-all duration-200" />
+                  <span className="leading-snug group-hover:underline underline-offset-2 font-medium">
+                    {address}
+                  </span>
+                </a>
 
                 {/* Phone */}
                 {contactPhone && (
