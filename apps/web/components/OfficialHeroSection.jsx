@@ -326,7 +326,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
         </div>
 
         {/* ─── CARD 2 (Right): Compact Interactive App Showcase & 3D Phone Mockup ─── */}
-        <div className="lg:col-span-5 w-full rounded-3xl bg-gradient-to-br from-[#FFFDE7] via-[#FFF9C4] to-[#FFEB3B]/35 border-2 border-amber-300/80 shadow-lg shadow-amber-200/30 p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-amber-400">
+        <div className="lg:col-span-5 w-full rounded-3xl bg-[#FFEE45] border-2 border-[#E5D322] shadow-lg shadow-yellow-200/50 p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-between relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-[#E5D322]" style={{ backgroundColor: '#FFEE45' }}>
           
           {/* Background Decorative Skyline & Glow */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none z-0">
