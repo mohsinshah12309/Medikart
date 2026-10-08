@@ -268,7 +268,7 @@ export default function MonthlyRefillSection({
             {!isAuthenticated && (
               <Link
                 href="/login?redirect=/#monthly-refill-section"
-                className="btn-refill-primary px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-black shadow-xs flex items-center gap-1.5"
+                className="bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-black shadow-md hover:shadow-lg hover:scale-103 active:scale-97 flex items-center gap-1.5 transition-all border border-orange-600"
               >
                 <LogIn className="w-4 h-4" />
                 <span>Sign In to Refill</span>
@@ -485,7 +485,7 @@ export default function MonthlyRefillSection({
             <div className="flex items-center gap-2.5 w-full sm:w-auto">
               <Link
                 href="/login?redirect=/#monthly-refill-section"
-                className="flex-1 sm:flex-initial btn-refill-primary px-6 py-2.5 rounded-full text-xs uppercase tracking-wider font-black shadow-xs text-center"
+                className="flex-1 sm:flex-initial bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white px-6 py-2.5 rounded-full text-xs uppercase tracking-wider font-black shadow-md hover:shadow-lg hover:scale-103 active:scale-97 text-center transition-all border border-orange-600"
               >
                 Sign In
               </Link>
