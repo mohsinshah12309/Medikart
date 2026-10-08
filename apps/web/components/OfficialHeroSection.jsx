@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { triggerCategorySelect, triggerCatalogSearch, scrollToCatalog } from '../lib/catalogEvents';
 import MonthlyRefillSection from './monthlyRefill/MonthlyRefillSection';
+import { usePwaInstall } from './pwa/PwaInstallProvider';
 
 const DEFAULT_CITIES = ['Lahore'];
 
@@ -13,6 +14,7 @@ let cachedCities = null;
 let cachedTrending = null;
 
 export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [], initialProducts = [] }) {
+  const { isInstalled, triggerInstall } = usePwaInstall();
   const [selectedCity, setSelectedCity] = useState(initialCity);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
   const [cities, setCities] = useState(cachedCities || DEFAULT_CITIES);
@@ -452,17 +454,42 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
                   </div>
                 </div>
 
-                {/* Bottom In-App Banner Accent */}
-                <div className="mt-auto pt-2">
+                {/* In-App Action Banners */}
+                <div className="mt-auto pt-1.5 flex flex-col gap-1.5">
+                  {/* Download Medikart App CTA Banner */}
+                  <button
+                    type="button"
+                    onClick={triggerInstall}
+                    className="w-full p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-slate-950 hover:bg-slate-900 border border-slate-850 text-white flex items-center justify-between shadow-xs cursor-pointer hover:scale-102 active:scale-98 transition-all group"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-lg bg-[#FFEE45] text-slate-950 flex items-center justify-center text-xs font-black shrink-0 shadow-2xs group-hover:scale-110 transition-transform">
+                        📱
+                      </div>
+                      <div className="text-left leading-tight">
+                        <div className="text-[9.5px] sm:text-[10.5px] font-black text-white">
+                          Download Medikart App
+                        </div>
+                        <div className="text-[7.5px] sm:text-[8px] font-medium text-slate-400">
+                          {isInstalled ? "App Installed" : "Fast & convenient delivery"}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[9px] sm:text-[10px] font-black bg-[#FFEE45] text-slate-950 rounded-full px-2.5 py-0.5 shadow-2xs group-hover:bg-[#FDD835] transition-colors">
+                      {isInstalled ? "Open" : "Install"}
+                    </span>
+                  </button>
+
+                  {/* Bottom In-App Prescription Upload Banner */}
                   <Link 
                     href="/instant-order"
-                    className="w-full p-2 rounded-xl sm:rounded-2xl bg-[#FFEB3B] hover:bg-[#FFE01B] border border-amber-300 text-slate-950 flex items-center justify-between shadow-2xs cursor-pointer hover:scale-102 active:scale-98 transition-all"
+                    className="w-full p-1.5 sm:p-2 rounded-xl sm:rounded-2xl bg-[#FFEB3B] hover:bg-[#FFE01B] border border-amber-300 text-slate-950 flex items-center justify-between shadow-2xs cursor-pointer hover:scale-102 active:scale-98 transition-all"
                   >
                     <div className="text-left leading-tight">
-                      <div className="text-[10px] sm:text-[11px] font-black">Prescription Upload</div>
-                      <div className="text-[8px] sm:text-[9px] font-bold text-amber-900">Verified in 5 min</div>
+                      <div className="text-[9.5px] sm:text-[10.5px] font-black">Prescription Upload</div>
+                      <div className="text-[7.5px] sm:text-[8px] font-bold text-amber-900">Verified in 5 min</div>
                     </div>
-                    <span className="text-[10.5px] sm:text-xs font-black bg-white rounded-full px-2.5 py-0.5 text-slate-900 shadow-2xs">Upload</span>
+                    <span className="text-[9.5px] sm:text-[10px] font-black bg-white rounded-full px-2.5 py-0.5 text-slate-900 shadow-2xs">Upload</span>
                   </Link>
                 </div>
 

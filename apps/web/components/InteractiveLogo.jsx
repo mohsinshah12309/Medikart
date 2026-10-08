@@ -8,9 +8,20 @@ import Image from 'next/image';
  * Uses the official Medikart logo with dynamic sizing and hover effects.
  */
 export default function InteractiveLogo({ 
-  className = "" 
+  className = "",
+  size = "md",
+  imageClassName = ""
 }) {
   const [isHovered, setIsHovered] = useState(false);
+
+  const sizeClasses = {
+    sm: "h-7 sm:h-8",
+    md: "h-8 sm:h-10 md:h-12",
+    lg: "h-10 sm:h-12 md:h-14",
+    xl: "h-12 sm:h-14 md:h-16"
+  };
+
+  const currentSize = sizeClasses[size] || sizeClasses.md;
 
   return (
     <div 
@@ -28,10 +39,10 @@ export default function InteractiveLogo({
         <Image
           src="/logo.png"
           alt="Medikart — Medicines. Faster to you."
-          width={200}
-          height={60}
+          width={240}
+          height={72}
           priority
-          className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+          className={`${currentSize} ${imageClassName} w-auto object-contain`}
         />
       </div>
     </div>

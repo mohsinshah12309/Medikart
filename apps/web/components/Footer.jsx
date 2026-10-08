@@ -194,8 +194,10 @@ export default function Footer({
             
             {/* ─── COLUMN 1: BRAND BLOCK (lg:col-span-4) ─── */}
             <div className="lg:col-span-4 flex flex-col items-start gap-4">
-              <Link href="/" aria-label="Medikart Home" className="inline-block">
-                <InteractiveLogo size="md" />
+              <Link href="/" aria-label="Medikart Home" className="inline-block group">
+                <div className="bg-white/95 hover:bg-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl shadow-sm border border-amber-300/80 hover:border-amber-400 hover:shadow-md hover:scale-[1.02] transition-all duration-200 inline-flex items-center">
+                  <InteractiveLogo size="lg" />
+                </div>
               </Link>
 
               <p className="text-xs sm:text-sm font-extrabold text-amber-950 uppercase tracking-wide">
