@@ -282,35 +282,66 @@ export default function FaqClient() {
             return (
               <div
                 key={faq.id}
-                className={`bg-white rounded-2xl sm:rounded-3xl border-2 transition-all duration-200 overflow-hidden shadow-xs ${
+                className={`rounded-2xl sm:rounded-3xl border-2 transition-all duration-300 overflow-hidden relative ${
                   isExpanded
-                    ? "border-yellow-400 shadow-md ring-2 ring-yellow-400/20"
-                    : "border-slate-200 hover:border-yellow-300"
+                    ? "bg-white border-[#FFEE45] shadow-lg shadow-yellow-200/40 ring-4 ring-[#FFEE45]/25"
+                    : "bg-white/95 hover:bg-white border-amber-200/80 hover:border-[#FFEE45] shadow-xs hover:shadow-md hover:-translate-y-0.5"
                 }`}
               >
+                {/* Active Indicator Accent Bar on Expanded State */}
+                {isExpanded && (
+                  <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-[#FFEE45] z-20" />
+                )}
+
                 {/* Accordion Trigger */}
                 <button
                   type="button"
                   onClick={() => toggleAccordion(faq.id)}
                   aria-expanded={isExpanded}
-                  className="w-full text-left p-5 sm:p-6 flex items-start justify-between gap-4 cursor-pointer bg-white hover:bg-yellow-50/30 transition-colors"
+                  className={`w-full text-left p-5 sm:p-6 pl-6 sm:pl-7 flex items-start justify-between gap-4 cursor-pointer transition-all duration-200 ${
+                    isExpanded
+                      ? "bg-gradient-to-r from-amber-50/90 via-[#FFFDE6]/60 to-transparent border-b border-amber-200/70"
+                      : "bg-transparent hover:bg-amber-50/40"
+                  }`}
                 >
-                  <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200 w-fit">
-                        {faq.categoryLabel}
-                      </span>
+                  <div className="flex items-start gap-3.5 flex-1 min-w-0">
+                    {/* Medical Question Icon Badge */}
+                    <div
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 mt-0.5 border transition-all duration-200 ${
+                        isExpanded
+                          ? "bg-slate-950 text-[#FFEE45] border-slate-900 shadow-2xs"
+                          : "bg-amber-100/90 text-amber-950 border-amber-300/80"
+                      }`}
+                    >
+                      Q
                     </div>
-                    <h3 id={`faq-heading-${faq.id}`} className="text-sm sm:text-base md:text-lg font-black text-slate-900 leading-snug">
-                      {faq.question}
-                    </h3>
+
+                    <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full w-fit border transition-colors ${
+                            isExpanded
+                              ? "bg-[#FFEE45] text-slate-950 border-[#E5D322] shadow-2xs"
+                              : "bg-amber-100/80 text-amber-950 border-amber-200/90"
+                          }`}
+                        >
+                          {faq.categoryLabel}
+                        </span>
+                      </div>
+                      <h3
+                        id={`faq-heading-${faq.id}`}
+                        className="text-sm sm:text-base md:text-lg font-black text-slate-950 leading-snug tracking-tight"
+                      >
+                        {faq.question}
+                      </h3>
+                    </div>
                   </div>
 
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 mt-0.5 ${
+                    className={`w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 font-black mt-0.5 shadow-2xs ${
                       isExpanded
-                        ? "bg-yellow-400 text-slate-950 rotate-180 shadow-xs"
-                        : "bg-slate-100 text-slate-600 group-hover:bg-yellow-100"
+                        ? "bg-[#FFEE45] text-slate-950 border-2 border-[#E5D322] rotate-180"
+                        : "bg-amber-50 text-amber-900 border border-amber-200/90 hover:bg-[#FFEE45] hover:text-slate-950 hover:border-[#E5D322]"
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -319,22 +350,36 @@ export default function FaqClient() {
 
                 {/* Accordion Content */}
                 {isExpanded && (
-                  <div role="region" aria-labelledby={`faq-heading-${faq.id}`} className="px-5 pb-6 sm:px-6 sm:pb-7 pt-1 border-t border-yellow-100 bg-gradient-to-b from-yellow-50/30 via-white to-white">
-                    {/* Render Formatted Markdown */}
-                    <div className="pt-3">{renderFormattedText(faq.answer)}</div>
+                  <div
+                    role="region"
+                    aria-labelledby={`faq-heading-${faq.id}`}
+                    className="p-5 sm:p-7 pl-6 sm:pl-7 bg-gradient-to-b from-[#FFFDF2] via-white to-[#FFFDF5] relative space-y-4"
+                  >
+                    {/* Refined Inset Answer Card with "A" Badge */}
+                    <div className="rounded-2xl bg-white/95 border-2 border-amber-100/90 p-4 sm:p-5 shadow-xs relative">
+                      <div className="flex items-start gap-3">
+                        <div className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-900 font-black text-xs flex items-center justify-center border border-emerald-300 shrink-0 mt-0.5 shadow-2xs">
+                          A
+                        </div>
+                        <div className="flex-1 min-w-0 text-slate-800 leading-relaxed text-xs sm:text-sm">
+                          {renderFormattedText(faq.answer)}
+                        </div>
+                      </div>
+                    </div>
 
-                    {/* Highlights Badges */}
+                    {/* Highlights Badges Banner */}
                     {faq.highlights && faq.highlights.length > 0 && (
-                      <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] font-black text-slate-500 uppercase tracking-tight mr-1 flex items-center gap-1">
-                          <Sparkles className="w-3 h-3 text-amber-600" /> Key Takeaway:
+                      <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 via-[#FFFDE6]/60 to-amber-50/40 border border-amber-200/80 flex flex-wrap items-center gap-2 shadow-2xs">
+                        <span className="text-[11px] font-black text-amber-950 uppercase tracking-wider flex items-center gap-1.5 mr-1">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                          <span>Key Takeaways:</span>
                         </span>
                         {faq.highlights.map((h, i) => (
                           <span
                             key={i}
-                            className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-yellow-100/70 border border-yellow-300/80 text-amber-950"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl bg-white text-slate-900 border border-amber-300/80 shadow-2xs"
                           >
-                            <CheckCircle2 className="w-3 h-3 text-amber-700 shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                             <span>{h}</span>
                           </span>
                         ))}
@@ -342,12 +387,13 @@ export default function FaqClient() {
                     )}
 
                     {/* Helpful Feedback Box */}
-                    <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-3 text-xs text-slate-500">
-                      <span>Was this answer helpful?</span>
+                    <div className="pt-3 border-t border-amber-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
+                      <span className="font-semibold text-slate-700">Was this answer helpful?</span>
                       <div className="flex items-center gap-2">
                         {userFeedback ? (
-                          <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
-                            ✓ Thank you for your feedback!
+                          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200 shadow-2xs inline-flex items-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                            <span>Thank you for your feedback!</span>
                           </span>
                         ) : (
                           <>
@@ -355,18 +401,18 @@ export default function FaqClient() {
                               type="button"
                               onClick={() => handleFeedback(faq.id, "up")}
                               aria-label="Mark answer as helpful"
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-yellow-100 hover:text-slate-900 border border-slate-200 text-slate-700 font-semibold transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-800 border border-slate-200 text-slate-700 font-bold transition-all shadow-2xs hover:scale-105 active:scale-95 cursor-pointer"
                             >
-                              <ThumbsUp className="w-3 h-3 text-slate-600" />
+                              <ThumbsUp className="w-3.5 h-3.5 text-slate-600" />
                               <span>Yes</span>
                             </button>
                             <button
                               type="button"
                               onClick={() => handleFeedback(faq.id, "down")}
                               aria-label="Mark answer as not helpful"
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-rose-50 hover:text-rose-700 border border-slate-200 text-slate-700 font-semibold transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-rose-50 hover:border-rose-300 hover:text-rose-800 border border-slate-200 text-slate-700 font-bold transition-all shadow-2xs hover:scale-105 active:scale-95 cursor-pointer"
                             >
-                              <ThumbsDown className="w-3 h-3 text-slate-600" />
+                              <ThumbsDown className="w-3.5 h-3.5 text-slate-600" />
                               <span>No</span>
                             </button>
                           </>
