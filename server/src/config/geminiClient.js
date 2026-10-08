@@ -15,7 +15,11 @@ function getApiKey() {
 }
 
 function getModel() {
-  return process.env.GEMINI_MODEL || "gemini-1.5-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+  if (model === "gemini-1.5-flash" || model === "gemini-1.5-pro" || model === "gemini-2.0-flash" || model === "gemini-2.5-flash") {
+    return "gemini-3.8-flash";
+  }
+  return model;
 }
 
 function isGeminiConfigured() {
@@ -75,6 +79,21 @@ async function generateContent(conversationMessages = [], systemInstruction = ""
 
     return text;
   } catch (error) {
+    // If primary model has high demand or error, attempt fallback to gemini-flash-latest
+    if (model !== "gemini-flash-latest") {
+      try {
+        const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
+        const fallbackRes = await axios.post(fallbackUrl, payload, {
+          headers: { "Content-Type": "application/json" },
+          timeout: 18000,
+        });
+        const fbCandidate = fallbackRes.data?.candidates?.[0];
+        const fbText = fbCandidate?.content?.parts?.[0]?.text;
+        if (fbText) return fbText;
+      } catch (fbErr) {
+        // Fallback failed as well, proceed to throw primary error
+      }
+    }
     const errorDetail = error.response?.data?.error?.message || error.message;
     console.error(`[Gemini API Error] (${model}):`, errorDetail);
     throw new Error(`Gemini API Error: ${errorDetail}`);

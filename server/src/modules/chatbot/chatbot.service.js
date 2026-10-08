@@ -8,6 +8,7 @@
  */
 const mongoose = require("mongoose");
 const Product = require("../products/product.model");
+const Category = require("../categories/category.model");
 const ChatbotConversation = require("./chatbotConversation.model");
 const { findMatchingProducts, isGreetingOrChitchat, isPediatricQuery } = require("./catalogMatcher");
 const geminiClient = require("../../config/geminiClient");
@@ -168,15 +169,18 @@ const getOtcSuggestions = async (ip, conversationId, message) => {
     };
   }
 
-  // 2. Fetch all narcotic products to ensure strict exclusion
-  const narcotics = await Product.find({ isNarcotic: true });
-  const narcoticCategoryIds = new Set();
-  const narcoticGenericNames = new Set();
+  // 2. Fetch all narcotic products and dedicated narcotic categories to ensure strict exclusion
+  const narcoticCategories = await Category.find({
+    $or: [
+      { name: { $regex: /narcotic|controlled|schedule\s*x|sedative/i } },
+      { slug: { $regex: /narcotic|controlled|schedule-x|sedative/i } },
+    ],
+  }).lean();
+  const narcoticCategoryIds = new Set(narcoticCategories.map((c) => c._id.toString()));
 
+  const narcotics = await Product.find({ isNarcotic: true }).lean();
+  const narcoticGenericNames = new Set();
   narcotics.forEach((p) => {
-    if (p.categoryIds) {
-      p.categoryIds.forEach((catId) => narcoticCategoryIds.add(catId.toString()));
-    }
     if (p.genericName) {
       narcoticGenericNames.add(p.genericName.trim().toLowerCase());
     }
@@ -197,6 +201,7 @@ const getOtcSuggestions = async (ip, conversationId, message) => {
   // Filter in memory to guarantee zero narcotics or sibling products
   const safeProducts = candidateProducts.filter((p) => {
     if (p.isNarcotic) return false;
+    // Exclude only if explicitly belonging to a dedicated narcotic category
     if (p.categoryIds && p.categoryIds.some((catId) => narcoticCategoryIds.has(catId.toString()))) {
       return false;
     }
@@ -211,7 +216,7 @@ const getOtcSuggestions = async (ip, conversationId, message) => {
 
   // 4. Format safe product catalog for the LLM
   const catalogList = safeProducts
-    .map((p) => `- Name: "${p.name}", Generic Name: "${p.genericName || "N/A"}", Price: Rs. ${p.price} PKR, Stock: ${p.stockStatus}, Description: "${p.description || ""}"`)
+    .map((p) => `- Name: "${p.name}", Generic Name: "${p.genericName || "N/A"}", Price: Rs. ${p.price} PKR, Stock: ${p.stockStatus}, Requires Prescription: ${p.requiresPrescription ? "Yes" : "No"}, Description: "${p.description || ""}"`)
     .join("\n");
 
   // 5. Construct System Prompt
@@ -227,13 +232,18 @@ YOUR CORE RESPONSIBILITIES:
 
 2. MEDICINE AVAILABILITY & SYMPTOM CHECKER:
    - Check medicine availability and suggest safe Over-The-Counter (OTC) products strictly from the ALLOWED CATALOG below.
+   - If a customer asks whether a medicine is available or asks about stock or price (e.g. "Is Panadol available?", "Do you have Panadol?", "Augmentin stock?"):
+     * Look closely at the ALLOWED CATALOG below.
+     * If the requested product (or any variant/strength of it) is in the ALLOWED CATALOG, you MUST confirm that it is AVAILABLE / IN STOCK!
+     * List the exact available options with their names, strengths, forms, and prices in PKR from the ALLOWED CATALOG.
+     * NEVER state that a medicine is "not listed in our current catalog" or "not available" when matching products are listed in the ALLOWED CATALOG below!
+     * If the item requires a doctor's prescription (Requires Prescription: Yes), clearly inform the user that it is in stock and can be ordered by uploading their prescription via [Instant Order](/instant-order).
    - If the user describes symptoms or an illness (e.g. "my 2 years old son having flu", "fever and cough", "headache", "cold"):
      * You MUST analyze their symptoms and suggest 1-3 suitable products from the ALLOWED CATALOG.
      * For pediatric cases (babies, toddlers, or children, e.g. "2 years old son having flu"):
        - Recommend safe pediatric liquid formulations (such as Paracetamol/Panadol pediatric syrup, Calpol suspension, Arinac syrup, saline nasal drops, or pediatric ORS).
        - NEVER recommend adult tablets, capsules, or non-medicinal items (such as soft drinks, 7up, or batteries).
        - Give helpful pediatric advice: measure dosages accurately by weight with a syringe/dropper, keep the child hydrated, and seek immediate pediatric care if fever is high (>102°F) or lasts over 48 hours.
-   - If a customer asks if a medicine is available (e.g. "Do you have Panadol?", "Is Augmentin available?"), clearly state whether it is in stock or not, and mention its price in PKR from the catalog.
 
 ============================================================
 MEDIKART STOREFRONT KNOWLEDGE BASE & BUSINESS RULES:
@@ -292,13 +302,14 @@ ALLOWED CATALOG:
 ${catalogList || "No products currently available in this specific catalog filter. Suggest browsing the catalog, searching other remedies, or uploading a prescription via Instant Order (/instant-order)."}
 
 RULES:
-1. ONLY suggest products that are explicitly listed in the ALLOWED CATALOG above. Never invent or suggest any products not listed.
-2. If the user sends a greeting or general conversational query without describing any symptoms or asking storefront questions:
+1. MEDICINE AVAILABILITY CONFIRMATION: If the customer asks whether a medicine is available or in stock (e.g. Panadol, Augmentin, Brufen), and products matching that medicine appear in the ALLOWED CATALOG above, you MUST explicitly confirm that it IS AVAILABLE and IN STOCK. List the matching formulations with their prices in PKR. NEVER state that it is "not listed in our current catalog" or "not available" when matching products appear in the ALLOWED CATALOG above!
+2. ONLY suggest products that are explicitly listed in the ALLOWED CATALOG above. Never invent or hallucinate products not present in the catalog.
+3. If the user sends a greeting or general conversational query without describing any symptoms or asking storefront questions:
    Reply warmly describing how you can help with medicines, delivery, payments, prescriptions, policies, and support.
-3. Keep suggestions concise, professional, warm, and easy to read. Do NOT use markdown bold asterisks (**) anywhere in your response.
-4. You MUST include the medical disclaimer in your response:
+4. Keep suggestions concise, professional, warm, and easy to read. Do NOT use markdown bold asterisks (**) anywhere in your response.
+5. You MUST include the medical disclaimer in your response:
    "${MEDICAL_DISCLAIMER}"
-5. DO NOT mention the names of any narcotic or controlled substances, even to explain why you cannot recommend them. Simply advise them to consult a physician.`;
+6. DO NOT mention the names of any narcotic or controlled substances, even to explain why you cannot recommend them. Simply advise them to consult a physician.`;
 
   let assistantReply = "";
 
