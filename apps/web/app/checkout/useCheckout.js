@@ -116,13 +116,13 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
     }
   }, [citiesList, customer.city]);
 
-  // Auto-switch to Card if city is 'Other'
-  useEffect(() => {
-    const isOther = (customer.city || '').trim().toLowerCase() === 'other';
-    if (isOther && paymentMethod === 'cod') {
-      setPaymentMethod('card');
-    }
-  }, [customer.city, paymentMethod]);
+  // Auto-switch to Card if city is 'Other' (Temporarily disabled while Card is Coming Soon)
+  // useEffect(() => {
+  //   const isOther = (customer.city || '').trim().toLowerCase() === 'other';
+  //   if (isOther && paymentMethod === 'cod') {
+  //     setPaymentMethod('card');
+  //   }
+  // }, [customer.city, paymentMethod]);
 
   // Fetch delivery charge whenever city changes
   useEffect(() => {
@@ -320,12 +320,12 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
       setErrorMsg('Prescription upload (PDF or Image) is required for controlled medicine items.');
       return;
     }
-    if (customer.city?.trim().toLowerCase() === 'other' && paymentMethod === 'cod') {
-      setErrorMsg(
-        "Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment."
-      );
-      return;
-    }
+    // if (customer.city?.trim().toLowerCase() === 'other' && paymentMethod === 'cod') {
+    //   setErrorMsg(
+    //     "Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment."
+    //   );
+    //   return;
+    // }
     setErrorMsg('');
     setSubmitting(true);
 

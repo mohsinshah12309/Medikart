@@ -491,76 +491,48 @@ export default function CheckoutPage() {
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-5">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700">Payment Method</h2>
-              {customer.city?.trim().toLowerCase() === 'other' && (
-                <span className="text-[11px] font-bold text-amber-800 bg-amber-100/80 border border-amber-300 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                  <span>⚠️</span> COD is not available for "Other" cities — Card Payment Only
-                </span>
-              )}
             </div>
             
             <div className="grid grid-cols-1 gap-3">
-              <label className={`flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all ${
-                customer.city?.trim().toLowerCase() === 'other'
-                  ? 'bg-slate-50/80 border-slate-200 opacity-60 cursor-not-allowed'
-                  : paymentMethod === 'cod' 
-                  ? 'bg-yellow-50/40 border-yellow-500 shadow-sm cursor-pointer' 
-                  : 'bg-white border-slate-200 hover:border-slate-300 cursor-pointer'
-              }`}>
+              <label className="flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all bg-yellow-50/40 border-yellow-500 shadow-sm cursor-pointer">
                 <input
                   type="radio"
                   name="paymentMethod"
                   value="cod"
-                  checked={paymentMethod === 'cod' && customer.city?.trim().toLowerCase() !== 'other'}
-                  onChange={() => {
-                    if (customer.city?.trim().toLowerCase() !== 'other') setPaymentMethod('cod');
-                  }}
-                  disabled={submitting || customer.city?.trim().toLowerCase() === 'other'}
-                  className="mt-1 accent-yellow-500 w-4 h-4 cursor-pointer disabled:cursor-not-allowed"
+                  checked={paymentMethod === 'cod'}
+                  onChange={() => setPaymentMethod('cod')}
+                  disabled={submitting}
+                  className="mt-1 accent-yellow-500 w-4 h-4 cursor-pointer"
                 />
                 <div className="flex flex-col gap-0.5">
                   <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                     Cash on Delivery (COD)
-                    {customer.city?.trim().toLowerCase() === 'other' ? (
-                      <span className="bg-slate-200 text-slate-700 text-[10px] px-2 py-0.5 rounded-full font-bold">Unavailable for Other Cities</span>
-                    ) : (
-                      <span className="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">Popular</span>
-                    )}
+                    <span className="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">Active</span>
                   </span>
                   <span className="text-xs text-slate-500">
-                    {customer.city?.trim().toLowerCase() === 'other'
-                      ? 'Cash on Delivery is only available in major registered cities. Orders for other cities must be prepaid via Card.'
-                      : 'Pay in cash when your order is delivered to your doorstep.'}
+                    Pay in cash when your order is delivered to your doorstep.
                   </span>
                 </div>
               </label>
 
               {!hasNarcotics && (
-                <label className={`flex items-start gap-3.5 p-4 rounded-2xl border-2 transition-all cursor-pointer ${
-                  paymentMethod === 'card' 
-                    ? 'bg-yellow-50/40 border-yellow-500 shadow-sm ring-1 ring-yellow-400' 
-                    : 'bg-white border-slate-200 hover:border-slate-300'
-                }`}>
+                <div className="flex items-start gap-3.5 p-4 rounded-2xl border-2 border-slate-200 bg-slate-50/80 opacity-60 cursor-not-allowed select-none transition-all">
                   <input
                     type="radio"
                     name="paymentMethod"
                     value="card"
-                    checked={paymentMethod === 'card' || customer.city?.trim().toLowerCase() === 'other'}
-                    onChange={() => setPaymentMethod('card')}
-                    disabled={submitting}
-                    className="mt-1 accent-yellow-500 w-4 h-4 cursor-pointer"
+                    checked={false}
+                    disabled={true}
+                    className="mt-1 accent-slate-400 w-4 h-4 cursor-not-allowed"
                   />
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                    <span className="text-sm font-extrabold text-slate-600 flex items-center gap-2">
                       Debit / Credit Card / Online Payment
-                      {customer.city?.trim().toLowerCase() === 'other' ? (
-                        <span className="bg-amber-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">Required for Other Cities</span>
-                      ) : (
-                        <span className="bg-yellow-400 text-slate-950 text-[10px] px-2 py-0.5 rounded-full font-black">3D Interactive</span>
-                      )}
+                      <span className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider">Coming Soon</span>
                     </span>
-                    <span className="text-xs text-slate-500">Pay securely online with Visa, Mastercard, or digital banking.</span>
+                    <span className="text-xs text-slate-400">Direct Visa, Mastercard &amp; digital banking integration launching soon.</span>
                   </div>
-                </label>
+                </div>
               )}
             </div>
 
