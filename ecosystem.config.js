@@ -10,9 +10,9 @@ module.exports = {
   apps: [
     {
       name: 'medikart-api',
-      script: './server/src/app.js',
+      script: 'src/app.js',
       cwd: './server',
-      instances: 2, // Load balanced across 2 vCPU cores
+      instances: 1, // 1 instance per vCPU core for 1 vCPU Droplet
       exec_mode: 'cluster',
       watch: false,
       max_memory_restart: '850M',
@@ -29,10 +29,10 @@ module.exports = {
       script: 'node_modules/next/dist/bin/next',
       args: 'start -p 3000',
       cwd: './apps/web',
-      instances: 2, // Load balanced across 2 vCPU cores
+      instances: 1, // 1 instance per vCPU core for 1 vCPU Droplet
       exec_mode: 'cluster',
       watch: false,
-      max_memory_restart: '1400M',
+      max_memory_restart: '1200M',
       env: {
         NODE_ENV: 'production',
         PORT: 3000,
