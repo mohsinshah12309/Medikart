@@ -36,8 +36,6 @@ const FALLBACK_POPULAR_REFILLS = [
     genericName: "Paracetamol + Caffeine",
     sku: "PAN-EXT-100",
     price: 360,
-    effectivePrice: 340,
-    discountPercent: 5,
     coverImage: "/images/placeholder-product.png",
     category: "Pain & Fever",
   },
@@ -47,8 +45,6 @@ const FALLBACK_POPULAR_REFILLS = [
     genericName: "Multivitamins with Zinc",
     sku: "SUR-Z-30",
     price: 490,
-    effectivePrice: 465,
-    discountPercent: 5,
     coverImage: "/images/placeholder-product.png",
     category: "Vitamins & Supplements",
   },
@@ -58,8 +54,6 @@ const FALLBACK_POPULAR_REFILLS = [
     genericName: "Calcium + Vitamin C, D3 & B6",
     sku: "CAC-1000-20",
     price: 520,
-    effectivePrice: 495,
-    discountPercent: 5,
     coverImage: "/images/placeholder-product.png",
     category: "Bone & Joint Care",
   },
@@ -69,8 +63,6 @@ const FALLBACK_POPULAR_REFILLS = [
     genericName: "EPA & DHA Fatty Acids",
     sku: "NUT-OMG-30",
     price: 1350,
-    effectivePrice: 1215,
-    discountPercent: 10,
     coverImage: "/images/placeholder-product.png",
     category: "Heart & Cardio",
   },
@@ -304,8 +296,8 @@ export default function MonthlyRefillSection({
               <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-700" />
             </div>
             <div>
-              <p className="text-sm sm:text-base text-slate-950 font-black tracking-tight leading-snug">Genuine & Discounted</p>
-              <p className="text-xs sm:text-[13px] text-slate-700 mt-0.5 leading-snug font-medium">100% authentic pharmacy stock</p>
+              <p className="text-sm sm:text-base text-slate-950 font-black tracking-tight leading-snug">100% Genuine Pharmacy Stock</p>
+              <p className="text-xs sm:text-[13px] text-slate-700 mt-0.5 leading-snug font-medium">Licensed partner sourcing</p>
             </div>
           </div>
         </div>
@@ -423,9 +415,9 @@ export default function MonthlyRefillSection({
                         }
                       }}
                     />
-                    {prod.discountPercent > 0 && (
+                    {Boolean(prod.discount?.active && prod.discount?.value > 0) && (
                       <span className="absolute top-1 left-1 bg-red-600 text-white text-[8px] font-black px-1 py-0.5 rounded uppercase">
-                        -{prod.discountPercent}%
+                        -{prod.discount.value}%
                       </span>
                     )}
                   </Link>
@@ -443,7 +435,7 @@ export default function MonthlyRefillSection({
                       <span className="text-xs font-black text-slate-950">
                         PKR {formatPrice(prod.effectivePrice || prod.price)}
                       </span>
-                      {prod.discountPercent > 0 && (
+                      {Boolean(prod.discount?.active && prod.discount?.value > 0) && (
                         <span className="text-[10px] text-slate-400 line-through">
                           PKR {formatPrice(prod.price)}
                         </span>

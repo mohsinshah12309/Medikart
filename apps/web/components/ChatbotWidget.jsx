@@ -95,7 +95,7 @@ export default function ChatbotWidget() {
       {/* ─────────────────────────────────────────────────────────────────
           1. FLOATING CHAT BUTTON (Ultra-Prominent 3D Medi Owl Doctor)
       ────────────────────────────────────────────────────────────────── */}
-      <div className="fixed bottom-20 md:bottom-8 right-3 md:right-8 z-50 flex items-center select-none">
+      <div className="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-50 flex items-center select-none">
         
         {/* Irresistible High-Visibility Greeting Speech Bubble */}
         {!isOpen && showTooltip && (
@@ -151,9 +151,9 @@ export default function ChatbotWidget() {
             <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-none">✕</span>
           ) : (
             <>
-              {/* Active Online Indicator */}
-              <span className="absolute -top-2 -right-1 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              {/* Active Online Indicator - Centered neatly above the button, never overlapping the avatar */}
+              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 bg-emerald-600 text-white text-[9px] sm:text-[10px] font-black px-2 sm:px-2.5 py-0.5 rounded-full ring-2 ring-white shadow-md whitespace-nowrap pointer-events-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 Ask Medi
               </span>
 
@@ -176,7 +176,7 @@ export default function ChatbotWidget() {
           2. CHAT WINDOW PANEL
       ────────────────────────────────────────────────────────────────── */}
       {isOpen && (
-        <div className="fixed bottom-20 sm:bottom-28 right-2 sm:right-6 left-2 sm:left-auto w-auto sm:w-[420px] max-w-[440px] h-[calc(100vh-140px)] sm:h-[540px] max-h-[620px] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-24 sm:bottom-28 right-2 sm:right-6 left-2 sm:left-auto w-auto sm:w-[420px] max-w-[440px] h-[calc(100vh-140px)] sm:h-[540px] max-h-[620px] z-50 bg-[#FAF8F5] border-2 border-amber-300 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           
           {/* Header with 3D Owl Avatar */}
           <div className="bg-gradient-to-r from-amber-300 via-[#FFEE45] to-yellow-300 text-slate-950 px-5 py-3.5 flex justify-between items-center flex-shrink-0 shadow-sm border-b border-amber-300">

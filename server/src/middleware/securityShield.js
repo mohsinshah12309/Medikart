@@ -39,12 +39,21 @@ function securityShield(req, res, next) {
 
   // 2. Enforce HTTPS in production behind Cloudflare / Reverse Proxy
   if (process.env.NODE_ENV === "production") {
+    const isLoopback =
+      req.hostname === "localhost" ||
+      req.hostname === "127.0.0.1" ||
+      req.ip === "127.0.0.1" ||
+      req.ip === "::1" ||
+      req.clientIp === "127.0.0.1" ||
+      req.clientIp === "::1";
+
     const isHttps =
+      isLoopback ||
       req.secure ||
       req.headers["x-forwarded-proto"] === "https" ||
       req.headers["cf-visitor"]?.includes('"scheme":"https"');
 
-    // Skip health check from HTTP enforcement to allow internal cluster probes
+    // Skip health check and internal loopback probes from HTTP enforcement
     if (!isHttps && req.path !== "/health") {
       const host = req.headers.host || "medikart.pk";
       const secureUrl = `https://${host}${req.originalUrl || req.url}`;

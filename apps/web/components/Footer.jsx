@@ -129,7 +129,7 @@ export default function Footer({
 
   const cleanPhone = contactPhone && !contactPhone.includes("CLIENT TO CONFIRM") ? contactPhone.replace(/[^0-9]/g, "") : "";
 
-  // Social Profile URLs (Placeholders flagged for client confirmation)
+  // Social Profile URLs
   const socialLinks = [
     {
       name: "Facebook",
@@ -142,18 +142,6 @@ export default function Footer({
       icon: InstagramIcon,
       href: "https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl",
       hoverColor: "hover:bg-[#E4405F] hover:text-white hover:border-[#E4405F]",
-    },
-    {
-      name: "X / Twitter",
-      icon: TwitterIcon,
-      href: "https://twitter.com/medikartpk",
-      hoverColor: "hover:bg-black hover:text-white hover:border-black",
-    },
-    {
-      name: "YouTube",
-      icon: YoutubeIcon,
-      href: "https://youtube.com/@medikartpk",
-      hoverColor: "hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]",
     },
   ];
 

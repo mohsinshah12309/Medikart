@@ -209,6 +209,9 @@ export default function CatalogSection({
         setActiveCategoryId(initialC);
         setCurrentPage(initialP);
         fetchCatalog(initialS, initialC, initialP);
+      } else if (!initialProducts || initialProducts.length === 0) {
+        // Fallback: If initialProducts was empty on mount, fetch immediately client-side
+        fetchCatalog('', '', 1);
       }
     }
 

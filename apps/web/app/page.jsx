@@ -12,6 +12,8 @@ import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanne
 import BlogsSection from '../components/BlogsSection';
 import RightBlogSidebar from '../components/RightBlogSidebar';
 
+export const revalidate = 60;
+
 export async function generateMetadata({ searchParams }) {
   const resolvedParams = await searchParams;
   const categoryParam = resolvedParams?.category;
