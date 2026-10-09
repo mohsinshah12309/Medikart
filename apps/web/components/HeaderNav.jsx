@@ -258,10 +258,14 @@ export default function HeaderNav({ initialCategories = [] }) {
                   const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
                   return (
-                    <div
+                    <Link
                       key={cat._id}
-                      onClick={(e) => handleCategorySelect(cat._id, e)}
-                      className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-yellow-50 text-xs font-bold text-slate-800 hover:text-slate-950 cursor-pointer transition-colors"
+                      href={`/categories/${slug}`}
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-yellow-50 text-xs font-bold text-slate-800 hover:text-slate-950 transition-colors"
                     >
                       <div className="w-6 h-6 rounded-md bg-amber-50 border border-amber-200 relative overflow-hidden shrink-0 flex items-center justify-center">
                         {imgSrc ? (
@@ -278,7 +282,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                       </div>
                       <span className="line-clamp-1 flex-1">{cat.name}</span>
                       <span className="text-xs text-slate-400">→</span>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
@@ -432,7 +436,7 @@ export default function HeaderNav({ initialCategories = [] }) {
           </Link>
           <div className="text-center pt-0.5">
             <span className="text-[10px] text-slate-400 font-medium">
-              A project by Banu Zahrah Pvt Ltd
+              Medikart Online Pharmacy Pakistan
             </span>
           </div>
         </div>
@@ -520,10 +524,11 @@ export default function HeaderNav({ initialCategories = [] }) {
                           const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
                           return (
-                            <div
+                            <Link
                               key={cat._id}
-                              onClick={(e) => handleCategorySelect(cat._id, e)}
-                              className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all cursor-pointer"
+                              href={`/categories/${slug}`}
+                              onClick={() => setIsDropdownOpen(false)}
+                              className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all"
                             >
                               <div className="w-10 h-10 rounded-lg bg-amber-50/80 border border-amber-100 flex items-center justify-center relative overflow-hidden shrink-0 group-hover:scale-105 group-hover:border-amber-300 transition-all">
                                 {imgSrc ? (
@@ -546,7 +551,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                               </div>
 
                               <ChevronRight className="w-3.5 h-3.5 text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
-                            </div>
+                            </Link>
                           );
                         })}
                       </div>

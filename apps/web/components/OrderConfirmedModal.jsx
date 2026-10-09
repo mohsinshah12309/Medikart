@@ -80,7 +80,7 @@ export function OrderConfirmedCard({
   const whatsappMessage = encodeURIComponent(
     `Hello Medikart Support, I have placed an order.\nOrder ID: ${orderId}\nCustomer: ${customer?.name || ''}\nCity: ${customer?.city || ''}`
   );
-  const whatsappUrl = `https://wa.me/923244489159?text=${whatsappMessage}`;
+  const whatsappUrl = "/contact";
 
   return (
     <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-2xl flex flex-col items-center text-center relative overflow-hidden animate-in zoom-in-95 fade-in duration-300">
@@ -177,15 +177,13 @@ export function OrderConfirmedCard({
           <span>→</span>
         </Link>
 
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="py-3.5 px-5 bg-green-600 hover:bg-green-700 text-white font-bold text-sm rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
+        <Link
+          href="/contact"
+          className="py-3.5 px-5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2"
         >
           <span>💬</span>
-          <span>WhatsApp Support</span>
-        </a>
+          <span>Support Desk</span>
+        </Link>
 
         {onContinueShopping ? (
           <button

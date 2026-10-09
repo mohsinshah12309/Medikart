@@ -85,7 +85,7 @@ export default function OrderConfirmationPage() {
   const whatsappMessage = encodeURIComponent(
     `Hello Medikart Support, I have a query regarding my Order #${codeToDisplay}.\nCustomer: ${order?.customer?.name || ""}`
   );
-  const whatsappUrl = `https://wa.me/923244489159?text=${whatsappMessage}`;
+  const whatsappUrl = "/contact";
 
   const subtotal = order?.totals?.subtotal ?? (order?.items || []).reduce((acc, it) => acc + (it.price || 0) * (it.quantity || 1), 0);
   const deliveryCharge = order?.totals?.deliveryCharge ?? 0;
@@ -108,7 +108,7 @@ export default function OrderConfirmationPage() {
             className="h-9 sm:h-10 mx-auto object-contain mb-1"
           />
           <p className="text-xs text-slate-600 font-semibold">Medicines. Faster to you.</p>
-          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5">92 G1 Johar Town, Lahore, Pakistan | Helpline: +92 324 4489159</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5">Online Pharmacy Network Pakistan | Support: support@medikart.pk</p>
         </div>
 
         {/* Loading State */}

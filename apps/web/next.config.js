@@ -79,6 +79,27 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        has: [
+          {
+            type: 'query',
+            key: 'category',
+            value: '(?<category>[a-zA-Z0-9_-]+)',
+          },
+        ],
+        permanent: true,
+        destination: '/categories/:category',
+      },
+      {
+        source: '/press',
+        permanent: true,
+        destination: '/',
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

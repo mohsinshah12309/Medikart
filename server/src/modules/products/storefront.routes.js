@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const Product = require("./product.model");
 const Category = require("../categories/category.model");
@@ -33,7 +34,7 @@ router.get("/sitemap/products", async (req, res, next) => {
 
         const products = await Product.find(
           { active: true, categoryIds: { $in: activeCategoryIds } },
-          { _id: 1, updatedAt: 1 }
+          { _id: 1, slug: 1, updatedAt: 1 }
         ).lean();
 
         return {
@@ -187,7 +188,7 @@ router.get("/products", async (req, res, next) => {
     // Parallelize independent DB reads (Product.find, storewide discount, countDocuments)
     let [products, storewidePercent, totalCount] = await Promise.all([
       Product.find(query)
-        .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+        .select("name slug genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
         .populate("categoryIds", "name slug discount active")
         .sort({ name: 1 })
         .skip(skip)
@@ -215,7 +216,7 @@ router.get("/products", async (req, res, next) => {
 
         const [fallbackProducts, fallbackCount] = await Promise.all([
           Product.find(relaxedQuery)
-            .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .select("name slug genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
             .populate("categoryIds", "name slug discount active")
             .sort({ name: 1 })
             .skip(skip)
@@ -284,8 +285,14 @@ router.get("/products/:id", async (req, res, next) => {
       policy: CACHE_POLICIES.PRODUCT_DETAIL,
       bypassCache: req.query.bypassCache === "true",
       fetcher: async () => {
+        const param = req.params.id;
+        const isObjectId = mongoose.Types.ObjectId.isValid(param);
+        const filter = isObjectId
+          ? { $or: [{ _id: param }, { slug: param }], active: true }
+          : { slug: param, active: true };
+
         const [product, storewidePercent] = await Promise.all([
-          Product.findOne({ _id: req.params.id, active: true })
+          Product.findOne(filter)
             .populate("categoryIds", "name slug discount active")
             .lean(),
           getStorewideDiscount(),
@@ -340,7 +347,11 @@ router.get("/products/:id/related", async (req, res, next) => {
       policy: CACHE_POLICIES.PRODUCT_RELATED,
       bypassCache: req.query.bypassCache === "true",
       fetcher: async () => {
-        const currentProduct = await Product.findOne({ _id: id, active: true }).lean();
+        const isObjectId = mongoose.Types.ObjectId.isValid(id);
+        const filter = isObjectId
+          ? { $or: [{ _id: id }, { slug: id }], active: true }
+          : { slug: id, active: true };
+        const currentProduct = await Product.findOne(filter).lean();
         if (!currentProduct) {
           return null;
         }
@@ -388,7 +399,7 @@ router.get("/products/:id/related", async (req, res, next) => {
           active: true,
           name: brandRegex,
         })
-          .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .select("name slug genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
           .populate("categoryIds", "name slug discount active")
           .limit(20)
           .lean()
@@ -407,7 +418,7 @@ router.get("/products/:id/related", async (req, res, next) => {
             active: true,
             genericName: genRegex,
           })
-            .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .select("name slug genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
             .populate("categoryIds", "name slug discount active")
             .limit(15)
             .lean()
@@ -424,7 +435,7 @@ router.get("/products/:id/related", async (req, res, next) => {
           active: true,
           keywords: { $in: currentProduct.keywords },
         })
-          .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .select("name slug genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
           .populate("categoryIds", "name slug discount active")
           .limit(15)
           .lean()
@@ -441,7 +452,7 @@ router.get("/products/:id/related", async (req, res, next) => {
           active: true,
           categoryIds: primaryCatId,
         })
-          .select("name genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .select("name slug genericName description keywords tags price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
           .populate("categoryIds", "name slug discount active")
           .sort({ name: 1 })
           .limit(20)
@@ -528,6 +539,29 @@ router.get("/categories", async (req, res, next) => {
     });
 
     res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/v1/categories/:slug - Public category detail by slug or ID
+router.get("/categories/:slug", async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    const isObjectId = mongoose.Types.ObjectId.isValid(slug);
+    const filter = isObjectId
+      ? { $or: [{ _id: slug }, { slug: slug }], active: true }
+      : { slug: slug, active: true };
+
+    const category = await Category.findOne(filter).lean();
+    if (!category) {
+      return res.status(404).json({ status: "error", message: "Category not found" });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: { category },
+    });
   } catch (error) {
     next(error);
   }

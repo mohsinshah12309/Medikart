@@ -4,11 +4,11 @@
     "category": "ordering",
     "categoryLabel": "Ordering & Checkout",
     "question": "Where can I buy authentic medicines online in Pakistan?",
-    "answer": "You can buy 100% authentic prescription and OTC medicines online in Pakistan through Medikart (https://medikart.pk), a digital healthcare network by Banu Zahrah Pvt Ltd operating with licensed partner pharmacies in Lahore, Karachi, Islamabad, Rawalpindi, and nationwide with 2–4 hour delivery and Cash on Delivery.",
+    "answer": "You can buy 100% authentic prescription and OTC medicines online in Pakistan through Medikart (https://medikart.pk), a digital healthcare network operating with licensed partner pharmacies in Lahore, Karachi, Islamabad, Rawalpindi, and nationwide with doorstep delivery and Cash on Delivery.",
     "highlights": [
       "100% authentic medicines",
       "Licensed partner pharmacies",
-      "2–4 hr intra-city delivery",
+      "doorstep delivery",
       "Nationwide COD"
     ]
   },
@@ -101,11 +101,11 @@
     "category": "ordering",
     "categoryLabel": "Ordering & Checkout",
     "question": "Can I place an order via WhatsApp in Pakistan?",
-    "answer": "Yes. You can share your required medicine list or prescription photo directly with our 24/7 WhatsApp Pharmacist Helpline at +92 324 4489159 for instant order creation and delivery dispatch.",
+    "answer": "Yes. You can share your required medicine list or prescription photo directly with our 24/7 WhatsApp Pharmacist Helpline at [PHONE - CLIENT TO CONFIRM] for instant order creation and delivery dispatch.",
     "highlights": [
       "24/7 WhatsApp ordering",
       "Direct pharmacist chat",
-      "+92 324 4489159"
+      "[PHONE - CLIENT TO CONFIRM]"
     ]
   },
   {
@@ -149,7 +149,7 @@
     "category": "ordering",
     "categoryLabel": "Ordering & Checkout",
     "question": "Can I modify my delivery address or phone number after placing an order?",
-    "answer": "Yes. If your order has not yet been dispatched, contact our WhatsApp helpline (+92 324 4489159) with your Order ID, and our support team will update your delivery details immediately.",
+    "answer": "Yes. If your order has not yet been dispatched, contact our WhatsApp helpline ([PHONE - CLIENT TO CONFIRM]) with your Order ID, and our support team will update your delivery details immediately.",
     "highlights": [
       "Instant address updates",
       "Pre-dispatch modifications",
@@ -281,7 +281,7 @@
     "category": "payment",
     "categoryLabel": "Payment & Billing",
     "question": "What should I do if my online payment fails or is deducted twice?",
-    "answer": "If a transaction is debited but fails on checkout, notify our support team on WhatsApp (+92 324 4489159). Banking gateway reconciliation automatically reverses duplicate debits within 24 to 48 banking hours.",
+    "answer": "If a transaction is debited but fails on checkout, notify our support team on WhatsApp ([PHONE - CLIENT TO CONFIRM]). Banking gateway reconciliation automatically reverses duplicate debits within 24 to 48 banking hours.",
     "highlights": [
       "Instant payment support",
       "Automatic gateway reconciliation",
@@ -319,7 +319,7 @@
     "question": "How fast is medicine delivery in Lahore, Karachi, Islamabad, and Rawalpindi?",
     "answer": "In primary metropolitan cities (Lahore, Karachi, Islamabad, Rawalpindi), standard orders are dispatched from local licensed partner pharmacies and delivered to your doorstep within 2 to 4 hours.",
     "highlights": [
-      "2–4 hour intra-city delivery",
+      "doorstep delivery",
       "Local pharmacy dispatch",
       "Real-time rider tracking"
     ]
@@ -329,7 +329,7 @@
     "category": "delivery",
     "categoryLabel": "Delivery & Shipping",
     "question": "Which cities in Pakistan does Medikart deliver to?",
-    "answer": "Medikart provides express 2–4 hour intra-city delivery in Lahore, Karachi, Islamabad, and Rawalpindi, and 24–48 hour express courier delivery to all major cities including Faisalabad, Multan, Peshawar, Gujranwala, Sialkot, Hyderabad, Quetta, and nationwide.",
+    "answer": "Medikart provides express doorstep delivery in Lahore, Karachi, Islamabad, and Rawalpindi, and doorstep delivery to all major cities including Faisalabad, Multan, Peshawar, Gujranwala, Sialkot, Hyderabad, Quetta, and nationwide.",
     "highlights": [
       "Lahore, Karachi, Islamabad express",
       "Nationwide courier delivery",
@@ -365,7 +365,7 @@
     "category": "delivery",
     "categoryLabel": "Delivery & Shipping",
     "question": "How can I track my medicine order in real time?",
-    "answer": "You can track your order status by clicking the live tracking link sent in your confirmation SMS, entering your Order ID on the website, or messaging our 24/7 WhatsApp helpline (+92 324 4489159).",
+    "answer": "You can track your order status by clicking the live tracking link sent in your confirmation SMS, entering your Order ID on the website, or messaging our 24/7 WhatsApp helpline ([PHONE - CLIENT TO CONFIRM]).",
     "highlights": [
       "SMS tracking link",
       "WhatsApp real-time rider tracking",
@@ -473,7 +473,7 @@
     "category": "delivery",
     "categoryLabel": "Delivery & Shipping",
     "question": "What should I do if my package arrives opened or damaged?",
-    "answer": "Do not accept tampered packages. If a damaged parcel is handed over, photograph the package and notify support within 24 hours on WhatsApp (+92 324 4489159) for an immediate free replacement.",
+    "answer": "Do not accept tampered packages. If a damaged parcel is handed over, photograph the package and notify support within 24 hours on WhatsApp ([PHONE - CLIENT TO CONFIRM]) for an immediate free replacement.",
     "highlights": [
       "Immediate free replacement",
       "Do not accept broken seals",
@@ -713,11 +713,11 @@
     "category": "prescriptions",
     "categoryLabel": "Prescriptions & Safety",
     "question": "Can I consult a pharmacist on Medikart regarding drug interactions?",
-    "answer": "Yes. You can consult our on-duty clinical pharmacist via WhatsApp (+92 324 4489159) to ask about dosage timings, food interactions, and potential contraindications with other medications.",
+    "answer": "Yes. You can consult our on-duty clinical pharmacist via WhatsApp ([PHONE - CLIENT TO CONFIRM]) to ask about dosage timings, food interactions, and potential contraindications with other medications.",
     "highlights": [
       "Free pharmacist consultation",
       "Drug interaction checks",
-      "WhatsApp +92 324 4489159"
+      "WhatsApp [PHONE - CLIENT TO CONFIRM]"
     ]
   },
   {
@@ -1061,7 +1061,7 @@
     "category": "returns",
     "categoryLabel": "Returns & Customer Support",
     "question": "Can I cancel my order before it is dispatched?",
-    "answer": "Yes. You can cancel your order free of charge at any time before partner pharmacy dispatch by messaging our WhatsApp support (+92 324 4489159) with your Order ID.",
+    "answer": "Yes. You can cancel your order free of charge at any time before partner pharmacy dispatch by messaging our WhatsApp support ([PHONE - CLIENT TO CONFIRM]) with your Order ID.",
     "highlights": [
       "100% free cancellation",
       "Cancel prior to dispatch",
@@ -1097,9 +1097,9 @@
     "category": "returns",
     "categoryLabel": "Returns & Customer Support",
     "question": "How can I contact Medikart customer support?",
-    "answer": "You can reach Medikart customer support 24/7 via WhatsApp (+92 324 4489159), email (support@medikart.pk), or through our contact page at https://medikart.pk/contact.",
+    "answer": "You can reach Medikart customer support 24/7 via WhatsApp ([PHONE - CLIENT TO CONFIRM]), email (support@medikart.pk), or through our contact page at https://medikart.pk/contact.",
     "highlights": [
-      "24/7 WhatsApp: +92 324 4489159",
+      "24/7 WhatsApp: [PHONE - CLIENT TO CONFIRM]",
       "Email: support@medikart.pk",
       "Online contact form"
     ]
@@ -1133,9 +1133,9 @@
     "category": "returns",
     "categoryLabel": "Returns & Customer Support",
     "question": "What company owns and operates Medikart?",
-    "answer": "Medikart is owned and operated by Banu Zahrah Pvt Ltd, a registered healthcare and technology company incorporated in Pakistan.",
+    "answer": "Medikart is owned and operated by Medikart, a registered healthcare and technology company incorporated in Pakistan.",
     "highlights": [
-      "Banu Zahrah Pvt Ltd",
+      "Medikart",
       "Registered Pakistani entity",
       "Corporate healthcare network"
     ]
@@ -1157,7 +1157,7 @@
     "category": "returns",
     "categoryLabel": "Returns & Customer Support",
     "question": "How do I file a complaint regarding a delivery delay or rider behavior?",
-    "answer": "You can report any service issue directly to our customer escalation team via WhatsApp (+92 324 4489159) with your Order ID for immediate manager intervention and resolution.",
+    "answer": "You can report any service issue directly to our customer escalation team via WhatsApp ([PHONE - CLIENT TO CONFIRM]) with your Order ID for immediate manager intervention and resolution.",
     "highlights": [
       "Dedicated complaint escalation",
       "Manager intervention",
@@ -1181,9 +1181,9 @@
     "category": "returns",
     "categoryLabel": "Returns & Customer Support",
     "question": "Where is Medikart located, and do you have physical walk-in branches?",
-    "answer": "Medikart's official headquarters and central pharmacy operations hub is located at 92 G1 Johar Town, Lahore, Pakistan. We operate as a nationwide digital healthcare platform partnering with licensed Category-A retail pharmacies across Lahore, Karachi, Islamabad, and Rawalpindi to fulfill and dispatch doorstep orders rapidly.",
+    "answer": "Medikart's official headquarters and central pharmacy operations hub is located at [ADDRESS - CLIENT TO CONFIRM]. We operate as a nationwide digital healthcare platform partnering with licensed Category-A retail pharmacies across Lahore, Karachi, Islamabad, and Rawalpindi to fulfill and dispatch doorstep orders rapidly.",
     "highlights": [
-      "92 G1 Johar Town, Lahore",
+      "[ADDRESS - CLIENT TO CONFIRM]",
       "Digital network model",
       "Category-A partner pharmacies",
       "Doorstep express fulfillment"

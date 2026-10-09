@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Instant Prescription Order & Upload | Medikart Pharmacy Pakistan",
-  description: "Upload your doctor's prescription on Medikart for fast verification by registered pharmacists. Quick pricing, authentic medicine dispatch & 2–4 hr express delivery across Pakistan.",
+  description: "Upload your doctor's prescription on Medikart for fast verification by registered pharmacists. Quick pricing, authentic medicine dispatch and doorstep delivery across Pakistan.",
   keywords: [
     "instant medicine order",
     "upload prescription online Pakistan",

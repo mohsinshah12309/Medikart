@@ -1,4 +1,5 @@
 import React from 'react';
+import { redirect, RedirectType } from 'next/navigation';
 import { getProducts, getCategories, getBanners, getConditions } from '../lib/api';
 import CatalogSection from '../components/CatalogSection';
 import HeroBannerCarousel from '../components/HeroBannerCarousel';
@@ -18,55 +19,10 @@ export async function generateMetadata({ searchParams }) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
 
   if (categoryParam) {
-    try {
-      const categoriesRes = await getCategories();
-      if (categoriesRes && categoriesRes.data) {
-        const category = categoriesRes.data.categories.find(
-          (c) => c._id === categoryParam || c.slug === categoryParam
-        );
-        if (category) {
-          const title = `${category.name} Online in Pakistan | Medikart`;
-          const description = `Buy authentic ${category.name} online in Pakistan. Sourced from licensed partner pharmacies, 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD). Order now on Medikart.`;
-          const canonicalUrl = `${siteUrl}/?category=${category.slug || category._id}`;
-
-          return {
-            title: {
-              absolute: title,
-            },
-            description,
-            keywords: [
-              category.name,
-              `${category.name} Pakistan`,
-              `buy ${category.name} online`,
-              `${category.name} price in Pakistan`,
-              `${category.name} Lahore`,
-              `${category.name} Karachi`,
-              `${category.name} Islamabad`,
-              'online pharmacy Pakistan',
-              'Medikart',
-            ],
-            alternates: {
-              canonical: canonicalUrl,
-            },
-            openGraph: {
-              title,
-              description,
-              url: canonicalUrl,
-              siteName: 'Medikart - Authentic Online Pharmacy',
-              locale: 'en_PK',
-              type: 'website',
-            },
-            twitter: {
-              card: 'summary_large_image',
-              title,
-              description,
-            },
-          };
-        }
-      }
-    } catch (err) {
-      console.error("Failed to load category metadata:", err);
-    }
+    return {
+      title: 'Categories | Medikart Online Pharmacy',
+      robots: { index: false, follow: true },
+    };
   }
 
   if (searchParam) {
@@ -81,8 +37,8 @@ export async function generateMetadata({ searchParams }) {
     };
   }
 
-  const homepageTitle = 'Medikart | Online Pharmacy Pakistan - Genuine Medicines';
-  const homepageDesc = 'Pakistan\'s trusted online pharmacy platform by Banu Zahrah Pvt Ltd. Order 100% authentic medicines sourced from licensed partner pharmacies, Panadol, Augmentin, vitamins, baby care & OTC health essentials with fast 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).';
+  const homepageTitle = 'Medikart | Online Pharmacy in Pakistan - Order Medicines Online';
+  const homepageDesc = 'Order authentic prescription and OTC medicines, upload prescriptions via Instant Order, and set up monthly medicine refills through partner pharmacies in Pakistan with Cash on Delivery (COD).';
 
   return {
     title: {
@@ -111,25 +67,40 @@ export async function generateMetadata({ searchParams }) {
     },
     openGraph: {
       title: homepageTitle,
-      description: 'Pakistan\'s trusted online pharmacy platform by Banu Zahrah Pvt Ltd. Sourcing authentic medicines from licensed partner pharmacies, vitamins, baby care & OTC health essentials with 2–4 hr delivery & Cash on Delivery.',
+      description: homepageDesc,
       url: siteUrl,
-      siteName: 'Medikart - Authentic Online Pharmacy',
+      siteName: 'Medikart',
       locale: 'en_PK',
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title: homepageTitle,
-      description: 'Order authentic prescription & OTC medicines online with fast 2–4 hr delivery and Cash on Delivery across Pakistan.',
+      description: homepageDesc,
     },
   };
 }
 
 export default async function Home({ searchParams }) {
   const resolvedParams = await searchParams;
+
+  // 301 Permanent Redirect for /?category=x to canonical /categories/[slug]
+  if (resolvedParams?.category) {
+    let targetSlug = resolvedParams.category;
+    try {
+      const categoriesRes = await getCategories();
+      const categories = categoriesRes?.data?.categories || [];
+      const matched = categories.find(
+        (c) => c._id === resolvedParams.category || c.slug === resolvedParams.category
+      );
+      if (matched?.slug) targetSlug = matched.slug;
+    } catch (_) {}
+    redirect(`/categories/${targetSlug}`, RedirectType.permanent);
+  }
+
   const queryParams = {
     search: resolvedParams?.search || '',
-    categoryId: resolvedParams?.category || '',
+    categoryId: '',
     page: parseInt(resolvedParams?.page, 10) || 1,
     limit: 24,
   };

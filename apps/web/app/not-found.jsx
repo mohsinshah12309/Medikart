@@ -34,7 +34,7 @@ export default function NotFound() {
               <input
                 type="text"
                 name="search"
-                placeholder="Search all 6,112 medicines..."
+                placeholder="Search medicines & health products..."
                 className="w-full bg-transparent px-3 py-2 text-sm outline-none text-slate-900 placeholder:text-slate-400 font-medium"
               />
               <button
@@ -69,10 +69,10 @@ export default function NotFound() {
               ← Back to Home
             </Link>
             <Link
-              href="/#store-catalog"
+              href="/categories/medicines"
               className="px-6 py-3 bg-white hover:bg-amber-50 active:bg-amber-100 text-slate-900 font-black text-sm rounded-xl transition-all border border-amber-300 shadow-2xs"
             >
-              Browse Products →
+              Browse Medicines →
             </Link>
             <Link
               href="/instant-order"

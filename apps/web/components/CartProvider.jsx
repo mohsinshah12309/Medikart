@@ -111,6 +111,7 @@ export function CartProvider({ children }) {
           ...prevCart,
           {
             productId: prodId,
+            slug: product.slug || "",
             name: product.name,
             price: product.effectivePrice !== undefined ? product.effectivePrice : product.price,
             quantity: qty,

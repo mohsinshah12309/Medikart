@@ -69,7 +69,7 @@ function ProductCardComponent({ product }) {
   return (
     <TiltCard3D className="bg-white border-2 border-yellow-200/90 rounded-2xl overflow-hidden hover:shadow-xl hover:border-[#FFEE45] flex flex-col h-full relative group transition-all duration-200 hover:-translate-y-1 w-full min-h-0">
       {/* Product Image Link Container */}
-      <Link href={`/products/${product._id}`} prefetch={true} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
+      <Link href={`/products/${product.slug || product._id}`} prefetch={true} className="block relative aspect-square bg-[#FAF8F5]/80 flex items-center justify-center p-2.5 overflow-hidden border-b border-yellow-100">
         {/* Discount Badge */}
         {hasDiscount && (
           <span className="absolute top-1.5 left-1.5 z-10 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md tracking-wider uppercase shadow-xs">
@@ -147,7 +147,7 @@ function ProductCardComponent({ product }) {
               {product.genericName}
             </p>
           )}
-          <Link href={`/products/${product._id}`} prefetch={true} className="block">
+          <Link href={`/products/${product.slug || product._id}`} prefetch={true} className="block">
             <h3 className="font-bold text-slate-800 text-xs sm:text-[13px] hover:text-yellow-600 line-clamp-2 min-h-[32px] sm:min-h-[36px] leading-tight transition-colors">
               {product.name}
             </h3>
@@ -186,7 +186,7 @@ function ProductCardComponent({ product }) {
               </span>
             ) : product.isNarcotic ? (
               <Link
-                href={`/products/${product._id}`}
+                href={`/products/${product.slug || product._id}`}
                 className="w-full inline-flex items-center justify-center gap-1 text-center bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] sm:text-xs font-bold py-1.5 rounded-xl border border-amber-300 transition-colors"
               >
                 <span>Rx Required</span>
@@ -218,7 +218,7 @@ function ProductCardComponent({ product }) {
 
             {/* Below: View Details Secondary Button */}
             <Link
-              href={`/products/${product._id}`}
+              href={`/products/${product.slug || product._id}`}
               className="w-full inline-flex items-center justify-center gap-1.5 text-center bg-[#FFEE45]/15 hover:bg-[#FFEE45]/30 text-slate-950 text-[11px] sm:text-xs font-bold py-1.5 px-2 rounded-xl border border-[#FFEE45] hover:border-[#E5D322] transition-all duration-150 shadow-2xs group hover:shadow-xs active:scale-98"
             >
               <Eye className="w-3.5 h-3.5 text-amber-800 group-hover:text-slate-950 transition-colors" />

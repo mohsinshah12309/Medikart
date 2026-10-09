@@ -5,7 +5,7 @@ import faqData from "./faqData.json";
 export const metadata = {
   title: "Frequently Asked Questions (FAQs) | Medikart Online Pharmacy Pakistan",
   description:
-    "Find answers to 100+ questions about online medicine orders, Cash on Delivery, debit/credit cards, 2–4 hr express delivery, prescription verification & 30-day monthly refills in Pakistan.",
+    "Find answers to 100+ questions about online medicine orders, Cash on Delivery, debit/credit cards, doorstep delivery, prescription verification & 30-day monthly refills in Pakistan.",
   keywords: [
     "Medikart FAQs",
     "online pharmacy questions Pakistan",

@@ -74,9 +74,9 @@ export default function ContactPage() {
     }
   };
 
-  const defaultEmail = "contact@medikart.pk";
-  const defaultPhone = "+92 324 4489159";
-  const defaultAddress = "92 G1 Johar Town, Lahore, Pakistan";
+  const defaultEmail = "support@medikart.pk";
+  const defaultPhone = "[PHONE - CLIENT TO CONFIRM]";
+  const defaultAddress = "[ADDRESS - CLIENT TO CONFIRM]";
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-10 pb-16 px-4 sm:px-6">
@@ -204,22 +204,28 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              {/* Live WhatsApp Direct CTA */}
+              {/* WhatsApp Support */}
               <div className="p-5 bg-[#25D366]/10 border-2 border-[#25D366]/40 rounded-2xl flex flex-col gap-2 shadow-xs">
                 <span className="text-xs uppercase tracking-wider font-black text-green-950 flex items-center gap-1.5">
-                  <span>💬</span> Instant WhatsApp Support
+                  <span>💬</span> Patient Support Helpline
                 </span>
                 <p className="text-xs text-green-900 leading-relaxed font-semibold">
-                  Connect immediately with on-duty pharmacists for urgent prescription queries.
+                  Reach our support desk for prescription verification and order inquiries.
                 </p>
-                <a
-                  href="https://wa.me/923244489159?text=Hi%20Medikart%20Support,%20I%20have%20a%20query%20about%20an%20order."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#1faa53] active:bg-[#1b9347] text-white text-xs font-black rounded-xl transition-all shadow-md cursor-pointer active:scale-[0.98]"
-                >
-                  Chat on WhatsApp Now →
-                </a>
+                {content?.contactPhone && !content.contactPhone.includes('CLIENT TO CONFIRM') && !content.contactPhone.includes('4489159') ? (
+                  <a
+                    href={`https://wa.me/${content.contactPhone.replace(/[^0-9]/g, '')}?text=Hi%20Medikart%20Support`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#1faa53] active:bg-[#1b9347] text-white text-xs font-black rounded-xl transition-all shadow-md cursor-pointer active:scale-[0.98]"
+                  >
+                    Chat on WhatsApp Now →
+                  </a>
+                ) : (
+                  <span className="mt-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border border-slate-200">
+                    Helpline: [PHONE - CLIENT TO CONFIRM]
+                  </span>
+                )}
               </div>
 
               {/* Operating Hours */}

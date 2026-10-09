@@ -64,6 +64,12 @@ export async function getCategories() {
   return fetchApi('/categories', { next: { revalidate: 3600, tags: ['categories'] } });
 }
 
+export const getCategory = cache(async (slug) => {
+  return fetchApi(`/categories/${slug}`, {
+    next: { revalidate: 3600, tags: [`category-${slug}`, 'categories'] },
+  });
+});
+
 export async function getDeliveryCharge(city) {
   return fetchApi(`/delivery-charge?city=${encodeURIComponent(city)}`, { cache: 'no-store' });
 }

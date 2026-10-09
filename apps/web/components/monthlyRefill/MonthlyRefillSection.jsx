@@ -407,7 +407,7 @@ export default function MonthlyRefillSection({
                 >
                   {/* Top image link */}
                   <Link
-                    href={`/products/${prod._id}`}
+                    href={`/products/${prod.slug || prod._id}`}
                     className="relative aspect-square w-full bg-[#FAF8F5] rounded-xl flex items-center justify-center p-2 mb-2 overflow-hidden"
                   >
                     <Image
@@ -433,7 +433,7 @@ export default function MonthlyRefillSection({
                   {/* Details */}
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/products/${prod._id}`}
+                      href={`/products/${prod.slug || prod._id}`}
                       className="text-xs font-bold text-slate-900 group-hover:text-amber-700 transition-colors line-clamp-2 leading-tight"
                     >
                       {prod.name}

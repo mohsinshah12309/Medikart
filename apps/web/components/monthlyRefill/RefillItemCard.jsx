@@ -105,7 +105,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
       {/* Left: Product Media & Details */}
       <div className="flex items-center gap-3.5 w-full sm:w-auto flex-1 min-w-0">
         <Link
-          href={`/products/${item.productId}`}
+          href={`/products/${item.productSlug || item.slug || item.productId}`}
           className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-[#FAF8F5] border border-amber-100 flex items-center justify-center p-1.5 flex-shrink-0 overflow-hidden group"
         >
           <Image
@@ -126,7 +126,7 @@ function RefillItemCardComponent({ item, onUpdateQuantity, onRemove }) {
         <div className="flex-1 min-w-0 text-left">
           <div className="flex items-center gap-1.5 flex-wrap">
             <Link
-              href={`/products/${item.productId}`}
+              href={`/products/${item.productSlug || item.slug || item.productId}`}
               className="text-sm font-black text-slate-900 hover:text-amber-700 transition-colors line-clamp-1 leading-snug"
             >
               {item.name}

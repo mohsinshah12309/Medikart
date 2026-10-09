@@ -463,43 +463,41 @@ export default function FaqClient() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Card 1: WhatsApp */}
-          <a
-            href="https://wa.me/923244489159?text=Hi%20Medikart%20Support,%20I%20have%20a%20question%20about%20your%20services."
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Card 1: Support Desk */}
+          <Link
+            href="/contact"
             className="p-5 bg-white rounded-2xl border-2 border-[#25D366]/40 hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all shadow-xs flex flex-col items-center text-center gap-3 group cursor-pointer"
           >
             <div className="w-12 h-12 rounded-2xl bg-[#25D366] text-white flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition-transform">
               💬
             </div>
             <div>
-              <h4 className="font-black text-slate-950 text-sm">WhatsApp Live Chat</h4>
-              <p className="text-xs text-slate-500 mt-0.5">Average reply in minutes</p>
+              <h4 className="font-black text-slate-950 text-sm">Customer Support</h4>
+              <p className="text-xs text-slate-500 mt-0.5">Contact via online desk</p>
             </div>
             <span className="text-xs font-black text-[#15803d] flex items-center gap-1 mt-auto">
-              <span>Chat Now</span>
+              <span>Contact Desk</span>
               <span>→</span>
             </span>
-          </a>
+          </Link>
 
           {/* Card 2: Phone Helpline */}
-          <a
-            href="tel:+923244489159"
+          <Link
+            href="/contact"
             className="p-5 bg-white rounded-2xl border-2 border-yellow-300 hover:border-yellow-500 hover:bg-yellow-50/50 transition-all shadow-xs flex flex-col items-center text-center gap-3 group cursor-pointer"
           >
             <div className="w-12 h-12 rounded-2xl bg-yellow-400 text-slate-950 flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition-transform">
               📞
             </div>
             <div>
-              <h4 className="font-black text-slate-950 text-sm">Direct Phone Helpline</h4>
-              <p className="text-xs text-slate-500 mt-0.5">+92 324 4489159</p>
+              <h4 className="font-black text-slate-950 text-sm">Phone Helpline</h4>
+              <p className="text-xs text-slate-500 mt-0.5">[PHONE - CLIENT TO CONFIRM]</p>
             </div>
             <span className="text-xs font-black text-amber-900 flex items-center gap-1 mt-auto">
-              <span>Call Helpline</span>
+              <span>View Contact Info</span>
               <span>→</span>
             </span>
-          </a>
+          </Link>
 
           {/* Card 3: Contact Form */}
           <Link

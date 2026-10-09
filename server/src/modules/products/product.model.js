@@ -26,6 +26,7 @@ const productImageSchema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
+    slug: { type: String, trim: true, unique: true, sparse: true },
     genericName: { type: String, default: "" },
     description: { type: String, default: "" },
     keywords: [{ type: String, trim: true }],

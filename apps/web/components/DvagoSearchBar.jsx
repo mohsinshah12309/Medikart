@@ -315,7 +315,7 @@ export default function DvagoSearchBar({ className = "" }) {
       >
         {/* Clickable Product Info */}
         <Link
-          href={`/products/${prod._id}`}
+          href={`/products/${prod.slug || prod._id}`}
           prefetch={true}
           onClick={() => {
             saveRecentSearch(prod.name);
@@ -373,7 +373,7 @@ export default function DvagoSearchBar({ className = "" }) {
             </span>
           ) : prod.isNarcotic ? (
             <Link
-              href={`/products/${prod._id}`}
+              href={`/products/${prod.slug || prod._id}`}
               onClick={() => setIsOpen(false)}
               className="text-[10px] font-extrabold text-amber-900 bg-amber-100 border border-amber-300 px-2 py-1.5 rounded-xl hover:bg-amber-200 transition-colors"
             >
@@ -568,7 +568,7 @@ export default function DvagoSearchBar({ className = "" }) {
                         {suggestions.matchingCategories.map((cat) => (
                           <Link
                             key={cat._id}
-                            href={`/?category=${encodeURIComponent(cat.slug || cat._id)}#store-catalog`}
+                            href={`/categories/${encodeURIComponent(cat.slug || cat._id)}`}
                             onClick={() => setIsOpen(false)}
                             className="inline-flex items-center gap-2 px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-950 rounded-xl text-xs font-bold border border-amber-200 transition-colors"
                           >

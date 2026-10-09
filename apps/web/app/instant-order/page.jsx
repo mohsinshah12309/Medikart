@@ -521,7 +521,7 @@ export default function InstantOrderPage() {
                 onChange={handleInputChange}
                 required
                 disabled={otpVerified || submitting}
-                placeholder="e.g. 03244489159"
+                placeholder="e.g. 03001234567"
                 className="border-2 border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400/20 focus:border-yellow-500 transition-all disabled:opacity-70 hover:border-yellow-400"
               />
             </div>

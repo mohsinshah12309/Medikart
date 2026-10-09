@@ -233,15 +233,9 @@ export default function PrivacyPolicyPage() {
               </a>
             </p>
             <p>
-              Support Hotline / WhatsApp:{" "}
-              <a
-                href="https://wa.me/923244489159"
-                className="text-amber-800 font-bold hover:underline"
-              >
-                +92 324 4489159
-              </a>
+              Support Hotline: [PHONE - CLIENT TO CONFIRM]
             </p>
-            <p>Address: 92 G1 Johar Town, Lahore, Pakistan</p>
+            <p>Address: [ADDRESS - CLIENT TO CONFIRM]</p>
           </div>
         </section>
 

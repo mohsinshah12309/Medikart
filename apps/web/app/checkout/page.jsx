@@ -114,14 +114,12 @@ export default function CheckoutPage() {
               </p>
             </div>
           </div>
-          <a
-            href="https://wa.me/923244489159?text=Hi%20Medikart,%20I%20had%20an%20issue%20during%20checkout"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/contact"
             className="shrink-0 text-xs bg-red-100 hover:bg-red-200 text-red-900 font-bold px-3 py-1.5 rounded-xl border border-red-300 transition-colors text-center"
           >
-            Need Help? WhatsApp Support →
-          </a>
+            Need Help? Contact Support →
+          </Link>
         </div>
       )}
 
@@ -263,7 +261,7 @@ export default function CheckoutPage() {
                   onChange={handleInputChange}
                   required
                   disabled={otpVerified || submitting}
-                  placeholder="e.g. 03244489159"
+                  placeholder="e.g. 03001234567"
                   className="border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/40 focus:border-yellow-500 transition-all disabled:opacity-70"
                 />
               </div>

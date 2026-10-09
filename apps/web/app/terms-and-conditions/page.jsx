@@ -153,9 +153,9 @@ export default function TermsAndConditionsPage() {
           </p>
           <div className="bg-yellow-50/70 rounded-2xl p-4 border-2 border-yellow-200 text-xs space-y-1">
             <p><strong>Medikart Customer Legal Support</strong></p>
-            <p>Official Address: 92 G1 Johar Town, Lahore, Pakistan</p>
+            <p>Official Address: [ADDRESS - CLIENT TO CONFIRM]</p>
             <p>Email: <a href="mailto:support@medikart.pk" className="text-amber-800 font-bold hover:underline">support@medikart.pk</a></p>
-            <p>Helpline: <a href="https://wa.me/923244489159" className="text-amber-800 font-bold hover:underline">+92 324 4489159</a></p>
+            <p>Helpline: [PHONE - CLIENT TO CONFIRM]</p>
           </div>
         </section>
 

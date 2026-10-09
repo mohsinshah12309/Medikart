@@ -67,7 +67,7 @@ export const metadata = {
     default: 'Medikart | Online Pharmacy Pakistan - Fast Delivery',
     template: '%s | Medikart Online Pharmacy Pakistan',
   },
-  description: 'Pakistan\'s trusted online pharmacy platform by Banu Zahrah Pvt Ltd. Order 100% authentic medicines sourced from licensed partner pharmacies, Panadol, Augmentin, vitamins, baby care & OTC health essentials with fast 2–4 hr rapid delivery in Lahore, Karachi, Islamabad & nationwide Cash on Delivery (COD).',
+  description: 'Medikart is an online pharmacy platform connecting customers with licensed partner pharmacies in Pakistan. Order authentic medicines, vitamins, baby care, and healthcare essentials with doorstep delivery and Cash on Delivery.',
   keywords: [
     'online pharmacy Pakistan',
     'buy medicine online Pakistan',
@@ -109,7 +109,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery Pakistan',
-    description: 'Order 100% genuine medicines, Panadol, Augmentin, vitamins, baby care & health essentials with fast 2–4 hr doorstep delivery across Pakistan.',
+    description: 'Order authentic medicines, vitamins, baby care and healthcare essentials with doorstep delivery and Cash on Delivery across Pakistan.',
     url: 'https://medikart.pk',
     siteName: 'Medikart - Authentic Online Pharmacy',
     images: [
@@ -126,7 +126,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Medikart - Authentic Online Pharmacy & Medicine Delivery Pakistan',
-    description: 'Pakistan\'s trusted online pharmacy for authentic prescription & OTC medicines with 2–4 hr rapid delivery.',
+    description: 'Pakistan\'s trusted online pharmacy for authentic prescription and OTC medicines with doorstep delivery.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -144,10 +144,10 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
-  let contactPhone = '923244489159';
+  let contactPhone = '[PHONE - CLIENT TO CONFIRM]';
   let contactEmail = 'support@medikart.pk';
-  let contactAddress = '92 G1 Johar Town, Lahore, Pakistan';
-  let aboutText = 'Medikart connects customers with licensed partner pharmacies across Pakistan to deliver 100% genuine prescription and OTC medicines, vitamins, and healthcare essentials with 2–4 hr express delivery and nationwide Cash on Delivery.';
+  let contactAddress = '[ADDRESS - CLIENT TO CONFIRM]';
+  let aboutText = 'Medikart connects customers with licensed partner pharmacies across Pakistan to deliver genuine prescription and OTC medicines, vitamins, and healthcare essentials with doorstep delivery and nationwide Cash on Delivery.';
   let categories = [];
 
   const baseUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
@@ -160,10 +160,10 @@ export default async function RootLayout({ children }) {
     if (contentRes && contentRes.ok) {
       const body = await contentRes.json();
       if (body?.data) {
-        if (body.data.contactPhone) contactPhone = body.data.contactPhone;
+        if (body.data.contactPhone && !body.data.contactPhone.includes('4489159')) contactPhone = body.data.contactPhone;
         if (body.data.contactEmail) contactEmail = body.data.contactEmail;
-        if (body.data.contactAddress) contactAddress = body.data.contactAddress;
-        if (body.data.aboutText) aboutText = body.data.aboutText;
+        if (body.data.contactAddress && !body.data.contactAddress.includes('Johar Town')) contactAddress = body.data.contactAddress;
+        if (body.data.aboutText && !body.data.aboutText.includes('Banu Zahrah') && !body.data.aboutText.includes('2–4')) aboutText = body.data.aboutText;
       }
     }
 
@@ -184,36 +184,28 @@ export default async function RootLayout({ children }) {
     '@type': ['Pharmacy', 'MedicalBusiness', 'LocalBusiness'],
     'name': 'Medikart Online Pharmacy Pakistan',
     'alternateName': 'Medikart Pakistan',
-    'legalName': 'Banu Zahrah Pvt Ltd',
     'url': 'https://medikart.pk',
     'logo': 'https://medikart.pk/icon.png',
     'image': 'https://medikart.pk/og-image.png',
     'description': aboutText,
-    'telephone': '+923244489159',
+    'telephone': contactPhone,
     'email': contactEmail,
     'priceRange': 'PKR',
     'currenciesAccepted': 'PKR',
     'paymentAccepted': 'Cash on Delivery, Credit Card, Debit Card',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': '92 G1 Johar Town',
-      'addressLocality': 'Lahore',
-      'addressRegion': 'Punjab',
-      'postalCode': '54770',
+      'streetAddress': contactAddress,
+      'addressLocality': 'Pakistan',
       'addressCountry': 'PK'
     },
     'areaServed': {
       '@type': 'Country',
       'name': 'Pakistan'
     },
-    'parentOrganization': {
-      '@type': 'Organization',
-      'name': 'Banu Zahrah Pvt Ltd',
-      'legalName': 'Banu Zahrah Pvt Ltd'
-    },
     'contactPoint': {
       '@type': 'ContactPoint',
-      'telephone': '+923244489159',
+      'telephone': contactPhone,
       'contactType': 'customer service',
       'areaServed': 'PK',
       'availableLanguage': ['English', 'Urdu']

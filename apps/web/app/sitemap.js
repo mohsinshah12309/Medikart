@@ -86,12 +86,6 @@ export default async function sitemap() {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/press`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
       url: `${baseUrl}/return-refund-policy`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
@@ -111,20 +105,20 @@ export default async function sitemap() {
     },
   ];
 
-  // Category dynamic URLs (filtered on home page) - 0.9 priority, daily changeFrequency
+  // Category dynamic crawlable URLs - 0.9 priority, daily changeFrequency
   categories.forEach((cat) => {
     sitemapEntries.push({
-      url: `${baseUrl}/?category=${cat.slug || cat._id}`,
+      url: `${baseUrl}/categories/${cat.slug || cat._id}`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
     });
   });
 
-  // Product dynamic URLs - 0.85 priority, weekly changeFrequency
+  // Product dynamic URLs using deterministic clean slugs - 0.85 priority, weekly changeFrequency
   products.forEach((prod) => {
     sitemapEntries.push({
-      url: `${baseUrl}/products/${prod._id}`,
+      url: `${baseUrl}/products/${prod.slug || prod._id}`,
       lastModified: prod.updatedAt ? new Date(prod.updatedAt) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.85,

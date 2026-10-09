@@ -10,7 +10,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hello! I am Medi, your personal AI assistant at Medikart 🦉💊.\n\nI can help you with:\n• Finding medicines, checking live prices & stock\n• Safe Over-The-Counter (OTC) symptom advice\n• Delivery timelines (2–4 hrs local, 24–48 hrs nationwide)\n• Payment methods (COD, Online Cards & Wallets)\n• Return & Refund Policy and Store FAQs\n• Uploading prescriptions via [Instant Order](/instant-order) & [Monthly Refills](/refill)\n\nHow can I help you today?\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
+      content: 'Hello! I am Medi, your personal AI assistant at Medikart 🦉💊.\n\nI can help you with:\n• Finding medicines, checking live prices & stock\n• Safe Over-The-Counter (OTC) symptom advice\n• Doorstep delivery information\n• Payment methods (Cash on Delivery & Online Card Payments)\n• Return & Refund Policy and Store FAQs\n• Uploading prescriptions via [Instant Order](/instant-order) & [Monthly Refills](/refill)\n\nHow can I help you today?\n\nDisclaimer: I am an AI, not a doctor. Suggestions are for informational purposes only. Consult a physician for medical advice.',
       suggestedProducts: []
     }
   ]);
@@ -69,7 +69,7 @@ export default function ChatbotWidget() {
       console.error("Chatbot error:", err);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `⚠️ I'm having trouble connecting right now. Please try asking again in a moment, or speak directly with our licensed pharmacist on WhatsApp: +92 324 4489159.`
+        content: `⚠️ I'm having trouble connecting right now. Please try asking again in a moment, or visit our [Contact page](/contact) for direct support.`
       }]);
     } finally {
       setLoading(false);

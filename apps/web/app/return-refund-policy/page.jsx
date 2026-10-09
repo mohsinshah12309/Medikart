@@ -396,25 +396,23 @@ export default function ReturnRefundPolicyPage() {
             </span>
           </Link>
 
-          {/* Card 2: WhatsApp */}
-          <a
-            href="https://wa.me/923244489159?text=Hi%20Medikart%20Support,%20I%20have%20a%20question%20about%20the%20Return%20and%20Refund%20policy."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-5 bg-white rounded-2xl border-2 border-[#25D366]/40 hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all shadow-xs flex flex-col items-center text-center gap-3 group cursor-pointer"
+          {/* Card 2: Customer Support Desk */}
+          <Link
+            href="/contact"
+            className="p-5 bg-white rounded-2xl border-2 border-yellow-300 hover:border-yellow-500 hover:bg-yellow-50/50 transition-all shadow-xs flex flex-col items-center text-center gap-3 group cursor-pointer"
           >
-            <div className="w-12 h-12 rounded-2xl bg-[#25D366] text-white flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-yellow-400 text-slate-950 flex items-center justify-center text-xl shadow-xs group-hover:scale-110 transition-transform">
               💬
             </div>
             <div>
-              <h4 className="font-black text-slate-950 text-sm">WhatsApp Live Chat</h4>
-              <p className="text-xs text-slate-500 mt-0.5">Instant support desk</p>
+              <h4 className="font-black text-slate-950 text-sm">Customer Support Desk</h4>
+              <p className="text-xs text-slate-500 mt-0.5">Assistance with returns &amp; refunds</p>
             </div>
-            <span className="text-xs font-black text-[#15803d] flex items-center gap-1 mt-auto">
-              <span>Chat on WhatsApp</span>
+            <span className="text-xs font-black text-amber-900 flex items-center gap-1 mt-auto">
+              <span>Contact Support</span>
               <span>→</span>
             </span>
-          </a>
+          </Link>
 
           {/* Card 3: Contact Form */}
           <Link

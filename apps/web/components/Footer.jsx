@@ -75,9 +75,9 @@ function WhatsAppIcon({ className = "w-4 h-4" }) {
  */
 export default function Footer({
   initialCategories = [],
-  contactPhone = "+92 324 4489159",
+  contactPhone = "[PHONE - CLIENT TO CONFIRM]",
   contactEmail = "support@medikart.pk",
-  address = "92 G1 Johar Town, Lahore, Pakistan",
+  address = "[ADDRESS - CLIENT TO CONFIRM]",
 }) {
   const [categories, setCategories] = useState(initialCategories);
   const pathname = usePathname();
@@ -127,7 +127,7 @@ export default function Footer({
     }
   };
 
-  const cleanPhone = contactPhone ? contactPhone.replace(/[^0-9]/g, "") : "";
+  const cleanPhone = contactPhone && !contactPhone.includes("CLIENT TO CONFIRM") ? contactPhone.replace(/[^0-9]/g, "") : "";
 
   // Social Profile URLs (Placeholders flagged for client confirmation)
   const socialLinks = [
@@ -163,7 +163,6 @@ export default function Footer({
     { label: "Instant Order", href: "/instant-order", badge: "Fast" },
     { label: "Health & Medicine Blogs", href: "/blogs" },
     { label: "Prescription Refill", href: "/refill" },
-    { label: "Press & Partnerships", href: "/press" },
     { label: "About Medikart", href: "/about" },
     { label: "Contact Us", href: "/contact" },
   ];
@@ -253,14 +252,13 @@ export default function Footer({
               <ul className="flex flex-col gap-2 w-full text-xs sm:text-sm">
                 {displayCategories.map((cat) => (
                   <li key={cat._id || cat.slug}>
-                    <button
-                      type="button"
-                      onClick={(e) => handleCategoryClick(cat._id, e)}
-                      className="text-left font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all flex items-center gap-1.5 cursor-pointer py-0.5"
+                    <Link
+                      href={`/categories/${cat.slug || cat._id}`}
+                      className="text-left font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all flex items-center gap-1.5 py-0.5"
                     >
                       <span className="text-amber-600 text-[10px] font-black">›</span>
                       <span className="line-clamp-1">{cat.name}</span>
-                    </button>
+                    </Link>
                   </li>
                 ))}
                 
@@ -428,7 +426,7 @@ export default function Footer({
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 pt-2 border-t border-slate-100">
             {/* Copyright */}
             <div className="text-center md:text-left font-medium">
-              <p>© {new Date().getFullYear()} Medikart. All rights reserved. <span className="text-slate-400 font-normal">A project by Banu Zahrah Pvt Ltd.</span></p>
+              <p>© {new Date().getFullYear()} Medikart. All rights reserved.</p>
               <p className="text-[11px] text-slate-400 mt-0.5">
                 Pakistan's digital healthcare network. Powered by licensed partner pharmacies.
               </p>

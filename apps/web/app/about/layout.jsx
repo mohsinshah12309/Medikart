@@ -1,6 +1,6 @@
 export const metadata = {
   title: "About Us | Online Pharmacy Platform Pakistan | Medikart",
-  description: "Learn about Medikart, a digital healthcare initiative by Banu Zahrah Pvt Ltd partnered with licensed retail pharmacies. Supplying 100% authentic prescription medicines, vitamins & OTC remedies with 2–4 hr doorstep delivery across Pakistan.",
+  description: "Learn about Medikart, an online healthcare platform partnered with licensed retail pharmacies across Pakistan. Supplying authentic prescription medicines, vitamins, and healthcare essentials with doorstep delivery.",
   keywords: [
     "about Medikart",
     "online pharmacy Pakistan",
@@ -8,15 +8,14 @@ export const metadata = {
     "authentic medicines Lahore",
     "pharmacy network Karachi",
     "authentic medicine delivery",
-    "Banu Zahrah Medikart",
     "Medikart Pakistan"
   ],
   alternates: {
     canonical: "https://medikart.pk/about",
   },
   openGraph: {
-    title: "About Medikart — Online Healthcare Platform by Banu Zahrah Pvt Ltd",
-    description: "Discover Medikart's mission: 100% authentic medicines sourced from licensed partner pharmacies with 2–4 hr rapid delivery across Pakistan.",
+    title: "About Medikart — Online Healthcare Platform Pakistan",
+    description: "Discover Medikart's mission: authentic medicines sourced from licensed partner pharmacies with nationwide doorstep delivery across Pakistan.",
     url: "https://medikart.pk/about",
     siteName: "Medikart - Authentic Online Pharmacy",
     locale: "en_PK",

@@ -5,7 +5,7 @@ import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { Sparkles, ArrowRight, Stethoscope } from "lucide-react";
 
-export default function RelatedProducts({ currentProduct }) {
+export default function RelatedProducts({ currentProduct, primaryCategory }) {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -84,7 +84,7 @@ export default function RelatedProducts({ currentProduct }) {
           </div>
 
           <Link
-            href="/#store-catalog"
+            href={primaryCategory ? `/categories/${primaryCategory.slug || primaryCategory._id}` : "/categories/medicines"}
             className="btn-amber-gradient px-4 py-2 rounded-xl text-slate-950 text-xs font-black uppercase tracking-wider transition-all shadow-xs flex items-center gap-1.5 self-start sm:self-auto group"
           >
             <span>Explore All</span>

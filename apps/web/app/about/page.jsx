@@ -45,7 +45,7 @@ export default function AboutPage() {
     loadData();
   }, []);
 
-  const defaultText = "Welcome to Medikart, a healthcare initiative by Banu Zahrah Pvt Ltd connecting patients with Pakistan's trusted digital pharmacy network and healthcare delivery platform. We are committed to solving medicine accessibility by providing 100% authentic prescription medicines, OTC remedies, mother & baby essentials, and healthcare supplies delivered safely to your doorstep.\n\nEvery medication on Medikart is sourced from licensed pharmaceutical distributors and partner retail pharmacies. Orders are reviewed and fulfilled with care and strict adherence to medicine safety standards.";
+  const defaultText = "Welcome to Medikart, a healthcare initiative connecting patients with Pakistan's trusted digital pharmacy network and healthcare delivery platform. We are committed to solving medicine accessibility by providing 100% authentic prescription medicines, OTC remedies, mother & baby essentials, and healthcare supplies delivered safely to your doorstep.\n\nEvery medication on Medikart is sourced from licensed pharmaceutical distributors and partner retail pharmacies. Orders are reviewed and fulfilled with care and strict adherence to medicine safety standards.";
 
   const formattedProductCount = totalProducts.toLocaleString();
 
@@ -227,13 +227,13 @@ export default function AboutPage() {
 
                     <tr className="hover:bg-yellow-50/60 transition-colors">
                       <td className="py-3.5 px-5 font-bold text-slate-950 flex items-center gap-2">
-                        <span>❄️</span> Cold Chain Storage
+                        <span>🏛️</span> Pharmacy Storage Standards
                       </td>
-                      <td className="py-3.5 px-5 text-slate-800 font-semibold">2°C – 8°C Monitored Refrigeration with 24/7 Power Redundancy</td>
-                      <td className="py-3.5 px-5 text-slate-600">Digital temperature loggers + insulated thermal packs during dispatch</td>
+                      <td className="py-3.5 px-5 text-slate-800 font-semibold">Climate-controlled pharmaceutical storage per regulations</td>
+                      <td className="py-3.5 px-5 text-slate-600">Standardized partner storage adhering to DRAP guidelines</td>
                       <td className="py-3.5 px-5">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-300">
-                          WHO Good Storage
+                          Pharmacy Standards
                         </span>
                       </td>
                     </tr>
@@ -379,8 +379,8 @@ export default function AboutPage() {
 
       {/* Subtle Corporate Entity Footer Note */}
       <div className="text-center text-xs text-slate-500 font-medium space-y-1">
-        <p>Medikart is a digital healthcare platform by Banu Zahrah Pvt Ltd, operated in partnership with licensed pharmacies across Pakistan.</p>
-        <p className="text-slate-500">Official Headquarters &amp; Operations Center: <a href="https://www.google.com/maps/search/?api=1&query=92+G1+Johar+Town%2C+Lahore%2C+Pakistan" target="_blank" rel="noopener noreferrer" title="Find Medikart location on Google Maps" className="text-slate-700 font-bold hover:text-amber-800 hover:underline underline-offset-2 transition-colors">92 G1 Johar Town, Lahore, Pakistan ↗</a></p>
+        <p>Medikart is a digital healthcare platform operated in partnership with licensed pharmacies across Pakistan.</p>
+        <p className="text-slate-500">Official Operations: [ADDRESS - CLIENT TO CONFIRM]</p>
       </div>
     </div>
   );
