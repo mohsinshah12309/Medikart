@@ -384,6 +384,9 @@ if (require.main === module) {
     server = app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server is running on port ${PORT} (0.0.0.0)`);
     });
+    // High-performance keepalive tuning behind Nginx/Cloudflare reverse proxies
+    server.keepAliveTimeout = 65000;
+    server.headersTimeout = 66000;
     // Phase 19: Register cron jobs, cache warmer and seeds ONLY on primary cluster worker (instance 0)
     // to prevent duplicate executions in PM2 cluster mode across multiple CPU cores.
     const isPrimaryWorker = !process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === "0";

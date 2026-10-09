@@ -66,6 +66,7 @@ productSchema.index({ categoryIds: 1 });
 productSchema.index({ genericName: 1 });
 productSchema.index({ keywords: 1 });
 productSchema.index({ tags: 1 });
+productSchema.index({ slug: 1, active: 1 });
 productSchema.index({ active: 1, name: 1 });
 productSchema.index({ active: 1, categoryIds: 1, name: 1 });
 productSchema.index({ active: 1, isNarcotic: 1, createdAt: -1 });
