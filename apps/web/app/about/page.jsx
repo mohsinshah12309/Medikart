@@ -380,7 +380,7 @@ export default function AboutPage() {
       {/* Subtle Corporate Entity Footer Note */}
       <div className="text-center text-xs text-slate-500 font-medium space-y-1">
         <p>Medikart is a digital healthcare platform operated in partnership with licensed pharmacies across Pakistan.</p>
-        <p className="text-slate-500">Official Operations: [ADDRESS - CLIENT TO CONFIRM]</p>
+        <p className="text-slate-500">Official Operations: 92 G1 Johar Town, Lahore, Pakistan</p>
       </div>
     </div>
   );

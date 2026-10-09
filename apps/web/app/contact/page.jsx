@@ -76,7 +76,7 @@ export default function ContactPage() {
 
   const defaultEmail = "support@medikart.pk";
   const defaultPhone = "+92 324 4489159";
-  const defaultAddress = "[ADDRESS - CLIENT TO CONFIRM]";
+  const defaultAddress = "92 G1 Johar Town, Lahore, Pakistan";
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-10 pb-16 px-4 sm:px-6">

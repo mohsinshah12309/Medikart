@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { triggerCategorySelect, triggerCatalogSearch, scrollToCatalog } from '../lib/catalogEvents';
 import MonthlyRefillSection from './monthlyRefill/MonthlyRefillSection';
+import HeroBannerCarousel from './HeroBannerCarousel';
 import { usePwaInstall } from './pwa/PwaInstallProvider';
 
 const DEFAULT_CITIES = ['Lahore'];
@@ -13,7 +14,7 @@ const DEFAULT_CITIES = ['Lahore'];
 let cachedCities = null;
 let cachedTrending = null;
 
-export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [], initialProducts = [] }) {
+export default function OfficialHeroSection({ initialCity = 'Lahore', categories = [], initialProducts = [], initialBanners = [] }) {
   const { isInstalled, triggerInstall } = usePwaInstall();
   const [selectedCity, setSelectedCity] = useState(initialCity);
   const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
@@ -608,6 +609,13 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────────────
+          2.4. HERO PROMOTIONAL BANNER CAROUSEL (Smooth Animated Cards)
+      ────────────────────────────────────────────────────────────────────── */}
+      <div className="w-full relative z-10">
+        <HeroBannerCarousel initialBanners={initialBanners} />
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────

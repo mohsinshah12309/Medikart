@@ -2,7 +2,6 @@ import React from 'react';
 import { redirect, RedirectType } from 'next/navigation';
 import { getProducts, getCategories, getBanners, getConditions } from '../lib/api';
 import CatalogSection from '../components/CatalogSection';
-import HeroBannerCarousel from '../components/HeroBannerCarousel';
 import OfficialHeroSection from '../components/OfficialHeroSection';
 import CategoryQuickLinks from '../components/CategoryQuickLinks';
 import CareByConditionSection from '../components/CareByConditionSection';
@@ -140,17 +139,13 @@ export default async function Home({ searchParams }) {
         {/* 1. Care By Condition Section (Prominently placed at the top) */}
         <CareByConditionSection initialConditions={conditions} />
 
-        {/* 2. Official Master Brand Hero Section (Contains Integrated Monthly Medicine Refill) */}
+        {/* 2. Official Master Brand Hero Section (Contains Prescription Banner, Animated Carousel, and Monthly Medicine Refill) */}
         <OfficialHeroSection
           initialCity="Lahore"
           categories={categories}
           initialProducts={products.slice(0, 6)}
+          initialBanners={heroBanners}
         />
-
-        {/* 3. Hero Promotional Banner Carousel (Full Width) */}
-        {heroBanners && heroBanners.length > 0 && (
-          <HeroBannerCarousel initialBanners={heroBanners} />
-        )}
 
         {/* 4. AI Dual Promotional Banners: Baby Nutrition & Refreshment Hydration (Dvago style) */}
         <NutritionRefreshmentBanners />

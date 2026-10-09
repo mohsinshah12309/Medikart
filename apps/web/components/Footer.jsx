@@ -77,7 +77,7 @@ export default function Footer({
   initialCategories = [],
   contactPhone = "+92 324 4489159",
   contactEmail = "support@medikart.pk",
-  address = "[ADDRESS - CLIENT TO CONFIRM]",
+  address = "92 G1 Johar Town, Lahore, Pakistan",
 }) {
   const [categories, setCategories] = useState(initialCategories);
   const pathname = usePathname();
