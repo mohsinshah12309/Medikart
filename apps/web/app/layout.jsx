@@ -144,7 +144,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   // Fetch settings content to get contact and about details dynamically
-  let contactPhone = '[PHONE - CLIENT TO CONFIRM]';
+  let contactPhone = '+92 324 4489159';
   let contactEmail = 'support@medikart.pk';
   let contactAddress = '[ADDRESS - CLIENT TO CONFIRM]';
   let aboutText = 'Medikart connects customers with licensed partner pharmacies across Pakistan to deliver genuine prescription and OTC medicines, vitamins, and healthcare essentials with doorstep delivery and nationwide Cash on Delivery.';
@@ -160,7 +160,7 @@ export default async function RootLayout({ children }) {
     if (contentRes && contentRes.ok) {
       const body = await contentRes.json();
       if (body?.data) {
-        if (body.data.contactPhone && !body.data.contactPhone.includes('4489159')) contactPhone = body.data.contactPhone;
+        if (body.data.contactPhone) contactPhone = body.data.contactPhone;
         if (body.data.contactEmail) contactEmail = body.data.contactEmail;
         if (body.data.contactAddress && !body.data.contactAddress.includes('Johar Town')) contactAddress = body.data.contactAddress;
         if (body.data.aboutText && !body.data.aboutText.includes('Banu Zahrah') && !body.data.aboutText.includes('2–4')) aboutText = body.data.aboutText;

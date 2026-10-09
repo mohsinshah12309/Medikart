@@ -75,7 +75,7 @@ export default function ContactPage() {
   };
 
   const defaultEmail = "support@medikart.pk";
-  const defaultPhone = "[PHONE - CLIENT TO CONFIRM]";
+  const defaultPhone = "+92 324 4489159";
   const defaultAddress = "[ADDRESS - CLIENT TO CONFIRM]";
 
   return (

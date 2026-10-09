@@ -75,7 +75,7 @@ function WhatsAppIcon({ className = "w-4 h-4" }) {
  */
 export default function Footer({
   initialCategories = [],
-  contactPhone = "[PHONE - CLIENT TO CONFIRM]",
+  contactPhone = "+92 324 4489159",
   contactEmail = "support@medikart.pk",
   address = "[ADDRESS - CLIENT TO CONFIRM]",
 }) {
