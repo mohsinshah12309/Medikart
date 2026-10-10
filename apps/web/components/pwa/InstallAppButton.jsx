@@ -104,8 +104,17 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
         } ${className}`}
         aria-label="Download Medikart App"
       >
-        <Smartphone className="w-3 h-3 text-slate-950" />
-        <span>{isInstalled ? "Installed" : "App"}</span>
+        {isInstalled ? (
+          <>
+            <Check className="w-3 h-3 text-emerald-600" />
+            <span>Installed</span>
+          </>
+        ) : (
+          <>
+            <Download className="w-3 h-3 text-slate-950" />
+            <span>Download App</span>
+          </>
+        )}
       </button>
     );
   }

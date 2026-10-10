@@ -41,11 +41,13 @@ export function PwaInstallProvider({ children }) {
 
     // 2. Check if already running in standalone mode (installed PWA)
     const checkStandalone = () => {
+      if (typeof window === "undefined") return;
       const isStandaloneMode =
-        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+        (window.matchMedia && window.matchMedia("(display-mode: fullscreen)").matches) ||
         window.navigator.standalone === true ||
-        document.referrer.includes("android-app://");
-      setIsInstalled(isStandaloneMode);
+        (document.referrer && document.referrer.startsWith("android-app://"));
+      setIsInstalled(Boolean(isStandaloneMode));
     };
     checkStandalone();
 
