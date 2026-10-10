@@ -98,12 +98,14 @@ export const metadata = {
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
       { url: '/icon.png', sizes: '48x48', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: [{ url: '/favicon.ico', sizes: '48x48' }],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
@@ -224,7 +226,7 @@ export default async function RootLayout({ children }) {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     'name': 'Medikart',
-    'alternateName': 'Medikart Pharmacy',
+    'alternateName': ['Medikart Pakistan', 'medikart.pk', 'Medikart Online Pharmacy'],
     'url': 'https://medikart.pk',
     'potentialAction': {
       '@type': 'SearchAction',
@@ -232,6 +234,29 @@ export default async function RootLayout({ children }) {
       'query-input': 'required name=search_term_string'
     }
   };
+
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    'name': 'Medikart',
+    'alternateName': 'Medikart Pakistan',
+    'url': 'https://medikart.pk/',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': 'https://medikart.pk/icon-512.png',
+      'width': 512,
+      'height': 512
+    },
+    'image': 'https://medikart.pk/icon-512.png',
+    'sameAs': [
+      'https://www.facebook.com/share/1GcQvQBE41/',
+      'https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl',
+      'https://twitter.com/medikartpk',
+      'https://linkedin.com/company/medikart-pk',
+      'https://youtube.com/@medikartpk'
+    ]
+  };
+
 
   return (
     <html lang="en-PK" className={`light ${plusJakarta.variable} ${inter.variable} ${caveat.variable}`} style={{ colorScheme: 'light' }}>
@@ -248,6 +273,14 @@ export default async function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <link rel="icon" href="/favicon.ico" sizes="48x48" type="image/x-icon" />
+        <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+
       </head>
       <body className="min-h-screen flex flex-col bg-white text-slate-900 relative overflow-x-clip font-body pb-16 md:pb-0">
         <PwaInstallProvider>

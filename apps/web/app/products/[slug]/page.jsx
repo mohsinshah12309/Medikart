@@ -1,7 +1,7 @@
 import React from 'react';
 import { getProduct, getProducts } from '../../../lib/api';
 import ProductGallery from '../../../components/ProductGallery';
-import NarcoticsBlock from '../../../components/NarcoticsBlock';
+
 import AddToCartButton from '../../../components/AddToCartButton';
 import AddToRefillButton from '../../../components/monthlyRefill/AddToRefillButton';
 import RelatedProducts from '../../../components/RelatedProducts';
@@ -227,10 +227,6 @@ export default async function ProductDetailPage({ params }) {
       question: `Is ${product.name} authentic and DRAP registered?`,
       answer: `All medicines and healthcare products on Medikart, including ${product.name}, are 100% genuine and procured directly through licensed pharmaceutical distributors compliant with Drug Regulatory Authority of Pakistan (DRAP) standards.`
     },
-    ...(product.requiresPrescription || product.isNarcotic ? [{
-      question: `Do I need a prescription to order ${product.name}?`,
-      answer: `${product.name} is a prescription medication. You can easily upload your doctor's prescription through our Instant Order service at medikart.pk/instant-order for pharmacist verification.`
-    }] : [])
   ];
 
   const faqJsonLd = {
@@ -322,15 +318,7 @@ export default async function ProductDetailPage({ params }) {
                 {isOutOfStock ? 'Out of Stock' : 'In Stock'}
               </span>
 
-              {product.isNarcotic ? (
-                <span className="bg-amber-100 text-amber-900 border border-amber-300 text-xs px-2.5 py-1 rounded-lg font-bold">
-                  Rx ONLY
-                </span>
-              ) : product.requiresPrescription ? (
-                <span className="bg-rose-50 text-rose-700 border border-rose-200 text-xs px-2.5 py-1 rounded-lg font-bold">
-                  Rx ONLY
-                </span>
-              ) : null}
+
             </div>
           </div>
 
@@ -382,7 +370,7 @@ export default async function ProductDetailPage({ params }) {
           <div className="flex flex-col gap-3">
             <AddToCartButton product={product} />
             <AddToRefillButton product={product} variant="button" />
-            {product.isNarcotic && <NarcoticsBlock />}
+
           </div>
         </div>
       </div>
