@@ -58,4 +58,5 @@ verify*.js
 server/test*.js
 server/verify*.js
 *.xlsx
-
+*.tar.gz
+products_images.tar.gz

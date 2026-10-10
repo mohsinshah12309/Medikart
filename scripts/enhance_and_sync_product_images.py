@@ -103,24 +103,15 @@ def main():
             target_item_id = str(int(row["Item Id"]))
             name = str(row["Item Name"]).strip()
 
-            # Mapping rule:
-            # - Rows 0 to 198: source is Item_Id[idx]
-            # - Row 199 (Actrapid Hm): missing in source dataset
-            # - Rows 200 to 6111: source is Item_Id[idx - 1]
-            if idx <= 198:
-                src_item_id = str(int(excel_df.iloc[idx]["Item Id"]))
-            elif idx == 199:
-                src_item_id = None
-            else:
-                src_item_id = str(int(excel_df.iloc[idx - 1]["Item Id"]))
+            # EXACT 1-to-1 DIRECT MAPPING:
+            # ItemId in Excel == ItemId in medikartImages (6,095 perfect matches)
+            src_path = os.path.join(SRC_IMAGES_DIR, f"{target_item_id}.jpg")
+            web_dest = os.path.join(WEB_DEST_DIR, f"{target_item_id}.webp")
+            server_dest = os.path.join(SERVER_DEST_DIR, f"{target_item_id}.webp")
 
-            if src_item_id:
-                src_path = os.path.join(SRC_IMAGES_DIR, f"{src_item_id}.jpg")
-                if os.path.exists(src_path):
-                    web_dest = os.path.join(WEB_DEST_DIR, f"{target_item_id}.webp")
-                    server_dest = os.path.join(SERVER_DEST_DIR, f"{target_item_id}.webp")
-                    tasks.append((target_item_id, src_path, web_dest, server_dest))
-                    product_to_image_map[name.lower()] = target_item_id
+            if os.path.exists(src_path):
+                tasks.append((target_item_id, src_path, web_dest, server_dest))
+                product_to_image_map[name.lower()] = target_item_id
 
         except Exception as e:
             print(f"Error building task for row {idx}: {e}")
