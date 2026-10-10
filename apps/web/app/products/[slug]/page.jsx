@@ -214,6 +214,38 @@ export default async function ProductDetailPage({ params }) {
     itemListElement: breadcrumbItems,
   };
 
+  const productFaqs = [
+    {
+      question: `What is the price of ${product.name} in Pakistan?`,
+      answer: `The current retail price of ${product.name} on Medikart is Rs. ${formatPrice(effectivePrice)} PKR with doorstep delivery available across Pakistan.`
+    },
+    {
+      question: `Is ${product.name} available for Cash on Delivery (COD)?`,
+      answer: `Yes, ${product.name} is available with Cash on Delivery (COD) as well as secure online card payments across major cities including Lahore, Karachi, Islamabad, and Rawalpindi.`
+    },
+    {
+      question: `Is ${product.name} authentic and DRAP registered?`,
+      answer: `All medicines and healthcare products on Medikart, including ${product.name}, are 100% genuine and procured directly through licensed pharmaceutical distributors compliant with Drug Regulatory Authority of Pakistan (DRAP) standards.`
+    },
+    ...(product.requiresPrescription || product.isNarcotic ? [{
+      question: `Do I need a prescription to order ${product.name}?`,
+      answer: `${product.name} is a prescription medication. You can easily upload your doctor's prescription through our Instant Order service at medikart.pk/instant-order for pharmacist verification.`
+    }] : [])
+  ];
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: productFaqs.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <script
@@ -223,6 +255,10 @@ export default async function ProductDetailPage({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* Visible Semantic Breadcrumbs */}
