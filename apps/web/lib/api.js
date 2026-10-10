@@ -137,8 +137,10 @@ export async function initiatePayment(orderId) {
 }
 
 export async function sendChatbotMessage(symptoms, conversationId) {
+  const signal = typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(30000) : undefined;
   return fetchApi('/chatbot', {
     method: 'POST',
+    signal,
     body: JSON.stringify({ symptoms, conversationId }),
   });
 }

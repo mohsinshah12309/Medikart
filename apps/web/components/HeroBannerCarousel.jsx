@@ -14,7 +14,7 @@ const FALLBACK_BANNERS = [
     ctaLink: "/instant-order",
     secondaryText: "Browse Catalog",
     secondaryLink: "#store-catalog",
-    imageUrl: "/banners/hero-1.jpg",
+    imageUrl: "/banners/hero-1.webp",
   },
   {
     _id: "hero-2",
@@ -25,7 +25,7 @@ const FALLBACK_BANNERS = [
     ctaLink: "#store-catalog",
     secondaryText: "Learn More",
     secondaryLink: "/about",
-    imageUrl: "/banners/hero-2.jpg",
+    imageUrl: "/banners/hero-2.webp",
   },
   {
     _id: "hero-3",
@@ -36,7 +36,7 @@ const FALLBACK_BANNERS = [
     ctaLink: "#store-catalog",
     secondaryText: "View Products",
     secondaryLink: "#store-catalog",
-    imageUrl: "/banners/hero-3.jpg",
+    imageUrl: "/banners/hero-3.webp",
   },
   {
     _id: "hero-4",
@@ -47,7 +47,7 @@ const FALLBACK_BANNERS = [
     ctaLink: "/instant-order",
     secondaryText: "Browse All Categories",
     secondaryLink: "#store-catalog",
-    imageUrl: "/banners/hero-4.jpg",
+    imageUrl: "/banners/hero-4.webp",
   },
 ];
 
