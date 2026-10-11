@@ -133,6 +133,7 @@ export default async function CategoryPage({ params, searchParams }) {
   // Fetch paginated products for this category
   let products = [];
   let totalProducts = 0;
+  let totalPages = 1;
   try {
     const prodRes = await getProducts({
       categoryId: category._id.toString(),
@@ -140,12 +141,11 @@ export default async function CategoryPage({ params, searchParams }) {
       limit: ITEMS_PER_PAGE,
     });
     products = prodRes?.data?.products || [];
-    totalProducts = prodRes?.total || prodRes?.results || products.length;
+    totalProducts = prodRes?.pagination?.total ?? prodRes?.total ?? prodRes?.results ?? products.length;
+    totalPages = prodRes?.pagination?.pages ?? Math.ceil(totalProducts / ITEMS_PER_PAGE) ?? 1;
   } catch (err) {
     console.error('Failed to load category products:', err.message);
   }
-
-  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE) || 1;
 
   // Filter sibling categories
   const siblingCategories = allCategories.filter((c) => (c.slug || c._id.toString()) !== slug);
