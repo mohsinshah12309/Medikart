@@ -56,13 +56,13 @@ export async function generateMetadata({ params }) {
     const priceFormatted = typeof effectivePrice === 'number' ? effectivePrice.toFixed(2) : effectivePrice;
     const genericStr = product.genericName ? ` (${product.genericName})` : '';
 
-    const title = `${product.name} Price in Pakistan | Medikart`;
+    const title = `${product.name}${genericStr} - Price in Pakistan | Buy Online | Medikart`;
 
     const rxNote = (product.requiresPrescription || product.isNarcotic)
-      ? 'Doctor prescription required. Order via Instant Order.'
-      : 'Order online with Cash on Delivery.';
+      ? 'Licensed doctor prescription verified before dispatch.'
+      : 'Order online with fast delivery & Cash on Delivery (COD).';
 
-    const description = `Buy authentic ${product.name}${genericStr} online in Pakistan at Rs. ${priceFormatted} PKR. Genuine pharmacy stock. ${rxNote}`;
+    const description = `Buy authentic ${product.name}${genericStr} online in Pakistan at best price Rs. ${priceFormatted} PKR. Genuine DRAP-registered stock from licensed partner pharmacies in Lahore, Karachi, Islamabad & nationwide. ${rxNote}`;
 
     const canonicalUrl = `${SITE_URL}/products/${product.slug || slug}`;
 

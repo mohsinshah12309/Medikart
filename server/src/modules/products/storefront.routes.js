@@ -32,9 +32,19 @@ router.get("/sitemap/products", async (req, res, next) => {
         const activeCategories = await Category.find({ active: true }, { _id: 1 }).lean();
         const activeCategoryIds = activeCategories.map((c) => c._id);
 
+        const filter = { active: true };
+        if (activeCategoryIds.length > 0) {
+          filter.$or = [
+            { categoryIds: { $in: activeCategoryIds } },
+            { categoryIds: { $exists: false } },
+            { categoryIds: { $size: 0 } },
+            { categoryId: { $in: activeCategoryIds } }
+          ];
+        }
+
         const products = await Product.find(
-          { active: true, categoryIds: { $in: activeCategoryIds } },
-          { _id: 1, slug: 1, updatedAt: 1 }
+          filter,
+          { _id: 1, slug: 1, name: 1, updatedAt: 1 }
         ).lean();
 
         return {
