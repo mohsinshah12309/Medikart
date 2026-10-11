@@ -237,6 +237,39 @@ export default function ContactPage() {
                 </div>
               </div>
 
+              {/* Google Business & Maps Verification */}
+              <div className="p-4 bg-blue-50/80 border-2 border-blue-200 rounded-2xl flex flex-col gap-2.5 shadow-2xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase tracking-wider font-black text-blue-950 flex items-center gap-1.5">
+                    <span>📍</span> Verified on Google Maps
+                  </span>
+                  <span className="text-[10px] font-black px-2 py-0.5 bg-blue-600 text-white rounded-full">
+                    Live
+                  </span>
+                </div>
+                <p className="text-xs text-blue-900 font-medium leading-relaxed">
+                  Headquartered at 92 G1 Johar Town, Lahore. Verified by Google for authentic pharmaceutical supply.
+                </p>
+                <div className="flex items-center gap-2 pt-1 flex-wrap">
+                  <a
+                    href="https://www.google.com/maps/place/Medikart.pk/data=!4m2!3m1!1s0x3919031409634b6d:0xa875bb92028b90be"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-w-[120px] text-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs"
+                  >
+                    View on Maps ↗
+                  </a>
+                  <a
+                    href="https://g.page/r/Cb6QiwKSu3WoEBM/review"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 min-w-[120px] text-center px-3 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-black rounded-xl transition-all shadow-xs"
+                  >
+                    ⭐ Review Us on Google
+                  </a>
+                </div>
+              </div>
+
               {/* Official Instagram Channel */}
               <div className="p-4 bg-gradient-to-r from-amber-50 via-yellow-50 to-white border-2 border-yellow-200 rounded-2xl flex items-center justify-between gap-3 shadow-xs">
                 <div className="flex items-center gap-3">

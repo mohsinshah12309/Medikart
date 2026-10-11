@@ -196,16 +196,43 @@ export default async function RootLayout({ children }) {
     'priceRange': 'PKR',
     'currenciesAccepted': 'PKR',
     'paymentAccepted': 'Cash on Delivery, Credit Card, Debit Card',
+    'hasMap': 'https://www.google.com/maps/place/Medikart.pk/data=!4m2!3m1!1s0x3919031409634b6d:0xa875bb92028b90be',
+    'openingHoursSpecification': {
+      '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ],
+      'opens': '00:00',
+      'closes': '23:59'
+    },
     'address': {
       '@type': 'PostalAddress',
       'streetAddress': contactAddress,
-      'addressLocality': 'Pakistan',
+      'addressLocality': 'Lahore',
+      'addressRegion': 'Punjab',
+      'postalCode': '54782',
       'addressCountry': 'PK'
     },
-    'areaServed': {
-      '@type': 'Country',
-      'name': 'Pakistan'
+    'geo': {
+      '@type': 'GeoCoordinates',
+      'latitude': '31.4697',
+      'longitude': '74.2728'
     },
+    'areaServed': [
+      { '@type': 'City', 'name': 'Lahore' },
+      { '@type': 'City', 'name': 'Karachi' },
+      { '@type': 'City', 'name': 'Islamabad' },
+      { '@type': 'City', 'name': 'Rawalpindi' },
+      { '@type': 'City', 'name': 'Faisalabad' },
+      { '@type': 'City', 'name': 'Multan' },
+      { '@type': 'Country', 'name': 'Pakistan' }
+    ],
     'contactPoint': {
       '@type': 'ContactPoint',
       'telephone': contactPhone,
@@ -214,6 +241,8 @@ export default async function RootLayout({ children }) {
       'availableLanguage': ['English', 'Urdu']
     },
     'sameAs': [
+      'https://www.google.com/maps/place/Medikart.pk/data=!4m2!3m1!1s0x3919031409634b6d:0xa875bb92028b90be',
+      'https://g.page/r/Cb6QiwKSu3WoEBM/review',
       'https://www.facebook.com/share/1GcQvQBE41/',
       'https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl',
       'https://www.linkedin.com/showcase/medikart-pk/',
@@ -248,7 +277,10 @@ export default async function RootLayout({ children }) {
       'height': 512
     },
     'image': 'https://medikart.pk/icon-512.png',
+    'hasMap': 'https://www.google.com/maps/place/Medikart.pk/data=!4m2!3m1!1s0x3919031409634b6d:0xa875bb92028b90be',
     'sameAs': [
+      'https://www.google.com/maps/place/Medikart.pk/data=!4m2!3m1!1s0x3919031409634b6d:0xa875bb92028b90be',
+      'https://g.page/r/Cb6QiwKSu3WoEBM/review',
       'https://www.facebook.com/share/1GcQvQBE41/',
       'https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl',
       'https://www.linkedin.com/showcase/medikart-pk/',
