@@ -61,6 +61,82 @@ router.get("/sitemap/products", async (req, res, next) => {
   }
 });
 
+// GET /api/v1/feeds/google-merchant.xml - Official Google Merchant Center RSS 2.0 XML Feed (All Catalog Products)
+router.get("/feeds/google-merchant.xml", async (req, res, next) => {
+  try {
+    const siteUrl = process.env.CLIENT_URL || "https://medikart.pk";
+    const products = await Product.find({ active: true })
+      .populate("categoryIds", "name slug")
+      .lean();
+
+    const escapeXml = (str) => {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+    };
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>Medikart - Authentic Online Pharmacy Pakistan</title>
+    <link>${siteUrl}</link>
+    <description>100% Genuine DRAP-registered prescription medicines, OTC drugs, health essentials, and baby care delivered across Pakistan with Cash on Delivery.</description>
+`;
+
+    for (const prod of products) {
+      const id = prod.sku || prod._id.toString();
+      const title = prod.name ? `${prod.name}${prod.genericName ? ` (${prod.genericName})` : ""}` : "Healthcare Product";
+      const desc = prod.description || `Buy authentic ${prod.name} online in Pakistan on Medikart with Cash on Delivery. Genuine pharmacy stock.`;
+      const link = `${siteUrl}/products/${prod.slug || prod._id.toString()}`;
+      
+      let imgLink = `${siteUrl}/icon-512.png`;
+      if (prod.images && prod.images.length > 0 && prod.images[0].path) {
+        const p = prod.images[0].path;
+        imgLink = p.startsWith("http") ? p : `${siteUrl}${p}`;
+      }
+
+      const price = typeof prod.price === "number" ? prod.price.toFixed(2) : "0.00";
+      const availability = prod.stockStatus === "out_of_stock" ? "out_of_stock" : "in_stock";
+      const categoryName = prod.categoryIds && prod.categoryIds.length > 0 && prod.categoryIds[0]?.name
+        ? prod.categoryIds[0].name
+        : "Health & Beauty > Health Care > Medicine & Drugs";
+
+      xml += `    <item>
+      <g:id>${escapeXml(id)}</g:id>
+      <g:title>${escapeXml(title)}</g:title>
+      <g:description>${escapeXml(desc)}</g:description>
+      <g:link>${escapeXml(link)}</g:link>
+      <g:image_link>${escapeXml(imgLink)}</g:image_link>
+      <g:availability>${availability}</g:availability>
+      <g:price>${price} PKR</g:price>
+      <g:brand>${escapeXml(prod.manufacturer || "Medikart")}</g:brand>
+      <g:condition>new</g:condition>
+      <g:google_product_category>Health &amp; Beauty &gt; Health Care &gt; Medicine &amp; Drugs</g:google_product_category>
+      <g:product_type>${escapeXml(categoryName)}</g:product_type>
+      <g:shipping>
+        <g:country>PK</g:country>
+        <g:service>Standard Nationwide Delivery</g:service>
+        <g:price>0.00 PKR</g:price>
+      </g:shipping>
+    </item>
+`;
+    }
+
+    xml += `  </channel>
+</rss>`;
+
+    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+    res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=7200");
+    return res.status(200).send(xml);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET /api/v1/products - Public listing/browsing
 router.get("/products", async (req, res, next) => {
   try {
