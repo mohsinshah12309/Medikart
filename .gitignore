@@ -60,3 +60,7 @@ server/verify*.js
 *.xlsx
 *.tar.gz
 products_images.tar.gz
+venv/
+test_images/
+_image_audit/
+
