@@ -23,7 +23,17 @@ export default function robots() {
         ],
       },
       {
-        userAgent: ['GPTBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'CCBot', 'Applebot-Extended'],
+        userAgent: [
+          'GPTBot',
+          'OAI-SearchBot',
+          'ChatGPT-User',
+          'PerplexityBot',
+          'ClaudeBot',
+          'Google-Extended',
+          'CCBot',
+          'Applebot-Extended',
+          'bingbot',
+        ],
         allow: [
           '/',
           '/llms.txt',

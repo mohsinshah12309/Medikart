@@ -144,7 +144,7 @@ export default async function ProductDetailPage({ params }) {
   const canonicalUrl = `${SITE_URL}/products/${product.slug || slug}`;
   const firstCategory = product.categoryIds && product.categoryIds.length > 0 ? product.categoryIds[0] : null;
 
-  // Real, Schema.org-compliant Product JSON-LD (Strictly zero fake ratings/reviews)
+  // Real, Schema.org-compliant Product JSON-LD (Includes Google Merchant Listings & Free Listings fields)
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -153,19 +153,60 @@ export default async function ProductDetailPage({ params }) {
     image: [productImageUrl],
     description: product.description || `Buy genuine ${product.name} online in Pakistan on Medikart with Cash on Delivery.`,
     sku: product.sku || `MED-${product._id}`,
+    mpn: product.sku || `${product._id}`,
     category: firstCategory ? firstCategory.name : 'Medicines & Healthcare',
+    brand: {
+      '@type': 'Brand',
+      name: product.manufacturer || 'Medikart',
+    },
     offers: {
       '@type': 'Offer',
       url: canonicalUrl,
       priceCurrency: 'PKR',
       price: effectivePrice,
       priceValidUntil: '2027-12-31',
+      validFrom: '2024-01-01',
       itemCondition: 'https://schema.org/NewCondition',
       availability: isOutOfStock ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
       seller: {
         '@type': 'Organization',
         name: 'Medikart',
         url: SITE_URL,
+      },
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'PK',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 7,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'PKR',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'PK',
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 1,
+            unitCode: 'DAY',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 1,
+            maxValue: 3,
+            unitCode: 'DAY',
+          },
+        },
       },
     },
   };
