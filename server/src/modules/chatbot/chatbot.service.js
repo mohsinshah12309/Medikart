@@ -103,6 +103,30 @@ function buildCatalogFallbackResponse(message = "", products = []) {
       reply += `${i + 1}. **${p.name}**${generic}\n   • Price: Rs. ${Number(p.price).toFixed(2)} PKR\n   • Status: ${stockText}\n`;
     });
     reply += `\n**Guidance**: For mild to moderate tension headaches, Paracetamol or Ibuprofen products are commonly used. Take with plenty of water and do not exceed the daily recommended dosage on the packaging.`;
+  } else if (queryLower.includes("diarrhea") || queryLower.includes("loose motion") || queryLower.includes("motion") || queryLower.includes("dysentery")) {
+    reply = `Here are the Over-The-Counter (OTC) rehydration and digestive care options available in our catalog:\n\n`;
+    products.slice(0, 4).forEach((p, i) => {
+      const stockText = p.stockStatus === "in_stock" ? "Available in Stock" : "Out of Stock";
+      const generic = p.genericName ? ` (${p.genericName})` : "";
+      reply += `${i + 1}. **${p.name}**${generic}\n   • Price: Rs. ${Number(p.price).toFixed(2)} PKR\n   • Status: ${stockText}\n`;
+    });
+    reply += `\n**Guidance**: Stay hydrated by drinking Oral Rehydration Salts (ORS) solution frequently. If symptoms persist for more than 48 hours or are accompanied by high fever or severe cramping, consult a physician promptly.`;
+  } else if (queryLower.includes("cough") || queryLower.includes("sore throat") || queryLower.includes("cold")) {
+    reply = `Here are the cough and cold relief options available in the Medikart catalog:\n\n`;
+    products.slice(0, 4).forEach((p, i) => {
+      const stockText = p.stockStatus === "in_stock" ? "Available in Stock" : "Out of Stock";
+      const generic = p.genericName ? ` (${p.genericName})` : "";
+      reply += `${i + 1}. **${p.name}**${generic}\n   • Price: Rs. ${Number(p.price).toFixed(2)} PKR\n   • Status: ${stockText}\n`;
+    });
+    reply += `\n**Guidance**: Drink warm fluids, take warm honey tea, and use lozenges or soothing syrups as directed. If coughing persists over a week or is accompanied by chest pain or shortness of breath, consult a doctor immediately.`;
+  } else if (queryLower.includes("stomach") || queryLower.includes("acidity") || queryLower.includes("gas") || queryLower.includes("heartburn")) {
+    reply = `Here are the stomach and digestive comfort options available in the Medikart catalog:\n\n`;
+    products.slice(0, 4).forEach((p, i) => {
+      const stockText = p.stockStatus === "in_stock" ? "Available in Stock" : "Out of Stock";
+      const generic = p.genericName ? ` (${p.genericName})` : "";
+      reply += `${i + 1}. **${p.name}**${generic}\n   • Price: Rs. ${Number(p.price).toFixed(2)} PKR\n   • Status: ${stockText}\n`;
+    });
+    reply += `\n**Guidance**: Avoid spicy or oily meals, eat smaller portions, and take antacids as indicated. If you experience severe radiating pain or vomiting, seek immediate medical attention.`;
   } else if (queryLower.includes("available") || queryLower.includes("have") || queryLower.includes("stock") || queryLower.includes("price")) {
     reply = `Here are the availability details from our catalog for "${message}":\n\n`;
     products.slice(0, 5).forEach((p, i) => {
@@ -314,20 +338,21 @@ RULES:
   let assistantReply = "";
 
   // 6. Execute with Google Gemini, Groq (test/fallback), or Direct Catalog Matcher
+  // Enforce a strict 2.5 second ceiling on LLM generation to guarantee response time < 3 seconds
   let llmSuccess = false;
 
-  // Priority A: Google Gemini
-  if (geminiClient.isGeminiConfigured() && process.env.NODE_ENV !== "test") {
-    try {
-      assistantReply = await geminiClient.generateContent(conversation.messages, systemPrompt);
-      llmSuccess = true;
-    } catch (err) {
-      console.warn("[Chatbot] Gemini API call failed, attempting fallback:", err.message);
+  const tryLlmGeneration = async () => {
+    // Priority A: Google Gemini
+    if (geminiClient.isGeminiConfigured() && process.env.NODE_ENV !== "test") {
+      try {
+        const text = await geminiClient.generateContent(conversation.messages, systemPrompt);
+        if (text && text.trim()) return text;
+      } catch (err) {
+        console.warn("[Chatbot] Gemini call failed/timed out:", err.message);
+      }
     }
-  }
 
-  // Priority B: Groq (Used in automated tests or when Groq is configured and Gemini is not)
-  if (!llmSuccess) {
+    // Priority B: Groq fallback
     try {
       const groqMessages = [
         { role: "system", content: systemPrompt },
@@ -340,13 +365,24 @@ RULES:
         temperature: 0.2,
       });
 
-      assistantReply = completion.choices[0]?.message?.content || "";
-      if (assistantReply.trim() !== "") {
-        llmSuccess = true;
-      }
+      const groqText = completion.choices[0]?.message?.content || "";
+      if (groqText && groqText.trim()) return groqText;
     } catch (err) {
-      console.warn("[Chatbot] Groq call failed, falling back to intelligent matcher:", err.message);
+      console.warn("[Chatbot] Groq call failed:", err.message);
     }
+
+    return null;
+  };
+
+  try {
+    const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(null), 2400));
+    const llmResult = await Promise.race([tryLlmGeneration(), timeoutPromise]);
+    if (llmResult && llmResult.trim() !== "") {
+      assistantReply = llmResult;
+      llmSuccess = true;
+    }
+  } catch (err) {
+    console.warn("[Chatbot] LLM race error:", err.message);
   }
 
   // Priority C: Direct Intelligent Catalog Matching Engine
@@ -386,6 +422,7 @@ RULES:
   const formattedProducts = safeProducts.slice(0, 4).map((p) => ({
     _id: p._id,
     name: p.name,
+    slug: p.slug,
     genericName: p.genericName,
     price: p.price,
     stockStatus: p.stockStatus,

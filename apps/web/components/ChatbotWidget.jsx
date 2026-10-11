@@ -265,7 +265,7 @@ export default function ChatbotWidget() {
                         {msg.suggestedProducts.map((p) => (
                           <Link
                             key={p._id}
-                            href={`/?search=${encodeURIComponent(p.name)}#store-catalog`}
+                            href={p.slug ? `/products/${p.slug}` : `/?search=${encodeURIComponent(p.name)}#store-catalog`}
                             onClick={() => setIsOpen(false)}
                             className="flex items-center justify-between p-2 rounded-xl bg-amber-50/60 hover:bg-amber-100/80 border border-amber-200/70 transition-all group"
                           >
