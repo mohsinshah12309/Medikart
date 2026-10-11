@@ -4,7 +4,9 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getCategory, getCategories, getProducts } from '../../../lib/api';
 import { BLOGS_DATA } from '../../../data/blogsData';
+import { getCategoryFaqs } from '../../../data/categoryFaqsData';
 import ProductCard from '../../../components/ProductCard';
+import { HelpCircle, ChevronDown, MapPin, Truck, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -57,18 +59,32 @@ export async function generateMetadata({ params, searchParams }) {
     }
 
     const title = currentPage > 1
-      ? `${category.name} - Page ${currentPage} | Buy Online in Pakistan | Medikart`
-      : `${category.name} Online in Pakistan | Buy Authentic Medicines | Medikart`;
+      ? `Buy ${category.name} Online in Pakistan (Page ${currentPage}) | Best Prices | Medikart`
+      : `Buy ${category.name} Online in Pakistan | DRAP Verified | Medikart.pk`;
 
-    const description = `Buy authentic ${category.name} online in Pakistan on Medikart. Genuine pharmacy stock, Cash on Delivery (COD) & card payment. Page ${currentPage}.`;
+    const description = `Order 100% authentic ${category.name} online in Pakistan on Medikart. Sourced from licensed pharmacies. 2-4 hr express delivery in Lahore, Karachi, Islamabad/Rawalpindi; 24-48 hr delivery across Faisalabad, Multan, Sahiwal, Peshawar & nationwide with Cash on Delivery (COD).`;
 
     const canonicalUrl = currentPage > 1
       ? `${SITE_URL}/categories/${category.slug || slug}?page=${currentPage}`
       : `${SITE_URL}/categories/${category.slug || slug}`;
 
+    const keywords = [
+      `buy ${category.name} online Pakistan`,
+      `${category.name} price in Pakistan`,
+      `order ${category.name} Lahore`,
+      `order ${category.name} Karachi`,
+      `order ${category.name} Islamabad Rawalpindi`,
+      `order ${category.name} Faisalabad Multan Sahiwal`,
+      `DRAP registered ${category.name}`,
+      `online pharmacy Pakistan`,
+      `medicine delivery Pakistan`,
+      `Medikart ${category.name}`,
+    ];
+
     return {
       title: { absolute: title },
       description,
+      keywords,
       alternates: {
         canonical: canonicalUrl,
       },
@@ -76,12 +92,12 @@ export async function generateMetadata({ params, searchParams }) {
         title,
         description,
         url: canonicalUrl,
-        siteName: 'Medikart',
+        siteName: 'Medikart - Authentic Online Pharmacy',
         locale: 'en_PK',
         type: 'website',
       },
       twitter: {
-        card: 'summary',
+        card: 'summary_large_image',
         title,
         description,
       },
@@ -170,7 +186,24 @@ export default async function CategoryPage({ params, searchParams }) {
     ],
   };
 
-  // CollectionPage Schema
+  // Category FAQs (8 to 10 Pakistan-specific FAQs)
+  const categoryFaqs = getCategoryFaqs(slug);
+
+  // FAQPage Schema
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: categoryFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
+  // Enhanced CollectionPage Schema with Full Product Offers in ItemList
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -180,12 +213,79 @@ export default async function CategoryPage({ params, searchParams }) {
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: products.length,
-      itemListElement: products.map((p, index) => ({
-        '@type': 'ListItem',
-        position: (currentPage - 1) * ITEMS_PER_PAGE + index + 1,
-        url: `${SITE_URL}/products/${p.slug || p._id}`,
-        name: p.name,
-      })),
+      itemListElement: products.map((p, index) => {
+        const prodUrl = `${SITE_URL}/products/${p.slug || p._id}`;
+        const prodImg = p.coverImage || (Array.isArray(p.images) && p.images[0]) || '/images/placeholder-product.png';
+        const fullProdImg = prodImg.startsWith('http') ? prodImg : `${SITE_URL}${prodImg.startsWith('/') ? '' : '/'}${prodImg}`;
+        const priceVal = typeof p.effectivePrice === 'number' ? p.effectivePrice : (typeof p.price === 'number' ? p.price : 0);
+        const inStock = p.stockStatus === 'in_stock';
+
+        return {
+          '@type': 'ListItem',
+          position: (currentPage - 1) * ITEMS_PER_PAGE + index + 1,
+          url: prodUrl,
+          name: p.name,
+          item: {
+            '@type': 'Product',
+            name: p.name,
+            description: p.description || `${p.name} available at Medikart online pharmacy in Pakistan.`,
+            image: fullProdImg,
+            sku: p.itemCode || String(p._id),
+            brand: {
+              '@type': 'Brand',
+              name: p.brand || p.manufacturer || 'Medikart',
+            },
+            offers: {
+              '@type': 'Offer',
+              price: priceVal > 0 ? priceVal.toFixed(2) : '0.00',
+              priceCurrency: 'PKR',
+              availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+              url: prodUrl,
+              priceValidUntil: '2027-12-31',
+              seller: {
+                '@type': 'Organization',
+                name: 'Medikart',
+                url: SITE_URL,
+              },
+              hasMerchantReturnPolicy: {
+                '@type': 'MerchantReturnPolicy',
+                applicableCountry: 'PK',
+                returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+                merchantReturnDays: 7,
+                returnMethod: 'https://schema.org/ReturnByMail',
+                returnFees: 'https://schema.org/FreeReturn',
+              },
+              shippingDetails: {
+                '@type': 'OfferShippingDetails',
+                shippingRate: {
+                  '@type': 'MonetaryAmount',
+                  value: '0',
+                  currency: 'PKR',
+                },
+                shippingDestination: {
+                  '@type': 'DefinedRegion',
+                  addressCountry: 'PK',
+                },
+                deliveryTime: {
+                  '@type': 'ShippingDeliveryTime',
+                  handlingTime: {
+                    '@type': 'QuantitativeValue',
+                    minValue: 0,
+                    maxValue: 1,
+                    unitCode: 'DAY',
+                  },
+                  transitTime: {
+                    '@type': 'QuantitativeValue',
+                    minValue: 1,
+                    maxValue: 3,
+                    unitCode: 'DAY',
+                  },
+                },
+              },
+            },
+          },
+        };
+      }),
     },
   };
 
@@ -199,6 +299,10 @@ export default async function CategoryPage({ params, searchParams }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Visible Semantic Breadcrumbs */}
@@ -394,6 +498,86 @@ export default async function CategoryPage({ params, searchParams }) {
                   </Link>
                 </div>
               </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ─── Pakistan Nationwide City Delivery Network Strip (GEO & Entity Grounding) ─── */}
+      <section aria-label="Nationwide Medicine Delivery Network" className="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-amber-100/90 via-yellow-100 to-amber-50 border-2 border-amber-300 shadow-warm-card space-y-3">
+        <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-950">
+          <Truck className="w-4 h-4 text-amber-800" />
+          <span>Express Medicine &amp; Healthcare Delivery Across Pakistan</span>
+        </div>
+        <h3 className="text-lg sm:text-xl font-black text-slate-950">
+          Fast Doorstep Delivery in 150+ Cities with Cash on Delivery (COD)
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-800 leading-relaxed max-w-4xl">
+          Medikart partners with verified, licensed retail pharmacies to fulfill authentic orders of <strong>{category.name}</strong>. Enjoy <strong>2 to 4 hour express intra-city delivery</strong> in Lahore, Karachi, Islamabad, and Rawalpindi. We also deliver across Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, and Azad Kashmir within <strong>24 to 48 hours</strong>, covering major hubs: <em>Faisalabad, Multan, Peshawar, Quetta, Sahiwal, Gujranwala, Sialkot, Hyderabad, Sukkur, Bahawalpur, Sargodha, Abbottabad, and Gujrat</em>.
+        </p>
+        <div className="pt-1 flex flex-wrap items-center gap-2 text-[11px] font-bold text-slate-900">
+          <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            100% DRAP Registered Stock
+          </span>
+          <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            Tamper-Evident Sealed Boxes
+          </span>
+          <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            Cold-Chain Insulin &amp; Eye Drops Storage
+          </span>
+          <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            Cash on Delivery &amp; Online Cards
+          </span>
+        </div>
+      </section>
+
+      {/* ─── Category FAQs Accordion (Rich Snippets & AEO/GEO Grounding) ─── */}
+      {categoryFaqs && categoryFaqs.length > 0 && (
+        <section aria-label="Frequently Asked Questions" className="p-6 sm:p-8 rounded-3xl bg-white border-2 border-yellow-200/90 shadow-sm space-y-4">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-amber-950 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
+                <HelpCircle className="w-3.5 h-3.5 text-amber-700" />
+                <span>Verified Pharmacy Q&amp;A</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black font-heading text-slate-950">
+                Frequently Asked Questions about {category.name} ({categoryFaqs.length})
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                Answers verified by licensed Pakistani pharmacists regarding delivery, authenticity, DRAP compliance, and payments.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            {categoryFaqs.map((faq, fIdx) => (
+              <details
+                key={fIdx}
+                className="group rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all shadow-3xs overflow-hidden open:bg-amber-50/40 open:border-amber-300 open:shadow-2xs"
+              >
+                <summary className="w-full text-left p-4 sm:p-5 flex items-start justify-between gap-3 cursor-pointer list-none select-none">
+                  <div className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5 shadow-3xs">
+                      Q
+                    </span>
+                    <h3 className="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
+                      {faq.question}
+                    </h3>
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-white group-open:bg-amber-300 group-open:text-slate-950 flex items-center justify-center text-slate-600 flex-shrink-0 border border-slate-200 group-open:border-amber-400 transition-transform duration-200 group-open:rotate-180">
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </summary>
+                <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-amber-200/60 bg-white/70">
+                  <div className="pl-9 space-y-2">
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              </details>
             ))}
           </div>
         </section>

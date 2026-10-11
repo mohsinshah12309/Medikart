@@ -1,19 +1,24 @@
 export const metadata = {
-  title: "Contact Us & Customer Support | Medikart Pakistan",
-  description: "Get in touch with Medikart support for prescription verification, order tracking, and medicine delivery support across Pakistan.",
+  title: "Contact Us & Pharmacist Support | Medikart Pakistan | +92 324 4489159",
+  description: "Contact Medikart customer care and licensed pharmacist helpline. Official Headquarters: 92 G1 Johar Town, Lahore, Pakistan. WhatsApp: +92 324 4489159. Email: support@medikart.pk. Assistance with doctor prescription verification, order tracking, and express medicine delivery across Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, and all cities in Pakistan.",
   keywords: [
     "contact Medikart",
     "pharmacist helpline Pakistan",
-    "medicine customer service Lahore",
-    "prescription assistance Karachi",
-    "Medikart Pakistan"
+    "online pharmacy contact Lahore",
+    "medicine customer service Pakistan",
+    "upload prescription helpline",
+    "Medikart WhatsApp number 03244489159",
+    "Medikart Johar Town Lahore",
+    "medicine delivery helpline Karachi Islamabad",
+    "DRAP medicine verification",
+    "Medikart.pk"
   ],
   alternates: {
     canonical: "https://medikart.pk/contact",
   },
   openGraph: {
-    title: "Contact Us & Support | Medikart Pakistan",
-    description: "Connect with Medikart customer support and verified pharmacy partners for order tracking and prescription assistance.",
+    title: "Contact Medikart Pharmacist Support & Customer Care | Pakistan",
+    description: "Get in touch with Medikart: WhatsApp +92 324 4489159, 92 G1 Johar Town Lahore. 24/7 digital order assistance and prescription verification across Pakistan.",
     url: "https://medikart.pk/contact",
     siteName: "Medikart - Authentic Online Pharmacy",
     locale: "en_PK",
@@ -21,8 +26,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Medikart Support Pakistan",
-    description: "Customer care and prescription assistance across Pakistan.",
+    title: "Contact Medikart Support & Pharmacist Team | Pakistan",
+    description: "WhatsApp +92 324 4489159. Medicine delivery support, prescription uploads, and order assistance across Pakistan.",
   },
 };
 
