@@ -22,6 +22,25 @@ export default async function sitemap() {
     console.error("Sitemap products fetch fail:", err.message);
   }
 
+  const FALLBACK_CATEGORIES = [
+    { slug: 'medicines', name: 'Medicines' },
+    { slug: 'vitamins', name: 'Vitamins & Supplements' },
+    { slug: 'milk-powder', name: 'Milk Powder & Baby Food' },
+    { slug: 'herbal', name: 'Herbal & Organic' },
+    { slug: 'flat-items', name: 'Flat Items' },
+    { slug: 'consumer', name: 'Consumer Care' },
+    { slug: 'fridge-items', name: 'Fridge Items & Insulins' },
+    { slug: 'surgical-items', name: 'Surgical Items' },
+    { slug: 'dermatology', name: 'Dermatology & Skin' },
+    { slug: 'diagnostics', name: 'Diagnostics & Devices' },
+    { slug: 'diapers-babycare', name: 'Diapers & Baby Care' },
+    { slug: 'patient-supports', name: 'Patient Supports' },
+    { slug: 'general-items', name: 'General Items' },
+    { slug: 'beverages', name: 'Beverages & ORS' },
+    { slug: 'nutraceutical', name: 'Nutraceutical' },
+    { slug: 'otc', name: 'Over The Counter (OTC)' },
+  ];
+
   try {
     const catRes = await fetch(`${apiUrl}/categories`, { next: { revalidate: 3600 } });
     if (catRes.ok) {
@@ -30,6 +49,10 @@ export default async function sitemap() {
     }
   } catch (err) {
     console.error("Sitemap categories fetch fail:", err.message);
+  }
+
+  if (!categories || categories.length === 0) {
+    categories = FALLBACK_CATEGORIES;
   }
 
   try {
