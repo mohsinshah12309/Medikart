@@ -216,8 +216,8 @@ export default async function RootLayout({ children }) {
     'sameAs': [
       'https://www.facebook.com/share/1GcQvQBE41/',
       'https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl',
+      'https://www.linkedin.com/showcase/medikart-pk/',
       'https://twitter.com/medikartpk',
-      'https://linkedin.com/company/medikart-pk',
       'https://youtube.com/@medikartpk'
     ]
   };
@@ -251,8 +251,8 @@ export default async function RootLayout({ children }) {
     'sameAs': [
       'https://www.facebook.com/share/1GcQvQBE41/',
       'https://www.instagram.com/medikartpakistan?stkn=d2YyZGd6ZjhueGxl',
+      'https://www.linkedin.com/showcase/medikart-pk/',
       'https://twitter.com/medikartpk',
-      'https://linkedin.com/company/medikart-pk',
       'https://youtube.com/@medikartpk'
     ]
   };
