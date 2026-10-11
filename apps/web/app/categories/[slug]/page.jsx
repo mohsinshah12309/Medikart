@@ -354,22 +354,41 @@ export default async function CategoryPage({ params, searchParams }) {
         </div>
       </header>
 
-      {/* Sibling Categories Bar for Crawlability & User Discovery */}
-      {siblingCategories.length > 0 && (
-        <section aria-label="Other Healthcare Categories" className="space-y-2">
-          <h2 className="text-xs uppercase tracking-wider font-extrabold text-slate-500">
-            Explore Other Categories
-          </h2>
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
-            {siblingCategories.map((sib) => (
-              <Link
-                key={sib._id || sib.slug}
-                href={`/categories/${sib.slug || sib._id}`}
-                className="shrink-0 text-xs font-bold text-slate-700 bg-white hover:bg-yellow-100 hover:text-slate-950 border border-slate-200 hover:border-yellow-400 px-3 py-1.5 rounded-xl transition-colors"
-              >
-                {sib.name}
-              </Link>
-            ))}
+      {/* Categories Bar with Current Category Highlighted */}
+      {allCategories.length > 0 && (
+        <section aria-label="Browse Healthcare Categories" className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xs uppercase tracking-wider font-extrabold text-slate-500">
+              Browse Categories
+            </h2>
+            <span className="text-[11px] font-semibold text-slate-400">
+              Showing: <strong className="text-amber-900 font-extrabold">{category.name}</strong>
+            </span>
+          </div>
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin pt-1">
+            {allCategories.map((cat) => {
+              const catSlug = cat.slug || cat._id?.toString();
+              const isCurrent =
+                catSlug === slug ||
+                cat._id?.toString() === category._id?.toString() ||
+                cat.name?.toLowerCase() === category.name?.toLowerCase();
+
+              return (
+                <Link
+                  key={cat._id || cat.slug}
+                  href={`/categories/${catSlug}`}
+                  aria-current={isCurrent ? "page" : undefined}
+                  className={`shrink-0 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+                    isCurrent
+                      ? "bg-yellow-400 text-slate-950 border-2 border-yellow-500 shadow-sm font-black ring-2 ring-yellow-400/40"
+                      : "bg-white text-slate-700 hover:bg-yellow-50 hover:text-slate-950 border border-slate-200 hover:border-yellow-400"
+                  }`}
+                >
+                  {isCurrent && <span className="text-xs">✓</span>}
+                  <span>{cat.name}</span>
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}

@@ -256,6 +256,7 @@ export default function HeaderNav({ initialCategories = [] }) {
                 {categories.map((cat) => {
                   const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
                   const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
+                  const isCurrentCategory = pathname === `/categories/${slug}`;
 
                   return (
                     <Link
@@ -265,9 +266,15 @@ export default function HeaderNav({ initialCategories = [] }) {
                         setIsDropdownOpen(false);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-yellow-50 text-xs font-bold text-slate-800 hover:text-slate-950 transition-colors"
+                      className={`flex items-center gap-2.5 p-2 rounded-lg text-xs font-bold transition-colors ${
+                        isCurrentCategory
+                          ? "bg-yellow-400 text-slate-950 font-black shadow-2xs"
+                          : "hover:bg-yellow-50 text-slate-800 hover:text-slate-950"
+                      }`}
                     >
-                      <div className="w-6 h-6 rounded-md bg-amber-50 border border-amber-200 relative overflow-hidden shrink-0 flex items-center justify-center">
+                      <div className={`w-6 h-6 rounded-md relative overflow-hidden shrink-0 flex items-center justify-center ${
+                        isCurrentCategory ? "bg-white border border-yellow-500" : "bg-amber-50 border border-amber-200"
+                      }`}>
                         {imgSrc ? (
                           <Image
                             src={imgSrc}
@@ -277,11 +284,13 @@ export default function HeaderNav({ initialCategories = [] }) {
                             className="object-cover"
                           />
                         ) : (
-                          <Pill className="w-3.5 h-3.5 text-amber-600" />
+                          <Pill className={`w-3.5 h-3.5 ${isCurrentCategory ? "text-amber-800" : "text-amber-600"}`} />
                         )}
                       </div>
                       <span className="line-clamp-1 flex-1">{cat.name}</span>
-                      <span className="text-xs text-slate-400">→</span>
+                      <span className={`text-xs ${isCurrentCategory ? "text-slate-950 font-black" : "text-slate-400"}`}>
+                        {isCurrentCategory ? "✓" : "→"}
+                      </span>
                     </Link>
                   );
                 })}
@@ -463,18 +472,20 @@ export default function HeaderNav({ initialCategories = [] }) {
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className={`h-8.5 px-1 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center gap-0.5 xl:gap-1 cursor-pointer relative ${
-                    isDropdownOpen ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
+                    isDropdownOpen || pathname?.startsWith("/categories/")
+                      ? "text-amber-600 font-black"
+                      : "text-slate-700 hover:text-amber-600"
                   }`}
                 >
                   <span>Categories</span>
                   <ChevronDown
                     className={`w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200 ${
-                      isDropdownOpen ? "rotate-180 text-amber-500" : "text-slate-400"
+                      isDropdownOpen ? "rotate-180 text-amber-500" : pathname?.startsWith("/categories/") ? "text-amber-500" : "text-slate-400"
                     }`}
                   />
                   <span
                     className={`absolute bottom-0 left-1 right-1 h-[2.5px] bg-amber-500 rounded-full transition-all duration-200 ${
-                      isDropdownOpen ? "w-[calc(100%-8px)]" : "w-0"
+                      isDropdownOpen || pathname?.startsWith("/categories/") ? "w-[calc(100%-8px)]" : "w-0"
                     }`}
                   />
                 </button>
@@ -522,15 +533,22 @@ export default function HeaderNav({ initialCategories = [] }) {
                         {categories.map((cat) => {
                           const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
                           const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
+                          const isCurrentCategory = pathname === `/categories/${slug}`;
 
                           return (
                             <Link
                               key={cat._id}
                               href={`/categories/${slug}`}
                               onClick={() => setIsDropdownOpen(false)}
-                              className="group flex items-center gap-2.5 p-2 rounded-xl border border-transparent hover:border-amber-200 hover:bg-amber-50/60 transition-all"
+                              className={`group flex items-center gap-2.5 p-2 rounded-xl border transition-all ${
+                                isCurrentCategory
+                                  ? "bg-amber-100/80 border-amber-400 shadow-2xs font-black ring-1 ring-amber-300"
+                                  : "border-transparent hover:border-amber-200 hover:bg-amber-50/60"
+                              }`}
                             >
-                              <div className="w-10 h-10 rounded-lg bg-amber-50/80 border border-amber-100 flex items-center justify-center relative overflow-hidden shrink-0 group-hover:scale-105 group-hover:border-amber-300 transition-all">
+                              <div className={`w-10 h-10 rounded-lg flex items-center justify-center relative overflow-hidden shrink-0 group-hover:scale-105 transition-all ${
+                                isCurrentCategory ? "bg-amber-200 border-2 border-amber-400" : "bg-amber-50/80 border border-amber-100 group-hover:border-amber-300"
+                              }`}>
                                 {imgSrc ? (
                                   <Image
                                     src={imgSrc}
@@ -540,17 +558,21 @@ export default function HeaderNav({ initialCategories = [] }) {
                                     className="object-cover"
                                   />
                                 ) : (
-                                  <Pill className="w-5 h-5 text-amber-600" />
+                                  <Pill className={`w-5 h-5 ${isCurrentCategory ? "text-amber-800" : "text-amber-600"}`} />
                                 )}
                               </div>
 
                               <div className="flex-1 min-w-0 text-left">
-                                <p className="text-xs font-bold text-slate-800 group-hover:text-amber-700 transition-colors line-clamp-2 leading-tight">
+                                <p className={`text-xs font-bold transition-colors line-clamp-2 leading-tight ${
+                                  isCurrentCategory ? "text-amber-900 font-black" : "text-slate-800 group-hover:text-amber-700"
+                                }`}>
                                   {cat.name}
                                 </p>
                               </div>
 
-                              <ChevronRight className="w-3.5 h-3.5 text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                              <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-opacity ${
+                                isCurrentCategory ? "text-amber-700 opacity-100 font-bold" : "text-amber-400 opacity-0 group-hover:opacity-100"
+                              }`} />
                             </Link>
                           );
                         })}
