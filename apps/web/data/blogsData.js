@@ -2948,13 +2948,13 @@ export const BLOGS_DATA = [
 ];
 
 export const BLOG_CATEGORIES = [
-  { id: "all", label: "All Health Topics" },
-  { id: "baby-child-nutrition", label: "Baby & Child Care" },
-  { id: "chronic-disease-management", label: "Chronic Disease & Diabetes" },
-  { id: "seasonal-wellness", label: "Seasonal & Smog Care" },
-  { id: "pharmacy-first-aid", label: "Medicine & First Aid" },
-  { id: "dermatology-skin-hair", label: "Skin, Hair & Aesthetics" },
-  { id: "wellness-supplements", label: "Nutrition & Supplements" },
+  { id: "all", name: "All Articles", label: "All Health Topics", count: 60 },
+  { id: "baby-child-nutrition", name: "Baby & Child Nutrition", label: "Baby & Child Care", count: 10 },
+  { id: "chronic-conditions", name: "Chronic Conditions", label: "Chronic Disease & Diabetes", count: 10 },
+  { id: "seasonal-health", name: "Seasonal Health", label: "Seasonal & Smog Care", count: 10 },
+  { id: "medicine-safety", name: "Medicine Safety", label: "Medicine & First Aid", count: 10 },
+  { id: "dermatology-skincare", name: "Dermatology & Skincare", label: "Skin, Hair & Aesthetics", count: 10 },
+  { id: "nutrition-wellness", name: "Nutrition & Wellness", label: "Nutrition & Supplements", count: 10 },
 ];
 
 export function getBlogBySlug(slug) {

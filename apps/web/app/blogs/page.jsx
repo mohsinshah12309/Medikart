@@ -104,21 +104,33 @@ export default function BlogsDirectoryPage() {
       </div>
 
       {/* ─── Category Filter Pills ─── */}
-      <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
+      <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-none py-2 px-1">
         {BLOG_CATEGORIES.map((cat) => {
           const isActive = selectedCategory === cat.id;
+          const label = cat.name || cat.label || cat.id;
           return (
             <button
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 select-none ${
+              className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 select-none border shadow-xs ${
                 isActive
-                  ? "bg-yellow-400 text-slate-950 shadow-md border-2 border-yellow-500 font-black scale-[1.02]"
-                  : "bg-white text-slate-700 hover:bg-yellow-50/70 border border-slate-200 hover:border-yellow-300"
+                  ? "bg-[#FFEE45] text-slate-950 border-amber-400 font-black shadow-md scale-[1.03] ring-2 ring-amber-400/30"
+                  : "bg-white text-slate-700 hover:text-slate-950 hover:bg-amber-50/60 border-slate-200 hover:border-amber-300"
               }`}
             >
-              <span>{cat.name}</span>
+              <span>{label}</span>
+              {typeof cat.count === "number" && (
+                <span
+                  className={`text-[10px] font-black px-1.5 py-0.5 rounded-full transition-colors ${
+                    isActive
+                      ? "bg-slate-950 text-[#FFEE45]"
+                      : "bg-slate-100 text-slate-600 group-hover:bg-amber-100"
+                  }`}
+                >
+                  {cat.count}
+                </span>
+              )}
             </button>
           );
         })}
