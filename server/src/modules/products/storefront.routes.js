@@ -695,18 +695,48 @@ const getSuggestionsHandler = async (req, res, next) => {
     const regex = new RegExp(escapedQ, "i");
     const wordBoundaryRegex = new RegExp(`(^|\\s)${escapedQ}`, "i");
     const cleanQ = q.trim().toLowerCase();
+    const tokens = cleanQ.split(/\s+/).filter(Boolean);
 
-    // Parallel lookup of matching products and matching categories
-    const [rawProducts, rawCategories] = await Promise.all([
-      Product.find({
+    let productFilter = {
+      active: true,
+      $or: [
+        { name: regex },
+        { genericName: regex },
+        { keywords: regex },
+        { tags: regex },
+      ],
+    };
+
+    if (tokens.length > 1) {
+      const tokenConditions = tokens.map((t) => {
+        const escT = t.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+        const tRegex = new RegExp(escT, "i");
+        return {
+          $or: [
+            { name: tRegex },
+            { genericName: tRegex },
+            { keywords: tRegex },
+            { tags: tRegex },
+            { description: tRegex },
+          ],
+        };
+      });
+
+      productFilter = {
         active: true,
         $or: [
           { name: regex },
           { genericName: regex },
           { keywords: regex },
           { tags: regex },
+          { $and: tokenConditions },
         ],
-      })
+      };
+    }
+
+    // Parallel lookup of matching products and matching categories
+    const [rawProducts, rawCategories] = await Promise.all([
+      Product.find(productFilter)
         .select("name genericName price sku isNarcotic requiresPrescription stockStatus images discount active categoryIds")
         .populate("categoryIds", "name slug discount active")
         .limit(30)
@@ -802,6 +832,13 @@ const getSuggestionsHandler = async (req, res, next) => {
     sortedProducts.forEach((p) => {
       if (p.genericName && p.genericName.toLowerCase().includes(cleanQ)) {
         searchTermsSet.add(p.genericName);
+      }
+    });
+
+    // Fourth: For multi-token queries, add top matching product names
+    sortedProducts.forEach((p) => {
+      if (p.name) {
+        searchTermsSet.add(p.name);
       }
     });
 
