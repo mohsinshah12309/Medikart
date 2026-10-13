@@ -69,6 +69,52 @@ export function OrderConfirmedCard({
 }) {
   const [copied, setCopied] = useState(false);
 
+  // Google Customer Reviews (Merchant Center: 5872982532) Survey Opt-In Integration
+  useEffect(() => {
+    if (!orderId || !customer?.email) return;
+
+    // Estimated delivery date: order date + 3 days in YYYY-MM-DD
+    const orderDate = new Date();
+    orderDate.setDate(orderDate.getDate() + 3);
+    const estDeliveryDate = orderDate.toISOString().split("T")[0];
+
+    const customerEmail = String(customer.email).trim();
+    const finalOrderId = String(orderId).trim();
+
+    window.renderOptIn = function () {
+      if (typeof window !== "undefined" && window.gapi && window.gapi.load) {
+        window.gapi.load("surveyoptin", function () {
+          window.gapi.surveyoptin.render({
+            merchant_id: 5872982532,
+            order_id: finalOrderId,
+            email: customerEmail,
+            delivery_country: "PK",
+            estimated_delivery_date: estDeliveryDate,
+            opt_in_style: "BOTTOM_RIGHT_DIALOG",
+          });
+        });
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if (window.gapi && window.gapi.surveyoptin) {
+        window.renderOptIn();
+      } else {
+        const scriptId = "google-gcr-optin-script";
+        if (!document.getElementById(scriptId)) {
+          const script = document.createElement("script");
+          script.id = scriptId;
+          script.src = "https://apis.google.com/js/platform.js?onload=renderOptIn";
+          script.async = true;
+          script.defer = true;
+          document.body.appendChild(script);
+        } else {
+          window.renderOptIn();
+        }
+      }
+    }
+  }, [orderId, customer]);
+
   const handleCopyId = () => {
     if (navigator?.clipboard?.writeText && orderId) {
       navigator.clipboard.writeText(orderId);

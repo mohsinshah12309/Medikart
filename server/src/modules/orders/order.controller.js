@@ -189,6 +189,7 @@ const getPublicOrder = async (req, res, next) => {
           paymentState: order.paymentState,
           customer: {
             name: order.customer?.name,
+            email: order.customer?.email,
             phone: order.customer?.phone,
             city: order.customer?.city,
             address: order.customer?.address,
