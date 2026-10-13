@@ -413,7 +413,13 @@ export default function Footer({
                 Disclaimer:
               </strong>
               Medikart is a service platform that connects customers with different partner pharmacies across Pakistan to deliver medicines as fast as possible, nationwide. We are not a direct medicine manufacturer or supplier — all products are sourced and fulfilled through our verified partner pharmacies, and all medicines are authentic and genuine. Our official website is{" "}
-              <strong className="text-red-900 font-bold">medikart.pk</strong>. We are not liable for orders placed through unauthorized platforms — stay vigilant against scams and report any fraudulent websites, apps, or numbers falsely claiming association with Medikart to{" "}
+              <Link
+                href="/"
+                className="text-red-700 font-black underline hover:text-red-900 transition-colors"
+              >
+                medikart.pk
+              </Link>
+              . We are not liable for orders placed through unauthorized platforms — stay vigilant against scams and report any fraudulent websites, apps, or numbers falsely claiming association with Medikart to{" "}
               <a
                 href={`mailto:${contactEmail}`}
                 className="text-red-700 font-black underline hover:text-red-900 transition-colors"
