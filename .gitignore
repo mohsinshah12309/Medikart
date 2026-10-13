@@ -67,3 +67,22 @@ venv/
 test_images/
 _image_audit/
 
+# Python cache & compiled bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Local backups, archives, and temporary state
+backups/
+*.zip
+*.tar
+*.gz
+*_state.json
+scripts/test_*.py
+scripts/inspect_*.py
+scripts/check_*.py
+scripts/parse_*.py
+scripts/find_*.py
+scripts/top10_*.py
+

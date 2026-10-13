@@ -46,6 +46,65 @@ export default function OrderConfirmationPage() {
       });
   }, [orderId]);
 
+  // Google Customer Reviews (Merchant Center: 5872982532) Survey Opt-In Integration
+  useEffect(() => {
+    if (!order || !order.customer?.email) return;
+
+    // Calculate estimated delivery date: order createdAt + 3 days in YYYY-MM-DD
+    const orderDate = order.createdAt ? new Date(order.createdAt) : new Date();
+    const estDate = new Date(orderDate);
+    estDate.setDate(estDate.getDate() + 3);
+    const estDeliveryDate = estDate.toISOString().split("T")[0];
+
+    const customerEmail = String(order.customer.email).trim();
+    const finalOrderId = String(order.orderCode || orderId).trim();
+
+    // Collect product GTINs if available
+    const gtinItems = (order.items || [])
+      .map((it) => it.gtin || it.barcode)
+      .filter(Boolean)
+      .map((gtin) => ({ gtin: String(gtin) }));
+
+    window.renderOptIn = function () {
+      if (typeof window !== "undefined" && window.gapi && window.gapi.load) {
+        window.gapi.load("surveyoptin", function () {
+          const optInConfig = {
+            merchant_id: 5872982532,
+            order_id: finalOrderId,
+            email: customerEmail,
+            delivery_country: "PK",
+            estimated_delivery_date: estDeliveryDate,
+            opt_in_style: "BOTTOM_RIGHT_DIALOG",
+          };
+
+          if (gtinItems.length > 0) {
+            optInConfig.products = gtinItems;
+          }
+
+          window.gapi.surveyoptin.render(optInConfig);
+        });
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if (window.gapi && window.gapi.surveyoptin) {
+        window.renderOptIn();
+      } else {
+        const scriptId = "google-gcr-optin-script";
+        if (!document.getElementById(scriptId)) {
+          const script = document.createElement("script");
+          script.id = scriptId;
+          script.src = "https://apis.google.com/js/platform.js?onload=renderOptIn";
+          script.async = true;
+          script.defer = true;
+          document.body.appendChild(script);
+        } else {
+          window.renderOptIn();
+        }
+      }
+    }
+  }, [order, orderId]);
+
   const handleCopyId = () => {
     const code = order?.orderCode || orderId;
     if (navigator?.clipboard?.writeText && code) {
@@ -379,7 +438,9 @@ export default function OrderConfirmationPage() {
             .print-hidden,
             [role="dialog"],
             [aria-label*="WhatsApp"],
-            [aria-label*="Medi"] {
+            [aria-label*="Medi"],
+            iframe[src*="google"],
+            .gapi-surveyoptin-dialog {
               display: none !important;
             }
             #invoice-print-container {
