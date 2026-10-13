@@ -27,6 +27,10 @@ const CookieConsentBanner = dynamic(() => import('../components/CookieConsentBan
   ssr: false,
 });
 
+const GoogleMerchantBadge = dynamic(() => import('../components/GoogleMerchantBadge'), {
+  ssr: false,
+});
+
 // Code-split Mobile Bottom Nav (client-side only — uses usePathname)
 const MobileBottomNav = dynamic(() => import('../components/MobileBottomNav'), {
   ssr: false,
@@ -385,6 +389,9 @@ export default async function RootLayout({ children }) {
 
               {/* Floating AI Chatbot Widget (bottom-right) */}
               <ChatbotWidget />
+
+              {/* Google Customer Reviews & Merchant Rating Badge */}
+              <GoogleMerchantBadge />
 
               {/* Interactive PWA Install Modal */}
               <InstallModal />
