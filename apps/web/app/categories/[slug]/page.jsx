@@ -7,6 +7,7 @@ import { BLOGS_DATA } from '../../../data/blogsData';
 import { getCategoryFaqs } from '../../../data/categoryFaqsData';
 import ProductCard from '../../../components/ProductCard';
 import { HelpCircle, ChevronDown, MapPin, Truck, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { getCategorySeoMeta } from '../../../data/categorySeoKeywords';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -58,28 +59,11 @@ export async function generateMetadata({ params, searchParams }) {
       return { title: 'Category | Medikart Online Pharmacy' };
     }
 
-    const title = currentPage > 1
-      ? `Buy ${category.name} Online in Pakistan (Page ${currentPage}) | Best Prices | Medikart`
-      : `Buy ${category.name} Online in Pakistan | DRAP Verified | Medikart.pk`;
-
-    const description = `Order 100% authentic ${category.name} online in Pakistan on Medikart. Sourced from licensed pharmacies. 2-4 hr express delivery in Lahore, Karachi, Islamabad/Rawalpindi; 24-48 hr delivery across Faisalabad, Multan, Sahiwal, Peshawar & nationwide with Cash on Delivery (COD).`;
+    const { title, description, keywords } = getCategorySeoMeta(slug, category.name, currentPage);
 
     const canonicalUrl = currentPage > 1
       ? `${SITE_URL}/categories/${category.slug || slug}?page=${currentPage}`
       : `${SITE_URL}/categories/${category.slug || slug}`;
-
-    const keywords = [
-      `buy ${category.name} online Pakistan`,
-      `${category.name} price in Pakistan`,
-      `order ${category.name} Lahore`,
-      `order ${category.name} Karachi`,
-      `order ${category.name} Islamabad Rawalpindi`,
-      `order ${category.name} Faisalabad Multan Sahiwal`,
-      `DRAP registered ${category.name}`,
-      `online pharmacy Pakistan`,
-      `medicine delivery Pakistan`,
-      `Medikart ${category.name}`,
-    ];
 
     return {
       title: { absolute: title },
