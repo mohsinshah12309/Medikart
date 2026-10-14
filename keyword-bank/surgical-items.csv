@@ -1,0 +1,608 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+surgical disposables pakistan,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy surgical disposables pakistan online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+surgical disposables pakistan price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order surgical disposables pakistan online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+surgical disposables pakistan cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best surgical disposables pakistan in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable surgical disposables pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+surgical disposables pakistan home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+surgical disposables pakistan in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+surgical disposables pakistan in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+surgical disposables pakistan in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+surgical disposables pakistan in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+surgical disposables pakistan in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is surgical disposables pakistan,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose surgical disposables pakistan,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use surgical disposables pakistan,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is surgical disposables pakistan available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+surgical disposables pakistan sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+surgical disposables pakistan ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+surgical disposables pakistan online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+surgical disposables pakistan delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+disposable syringes,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy disposable syringes online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+disposable syringes price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order disposable syringes online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+disposable syringes cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best disposable syringes in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable disposable syringes,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+disposable syringes home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+disposable syringes in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+disposable syringes in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+disposable syringes in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+disposable syringes in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+disposable syringes in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is disposable syringes,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose disposable syringes,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use disposable syringes,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is disposable syringes available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+where to buy disposable syringes in pakistan,question,purchase,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,Vendor lookup
+disposable syringes sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+disposable syringes ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+disposable syringes online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+disposable syringes delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+latex examination gloves,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy latex examination gloves online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+latex examination gloves price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order latex examination gloves online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+latex examination gloves cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best latex examination gloves in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable latex examination gloves,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+latex examination gloves home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+latex examination gloves in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+latex examination gloves in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+latex examination gloves in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+latex examination gloves in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+latex examination gloves in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is latex examination gloves,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose latex examination gloves,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use latex examination gloves,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is latex examination gloves available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+latex examination gloves sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+latex examination gloves ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+latex examination gloves online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+latex examination gloves delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+sterile gauze bandages,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy sterile gauze bandages online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+sterile gauze bandages price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order sterile gauze bandages online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+sterile gauze bandages cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best sterile gauze bandages in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable sterile gauze bandages,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+sterile gauze bandages home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+sterile gauze bandages in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+sterile gauze bandages in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+sterile gauze bandages in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+sterile gauze bandages in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+sterile gauze bandages in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is sterile gauze bandages,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose sterile gauze bandages,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use sterile gauze bandages,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is sterile gauze bandages available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+sterile gauze bandages sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+sterile gauze bandages ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+sterile gauze bandages online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+sterile gauze bandages delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+surgical cotton roll,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy surgical cotton roll online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+surgical cotton roll price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order surgical cotton roll online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+surgical cotton roll cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best surgical cotton roll in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable surgical cotton roll,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+surgical cotton roll home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+surgical cotton roll in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+surgical cotton roll in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+surgical cotton roll in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+surgical cotton roll in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+surgical cotton roll in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is surgical cotton roll,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose surgical cotton roll,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use surgical cotton roll,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is surgical cotton roll available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+surgical cotton roll sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+surgical cotton roll ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+surgical cotton roll online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+surgical cotton roll delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+adhesive surgical tape,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy adhesive surgical tape online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+adhesive surgical tape price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order adhesive surgical tape online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+adhesive surgical tape cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best adhesive surgical tape in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable adhesive surgical tape,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+adhesive surgical tape home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+adhesive surgical tape in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+adhesive surgical tape in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+adhesive surgical tape in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+adhesive surgical tape in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+adhesive surgical tape in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is adhesive surgical tape,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose adhesive surgical tape,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use adhesive surgical tape,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is adhesive surgical tape available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+adhesive surgical tape sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+adhesive surgical tape ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+adhesive surgical tape online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+adhesive surgical tape delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+cannula iv catheter,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy cannula iv catheter online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+cannula iv catheter price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order cannula iv catheter online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+cannula iv catheter cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best cannula iv catheter in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable cannula iv catheter,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+cannula iv catheter home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+cannula iv catheter in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+cannula iv catheter in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+cannula iv catheter in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+cannula iv catheter in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+cannula iv catheter in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is cannula iv catheter,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose cannula iv catheter,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use cannula iv catheter,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is cannula iv catheter available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+cannula iv catheter sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+cannula iv catheter ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+cannula iv catheter online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+cannula iv catheter delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+surgical face masks,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy surgical face masks online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+surgical face masks price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order surgical face masks online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+surgical face masks cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best surgical face masks in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable surgical face masks,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+surgical face masks home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+surgical face masks in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+surgical face masks in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+surgical face masks in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+surgical face masks in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+surgical face masks in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is surgical face masks,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose surgical face masks,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use surgical face masks,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is surgical face masks available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+surgical face masks sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+surgical face masks ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+surgical face masks online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+surgical face masks delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+antiseptic dressings,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy antiseptic dressings online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+antiseptic dressings price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order antiseptic dressings online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+antiseptic dressings cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best antiseptic dressings in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable antiseptic dressings,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+antiseptic dressings home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+antiseptic dressings in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+antiseptic dressings in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+antiseptic dressings in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+antiseptic dressings in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+antiseptic dressings in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is antiseptic dressings,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose antiseptic dressings,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use antiseptic dressings,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is antiseptic dressings available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+where to buy antiseptic dressings in pakistan,question,purchase,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,Vendor lookup
+antiseptic dressings sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+antiseptic dressings ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+antiseptic dressings online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+antiseptic dressings delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+paraffin gauze dressings,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy paraffin gauze dressings online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+paraffin gauze dressings price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order paraffin gauze dressings online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+paraffin gauze dressings cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best paraffin gauze dressings in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable paraffin gauze dressings,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+paraffin gauze dressings home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+paraffin gauze dressings in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+paraffin gauze dressings in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+paraffin gauze dressings in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+paraffin gauze dressings in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+paraffin gauze dressings in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is paraffin gauze dressings,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose paraffin gauze dressings,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use paraffin gauze dressings,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is paraffin gauze dressings available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+paraffin gauze dressings sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+paraffin gauze dressings ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+paraffin gauze dressings online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+paraffin gauze dressings delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+3 way stopcock stopper,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy 3 way stopcock stopper online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+3 way stopcock stopper price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order 3 way stopcock stopper online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+3 way stopcock stopper cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best 3 way stopcock stopper in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable 3 way stopcock stopper,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+3 way stopcock stopper home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+3 way stopcock stopper in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+3 way stopcock stopper in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+3 way stopcock stopper in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+3 way stopcock stopper in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+3 way stopcock stopper in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is 3 way stopcock stopper,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose 3 way stopcock stopper,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use 3 way stopcock stopper,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+3 way stopcock stopper sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+3 way stopcock stopper online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+3 way stopcock stopper delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+surgical suture needles,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy surgical suture needles online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+surgical suture needles price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order surgical suture needles online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+surgical suture needles cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best surgical suture needles in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable surgical suture needles,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+surgical suture needles home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+surgical suture needles in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+surgical suture needles in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+surgical suture needles in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+surgical suture needles in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+surgical suture needles in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is surgical suture needles,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose surgical suture needles,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use surgical suture needles,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is surgical suture needles available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+surgical suture needles sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+surgical suture needles ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+surgical suture needles online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+surgical suture needles delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+sterile wound dressing pads,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy sterile wound dressing pads online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+sterile wound dressing pads price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order sterile wound dressing pads online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+sterile wound dressing pads cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best sterile wound dressing pads in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable sterile wound dressing pads,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+sterile wound dressing pads home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+sterile wound dressing pads in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+sterile wound dressing pads in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+sterile wound dressing pads in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+sterile wound dressing pads in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+sterile wound dressing pads in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is sterile wound dressing pads,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose sterile wound dressing pads,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use sterile wound dressing pads,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+sterile wound dressing pads sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+sterile wound dressing pads online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+sterile wound dressing pads delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+surgical scalpel blades,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy surgical scalpel blades online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+surgical scalpel blades price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order surgical scalpel blades online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+surgical scalpel blades cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best surgical scalpel blades in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable surgical scalpel blades,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+surgical scalpel blades home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+surgical scalpel blades in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+surgical scalpel blades in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+surgical scalpel blades in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+surgical scalpel blades in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+surgical scalpel blades in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is surgical scalpel blades,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose surgical scalpel blades,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use surgical scalpel blades,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is surgical scalpel blades available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+surgical scalpel blades sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+surgical scalpel blades ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+surgical scalpel blades online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+surgical scalpel blades delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+micropore surgical tape,informational,commercial-investigation,surgical-items-core,https://medikart.pk/categories/surgical-items,high,,template,Approved seed term
+buy micropore surgical tape online,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,high,,template,Core purchase intent
+micropore surgical tape price in pakistan,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,high,,template,Price check intent
+order micropore surgical tape online pakistan,transactional,purchase,surgical-items-transactional,https://medikart.pk/categories/surgical-items,medium,,template,Online order
+micropore surgical tape cash on delivery,transactional,purchase,surgical-items-cod,https://medikart.pk/categories/surgical-items,medium,,template,COD intent
+best micropore surgical tape in pakistan,informational,comparison,surgical-items-comparison,https://medikart.pk/categories/surgical-items,medium,,template,Best in class
+affordable micropore surgical tape,transactional,price-check,surgical-items-pricing,https://medikart.pk/categories/surgical-items,low,,template,Affordable value
+micropore surgical tape home delivery,transactional,purchase,surgical-items-delivery,https://medikart.pk/categories/surgical-items,medium,,template,Delivery intent
+micropore surgical tape in lahore,local,local-delivery,surgical-items-local-lahore,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in lahore
+micropore surgical tape in karachi,local,local-delivery,surgical-items-local-karachi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in karachi
+micropore surgical tape in islamabad,local,local-delivery,surgical-items-local-islamabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in islamabad
+micropore surgical tape in rawalpindi,local,local-delivery,surgical-items-local-rawalpindi,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in rawalpindi
+micropore surgical tape in faisalabad,local,local-delivery,surgical-items-local-faisalabad,https://medikart.pk/categories/surgical-items,medium,,template,1-5 hr delivery in faisalabad
+what is micropore surgical tape,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO direct answer
+how to choose micropore surgical tape,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO selection guide
+how to use micropore surgical tape,question,informational,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,medium,,template,AEO usage guide
+is micropore surgical tape available in pakistan,question,commercial-investigation,surgical-items-aeo,https://medikart.pk/categories/surgical-items#faqs,low,,template,Availability question
+micropore surgical tape sasti,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Pakistani vernacular
+micropore surgical tape ki price kitni hai,roman-urdu,price-check,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items#faqs,low,,template,Vernacular price query
+micropore surgical tape online mangwana,roman-urdu,purchase,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular delivery query
+micropore surgical tape delivery timing,roman-urdu,local-delivery,surgical-items-roman-urdu,https://medikart.pk/categories/surgical-items,low,,template,Vernacular timing query
+3 way stopper,product,brand-search,surgical-items-product,https://medikart.pk/products/3-way-stopper-mebi,high,,catalog,Direct catalog product
+buy 3 way stopper online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/3-way-stopper-mebi,high,,template,Product purchase intent
+3 way stopper price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/3-way-stopper-mebi,high,,template,Product price lookup
+3 way stopper cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/3-way-stopper-mebi,medium,,template,Product COD
+pyodine solution 60ml antiseptic germicide,product,brand-search,surgical-items-product,https://medikart.pk/products/pyodine-solution-01-60ml-antiseptic-germicide,high,,catalog,Direct catalog product
+buy pyodine solution 60ml antiseptic germicide online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/pyodine-solution-01-60ml-antiseptic-germicide,high,,template,Product purchase intent
+pyodine gel,product,brand-search,surgical-items-product,https://medikart.pk/products/pyodine-20g-gel,high,,catalog,Direct catalog product
+buy pyodine gel online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/pyodine-20g-gel,high,,template,Product purchase intent
+pyodine gel price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/pyodine-20g-gel,high,,template,Product price lookup
+pyodine gel cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/pyodine-20g-gel,medium,,template,Product COD
+povidone iodine,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+povidone iodine in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+medisol 1000ml dextrose water,product,brand-search,surgical-items-product,https://medikart.pk/products/medisol-5-1000ml-dextrose-water,high,,catalog,Direct catalog product
+buy medisol 1000ml dextrose water online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/medisol-5-1000ml-dextrose-water,high,,template,Product purchase intent
+medisol 1000ml dextrose water price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/medisol-5-1000ml-dextrose-water,high,,template,Product price lookup
+medisol 1000ml dextrose water cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/medisol-5-1000ml-dextrose-water,medium,,template,Product COD
+dextrose,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+dextrose in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+oxygen mask,product,brand-search,surgical-items-product,https://medikart.pk/products/oxygen-mask-child-1s,high,,catalog,Direct catalog product
+buy oxygen mask online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/oxygen-mask-child-1s,high,,template,Product purchase intent
+oxygen mask price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/oxygen-mask-child-1s,high,,template,Product price lookup
+oxygen mask cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/oxygen-mask-child-1s,medium,,template,Product COD
+transpore tape,product,brand-search,surgical-items-product,https://medikart.pk/products/transpore-tape-1-inch,high,,catalog,Direct catalog product
+buy transpore tape online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/transpore-tape-1-inch,high,,template,Product purchase intent
+transpore tape price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/transpore-tape-1-inch,high,,template,Product price lookup
+transpore tape cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/transpore-tape-1-inch,medium,,template,Product COD
+transpore tape 2 inch,product,brand-search,surgical-items-product,https://medikart.pk/products/transpore-tape-2-inch,high,,catalog,Direct catalog product
+buy transpore tape 2 inch online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/transpore-tape-2-inch,high,,template,Product purchase intent
+transpore tape 2 inch price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/transpore-tape-2-inch,high,,template,Product price lookup
+transpore tape 2 inch cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/transpore-tape-2-inch,medium,,template,Product COD
+bye bye fever patch,product,brand-search,surgical-items-product,https://medikart.pk/products/bye-bye-fever-patch,high,,catalog,Direct catalog product
+buy bye bye fever patch online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/bye-bye-fever-patch,high,,template,Product purchase intent
+bye bye fever patch price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/bye-bye-fever-patch,high,,template,Product price lookup
+bye bye fever patch cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/bye-bye-fever-patch,medium,,template,Product COD
+jms buret set 100ml,product,brand-search,surgical-items-product,https://medikart.pk/products/jms-buret-set-100ml,high,,catalog,Direct catalog product
+buy jms buret set 100ml online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/jms-buret-set-100ml,high,,template,Product purchase intent
+jms buret set 100ml price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/jms-buret-set-100ml,high,,template,Product price lookup
+jms buret set 100ml cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/jms-buret-set-100ml,medium,,template,Product COD
+polythin 100 gloves,product,brand-search,surgical-items-product,https://medikart.pk/products/polythin-100-gloves,high,,catalog,Direct catalog product
+buy polythin 100 gloves online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/polythin-100-gloves,high,,template,Product purchase intent
+polythin 100 gloves price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/polythin-100-gloves,high,,template,Product price lookup
+polythin 100 gloves cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/polythin-100-gloves,medium,,template,Product COD
+yms urine bag,product,brand-search,surgical-items-product,https://medikart.pk/products/yms-urine-bag,high,,catalog,Direct catalog product
+buy yms urine bag online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/yms-urine-bag,high,,template,Product purchase intent
+yms urine bag price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/yms-urine-bag,high,,template,Product price lookup
+yms urine bag cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/yms-urine-bag,medium,,template,Product COD
+saniplast family 100 bandages,product,brand-search,surgical-items-product,https://medikart.pk/products/saniplast-family-100-bandages,high,,catalog,Direct catalog product
+buy saniplast family 100 bandages online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/saniplast-family-100-bandages,high,,template,Product purchase intent
+saniplast family 100 bandages price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/saniplast-family-100-bandages,high,,template,Product price lookup
+saniplast family 100 bandages cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/saniplast-family-100-bandages,medium,,template,Product COD
+belladerma plaster,product,brand-search,surgical-items-product,https://medikart.pk/products/belladerma-plaster-20s,high,,catalog,Direct catalog product
+buy belladerma plaster online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/belladerma-plaster-20s,high,,template,Product purchase intent
+belladerma plaster price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/belladerma-plaster-20s,high,,template,Product price lookup
+belladerma plaster cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/belladerma-plaster-20s,medium,,template,Product COD
+cotton band 6 inch,product,brand-search,surgical-items-product,https://medikart.pk/products/cotton-band-6-inch-1s,high,,catalog,Direct catalog product
+buy cotton band 6 inch online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/cotton-band-6-inch-1s,high,,template,Product purchase intent
+cotton band 6 inch price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/cotton-band-6-inch-1s,high,,template,Product price lookup
+cotton band 6 inch cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/cotton-band-6-inch-1s,medium,,template,Product COD
+pyodine scrub,product,brand-search,surgical-items-product,https://medikart.pk/products/pyodine-60ml-scrub,high,,catalog,Direct catalog product
+buy pyodine scrub online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/pyodine-60ml-scrub,high,,template,Product purchase intent
+pyodine scrub price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/pyodine-60ml-scrub,high,,template,Product price lookup
+pyodine scrub cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/pyodine-60ml-scrub,medium,,template,Product COD
+gauze roll 20m,product,brand-search,surgical-items-product,https://medikart.pk/products/gauze-roll-20m-1s,high,,catalog,Direct catalog product
+buy gauze roll 20m online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/gauze-roll-20m-1s,high,,template,Product purchase intent
+gauze roll 20m price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/gauze-roll-20m-1s,high,,template,Product price lookup
+gauze roll 20m cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/gauze-roll-20m-1s,medium,,template,Product COD
+steri-strips 6 skin closure strips,product,brand-search,surgical-items-product,https://medikart.pk/products/steri-strips-r1547-6-skin-closure-strips,high,,catalog,Direct catalog product
+buy steri-strips 6 skin closure strips online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/steri-strips-r1547-6-skin-closure-strips,high,,template,Product purchase intent
+branula needle 22g,product,brand-search,surgical-items-product,https://medikart.pk/products/branula-needle-22g-13mm,high,,catalog,Direct catalog product
+buy branula needle 22g online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/branula-needle-22g-13mm,high,,template,Product purchase intent
+branula needle 22g price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/branula-needle-22g-13mm,high,,template,Product price lookup
+branula needle 22g cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/branula-needle-22g-13mm,medium,,template,Product COD
+introcan-w 24g iv cannula,product,brand-search,surgical-items-product,https://medikart.pk/products/introcan-w-22mlmin-24g-iv-cannula,high,,catalog,Direct catalog product
+buy introcan-w 24g iv cannula online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/introcan-w-22mlmin-24g-iv-cannula,high,,template,Product purchase intent
+introcan-w 24g iv cannula price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/introcan-w-22mlmin-24g-iv-cannula,high,,template,Product price lookup
+introcan-w 24g iv cannula cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/introcan-w-22mlmin-24g-iv-cannula,medium,,template,Product COD
+branula 24g yellow stopper needle,product,brand-search,surgical-items-product,https://medikart.pk/products/branula-24g-13-mm-yellow-stopper-needle,high,,catalog,Direct catalog product
+buy branula 24g yellow stopper needle online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/branula-24g-13-mm-yellow-stopper-needle,high,,template,Product purchase intent
+shifa syringe 100 syringes,product,brand-search,surgical-items-product,https://medikart.pk/products/shifa-syringe-3cc-100-syringes,high,,catalog,Direct catalog product
+buy shifa syringe 100 syringes online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/shifa-syringe-3cc-100-syringes,high,,template,Product purchase intent
+shifa syringe 100 syringes price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/shifa-syringe-3cc-100-syringes,high,,template,Product price lookup
+shifa syringe 100 syringes cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/shifa-syringe-3cc-100-syringes,medium,,template,Product COD
+shifa drip set,product,brand-search,surgical-items-product,https://medikart.pk/products/shifa-iv-drip-set-1s,high,,catalog,Direct catalog product
+buy shifa drip set online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/shifa-iv-drip-set-1s,high,,template,Product purchase intent
+shifa drip set price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/shifa-iv-drip-set-1s,high,,template,Product price lookup
+shifa drip set cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/shifa-iv-drip-set-1s,medium,,template,Product COD
+drip set,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+drip set in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+hollister wafer,product,brand-search,surgical-items-product,https://medikart.pk/products/hollister-55mm-wafer-1s,high,,catalog,Direct catalog product
+buy hollister wafer online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/hollister-55mm-wafer-1s,high,,template,Product purchase intent
+hollister wafer price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/hollister-55mm-wafer-1s,high,,template,Product price lookup
+hollister wafer cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/hollister-55mm-wafer-1s,medium,,template,Product COD
+jms scalp vein infusion set,product,brand-search,surgical-items-product,https://medikart.pk/products/jms-scalp-vein-27g-infusion-set,high,,catalog,Direct catalog product
+buy jms scalp vein infusion set online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/jms-scalp-vein-27g-infusion-set,high,,template,Product purchase intent
+infusion set,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+infusion set in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+medisol dextrose saline,product,brand-search,surgical-items-product,https://medikart.pk/products/medisol-1000ml-dextrose-saline,high,,catalog,Direct catalog product
+buy medisol dextrose saline online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/medisol-1000ml-dextrose-saline,high,,template,Product purchase intent
+medisol dextrose saline price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/medisol-1000ml-dextrose-saline,high,,template,Product price lookup
+medisol dextrose saline cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/medisol-1000ml-dextrose-saline,medium,,template,Product COD
+medisol dw 1000ml dextrose water,product,brand-search,surgical-items-product,https://medikart.pk/products/medisol-dw-10-1000ml-dextrose-water,high,,catalog,Direct catalog product
+buy medisol dw 1000ml dextrose water online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/medisol-dw-10-1000ml-dextrose-water,high,,template,Product purchase intent
+medisol rl ringer lactate,product,brand-search,surgical-items-product,https://medikart.pk/products/medisol-rl-1000ml-ringer-lactate,high,,catalog,Direct catalog product
+buy medisol rl ringer lactate online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/medisol-rl-1000ml-ringer-lactate,high,,template,Product purchase intent
+medisol rl ringer lactate price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/medisol-rl-1000ml-ringer-lactate,high,,template,Product price lookup
+medisol rl ringer lactate cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/medisol-rl-1000ml-ringer-lactate,medium,,template,Product COD
+ringer lactate,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+ringer lactate in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+lancets china 200s,product,brand-search,surgical-items-product,https://medikart.pk/products/lancets-china-200s,high,,catalog,Direct catalog product
+buy lancets china 200s online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/lancets-china-200s,high,,template,Product purchase intent
+lancets china 200s price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/lancets-china-200s,high,,template,Product price lookup
+lancets china 200s cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/lancets-china-200s,medium,,template,Product COD
+ringolact infusion,product,brand-search,surgical-items-product,https://medikart.pk/products/ringolact-1000ml-infusion,high,,catalog,Direct catalog product
+buy ringolact infusion online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/ringolact-1000ml-infusion,high,,template,Product purchase intent
+ringolact infusion price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/ringolact-1000ml-infusion,high,,template,Product price lookup
+ringolact infusion cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/ringolact-1000ml-infusion,medium,,template,Product COD
+opsite 1 dressing,product,brand-search,surgical-items-product,https://medikart.pk/products/opsite-10x14-1-dressing,high,,catalog,Direct catalog product
+buy opsite 1 dressing online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/opsite-10x14-1-dressing,high,,template,Product purchase intent
+opsite 1 dressing price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/opsite-10x14-1-dressing,high,,template,Product price lookup
+opsite 1 dressing cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/opsite-10x14-1-dressing,medium,,template,Product COD
+opsite 10 dressings,product,brand-search,surgical-items-product,https://medikart.pk/products/opsite-28cm-x-15cm-10-dressings,high,,catalog,Direct catalog product
+buy opsite 10 dressings online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/opsite-28cm-x-15cm-10-dressings,high,,template,Product purchase intent
+opsite 10 dressings price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/opsite-28cm-x-15cm-10-dressings,high,,template,Product price lookup
+opsite 10 dressings cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/opsite-28cm-x-15cm-10-dressings,medium,,template,Product COD
+life care syringe,product,brand-search,surgical-items-product,https://medikart.pk/products/life-care-syringe-30cc,high,,catalog,Direct catalog product
+buy life care syringe online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/life-care-syringe-30cc,high,,template,Product purchase intent
+life care syringe price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/life-care-syringe-30cc,high,,template,Product price lookup
+life care syringe cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/life-care-syringe-30cc,medium,,template,Product COD
+syringes 1 syringe,product,brand-search,surgical-items-product,https://medikart.pk/products/syringes-50cc-1-syringe,high,,catalog,Direct catalog product
+buy syringes 1 syringe online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/syringes-50cc-1-syringe,high,,template,Product purchase intent
+syringes 1 syringe price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/syringes-50cc-1-syringe,high,,template,Product price lookup
+syringes 1 syringe cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/syringes-50cc-1-syringe,medium,,template,Product COD
+master syringe 1 syringe,product,brand-search,surgical-items-product,https://medikart.pk/products/master-syringe-60cc-1-syringe,high,,catalog,Direct catalog product
+buy master syringe 1 syringe online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/master-syringe-60cc-1-syringe,high,,template,Product purchase intent
+master syringe 1 syringe price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/master-syringe-60cc-1-syringe,high,,template,Product price lookup
+master syringe 1 syringe cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/master-syringe-60cc-1-syringe,medium,,template,Product COD
+adhesive zinco tape 1 inch,product,brand-search,surgical-items-product,https://medikart.pk/products/adhesive-zinco-tape-1-inch,high,,catalog,Direct catalog product
+buy adhesive zinco tape 1 inch online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/adhesive-zinco-tape-1-inch,high,,template,Product purchase intent
+air mattress ucheck,product,brand-search,surgical-items-product,https://medikart.pk/products/air-mattress-ucheck-uc100,high,,catalog,Direct catalog product
+buy air mattress ucheck online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/air-mattress-ucheck-uc100,high,,template,Product purchase intent
+air mattress ucheck price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/air-mattress-ucheck-uc100,high,,template,Product price lookup
+air mattress ucheck cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/air-mattress-ucheck-uc100,medium,,template,Product COD
+bed pan imp,product,brand-search,surgical-items-product,https://medikart.pk/products/bed-pan-blue-imp,high,,catalog,Direct catalog product
+buy bed pan imp online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/bed-pan-blue-imp,high,,template,Product purchase intent
+bed pan imp price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/bed-pan-blue-imp,high,,template,Product price lookup
+bed pan imp cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/bed-pan-blue-imp,medium,,template,Product COD
+commod chair local fix,product,brand-search,surgical-items-product,https://medikart.pk/products/commod-chair-local-fix-1s,high,,catalog,Direct catalog product
+buy commod chair local fix online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/commod-chair-local-fix-1s,high,,template,Product purchase intent
+commod chair local fix price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/commod-chair-local-fix-1s,high,,template,Product price lookup
+commod chair local fix cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/commod-chair-local-fix-1s,medium,,template,Product COD
+condom catheter easyfit,product,brand-search,surgical-items-product,https://medikart.pk/products/condom-catheter-l-easyfit,high,,catalog,Direct catalog product
+buy condom catheter easyfit online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/condom-catheter-l-easyfit,high,,template,Product purchase intent
+condom catheter easyfit price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/condom-catheter-l-easyfit,high,,template,Product price lookup
+condom catheter easyfit cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/condom-catheter-l-easyfit,medium,,template,Product COD
+condom catheter western,product,brand-search,surgical-items-product,https://medikart.pk/products/condom-catheter-l-western,high,,catalog,Direct catalog product
+buy condom catheter western online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/condom-catheter-l-western,high,,template,Product purchase intent
+condom catheter western price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/condom-catheter-l-western,high,,template,Product price lookup
+condom catheter western cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/condom-catheter-l-western,medium,,template,Product COD
+cotton band 3 inch,product,brand-search,surgical-items-product,https://medikart.pk/products/cotton-band-3-inch,high,,catalog,Direct catalog product
+buy cotton band 3 inch online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/cotton-band-3-inch,high,,template,Product purchase intent
+cotton band 3 inch price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/cotton-band-3-inch,high,,template,Product price lookup
+cotton band 3 inch cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/cotton-band-3-inch,medium,,template,Product COD
+cotton roll,product,brand-search,surgical-items-product,https://medikart.pk/products/cotton-roll-100g,high,,catalog,Direct catalog product
+buy cotton roll online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/cotton-roll-100g,high,,template,Product purchase intent
+cotton roll price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/cotton-roll-100g,high,,template,Product price lookup
+cotton roll cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/cotton-roll-100g,medium,,template,Product COD
+foley angel 2-way 14fr catheter,product,brand-search,surgical-items-product,https://medikart.pk/products/foley-angel-2-way-14fr-catheter,high,,catalog,Direct catalog product
+buy foley angel 2-way 14fr catheter online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/foley-angel-2-way-14fr-catheter,high,,template,Product purchase intent
+foley angel 2-way 16fr catheter,product,brand-search,surgical-items-product,https://medikart.pk/products/foley-angel-2-way-16fr-catheter,high,,catalog,Direct catalog product
+buy foley angel 2-way 16fr catheter online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/foley-angel-2-way-16fr-catheter,high,,template,Product purchase intent
+foley angel 2-way 18fr catheter,product,brand-search,surgical-items-product,https://medikart.pk/products/foley-angel-2-way-18fr-catheter,high,,catalog,Direct catalog product
+buy foley angel 2-way 18fr catheter online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/foley-angel-2-way-18fr-catheter,high,,template,Product purchase intent
+ansell gloves 75,product,brand-search,surgical-items-product,https://medikart.pk/products/ansell-gloves-75,high,,catalog,Direct catalog product
+buy ansell gloves 75 online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/ansell-gloves-75,high,,template,Product purchase intent
+ansell gloves 75 price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/ansell-gloves-75,high,,template,Product price lookup
+ansell gloves 75 cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/ansell-gloves-75,medium,,template,Product COD
+lifecare hearing aid,product,brand-search,surgical-items-product,https://medikart.pk/products/lifecare-hearing-aid-v-163-1s,high,,catalog,Direct catalog product
+buy lifecare hearing aid online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/lifecare-hearing-aid-v-163-1s,high,,template,Product purchase intent
+lifecare hearing aid price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/lifecare-hearing-aid-v-163-1s,high,,template,Product price lookup
+lifecare hearing aid cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/lifecare-hearing-aid-v-163-1s,medium,,template,Product COD
+china hot water cloth,product,brand-search,surgical-items-product,https://medikart.pk/products/china-hot-water-cloth,high,,catalog,Direct catalog product
+buy china hot water cloth online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/china-hot-water-cloth,high,,template,Product purchase intent
+china hot water cloth price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/china-hot-water-cloth,high,,template,Product price lookup
+china hot water cloth cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/china-hot-water-cloth,medium,,template,Product COD
+mepore dressing,product,brand-search,surgical-items-product,https://medikart.pk/products/mepore-9x10cm36x4in-dressing,high,,catalog,Direct catalog product
+buy mepore dressing online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/mepore-9x10cm36x4in-dressing,high,,template,Product purchase intent
+mepore dressing price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/mepore-9x10cm36x4in-dressing,high,,template,Product price lookup
+mepore dressing cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/mepore-9x10cm36x4in-dressing,medium,,template,Product COD
+adult nebulizer kit,product,brand-search,surgical-items-product,https://medikart.pk/products/adult-nebulizer-kit,high,,catalog,Direct catalog product
+buy adult nebulizer kit online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/adult-nebulizer-kit,high,,template,Product purchase intent
+adult nebulizer kit price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/adult-nebulizer-kit,high,,template,Product price lookup
+adult nebulizer kit cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/adult-nebulizer-kit,medium,,template,Product COD
+child nebulizer kit,product,brand-search,surgical-items-product,https://medikart.pk/products/child-nebulizer-kit,high,,catalog,Direct catalog product
+buy child nebulizer kit online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/child-nebulizer-kit,high,,template,Product purchase intent
+child nebulizer kit price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/child-nebulizer-kit,high,,template,Product price lookup
+child nebulizer kit cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/child-nebulizer-kit,medium,,template,Product COD
+polythene gloves 1pack,product,brand-search,surgical-items-product,https://medikart.pk/products/polythene-gloves-1pack,high,,catalog,Direct catalog product
+buy polythene gloves 1pack online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/polythene-gloves-1pack,high,,template,Product purchase intent
+polythene gloves 1pack price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/polythene-gloves-1pack,high,,template,Product price lookup
+polythene gloves 1pack cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/polythene-gloves-1pack,medium,,template,Product COD
+sufre tulle 10 dressing,product,brand-search,surgical-items-product,https://medikart.pk/products/sufre-tulle-10-dressing,high,,catalog,Direct catalog product
+buy sufre tulle 10 dressing online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/sufre-tulle-10-dressing,high,,template,Product purchase intent
+sufre tulle 10 dressing price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/sufre-tulle-10-dressing,high,,template,Product price lookup
+sufre tulle 10 dressing cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/sufre-tulle-10-dressing,medium,,template,Product COD
+framycetin sulphate 001,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+framycetin sulphate 001 in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+urine container,product,brand-search,surgical-items-product,https://medikart.pk/products/urine-container,high,,catalog,Direct catalog product
+buy urine container online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/urine-container,high,,template,Product purchase intent
+urine container price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/urine-container,high,,template,Product price lookup
+urine container cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/urine-container,medium,,template,Product COD
+urine pot,product,brand-search,surgical-items-product,https://medikart.pk/products/urine-pot-imp,high,,catalog,Direct catalog product
+buy urine pot online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/urine-pot-imp,high,,template,Product purchase intent
+urine pot price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/urine-pot-imp,high,,template,Product price lookup
+urine pot cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/urine-pot-imp,medium,,template,Product COD
+surge gauze,product,brand-search,surgical-items-product,https://medikart.pk/products/surge-gauze-15x15,high,,catalog,Direct catalog product
+buy surge gauze online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/surge-gauze-15x15,high,,template,Product purchase intent
+surge gauze price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/surge-gauze-15x15,high,,template,Product price lookup
+surge gauze cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/surge-gauze-15x15,medium,,template,Product COD
+first aid first aid box,product,brand-search,surgical-items-product,https://medikart.pk/products/first-aid-f-300-first-aid-box,high,,catalog,Direct catalog product
+buy first aid first aid box online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/first-aid-f-300-first-aid-box,high,,template,Product purchase intent
+gentian violet paint,product,brand-search,surgical-items-product,https://medikart.pk/products/gentian-violet-30ml-paint,high,,catalog,Direct catalog product
+buy gentian violet paint online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/gentian-violet-30ml-paint,high,,template,Product purchase intent
+gentian violet paint price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/gentian-violet-30ml-paint,high,,template,Product price lookup
+gentian violet paint cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/gentian-violet-30ml-paint,medium,,template,Product COD
+gentian violet,brand,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,medium,,catalog,Generic formulation
+gentian violet in pakistan,informational,generic-search,surgical-items-generic,https://medikart.pk/categories/surgical-items,low,,template,Generic availability
+b braun vasofix,product,brand-search,surgical-items-product,https://medikart.pk/products/b-braun-vasofix-22g,high,,catalog,Direct catalog product
+buy b braun vasofix online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/b-braun-vasofix-22g,high,,template,Product purchase intent
+b braun vasofix price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/b-braun-vasofix-22g,high,,template,Product price lookup
+b braun vasofix cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/b-braun-vasofix-22g,medium,,template,Product COD
+lifecare fix roll dressing,product,brand-search,surgical-items-product,https://medikart.pk/products/lifecare-fix-roll-10-cm-x-10-m-dressing,high,,catalog,Direct catalog product
+buy lifecare fix roll dressing online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/lifecare-fix-roll-10-cm-x-10-m-dressing,high,,template,Product purchase intent
+lifecare fix roll dressing price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/lifecare-fix-roll-10-cm-x-10-m-dressing,high,,template,Product price lookup
+lifecare fix roll dressing cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/lifecare-fix-roll-10-cm-x-10-m-dressing,medium,,template,Product COD
+star drip set,product,brand-search,surgical-items-product,https://medikart.pk/products/star-drip-set-1s,high,,catalog,Direct catalog product
+buy star drip set online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/star-drip-set-1s,high,,template,Product purchase intent
+star drip set price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/star-drip-set-1s,high,,template,Product price lookup
+star drip set cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/star-drip-set-1s,medium,,template,Product COD
+easy save fever colling patch,product,brand-search,surgical-items-product,https://medikart.pk/products/easy-save-fever-colling-patch-1s,high,,catalog,Direct catalog product
+buy easy save fever colling patch online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/easy-save-fever-colling-patch-1s,high,,template,Product purchase intent
+kids face mask 50s,product,brand-search,surgical-items-product,https://medikart.pk/products/kids-face-mask-50s,high,,catalog,Direct catalog product
+buy kids face mask 50s online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/kids-face-mask-50s,high,,template,Product purchase intent
+kids face mask 50s price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/kids-face-mask-50s,high,,template,Product price lookup
+kids face mask 50s cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/kids-face-mask-50s,medium,,template,Product COD
+shifa disp 1 syringe,product,brand-search,surgical-items-product,https://medikart.pk/products/shifa-disp-60cc-1-syringe,high,,catalog,Direct catalog product
+buy shifa disp 1 syringe online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/shifa-disp-60cc-1-syringe,high,,template,Product purchase intent
+shifa disp 1 syringe price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/shifa-disp-60cc-1-syringe,high,,template,Product price lookup
+shifa disp 1 syringe cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/shifa-disp-60cc-1-syringe,medium,,template,Product COD
+face mask 50 pcs,product,brand-search,surgical-items-product,https://medikart.pk/products/face-mask-50-pcs,high,,catalog,Direct catalog product
+buy face mask 50 pcs online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/face-mask-50-pcs,high,,template,Product purchase intent
+face mask 50 pcs price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/face-mask-50-pcs,high,,template,Product price lookup
+face mask 50 pcs cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/face-mask-50-pcs,medium,,template,Product COD
+surgee gauze,product,brand-search,surgical-items-product,https://medikart.pk/products/surgee-gauze-10x10-10s,high,,catalog,Direct catalog product
+buy surgee gauze online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/surgee-gauze-10x10-10s,high,,template,Product purchase intent
+surgee gauze price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/surgee-gauze-10x10-10s,high,,template,Product price lookup
+surgee gauze cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/surgee-gauze-10x10-10s,medium,,template,Product COD
+kcl cotton roll,product,brand-search,surgical-items-product,https://medikart.pk/products/kcl-cotton-roll-500g,high,,catalog,Direct catalog product
+buy kcl cotton roll online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/kcl-cotton-roll-500g,high,,template,Product purchase intent
+kcl cotton roll price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/kcl-cotton-roll-500g,high,,template,Product price lookup
+kcl cotton roll cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/kcl-cotton-roll-500g,medium,,template,Product COD
+nitto tape,product,brand-search,surgical-items-product,https://medikart.pk/products/nitto-tape-2,high,,catalog,Direct catalog product
+buy nitto tape online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/nitto-tape-2,high,,template,Product purchase intent
+nitto tape price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/nitto-tape-2,high,,template,Product price lookup
+nitto tape cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/nitto-tape-2,medium,,template,Product COD
+vasofix braunula g20,product,brand-search,surgical-items-product,https://medikart.pk/products/vasofix-braunula-g20,high,,catalog,Direct catalog product
+buy vasofix braunula g20 online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/vasofix-braunula-g20,high,,template,Product purchase intent
+vasofix braunula g20 price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/vasofix-braunula-g20,high,,template,Product price lookup
+vasofix braunula g20 cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/vasofix-braunula-g20,medium,,template,Product COD
+vasofix braunula g22,product,brand-search,surgical-items-product,https://medikart.pk/products/vasofix-braunula-g22,high,,catalog,Direct catalog product
+buy vasofix braunula g22 online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/vasofix-braunula-g22,high,,template,Product purchase intent
+vasofix braunula g22 price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/vasofix-braunula-g22,high,,template,Product price lookup
+vasofix braunula g22 cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/vasofix-braunula-g22,medium,,template,Product COD
+bulb sucker 1s,product,brand-search,surgical-items-product,https://medikart.pk/products/bulb-sucker-medicare-1s,high,,catalog,Direct catalog product
+buy bulb sucker 1s online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/bulb-sucker-medicare-1s,high,,template,Product purchase intent
+bulb sucker 1s price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/bulb-sucker-medicare-1s,high,,template,Product price lookup
+bulb sucker 1s cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/bulb-sucker-medicare-1s,medium,,template,Product COD
+salonpas plaster 20 s,product,brand-search,surgical-items-product,https://medikart.pk/products/salonpas-plaster-20-s,high,,catalog,Direct catalog product
+buy salonpas plaster 20 s online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/salonpas-plaster-20-s,high,,template,Product purchase intent
+salonpas plaster 20 s price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/salonpas-plaster-20-s,high,,template,Product price lookup
+salonpas plaster 20 s cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/salonpas-plaster-20-s,medium,,template,Product COD
+surgical cap,product,brand-search,surgical-items-product,https://medikart.pk/products/surgical-cap-100s,high,,catalog,Direct catalog product
+buy surgical cap online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/surgical-cap-100s,high,,template,Product purchase intent
+surgical cap price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/surgical-cap-100s,high,,template,Product price lookup
+surgical cap cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/surgical-cap-100s,medium,,template,Product COD
+pro-med gauze pads,product,brand-search,surgical-items-product,https://medikart.pk/products/pro-med-gauze-10x10-pads,high,,catalog,Direct catalog product
+buy pro-med gauze pads online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/pro-med-gauze-10x10-pads,high,,template,Product purchase intent
+pro-med gauze pads price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/pro-med-gauze-10x10-pads,high,,template,Product price lookup
+pro-med gauze pads cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/pro-med-gauze-10x10-pads,medium,,template,Product COD
+unisa syringe 100 syringes,product,brand-search,surgical-items-product,https://medikart.pk/products/unisa-syringe-3cc-100-syringes,high,,catalog,Direct catalog product
+buy unisa syringe 100 syringes online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/unisa-syringe-3cc-100-syringes,high,,template,Product purchase intent
+unisa syringe 100 syringes price in pakistan,transactional,price-check,surgical-items-product-pricing,https://medikart.pk/products/unisa-syringe-3cc-100-syringes,high,,template,Product price lookup
+unisa syringe 100 syringes cash on delivery,transactional,purchase,surgical-items-product-cod,https://medikart.pk/products/unisa-syringe-3cc-100-syringes,medium,,template,Product COD
+jms butterfly needle all size,product,brand-search,surgical-items-product,https://medikart.pk/products/jms-butterfly-needle-all-size,high,,catalog,Direct catalog product
+buy jms butterfly needle all size online,transactional,purchase,surgical-items-product-transactional,https://medikart.pk/products/jms-butterfly-needle-all-size,high,,template,Product purchase intent

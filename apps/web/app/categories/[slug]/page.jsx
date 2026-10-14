@@ -7,7 +7,7 @@ import { BLOGS_DATA } from '../../../data/blogsData';
 import { getCategoryFaqs } from '../../../data/categoryFaqsData';
 import ProductCard from '../../../components/ProductCard';
 import { HelpCircle, ChevronDown, MapPin, Truck, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { getCategorySeoMeta } from '../../../data/categorySeoKeywords';
+import { getCategoryMetadata } from '../../../src/seo/category-meta';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -56,10 +56,13 @@ export async function generateMetadata({ params, searchParams }) {
     const category = catRes?.data?.category;
 
     if (!category) {
-      return { title: 'Category | Medikart Online Pharmacy' };
+      return {
+        title: { absolute: 'Category | Medikart Online Pharmacy' },
+        robots: { index: false, follow: false },
+      };
     }
 
-    const { title, description, keywords } = getCategorySeoMeta(slug, category.name, currentPage);
+    const { title, description, noindex } = getCategoryMetadata(slug, category.name);
 
     const canonicalUrl = currentPage > 1
       ? `${SITE_URL}/categories/${category.slug || slug}?page=${currentPage}`
@@ -68,7 +71,6 @@ export async function generateMetadata({ params, searchParams }) {
     return {
       title: { absolute: title },
       description,
-      keywords,
       alternates: {
         canonical: canonicalUrl,
       },
@@ -76,7 +78,7 @@ export async function generateMetadata({ params, searchParams }) {
         title,
         description,
         url: canonicalUrl,
-        siteName: 'Medikart - Authentic Online Pharmacy',
+        siteName: 'Medikart',
         locale: 'en_PK',
         type: 'website',
       },
@@ -85,9 +87,30 @@ export async function generateMetadata({ params, searchParams }) {
         title,
         description,
       },
+      robots: noindex
+        ? {
+            index: false,
+            follow: true,
+            nocache: true,
+            googleBot: {
+              index: false,
+              follow: true,
+            },
+          }
+        : {
+            index: true,
+            follow: true,
+            googleBot: {
+              index: true,
+              follow: true,
+            },
+          },
     };
   } catch {
-    return { title: 'Category | Medikart' };
+    return {
+      title: { absolute: 'Category | Medikart' },
+      robots: { index: false, follow: true },
+    };
   }
 }
 
@@ -140,7 +163,10 @@ export default async function CategoryPage({ params, searchParams }) {
     (b.tags && b.tags.some((t) => t.toLowerCase().includes(category.name.toLowerCase())))
   ).slice(0, 3);
 
-  // Intro text
+  // Intro text and AEO summary
+  const meta = getCategoryMetadata(slug, category.name);
+  const aeoSummary = meta?.aeoSummary || null;
+
   const introText = CATEGORY_INTROS[slug] ||
     `Browse genuine ${category.name} on Medikart. All healthcare items are sourced directly from licensed retail partner pharmacies and authorized pharmaceutical distributors in Pakistan. Check authentic stock, compare options, and order with Cash on Delivery (COD).`;
 
@@ -170,14 +196,25 @@ export default async function CategoryPage({ params, searchParams }) {
     ],
   };
 
-  // Category FAQs (8 to 10 Pakistan-specific FAQs)
+  // Category FAQs (Pakistan-specific FAQs with AEO summary aligned)
   const categoryFaqs = getCategoryFaqs(slug);
+  const allCategoryFaqs = [
+    ...(aeoSummary
+      ? [
+          {
+            question: `What does Medikart offer in ${category.name}, and what are the delivery and payment options?`,
+            answer: aeoSummary,
+          },
+        ]
+      : []),
+    ...categoryFaqs,
+  ];
 
   // FAQPage Schema
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: categoryFaqs.map((faq) => ({
+    mainEntity: allCategoryFaqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: {
@@ -192,7 +229,7 @@ export default async function CategoryPage({ params, searchParams }) {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: `${category.name} in Pakistan`,
-    description: introText,
+    description: aeoSummary || introText,
     url: `${SITE_URL}/categories/${category.slug || slug}`,
     mainEntity: {
       '@type': 'ItemList',
@@ -313,6 +350,20 @@ export default async function CategoryPage({ params, searchParams }) {
             </p>
           </div>
         </div>
+
+        {/* Answer-First Plain-Language Summary for AEO/GEO (40-60 words) */}
+        {aeoSummary && (
+          <div className="bg-white/95 border border-amber-200/90 rounded-2xl p-4 sm:p-5 shadow-2xs space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-black tracking-wider uppercase bg-yellow-400 text-slate-900 px-2 py-0.5 rounded-md">
+                ⚡ Quick Summary &amp; Delivery
+              </span>
+            </div>
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+              {aeoSummary}
+            </p>
+          </div>
+        )}
 
         {/* Server-Rendered Factual Intro Paragraph (80-150 words) */}
         <p className="text-sm sm:text-base text-slate-700 leading-relaxed max-w-4xl pt-1">
@@ -513,23 +564,19 @@ export default async function CategoryPage({ params, searchParams }) {
           <span>Express Medicine &amp; Healthcare Delivery Across Pakistan</span>
         </div>
         <h3 className="text-lg sm:text-xl font-black text-slate-950">
-          Fast Doorstep Delivery in 150+ Cities with Cash on Delivery (COD)
+          Fast Doorstep Delivery Across Pakistan with Cash on Delivery (COD)
         </h3>
         <p className="text-xs sm:text-sm text-slate-800 leading-relaxed max-w-4xl">
-          Medikart partners with verified, licensed retail pharmacies to fulfill authentic orders of <strong>{category.name}</strong>. Enjoy <strong>2 to 4 hour express intra-city delivery</strong> in Lahore, Karachi, Islamabad, and Rawalpindi. We also deliver across Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, and Azad Kashmir within <strong>24 to 48 hours</strong>, covering major hubs: <em>Faisalabad, Multan, Peshawar, Quetta, Sahiwal, Gujranwala, Sialkot, Hyderabad, Sukkur, Bahawalpur, Sargodha, Abbottabad, and Gujrat</em>.
+          Medikart partners with verified retail pharmacies to fulfill genuine orders of <strong>{category.name}</strong>. Enjoy <strong>1 to 5 hour express delivery</strong> in website-listed cities (<em>Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, Gujranwala, and Sahiwal</em>). For all other locations across Pakistan, orders arrive reliably within <strong>2 to 3 working days</strong>.
         </p>
         <div className="pt-1 flex flex-wrap items-center gap-2 text-[11px] font-bold text-slate-900">
           <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            100% DRAP Registered Stock
+            1 to 5 Hour Express Delivery in Listed Cities
           </span>
           <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            Tamper-Evident Sealed Boxes
-          </span>
-          <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            Cold-Chain Insulin &amp; Eye Drops Storage
+            2 to 3 Working Days Nationwide
           </span>
           <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full border border-amber-300 shadow-3xs">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -539,25 +586,25 @@ export default async function CategoryPage({ params, searchParams }) {
       </section>
 
       {/* ─── Category FAQs Accordion (Rich Snippets & AEO/GEO Grounding) ─── */}
-      {categoryFaqs && categoryFaqs.length > 0 && (
+      {allCategoryFaqs && allCategoryFaqs.length > 0 && (
         <section aria-label="Frequently Asked Questions" className="p-6 sm:p-8 rounded-3xl bg-white border-2 border-yellow-200/90 shadow-sm space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-amber-950 bg-amber-100 px-2.5 py-0.5 rounded-full mb-1">
                 <HelpCircle className="w-3.5 h-3.5 text-amber-700" />
-                <span>Verified Pharmacy Q&amp;A</span>
+                <span>Verified Healthcare Q&amp;A</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black font-heading text-slate-950">
-                Frequently Asked Questions about {category.name} ({categoryFaqs.length})
+                Frequently Asked Questions about {category.name} ({allCategoryFaqs.length})
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 font-medium">
-                Answers verified by licensed Pakistani pharmacists regarding delivery, authenticity, DRAP compliance, and payments.
+                Direct answers regarding delivery timelines, ordering, and payment options across Pakistan.
               </p>
             </div>
           </div>
 
           <div className="space-y-3 pt-2">
-            {categoryFaqs.map((faq, fIdx) => (
+            {allCategoryFaqs.map((faq, fIdx) => (
               <details
                 key={fIdx}
                 className="group rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all shadow-3xs overflow-hidden open:bg-amber-50/40 open:border-amber-300 open:shadow-2xs"

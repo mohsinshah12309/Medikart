@@ -1,0 +1,728 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+over the counter medicines,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy over the counter medicines online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+over the counter medicines price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order over the counter medicines online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+over the counter medicines cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best over the counter medicines in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable over the counter medicines,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+over the counter medicines home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+over the counter medicines in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+over the counter medicines in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+over the counter medicines in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+over the counter medicines in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+over the counter medicines in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is over the counter medicines,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose over the counter medicines,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use over the counter medicines,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+over the counter medicines sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+over the counter medicines online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+over the counter medicines delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+pain relief tablets,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy pain relief tablets online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+pain relief tablets price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order pain relief tablets online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+pain relief tablets cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best pain relief tablets in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable pain relief tablets,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+pain relief tablets home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+pain relief tablets in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+pain relief tablets in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+pain relief tablets in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+pain relief tablets in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+pain relief tablets in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is pain relief tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose pain relief tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use pain relief tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is pain relief tablets available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+pain relief tablets sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+pain relief tablets ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+pain relief tablets online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+pain relief tablets delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+fever medicine,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy fever medicine online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+fever medicine price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order fever medicine online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+fever medicine cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best fever medicine in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable fever medicine,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+fever medicine home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+fever medicine in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+fever medicine in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+fever medicine in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+fever medicine in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+fever medicine in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is fever medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose fever medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use fever medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is fever medicine available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy fever medicine in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+fever medicine sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+fever medicine ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+fever medicine online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+fever medicine delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+panadol tablets,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy panadol tablets online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+panadol tablets price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order panadol tablets online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+panadol tablets cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best panadol tablets in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable panadol tablets,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+panadol tablets home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+panadol tablets in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+panadol tablets in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+panadol tablets in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+panadol tablets in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+panadol tablets in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is panadol tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose panadol tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use panadol tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is panadol tablets available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy panadol tablets in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+panadol tablets sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+panadol tablets ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+panadol tablets online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+panadol tablets delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+cough syrup,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy cough syrup online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+cough syrup price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order cough syrup online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+cough syrup cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best cough syrup in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable cough syrup,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+cough syrup home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+cough syrup in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+cough syrup in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+cough syrup in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+cough syrup in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+cough syrup in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is cough syrup,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose cough syrup,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use cough syrup,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is cough syrup available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy cough syrup in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+cough syrup sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+cough syrup ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+cough syrup online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+cough syrup delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+flu and cold relief,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy flu and cold relief online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+flu and cold relief price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order flu and cold relief online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+flu and cold relief cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best flu and cold relief in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable flu and cold relief,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+flu and cold relief home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+flu and cold relief in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+flu and cold relief in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+flu and cold relief in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+flu and cold relief in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+flu and cold relief in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is flu and cold relief,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose flu and cold relief,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use flu and cold relief,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+flu and cold relief sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+flu and cold relief online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+flu and cold relief delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+digestive tablets,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy digestive tablets online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+digestive tablets price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order digestive tablets online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+digestive tablets cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best digestive tablets in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable digestive tablets,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+digestive tablets home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+digestive tablets in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+digestive tablets in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+digestive tablets in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+digestive tablets in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+digestive tablets in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is digestive tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose digestive tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use digestive tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is digestive tablets available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy digestive tablets in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+digestive tablets sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+digestive tablets ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+digestive tablets online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+digestive tablets delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+antacid syrup,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy antacid syrup online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+antacid syrup price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order antacid syrup online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+antacid syrup cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best antacid syrup in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable antacid syrup,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+antacid syrup home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+antacid syrup in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+antacid syrup in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+antacid syrup in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+antacid syrup in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+antacid syrup in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is antacid syrup,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose antacid syrup,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use antacid syrup,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is antacid syrup available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy antacid syrup in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+antacid syrup sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+antacid syrup ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+antacid syrup online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+antacid syrup delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+first aid supplies,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy first aid supplies online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+first aid supplies price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order first aid supplies online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+first aid supplies cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best first aid supplies in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable first aid supplies,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+first aid supplies home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+first aid supplies in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+first aid supplies in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+first aid supplies in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+first aid supplies in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+first aid supplies in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is first aid supplies,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose first aid supplies,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use first aid supplies,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is first aid supplies available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+first aid supplies sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+first aid supplies ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+first aid supplies online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+first aid supplies delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+allergy tablets,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy allergy tablets online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+allergy tablets price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order allergy tablets online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+allergy tablets cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best allergy tablets in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable allergy tablets,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+allergy tablets home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+allergy tablets in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+allergy tablets in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+allergy tablets in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+allergy tablets in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+allergy tablets in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is allergy tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose allergy tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use allergy tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is allergy tablets available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy allergy tablets in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+allergy tablets sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+allergy tablets ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+allergy tablets online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+allergy tablets delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+anti-diarrhea medicine,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy anti-diarrhea medicine online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+anti-diarrhea medicine price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order anti-diarrhea medicine online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+anti-diarrhea medicine cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best anti-diarrhea medicine in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable anti-diarrhea medicine,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+anti-diarrhea medicine home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+anti-diarrhea medicine in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+anti-diarrhea medicine in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+anti-diarrhea medicine in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+anti-diarrhea medicine in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+anti-diarrhea medicine in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is anti-diarrhea medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose anti-diarrhea medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use anti-diarrhea medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is anti-diarrhea medicine available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy anti-diarrhea medicine in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+anti-diarrhea medicine sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+anti-diarrhea medicine ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+anti-diarrhea medicine online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+anti-diarrhea medicine delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+throat lozenges,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy throat lozenges online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+throat lozenges price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order throat lozenges online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+throat lozenges cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best throat lozenges in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable throat lozenges,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+throat lozenges home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+throat lozenges in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+throat lozenges in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+throat lozenges in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+throat lozenges in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+throat lozenges in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is throat lozenges,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose throat lozenges,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use throat lozenges,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is throat lozenges available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy throat lozenges in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+throat lozenges sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+throat lozenges ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+throat lozenges online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+throat lozenges delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+headache medicine,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy headache medicine online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+headache medicine price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order headache medicine online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+headache medicine cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best headache medicine in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable headache medicine,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+headache medicine home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+headache medicine in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+headache medicine in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+headache medicine in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+headache medicine in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+headache medicine in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is headache medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose headache medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use headache medicine,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is headache medicine available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy headache medicine in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+headache medicine sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+headache medicine ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+headache medicine online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+headache medicine delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+motion sickness tablets,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy motion sickness tablets online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+motion sickness tablets price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order motion sickness tablets online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+motion sickness tablets cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best motion sickness tablets in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable motion sickness tablets,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+motion sickness tablets home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+motion sickness tablets in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+motion sickness tablets in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+motion sickness tablets in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+motion sickness tablets in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+motion sickness tablets in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is motion sickness tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose motion sickness tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use motion sickness tablets,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is motion sickness tablets available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+motion sickness tablets sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+motion sickness tablets ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+motion sickness tablets online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+motion sickness tablets delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+antiseptic liquid,informational,commercial-investigation,otc-core,https://medikart.pk/categories/otc,high,,template,Approved seed term
+buy antiseptic liquid online,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,high,,template,Core purchase intent
+antiseptic liquid price in pakistan,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,high,,template,Price check intent
+order antiseptic liquid online pakistan,transactional,purchase,otc-transactional,https://medikart.pk/categories/otc,medium,,template,Online order
+antiseptic liquid cash on delivery,transactional,purchase,otc-cod,https://medikart.pk/categories/otc,medium,,template,COD intent
+best antiseptic liquid in pakistan,informational,comparison,otc-comparison,https://medikart.pk/categories/otc,medium,,template,Best in class
+affordable antiseptic liquid,transactional,price-check,otc-pricing,https://medikart.pk/categories/otc,low,,template,Affordable value
+antiseptic liquid home delivery,transactional,purchase,otc-delivery,https://medikart.pk/categories/otc,medium,,template,Delivery intent
+antiseptic liquid in lahore,local,local-delivery,otc-local-lahore,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in lahore
+antiseptic liquid in karachi,local,local-delivery,otc-local-karachi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in karachi
+antiseptic liquid in islamabad,local,local-delivery,otc-local-islamabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in islamabad
+antiseptic liquid in rawalpindi,local,local-delivery,otc-local-rawalpindi,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in rawalpindi
+antiseptic liquid in faisalabad,local,local-delivery,otc-local-faisalabad,https://medikart.pk/categories/otc,medium,,template,1-5 hr delivery in faisalabad
+what is antiseptic liquid,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO direct answer
+how to choose antiseptic liquid,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO selection guide
+how to use antiseptic liquid,question,informational,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,AEO usage guide
+is antiseptic liquid available in pakistan,question,commercial-investigation,otc-aeo,https://medikart.pk/categories/otc#faqs,low,,template,Availability question
+where to buy antiseptic liquid in pakistan,question,purchase,otc-aeo,https://medikart.pk/categories/otc#faqs,medium,,template,Vendor lookup
+antiseptic liquid sasti,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Pakistani vernacular
+antiseptic liquid ki price kitni hai,roman-urdu,price-check,otc-roman-urdu,https://medikart.pk/categories/otc#faqs,low,,template,Vernacular price query
+antiseptic liquid online mangwana,roman-urdu,purchase,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular delivery query
+antiseptic liquid delivery timing,roman-urdu,local-delivery,otc-roman-urdu,https://medikart.pk/categories/otc,low,,template,Vernacular timing query
+acefer 120ml syrup,product,brand-search,otc-product,https://medikart.pk/products/acefer-50mg5ml-120ml-syrup,high,,catalog,Direct catalog product
+buy acefer 120ml syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/acefer-50mg5ml-120ml-syrup,high,,template,Product purchase intent
+acefer 120ml syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/acefer-50mg5ml-120ml-syrup,high,,template,Product price lookup
+acefer 120ml syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/acefer-50mg5ml-120ml-syrup,medium,,template,Product COD
+iron complex,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+iron complex in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+arinac forte 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/arinac-forte-40060mg-100-tablets,high,,catalog,Direct catalog product
+buy arinac forte 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/arinac-forte-40060mg-100-tablets,high,,template,Product purchase intent
+arinac forte 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/arinac-forte-40060mg-100-tablets,high,,template,Product price lookup
+arinac forte 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/arinac-forte-40060mg-100-tablets,medium,,template,Product COD
+ibuprofen pseudoephedrine,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+ibuprofen pseudoephedrine in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+bonmin 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/bonmin-30-tablets,high,,catalog,Direct catalog product
+buy bonmin 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/bonmin-30-tablets,high,,template,Product purchase intent
+bonmin 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/bonmin-30-tablets,high,,template,Product price lookup
+bonmin 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/bonmin-30-tablets,medium,,template,Product COD
+brufen 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/brufen-200mg-100-tablets,high,,catalog,Direct catalog product
+buy brufen 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/brufen-200mg-100-tablets,high,,template,Product purchase intent
+brufen 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/brufen-200mg-100-tablets,high,,template,Product price lookup
+brufen 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/brufen-200mg-100-tablets,medium,,template,Product COD
+calcee-500 10 sachets,product,brand-search,otc-product,https://medikart.pk/products/calcee-500-orange-10-sachets,high,,catalog,Direct catalog product
+buy calcee-500 10 sachets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/calcee-500-orange-10-sachets,high,,template,Product purchase intent
+calcee-500 10 sachets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/calcee-500-orange-10-sachets,high,,template,Product price lookup
+calcee-500 10 sachets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/calcee-500-orange-10-sachets,medium,,template,Product COD
+calpol 6 plus 90ml suspension,product,brand-search,otc-product,https://medikart.pk/products/calpol-6-plus-250mgml-90ml-suspension,high,,catalog,Direct catalog product
+buy calpol 6 plus 90ml suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/calpol-6-plus-250mgml-90ml-suspension,high,,template,Product purchase intent
+paracetamol 250mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+paracetamol 250mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+calpol 200 tablets,product,brand-search,otc-product,https://medikart.pk/products/calpol-500mg-200-tablets,high,,catalog,Direct catalog product
+buy calpol 200 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/calpol-500mg-200-tablets,high,,template,Product purchase intent
+calpol 200 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/calpol-500mg-200-tablets,high,,template,Product price lookup
+calpol 200 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/calpol-500mg-200-tablets,medium,,template,Product COD
+paracetamol 500mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+paracetamol 500mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+marhaba castor oil,product,brand-search,otc-product,https://medikart.pk/products/marhaba-castor-oil-1s,high,,catalog,Direct catalog product
+buy marhaba castor oil online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/marhaba-castor-oil-1s,high,,template,Product purchase intent
+marhaba castor oil price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/marhaba-castor-oil-1s,high,,template,Product price lookup
+marhaba castor oil cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/marhaba-castor-oil-1s,medium,,template,Product COD
+ceridal 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/ceridal-10mg-100-tablets,high,,catalog,Direct catalog product
+buy ceridal 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/ceridal-10mg-100-tablets,high,,template,Product purchase intent
+ceridal 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/ceridal-10mg-100-tablets,high,,template,Product price lookup
+ceridal 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/ceridal-10mg-100-tablets,medium,,template,Product COD
+cetirizine,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+cetirizine in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+clinica tooth paste 100g toothpaste,product,brand-search,otc-product,https://medikart.pk/products/clinica-tooth-paste-02-100g-toothpaste,high,,catalog,Direct catalog product
+buy clinica tooth paste 100g toothpaste online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/clinica-tooth-paste-02-100g-toothpaste,high,,template,Product purchase intent
+cortisporin eye ointment,product,brand-search,otc-product,https://medikart.pk/products/cortisporin-3g-eye-ointment,high,,catalog,Direct catalog product
+buy cortisporin eye ointment online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/cortisporin-3g-eye-ointment,high,,template,Product purchase intent
+cortisporin eye ointment price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/cortisporin-3g-eye-ointment,high,,template,Product price lookup
+cortisporin eye ointment cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/cortisporin-3g-eye-ointment,medium,,template,Product COD
+deltalin syrup,product,brand-search,otc-product,https://medikart.pk/products/deltalin-120ml-syrup,high,,catalog,Direct catalog product
+buy deltalin syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/deltalin-120ml-syrup,high,,template,Product purchase intent
+deltalin syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/deltalin-120ml-syrup,high,,template,Product price lookup
+deltalin syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/deltalin-120ml-syrup,medium,,template,Product COD
+aminophylline ammonium chloride diphenhydramine,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+aminophylline ammonium chloride diphenhydramine in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+erogesic 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/erogesic-35450mg-100-tablets,high,,catalog,Direct catalog product
+buy erogesic 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/erogesic-35450mg-100-tablets,high,,template,Product purchase intent
+erogesic 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/erogesic-35450mg-100-tablets,high,,template,Product price lookup
+erogesic 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/erogesic-35450mg-100-tablets,medium,,template,Product COD
+evion 100 capsules,product,brand-search,otc-product,https://medikart.pk/products/evion-200mg-100-capsules,high,,catalog,Direct catalog product
+buy evion 100 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/evion-200mg-100-capsules,high,,template,Product purchase intent
+evion 100 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/evion-200mg-100-capsules,high,,template,Product price lookup
+evion 100 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/evion-200mg-100-capsules,medium,,template,Product COD
+vitamin e,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+vitamin e in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+feptid 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/feptid-20mg-20-tablets,high,,catalog,Direct catalog product
+buy feptid 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/feptid-20mg-20-tablets,high,,template,Product purchase intent
+feptid 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/feptid-20mg-20-tablets,high,,template,Product price lookup
+feptid 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/feptid-20mg-20-tablets,medium,,template,Product COD
+famotidine 20mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+famotidine 20mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+ferry-f 30 capsules,product,brand-search,otc-product,https://medikart.pk/products/ferry-f-310mg350g-30-capsules,high,,catalog,Direct catalog product
+buy ferry-f 30 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/ferry-f-310mg350g-30-capsules,high,,template,Product purchase intent
+ferry-f 30 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/ferry-f-310mg350g-30-capsules,high,,template,Product price lookup
+ferry-f 30 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/ferry-f-310mg350g-30-capsules,medium,,template,Product COD
+folic acid iron complex,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+folic acid iron complex in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+gaviscon advance syrup,product,brand-search,otc-product,https://medikart.pk/products/gaviscon-120ml-advance-syrup,high,,catalog,Direct catalog product
+buy gaviscon advance syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/gaviscon-120ml-advance-syrup,high,,template,Product purchase intent
+gaviscon advance syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/gaviscon-120ml-advance-syrup,high,,template,Product price lookup
+gaviscon advance syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/gaviscon-120ml-advance-syrup,medium,,template,Product COD
+genifer f syrup,product,brand-search,otc-product,https://medikart.pk/products/genifer-f-120ml-syrup,high,,catalog,Direct catalog product
+buy genifer f syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/genifer-f-120ml-syrup,high,,template,Product purchase intent
+genifer f syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/genifer-f-120ml-syrup,high,,template,Product price lookup
+genifer f syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/genifer-f-120ml-syrup,medium,,template,Product COD
+woodwards gripe water,product,brand-search,otc-product,https://medikart.pk/products/woodwards-150ml-gripe-water,high,,catalog,Direct catalog product
+buy woodwards gripe water online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/woodwards-150ml-gripe-water,high,,template,Product purchase intent
+woodwards gripe water price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/woodwards-150ml-gripe-water,high,,template,Product price lookup
+woodwards gripe water cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/woodwards-150ml-gripe-water,medium,,template,Product COD
+intig-d suspension,product,brand-search,otc-product,https://medikart.pk/products/intig-d-120ml-suspension,high,,catalog,Direct catalog product
+buy intig-d suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/intig-d-120ml-suspension,high,,template,Product purchase intent
+intig-d suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/intig-d-120ml-suspension,high,,template,Product price lookup
+intig-d suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/intig-d-120ml-suspension,medium,,template,Product COD
+irecon 10 tablets,product,brand-search,otc-product,https://medikart.pk/products/irecon-150mg-10-tablets,high,,catalog,Direct catalog product
+buy irecon 10 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/irecon-150mg-10-tablets,high,,template,Product purchase intent
+irecon 10 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/irecon-150mg-10-tablets,high,,template,Product price lookup
+irecon 10 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/irecon-150mg-10-tablets,medium,,template,Product COD
+lecord 10 tablets,product,brand-search,otc-product,https://medikart.pk/products/lecord-250mg-10-tablets,high,,catalog,Direct catalog product
+buy lecord 10 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/lecord-250mg-10-tablets,high,,template,Product purchase intent
+lecord 10 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/lecord-250mg-10-tablets,high,,template,Product price lookup
+lecord 10 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/lecord-250mg-10-tablets,medium,,template,Product COD
+levofloxacin 250mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+levofloxacin 250mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+maltofer fol 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/maltofer-fol-100mg035mg-30-tablets,high,,catalog,Direct catalog product
+buy maltofer fol 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/maltofer-fol-100mg035mg-30-tablets,high,,template,Product purchase intent
+maltofer fol 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/maltofer-fol-100mg035mg-30-tablets,high,,template,Product price lookup
+maltofer fol 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/maltofer-fol-100mg035mg-30-tablets,medium,,template,Product COD
+multibionta-m 30 capsules,product,brand-search,otc-product,https://medikart.pk/products/multibionta-m-30-capsules,high,,catalog,Direct catalog product
+buy multibionta-m 30 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/multibionta-m-30-capsules,high,,template,Product purchase intent
+multibionta-m 30 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/multibionta-m-30-capsules,high,,template,Product price lookup
+multibionta-m 30 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/multibionta-m-30-capsules,medium,,template,Product COD
+multiplex 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/multiplex-20-tablets,high,,catalog,Direct catalog product
+buy multiplex 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/multiplex-20-tablets,high,,template,Product purchase intent
+multiplex 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/multiplex-20-tablets,high,,template,Product price lookup
+multiplex 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/multiplex-20-tablets,medium,,template,Product COD
+vitamin c vitamin a,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+vitamin c vitamin a in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+nervon 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/nervon-500mcg-30-tablets,high,,catalog,Direct catalog product
+buy nervon 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/nervon-500mcg-30-tablets,high,,template,Product purchase intent
+nervon 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/nervon-500mcg-30-tablets,high,,template,Product price lookup
+nervon 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/nervon-500mcg-30-tablets,medium,,template,Product COD
+mecobalamin,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+mecobalamin in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+ossobon d kids suspension,product,brand-search,otc-product,https://medikart.pk/products/ossobon-d-kids-120ml-suspension,high,,catalog,Direct catalog product
+buy ossobon d kids suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/ossobon-d-kids-120ml-suspension,high,,template,Product purchase intent
+ossobon d kids suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/ossobon-d-kids-120ml-suspension,high,,template,Product price lookup
+ossobon d kids suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/ossobon-d-kids-120ml-suspension,medium,,template,Product COD
+panadol extra 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/panadol-extra-50065mg-100-tablets,high,,catalog,Direct catalog product
+buy panadol extra 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/panadol-extra-50065mg-100-tablets,high,,template,Product purchase intent
+panadol extra 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/panadol-extra-50065mg-100-tablets,high,,template,Product price lookup
+panadol extra 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/panadol-extra-50065mg-100-tablets,medium,,template,Product COD
+paracetamol caffeine,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+paracetamol caffeine in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+panadol forte suspension,product,brand-search,otc-product,https://medikart.pk/products/panadol-forte-suspension,high,,catalog,Direct catalog product
+buy panadol forte suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/panadol-forte-suspension,high,,template,Product purchase intent
+panadol forte suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/panadol-forte-suspension,high,,template,Product price lookup
+panadol forte suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/panadol-forte-suspension,medium,,template,Product COD
+pedrol 60ml suspension,product,brand-search,otc-product,https://medikart.pk/products/pedrol-120mg-60ml-suspension,high,,catalog,Direct catalog product
+buy pedrol 60ml suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/pedrol-120mg-60ml-suspension,high,,template,Product purchase intent
+pedrol 60ml suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/pedrol-120mg-60ml-suspension,high,,template,Product price lookup
+pedrol 60ml suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/pedrol-120mg-60ml-suspension,medium,,template,Product COD
+paracetamol 120mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+paracetamol 120mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+polyfax skin ointment,product,brand-search,otc-product,https://medikart.pk/products/polyfax-20g-skin-ointment,high,,catalog,Direct catalog product
+buy polyfax skin ointment online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/polyfax-20g-skin-ointment,high,,template,Product purchase intent
+polyfax skin ointment price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/polyfax-20g-skin-ointment,high,,template,Product price lookup
+polyfax skin ointment cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/polyfax-20g-skin-ointment,medium,,template,Product COD
+ponstan forte 200 tablets,product,brand-search,otc-product,https://medikart.pk/products/ponstan-forte-500mg-200-tablets,high,,catalog,Direct catalog product
+buy ponstan forte 200 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/ponstan-forte-500mg-200-tablets,high,,template,Product purchase intent
+ponstan forte 200 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/ponstan-forte-500mg-200-tablets,high,,template,Product price lookup
+ponstan forte 200 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/ponstan-forte-500mg-200-tablets,medium,,template,Product COD
+mefenamic acid 500mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+mefenamic acid 500mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+prodent 100g toothpaste,product,brand-search,otc-product,https://medikart.pk/products/prodent-5-100g-toothpaste,high,,catalog,Direct catalog product
+buy prodent 100g toothpaste online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/prodent-5-100g-toothpaste,high,,template,Product purchase intent
+prodent 100g toothpaste price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/prodent-5-100g-toothpaste,high,,template,Product price lookup
+prodent 100g toothpaste cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/prodent-5-100g-toothpaste,medium,,template,Product COD
+potassium nitrate,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+potassium nitrate in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+rigix 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/rigix-10mg-30-tablets,high,,catalog,Direct catalog product
+buy rigix 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/rigix-10mg-30-tablets,high,,template,Product purchase intent
+rigix 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/rigix-10mg-30-tablets,high,,template,Product price lookup
+rigix 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/rigix-10mg-30-tablets,medium,,template,Product COD
+rubifer-f 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/rubifer-f-20-tablets,high,,catalog,Direct catalog product
+buy rubifer-f 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/rubifer-f-20-tablets,high,,template,Product purchase intent
+rubifer-f 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/rubifer-f-20-tablets,high,,template,Product price lookup
+rubifer-f 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/rubifer-f-20-tablets,medium,,template,Product COD
+sangobion 120ml syrup,product,brand-search,otc-product,https://medikart.pk/products/sangobion-120ml-syrup,high,,catalog,Direct catalog product
+buy sangobion 120ml syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/sangobion-120ml-syrup,high,,template,Product purchase intent
+sangobion 120ml syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/sangobion-120ml-syrup,high,,template,Product price lookup
+sangobion 120ml syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/sangobion-120ml-syrup,medium,,template,Product COD
+sense-t 100g toothpaste,product,brand-search,otc-product,https://medikart.pk/products/sense-t-100g-toothpaste,high,,catalog,Direct catalog product
+buy sense-t 100g toothpaste online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/sense-t-100g-toothpaste,high,,template,Product purchase intent
+sense-t 100g toothpaste price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/sense-t-100g-toothpaste,high,,template,Product price lookup
+sense-t 100g toothpaste cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/sense-t-100g-toothpaste,medium,,template,Product COD
+strontium chloride hexahydrate 01,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+strontium chloride hexahydrate 01 in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+somogel cream,product,brand-search,otc-product,https://medikart.pk/products/somogel-20g-cream,high,,catalog,Direct catalog product
+buy somogel cream online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/somogel-20g-cream,high,,template,Product purchase intent
+somogel cream price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/somogel-20g-cream,high,,template,Product price lookup
+somogel cream cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/somogel-20g-cream,medium,,template,Product COD
+lignocaine,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+lignocaine in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+sunny d 30 capsules,product,brand-search,otc-product,https://medikart.pk/products/sunny-d-5000iu-30-capsules,high,,catalog,Direct catalog product
+buy sunny d 30 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/sunny-d-5000iu-30-capsules,high,,template,Product purchase intent
+sunny d 30 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/sunny-d-5000iu-30-capsules,high,,template,Product price lookup
+sunny d 30 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/sunny-d-5000iu-30-capsules,medium,,template,Product COD
+cholecalciferol 5000iu,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+cholecalciferol 5000iu in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+supravit-m 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/supravit-m-30-tablets,high,,catalog,Direct catalog product
+buy supravit-m 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/supravit-m-30-tablets,high,,template,Product purchase intent
+supravit-m 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/supravit-m-30-tablets,high,,template,Product price lookup
+supravit-m 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/supravit-m-30-tablets,medium,,template,Product COD
+multivitamins and minerals,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+multivitamins and minerals in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+tempramine suspension,product,brand-search,otc-product,https://medikart.pk/products/tempramine-120ml-suspension,high,,catalog,Direct catalog product
+buy tempramine suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/tempramine-120ml-suspension,high,,template,Product purchase intent
+tempramine suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/tempramine-120ml-suspension,high,,template,Product price lookup
+tempramine suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/tempramine-120ml-suspension,medium,,template,Product COD
+vidaylin syrup,product,brand-search,otc-product,https://medikart.pk/products/vidaylin-120ml-syrup,high,,catalog,Direct catalog product
+buy vidaylin syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/vidaylin-120ml-syrup,high,,template,Product purchase intent
+vidaylin syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/vidaylin-120ml-syrup,high,,template,Product price lookup
+vidaylin syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/vidaylin-120ml-syrup,medium,,template,Product COD
+supplement,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+supplement in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+voltral sr 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/voltral-sr-100mg-30-tablets,high,,catalog,Direct catalog product
+buy voltral sr 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/voltral-sr-100mg-30-tablets,high,,template,Product purchase intent
+voltral sr 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/voltral-sr-100mg-30-tablets,high,,template,Product price lookup
+voltral sr 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/voltral-sr-100mg-30-tablets,medium,,template,Product COD
+diclofenac sodium 100mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+diclofenac sodium 100mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+wintogeno 50g balm,product,brand-search,otc-product,https://medikart.pk/products/wintogeno-1217-50g-balm,high,,catalog,Direct catalog product
+buy wintogeno 50g balm online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/wintogeno-1217-50g-balm,high,,template,Product purchase intent
+wintogeno 50g balm price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/wintogeno-1217-50g-balm,high,,template,Product price lookup
+wintogeno 50g balm cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/wintogeno-1217-50g-balm,medium,,template,Product COD
+cecon 10ml oral drops,product,brand-search,otc-product,https://medikart.pk/products/cecon-100mg-10ml-oral-drops,high,,catalog,Direct catalog product
+buy cecon 10ml oral drops online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/cecon-100mg-10ml-oral-drops,high,,template,Product purchase intent
+cecon 10ml oral drops price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/cecon-100mg-10ml-oral-drops,high,,template,Product price lookup
+cecon 10ml oral drops cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/cecon-100mg-10ml-oral-drops,medium,,template,Product COD
+vitamin c,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+vitamin c in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+vidaylin-l 120ml syrup,product,brand-search,otc-product,https://medikart.pk/products/vidaylin-l-120ml-syrup,high,,catalog,Direct catalog product
+buy vidaylin-l 120ml syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/vidaylin-l-120ml-syrup,high,,template,Product purchase intent
+vidaylin-l 120ml syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/vidaylin-l-120ml-syrup,high,,template,Product price lookup
+vidaylin-l 120ml syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/vidaylin-l-120ml-syrup,medium,,template,Product COD
+vidaylin oral drops,product,brand-search,otc-product,https://medikart.pk/products/vidaylin-10ml-oral-drops,high,,catalog,Direct catalog product
+buy vidaylin oral drops online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/vidaylin-10ml-oral-drops,high,,template,Product purchase intent
+vidaylin oral drops price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/vidaylin-10ml-oral-drops,high,,template,Product price lookup
+vidaylin oral drops cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/vidaylin-10ml-oral-drops,medium,,template,Product COD
+iberet-500 syrup,product,brand-search,otc-product,https://medikart.pk/products/iberet-500-120ml-syrup,high,,catalog,Direct catalog product
+buy iberet-500 syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/iberet-500-120ml-syrup,high,,template,Product purchase intent
+iberet-500 syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/iberet-500-120ml-syrup,high,,template,Product price lookup
+iberet-500 syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/iberet-500-120ml-syrup,medium,,template,Product COD
+kalv 14 sachets,product,brand-search,otc-product,https://medikart.pk/products/kalv-14-sachets,high,,catalog,Direct catalog product
+buy kalv 14 sachets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/kalv-14-sachets,high,,template,Product purchase intent
+kalv 14 sachets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/kalv-14-sachets,high,,template,Product price lookup
+kalv 14 sachets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/kalv-14-sachets,medium,,template,Product COD
+lederplex 150ml syrup,product,brand-search,otc-product,https://medikart.pk/products/lederplex-150ml-syrup,high,,catalog,Direct catalog product
+buy lederplex 150ml syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/lederplex-150ml-syrup,high,,template,Product purchase intent
+lederplex 150ml syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/lederplex-150ml-syrup,high,,template,Product price lookup
+lederplex 150ml syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/lederplex-150ml-syrup,medium,,template,Product COD
+ponstan 600 tablets,product,brand-search,otc-product,https://medikart.pk/products/ponstan-250mg-600-tablets,high,,catalog,Direct catalog product
+buy ponstan 600 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/ponstan-250mg-600-tablets,high,,template,Product purchase intent
+ponstan 600 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/ponstan-250mg-600-tablets,high,,template,Product price lookup
+ponstan 600 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/ponstan-250mg-600-tablets,medium,,template,Product COD
+disprin 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/disprin-300mg-100-tablets,high,,catalog,Direct catalog product
+buy disprin 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/disprin-300mg-100-tablets,high,,template,Product purchase intent
+disprin 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/disprin-300mg-100-tablets,high,,template,Product price lookup
+disprin 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/disprin-300mg-100-tablets,medium,,template,Product COD
+aspirin,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+aspirin in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+calpol 100ml paediatric suspension,product,brand-search,otc-product,https://medikart.pk/products/calpol-120mg5ml-100ml-paediatric-suspension,high,,catalog,Direct catalog product
+buy calpol 100ml paediatric suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/calpol-120mg5ml-100ml-paediatric-suspension,high,,template,Product purchase intent
+calpol 100ml paediatric suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/calpol-120mg5ml-100ml-paediatric-suspension,high,,template,Product price lookup
+calpol 100ml paediatric suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/calpol-120mg5ml-100ml-paediatric-suspension,medium,,template,Product COD
+panadol 200 tablets,product,brand-search,otc-product,https://medikart.pk/products/panadol-500mg-200-tablets,high,,catalog,Direct catalog product
+buy panadol 200 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/panadol-500mg-200-tablets,high,,template,Product purchase intent
+panadol 200 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/panadol-500mg-200-tablets,high,,template,Product price lookup
+panadol 200 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/panadol-500mg-200-tablets,medium,,template,Product COD
+sanid 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/sanid-100mg-30-tablets,high,,catalog,Direct catalog product
+buy sanid 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/sanid-100mg-30-tablets,high,,template,Product purchase intent
+sanid 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/sanid-100mg-30-tablets,high,,template,Product price lookup
+sanid 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/sanid-100mg-30-tablets,medium,,template,Product COD
+flurbibrufen 100mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+flurbibrufen 100mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+pulmonol syrup,product,brand-search,otc-product,https://medikart.pk/products/pulmonol-120ml-syrup,high,,catalog,Direct catalog product
+buy pulmonol syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/pulmonol-120ml-syrup,high,,template,Product purchase intent
+pulmonol syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/pulmonol-120ml-syrup,high,,template,Product price lookup
+pulmonol syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/pulmonol-120ml-syrup,medium,,template,Product COD
+link-d softgel,product,brand-search,otc-product,https://medikart.pk/products/link-d-vitamin-d3-200000iu-softgel,high,,catalog,Direct catalog product
+buy link-d softgel online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/link-d-vitamin-d3-200000iu-softgel,high,,template,Product purchase intent
+link-d softgel price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/link-d-vitamin-d3-200000iu-softgel,high,,template,Product price lookup
+link-d softgel cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/link-d-vitamin-d3-200000iu-softgel,medium,,template,Product COD
+cholecalciferol 200000iu,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+cholecalciferol 200000iu in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+neurobion 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/neurobion-100-tablets,high,,catalog,Direct catalog product
+buy neurobion 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/neurobion-100-tablets,high,,template,Product purchase intent
+neurobion 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/neurobion-100-tablets,high,,template,Product price lookup
+neurobion 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/neurobion-100-tablets,medium,,template,Product COD
+vitamin b complex,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+vitamin b complex in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+sangobion 30 capsules,product,brand-search,otc-product,https://medikart.pk/products/sangobion-30-capsules,high,,catalog,Direct catalog product
+buy sangobion 30 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/sangobion-30-capsules,high,,template,Product purchase intent
+sangobion 30 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/sangobion-30-capsules,high,,template,Product price lookup
+sangobion 30 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/sangobion-30-capsules,medium,,template,Product COD
+iron b-complex,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+iron b-complex in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+naunehal herbal gripe water,product,brand-search,otc-product,https://medikart.pk/products/naunehal-herbal-175ml-gripe-water,high,,catalog,Direct catalog product
+buy naunehal herbal gripe water online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/naunehal-herbal-175ml-gripe-water,high,,template,Product purchase intent
+naunehal herbal gripe water price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/naunehal-herbal-175ml-gripe-water,high,,template,Product price lookup
+naunehal herbal gripe water cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/naunehal-herbal-175ml-gripe-water,medium,,template,Product COD
+maxdif g 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/maxdif-g-500mg-20-tablets,high,,catalog,Direct catalog product
+buy maxdif g 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/maxdif-g-500mg-20-tablets,high,,template,Product purchase intent
+maxdif g 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/maxdif-g-500mg-20-tablets,high,,template,Product price lookup
+maxdif g 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/maxdif-g-500mg-20-tablets,medium,,template,Product COD
+adn6 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/adn6-30-tablets,high,,catalog,Direct catalog product
+buy adn6 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/adn6-30-tablets,high,,template,Product purchase intent
+adn6 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/adn6-30-tablets,high,,template,Product price lookup
+adn6 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/adn6-30-tablets,medium,,template,Product COD
+bactigras 10 bandages,product,brand-search,otc-product,https://medikart.pk/products/bactigras-10cm-x-10cm-10-bandages,high,,catalog,Direct catalog product
+buy bactigras 10 bandages online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/bactigras-10cm-x-10cm-10-bandages,high,,template,Product purchase intent
+bactigras 10 bandages price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/bactigras-10cm-x-10cm-10-bandages,high,,template,Product price lookup
+bactigras 10 bandages cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/bactigras-10cm-x-10cm-10-bandages,medium,,template,Product COD
+vida-z 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/vida-z-30-tablets,high,,catalog,Direct catalog product
+buy vida-z 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/vida-z-30-tablets,high,,template,Product purchase intent
+vida-z 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/vida-z-30-tablets,high,,template,Product price lookup
+vida-z 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/vida-z-30-tablets,medium,,template,Product COD
+vitamin e zinc 15mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+vitamin e zinc 15mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+navidoxine 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/navidoxine-100-tablets,high,,catalog,Direct catalog product
+buy navidoxine 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/navidoxine-100-tablets,high,,template,Product purchase intent
+navidoxine 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/navidoxine-100-tablets,high,,template,Product price lookup
+navidoxine 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/navidoxine-100-tablets,medium,,template,Product COD
+surbex 120ml syrup,product,brand-search,otc-product,https://medikart.pk/products/surbex-120ml-syrup,high,,catalog,Direct catalog product
+buy surbex 120ml syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/surbex-120ml-syrup,high,,template,Product purchase intent
+surbex 120ml syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/surbex-120ml-syrup,high,,template,Product price lookup
+surbex 120ml syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/surbex-120ml-syrup,medium,,template,Product COD
+gesunden magnus 10 sachets,product,brand-search,otc-product,https://medikart.pk/products/gesunden-magnus-10-sachets,high,,catalog,Direct catalog product
+buy gesunden magnus 10 sachets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/gesunden-magnus-10-sachets,high,,template,Product purchase intent
+gesunden magnus 10 sachets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/gesunden-magnus-10-sachets,high,,template,Product price lookup
+gesunden magnus 10 sachets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/gesunden-magnus-10-sachets,medium,,template,Product COD
+lysovit syrup,product,brand-search,otc-product,https://medikart.pk/products/lysovit-120ml-syrup,high,,catalog,Direct catalog product
+buy lysovit syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/lysovit-120ml-syrup,high,,template,Product purchase intent
+lysovit syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/lysovit-120ml-syrup,high,,template,Product price lookup
+lysovit syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/lysovit-120ml-syrup,medium,,template,Product COD
+ace bex 20 capsules,product,brand-search,otc-product,https://medikart.pk/products/ace-bex-20-capsules,high,,catalog,Direct catalog product
+buy ace bex 20 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/ace-bex-20-capsules,high,,template,Product purchase intent
+ace bex 20 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/ace-bex-20-capsules,high,,template,Product price lookup
+ace bex 20 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/ace-bex-20-capsules,medium,,template,Product COD
+fefol vit 56 capsules,product,brand-search,otc-product,https://medikart.pk/products/fefol-vit-56-capsules,high,,catalog,Direct catalog product
+buy fefol vit 56 capsules online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/fefol-vit-56-capsules,high,,template,Product purchase intent
+fefol vit 56 capsules price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/fefol-vit-56-capsules,high,,template,Product price lookup
+fefol vit 56 capsules cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/fefol-vit-56-capsules,medium,,template,Product COD
+polybion forte syrup,product,brand-search,otc-product,https://medikart.pk/products/polybion-forte-120ml-syrup,high,,catalog,Direct catalog product
+buy polybion forte syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/polybion-forte-120ml-syrup,high,,template,Product purchase intent
+polybion forte syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/polybion-forte-120ml-syrup,high,,template,Product price lookup
+polybion forte syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/polybion-forte-120ml-syrup,medium,,template,Product COD
+camozyme syrup,product,brand-search,otc-product,https://medikart.pk/products/camozyme-120ml-syrup,high,,catalog,Direct catalog product
+buy camozyme syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/camozyme-120ml-syrup,high,,template,Product purchase intent
+camozyme syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/camozyme-120ml-syrup,high,,template,Product price lookup
+camozyme syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/camozyme-120ml-syrup,medium,,template,Product COD
+apityzer,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+apityzer in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+brufen 120ml oral suspension,product,brand-search,otc-product,https://medikart.pk/products/brufen-100mg5ml-120ml-oral-suspension,high,,catalog,Direct catalog product
+buy brufen 120ml oral suspension online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/brufen-100mg5ml-120ml-oral-suspension,high,,template,Product purchase intent
+brufen 120ml oral suspension price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/brufen-100mg5ml-120ml-oral-suspension,high,,template,Product price lookup
+brufen 120ml oral suspension cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/brufen-100mg5ml-120ml-oral-suspension,medium,,template,Product COD
+ibuprofen 100mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+ibuprofen 100mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+cac 1000 all flavour 10 tablets,product,brand-search,otc-product,https://medikart.pk/products/cac-1000-all-flavour-10-tablets,high,,catalog,Direct catalog product
+vitamin c vitamin d,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+vitamin c vitamin d in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+cotton roll surgical,product,brand-search,otc-product,https://medikart.pk/products/cotton-roll-100g-surgical,high,,catalog,Direct catalog product
+buy cotton roll surgical online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/cotton-roll-100g-surgical,high,,template,Product purchase intent
+cotton roll surgical price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/cotton-roll-100g-surgical,high,,template,Product price lookup
+cotton roll surgical cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/cotton-roll-100g-surgical,medium,,template,Product COD
+sunny d stat 1 softgel capsule,product,brand-search,otc-product,https://medikart.pk/products/sunny-d-stat-200000iu-1-softgel-capsule,high,,catalog,Direct catalog product
+froben 30 tablets,product,brand-search,otc-product,https://medikart.pk/products/froben-100mg-30-tablets,high,,catalog,Direct catalog product
+buy froben 30 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/froben-100mg-30-tablets,high,,template,Product purchase intent
+froben 30 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/froben-100mg-30-tablets,high,,template,Product price lookup
+froben 30 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/froben-100mg-30-tablets,medium,,template,Product COD
+atcoplex-z syrup,product,brand-search,otc-product,https://medikart.pk/products/atcoplex-z-120ml-syrup,high,,catalog,Direct catalog product
+buy atcoplex-z syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/atcoplex-z-120ml-syrup,high,,template,Product purchase intent
+atcoplex-z syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/atcoplex-z-120ml-syrup,high,,template,Product price lookup
+atcoplex-z syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/atcoplex-z-120ml-syrup,medium,,template,Product COD
+trihemic 48 tablets,product,brand-search,otc-product,https://medikart.pk/products/trihemic-600mg-48-tablets,high,,catalog,Direct catalog product
+buy trihemic 48 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/trihemic-600mg-48-tablets,high,,template,Product purchase intent
+trihemic 48 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/trihemic-600mg-48-tablets,high,,template,Product price lookup
+trihemic 48 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/trihemic-600mg-48-tablets,medium,,template,Product COD
+azvac 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/azvac-20-tablets,high,,catalog,Direct catalog product
+buy azvac 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/azvac-20-tablets,high,,template,Product purchase intent
+azvac 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/azvac-20-tablets,high,,template,Product price lookup
+azvac 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/azvac-20-tablets,medium,,template,Product COD
+calpro-d 120ml syrup,product,brand-search,otc-product,https://medikart.pk/products/calpro-d-120ml-syrup,high,,catalog,Direct catalog product
+buy calpro-d 120ml syrup online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/calpro-d-120ml-syrup,high,,template,Product purchase intent
+calpro-d 120ml syrup price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/calpro-d-120ml-syrup,high,,template,Product price lookup
+calpro-d 120ml syrup cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/calpro-d-120ml-syrup,medium,,template,Product COD
+inomel-f 10 sachets,product,brand-search,otc-product,https://medikart.pk/products/inomel-f-10-sachets,high,,catalog,Direct catalog product
+buy inomel-f 10 sachets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/inomel-f-10-sachets,high,,template,Product purchase intent
+inomel-f 10 sachets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/inomel-f-10-sachets,high,,template,Product price lookup
+inomel-f 10 sachets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/inomel-f-10-sachets,medium,,template,Product COD
+methix 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/methix-20-tablets,high,,catalog,Direct catalog product
+buy methix 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/methix-20-tablets,high,,template,Product purchase intent
+methix 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/methix-20-tablets,high,,template,Product price lookup
+methix 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/methix-20-tablets,medium,,template,Product COD
+l-methylfolate pyridoxal 5-phosphate 35mg,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+l-methylfolate pyridoxal 5-phosphate 35mg in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+medifer 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/medifer-20-tablets,high,,catalog,Direct catalog product
+buy medifer 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/medifer-20-tablets,high,,template,Product purchase intent
+medifer 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/medifer-20-tablets,high,,template,Product price lookup
+medifer 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/medifer-20-tablets,medium,,template,Product COD
+calup-d 20 tablets,product,brand-search,otc-product,https://medikart.pk/products/calup-d-20-tablets,high,,catalog,Direct catalog product
+buy calup-d 20 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/calup-d-20-tablets,high,,template,Product purchase intent
+calup-d 20 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/calup-d-20-tablets,high,,template,Product price lookup
+calup-d 20 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/calup-d-20-tablets,medium,,template,Product COD
+calcium cholecalciferol,brand,generic-search,otc-generic,https://medikart.pk/categories/otc,medium,,catalog,Generic formulation
+calcium cholecalciferol in pakistan,informational,generic-search,otc-generic,https://medikart.pk/categories/otc,low,,template,Generic availability
+panadol 120ml liquid,product,brand-search,otc-product,https://medikart.pk/products/panadol-160mg5ml-120ml-liquid,high,,catalog,Direct catalog product
+buy panadol 120ml liquid online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/panadol-160mg5ml-120ml-liquid,high,,template,Product purchase intent
+panadol 120ml liquid price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/panadol-160mg5ml-120ml-liquid,high,,template,Product price lookup
+panadol 120ml liquid cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/panadol-160mg5ml-120ml-liquid,medium,,template,Product COD
+duragesic 100 tablets,product,brand-search,otc-product,https://medikart.pk/products/duragesic-35450mg-100-tablets,high,,catalog,Direct catalog product
+buy duragesic 100 tablets online,transactional,purchase,otc-product-transactional,https://medikart.pk/products/duragesic-35450mg-100-tablets,high,,template,Product purchase intent
+duragesic 100 tablets price in pakistan,transactional,price-check,otc-product-pricing,https://medikart.pk/products/duragesic-35450mg-100-tablets,high,,template,Product price lookup
+duragesic 100 tablets cash on delivery,transactional,purchase,otc-product-cod,https://medikart.pk/products/duragesic-35450mg-100-tablets,medium,,template,Product COD

@@ -1,0 +1,482 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+baby diapers pakistan,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy baby diapers pakistan online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+baby diapers pakistan price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order baby diapers pakistan online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+baby diapers pakistan cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best baby diapers pakistan in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable baby diapers pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+baby diapers pakistan home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+baby diapers pakistan in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+baby diapers pakistan in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+baby diapers pakistan in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+baby diapers pakistan in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+baby diapers pakistan in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is baby diapers pakistan,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose baby diapers pakistan,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use baby diapers pakistan,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is baby diapers pakistan available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+baby diapers pakistan sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+baby diapers pakistan ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+baby diapers pakistan online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+baby diapers pakistan delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+pampers newborn,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy pampers newborn online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+pampers newborn price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order pampers newborn online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+pampers newborn cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best pampers newborn in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable pampers newborn,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+pampers newborn home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+pampers newborn in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+pampers newborn in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+pampers newborn in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+pampers newborn in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+pampers newborn in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is pampers newborn,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose pampers newborn,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use pampers newborn,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is pampers newborn available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+where to buy pampers newborn in pakistan,question,purchase,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,Vendor lookup
+pampers newborn sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+pampers newborn ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+pampers newborn online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+pampers newborn delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+baby pant diapers,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy baby pant diapers online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+baby pant diapers price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order baby pant diapers online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+baby pant diapers cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best baby pant diapers in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable baby pant diapers,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+baby pant diapers home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+baby pant diapers in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+baby pant diapers in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+baby pant diapers in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+baby pant diapers in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+baby pant diapers in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is baby pant diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose baby pant diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use baby pant diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is baby pant diapers available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+baby pant diapers sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+baby pant diapers ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+baby pant diapers online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+baby pant diapers delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+baby wet wipes,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy baby wet wipes online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+baby wet wipes price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order baby wet wipes online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+baby wet wipes cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best baby wet wipes in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable baby wet wipes,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+baby wet wipes home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+baby wet wipes in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+baby wet wipes in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+baby wet wipes in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+baby wet wipes in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+baby wet wipes in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is baby wet wipes,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose baby wet wipes,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use baby wet wipes,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is baby wet wipes available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+baby wet wipes sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+baby wet wipes ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+baby wet wipes online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+baby wet wipes delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+adult diapers,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy adult diapers online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+adult diapers price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order adult diapers online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+adult diapers cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best adult diapers in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable adult diapers,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+adult diapers home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+adult diapers in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+adult diapers in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+adult diapers in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+adult diapers in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+adult diapers in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is adult diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose adult diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use adult diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is adult diapers available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+where to buy adult diapers in pakistan,question,purchase,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,Vendor lookup
+adult diapers sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+adult diapers ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+adult diapers online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+adult diapers delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+incontinence underpads,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy incontinence underpads online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+incontinence underpads price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order incontinence underpads online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+incontinence underpads cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best incontinence underpads in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable incontinence underpads,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+incontinence underpads home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+incontinence underpads in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+incontinence underpads in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+incontinence underpads in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+incontinence underpads in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+incontinence underpads in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is incontinence underpads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose incontinence underpads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use incontinence underpads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is incontinence underpads available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+where to buy incontinence underpads in pakistan,question,purchase,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,Vendor lookup
+incontinence underpads sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+incontinence underpads ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+incontinence underpads online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+incontinence underpads delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+sanitary pads for women,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy sanitary pads for women online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+sanitary pads for women price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order sanitary pads for women online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+sanitary pads for women cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best sanitary pads for women in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable sanitary pads for women,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+sanitary pads for women home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+sanitary pads for women in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+sanitary pads for women in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+sanitary pads for women in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+sanitary pads for women in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+sanitary pads for women in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is sanitary pads for women,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose sanitary pads for women,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use sanitary pads for women,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+sanitary pads for women sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+sanitary pads for women online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+sanitary pads for women delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+maxi thick pads,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy maxi thick pads online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+maxi thick pads price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order maxi thick pads online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+maxi thick pads cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best maxi thick pads in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable maxi thick pads,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+maxi thick pads home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+maxi thick pads in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+maxi thick pads in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+maxi thick pads in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+maxi thick pads in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+maxi thick pads in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is maxi thick pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose maxi thick pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use maxi thick pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is maxi thick pads available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+maxi thick pads sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+maxi thick pads ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+maxi thick pads online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+maxi thick pads delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+overnight sanitary napkins,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy overnight sanitary napkins online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+overnight sanitary napkins price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order overnight sanitary napkins online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+overnight sanitary napkins cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best overnight sanitary napkins in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable overnight sanitary napkins,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+overnight sanitary napkins home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+overnight sanitary napkins in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+overnight sanitary napkins in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+overnight sanitary napkins in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+overnight sanitary napkins in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+overnight sanitary napkins in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is overnight sanitary napkins,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose overnight sanitary napkins,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use overnight sanitary napkins,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is overnight sanitary napkins available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+overnight sanitary napkins sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+overnight sanitary napkins ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+overnight sanitary napkins online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+overnight sanitary napkins delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+diaper rash cream,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy diaper rash cream online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+diaper rash cream price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order diaper rash cream online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+diaper rash cream cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best diaper rash cream in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable diaper rash cream,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+diaper rash cream home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+diaper rash cream in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+diaper rash cream in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+diaper rash cream in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+diaper rash cream in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+diaper rash cream in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is diaper rash cream,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose diaper rash cream,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use diaper rash cream,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is diaper rash cream available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+diaper rash cream sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+diaper rash cream ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+diaper rash cream online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+diaper rash cream delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+rash soothing powder,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy rash soothing powder online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+rash soothing powder price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order rash soothing powder online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+rash soothing powder cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best rash soothing powder in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable rash soothing powder,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+rash soothing powder home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+rash soothing powder in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+rash soothing powder in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+rash soothing powder in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+rash soothing powder in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+rash soothing powder in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is rash soothing powder,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose rash soothing powder,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use rash soothing powder,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is rash soothing powder available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+rash soothing powder sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+rash soothing powder ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+rash soothing powder online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+rash soothing powder delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+ultra thin sanitary pads,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy ultra thin sanitary pads online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+ultra thin sanitary pads price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order ultra thin sanitary pads online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+ultra thin sanitary pads cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best ultra thin sanitary pads in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable ultra thin sanitary pads,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+ultra thin sanitary pads home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+ultra thin sanitary pads in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+ultra thin sanitary pads in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+ultra thin sanitary pads in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+ultra thin sanitary pads in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+ultra thin sanitary pads in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is ultra thin sanitary pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose ultra thin sanitary pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use ultra thin sanitary pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+ultra thin sanitary pads sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+ultra thin sanitary pads online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+ultra thin sanitary pads delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+pull up diapers,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy pull up diapers online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+pull up diapers price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order pull up diapers online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+pull up diapers cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best pull up diapers in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable pull up diapers,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+pull up diapers home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+pull up diapers in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+pull up diapers in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+pull up diapers in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+pull up diapers in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+pull up diapers in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is pull up diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose pull up diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use pull up diapers,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is pull up diapers available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+pull up diapers sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+pull up diapers ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+pull up diapers online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+pull up diapers delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+maternity pads,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy maternity pads online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+maternity pads price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order maternity pads online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+maternity pads cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best maternity pads in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable maternity pads,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+maternity pads home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+maternity pads in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+maternity pads in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+maternity pads in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+maternity pads in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+maternity pads in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is maternity pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose maternity pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use maternity pads,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is maternity pads available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+where to buy maternity pads in pakistan,question,purchase,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,Vendor lookup
+maternity pads sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+maternity pads ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+maternity pads online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+maternity pads delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+cotton baby wipes,informational,commercial-investigation,diapers-napkins-core,https://medikart.pk/categories/diapers-napkins,high,,template,Approved seed term
+buy cotton baby wipes online,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,high,,template,Core purchase intent
+cotton baby wipes price in pakistan,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,high,,template,Price check intent
+order cotton baby wipes online pakistan,transactional,purchase,diapers-napkins-transactional,https://medikart.pk/categories/diapers-napkins,medium,,template,Online order
+cotton baby wipes cash on delivery,transactional,purchase,diapers-napkins-cod,https://medikart.pk/categories/diapers-napkins,medium,,template,COD intent
+best cotton baby wipes in pakistan,informational,comparison,diapers-napkins-comparison,https://medikart.pk/categories/diapers-napkins,medium,,template,Best in class
+affordable cotton baby wipes,transactional,price-check,diapers-napkins-pricing,https://medikart.pk/categories/diapers-napkins,low,,template,Affordable value
+cotton baby wipes home delivery,transactional,purchase,diapers-napkins-delivery,https://medikart.pk/categories/diapers-napkins,medium,,template,Delivery intent
+cotton baby wipes in lahore,local,local-delivery,diapers-napkins-local-lahore,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in lahore
+cotton baby wipes in karachi,local,local-delivery,diapers-napkins-local-karachi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in karachi
+cotton baby wipes in islamabad,local,local-delivery,diapers-napkins-local-islamabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in islamabad
+cotton baby wipes in rawalpindi,local,local-delivery,diapers-napkins-local-rawalpindi,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in rawalpindi
+cotton baby wipes in faisalabad,local,local-delivery,diapers-napkins-local-faisalabad,https://medikart.pk/categories/diapers-napkins,medium,,template,1-5 hr delivery in faisalabad
+what is cotton baby wipes,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO direct answer
+how to choose cotton baby wipes,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO selection guide
+how to use cotton baby wipes,question,informational,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,medium,,template,AEO usage guide
+is cotton baby wipes available in pakistan,question,commercial-investigation,diapers-napkins-aeo,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Availability question
+cotton baby wipes sasti,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Pakistani vernacular
+cotton baby wipes ki price kitni hai,roman-urdu,price-check,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins#faqs,low,,template,Vernacular price query
+cotton baby wipes online mangwana,roman-urdu,purchase,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular delivery query
+cotton baby wipes delivery timing,roman-urdu,local-delivery,diapers-napkins-roman-urdu,https://medikart.pk/categories/diapers-napkins,low,,template,Vernacular timing query
+butterfly breathable maxi thick long 9 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-breathable-maxi-thick-long-9-pads,high,,catalog,Direct catalog product
+molfix extra large pants 38pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-extra-large-pants-6-no-38pcs,high,,catalog,Direct catalog product
+buy molfix extra large pants 38pcs online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-extra-large-pants-6-no-38pcs,high,,template,Product purchase intent
+senior dignity sheets 10 under pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/senior-dignity-sheets-10-under-pads,high,,catalog,Direct catalog product
+senior 10 adult diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/senior-large-10-adult-diapers,high,,catalog,Direct catalog product
+buy senior 10 adult diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/senior-large-10-adult-diapers,high,,template,Product purchase intent
+senior 10 adult diapers price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/senior-large-10-adult-diapers,high,,template,Product price lookup
+senior 10 adult diapers cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/senior-large-10-adult-diapers,medium,,template,Product COD
+adult diapersnappies,brand,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,medium,,catalog,Generic formulation
+adult diapersnappies in pakistan,informational,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,low,,template,Generic availability
+senior pants 10 adult pants,product,brand-search,diapers-napkins-product,https://medikart.pk/products/senior-pants-large-10-adult-pants,high,,catalog,Direct catalog product
+buy senior pants 10 adult pants online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/senior-pants-large-10-adult-pants,high,,template,Product purchase intent
+senior pants 10 adult diaper pants,product,brand-search,diapers-napkins-product,https://medikart.pk/products/senior-pants-extra-large-10-adult-diaper-pants,high,,catalog,Direct catalog product
+johnsons 72 baby wipes,product,brand-search,diapers-napkins-product,https://medikart.pk/products/johnsons-72-baby-wipes,high,,catalog,Direct catalog product
+buy johnsons 72 baby wipes online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/johnsons-72-baby-wipes,high,,template,Product purchase intent
+johnsons 72 baby wipes price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/johnsons-72-baby-wipes,high,,template,Product price lookup
+johnsons 72 baby wipes cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/johnsons-72-baby-wipes,medium,,template,Product COD
+carebaby diapers xl,product,brand-search,diapers-napkins-product,https://medikart.pk/products/carebaby-diapers-xl-size-5-72-pcs,high,,catalog,Direct catalog product
+buy carebaby diapers xl online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/carebaby-diapers-xl-size-5-72-pcs,high,,template,Product purchase intent
+carebaby diapers xl price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/carebaby-diapers-xl-size-5-72-pcs,high,,template,Product price lookup
+carebaby diapers xl cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/carebaby-diapers-xl-size-5-72-pcs,medium,,template,Product COD
+baby diapersnappies,brand,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,medium,,catalog,Generic formulation
+baby diapersnappies in pakistan,informational,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,low,,template,Generic availability
+canbebe 3 36 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-3-midi-36-baby-diapers,high,,catalog,Direct catalog product
+buy canbebe 3 36 baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/canbebe-3-midi-36-baby-diapers,high,,template,Product purchase intent
+canbebe 3 60 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-3-midi-60-baby-diapers,high,,catalog,Direct catalog product
+buy canbebe 3 60 baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/canbebe-3-midi-60-baby-diapers,high,,template,Product purchase intent
+canbebe 4 49 diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-4-premium-maxi-49-diapers,high,,catalog,Direct catalog product
+buy canbebe 4 49 diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/canbebe-4-premium-maxi-49-diapers,high,,template,Product purchase intent
+canbebe 4 49 diapers price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/canbebe-4-premium-maxi-49-diapers,high,,template,Product price lookup
+canbebe 4 49 diapers cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/canbebe-4-premium-maxi-49-diapers,medium,,template,Product COD
+canbebe 3 junior 28 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-3-junior-28-baby-diapers,high,,catalog,Direct catalog product
+canbebe 6 46 diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-6-xl-46-diapers,high,,catalog,Direct catalog product
+buy canbebe 6 46 diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/canbebe-6-xl-46-diapers,high,,template,Product purchase intent
+canbebe 6 46 diapers price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/canbebe-6-xl-46-diapers,high,,template,Product price lookup
+canbebe 6 46 diapers cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/canbebe-6-xl-46-diapers,medium,,template,Product COD
+always maxi thick 18 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/always-maxi-thick-l-18-pads,high,,catalog,Direct catalog product
+buy always maxi thick 18 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/always-maxi-thick-l-18-pads,high,,template,Product purchase intent
+always maxi thick 8 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/always-maxi-thick-xl-8-pads,high,,catalog,Direct catalog product
+buy always maxi thick 8 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/always-maxi-thick-xl-8-pads,high,,template,Product purchase intent
+pampers junior 44 pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/pampers-junior-5-no-44-pcs,high,,catalog,Direct catalog product
+buy pampers junior 44 pcs online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/pampers-junior-5-no-44-pcs,high,,template,Product purchase intent
+pampers junior 44 pcs price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/pampers-junior-5-no-44-pcs,high,,template,Product price lookup
+pampers junior 44 pcs cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/pampers-junior-5-no-44-pcs,medium,,template,Product COD
+comfrey 10 adult diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/comfrey-large-10-adult-diapers,high,,catalog,Direct catalog product
+buy comfrey 10 adult diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/comfrey-large-10-adult-diapers,high,,template,Product purchase intent
+comfrey 10 adult diapers price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/comfrey-large-10-adult-diapers,high,,template,Product price lookup
+comfrey 10 adult diapers cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/comfrey-large-10-adult-diapers,medium,,template,Product COD
+molfix junior pants 44pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-junior-pants-5-no-44pcs,high,,catalog,Direct catalog product
+buy molfix junior pants 44pcs online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-junior-pants-5-no-44pcs,high,,template,Product purchase intent
+molfix junior pants 44pcs price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/molfix-junior-pants-5-no-44pcs,high,,template,Product price lookup
+molfix junior pants 44pcs cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/molfix-junior-pants-5-no-44pcs,medium,,template,Product COD
+butterfly maxi big saver 7 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-maxi-big-saver-l-7-pads,high,,catalog,Direct catalog product
+butterfly breathable 8 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-breathable-xl-8-pads,high,,catalog,Direct catalog product
+buy butterfly breathable 8 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/butterfly-breathable-xl-8-pads,high,,template,Product purchase intent
+butterfly breathable 8 pads price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/butterfly-breathable-xl-8-pads,high,,template,Product price lookup
+butterfly breathable 8 pads cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/butterfly-breathable-xl-8-pads,medium,,template,Product COD
+butterfly breathable 16 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-breathable-xl-16-pads,high,,catalog,Direct catalog product
+buy butterfly breathable 16 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/butterfly-breathable-xl-16-pads,high,,template,Product purchase intent
+butterfly breathable 16 pads price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/butterfly-breathable-xl-16-pads,high,,template,Product price lookup
+butterfly breathable 16 pads cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/butterfly-breathable-xl-16-pads,medium,,template,Product COD
+butterfly ultra 7 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-ultra-xl-7-pads,high,,catalog,Direct catalog product
+buy butterfly ultra 7 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/butterfly-ultra-xl-7-pads,high,,template,Product purchase intent
+butterfly ultra 7 pads price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/butterfly-ultra-xl-7-pads,high,,template,Product price lookup
+butterfly ultra 7 pads cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/butterfly-ultra-xl-7-pads,medium,,template,Product COD
+butterfly mother comforts 16 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-mother-comforts-m-16-pads,high,,catalog,Direct catalog product
+buy butterfly mother comforts 16 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/butterfly-mother-comforts-m-16-pads,high,,template,Product purchase intent
+butterfly ultra big saver 18 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-ultra-big-saver-l-18-pads,high,,catalog,Direct catalog product
+always maxi 16 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/always-maxi-xl-16-pads,high,,catalog,Direct catalog product
+buy always maxi 16 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/always-maxi-xl-16-pads,high,,template,Product purchase intent
+always maxi 16 pads price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/always-maxi-xl-16-pads,high,,template,Product price lookup
+always maxi 16 pads cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/always-maxi-xl-16-pads,medium,,template,Product COD
+molped maxi thick long pads 18pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molped-maxi-thick-long-pads-18pcs,high,,catalog,Direct catalog product
+butterfly breathable panty liners long 1 pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-breathable-panty-liners-long-20s-1-pack,high,,catalog,Direct catalog product
+canbebe 4 46 diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-4-maxi-plus-46-diapers,high,,catalog,Direct catalog product
+buy canbebe 4 46 diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/canbebe-4-maxi-plus-46-diapers,high,,template,Product purchase intent
+canbebe 4 46 diapers price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/canbebe-4-maxi-plus-46-diapers,high,,template,Product price lookup
+canbebe 4 46 diapers cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/canbebe-4-maxi-plus-46-diapers,medium,,template,Product COD
+canbebe 5 44 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/canbebe-5-jumbo-44-baby-diapers,high,,catalog,Direct catalog product
+buy canbebe 5 44 baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/canbebe-5-jumbo-44-baby-diapers,high,,template,Product purchase intent
+carebaby diapers medium,product,brand-search,diapers-napkins-product,https://medikart.pk/products/carebaby-diapers-medium-size-3-88-pcs,high,,catalog,Direct catalog product
+buy carebaby diapers medium online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/carebaby-diapers-medium-size-3-88-pcs,high,,template,Product purchase intent
+carebaby diapers medium price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/carebaby-diapers-medium-size-3-88-pcs,high,,template,Product price lookup
+carebaby diapers medium cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/carebaby-diapers-medium-size-3-88-pcs,medium,,template,Product COD
+carebaby diapers large,product,brand-search,diapers-napkins-product,https://medikart.pk/products/carebaby-diapers-large-size-4-80-pcs,high,,catalog,Direct catalog product
+buy carebaby diapers large online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/carebaby-diapers-large-size-4-80-pcs,high,,template,Product purchase intent
+carebaby diapers large price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/carebaby-diapers-large-size-4-80-pcs,high,,template,Product price lookup
+carebaby diapers large cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/carebaby-diapers-large-size-4-80-pcs,medium,,template,Product COD
+goodcare 3 44 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/goodcare-3-m-44-baby-diapers,high,,catalog,Direct catalog product
+buy goodcare 3 44 baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/goodcare-3-m-44-baby-diapers,high,,template,Product purchase intent
+goodcare 5 36 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/goodcare-5-xl-36-baby-diapers,high,,catalog,Direct catalog product
+buy goodcare 5 36 baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/goodcare-5-xl-36-baby-diapers,high,,template,Product purchase intent
+goodcare 6 34 baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/goodcare-6-xxl-34-baby-diapers,high,,catalog,Direct catalog product
+buy goodcare 6 34 baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/goodcare-6-xxl-34-baby-diapers,high,,template,Product purchase intent
+molped maxi thick extra long pads 8pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molped-maxi-thick-extra-long-pads-8pcs,high,,catalog,Direct catalog product
+molped maxi thick long pads 9pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molped-maxi-thick-long-pads-9pcs,high,,catalog,Direct catalog product
+always ultra thin 7 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/always-3in1-ultra-thin-7-pads,high,,catalog,Direct catalog product
+buy always ultra thin 7 pads online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/always-3in1-ultra-thin-7-pads,high,,template,Product purchase intent
+butterfly breathable ultra thin long 8 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-breathable-ultra-thin-long-8-pads,high,,catalog,Direct catalog product
+butterfly maxi thick xxl 6 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-maxi-thick-xxl-6-pads,high,,catalog,Direct catalog product
+butterfly cottony soft breathable 8 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-cottony-soft-breathable-xl-8-pads,high,,catalog,Direct catalog product
+care baby diapers,product,brand-search,diapers-napkins-product,https://medikart.pk/products/care-baby-diapers-s,high,,catalog,Direct catalog product
+buy care baby diapers online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/care-baby-diapers-s,high,,template,Product purchase intent
+care baby diapers price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/care-baby-diapers-s,high,,template,Product price lookup
+care baby diapers cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/care-baby-diapers-s,medium,,template,Product COD
+carebaby diapers newborn,product,brand-search,diapers-napkins-product,https://medikart.pk/products/carebaby-diapers-newborn-size-1-52-pcs,high,,catalog,Direct catalog product
+buy carebaby diapers newborn online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/carebaby-diapers-newborn-size-1-52-pcs,high,,template,Product purchase intent
+carebaby diapers newborn price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/carebaby-diapers-newborn-size-1-52-pcs,high,,template,Product price lookup
+carebaby diapers newborn cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/carebaby-diapers-newborn-size-1-52-pcs,medium,,template,Product COD
+molfix junior pants 62pcs,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-junior-pants-5-no-62pcs,high,,catalog,Direct catalog product
+buy molfix junior pants 62pcs online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-junior-pants-5-no-62pcs,high,,template,Product purchase intent
+molfix junior pants 62pcs price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/molfix-junior-pants-5-no-62pcs,high,,template,Product price lookup
+molfix junior pants 62pcs cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/molfix-junior-pants-5-no-62pcs,medium,,template,Product COD
+senior 10 adult pants,product,brand-search,diapers-napkins-product,https://medikart.pk/products/senior-xxl-10-adult-pants,high,,catalog,Direct catalog product
+buy senior 10 adult pants online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/senior-xxl-10-adult-pants,high,,template,Product purchase intent
+senior 10 adult pants price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/senior-xxl-10-adult-pants,high,,template,Product price lookup
+senior 10 adult pants cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/senior-xxl-10-adult-pants,medium,,template,Product COD
+evony adult diaper large,product,brand-search,diapers-napkins-product,https://medikart.pk/products/evony-adult-diaper-large,high,,catalog,Direct catalog product
+buy evony adult diaper large online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/evony-adult-diaper-large,high,,template,Product purchase intent
+evony adult diaper large price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/evony-adult-diaper-large,high,,template,Product price lookup
+evony adult diaper large cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/evony-adult-diaper-large,medium,,template,Product COD
+evony adult diaper x-large,product,brand-search,diapers-napkins-product,https://medikart.pk/products/evony-adult-diaper-x-large,high,,catalog,Direct catalog product
+buy evony adult diaper x-large online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/evony-adult-diaper-x-large,high,,template,Product purchase intent
+evony adult diaper x-large price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/evony-adult-diaper-x-large,high,,template,Product price lookup
+evony adult diaper x-large cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/evony-adult-diaper-x-large,medium,,template,Product COD
+molfix diapers 2 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diapers-2-no-38-pcs-twin-pack,high,,catalog,Direct catalog product
+niacin,brand,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,medium,,catalog,Generic formulation
+niacin in pakistan,informational,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,low,,template,Generic availability
+molfilx diapers 3 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfilx-diapers-3-no-36-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix diapers 4 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diapers-4-no-32-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix diapers 5 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diapers-5-no-22-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix diaper 6 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diaper-6-no-24-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix pants 3 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-pants-3-no-31-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix pants 4 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-pants-4-no-28-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix pants 5 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-pants-5-no-26-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix pants 6 no twin pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-pants-6-no-22-pcs-twin-pack,high,,catalog,Direct catalog product
+molfix diaper 6 no jumbo pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diaper-6-no-38-pcs-jumbo-pack,high,,catalog,Direct catalog product
+molfix diapers 3 no mega pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diapers-3-no-80-pcs-mega-pack,high,,catalog,Direct catalog product
+molfix diapers 4 no mega pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diapers-4-no-72-pcs-mega-pack,high,,catalog,Direct catalog product
+molfix 5 no mega pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-5-no-62-pcs-mega-pack,high,,catalog,Direct catalog product
+buy molfix 5 no mega pack online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-5-no-62-pcs-mega-pack,high,,template,Product purchase intent
+molfix 6 no mega pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-6-no-54-pcs-mega-pack,high,,catalog,Direct catalog product
+buy molfix 6 no mega pack online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-6-no-54-pcs-mega-pack,high,,template,Product purchase intent
+pyridoxine,brand,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,medium,,catalog,Generic formulation
+pyridoxine in pakistan,informational,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,low,,template,Generic availability
+molfix mega pant 5 no,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-mega-pant-5-no-44pcs,high,,catalog,Direct catalog product
+buy molfix mega pant 5 no online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-mega-pant-5-no-44pcs,high,,template,Product purchase intent
+molfix mega pant 6 no,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-mega-pant-6-no-38pcs,high,,catalog,Direct catalog product
+buy molfix mega pant 6 no online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-mega-pant-6-no-38pcs,high,,template,Product purchase intent
+molfix diaper twin no1,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-diaper-twin-no1-42pcs,high,,catalog,Direct catalog product
+buy molfix diaper twin no1 online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-diaper-twin-no1-42pcs,high,,template,Product purchase intent
+molfix diaper twin no1 price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/molfix-diaper-twin-no1-42pcs,high,,template,Product price lookup
+molfix diaper twin no1 cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/molfix-diaper-twin-no1-42pcs,medium,,template,Product COD
+senior pull up xl,product,brand-search,diapers-napkins-product,https://medikart.pk/products/senior-pull-up-xl,high,,catalog,Direct catalog product
+buy senior pull up xl online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/senior-pull-up-xl,high,,template,Product purchase intent
+senior pull up xl price in pakistan,transactional,price-check,diapers-napkins-product-pricing,https://medikart.pk/products/senior-pull-up-xl,high,,template,Product price lookup
+senior pull up xl cash on delivery,transactional,purchase,diapers-napkins-product-cod,https://medikart.pk/products/senior-pull-up-xl,medium,,template,Product COD
+molfix mega diaper 3 no,product,brand-search,diapers-napkins-product,https://medikart.pk/products/molfix-mega-diaper-3-no-80,high,,catalog,Direct catalog product
+buy molfix mega diaper 3 no online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/molfix-mega-diaper-3-no-80,high,,template,Product purchase intent
+butterfly mother comfort 1 pack,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-mother-comfort-15pc-1-pack,high,,catalog,Direct catalog product
+buy butterfly mother comfort 1 pack online,transactional,purchase,diapers-napkins-product-transactional,https://medikart.pk/products/butterfly-mother-comfort-15pc-1-pack,high,,template,Product purchase intent
+soft cotton wings,brand,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,medium,,catalog,Generic formulation
+soft cotton wings in pakistan,informational,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,low,,template,Generic availability
+butterfly maxi thick long 9 pads,product,brand-search,diapers-napkins-product,https://medikart.pk/products/butterfly-maxi-thick-long-9-pads,high,,catalog,Direct catalog product
+pads,brand,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,medium,,catalog,Generic formulation
+pads in pakistan,informational,generic-search,diapers-napkins-generic,https://medikart.pk/categories/diapers-napkins,low,,template,Generic availability

@@ -1,4 +1,5 @@
 import { BLOGS_DATA } from '../data/blogsData.js';
+import { NOINDEX_CATEGORY_SLUGS } from '../src/seo/category-meta.js';
 
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
@@ -128,10 +129,14 @@ export default async function sitemap() {
     },
   ];
 
-  // Category dynamic crawlable URLs - 0.9 priority, daily changeFrequency
+  // Category dynamic crawlable URLs - 0.9 priority, daily changeFrequency (excluding internal buckets & noindex)
   categories.forEach((cat) => {
+    const slug = cat.slug || cat._id;
+    if (NOINDEX_CATEGORY_SLUGS.has(slug)) {
+      return; // Skip internal inventory buckets, beverages, and unapproved medicines
+    }
     sitemapEntries.push({
-      url: `${baseUrl}/categories/${cat.slug || cat._id}`,
+      url: `${baseUrl}/categories/${slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,

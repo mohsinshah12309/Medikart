@@ -1,0 +1,543 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+blood glucose monitor,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy blood glucose monitor online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+blood glucose monitor price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order blood glucose monitor online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+blood glucose monitor cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best blood glucose monitor in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable blood glucose monitor,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+blood glucose monitor home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+blood glucose monitor in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+blood glucose monitor in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+blood glucose monitor in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+blood glucose monitor in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+blood glucose monitor in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is blood glucose monitor,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose blood glucose monitor,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use blood glucose monitor,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is blood glucose monitor available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+blood glucose monitor sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+blood glucose monitor ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+blood glucose monitor online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+blood glucose monitor delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+sugar test strips,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy sugar test strips online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+sugar test strips price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order sugar test strips online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+sugar test strips cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best sugar test strips in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable sugar test strips,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+sugar test strips home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+sugar test strips in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+sugar test strips in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+sugar test strips in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+sugar test strips in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+sugar test strips in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is sugar test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose sugar test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use sugar test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is sugar test strips available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+sugar test strips sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+sugar test strips ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+sugar test strips online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+sugar test strips delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+digital bp monitor,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy digital bp monitor online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+digital bp monitor price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order digital bp monitor online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+digital bp monitor cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best digital bp monitor in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable digital bp monitor,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+digital bp monitor home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+digital bp monitor in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+digital bp monitor in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+digital bp monitor in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+digital bp monitor in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+digital bp monitor in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is digital bp monitor,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose digital bp monitor,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use digital bp monitor,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is digital bp monitor available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+digital bp monitor sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+digital bp monitor ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+digital bp monitor online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+digital bp monitor delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+blood pressure apparatus,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy blood pressure apparatus online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+blood pressure apparatus price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order blood pressure apparatus online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+blood pressure apparatus cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best blood pressure apparatus in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable blood pressure apparatus,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+blood pressure apparatus home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+blood pressure apparatus in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+blood pressure apparatus in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+blood pressure apparatus in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+blood pressure apparatus in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+blood pressure apparatus in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is blood pressure apparatus,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose blood pressure apparatus,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use blood pressure apparatus,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is blood pressure apparatus available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+blood pressure apparatus sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+blood pressure apparatus ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+blood pressure apparatus online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+blood pressure apparatus delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+digital thermometer,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy digital thermometer online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+digital thermometer price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order digital thermometer online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+digital thermometer cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best digital thermometer in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable digital thermometer,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+digital thermometer home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+digital thermometer in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+digital thermometer in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+digital thermometer in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+digital thermometer in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+digital thermometer in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is digital thermometer,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose digital thermometer,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use digital thermometer,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is digital thermometer available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+where to buy digital thermometer in pakistan,question,purchase,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,Vendor lookup
+digital thermometer sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+digital thermometer ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+digital thermometer online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+digital thermometer delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+pulse oximeter,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy pulse oximeter online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+pulse oximeter price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order pulse oximeter online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+pulse oximeter cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best pulse oximeter in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable pulse oximeter,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+pulse oximeter home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+pulse oximeter in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+pulse oximeter in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+pulse oximeter in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+pulse oximeter in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+pulse oximeter in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is pulse oximeter,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose pulse oximeter,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use pulse oximeter,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is pulse oximeter available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+where to buy pulse oximeter in pakistan,question,purchase,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,Vendor lookup
+pulse oximeter sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+pulse oximeter ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+pulse oximeter online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+pulse oximeter delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+nebulizer machine,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy nebulizer machine online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+nebulizer machine price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order nebulizer machine online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+nebulizer machine cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best nebulizer machine in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable nebulizer machine,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+nebulizer machine home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+nebulizer machine in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+nebulizer machine in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+nebulizer machine in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+nebulizer machine in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+nebulizer machine in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is nebulizer machine,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose nebulizer machine,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use nebulizer machine,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is nebulizer machine available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+where to buy nebulizer machine in pakistan,question,purchase,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,Vendor lookup
+nebulizer machine sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+nebulizer machine ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+nebulizer machine online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+nebulizer machine delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+lancets and lancing device,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy lancets and lancing device online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+lancets and lancing device price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order lancets and lancing device online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+lancets and lancing device cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best lancets and lancing device in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable lancets and lancing device,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+lancets and lancing device home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+lancets and lancing device in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+lancets and lancing device in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+lancets and lancing device in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+lancets and lancing device in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+lancets and lancing device in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is lancets and lancing device,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose lancets and lancing device,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use lancets and lancing device,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+lancets and lancing device sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+lancets and lancing device online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+lancets and lancing device delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+accuchek test strips,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy accuchek test strips online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+accuchek test strips price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order accuchek test strips online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+accuchek test strips cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best accuchek test strips in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable accuchek test strips,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+accuchek test strips home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+accuchek test strips in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+accuchek test strips in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+accuchek test strips in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+accuchek test strips in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+accuchek test strips in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is accuchek test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose accuchek test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use accuchek test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is accuchek test strips available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+accuchek test strips sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+accuchek test strips ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+accuchek test strips online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+accuchek test strips delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+certeza bp apparatus,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy certeza bp apparatus online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+certeza bp apparatus price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order certeza bp apparatus online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+certeza bp apparatus cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best certeza bp apparatus in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable certeza bp apparatus,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+certeza bp apparatus home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+certeza bp apparatus in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+certeza bp apparatus in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+certeza bp apparatus in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+certeza bp apparatus in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+certeza bp apparatus in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is certeza bp apparatus,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose certeza bp apparatus,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use certeza bp apparatus,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is certeza bp apparatus available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+certeza bp apparatus sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+certeza bp apparatus ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+certeza bp apparatus online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+certeza bp apparatus delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+pregnancy test strip,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy pregnancy test strip online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+pregnancy test strip price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order pregnancy test strip online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+pregnancy test strip cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best pregnancy test strip in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable pregnancy test strip,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+pregnancy test strip home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+pregnancy test strip in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+pregnancy test strip in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+pregnancy test strip in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+pregnancy test strip in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+pregnancy test strip in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is pregnancy test strip,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose pregnancy test strip,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use pregnancy test strip,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is pregnancy test strip available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+pregnancy test strip sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+pregnancy test strip ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+pregnancy test strip online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+pregnancy test strip delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+uric acid test meter,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy uric acid test meter online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+uric acid test meter price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order uric acid test meter online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+uric acid test meter cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best uric acid test meter in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable uric acid test meter,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+uric acid test meter home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+uric acid test meter in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+uric acid test meter in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+uric acid test meter in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+uric acid test meter in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+uric acid test meter in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is uric acid test meter,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose uric acid test meter,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use uric acid test meter,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+uric acid test meter sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+uric acid test meter online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+uric acid test meter delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+cholesterol test strips,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy cholesterol test strips online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+cholesterol test strips price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order cholesterol test strips online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+cholesterol test strips cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best cholesterol test strips in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable cholesterol test strips,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+cholesterol test strips home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+cholesterol test strips in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+cholesterol test strips in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+cholesterol test strips in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+cholesterol test strips in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+cholesterol test strips in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is cholesterol test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose cholesterol test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use cholesterol test strips,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is cholesterol test strips available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+cholesterol test strips sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+cholesterol test strips ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+cholesterol test strips online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+cholesterol test strips delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+infrared forehead thermometer,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy infrared forehead thermometer online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+infrared forehead thermometer price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order infrared forehead thermometer online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+infrared forehead thermometer cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best infrared forehead thermometer in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable infrared forehead thermometer,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+infrared forehead thermometer home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+infrared forehead thermometer in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+infrared forehead thermometer in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+infrared forehead thermometer in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+infrared forehead thermometer in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+infrared forehead thermometer in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is infrared forehead thermometer,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose infrared forehead thermometer,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use infrared forehead thermometer,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is infrared forehead thermometer available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+infrared forehead thermometer sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+infrared forehead thermometer ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+infrared forehead thermometer online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+infrared forehead thermometer delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+asthma spacer chamber,informational,commercial-investigation,diagnostics-core,https://medikart.pk/categories/diagnostics,high,,template,Approved seed term
+buy asthma spacer chamber online,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,high,,template,Core purchase intent
+asthma spacer chamber price in pakistan,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,high,,template,Price check intent
+order asthma spacer chamber online pakistan,transactional,purchase,diagnostics-transactional,https://medikart.pk/categories/diagnostics,medium,,template,Online order
+asthma spacer chamber cash on delivery,transactional,purchase,diagnostics-cod,https://medikart.pk/categories/diagnostics,medium,,template,COD intent
+best asthma spacer chamber in pakistan,informational,comparison,diagnostics-comparison,https://medikart.pk/categories/diagnostics,medium,,template,Best in class
+affordable asthma spacer chamber,transactional,price-check,diagnostics-pricing,https://medikart.pk/categories/diagnostics,low,,template,Affordable value
+asthma spacer chamber home delivery,transactional,purchase,diagnostics-delivery,https://medikart.pk/categories/diagnostics,medium,,template,Delivery intent
+asthma spacer chamber in lahore,local,local-delivery,diagnostics-local-lahore,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in lahore
+asthma spacer chamber in karachi,local,local-delivery,diagnostics-local-karachi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in karachi
+asthma spacer chamber in islamabad,local,local-delivery,diagnostics-local-islamabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in islamabad
+asthma spacer chamber in rawalpindi,local,local-delivery,diagnostics-local-rawalpindi,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in rawalpindi
+asthma spacer chamber in faisalabad,local,local-delivery,diagnostics-local-faisalabad,https://medikart.pk/categories/diagnostics,medium,,template,1-5 hr delivery in faisalabad
+what is asthma spacer chamber,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO direct answer
+how to choose asthma spacer chamber,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO selection guide
+how to use asthma spacer chamber,question,informational,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,medium,,template,AEO usage guide
+is asthma spacer chamber available in pakistan,question,commercial-investigation,diagnostics-aeo,https://medikart.pk/categories/diagnostics#faqs,low,,template,Availability question
+asthma spacer chamber sasti,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Pakistani vernacular
+asthma spacer chamber ki price kitni hai,roman-urdu,price-check,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics#faqs,low,,template,Vernacular price query
+asthma spacer chamber online mangwana,roman-urdu,purchase,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular delivery query
+asthma spacer chamber delivery timing,roman-urdu,local-delivery,diagnostics-roman-urdu,https://medikart.pk/categories/diagnostics,low,,template,Vernacular timing query
+certeza blood glucose 50 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-gl-110-blood-glucose-50-test-strips,high,,catalog,Direct catalog product
+device,brand,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,medium,,catalog,Generic formulation
+device in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability
+freestyle optium 50 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/freestyle-optium-blood-glucose-50-test-strips,high,,catalog,Direct catalog product
+buy freestyle optium 50 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/freestyle-optium-blood-glucose-50-test-strips,high,,template,Product purchase intent
+aerohaler inhaler device,product,brand-search,diagnostics-product,https://medikart.pk/products/aerohaler-inhaler-device-1s,high,,catalog,Direct catalog product
+buy aerohaler inhaler device online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/aerohaler-inhaler-device-1s,high,,template,Product purchase intent
+aerohaler inhaler device price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/aerohaler-inhaler-device-1s,high,,template,Product price lookup
+aerohaler inhaler device cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/aerohaler-inhaler-device-1s,medium,,template,Product COD
+dary powder,brand,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,medium,,catalog,Generic formulation
+dary powder in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability
+fast sign gold pregnancy test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/fast-sign-gold-pregnancy-test-strips,high,,catalog,Direct catalog product
+fast sign ovulation kit 1 pc,product,brand-search,diagnostics-product,https://medikart.pk/products/fast-sign-ovulation-kit-1-pc,high,,catalog,Direct catalog product
+fast sign plus strips,product,brand-search,diagnostics-product,https://medikart.pk/products/fast-sign-plus-strips,high,,catalog,Direct catalog product
+buy fast sign plus strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/fast-sign-plus-strips,high,,template,Product purchase intent
+fast sign plus strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/fast-sign-plus-strips,high,,template,Product price lookup
+fast sign plus strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/fast-sign-plus-strips,medium,,template,Product COD
+fast sigh premium strips,product,brand-search,diagnostics-product,https://medikart.pk/products/fast-sigh-premium-strips,high,,catalog,Direct catalog product
+buy fast sigh premium strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/fast-sigh-premium-strips,high,,template,Product purchase intent
+fast sigh premium strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/fast-sigh-premium-strips,high,,template,Product price lookup
+fast sigh premium strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/fast-sigh-premium-strips,medium,,template,Product COD
+certeza aneroid sphygmomanometer,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-cr-1006-aneroid-sphygmomanometer,high,,catalog,Direct catalog product
+buy certeza aneroid sphygmomanometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-cr-1006-aneroid-sphygmomanometer,high,,template,Product purchase intent
+certeza aneroid sphygmomanometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-cr-1006-aneroid-sphygmomanometer,high,,template,Product price lookup
+certeza aneroid sphygmomanometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-cr-1006-aneroid-sphygmomanometer,medium,,template,Product COD
+certeza digital blood pressure monitor,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-bm-307-digital-blood-pressure-monitor,high,,catalog,Direct catalog product
+buy certeza digital blood pressure monitor online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-bm-307-digital-blood-pressure-monitor,high,,template,Product purchase intent
+certeza blood glucose meter,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-gl-110-blood-glucose-meter,high,,catalog,Direct catalog product
+buy certeza blood glucose meter online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-gl-110-blood-glucose-meter,high,,template,Product purchase intent
+certeza blood glucose meter price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-gl-110-blood-glucose-meter,high,,template,Product price lookup
+certeza blood glucose meter cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-gl-110-blood-glucose-meter,medium,,template,Product COD
+certeza nebulizer,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-nb-605-nebulizer,high,,catalog,Direct catalog product
+buy certeza nebulizer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-nb-605-nebulizer,high,,template,Product purchase intent
+certeza nebulizer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-nb-605-nebulizer,high,,template,Product price lookup
+certeza nebulizer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-nb-605-nebulizer,medium,,template,Product COD
+certeza facial steamer,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-fs-510-facial-steamer,high,,catalog,Direct catalog product
+buy certeza facial steamer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-fs-510-facial-steamer,high,,template,Product purchase intent
+certeza facial steamer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-fs-510-facial-steamer,high,,template,Product price lookup
+certeza facial steamer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-fs-510-facial-steamer,medium,,template,Product COD
+certeza adult deluxe stethoscope,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-cr-747x-adult-deluxe-stethoscope,high,,catalog,Direct catalog product
+buy certeza adult deluxe stethoscope online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-cr-747x-adult-deluxe-stethoscope,high,,template,Product purchase intent
+certeza adult deluxe stethoscope price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-cr-747x-adult-deluxe-stethoscope,high,,template,Product price lookup
+certeza adult deluxe stethoscope cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-cr-747x-adult-deluxe-stethoscope,medium,,template,Product COD
+certeza digital glass weighing scale,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-gs-807-digital-glass-weighing-scale,high,,catalog,Direct catalog product
+buy certeza digital glass weighing scale online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-gs-807-digital-glass-weighing-scale,high,,template,Product purchase intent
+citizen bp monitor,product,brand-search,diagnostics-product,https://medikart.pk/products/citizen-ch-452-bp-monitor-1s,high,,catalog,Direct catalog product
+buy citizen bp monitor online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/citizen-ch-452-bp-monitor-1s,high,,template,Product purchase intent
+citizen bp monitor price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/citizen-ch-452-bp-monitor-1s,high,,template,Product price lookup
+citizen bp monitor cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/citizen-ch-452-bp-monitor-1s,medium,,template,Product COD
+citizen digital thermometer,product,brand-search,diagnostics-product,https://medikart.pk/products/citizen-cta-302-digital-thermometer,high,,catalog,Direct catalog product
+buy citizen digital thermometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/citizen-cta-302-digital-thermometer,high,,template,Product purchase intent
+citizen digital thermometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/citizen-cta-302-digital-thermometer,high,,template,Product price lookup
+citizen digital thermometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/citizen-cta-302-digital-thermometer,medium,,template,Product COD
+revolizer device,product,brand-search,diagnostics-product,https://medikart.pk/products/revolizer-device-1s,high,,catalog,Direct catalog product
+buy revolizer device online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/revolizer-device-1s,high,,template,Product purchase intent
+revolizer device price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/revolizer-device-1s,high,,template,Product price lookup
+revolizer device cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/revolizer-device-1s,medium,,template,Product COD
+humapen ergo ll 1 insulin injection pen,product,brand-search,diagnostics-product,https://medikart.pk/products/humapen-ergo-ll-1-insulin-injection-pen,high,,catalog,Direct catalog product
+insulin pen,brand,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,medium,,catalog,Generic formulation
+insulin pen in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability
+cc blood 50 glucose test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/cc-blood-50-glucose-test-strips,high,,catalog,Direct catalog product
+cc advance 25 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/cc-advance-glucometer-25-test-strips,high,,catalog,Direct catalog product
+buy cc advance 25 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/cc-advance-glucometer-25-test-strips,high,,template,Product purchase intent
+medisign 50 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/medisign-blood-glucose-50-test-strips,high,,catalog,Direct catalog product
+buy medisign 50 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/medisign-blood-glucose-50-test-strips,high,,template,Product purchase intent
+medisign 50 test strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/medisign-blood-glucose-50-test-strips,high,,template,Product price lookup
+medisign 50 test strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/medisign-blood-glucose-50-test-strips,medium,,template,Product COD
+on call extra meter,product,brand-search,diagnostics-product,https://medikart.pk/products/on-call-extra-meter,high,,catalog,Direct catalog product
+buy on call extra meter online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/on-call-extra-meter,high,,template,Product purchase intent
+on call extra meter price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/on-call-extra-meter,high,,template,Product price lookup
+on call extra meter cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/on-call-extra-meter,medium,,template,Product COD
+on call extra 50 strips,product,brand-search,diagnostics-product,https://medikart.pk/products/on-call-extra-50-strips,high,,catalog,Direct catalog product
+buy on call extra 50 strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/on-call-extra-50-strips,high,,template,Product purchase intent
+on call plus 25 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/on-call-plus-25-test-strips,high,,catalog,Direct catalog product
+on call plus 252 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/on-call-plus-252-test-strips,high,,catalog,Direct catalog product
+novofine 6mm 100 needles,product,brand-search,diagnostics-product,https://medikart.pk/products/novofine-31g-6mm-100-needles,high,,catalog,Direct catalog product
+buy novofine 6mm 100 needles online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/novofine-31g-6mm-100-needles,high,,template,Product purchase intent
+novofine 6mm 100 needles price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/novofine-31g-6mm-100-needles,high,,template,Product price lookup
+novofine 6mm 100 needles cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/novofine-31g-6mm-100-needles,medium,,template,Product COD
+omnicaine syringe syringe,product,brand-search,diagnostics-product,https://medikart.pk/products/omnicaine-syringe-1cc-syringe,high,,catalog,Direct catalog product
+buy omnicaine syringe syringe online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/omnicaine-syringe-1cc-syringe,high,,template,Product purchase intent
+omnicaine syringe syringe price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/omnicaine-syringe-1cc-syringe,high,,template,Product price lookup
+omnicaine syringe syringe cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/omnicaine-syringe-1cc-syringe,medium,,template,Product COD
+omron wrist blood pressure monitor,product,brand-search,diagnostics-product,https://medikart.pk/products/omron-rs1-wrist-blood-pressure-monitor,high,,catalog,Direct catalog product
+buy omron wrist blood pressure monitor online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/omron-rs1-wrist-blood-pressure-monitor,high,,template,Product purchase intent
+omron digital thermometer,product,brand-search,diagnostics-product,https://medikart.pk/products/omron-eco-temp-basic-digital-thermometer,high,,catalog,Direct catalog product
+buy omron digital thermometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/omron-eco-temp-basic-digital-thermometer,high,,template,Product purchase intent
+omron digital thermometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/omron-eco-temp-basic-digital-thermometer,high,,template,Product price lookup
+omron digital thermometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/omron-eco-temp-basic-digital-thermometer,medium,,template,Product COD
+accu-chek active 25 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-active-blood-glucose-25-test-strips,high,,catalog,Direct catalog product
+buy accu-chek active 25 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-active-blood-glucose-25-test-strips,high,,template,Product purchase intent
+accu-chek active 100 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-active-blood-glucose-100-test-strips,high,,catalog,Direct catalog product
+buy accu-chek active 100 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-active-blood-glucose-100-test-strips,high,,template,Product purchase intent
+accu-chek glucometer,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-active-glucometer,high,,catalog,Direct catalog product
+buy accu-chek glucometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-active-glucometer,high,,template,Product purchase intent
+accu-chek glucometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/accu-chek-active-glucometer,high,,template,Product price lookup
+accu-chek glucometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/accu-chek-active-glucometer,medium,,template,Product COD
+accu-chek instant 50 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-instant-blood-glucose-50-test-strips,high,,catalog,Direct catalog product
+buy accu-chek instant 50 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-instant-blood-glucose-50-test-strips,high,,template,Product purchase intent
+accu-chek performa 25 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-performa-blood-glucose-25-test-strips,high,,catalog,Direct catalog product
+buy accu-chek performa 25 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-performa-blood-glucose-25-test-strips,high,,template,Product purchase intent
+accu-chek performa 50 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-performa-blood-glucose-50-test-strips,high,,catalog,Direct catalog product
+buy accu-chek performa 50 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-performa-blood-glucose-50-test-strips,high,,template,Product purchase intent
+air cushion with pump,product,brand-search,diagnostics-product,https://medikart.pk/products/air-cushion-with-pump-life-care,high,,catalog,Direct catalog product
+buy air cushion with pump online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/air-cushion-with-pump-life-care,high,,template,Product purchase intent
+air cushion with pump price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/air-cushion-with-pump-life-care,high,,template,Product price lookup
+air cushion with pump cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/air-cushion-with-pump-life-care,medium,,template,Product COD
+lifecare digital thermometer,product,brand-search,diagnostics-product,https://medikart.pk/products/lifecare-lc-990-digital-thermometer,high,,catalog,Direct catalog product
+buy lifecare digital thermometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/lifecare-lc-990-digital-thermometer,high,,template,Product purchase intent
+lifecare digital thermometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/lifecare-lc-990-digital-thermometer,high,,template,Product price lookup
+lifecare digital thermometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/lifecare-lc-990-digital-thermometer,medium,,template,Product COD
+cyber sonic hearing aid,product,brand-search,diagnostics-product,https://medikart.pk/products/cyber-sonic-hearing-aid,high,,catalog,Direct catalog product
+buy cyber sonic hearing aid online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/cyber-sonic-hearing-aid,high,,template,Product purchase intent
+cyber sonic hearing aid price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/cyber-sonic-hearing-aid,high,,template,Product price lookup
+cyber sonic hearing aid cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/cyber-sonic-hearing-aid,medium,,template,Product COD
+u-check heating pad,product,brand-search,diagnostics-product,https://medikart.pk/products/u-check-heating-pad,high,,catalog,Direct catalog product
+buy u-check heating pad online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/u-check-heating-pad,high,,template,Product purchase intent
+u-check heating pad price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/u-check-heating-pad,high,,template,Product price lookup
+u-check heating pad cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/u-check-heating-pad,medium,,template,Product COD
+unique lancing device,product,brand-search,diagnostics-product,https://medikart.pk/products/unique-lancing-device,high,,catalog,Direct catalog product
+buy unique lancing device online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/unique-lancing-device,high,,template,Product purchase intent
+unique lancing device price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/unique-lancing-device,high,,template,Product price lookup
+unique lancing device cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/unique-lancing-device,medium,,template,Product COD
+insulin ice box,product,brand-search,diagnostics-product,https://medikart.pk/products/insulin-ice-box-ib14,high,,catalog,Direct catalog product
+buy insulin ice box online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/insulin-ice-box-ib14,high,,template,Product purchase intent
+insulin ice box price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/insulin-ice-box-ib14,high,,template,Product price lookup
+insulin ice box cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/insulin-ice-box-ib14,medium,,template,Product COD
+pill cutter,product,brand-search,diagnostics-product,https://medikart.pk/products/pill-cutter-p4-4in1,high,,catalog,Direct catalog product
+buy pill cutter online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/pill-cutter-p4-4in1,high,,template,Product purchase intent
+pill cutter price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/pill-cutter-p4-4in1,high,,template,Product price lookup
+pill cutter cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/pill-cutter-p4-4in1,medium,,template,Product COD
+pill cutter in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability
+on call ez ii glucometer,product,brand-search,diagnostics-product,https://medikart.pk/products/on-call-ez-ii-glucometer,high,,catalog,Direct catalog product
+buy on call ez ii glucometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/on-call-ez-ii-glucometer,high,,template,Product purchase intent
+certeza bp apparatus dial,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-cr-1002-bp-apparatus-dial,high,,catalog,Direct catalog product
+buy certeza bp apparatus dial online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-cr-1002-bp-apparatus-dial,high,,template,Product purchase intent
+certeza bp apparatus dial price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-cr-1002-bp-apparatus-dial,high,,template,Product price lookup
+certeza bp apparatus dial cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-cr-1002-bp-apparatus-dial,medium,,template,Product COD
+rotaflo device,product,brand-search,diagnostics-product,https://medikart.pk/products/rotaflo-device-1s,high,,catalog,Direct catalog product
+buy rotaflo device online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/rotaflo-device-1s,high,,template,Product purchase intent
+rotaflo device price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/rotaflo-device-1s,high,,template,Product price lookup
+rotaflo device cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/rotaflo-device-1s,medium,,template,Product COD
+electric breast pump,product,brand-search,diagnostics-product,https://medikart.pk/products/electric-breast-pump-lifecare-1s,high,,catalog,Direct catalog product
+buy electric breast pump online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/electric-breast-pump-lifecare-1s,high,,template,Product purchase intent
+electric breast pump price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/electric-breast-pump-lifecare-1s,high,,template,Product price lookup
+electric breast pump cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/electric-breast-pump-lifecare-1s,medium,,template,Product COD
+klear 24 pregnancy test strip,product,brand-search,diagnostics-product,https://medikart.pk/products/klear-24-pregnancy-test-strip,high,,catalog,Direct catalog product
+buy klear 24 pregnancy test strip online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/klear-24-pregnancy-test-strip,high,,template,Product purchase intent
+codefree 50 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/codefree-blood-glucose-50-test-strips,high,,catalog,Direct catalog product
+buy codefree 50 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/codefree-blood-glucose-50-test-strips,high,,template,Product purchase intent
+codefree 50 test strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/codefree-blood-glucose-50-test-strips,high,,template,Product price lookup
+codefree 50 test strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/codefree-blood-glucose-50-test-strips,medium,,template,Product COD
+life care blood lancets 200s,product,brand-search,diagnostics-product,https://medikart.pk/products/life-care-blood-lancets-200s,high,,catalog,Direct catalog product
+buy life care blood lancets 200s online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/life-care-blood-lancets-200s,high,,template,Product purchase intent
+lifecare massager,product,brand-search,diagnostics-product,https://medikart.pk/products/lifecare-massager-lc-900,high,,catalog,Direct catalog product
+buy lifecare massager online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/lifecare-massager-lc-900,high,,template,Product purchase intent
+lifecare massager price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/lifecare-massager-lc-900,high,,template,Product price lookup
+lifecare massager cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/lifecare-massager-lc-900,medium,,template,Product COD
+mac-life spacer device,product,brand-search,diagnostics-product,https://medikart.pk/products/mac-life-spacer-device,high,,catalog,Direct catalog product
+buy mac-life spacer device online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/mac-life-spacer-device,high,,template,Product purchase intent
+mac-life spacer device price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/mac-life-spacer-device,high,,template,Product price lookup
+mac-life spacer device cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/mac-life-spacer-device,medium,,template,Product COD
+ipsa electric breast pump,product,brand-search,diagnostics-product,https://medikart.pk/products/ipsa-electric-breast-pump-6002,high,,catalog,Direct catalog product
+buy ipsa electric breast pump online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/ipsa-electric-breast-pump-6002,high,,template,Product purchase intent
+ipsa electric breast pump price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/ipsa-electric-breast-pump-6002,high,,template,Product price lookup
+ipsa electric breast pump cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/ipsa-electric-breast-pump-6002,medium,,template,Product COD
+evocheck go strips,product,brand-search,diagnostics-product,https://medikart.pk/products/evocheck-go-strips-2x50,high,,catalog,Direct catalog product
+buy evocheck go strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/evocheck-go-strips-2x50,high,,template,Product purchase intent
+evocheck go strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/evocheck-go-strips-2x50,high,,template,Product price lookup
+evocheck go strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/evocheck-go-strips-2x50,medium,,template,Product COD
+life care breast pump manual,product,brand-search,diagnostics-product,https://medikart.pk/products/life-care-breast-pump-manual,high,,catalog,Direct catalog product
+buy life care breast pump manual online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/life-care-breast-pump-manual,high,,template,Product purchase intent
+evocheck glucometer,product,brand-search,diagnostics-product,https://medikart.pk/products/evocheck-glucometer,high,,catalog,Direct catalog product
+buy evocheck glucometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/evocheck-glucometer,high,,template,Product purchase intent
+evocheck glucometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/evocheck-glucometer,high,,template,Product price lookup
+evocheck glucometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/evocheck-glucometer,medium,,template,Product COD
+certeza stethoscope,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-cr-3001-stethoscope,high,,catalog,Direct catalog product
+buy certeza stethoscope online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-cr-3001-stethoscope,high,,template,Product purchase intent
+certeza stethoscope price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-cr-3001-stethoscope,high,,template,Product price lookup
+certeza stethoscope cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-cr-3001-stethoscope,medium,,template,Product COD
+evocheck go glucometer,product,brand-search,diagnostics-product,https://medikart.pk/products/evocheck-go-glucometer,high,,catalog,Direct catalog product
+buy evocheck go glucometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/evocheck-go-glucometer,high,,template,Product purchase intent
+evocheck go glucometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/evocheck-go-glucometer,high,,template,Product price lookup
+evocheck go glucometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/evocheck-go-glucometer,medium,,template,Product COD
+medisign 25 test strips,product,brand-search,diagnostics-product,https://medikart.pk/products/medisign-blood-glucose-25-test-strips,high,,catalog,Direct catalog product
+buy medisign 25 test strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/medisign-blood-glucose-25-test-strips,high,,template,Product purchase intent
+medisign 25 test strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/medisign-blood-glucose-25-test-strips,high,,template,Product price lookup
+medisign 25 test strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/medisign-blood-glucose-25-test-strips,medium,,template,Product COD
+pill box,product,brand-search,diagnostics-product,https://medikart.pk/products/pill-box-7-days,high,,catalog,Direct catalog product
+buy pill box online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/pill-box-7-days,high,,template,Product purchase intent
+pill box price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/pill-box-7-days,high,,template,Product price lookup
+pill box cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/pill-box-7-days,medium,,template,Product COD
+surgical,brand,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,medium,,catalog,Generic formulation
+surgical in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability
+accu-chek softclix 200 lancets,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-chek-softclix-200-lancets,high,,catalog,Direct catalog product
+buy accu-chek softclix 200 lancets online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-chek-softclix-200-lancets,high,,template,Product purchase intent
+accu-chek softclix 200 lancets price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/accu-chek-softclix-200-lancets,high,,template,Product price lookup
+accu-chek softclix 200 lancets cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/accu-chek-softclix-200-lancets,medium,,template,Product COD
+fast sign strip 25s,product,brand-search,diagnostics-product,https://medikart.pk/products/fast-sign-strip-25s,high,,catalog,Direct catalog product
+buy fast sign strip 25s online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/fast-sign-strip-25s,high,,template,Product purchase intent
+fast sign strip 25s price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/fast-sign-strip-25s,high,,template,Product price lookup
+fast sign strip 25s cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/fast-sign-strip-25s,medium,,template,Product COD
+omron m1 basic blood pressure monitor,product,brand-search,diagnostics-product,https://medikart.pk/products/omron-m1-basic-blood-pressure-monitor,high,,catalog,Direct catalog product
+certeza thermometer,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-thermometer-705,high,,catalog,Direct catalog product
+buy certeza thermometer online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-thermometer-705,high,,template,Product purchase intent
+certeza thermometer price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-thermometer-705,high,,template,Product price lookup
+certeza thermometer cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-thermometer-705,medium,,template,Product COD
+certeza scale,product,brand-search,diagnostics-product,https://medikart.pk/products/certeza-scale-807,high,,catalog,Direct catalog product
+buy certeza scale online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/certeza-scale-807,high,,template,Product purchase intent
+certeza scale price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/certeza-scale-807,high,,template,Product price lookup
+certeza scale cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/certeza-scale-807,medium,,template,Product COD
+accu check instant dl sc,product,brand-search,diagnostics-product,https://medikart.pk/products/accu-check-instant-dl-sc-set,high,,catalog,Direct catalog product
+buy accu check instant dl sc online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/accu-check-instant-dl-sc-set,high,,template,Product purchase intent
+instant sc kit,product,brand-search,diagnostics-product,https://medikart.pk/products/instant-mgdl-sc-kit-laapac,high,,catalog,Direct catalog product
+buy instant sc kit online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/instant-mgdl-sc-kit-laapac,high,,template,Product purchase intent
+instant sc kit price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/instant-mgdl-sc-kit-laapac,high,,template,Product price lookup
+instant sc kit cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/instant-mgdl-sc-kit-laapac,medium,,template,Product COD
+medisign sugar strips,product,brand-search,diagnostics-product,https://medikart.pk/products/medisign-sugar-strips-252,high,,catalog,Direct catalog product
+buy medisign sugar strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/medisign-sugar-strips-252,high,,template,Product purchase intent
+medisign sugar strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/medisign-sugar-strips-252,high,,template,Product price lookup
+medisign sugar strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/medisign-sugar-strips-252,medium,,template,Product COD
+code free strips,product,brand-search,diagnostics-product,https://medikart.pk/products/code-free-strips-100s,high,,catalog,Direct catalog product
+buy code free strips online,transactional,purchase,diagnostics-product-transactional,https://medikart.pk/products/code-free-strips-100s,high,,template,Product purchase intent
+code free strips price in pakistan,transactional,price-check,diagnostics-product-pricing,https://medikart.pk/products/code-free-strips-100s,high,,template,Product price lookup
+code free strips cash on delivery,transactional,purchase,diagnostics-product-cod,https://medikart.pk/products/code-free-strips-100s,medium,,template,Product COD
+sugar test strips in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability
+thermometer,brand,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,medium,,catalog,Generic formulation
+thermometer in pakistan,informational,generic-search,diagnostics-generic,https://medikart.pk/categories/diagnostics,low,,template,Generic availability

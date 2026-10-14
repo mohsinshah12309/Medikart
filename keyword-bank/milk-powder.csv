@@ -1,0 +1,509 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+baby formula milk,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy baby formula milk online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+baby formula milk price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order baby formula milk online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+baby formula milk cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best baby formula milk in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable baby formula milk,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+baby formula milk home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+baby formula milk in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+baby formula milk in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+baby formula milk in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+baby formula milk in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+baby formula milk in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is baby formula milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose baby formula milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use baby formula milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is baby formula milk available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+baby formula milk sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+baby formula milk ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+baby formula milk online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+baby formula milk delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+infant formula stage 1,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy infant formula stage 1 online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+infant formula stage 1 price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order infant formula stage 1 online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+infant formula stage 1 cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best infant formula stage 1 in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable infant formula stage 1,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+infant formula stage 1 home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+infant formula stage 1 in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+infant formula stage 1 in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+infant formula stage 1 in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+infant formula stage 1 in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+infant formula stage 1 in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is infant formula stage 1,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose infant formula stage 1,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use infant formula stage 1,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+infant formula stage 1 sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+infant formula stage 1 online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+infant formula stage 1 delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+follow on formula stage 2,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy follow on formula stage 2 online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+affordable follow on formula stage 2,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+follow on formula stage 2 home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+follow on formula stage 2 in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+follow on formula stage 2 in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+follow on formula stage 2 in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+follow on formula stage 2 in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+follow on formula stage 2 in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is follow on formula stage 2,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+follow on formula stage 2 sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+follow on formula stage 2 online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+follow on formula stage 2 delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+growing up formula stage 3,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy growing up formula stage 3 online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+affordable growing up formula stage 3,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+growing up formula stage 3 home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+growing up formula stage 3 in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+growing up formula stage 3 in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+growing up formula stage 3 in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+growing up formula stage 3 in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+growing up formula stage 3 in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is growing up formula stage 3,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+growing up formula stage 3 sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+growing up formula stage 3 online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+growing up formula stage 3 delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+powdered milk for babies,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy powdered milk for babies online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+powdered milk for babies price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order powdered milk for babies online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+powdered milk for babies cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best powdered milk for babies in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable powdered milk for babies,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+powdered milk for babies home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+powdered milk for babies in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+powdered milk for babies in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+powdered milk for babies in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+powdered milk for babies in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+powdered milk for babies in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is powdered milk for babies,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose powdered milk for babies,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use powdered milk for babies,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+powdered milk for babies sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+powdered milk for babies online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+powdered milk for babies delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+pediasure nutrition drink,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy pediasure nutrition drink online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+pediasure nutrition drink price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order pediasure nutrition drink online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+pediasure nutrition drink cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best pediasure nutrition drink in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable pediasure nutrition drink,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+pediasure nutrition drink home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+pediasure nutrition drink in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+pediasure nutrition drink in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+pediasure nutrition drink in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+pediasure nutrition drink in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+pediasure nutrition drink in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is pediasure nutrition drink,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose pediasure nutrition drink,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use pediasure nutrition drink,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is pediasure nutrition drink available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+pediasure nutrition drink sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+pediasure nutrition drink ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+pediasure nutrition drink online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+pediasure nutrition drink delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+lactogen milk powder,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy lactogen milk powder online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+lactogen milk powder price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order lactogen milk powder online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+lactogen milk powder cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best lactogen milk powder in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable lactogen milk powder,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+lactogen milk powder home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+lactogen milk powder in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+lactogen milk powder in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+lactogen milk powder in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+lactogen milk powder in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+lactogen milk powder in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is lactogen milk powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose lactogen milk powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use lactogen milk powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is lactogen milk powder available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+lactogen milk powder sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+lactogen milk powder ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+lactogen milk powder online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+lactogen milk powder delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+meiji infant milk,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy meiji infant milk online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+meiji infant milk price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order meiji infant milk online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+meiji infant milk cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best meiji infant milk in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable meiji infant milk,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+meiji infant milk home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+meiji infant milk in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+meiji infant milk in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+meiji infant milk in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+meiji infant milk in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+meiji infant milk in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is meiji infant milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose meiji infant milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use meiji infant milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is meiji infant milk available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+meiji infant milk sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+meiji infant milk ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+meiji infant milk online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+meiji infant milk delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+hypoallergenic baby milk,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy hypoallergenic baby milk online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+hypoallergenic baby milk price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order hypoallergenic baby milk online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+hypoallergenic baby milk cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best hypoallergenic baby milk in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable hypoallergenic baby milk,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+hypoallergenic baby milk home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+hypoallergenic baby milk in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+hypoallergenic baby milk in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+hypoallergenic baby milk in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+hypoallergenic baby milk in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+hypoallergenic baby milk in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is hypoallergenic baby milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose hypoallergenic baby milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use hypoallergenic baby milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is hypoallergenic baby milk available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+hypoallergenic baby milk sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+hypoallergenic baby milk ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+hypoallergenic baby milk online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+hypoallergenic baby milk delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+adult nutritional milk,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy adult nutritional milk online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+adult nutritional milk price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order adult nutritional milk online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+adult nutritional milk cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best adult nutritional milk in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable adult nutritional milk,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+adult nutritional milk home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+adult nutritional milk in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+adult nutritional milk in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+adult nutritional milk in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+adult nutritional milk in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+adult nutritional milk in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is adult nutritional milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose adult nutritional milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use adult nutritional milk,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is adult nutritional milk available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+adult nutritional milk sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+adult nutritional milk ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+adult nutritional milk online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+adult nutritional milk delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+lactose free infant formula,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy lactose free infant formula online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+lactose free infant formula price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order lactose free infant formula online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+lactose free infant formula cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best lactose free infant formula in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable lactose free infant formula,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+lactose free infant formula home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+lactose free infant formula in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+lactose free infant formula in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+lactose free infant formula in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+lactose free infant formula in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+lactose free infant formula in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is lactose free infant formula,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose lactose free infant formula,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use lactose free infant formula,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+lactose free infant formula sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+lactose free infant formula online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+lactose free infant formula delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+high protein nutritional powder,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy high protein nutritional powder online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+high protein nutritional powder price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order high protein nutritional powder online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+high protein nutritional powder cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best high protein nutritional powder in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable high protein nutritional powder,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+high protein nutritional powder home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+high protein nutritional powder in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+high protein nutritional powder in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+high protein nutritional powder in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+high protein nutritional powder in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+high protein nutritional powder in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is high protein nutritional powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose high protein nutritional powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use high protein nutritional powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+high protein nutritional powder sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+high protein nutritional powder online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+high protein nutritional powder delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+fortified milk powder,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy fortified milk powder online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+fortified milk powder price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order fortified milk powder online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+fortified milk powder cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best fortified milk powder in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable fortified milk powder,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+fortified milk powder home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+fortified milk powder in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+fortified milk powder in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+fortified milk powder in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+fortified milk powder in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+fortified milk powder in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is fortified milk powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose fortified milk powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use fortified milk powder,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is fortified milk powder available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+fortified milk powder sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+fortified milk powder ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+fortified milk powder online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+fortified milk powder delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+premature infant formula,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy premature infant formula online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+premature infant formula price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order premature infant formula online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+premature infant formula cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best premature infant formula in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable premature infant formula,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+premature infant formula home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+premature infant formula in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+premature infant formula in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+premature infant formula in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+premature infant formula in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+premature infant formula in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is premature infant formula,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose premature infant formula,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use premature infant formula,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is premature infant formula available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+premature infant formula sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+premature infant formula ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+premature infant formula online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+premature infant formula delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+cereal baby food,informational,commercial-investigation,milk-powder-core,https://medikart.pk/categories/milk-powder,high,,template,Approved seed term
+buy cereal baby food online,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,high,,template,Core purchase intent
+cereal baby food price in pakistan,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,high,,template,Price check intent
+order cereal baby food online pakistan,transactional,purchase,milk-powder-transactional,https://medikart.pk/categories/milk-powder,medium,,template,Online order
+cereal baby food cash on delivery,transactional,purchase,milk-powder-cod,https://medikart.pk/categories/milk-powder,medium,,template,COD intent
+best cereal baby food in pakistan,informational,comparison,milk-powder-comparison,https://medikart.pk/categories/milk-powder,medium,,template,Best in class
+affordable cereal baby food,transactional,price-check,milk-powder-pricing,https://medikart.pk/categories/milk-powder,low,,template,Affordable value
+cereal baby food home delivery,transactional,purchase,milk-powder-delivery,https://medikart.pk/categories/milk-powder,medium,,template,Delivery intent
+cereal baby food in lahore,local,local-delivery,milk-powder-local-lahore,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in lahore
+cereal baby food in karachi,local,local-delivery,milk-powder-local-karachi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in karachi
+cereal baby food in islamabad,local,local-delivery,milk-powder-local-islamabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in islamabad
+cereal baby food in rawalpindi,local,local-delivery,milk-powder-local-rawalpindi,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in rawalpindi
+cereal baby food in faisalabad,local,local-delivery,milk-powder-local-faisalabad,https://medikart.pk/categories/milk-powder,medium,,template,1-5 hr delivery in faisalabad
+what is cereal baby food,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO direct answer
+how to choose cereal baby food,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO selection guide
+how to use cereal baby food,question,informational,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,medium,,template,AEO usage guide
+is cereal baby food available in pakistan,question,commercial-investigation,milk-powder-aeo,https://medikart.pk/categories/milk-powder#faqs,low,,template,Availability question
+cereal baby food sasti,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Pakistani vernacular
+cereal baby food ki price kitni hai,roman-urdu,price-check,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder#faqs,low,,template,Vernacular price query
+cereal baby food online mangwana,roman-urdu,purchase,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular delivery query
+cereal baby food delivery timing,roman-urdu,local-delivery,milk-powder-roman-urdu,https://medikart.pk/categories/milk-powder,low,,template,Vernacular timing query
+aminoleban oral granules,product,brand-search,milk-powder-product,https://medikart.pk/products/aminoleban-450g-oral-granules-1s,high,,catalog,Direct catalog product
+buy aminoleban oral granules online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/aminoleban-450g-oral-granules-1s,high,,template,Product purchase intent
+aminoleban oral granules price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/aminoleban-450g-oral-granules-1s,high,,template,Product price lookup
+aminoleban oral granules cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/aminoleban-450g-oral-granules-1s,medium,,template,Product COD
+meiji big 3 900g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-big-3-growing-up-formula-900g-powdered-milk,high,,catalog,Direct catalog product
+pediasure 850g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/pediasure-chocolate-850g-powdered-milk,high,,catalog,Direct catalog product
+buy pediasure 850g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/pediasure-chocolate-850g-powdered-milk,high,,template,Product purchase intent
+pediasure 850g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/pediasure-chocolate-850g-powdered-milk,high,,template,Product price lookup
+pediasure 850g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/pediasure-chocolate-850g-powdered-milk,medium,,template,Product COD
+nutrafil 1 400g powder,product,brand-search,milk-powder-product,https://medikart.pk/products/nutrafil-1-infant-formula-400g-powder,high,,catalog,Direct catalog product
+buy nutrafil 1 400g powder online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nutrafil-1-infant-formula-400g-powder,high,,template,Product purchase intent
+nutrafil 1 400g powder price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/nutrafil-1-infant-formula-400g-powder,high,,template,Product price lookup
+nutrafil 1 400g powder cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/nutrafil-1-infant-formula-400g-powder,medium,,template,Product COD
+nutrafil 2 400g powder,product,brand-search,milk-powder-product,https://medikart.pk/products/nutrafil-2-follow-on-formula-400g-powder,high,,catalog,Direct catalog product
+buy nutrafil 2 400g powder online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nutrafil-2-follow-on-formula-400g-powder,high,,template,Product purchase intent
+nutrafil 2 400g powder price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/nutrafil-2-follow-on-formula-400g-powder,high,,template,Product price lookup
+nutrafil 2 400g powder cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/nutrafil-2-follow-on-formula-400g-powder,medium,,template,Product COD
+nutrafil 3 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nutrafil-3-400g-powdered-milk,high,,catalog,Direct catalog product
+buy nutrafil 3 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nutrafil-3-400g-powdered-milk,high,,template,Product purchase intent
+nutrafil lf 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nutrafil-lf-400g-powdered-milk,high,,catalog,Direct catalog product
+buy nutrafil lf 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nutrafil-lf-400g-powdered-milk,high,,template,Product purchase intent
+lactogen 1 happy smooth 800g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-1-happy-smooth-800g-powdered-milk,high,,catalog,Direct catalog product
+lactogen 2 happy smooth 800g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-2-happy-smooth-800g-powdered-milk,high,,catalog,Direct catalog product
+lactogrow 3 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogrow-3-800g-powdered-milk,high,,catalog,Direct catalog product
+buy lactogrow 3 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/lactogrow-3-800g-powdered-milk,high,,template,Product purchase intent
+lactogrow 3 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/lactogrow-3-800g-powdered-milk,high,,template,Product price lookup
+lactogrow 3 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/lactogrow-3-800g-powdered-milk,medium,,template,Product COD
+nestle cerelac 175g baby cereal,product,brand-search,milk-powder-product,https://medikart.pk/products/nestle-cerelac-wheat-banana-175g-baby-cereal,high,,catalog,Direct catalog product
+buy nestle cerelac 175g baby cereal online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nestle-cerelac-wheat-banana-175g-baby-cereal,high,,template,Product purchase intent
+lactogen 1 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-1-400g-powdered-milk,high,,catalog,Direct catalog product
+buy lactogen 1 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/lactogen-1-400g-powdered-milk,high,,template,Product purchase intent
+lactogen 1 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/lactogen-1-400g-powdered-milk,high,,template,Product price lookup
+lactogen 1 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/lactogen-1-400g-powdered-milk,medium,,template,Product COD
+lactogen 2 happy smooth 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-2-happy-smooth-200g-powdered-milk,high,,catalog,Direct catalog product
+lactogen 1 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-1-infant-formula-200g-powdered-milk,high,,catalog,Direct catalog product
+buy lactogen 1 200g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/lactogen-1-infant-formula-200g-powdered-milk,high,,template,Product purchase intent
+meiji lactoless powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-lactoless-350g-powdered-milk,high,,catalog,Direct catalog product
+buy meiji lactoless powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-lactoless-350g-powdered-milk,high,,template,Product purchase intent
+meiji lactoless powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-lactoless-350g-powdered-milk,high,,template,Product price lookup
+meiji lactoless powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-lactoless-350g-powdered-milk,medium,,template,Product COD
+morinaga 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-bf-p-400g-powdered-milk,high,,catalog,Direct catalog product
+buy morinaga 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/morinaga-bf-p-400g-powdered-milk,high,,template,Product purchase intent
+morinaga 400g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/morinaga-bf-p-400g-powdered-milk,high,,template,Product price lookup
+morinaga 400g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/morinaga-bf-p-400g-powdered-milk,medium,,template,Product COD
+pediasure 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/pediasure-chocolate-400g-powdered-milk,high,,catalog,Direct catalog product
+buy pediasure 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/pediasure-chocolate-400g-powdered-milk,high,,template,Product purchase intent
+pediasure 400g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/pediasure-chocolate-400g-powdered-milk,high,,template,Product price lookup
+pediasure 400g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/pediasure-chocolate-400g-powdered-milk,medium,,template,Product COD
+nestle cerelac 350g baby cereal,product,brand-search,milk-powder-product,https://medikart.pk/products/nestle-cerelac-3-fruits-wheat-350g-baby-cereal,high,,catalog,Direct catalog product
+buy nestle cerelac 350g baby cereal online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nestle-cerelac-3-fruits-wheat-350g-baby-cereal,high,,template,Product purchase intent
+lactogen 2 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-2-follow-up-formula-400g-powdered-milk,high,,catalog,Direct catalog product
+buy lactogen 2 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/lactogen-2-follow-up-formula-400g-powdered-milk,high,,template,Product purchase intent
+lactogen recover powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/lactogen-recover-200g-powdered-milk,high,,catalog,Direct catalog product
+buy lactogen recover powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/lactogen-recover-200g-powdered-milk,high,,template,Product purchase intent
+lactogen recover powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/lactogen-recover-200g-powdered-milk,high,,template,Product price lookup
+lactogen recover powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/lactogen-recover-200g-powdered-milk,medium,,template,Product COD
+ensure 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/ensure-choclate-400g-powdered-milk,high,,catalog,Direct catalog product
+buy ensure 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/ensure-choclate-400g-powdered-milk,high,,template,Product purchase intent
+ensure 400g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/ensure-choclate-400g-powdered-milk,high,,template,Product price lookup
+ensure 400g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/ensure-choclate-400g-powdered-milk,medium,,template,Product COD
+ensure nutritional supplement 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/ensure-stawberry-nutritional-supplement-400g-powdered-milk,high,,catalog,Direct catalog product
+ensure 850g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/ensure-vanilla-850g-powdered-milk,high,,catalog,Direct catalog product
+buy ensure 850g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/ensure-vanilla-850g-powdered-milk,high,,template,Product purchase intent
+ensure 850g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/ensure-vanilla-850g-powdered-milk,high,,template,Product price lookup
+ensure 850g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/ensure-vanilla-850g-powdered-milk,medium,,template,Product COD
+ensure nutrivigor 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/ensure-nutrivigor-vanilla-400g-powdered-milk,high,,catalog,Direct catalog product
+buy ensure nutrivigor 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/ensure-nutrivigor-vanilla-400g-powdered-milk,high,,template,Product purchase intent
+ensure plus liquid,product,brand-search,milk-powder-product,https://medikart.pk/products/ensure-plus-250ml-liquid,high,,catalog,Direct catalog product
+buy ensure plus liquid online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/ensure-plus-250ml-liquid,high,,template,Product purchase intent
+ensure plus liquid price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/ensure-plus-250ml-liquid,high,,template,Product price lookup
+ensure plus liquid cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/ensure-plus-250ml-liquid,medium,,template,Product COD
+glucerna liquid,product,brand-search,milk-powder-product,https://medikart.pk/products/glucerna-250ml-liquid,high,,catalog,Direct catalog product
+buy glucerna liquid online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/glucerna-250ml-liquid,high,,template,Product purchase intent
+glucerna liquid price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/glucerna-250ml-liquid,high,,template,Product price lookup
+glucerna liquid cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/glucerna-250ml-liquid,medium,,template,Product COD
+glucerna 400g powder,product,brand-search,milk-powder-product,https://medikart.pk/products/glucerna-chocolate-flavour-400g-powder,high,,catalog,Direct catalog product
+buy glucerna 400g powder online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/glucerna-chocolate-flavour-400g-powder,high,,template,Product purchase intent
+glucerna 400g powder price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/glucerna-chocolate-flavour-400g-powder,high,,template,Product price lookup
+glucerna 400g powder cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/glucerna-chocolate-flavour-400g-powder,medium,,template,Product COD
+similac 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/similac-isomil-400g-powdered-milk,high,,catalog,Direct catalog product
+buy similac 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/similac-isomil-400g-powdered-milk,high,,template,Product purchase intent
+similac 400g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/similac-isomil-400g-powdered-milk,high,,template,Product price lookup
+similac 400g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/similac-isomil-400g-powdered-milk,medium,,template,Product COD
+similac 360g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/similac-total-comfort-2-360g-powdered-milk,high,,catalog,Direct catalog product
+buy similac 360g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/similac-total-comfort-2-360g-powdered-milk,high,,template,Product purchase intent
+similac 360g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/similac-total-comfort-2-360g-powdered-milk,high,,template,Product price lookup
+similac 360g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/similac-total-comfort-2-360g-powdered-milk,medium,,template,Product COD
+finlac 1 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/finlac-1-200g-powdered-milk,high,,catalog,Direct catalog product
+buy finlac 1 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/finlac-1-200g-powdered-milk,high,,template,Product purchase intent
+finlac 1 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/finlac-1-200g-powdered-milk,high,,template,Product price lookup
+finlac 1 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/finlac-1-200g-powdered-milk,medium,,template,Product COD
+finlac lactose free powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/finlac-lactose-free-150g-powdered-milk,high,,catalog,Direct catalog product
+buy finlac lactose free powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/finlac-lactose-free-150g-powdered-milk,high,,template,Product purchase intent
+enfamil a 2 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/enfamil-a-2-760g-powdered-milk,high,,catalog,Direct catalog product
+buy enfamil a 2 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/enfamil-a-2-760g-powdered-milk,high,,template,Product purchase intent
+meiji big 3 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-big-3-growing-up-formula-400g-powdered-milk,high,,catalog,Direct catalog product
+meiji fm-t powder milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-fm-t-900g-powder-milk,high,,catalog,Direct catalog product
+buy meiji fm-t powder milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-fm-t-900g-powder-milk,high,,template,Product purchase intent
+meiji fm-t powder milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-fm-t-900g-powder-milk,high,,template,Product price lookup
+meiji fm-t powder milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-fm-t-900g-powder-milk,medium,,template,Product COD
+meiji fm-t powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-fm-t-400g-powdered-milk,high,,catalog,Direct catalog product
+buy meiji fm-t powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-fm-t-400g-powdered-milk,high,,template,Product purchase intent
+meiji fm-t powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-fm-t-400g-powdered-milk,high,,template,Product price lookup
+meiji fm-t powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-fm-t-400g-powdered-milk,medium,,template,Product COD
+meiji fu powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-fu-400g-powdered-milk,high,,catalog,Direct catalog product
+buy meiji fu powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-fu-400g-powdered-milk,high,,template,Product purchase intent
+meiji fu powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-fu-400g-powdered-milk,high,,template,Product price lookup
+meiji fu powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-fu-400g-powdered-milk,medium,,template,Product COD
+meiji mamilac powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-mamilac-350g-powdered-milk,high,,catalog,Direct catalog product
+buy meiji mamilac powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-mamilac-350g-powdered-milk,high,,template,Product purchase intent
+meiji mamilac powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-mamilac-350g-powdered-milk,high,,template,Product price lookup
+meiji mamilac powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-mamilac-350g-powdered-milk,medium,,template,Product COD
+meiji pre powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-pre-400g-powdered-milk,high,,catalog,Direct catalog product
+buy meiji pre powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-pre-400g-powdered-milk,high,,template,Product purchase intent
+meiji pre powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-pre-400g-powdered-milk,high,,template,Product price lookup
+meiji pre powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-pre-400g-powdered-milk,medium,,template,Product COD
+morinaga bf 3 soft pack,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-bf-3-300g-soft-pack,high,,catalog,Direct catalog product
+buy morinaga bf 3 soft pack online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/morinaga-bf-3-300g-soft-pack,high,,template,Product purchase intent
+morinaga nl-33 lactose free formula powder,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-nl-33-lactose-free-formula-350g-powder,high,,catalog,Direct catalog product
+cow gate 1 infant formula milk powder,product,brand-search,milk-powder-product,https://medikart.pk/products/cow-gate-1-infant-formula-400g-milk-powder,high,,catalog,Direct catalog product
+cow gate 2,product,brand-search,milk-powder-product,https://medikart.pk/products/cow-gate-2-400g,high,,catalog,Direct catalog product
+buy cow gate 2 online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/cow-gate-2-400g,high,,template,Product purchase intent
+cow gate 2 price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/cow-gate-2-400g,high,,template,Product price lookup
+cow gate 2 cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/cow-gate-2-400g,medium,,template,Product COD
+cow gate 3,product,brand-search,milk-powder-product,https://medikart.pk/products/cow-gate-3-400g,high,,catalog,Direct catalog product
+buy cow gate 3 online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/cow-gate-3-400g,high,,template,Product purchase intent
+cow gate 3 price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/cow-gate-3-400g,high,,template,Product price lookup
+cow gate 3 cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/cow-gate-3-400g,medium,,template,Product COD
+beneprotein boost powder,product,brand-search,milk-powder-product,https://medikart.pk/products/beneprotein-boost-264g-powder,high,,catalog,Direct catalog product
+buy beneprotein boost powder online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/beneprotein-boost-264g-powder,high,,template,Product purchase intent
+beneprotein boost powder price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/beneprotein-boost-264g-powder,high,,template,Product price lookup
+beneprotein boost powder cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/beneprotein-boost-264g-powder,medium,,template,Product COD
+nestle cerelac natures 175g baby cereal,product,brand-search,milk-powder-product,https://medikart.pk/products/nestle-cerelac-natures-oats-rice-yummy-apples-175g-baby-cereal,high,,catalog,Direct catalog product
+nestle bunyad powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nestle-bunyad-910g-powdered-milk,high,,catalog,Direct catalog product
+buy nestle bunyad powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nestle-bunyad-910g-powdered-milk,high,,template,Product purchase intent
+nestle bunyad powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/nestle-bunyad-910g-powdered-milk,high,,template,Product price lookup
+nestle bunyad powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/nestle-bunyad-910g-powdered-milk,medium,,template,Product COD
+nido 1 soft pack,product,brand-search,milk-powder-product,https://medikart.pk/products/nido-1-150g-soft-pack,high,,catalog,Direct catalog product
+buy nido 1 soft pack online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nido-1-150g-soft-pack,high,,template,Product purchase intent
+nido 1 soft pack price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/nido-1-150g-soft-pack,high,,template,Product price lookup
+nido 1 soft pack cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/nido-1-150g-soft-pack,medium,,template,Product COD
+bellakt 1 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/bellakt-1-lactable-200g-powdered-milk,high,,catalog,Direct catalog product
+buy bellakt 1 200g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/bellakt-1-lactable-200g-powdered-milk,high,,template,Product purchase intent
+bellakt 1 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/bellakt-1-lactable-400g-powdered-milk,high,,catalog,Direct catalog product
+buy bellakt 1 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/bellakt-1-lactable-400g-powdered-milk,high,,template,Product purchase intent
+bellakt 2 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/bellakt-2-lactable-200g-powdered-milk,high,,catalog,Direct catalog product
+buy bellakt 2 200g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/bellakt-2-lactable-200g-powdered-milk,high,,template,Product purchase intent
+bellakt 2 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/bellakt-2-400g-powdered-milk,high,,catalog,Direct catalog product
+buy bellakt 2 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/bellakt-2-400g-powdered-milk,high,,template,Product purchase intent
+bellakt 2 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/bellakt-2-400g-powdered-milk,high,,template,Product price lookup
+bellakt 2 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/bellakt-2-400g-powdered-milk,medium,,template,Product COD
+bellakt gf powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/bellakt-gf-200g-powdered-milk,high,,catalog,Direct catalog product
+buy bellakt gf powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/bellakt-gf-200g-powdered-milk,high,,template,Product purchase intent
+bellakt gf powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/bellakt-gf-200g-powdered-milk,high,,template,Product price lookup
+bellakt gf powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/bellakt-gf-200g-powdered-milk,medium,,template,Product COD
+nurture intellegence ni-1 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nurture-intellegence-ni-1-400g-powdered-milk,high,,catalog,Direct catalog product
+nurture intellegence ni-ac 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nurture-intellegence-ni-ac-low-lactose-formula-400g-powdered-milk,high,,catalog,Direct catalog product
+ni-grow powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/ni-grow-400g-powdered-milk,high,,catalog,Direct catalog product
+buy ni-grow powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/ni-grow-400g-powdered-milk,high,,template,Product purchase intent
+ni-grow powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/ni-grow-400g-powdered-milk,high,,template,Product price lookup
+ni-grow powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/ni-grow-400g-powdered-milk,medium,,template,Product COD
+morinaga bf-mama 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-bf-mama-vanilla-200g-powdered-milk,high,,catalog,Direct catalog product
+buy morinaga bf-mama 200g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/morinaga-bf-mama-vanilla-200g-powdered-milk,high,,template,Product purchase intent
+morinaga bf-1 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-bf-1-400g-powdered-milk,high,,catalog,Direct catalog product
+buy morinaga bf-1 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/morinaga-bf-1-400g-powdered-milk,high,,template,Product purchase intent
+morinaga bf-1 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/morinaga-bf-1-400g-powdered-milk,high,,template,Product price lookup
+morinaga bf-1 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/morinaga-bf-1-400g-powdered-milk,medium,,template,Product COD
+morinaga bf-2 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-bf-2-400g-powdered-milk,high,,catalog,Direct catalog product
+buy morinaga bf-2 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/morinaga-bf-2-400g-powdered-milk,high,,template,Product purchase intent
+morinaga bf-2 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/morinaga-bf-2-400g-powdered-milk,high,,template,Product price lookup
+morinaga bf-2 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/morinaga-bf-2-400g-powdered-milk,medium,,template,Product COD
+morinaga bf-3 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/morinaga-bf-3-400g-powdered-milk,high,,catalog,Direct catalog product
+buy morinaga bf-3 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/morinaga-bf-3-400g-powdered-milk,high,,template,Product purchase intent
+morinaga bf-3 powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/morinaga-bf-3-400g-powdered-milk,high,,template,Product price lookup
+morinaga bf-3 powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/morinaga-bf-3-400g-powdered-milk,medium,,template,Product COD
+enfamama a 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/enfamama-a-vanila-400g-powdered-milk,high,,catalog,Direct catalog product
+buy enfamama a 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/enfamama-a-vanila-400g-powdered-milk,high,,template,Product purchase intent
+glucerna 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/glucerna-vanilla-400g-powdered-milk,high,,catalog,Direct catalog product
+buy glucerna 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/glucerna-vanilla-400g-powdered-milk,high,,template,Product purchase intent
+glucerna 400g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/glucerna-vanilla-400g-powdered-milk,high,,template,Product price lookup
+glucerna 400g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/glucerna-vanilla-400g-powdered-milk,medium,,template,Product COD
+nan 1 300g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nan-1-optipro-300g-powdered-milk,high,,catalog,Direct catalog product
+buy nan 1 300g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nan-1-optipro-300g-powdered-milk,high,,template,Product purchase intent
+nan optipro 2 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nan-optipro-2-300g-powdered-milk,high,,catalog,Direct catalog product
+buy nan optipro 2 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nan-optipro-2-300g-powdered-milk,high,,template,Product purchase intent
+bellakt lactable ll powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/bellakt-lactable-ll-350g-powdered-milk,high,,catalog,Direct catalog product
+buy bellakt lactable ll powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/bellakt-lactable-ll-350g-powdered-milk,high,,template,Product purchase intent
+nangrow optipro 3 powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nangrow-optipro-3-300g-powdered-milk,high,,catalog,Direct catalog product
+buy nangrow optipro 3 powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nangrow-optipro-3-300g-powdered-milk,high,,template,Product purchase intent
+livity vanilla,product,brand-search,milk-powder-product,https://medikart.pk/products/livity-400g-vanilla,high,,catalog,Direct catalog product
+buy livity vanilla online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/livity-400g-vanilla,high,,template,Product purchase intent
+livity vanilla price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/livity-400g-vanilla,high,,template,Product price lookup
+livity vanilla cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/livity-400g-vanilla,medium,,template,Product COD
+nan 400g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nan-ha-400g-powdered-milk,high,,catalog,Direct catalog product
+buy nan 400g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nan-ha-400g-powdered-milk,high,,template,Product purchase intent
+nan 400g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/nan-ha-400g-powdered-milk,high,,template,Product price lookup
+nan 400g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/nan-ha-400g-powdered-milk,medium,,template,Product COD
+nan 1 600g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nan-1-optipro-600g-powdered-milk,high,,catalog,Direct catalog product
+buy nan 1 600g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nan-1-optipro-600g-powdered-milk,high,,template,Product purchase intent
+meiji 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/meiji-kids-200g-powdered-milk,high,,catalog,Direct catalog product
+buy meiji 200g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/meiji-kids-200g-powdered-milk,high,,template,Product purchase intent
+meiji 200g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/meiji-kids-200g-powdered-milk,high,,template,Product price lookup
+meiji 200g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/meiji-kids-200g-powdered-milk,medium,,template,Product COD
+pediasure 200g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/pediasure-vanilla-200g-powdered-milk,high,,catalog,Direct catalog product
+buy pediasure 200g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/pediasure-vanilla-200g-powdered-milk,high,,template,Product purchase intent
+pediasure 200g powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/pediasure-vanilla-200g-powdered-milk,high,,template,Product price lookup
+pediasure 200g powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/pediasure-vanilla-200g-powdered-milk,medium,,template,Product COD
+neolac rise 3 growing-up formula,product,brand-search,milk-powder-product,https://medikart.pk/products/neolac-rise-3-400g-growing-up-formula,high,,catalog,Direct catalog product
+buy neolac rise 3 growing-up formula online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/neolac-rise-3-400g-growing-up-formula,high,,template,Product purchase intent
+nido 1 forti protect powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nido-1-forti-protect-375g-powdered-milk,high,,catalog,Direct catalog product
+nido 3 growing up formula powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nido-3-growing-up-formula-375g-powdered-milk,high,,catalog,Direct catalog product
+nan 2 600g powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nan-2-optipro-600g-powdered-milk,high,,catalog,Direct catalog product
+buy nan 2 600g powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nan-2-optipro-600g-powdered-milk,high,,template,Product purchase intent
+nido bunyad powdered milk,product,brand-search,milk-powder-product,https://medikart.pk/products/nido-bunyad-260g-powdered-milk,high,,catalog,Direct catalog product
+buy nido bunyad powdered milk online,transactional,purchase,milk-powder-product-transactional,https://medikart.pk/products/nido-bunyad-260g-powdered-milk,high,,template,Product purchase intent
+nido bunyad powdered milk price in pakistan,transactional,price-check,milk-powder-product-pricing,https://medikart.pk/products/nido-bunyad-260g-powdered-milk,high,,template,Product price lookup
+nido bunyad powdered milk cash on delivery,transactional,purchase,milk-powder-product-cod,https://medikart.pk/products/nido-bunyad-260g-powdered-milk,medium,,template,Product COD

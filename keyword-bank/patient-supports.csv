@@ -1,0 +1,350 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+orthopedic supports pakistan,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy orthopedic supports pakistan online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+orthopedic supports pakistan price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order orthopedic supports pakistan online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+orthopedic supports pakistan cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best orthopedic supports pakistan in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable orthopedic supports pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+orthopedic supports pakistan home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+orthopedic supports pakistan in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+orthopedic supports pakistan in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+orthopedic supports pakistan in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+orthopedic supports pakistan in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+orthopedic supports pakistan in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is orthopedic supports pakistan,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose orthopedic supports pakistan,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use orthopedic supports pakistan,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is orthopedic supports pakistan available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+orthopedic supports pakistan sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+orthopedic supports pakistan ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+orthopedic supports pakistan online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+orthopedic supports pakistan delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+knee brace support,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy knee brace support online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+knee brace support price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order knee brace support online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+knee brace support cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best knee brace support in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable knee brace support,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+knee brace support home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+knee brace support in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+knee brace support in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+knee brace support in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+knee brace support in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+knee brace support in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is knee brace support,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose knee brace support,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use knee brace support,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is knee brace support available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+knee brace support sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+knee brace support ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+knee brace support online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+knee brace support delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+lumbar back support belt,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy lumbar back support belt online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+lumbar back support belt price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order lumbar back support belt online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+lumbar back support belt cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best lumbar back support belt in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable lumbar back support belt,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+lumbar back support belt home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+lumbar back support belt in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+lumbar back support belt in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+lumbar back support belt in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+lumbar back support belt in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+lumbar back support belt in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is lumbar back support belt,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose lumbar back support belt,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use lumbar back support belt,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+lumbar back support belt sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+lumbar back support belt online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+lumbar back support belt delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+cervical collar neck brace,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy cervical collar neck brace online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+cervical collar neck brace price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order cervical collar neck brace online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+cervical collar neck brace cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best cervical collar neck brace in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable cervical collar neck brace,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+cervical collar neck brace home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+cervical collar neck brace in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+cervical collar neck brace in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+cervical collar neck brace in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+cervical collar neck brace in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+cervical collar neck brace in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is cervical collar neck brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose cervical collar neck brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use cervical collar neck brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+cervical collar neck brace sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+cervical collar neck brace online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+cervical collar neck brace delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+ankle support brace,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy ankle support brace online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+ankle support brace price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order ankle support brace online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+ankle support brace cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best ankle support brace in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable ankle support brace,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+ankle support brace home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+ankle support brace in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+ankle support brace in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+ankle support brace in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+ankle support brace in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+ankle support brace in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is ankle support brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose ankle support brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use ankle support brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is ankle support brace available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+ankle support brace sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+ankle support brace ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+ankle support brace online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+ankle support brace delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+wrist splint,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy wrist splint online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+wrist splint price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order wrist splint online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+wrist splint cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best wrist splint in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable wrist splint,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+wrist splint home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+wrist splint in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+wrist splint in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+wrist splint in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+wrist splint in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+wrist splint in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is wrist splint,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose wrist splint,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use wrist splint,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is wrist splint available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+where to buy wrist splint in pakistan,question,purchase,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,Vendor lookup
+wrist splint sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+wrist splint ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+wrist splint online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+wrist splint delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+elbow support strap,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy elbow support strap online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+elbow support strap price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order elbow support strap online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+elbow support strap cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best elbow support strap in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable elbow support strap,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+elbow support strap home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+elbow support strap in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+elbow support strap in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+elbow support strap in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+elbow support strap in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+elbow support strap in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is elbow support strap,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose elbow support strap,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use elbow support strap,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is elbow support strap available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+elbow support strap sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+elbow support strap ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+elbow support strap online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+elbow support strap delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+walking stick for elderly,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy walking stick for elderly online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+walking stick for elderly price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order walking stick for elderly online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+walking stick for elderly cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best walking stick for elderly in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable walking stick for elderly,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+walking stick for elderly home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+walking stick for elderly in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+walking stick for elderly in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+walking stick for elderly in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+walking stick for elderly in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+walking stick for elderly in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is walking stick for elderly,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose walking stick for elderly,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use walking stick for elderly,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+walking stick for elderly sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+walking stick for elderly online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+walking stick for elderly delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+compression stockings,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy compression stockings online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+compression stockings price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order compression stockings online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+compression stockings cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best compression stockings in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable compression stockings,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+compression stockings home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+compression stockings in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+compression stockings in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+compression stockings in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+compression stockings in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+compression stockings in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is compression stockings,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose compression stockings,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use compression stockings,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is compression stockings available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+where to buy compression stockings in pakistan,question,purchase,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,Vendor lookup
+compression stockings sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+compression stockings ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+compression stockings online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+compression stockings delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+post-surgery abdominal binder,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy post-surgery abdominal binder online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+post-surgery abdominal binder price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order post-surgery abdominal binder online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+post-surgery abdominal binder cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best post-surgery abdominal binder in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable post-surgery abdominal binder,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+post-surgery abdominal binder home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+post-surgery abdominal binder in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+post-surgery abdominal binder in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+post-surgery abdominal binder in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+post-surgery abdominal binder in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+post-surgery abdominal binder in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is post-surgery abdominal binder,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose post-surgery abdominal binder,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use post-surgery abdominal binder,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is post-surgery abdominal binder available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+post-surgery abdominal binder sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+post-surgery abdominal binder ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+post-surgery abdominal binder online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+post-surgery abdominal binder delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+shoulder immobilizer sling,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy shoulder immobilizer sling online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+shoulder immobilizer sling price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order shoulder immobilizer sling online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+shoulder immobilizer sling cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best shoulder immobilizer sling in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable shoulder immobilizer sling,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+shoulder immobilizer sling home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+shoulder immobilizer sling in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+shoulder immobilizer sling in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+shoulder immobilizer sling in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+shoulder immobilizer sling in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+shoulder immobilizer sling in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is shoulder immobilizer sling,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose shoulder immobilizer sling,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use shoulder immobilizer sling,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is shoulder immobilizer sling available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+shoulder immobilizer sling sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+shoulder immobilizer sling ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+shoulder immobilizer sling online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+shoulder immobilizer sling delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+silicone heel cushions,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy silicone heel cushions online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+silicone heel cushions price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order silicone heel cushions online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+silicone heel cushions cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best silicone heel cushions in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable silicone heel cushions,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+silicone heel cushions home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+silicone heel cushions in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+silicone heel cushions in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+silicone heel cushions in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+silicone heel cushions in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+silicone heel cushions in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is silicone heel cushions,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose silicone heel cushions,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use silicone heel cushions,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is silicone heel cushions available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+silicone heel cushions sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+silicone heel cushions ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+silicone heel cushions online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+silicone heel cushions delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+posture corrector belt,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy posture corrector belt online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+posture corrector belt price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order posture corrector belt online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+posture corrector belt cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best posture corrector belt in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable posture corrector belt,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+posture corrector belt home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+posture corrector belt in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+posture corrector belt in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+posture corrector belt in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+posture corrector belt in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+posture corrector belt in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is posture corrector belt,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose posture corrector belt,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use posture corrector belt,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is posture corrector belt available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+posture corrector belt sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+posture corrector belt ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+posture corrector belt online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+posture corrector belt delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+crutches for walking,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy crutches for walking online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+crutches for walking price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order crutches for walking online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+crutches for walking cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best crutches for walking in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable crutches for walking,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+crutches for walking home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+crutches for walking in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+crutches for walking in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+crutches for walking in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+crutches for walking in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+crutches for walking in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is crutches for walking,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose crutches for walking,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use crutches for walking,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is crutches for walking available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+crutches for walking sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+crutches for walking ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+crutches for walking online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+crutches for walking delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+tennis elbow brace,informational,commercial-investigation,patient-supports-core,https://medikart.pk/categories/patient-supports,high,,template,Approved seed term
+buy tennis elbow brace online,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,high,,template,Core purchase intent
+tennis elbow brace price in pakistan,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,high,,template,Price check intent
+order tennis elbow brace online pakistan,transactional,purchase,patient-supports-transactional,https://medikart.pk/categories/patient-supports,medium,,template,Online order
+tennis elbow brace cash on delivery,transactional,purchase,patient-supports-cod,https://medikart.pk/categories/patient-supports,medium,,template,COD intent
+best tennis elbow brace in pakistan,informational,comparison,patient-supports-comparison,https://medikart.pk/categories/patient-supports,medium,,template,Best in class
+affordable tennis elbow brace,transactional,price-check,patient-supports-pricing,https://medikart.pk/categories/patient-supports,low,,template,Affordable value
+tennis elbow brace home delivery,transactional,purchase,patient-supports-delivery,https://medikart.pk/categories/patient-supports,medium,,template,Delivery intent
+tennis elbow brace in lahore,local,local-delivery,patient-supports-local-lahore,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in lahore
+tennis elbow brace in karachi,local,local-delivery,patient-supports-local-karachi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in karachi
+tennis elbow brace in islamabad,local,local-delivery,patient-supports-local-islamabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in islamabad
+tennis elbow brace in rawalpindi,local,local-delivery,patient-supports-local-rawalpindi,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in rawalpindi
+tennis elbow brace in faisalabad,local,local-delivery,patient-supports-local-faisalabad,https://medikart.pk/categories/patient-supports,medium,,template,1-5 hr delivery in faisalabad
+what is tennis elbow brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO direct answer
+how to choose tennis elbow brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO selection guide
+how to use tennis elbow brace,question,informational,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,medium,,template,AEO usage guide
+is tennis elbow brace available in pakistan,question,commercial-investigation,patient-supports-aeo,https://medikart.pk/categories/patient-supports#faqs,low,,template,Availability question
+tennis elbow brace sasti,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Pakistani vernacular
+tennis elbow brace ki price kitni hai,roman-urdu,price-check,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports#faqs,low,,template,Vernacular price query
+tennis elbow brace online mangwana,roman-urdu,purchase,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular delivery query
+tennis elbow brace delivery timing,roman-urdu,local-delivery,patient-supports-roman-urdu,https://medikart.pk/categories/patient-supports,low,,template,Vernacular timing query
+easycare ankle support ankle braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-ankle-support-s-ankle-braces,high,,catalog,Direct catalog product
+buy easycare ankle support ankle braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-ankle-support-s-ankle-braces,high,,template,Product purchase intent
+easycare elbow support elbow braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-elbow-support-s-elbow-braces,high,,catalog,Direct catalog product
+buy easycare elbow support elbow braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-elbow-support-s-elbow-braces,high,,template,Product purchase intent
+easycare gynae pad,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-gynae-pad-1s,high,,catalog,Direct catalog product
+buy easycare gynae pad online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-gynae-pad-1s,high,,template,Product purchase intent
+easycare gynae pad price in pakistan,transactional,price-check,patient-supports-product-pricing,https://medikart.pk/products/easycare-gynae-pad-1s,high,,template,Product price lookup
+easycare gynae pad cash on delivery,transactional,purchase,patient-supports-product-cod,https://medikart.pk/products/easycare-gynae-pad-1s,medium,,template,Product COD
+easycare knee support knee braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-knee-support-xl-knee-braces,high,,catalog,Direct catalog product
+buy easycare knee support knee braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-knee-support-xl-knee-braces,high,,template,Product purchase intent
+easycare palm support palm braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-palm-support-l-palm-braces,high,,catalog,Direct catalog product
+buy easycare palm support palm braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-palm-support-l-palm-braces,high,,template,Product purchase intent
+easycare shoulder support shoulder braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-shoulder-support-m-shoulder-braces,high,,catalog,Direct catalog product
+buy easycare shoulder support shoulder braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-shoulder-support-m-shoulder-braces,high,,template,Product purchase intent
+easycare hot shaper body shaper,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-hot-shaper-l-body-shaper,high,,catalog,Direct catalog product
+buy easycare hot shaper body shaper online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-hot-shaper-l-body-shaper,high,,template,Product purchase intent
+commod stool,product,brand-search,patient-supports-product,https://medikart.pk/products/commod-stool-1s,high,,catalog,Direct catalog product
+buy commod stool online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/commod-stool-1s,high,,template,Product purchase intent
+commod stool price in pakistan,transactional,price-check,patient-supports-product-pricing,https://medikart.pk/products/commod-stool-1s,high,,template,Product price lookup
+commod stool cash on delivery,transactional,purchase,patient-supports-product-cod,https://medikart.pk/products/commod-stool-1s,medium,,template,Product COD
+philadelphia collar,product,brand-search,patient-supports-product,https://medikart.pk/products/philadelphia-collar-m,high,,catalog,Direct catalog product
+buy philadelphia collar online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/philadelphia-collar-m,high,,template,Product purchase intent
+philadelphia collar price in pakistan,transactional,price-check,patient-supports-product-pricing,https://medikart.pk/products/philadelphia-collar-m,high,,template,Product price lookup
+philadelphia collar cash on delivery,transactional,purchase,patient-supports-product-cod,https://medikart.pk/products/philadelphia-collar-m,medium,,template,Product COD
+easycare spinal spinal braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-spinal-s-spinal-braces,high,,catalog,Direct catalog product
+buy easycare spinal spinal braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-spinal-s-spinal-braces,high,,template,Product purchase intent
+easycare spinal spinal braces price in pakistan,transactional,price-check,patient-supports-product-pricing,https://medikart.pk/products/easycare-spinal-s-spinal-braces,high,,template,Product price lookup
+easycare spinal spinal braces cash on delivery,transactional,purchase,patient-supports-product-cod,https://medikart.pk/products/easycare-spinal-s-spinal-braces,medium,,template,Product COD
+easycare wrist support wrist braces,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-wrist-support-m-wrist-braces,high,,catalog,Direct catalog product
+buy easycare wrist support wrist braces online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-wrist-support-m-wrist-braces,high,,template,Product purchase intent
+droper kids,product,brand-search,patient-supports-product,https://medikart.pk/products/droper-kids-pedi-dose,high,,catalog,Direct catalog product
+buy droper kids online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/droper-kids-pedi-dose,high,,template,Product purchase intent
+droper kids price in pakistan,transactional,price-check,patient-supports-product-pricing,https://medikart.pk/products/droper-kids-pedi-dose,high,,template,Product price lookup
+droper kids cash on delivery,transactional,purchase,patient-supports-product-cod,https://medikart.pk/products/droper-kids-pedi-dose,medium,,template,Product COD
+easycare relief of back pain,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-relief-of-back-pain-large,high,,catalog,Direct catalog product
+buy easycare relief of back pain online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-relief-of-back-pain-large,high,,template,Product purchase intent
+easycare relife of back pain,product,brand-search,patient-supports-product,https://medikart.pk/products/easycare-relife-of-back-pain-medium,high,,catalog,Direct catalog product
+buy easycare relife of back pain online,transactional,purchase,patient-supports-product-transactional,https://medikart.pk/products/easycare-relife-of-back-pain-medium,high,,template,Product purchase intent

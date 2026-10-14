@@ -1,0 +1,646 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+dietary supplements pakistan,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy dietary supplements pakistan online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+dietary supplements pakistan price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order dietary supplements pakistan online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+dietary supplements pakistan cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best dietary supplements pakistan in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable dietary supplements pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+dietary supplements pakistan home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+dietary supplements pakistan in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+dietary supplements pakistan in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+dietary supplements pakistan in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+dietary supplements pakistan in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+dietary supplements pakistan in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is dietary supplements pakistan,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose dietary supplements pakistan,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use dietary supplements pakistan,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is dietary supplements pakistan available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+dietary supplements pakistan sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+dietary supplements pakistan ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+dietary supplements pakistan online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+dietary supplements pakistan delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+omega-3 fish oil,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy omega-3 fish oil online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+omega-3 fish oil price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order omega-3 fish oil online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+omega-3 fish oil cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best omega-3 fish oil in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable omega-3 fish oil,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+omega-3 fish oil home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+omega-3 fish oil in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+omega-3 fish oil in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+omega-3 fish oil in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+omega-3 fish oil in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+omega-3 fish oil in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is omega-3 fish oil,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose omega-3 fish oil,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use omega-3 fish oil,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is omega-3 fish oil available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+omega-3 fish oil sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+omega-3 fish oil ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+omega-3 fish oil online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+omega-3 fish oil delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+coenzyme q10,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy coenzyme q10 online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+coenzyme q10 price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order coenzyme q10 online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+coenzyme q10 cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best coenzyme q10 in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable coenzyme q10,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+coenzyme q10 home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+coenzyme q10 in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+coenzyme q10 in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+coenzyme q10 in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+coenzyme q10 in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+coenzyme q10 in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is coenzyme q10,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose coenzyme q10,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use coenzyme q10,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is coenzyme q10 available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+where to buy coenzyme q10 in pakistan,question,purchase,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,Vendor lookup
+coenzyme q10 sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+coenzyme q10 ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+coenzyme q10 online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+coenzyme q10 delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+collagen powder,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy collagen powder online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+collagen powder price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order collagen powder online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+collagen powder cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best collagen powder in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable collagen powder,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+collagen powder home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+collagen powder in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+collagen powder in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+collagen powder in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+collagen powder in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+collagen powder in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is collagen powder,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose collagen powder,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use collagen powder,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is collagen powder available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+where to buy collagen powder in pakistan,question,purchase,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,Vendor lookup
+collagen powder sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+collagen powder ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+collagen powder online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+collagen powder delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+joint care glucosamine,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy joint care glucosamine online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+joint care glucosamine price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order joint care glucosamine online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+joint care glucosamine cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best joint care glucosamine in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable joint care glucosamine,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+joint care glucosamine home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+joint care glucosamine in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+joint care glucosamine in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+joint care glucosamine in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+joint care glucosamine in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+joint care glucosamine in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is joint care glucosamine,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose joint care glucosamine,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use joint care glucosamine,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is joint care glucosamine available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+joint care glucosamine sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+joint care glucosamine ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+joint care glucosamine online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+joint care glucosamine delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+probiotics capsules,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy probiotics capsules online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+probiotics capsules price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order probiotics capsules online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+probiotics capsules cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best probiotics capsules in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable probiotics capsules,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+probiotics capsules home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+probiotics capsules in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+probiotics capsules in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+probiotics capsules in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+probiotics capsules in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+probiotics capsules in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is probiotics capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose probiotics capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use probiotics capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is probiotics capsules available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+where to buy probiotics capsules in pakistan,question,purchase,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,Vendor lookup
+probiotics capsules sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+probiotics capsules ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+probiotics capsules online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+probiotics capsules delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+antioxidant supplements,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy antioxidant supplements online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+antioxidant supplements price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order antioxidant supplements online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+antioxidant supplements cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best antioxidant supplements in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable antioxidant supplements,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+antioxidant supplements home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+antioxidant supplements in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+antioxidant supplements in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+antioxidant supplements in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+antioxidant supplements in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+antioxidant supplements in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is antioxidant supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose antioxidant supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use antioxidant supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is antioxidant supplements available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+where to buy antioxidant supplements in pakistan,question,purchase,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,Vendor lookup
+antioxidant supplements sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+antioxidant supplements ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+antioxidant supplements online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+antioxidant supplements delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+liver support supplements,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy liver support supplements online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+liver support supplements price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order liver support supplements online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+liver support supplements cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best liver support supplements in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable liver support supplements,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+liver support supplements home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+liver support supplements in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+liver support supplements in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+liver support supplements in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+liver support supplements in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+liver support supplements in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is liver support supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose liver support supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use liver support supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is liver support supplements available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+liver support supplements sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+liver support supplements ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+liver support supplements online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+liver support supplements delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+amino acid supplements,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy amino acid supplements online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+amino acid supplements price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order amino acid supplements online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+amino acid supplements cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best amino acid supplements in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable amino acid supplements,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+amino acid supplements home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+amino acid supplements in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+amino acid supplements in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+amino acid supplements in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+amino acid supplements in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+amino acid supplements in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is amino acid supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose amino acid supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use amino acid supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is amino acid supplements available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+amino acid supplements sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+amino acid supplements ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+amino acid supplements online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+amino acid supplements delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+sports nutrition supplements,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy sports nutrition supplements online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+sports nutrition supplements price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order sports nutrition supplements online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+sports nutrition supplements cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best sports nutrition supplements in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable sports nutrition supplements,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+sports nutrition supplements home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+sports nutrition supplements in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+sports nutrition supplements in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+sports nutrition supplements in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+sports nutrition supplements in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+sports nutrition supplements in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is sports nutrition supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose sports nutrition supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use sports nutrition supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is sports nutrition supplements available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+sports nutrition supplements sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+sports nutrition supplements ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+sports nutrition supplements online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+sports nutrition supplements delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+memory booster supplements,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy memory booster supplements online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+memory booster supplements price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order memory booster supplements online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+memory booster supplements cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best memory booster supplements in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable memory booster supplements,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+memory booster supplements home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+memory booster supplements in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+memory booster supplements in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+memory booster supplements in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+memory booster supplements in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+memory booster supplements in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is memory booster supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose memory booster supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use memory booster supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is memory booster supplements available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+memory booster supplements sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+memory booster supplements ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+memory booster supplements online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+memory booster supplements delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+herbal extract capsules,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy herbal extract capsules online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+herbal extract capsules price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order herbal extract capsules online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+herbal extract capsules cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best herbal extract capsules in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable herbal extract capsules,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+herbal extract capsules home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+herbal extract capsules in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+herbal extract capsules in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+herbal extract capsules in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+herbal extract capsules in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+herbal extract capsules in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is herbal extract capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose herbal extract capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use herbal extract capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is herbal extract capsules available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+herbal extract capsules sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+herbal extract capsules ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+herbal extract capsules online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+herbal extract capsules delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+heart health supplements,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy heart health supplements online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+heart health supplements price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order heart health supplements online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+heart health supplements cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best heart health supplements in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable heart health supplements,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+heart health supplements home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+heart health supplements in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+heart health supplements in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+heart health supplements in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+heart health supplements in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+heart health supplements in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is heart health supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose heart health supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use heart health supplements,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is heart health supplements available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+heart health supplements sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+heart health supplements ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+heart health supplements online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+heart health supplements delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+bone density formulas,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy bone density formulas online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+bone density formulas price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order bone density formulas online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+bone density formulas cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best bone density formulas in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable bone density formulas,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+bone density formulas home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+bone density formulas in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+bone density formulas in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+bone density formulas in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+bone density formulas in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+bone density formulas in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is bone density formulas,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose bone density formulas,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use bone density formulas,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is bone density formulas available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+bone density formulas sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+bone density formulas ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+bone density formulas online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+bone density formulas delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+wellness capsules,informational,commercial-investigation,nutraceutical-core,https://medikart.pk/categories/nutraceutical,high,,template,Approved seed term
+buy wellness capsules online,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,high,,template,Core purchase intent
+wellness capsules price in pakistan,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,high,,template,Price check intent
+order wellness capsules online pakistan,transactional,purchase,nutraceutical-transactional,https://medikart.pk/categories/nutraceutical,medium,,template,Online order
+wellness capsules cash on delivery,transactional,purchase,nutraceutical-cod,https://medikart.pk/categories/nutraceutical,medium,,template,COD intent
+best wellness capsules in pakistan,informational,comparison,nutraceutical-comparison,https://medikart.pk/categories/nutraceutical,medium,,template,Best in class
+affordable wellness capsules,transactional,price-check,nutraceutical-pricing,https://medikart.pk/categories/nutraceutical,low,,template,Affordable value
+wellness capsules home delivery,transactional,purchase,nutraceutical-delivery,https://medikart.pk/categories/nutraceutical,medium,,template,Delivery intent
+wellness capsules in lahore,local,local-delivery,nutraceutical-local-lahore,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in lahore
+wellness capsules in karachi,local,local-delivery,nutraceutical-local-karachi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in karachi
+wellness capsules in islamabad,local,local-delivery,nutraceutical-local-islamabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in islamabad
+wellness capsules in rawalpindi,local,local-delivery,nutraceutical-local-rawalpindi,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in rawalpindi
+wellness capsules in faisalabad,local,local-delivery,nutraceutical-local-faisalabad,https://medikart.pk/categories/nutraceutical,medium,,template,1-5 hr delivery in faisalabad
+what is wellness capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO direct answer
+how to choose wellness capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO selection guide
+how to use wellness capsules,question,informational,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,AEO usage guide
+is wellness capsules available in pakistan,question,commercial-investigation,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Availability question
+where to buy wellness capsules in pakistan,question,purchase,nutraceutical-aeo,https://medikart.pk/categories/nutraceutical#faqs,medium,,template,Vendor lookup
+wellness capsules sasti,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Pakistani vernacular
+wellness capsules ki price kitni hai,roman-urdu,price-check,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical#faqs,low,,template,Vernacular price query
+wellness capsules online mangwana,roman-urdu,purchase,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular delivery query
+wellness capsules delivery timing,roman-urdu,local-delivery,nutraceutical-roman-urdu,https://medikart.pk/categories/nutraceutical,low,,template,Vernacular timing query
+hicrom plus q10 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/hicrom-plus-q10-30-capsules,high,,catalog,Direct catalog product
+buy hicrom plus q10 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/hicrom-plus-q10-30-capsules,high,,template,Product purchase intent
+nutraxin coenzyme q-10 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-coenzyme-q-10-100mg-30-capsules,high,,catalog,Direct catalog product
+buy nutraxin coenzyme q-10 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutraxin-coenzyme-q-10-100mg-30-capsules,high,,template,Product purchase intent
+nutraxin ultra men 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-ultra-men-60-tablets,high,,catalog,Direct catalog product
+buy nutraxin ultra men 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutraxin-ultra-men-60-tablets,high,,template,Product purchase intent
+nutraxin vitamin d3 1000iu 120 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-vitamin-d3-1000iu-25mcg-120-tablets,high,,catalog,Direct catalog product
+nutrifactor biotin plus 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-biotin-plus-2500mcg-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor biotin plus 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-biotin-plus-2500mcg-30-tablets,high,,template,Product purchase intent
+nutrifactor biotin plus 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-biotin-plus-2500mcg-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor biotin plus 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-biotin-plus-2500mcg-60-tablets,high,,template,Product purchase intent
+biotin 2500mcg,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+biotin 2500mcg in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+duron plus 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/duron-plus-30-tablets,high,,catalog,Direct catalog product
+buy duron plus 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/duron-plus-30-tablets,high,,template,Product purchase intent
+duron plus 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/duron-plus-30-tablets,high,,template,Product price lookup
+duron plus 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/duron-plus-30-tablets,medium,,template,Product COD
+nutrifactor extra-c 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-extra-c-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor extra-c 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-extra-c-30-tablets,high,,template,Product purchase intent
+nutrifactor extra-c 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-extra-c-30-tablets,high,,template,Product price lookup
+nutrifactor extra-c 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-extra-c-30-tablets,medium,,template,Product COD
+nutrifactor extra-c 90 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-extra-c-90-tablets,high,,catalog,Direct catalog product
+buy nutrifactor extra-c 90 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-extra-c-90-tablets,high,,template,Product purchase intent
+nutrifactor extra-c 90 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-extra-c-90-tablets,high,,template,Product price lookup
+nutrifactor extra-c 90 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-extra-c-90-tablets,medium,,template,Product COD
+nutrifactor folic acid 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-folic-acid-400mcg-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor folic acid 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-folic-acid-400mcg-60-tablets,high,,template,Product purchase intent
+folic acid,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+folic acid in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor garlic 60 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-garlic-300mg-60-capsules,high,,catalog,Direct catalog product
+buy nutrifactor garlic 60 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-garlic-300mg-60-capsules,high,,template,Product purchase intent
+nutrifactor garlic 60 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-garlic-300mg-60-capsules,high,,template,Product price lookup
+nutrifactor garlic 60 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-garlic-300mg-60-capsules,medium,,template,Product COD
+garlic extract,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+garlic extract in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor ginseng 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-ginseng-250mg-30-capsules,high,,catalog,Direct catalog product
+buy nutrifactor ginseng 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-ginseng-250mg-30-capsules,high,,template,Product purchase intent
+nutrifactor ginseng 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-ginseng-250mg-30-capsules,high,,template,Product price lookup
+nutrifactor ginseng 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-ginseng-250mg-30-capsules,medium,,template,Product COD
+panax ginseng extract 250mg,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+panax ginseng extract 250mg in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+glucofactor 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/glucofactor-one-a-day-30-tablets,high,,catalog,Direct catalog product
+buy glucofactor 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/glucofactor-one-a-day-30-tablets,high,,template,Product purchase intent
+glucofactor 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/glucofactor-one-a-day-30-tablets,high,,template,Product price lookup
+glucofactor 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/glucofactor-one-a-day-30-tablets,medium,,template,Product COD
+nutrifactor green tea complex 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-green-tea-complex-30-capsules,high,,catalog,Direct catalog product
+green tea extract 225mg,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+green tea extract 225mg in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+lipozin 60 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/lipozin-garcinia-cambogia-60-capsules,high,,catalog,Direct catalog product
+buy lipozin 60 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/lipozin-garcinia-cambogia-60-capsules,high,,template,Product purchase intent
+lipozin 60 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/lipozin-garcinia-cambogia-60-capsules,high,,template,Product price lookup
+lipozin 60 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/lipozin-garcinia-cambogia-60-capsules,medium,,template,Product COD
+nutrifactor magnesium 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-magnesium-500mg-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor magnesium 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-magnesium-500mg-60-tablets,high,,template,Product purchase intent
+nutrifactor magnesium 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-magnesium-500mg-60-tablets,high,,template,Product price lookup
+nutrifactor magnesium 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-magnesium-500mg-60-tablets,medium,,template,Product COD
+magnesium oxide 500mg,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+magnesium oxide 500mg in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor melatonin 90 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-melatonin-3mg-90-tablets,high,,catalog,Direct catalog product
+buy nutrifactor melatonin 90 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-melatonin-3mg-90-tablets,high,,template,Product purchase intent
+nutrifactor melatonin 90 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-melatonin-3mg-90-tablets,high,,template,Product price lookup
+nutrifactor melatonin 90 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-melatonin-3mg-90-tablets,medium,,template,Product COD
+melatonin,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+melatonin in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nucal-m 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nucal-m-30-tablets,high,,catalog,Direct catalog product
+buy nucal-m 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nucal-m-30-tablets,high,,template,Product purchase intent
+nucal-m 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nucal-m-30-tablets,high,,template,Product price lookup
+nucal-m 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nucal-m-30-tablets,medium,,template,Product COD
+opti vision 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/opti-vision-420mg-60-tablets,high,,catalog,Direct catalog product
+buy opti vision 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/opti-vision-420mg-60-tablets,high,,template,Product purchase intent
+opti vision 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/opti-vision-420mg-60-tablets,high,,template,Product price lookup
+opti vision 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/opti-vision-420mg-60-tablets,medium,,template,Product COD
+lutein zeaxanthin,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+lutein zeaxanthin in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+neutrifactor qfactor 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/neutrifactor-qfactor-30-capsules,high,,catalog,Direct catalog product
+buy neutrifactor qfactor 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/neutrifactor-qfactor-30-capsules,high,,template,Product purchase intent
+neutrifactor qfactor 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/neutrifactor-qfactor-30-capsules,high,,template,Product price lookup
+neutrifactor qfactor 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/neutrifactor-qfactor-30-capsules,medium,,template,Product COD
+co enzyme q 10,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+co enzyme q 10 in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor sleep well 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-sleep-well-30-capsules,high,,catalog,Direct catalog product
+buy nutrifactor sleep well 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-sleep-well-30-capsules,high,,template,Product purchase intent
+nutrifactor tryception 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-tryception-male-fertility-support-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor tryception 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-tryception-male-fertility-support-30-tablets,high,,template,Product purchase intent
+nutrifactor tryception 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-tryception-male-fertility-support-30-tablets,high,,template,Product price lookup
+nutrifactor tryception 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-tryception-male-fertility-support-30-tablets,medium,,template,Product COD
+nutrifactor vitamin b12 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-vitamin-b12-500mcg-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor vitamin b12 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-vitamin-b12-500mcg-60-tablets,high,,template,Product purchase intent
+nutrifactor e-cell 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-e-cell-400iu-30-capsules,high,,catalog,Direct catalog product
+buy nutrifactor e-cell 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-e-cell-400iu-30-capsules,high,,template,Product purchase intent
+nutrifactor e-cell 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-e-cell-400iu-30-capsules,high,,template,Product price lookup
+nutrifactor e-cell 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-e-cell-400iu-30-capsules,medium,,template,Product COD
+nutrifactor nuroton 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-nuroton-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor nuroton 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-nuroton-30-tablets,high,,template,Product purchase intent
+nutrifactor nuroton 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-nuroton-30-tablets,high,,template,Product price lookup
+nutrifactor nuroton 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-nuroton-30-tablets,medium,,template,Product COD
+niacin pyridoxine,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+niacin pyridoxine in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor bonex-d 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-bonex-d-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor bonex-d 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-bonex-d-30-tablets,high,,template,Product purchase intent
+nutrifactor bonex-d 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-bonex-d-30-tablets,high,,template,Product price lookup
+nutrifactor bonex-d 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-bonex-d-30-tablets,medium,,template,Product COD
+nutrifactor bonex-d 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-bonex-d-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor bonex-d 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-bonex-d-60-tablets,high,,template,Product purchase intent
+nutrifactor bonex-d 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-bonex-d-60-tablets,high,,template,Product price lookup
+nutrifactor bonex-d 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-bonex-d-60-tablets,medium,,template,Product COD
+nutrifactor biogrow 120ml syrup,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-biogrow-120ml-syrup,high,,catalog,Direct catalog product
+buy nutrifactor biogrow 120ml syrup online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-biogrow-120ml-syrup,high,,template,Product purchase intent
+nutrifactor biogrow 120ml syrup price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-biogrow-120ml-syrup,high,,template,Product price lookup
+nutrifactor biogrow 120ml syrup cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-biogrow-120ml-syrup,medium,,template,Product COD
+nutrifactor biogrow 30 gummies,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-biogrow-multivitamin-30-gummies,high,,catalog,Direct catalog product
+buy nutrifactor biogrow 30 gummies online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-biogrow-multivitamin-30-gummies,high,,template,Product purchase intent
+nutrifactor biogrow 30 gummies price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-biogrow-multivitamin-30-gummies,high,,template,Product price lookup
+nutrifactor biogrow 30 gummies cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-biogrow-multivitamin-30-gummies,medium,,template,Product COD
+nutrifactor jointin-d 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-jointin-d-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor jointin-d 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-jointin-d-60-tablets,high,,template,Product purchase intent
+nutrifactor jointin-d 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-jointin-d-60-tablets,high,,template,Product price lookup
+nutrifactor jointin-d 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-jointin-d-60-tablets,medium,,template,Product COD
+nutrifactor jointin-d 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-jointin-d-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor jointin-d 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-jointin-d-30-tablets,high,,template,Product purchase intent
+nutrifactor jointin-d 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-jointin-d-30-tablets,high,,template,Product price lookup
+nutrifactor jointin-d 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-jointin-d-30-tablets,medium,,template,Product COD
+maxzoom 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/maxzoom-skin-hair-nails-60-tablets,high,,catalog,Direct catalog product
+buy maxzoom 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/maxzoom-skin-hair-nails-60-tablets,high,,template,Product purchase intent
+maxzoom 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/maxzoom-skin-hair-nails-60-tablets,high,,template,Product price lookup
+maxzoom 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/maxzoom-skin-hair-nails-60-tablets,medium,,template,Product COD
+nutrifactor multi factor 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-multi-factor-advance-50-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor multi factor 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-multi-factor-advance-50-30-tablets,high,,template,Product purchase intent
+nutrifactor normega fish oil 1000mg 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-normega-fish-oil-1000mg-30-capsules,high,,catalog,Direct catalog product
+fish oil,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+fish oil in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor normega fish oil 500mg 60 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-normega-fish-oil-500mg-60-capsules,high,,catalog,Direct catalog product
+nutrifactor nuflex 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-nuflex-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor nuflex 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-nuflex-30-tablets,high,,template,Product purchase intent
+nutrifactor nuflex 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-nuflex-30-tablets,high,,template,Product price lookup
+nutrifactor nuflex 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-nuflex-30-tablets,medium,,template,Product COD
+nutrifactor vitamax women 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-vitamax-women-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor vitamax women 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-vitamax-women-30-tablets,high,,template,Product purchase intent
+nutrifactor vitamax women 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-vitamax-women-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor vitamax women 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-vitamax-women-60-tablets,high,,template,Product purchase intent
+nutrifactor vitamax 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor vitamax 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-30-tablets,high,,template,Product purchase intent
+nutrifactor vitamax 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-30-tablets,high,,template,Product price lookup
+nutrifactor vitamax 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-30-tablets,medium,,template,Product COD
+nutrifactor vitamax 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-60-tablets,high,,catalog,Direct catalog product
+buy nutrifactor vitamax 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-60-tablets,high,,template,Product purchase intent
+nutrifactor vitamax 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-60-tablets,high,,template,Product price lookup
+nutrifactor vitamax 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-vitamax-one-a-day-multi-60-tablets,medium,,template,Product COD
+nutraxin artroflex hya-c-ii 90 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-artroflex-hya-c-ii-90-tablets,high,,catalog,Direct catalog product
+buy nutraxin artroflex hya-c-ii 90 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutraxin-artroflex-hya-c-ii-90-tablets,high,,template,Product purchase intent
+glucosamine,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+glucosamine in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutraxin vitamin b12 60 chewable tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-vitamin-b12-1000mcg-60-chewable-tablets,high,,catalog,Direct catalog product
+nutraxin b-one formula 90 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-b-one-formula-collagen-90-tablets,high,,catalog,Direct catalog product
+buy nutraxin b-one formula 90 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutraxin-b-one-formula-collagen-90-tablets,high,,template,Product purchase intent
+collagen,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+collagen in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutraxin biotin 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-biotin-5000mcg-30-tablets,high,,catalog,Direct catalog product
+buy nutraxin biotin 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutraxin-biotin-5000mcg-30-tablets,high,,template,Product purchase intent
+nutraxin biotin 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutraxin-biotin-5000mcg-30-tablets,high,,template,Product price lookup
+nutraxin biotin 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutraxin-biotin-5000mcg-30-tablets,medium,,template,Product COD
+biotin 5000mcg,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+biotin 5000mcg in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutraxin quick-slim l carnitine 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-quick-slim-l-carnitine-700mg-60-tablets,high,,catalog,Direct catalog product
+l-carnitine,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+l-carnitine in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutraxin mens multivitamin complex 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-mens-multivitamin-complex-60-tablets,high,,catalog,Direct catalog product
+nutraxin womens multivitamin complex 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-womens-multivitamin-complex-60-tablets,high,,catalog,Direct catalog product
+vitamin a,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+vitamin a in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutraxin zinc 100 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutraxin-zinc-15mg-100-tablets,high,,catalog,Direct catalog product
+buy nutraxin zinc 100 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutraxin-zinc-15mg-100-tablets,high,,template,Product purchase intent
+nutraxin zinc 100 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutraxin-zinc-15mg-100-tablets,high,,template,Product price lookup
+nutraxin zinc 100 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutraxin-zinc-15mg-100-tablets,medium,,template,Product COD
+zinc sulphate,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+zinc sulphate in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+natures bounty chromium picolinate 50 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/natures-bounty-chromium-picolinate-800mcg-50-tablets,high,,catalog,Direct catalog product
+chromium,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+chromium in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+gluvit-s 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/gluvit-s-500mg-30-capsules,high,,catalog,Direct catalog product
+buy gluvit-s 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/gluvit-s-500mg-30-capsules,high,,template,Product purchase intent
+gluvit-s 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/gluvit-s-500mg-30-capsules,high,,template,Product price lookup
+gluvit-s 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/gluvit-s-500mg-30-capsules,medium,,template,Product COD
+nutrifactor dermazon 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-dermazon-hair-skin-nails-30-capsules,high,,catalog,Direct catalog product
+buy nutrifactor dermazon 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-dermazon-hair-skin-nails-30-capsules,high,,template,Product purchase intent
+nutrifactor dermazon 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-dermazon-hair-skin-nails-30-capsules,high,,template,Product price lookup
+nutrifactor dermazon 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-dermazon-hair-skin-nails-30-capsules,medium,,template,Product COD
+nutrifactor ginkgo focus 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-ginkgo-focus-120150mg-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor ginkgo focus 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-ginkgo-focus-120150mg-30-tablets,high,,template,Product purchase intent
+herbiotics alfabon 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-alfabon-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics alfabon 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-alfabon-30-tablets,high,,template,Product purchase intent
+herbiotics alfabon 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-alfabon-30-tablets,high,,template,Product price lookup
+herbiotics alfabon 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-alfabon-30-tablets,medium,,template,Product COD
+herbiotics biotin plus 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-biotin-plus-2500mcg-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics biotin plus 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-biotin-plus-2500mcg-30-tablets,high,,template,Product purchase intent
+herbiotics bn-d3 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-bn-d3-b-complex-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics bn-d3 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-bn-d3-b-complex-30-tablets,high,,template,Product purchase intent
+herbiotics bn-d3 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-bn-d3-b-complex-30-tablets,high,,template,Product price lookup
+herbiotics bn-d3 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-bn-d3-b-complex-30-tablets,medium,,template,Product COD
+collagix collagen 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/collagix-collagen-biotinvitamin-c-30-tablets,high,,catalog,Direct catalog product
+buy collagix collagen 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/collagix-collagen-biotinvitamin-c-30-tablets,high,,template,Product purchase intent
+collagix collagen 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/collagix-collagen-biotinvitamin-c-30-tablets,high,,template,Product price lookup
+collagix collagen 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/collagix-collagen-biotinvitamin-c-30-tablets,medium,,template,Product COD
+herbiotics folic acid 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-folic-acid-400mcg-60-tablets,high,,catalog,Direct catalog product
+buy herbiotics folic acid 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-folic-acid-400mcg-60-tablets,high,,template,Product purchase intent
+ginkwell 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/ginkwell-30-tablets,high,,catalog,Direct catalog product
+buy ginkwell 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/ginkwell-30-tablets,high,,template,Product purchase intent
+ginkwell 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/ginkwell-30-tablets,high,,template,Product price lookup
+ginkwell 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/ginkwell-30-tablets,medium,,template,Product COD
+ginseng extract gingko biloba,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+ginseng extract gingko biloba in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+ginosin ginseng 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/ginosin-ginseng-750mg-30-tablets,high,,catalog,Direct catalog product
+buy ginosin ginseng 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/ginosin-ginseng-750mg-30-tablets,high,,template,Product purchase intent
+ginosin ginseng 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/ginosin-ginseng-750mg-30-tablets,high,,template,Product price lookup
+ginosin ginseng 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/ginosin-ginseng-750mg-30-tablets,medium,,template,Product COD
+glucobex 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/glucobex-30-tablets,high,,catalog,Direct catalog product
+buy glucobex 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/glucobex-30-tablets,high,,template,Product purchase intent
+glucobex 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/glucobex-30-tablets,high,,template,Product price lookup
+glucobex 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/glucobex-30-tablets,medium,,template,Product COD
+herbiotics l-carnitine 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-l-carnitine-400mg-30-capsules,high,,catalog,Direct catalog product
+buy herbiotics l-carnitine 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-l-carnitine-400mg-30-capsules,high,,template,Product purchase intent
+herbiotics l-carnitine 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-l-carnitine-400mg-30-capsules,high,,template,Product price lookup
+herbiotics l-carnitine 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-l-carnitine-400mg-30-capsules,medium,,template,Product COD
+herbiotics magnesium 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-magnesium-500mg-60-tablets,high,,catalog,Direct catalog product
+buy herbiotics magnesium 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-magnesium-500mg-60-tablets,high,,template,Product purchase intent
+herbiotics magnesium 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-magnesium-500mg-60-tablets,high,,template,Product price lookup
+herbiotics magnesium 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-magnesium-500mg-60-tablets,medium,,template,Product COD
+metadetox 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/metadetox-60-tablets,high,,catalog,Direct catalog product
+buy metadetox 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/metadetox-60-tablets,high,,template,Product purchase intent
+metadetox 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/metadetox-60-tablets,high,,template,Product price lookup
+metadetox 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/metadetox-60-tablets,medium,,template,Product COD
+herbiotics multilife 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-multilife-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics multilife 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-multilife-30-tablets,high,,template,Product purchase intent
+herbiotics multilife 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-multilife-30-tablets,high,,template,Product price lookup
+herbiotics multilife 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-multilife-30-tablets,medium,,template,Product COD
+herbiotics multilife 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-multilife-60-tablets,high,,catalog,Direct catalog product
+buy herbiotics multilife 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-multilife-60-tablets,high,,template,Product purchase intent
+herbiotics multilife 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-multilife-60-tablets,high,,template,Product price lookup
+herbiotics multilife 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-multilife-60-tablets,medium,,template,Product COD
+herbiotics multipil 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-multipil-men-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics multipil 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-multipil-men-30-tablets,high,,template,Product purchase intent
+herbiotics multipil 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-multipil-men-30-tablets,high,,template,Product price lookup
+herbiotics multipil 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-multipil-men-30-tablets,medium,,template,Product COD
+herbiotics multipil 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-multipil-men-60-tablets,high,,catalog,Direct catalog product
+buy herbiotics multipil 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-multipil-men-60-tablets,high,,template,Product purchase intent
+herbiotics multipil 60 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-multipil-men-60-tablets,high,,template,Product price lookup
+herbiotics multipil 60 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-multipil-men-60-tablets,medium,,template,Product COD
+herbiotics somnirol ashwagandha 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-somnirol-ashwagandha-400mg-30-capsules,high,,catalog,Direct catalog product
+buy herbiotics somnirol ashwagandha 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-somnirol-ashwagandha-400mg-30-capsules,high,,template,Product purchase intent
+herbiotics vitokid syrup,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-vitokid-120ml-syrup,high,,catalog,Direct catalog product
+buy herbiotics vitokid syrup online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-vitokid-120ml-syrup,high,,template,Product purchase intent
+herbiotics vitokid syrup price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-vitokid-120ml-syrup,high,,template,Product price lookup
+herbiotics vitokid syrup cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-vitokid-120ml-syrup,medium,,template,Product COD
+herbiotics white-vit 30 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-white-vit-30-capsules,high,,catalog,Direct catalog product
+buy herbiotics white-vit 30 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-white-vit-30-capsules,high,,template,Product purchase intent
+herbiotics white-vit 30 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-white-vit-30-capsules,high,,template,Product price lookup
+herbiotics white-vit 30 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-white-vit-30-capsules,medium,,template,Product COD
+herbiotics zinplex 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-zinplex-50mg-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics zinplex 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-zinplex-50mg-30-tablets,high,,template,Product purchase intent
+herbiotics zinplex 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-zinplex-50mg-30-tablets,high,,template,Product price lookup
+herbiotics zinplex 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-zinplex-50mg-30-tablets,medium,,template,Product COD
+suncell 5000 60 softgels,product,brand-search,nutraceutical-product,https://medikart.pk/products/suncell-5000-5000iu-60-softgels,high,,catalog,Direct catalog product
+buy suncell 5000 60 softgels online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/suncell-5000-5000iu-60-softgels,high,,template,Product purchase intent
+suncell 5000 60 softgels price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/suncell-5000-5000iu-60-softgels,high,,template,Product price lookup
+suncell 5000 60 softgels cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/suncell-5000-5000iu-60-softgels,medium,,template,Product COD
+gluta glime 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/gluta-glime-30-tablets,high,,catalog,Direct catalog product
+buy gluta glime 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/gluta-glime-30-tablets,high,,template,Product purchase intent
+gluta glime 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/gluta-glime-30-tablets,high,,template,Product price lookup
+gluta glime 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/gluta-glime-30-tablets,medium,,template,Product COD
+glutathione,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+glutathione in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor melatonin 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-melatonin-3mg-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor melatonin 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-melatonin-3mg-30-tablets,high,,template,Product purchase intent
+nutrifactor melatonin 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-melatonin-3mg-30-tablets,high,,template,Product price lookup
+nutrifactor melatonin 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-melatonin-3mg-30-tablets,medium,,template,Product COD
+nutrifactor tribulus 60 capsules,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-tribulus-250mg-60-capsules,high,,catalog,Direct catalog product
+buy nutrifactor tribulus 60 capsules online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-tribulus-250mg-60-capsules,high,,template,Product purchase intent
+nutrifactor tribulus 60 capsules price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-tribulus-250mg-60-capsules,high,,template,Product price lookup
+nutrifactor tribulus 60 capsules cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-tribulus-250mg-60-capsules,medium,,template,Product COD
+herbiotics noflaw 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-noflaw-skin-hair-nails-30-tablets,high,,catalog,Direct catalog product
+buy herbiotics noflaw 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-noflaw-skin-hair-nails-30-tablets,high,,template,Product purchase intent
+herbiotics noflaw 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-noflaw-skin-hair-nails-30-tablets,high,,template,Product price lookup
+herbiotics noflaw 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-noflaw-skin-hair-nails-30-tablets,medium,,template,Product COD
+nutritional supplement,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+nutritional supplement in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+herbiotics vimocid syrup,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-vimocid-120ml-syrup,high,,catalog,Direct catalog product
+buy herbiotics vimocid syrup online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-vimocid-120ml-syrup,high,,template,Product purchase intent
+herbiotics vimocid syrup price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-vimocid-120ml-syrup,high,,template,Product price lookup
+herbiotics vimocid syrup cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-vimocid-120ml-syrup,medium,,template,Product COD
+nutrifactor biotin plus 120 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-biotin-plus-2500mcg-120-tablets,high,,catalog,Direct catalog product
+buy nutrifactor biotin plus 120 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-biotin-plus-2500mcg-120-tablets,high,,template,Product purchase intent
+hi nutrition collagen powder,product,brand-search,nutraceutical-product,https://medikart.pk/products/hi-nutrition-collagen-powder-198g,high,,catalog,Direct catalog product
+buy hi nutrition collagen powder online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/hi-nutrition-collagen-powder-198g,high,,template,Product purchase intent
+hi nutrition collagen powder price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/hi-nutrition-collagen-powder-198g,high,,template,Product price lookup
+hi nutrition collagen powder cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/hi-nutrition-collagen-powder-198g,medium,,template,Product COD
+collagen supplement,brand,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,medium,,catalog,Generic formulation
+collagen supplement in pakistan,informational,generic-search,nutraceutical-generic,https://medikart.pk/categories/nutraceutical,low,,template,Generic availability
+nutrifactor liverovit 60 capsule,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-liverovit-60-capsule,high,,catalog,Direct catalog product
+buy nutrifactor liverovit 60 capsule online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-liverovit-60-capsule,high,,template,Product purchase intent
+nutrifactor liverovit 60 capsule price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-liverovit-60-capsule,high,,template,Product price lookup
+nutrifactor liverovit 60 capsule cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-liverovit-60-capsule,medium,,template,Product COD
+herbiotics biotin 5000mcg 60s,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-biotin-5000mcg-60s,high,,catalog,Direct catalog product
+buy herbiotics biotin 5000mcg 60s online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-biotin-5000mcg-60s,high,,template,Product purchase intent
+herbiotics biotin 5000mcg 60s price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/herbiotics-biotin-5000mcg-60s,high,,template,Product price lookup
+herbiotics biotin 5000mcg 60s cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/herbiotics-biotin-5000mcg-60s,medium,,template,Product COD
+herbiotics magnesium glycinate 60 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/herbiotics-magnesium-glycinate-500mg-60-tablets,high,,catalog,Direct catalog product
+buy herbiotics magnesium glycinate 60 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/herbiotics-magnesium-glycinate-500mg-60-tablets,high,,template,Product purchase intent
+nutrifactor magnilax 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/nutrifactor-magnilax-30-tablets,high,,catalog,Direct catalog product
+buy nutrifactor magnilax 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/nutrifactor-magnilax-30-tablets,high,,template,Product purchase intent
+nutrifactor magnilax 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/nutrifactor-magnilax-30-tablets,high,,template,Product price lookup
+nutrifactor magnilax 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/nutrifactor-magnilax-30-tablets,medium,,template,Product COD
+hi-nutrition neu-flex 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/hi-nutrition-neu-flex-30-tablets,high,,catalog,Direct catalog product
+buy hi-nutrition neu-flex 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/hi-nutrition-neu-flex-30-tablets,high,,template,Product purchase intent
+hi-nutrition neu-flex 30 tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/hi-nutrition-neu-flex-30-tablets,high,,template,Product price lookup
+hi-nutrition neu-flex 30 tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/hi-nutrition-neu-flex-30-tablets,medium,,template,Product COD
+medi green magnesium tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/medi-green-magnesium-500mg-tablets,high,,catalog,Direct catalog product
+buy medi green magnesium tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/medi-green-magnesium-500mg-tablets,high,,template,Product purchase intent
+medi green magnesium tablets price in pakistan,transactional,price-check,nutraceutical-product-pricing,https://medikart.pk/products/medi-green-magnesium-500mg-tablets,high,,template,Product price lookup
+medi green magnesium tablets cash on delivery,transactional,purchase,nutraceutical-product-cod,https://medikart.pk/products/medi-green-magnesium-500mg-tablets,medium,,template,Product COD
+medi green restiflex 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/medi-green-restiflex-30-tablets,high,,catalog,Direct catalog product
+buy medi green restiflex 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/medi-green-restiflex-30-tablets,high,,template,Product purchase intent
+medi green mvcal m 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/medi-green-mvcal-m-30-tablets,high,,catalog,Direct catalog product
+medi green zinc 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/medi-green-mg-zinc-50mg-30-tablets,high,,catalog,Direct catalog product
+buy medi green zinc 30 tablets online,transactional,purchase,nutraceutical-product-transactional,https://medikart.pk/products/medi-green-mg-zinc-50mg-30-tablets,high,,template,Product purchase intent
+medi green alpha cid 30 tablets,product,brand-search,nutraceutical-product,https://medikart.pk/products/medi-green-alpha-cid-30-tablets,high,,catalog,Direct catalog product

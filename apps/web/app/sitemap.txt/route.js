@@ -1,4 +1,5 @@
 import { BLOGS_DATA } from '../../data/blogsData.js';
+import { NOINDEX_CATEGORY_SLUGS } from '../../src/seo/category-meta.js';
 
 export const revalidate = 3600;
 
@@ -79,9 +80,13 @@ export async function GET() {
     `${baseUrl}/terms-and-conditions`,
   ];
 
-  // Category clean URLs
+  // Category clean URLs (excluding internal buckets & noindex)
   categories.forEach((cat) => {
-    urls.push(`${baseUrl}/categories/${cat.slug || cat._id}`);
+    const slug = cat.slug || cat._id;
+    if (NOINDEX_CATEGORY_SLUGS.has(slug)) {
+      return;
+    }
+    urls.push(`${baseUrl}/categories/${slug}`);
   });
 
   // Product clean URLs

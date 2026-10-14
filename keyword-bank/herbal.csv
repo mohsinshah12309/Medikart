@@ -1,0 +1,589 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+herbal medicines pakistan,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy herbal medicines pakistan online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+herbal medicines pakistan price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order herbal medicines pakistan online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+herbal medicines pakistan cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best herbal medicines pakistan in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable herbal medicines pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+herbal medicines pakistan home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+herbal medicines pakistan in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+herbal medicines pakistan in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+herbal medicines pakistan in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+herbal medicines pakistan in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+herbal medicines pakistan in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is herbal medicines pakistan,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose herbal medicines pakistan,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use herbal medicines pakistan,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is herbal medicines pakistan available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+herbal medicines pakistan sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+herbal medicines pakistan ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+herbal medicines pakistan online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+herbal medicines pakistan delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+gripe water,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy gripe water online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+gripe water price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order gripe water online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+gripe water cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best gripe water in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable gripe water,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+gripe water home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+gripe water in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+gripe water in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+gripe water in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+gripe water in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+gripe water in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is gripe water,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose gripe water,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use gripe water,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is gripe water available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+where to buy gripe water in pakistan,question,purchase,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,Vendor lookup
+gripe water sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+gripe water ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+gripe water online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+gripe water delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+castor oil pure,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy castor oil pure online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+castor oil pure price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order castor oil pure online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+castor oil pure cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best castor oil pure in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable castor oil pure,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+castor oil pure home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+castor oil pure in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+castor oil pure in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+castor oil pure in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+castor oil pure in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+castor oil pure in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is castor oil pure,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose castor oil pure,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use castor oil pure,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is castor oil pure available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+castor oil pure sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+castor oil pure ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+castor oil pure online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+castor oil pure delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+johar joshanda,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy johar joshanda online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+johar joshanda price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order johar joshanda online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+johar joshanda cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best johar joshanda in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable johar joshanda,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+johar joshanda home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+johar joshanda in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+johar joshanda in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+johar joshanda in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+johar joshanda in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+johar joshanda in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is johar joshanda,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose johar joshanda,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use johar joshanda,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is johar joshanda available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+where to buy johar joshanda in pakistan,question,purchase,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,Vendor lookup
+johar joshanda sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+johar joshanda ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+johar joshanda online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+johar joshanda delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+natural cough syrup,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy natural cough syrup online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+natural cough syrup price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order natural cough syrup online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+natural cough syrup cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best natural cough syrup in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable natural cough syrup,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+natural cough syrup home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+natural cough syrup in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+natural cough syrup in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+natural cough syrup in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+natural cough syrup in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+natural cough syrup in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is natural cough syrup,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose natural cough syrup,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use natural cough syrup,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is natural cough syrup available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+natural cough syrup sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+natural cough syrup ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+natural cough syrup online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+natural cough syrup delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+digestive carminative syrup,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy digestive carminative syrup online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+digestive carminative syrup price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order digestive carminative syrup online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+digestive carminative syrup cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best digestive carminative syrup in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable digestive carminative syrup,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+digestive carminative syrup home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+digestive carminative syrup in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+digestive carminative syrup in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+digestive carminative syrup in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+digestive carminative syrup in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+digestive carminative syrup in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is digestive carminative syrup,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose digestive carminative syrup,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use digestive carminative syrup,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is digestive carminative syrup available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+digestive carminative syrup sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+digestive carminative syrup ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+digestive carminative syrup online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+digestive carminative syrup delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+ispaghol husk,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy ispaghol husk online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+ispaghol husk price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order ispaghol husk online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+ispaghol husk cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best ispaghol husk in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable ispaghol husk,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+ispaghol husk home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+ispaghol husk in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+ispaghol husk in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+ispaghol husk in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+ispaghol husk in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+ispaghol husk in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is ispaghol husk,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose ispaghol husk,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use ispaghol husk,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is ispaghol husk available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+where to buy ispaghol husk in pakistan,question,purchase,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,Vendor lookup
+ispaghol husk sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+ispaghol husk ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+ispaghol husk online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+ispaghol husk delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+herbal hair oil,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy herbal hair oil online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+herbal hair oil price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order herbal hair oil online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+herbal hair oil cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best herbal hair oil in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable herbal hair oil,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+herbal hair oil home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+herbal hair oil in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+herbal hair oil in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+herbal hair oil in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+herbal hair oil in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+herbal hair oil in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is herbal hair oil,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose herbal hair oil,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use herbal hair oil,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is herbal hair oil available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+herbal hair oil sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+herbal hair oil ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+herbal hair oil online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+herbal hair oil delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+unani medicines,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy unani medicines online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+unani medicines price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order unani medicines online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+unani medicines cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best unani medicines in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable unani medicines,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+unani medicines home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+unani medicines in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+unani medicines in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+unani medicines in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+unani medicines in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+unani medicines in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is unani medicines,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose unani medicines,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use unani medicines,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is unani medicines available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+where to buy unani medicines in pakistan,question,purchase,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,Vendor lookup
+unani medicines sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+unani medicines ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+unani medicines online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+unani medicines delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+natural immunity boosters,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy natural immunity boosters online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+natural immunity boosters price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order natural immunity boosters online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+natural immunity boosters cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best natural immunity boosters in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable natural immunity boosters,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+natural immunity boosters home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+natural immunity boosters in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+natural immunity boosters in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+natural immunity boosters in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+natural immunity boosters in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+natural immunity boosters in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is natural immunity boosters,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose natural immunity boosters,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use natural immunity boosters,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is natural immunity boosters available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+natural immunity boosters sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+natural immunity boosters ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+natural immunity boosters online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+natural immunity boosters delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+herbal blood purifier,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy herbal blood purifier online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+herbal blood purifier price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order herbal blood purifier online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+herbal blood purifier cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best herbal blood purifier in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable herbal blood purifier,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+herbal blood purifier home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+herbal blood purifier in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+herbal blood purifier in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+herbal blood purifier in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+herbal blood purifier in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+herbal blood purifier in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is herbal blood purifier,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose herbal blood purifier,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use herbal blood purifier,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is herbal blood purifier available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+herbal blood purifier sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+herbal blood purifier ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+herbal blood purifier online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+herbal blood purifier delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+herbal liver tonic,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy herbal liver tonic online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+herbal liver tonic price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order herbal liver tonic online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+herbal liver tonic cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best herbal liver tonic in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable herbal liver tonic,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+herbal liver tonic home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+herbal liver tonic in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+herbal liver tonic in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+herbal liver tonic in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+herbal liver tonic in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+herbal liver tonic in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is herbal liver tonic,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose herbal liver tonic,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use herbal liver tonic,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is herbal liver tonic available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+herbal liver tonic sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+herbal liver tonic ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+herbal liver tonic online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+herbal liver tonic delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+neem extract products,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy neem extract products online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+neem extract products price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order neem extract products online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+neem extract products cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best neem extract products in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable neem extract products,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+neem extract products home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+neem extract products in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+neem extract products in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+neem extract products in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+neem extract products in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+neem extract products in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is neem extract products,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose neem extract products,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use neem extract products,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is neem extract products available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+neem extract products sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+neem extract products ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+neem extract products online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+neem extract products delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+senna leaf tea,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy senna leaf tea online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+senna leaf tea price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order senna leaf tea online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+senna leaf tea cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best senna leaf tea in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable senna leaf tea,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+senna leaf tea home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+senna leaf tea in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+senna leaf tea in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+senna leaf tea in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+senna leaf tea in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+senna leaf tea in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is senna leaf tea,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose senna leaf tea,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use senna leaf tea,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+is senna leaf tea available in pakistan,question,commercial-investigation,herbal-aeo,https://medikart.pk/categories/herbal#faqs,low,,template,Availability question
+senna leaf tea sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+senna leaf tea ki price kitni hai,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal#faqs,low,,template,Vernacular price query
+senna leaf tea online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+senna leaf tea delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+herbal pain relief oil,informational,commercial-investigation,herbal-core,https://medikart.pk/categories/herbal,high,,template,Approved seed term
+buy herbal pain relief oil online,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,high,,template,Core purchase intent
+herbal pain relief oil price in pakistan,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,high,,template,Price check intent
+order herbal pain relief oil online pakistan,transactional,purchase,herbal-transactional,https://medikart.pk/categories/herbal,medium,,template,Online order
+herbal pain relief oil cash on delivery,transactional,purchase,herbal-cod,https://medikart.pk/categories/herbal,medium,,template,COD intent
+best herbal pain relief oil in pakistan,informational,comparison,herbal-comparison,https://medikart.pk/categories/herbal,medium,,template,Best in class
+affordable herbal pain relief oil,transactional,price-check,herbal-pricing,https://medikart.pk/categories/herbal,low,,template,Affordable value
+herbal pain relief oil home delivery,transactional,purchase,herbal-delivery,https://medikart.pk/categories/herbal,medium,,template,Delivery intent
+herbal pain relief oil in lahore,local,local-delivery,herbal-local-lahore,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in lahore
+herbal pain relief oil in karachi,local,local-delivery,herbal-local-karachi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in karachi
+herbal pain relief oil in islamabad,local,local-delivery,herbal-local-islamabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in islamabad
+herbal pain relief oil in rawalpindi,local,local-delivery,herbal-local-rawalpindi,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in rawalpindi
+herbal pain relief oil in faisalabad,local,local-delivery,herbal-local-faisalabad,https://medikart.pk/categories/herbal,medium,,template,1-5 hr delivery in faisalabad
+what is herbal pain relief oil,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO direct answer
+how to choose herbal pain relief oil,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO selection guide
+how to use herbal pain relief oil,question,informational,herbal-aeo,https://medikart.pk/categories/herbal#faqs,medium,,template,AEO usage guide
+herbal pain relief oil sasti,roman-urdu,price-check,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Pakistani vernacular
+herbal pain relief oil online mangwana,roman-urdu,purchase,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular delivery query
+herbal pain relief oil delivery timing,roman-urdu,local-delivery,herbal-roman-urdu,https://medikart.pk/categories/herbal,low,,template,Vernacular timing query
+brick colic oral drops,product,brand-search,herbal-product,https://medikart.pk/products/brick-colic-20ml-oral-drops,high,,catalog,Direct catalog product
+buy brick colic oral drops online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/brick-colic-20ml-oral-drops,high,,template,Product purchase intent
+brick colic oral drops price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/brick-colic-20ml-oral-drops,high,,template,Product price lookup
+brick colic oral drops cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/brick-colic-20ml-oral-drops,medium,,template,Product COD
+qarshi lal sharbat syrup,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-lal-sharbat-120ml-syrup,high,,catalog,Direct catalog product
+buy qarshi lal sharbat syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-lal-sharbat-120ml-syrup,high,,template,Product purchase intent
+qarshi lal sharbat syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-lal-sharbat-120ml-syrup,high,,template,Product price lookup
+qarshi lal sharbat syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-lal-sharbat-120ml-syrup,medium,,template,Product COD
+gestofill syrup,product,brand-search,herbal-product,https://medikart.pk/products/gestofill-120ml-syrup,high,,catalog,Direct catalog product
+buy gestofill syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/gestofill-120ml-syrup,high,,template,Product purchase intent
+gestofill syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/gestofill-120ml-syrup,high,,template,Product price lookup
+gestofill syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/gestofill-120ml-syrup,medium,,template,Product COD
+cumin 28571mg fennel 28571mg,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+cumin 28571mg fennel 28571mg in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+marhaba almond oil,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-10ml-almond-oil,high,,catalog,Direct catalog product
+buy marhaba almond oil online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-10ml-almond-oil,high,,template,Product purchase intent
+marhaba almond oil price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-10ml-almond-oil,high,,template,Product price lookup
+marhaba almond oil cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-10ml-almond-oil,medium,,template,Product COD
+castor oil,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+castor oil in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+hamdard ghutti syrup,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-ghutti-60ml-syrup,high,,catalog,Direct catalog product
+buy hamdard ghutti syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-ghutti-60ml-syrup,high,,template,Product purchase intent
+hamdard ghutti syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-ghutti-60ml-syrup,high,,template,Product price lookup
+hamdard ghutti syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-ghutti-60ml-syrup,medium,,template,Product COD
+hamdard safi syrup,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-safi-175ml-syrup,high,,catalog,Direct catalog product
+buy hamdard safi syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-safi-175ml-syrup,high,,template,Product purchase intent
+hamdard safi syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-safi-175ml-syrup,high,,template,Product price lookup
+hamdard safi syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-safi-175ml-syrup,medium,,template,Product COD
+fibo powder sachets,product,brand-search,herbal-product,https://medikart.pk/products/fibo-powder-sachets-1box12s,high,,catalog,Direct catalog product
+buy fibo powder sachets online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/fibo-powder-sachets-1box12s,high,,template,Product purchase intent
+fibo powder sachets price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/fibo-powder-sachets-1box12s,high,,template,Product price lookup
+fibo powder sachets cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/fibo-powder-sachets-1box12s,medium,,template,Product COD
+qarshi arq e gulab khalis rose water,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-arq-e-gulab-khalis-120ml-rose-water,high,,catalog,Direct catalog product
+fibo jar,product,brand-search,herbal-product,https://medikart.pk/products/fibo-jar-175g,high,,catalog,Direct catalog product
+buy fibo jar online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/fibo-jar-175g,high,,template,Product purchase intent
+fibo jar price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/fibo-jar-175g,high,,template,Product price lookup
+fibo jar cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/fibo-jar-175g,medium,,template,Product COD
+khatooni syrup,product,brand-search,herbal-product,https://medikart.pk/products/khatooni-120ml-syrup,high,,catalog,Direct catalog product
+buy khatooni syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/khatooni-120ml-syrup,high,,template,Product purchase intent
+khatooni syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/khatooni-120ml-syrup,high,,template,Product price lookup
+khatooni syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/khatooni-120ml-syrup,medium,,template,Product COD
+digas antacid 120ml suspension,product,brand-search,herbal-product,https://medikart.pk/products/digas-antacid-450100mg-120ml-suspension,high,,catalog,Direct catalog product
+buy digas antacid 120ml suspension online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/digas-antacid-450100mg-120ml-suspension,high,,template,Product purchase intent
+digas antacid 120ml suspension price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/digas-antacid-450100mg-120ml-suspension,high,,template,Product price lookup
+digas antacid 120ml suspension cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/digas-antacid-450100mg-120ml-suspension,medium,,template,Product COD
+antacid,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+antacid in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+digas 20ml oral drops,product,brand-search,herbal-product,https://medikart.pk/products/digas-20ml-oral-drops,high,,catalog,Direct catalog product
+buy digas 20ml oral drops online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/digas-20ml-oral-drops,high,,template,Product purchase intent
+digas 20ml oral drops price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/digas-20ml-oral-drops,high,,template,Product price lookup
+digas 20ml oral drops cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/digas-20ml-oral-drops,medium,,template,Product COD
+bonnisan syrup,product,brand-search,herbal-product,https://medikart.pk/products/bonnisan-120ml-syrup,high,,catalog,Direct catalog product
+buy bonnisan syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/bonnisan-120ml-syrup,high,,template,Product purchase intent
+bonnisan syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/bonnisan-120ml-syrup,high,,template,Product price lookup
+bonnisan syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/bonnisan-120ml-syrup,medium,,template,Product COD
+herbal extracts,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+herbal extracts in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+qarshi arq e shirin,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-arq-e-shirin-240ml,high,,catalog,Direct catalog product
+buy qarshi arq e shirin online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-arq-e-shirin-240ml,high,,template,Product purchase intent
+qarshi arq e shirin price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-arq-e-shirin-240ml,high,,template,Product price lookup
+qarshi arq e shirin cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-arq-e-shirin-240ml,medium,,template,Product COD
+marhaba ispaghol husk,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-ispaghol-95g-husk,high,,catalog,Direct catalog product
+buy marhaba ispaghol husk online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-ispaghol-95g-husk,high,,template,Product purchase intent
+marhaba ispaghol husk price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-ispaghol-95g-husk,high,,template,Product price lookup
+marhaba ispaghol husk cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-ispaghol-95g-husk,medium,,template,Product COD
+psyllium husk,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+psyllium husk in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+qarshi ispaghol,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-25g-ispaghol-1s,high,,catalog,Direct catalog product
+buy qarshi ispaghol online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-25g-ispaghol-1s,high,,template,Product purchase intent
+qarshi ispaghol price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-25g-ispaghol-1s,high,,template,Product price lookup
+qarshi ispaghol cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-25g-ispaghol-1s,medium,,template,Product COD
+digas antacid 10ml 25 sachets,product,brand-search,herbal-product,https://medikart.pk/products/digas-antacid-450100mg-10ml-25-sachets,high,,catalog,Direct catalog product
+buy digas antacid 10ml 25 sachets online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/digas-antacid-450100mg-10ml-25-sachets,high,,template,Product purchase intent
+digas syrup,product,brand-search,herbal-product,https://medikart.pk/products/digas-120ml-syrup,high,,catalog,Direct catalog product
+buy digas syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/digas-120ml-syrup,high,,template,Product purchase intent
+digas syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/digas-120ml-syrup,high,,template,Product price lookup
+digas syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/digas-120ml-syrup,medium,,template,Product COD
+simethicone,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+simethicone in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+medics inhaler,product,brand-search,herbal-product,https://medikart.pk/products/medics-inhaler-1g-1s,high,,catalog,Direct catalog product
+buy medics inhaler online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/medics-inhaler-1g-1s,high,,template,Product purchase intent
+medics inhaler price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/medics-inhaler-1g-1s,high,,template,Product price lookup
+medics inhaler cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/medics-inhaler-1g-1s,medium,,template,Product COD
+johar joshanda hamdard pura,product,brand-search,herbal-product,https://medikart.pk/products/johar-joshanda-hamdard-pura,high,,catalog,Direct catalog product
+buy johar joshanda hamdard pura online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/johar-joshanda-hamdard-pura,high,,template,Product purchase intent
+johar joshanda hamdard pura price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/johar-joshanda-hamdard-pura,high,,template,Product price lookup
+johar joshanda hamdard pura cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/johar-joshanda-hamdard-pura,medium,,template,Product COD
+hamdard laooq e sapistan,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-laooq-e-sapistan-100g-1s,high,,catalog,Direct catalog product
+buy hamdard laooq e sapistan online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-laooq-e-sapistan-100g-1s,high,,template,Product purchase intent
+hamdard laooq e sapistan price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-laooq-e-sapistan-100g-1s,high,,template,Product price lookup
+hamdard laooq e sapistan cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-laooq-e-sapistan-100g-1s,medium,,template,Product COD
+hamdard masturin syrup,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-masturin-120ml-syrup,high,,catalog,Direct catalog product
+buy hamdard masturin syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-masturin-120ml-syrup,high,,template,Product purchase intent
+hamdard masturin syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-masturin-120ml-syrup,high,,template,Product price lookup
+hamdard masturin syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-masturin-120ml-syrup,medium,,template,Product COD
+hamdard suduri syrup,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-suduri-120ml-syrup,high,,catalog,Direct catalog product
+buy hamdard suduri syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-suduri-120ml-syrup,high,,template,Product purchase intent
+hamdard suduri syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-suduri-120ml-syrup,high,,template,Product price lookup
+hamdard suduri syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-suduri-120ml-syrup,medium,,template,Product COD
+hamdard supari pak,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-supari-pak-100g,high,,catalog,Direct catalog product
+buy hamdard supari pak online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-supari-pak-100g,high,,template,Product purchase intent
+hamdard supari pak price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-supari-pak-100g,high,,template,Product price lookup
+hamdard supari pak cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-supari-pak-100g,medium,,template,Product COD
+bioplasgen 20g tablets,product,brand-search,herbal-product,https://medikart.pk/products/bioplasgen-no21-20g-tablets,high,,catalog,Direct catalog product
+buy bioplasgen 20g tablets online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/bioplasgen-no21-20g-tablets,high,,template,Product purchase intent
+bioplasgen 20g tablets price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/bioplasgen-no21-20g-tablets,high,,template,Product price lookup
+bioplasgen 20g tablets cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/bioplasgen-no21-20g-tablets,medium,,template,Product COD
+haralin powder,product,brand-search,herbal-product,https://medikart.pk/products/haralin-powder-1s,high,,catalog,Direct catalog product
+buy haralin powder online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/haralin-powder-1s,high,,template,Product purchase intent
+haralin powder price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/haralin-powder-1s,high,,template,Product price lookup
+haralin powder cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/haralin-powder-1s,medium,,template,Product COD
+arq e mehzal syrup,product,brand-search,herbal-product,https://medikart.pk/products/arq-e-mehzal-800ml-syrup,high,,catalog,Direct catalog product
+buy arq e mehzal syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/arq-e-mehzal-800ml-syrup,high,,template,Product purchase intent
+arq e mehzal syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/arq-e-mehzal-800ml-syrup,high,,template,Product price lookup
+arq e mehzal syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/arq-e-mehzal-800ml-syrup,medium,,template,Product COD
+sharbat toot siah 120ml syrup,product,brand-search,herbal-product,https://medikart.pk/products/sharbat-toot-siah-mulathi-120ml-syrup,high,,catalog,Direct catalog product
+buy sharbat toot siah 120ml syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/sharbat-toot-siah-mulathi-120ml-syrup,high,,template,Product purchase intent
+glycyrrhiza glabra blackberry extract,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+glycyrrhiza glabra blackberry extract in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+lifestyle coconut oil,product,brand-search,herbal-product,https://medikart.pk/products/lifestyle-coconut-200ml-oil,high,,catalog,Direct catalog product
+buy lifestyle coconut oil online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/lifestyle-coconut-200ml-oil,high,,template,Product purchase intent
+lifestyle coconut oil price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/lifestyle-coconut-200ml-oil,high,,template,Product price lookup
+lifestyle coconut oil cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/lifestyle-coconut-200ml-oil,medium,,template,Product COD
+coconut oil,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+coconut oil in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+almond oil,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+almond oil in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+arq e gulab rose water,product,brand-search,herbal-product,https://medikart.pk/products/arq-e-gulab-50ml-rose-water,high,,catalog,Direct catalog product
+buy arq e gulab rose water online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/arq-e-gulab-50ml-rose-water,high,,template,Product purchase intent
+rose water,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+rose water in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+marhaba arq e gulab droper,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-arq-e-gulab-50ml-droper,high,,catalog,Direct catalog product
+buy marhaba arq e gulab droper online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-arq-e-gulab-50ml-droper,high,,template,Product purchase intent
+marhaba arq e gulab,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-arq-e-gulab-800ml,high,,catalog,Direct catalog product
+buy marhaba arq e gulab online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-arq-e-gulab-800ml,high,,template,Product purchase intent
+marhaba arq e gulab price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-arq-e-gulab-800ml,high,,template,Product price lookup
+marhaba arq e gulab cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-arq-e-gulab-800ml,medium,,template,Product COD
+arq e ghulab,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+arq e ghulab in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+marhaba black seed oil,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-black-seed-oil-100ml,high,,catalog,Direct catalog product
+buy marhaba black seed oil online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-black-seed-oil-100ml,high,,template,Product purchase intent
+marhaba black seed oil price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-black-seed-oil-100ml,high,,template,Product price lookup
+marhaba black seed oil cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-black-seed-oil-100ml,medium,,template,Product COD
+black seed oil,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+black seed oil in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+marhaba honey,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-honey-80g,high,,catalog,Direct catalog product
+buy marhaba honey online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-honey-80g,high,,template,Product purchase intent
+marhaba honey price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-honey-80g,high,,template,Product price lookup
+marhaba honey cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-honey-80g,medium,,template,Product COD
+honey,brand,generic-search,herbal-generic,https://medikart.pk/categories/herbal,medium,,catalog,Generic formulation
+honey in pakistan,informational,generic-search,herbal-generic,https://medikart.pk/categories/herbal,low,,template,Generic availability
+ispaghol sachet,product,brand-search,herbal-product,https://medikart.pk/products/ispaghol-4g-sachet,high,,catalog,Direct catalog product
+buy ispaghol sachet online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/ispaghol-4g-sachet,high,,template,Product purchase intent
+ispaghol sachet price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/ispaghol-4g-sachet,high,,template,Product price lookup
+ispaghol sachet cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/ispaghol-4g-sachet,medium,,template,Product COD
+digas classic 120 tablets,product,brand-search,herbal-product,https://medikart.pk/products/digas-classic-120-tablets,high,,catalog,Direct catalog product
+buy digas classic 120 tablets online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/digas-classic-120-tablets,high,,template,Product purchase intent
+digas classic 120 tablets price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/digas-classic-120-tablets,high,,template,Product price lookup
+digas classic 120 tablets cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/digas-classic-120-tablets,medium,,template,Product COD
+arq e gluab rose water drops,product,brand-search,herbal-product,https://medikart.pk/products/arq-e-gluab-25ml-rose-water-drops,high,,catalog,Direct catalog product
+qarshi chuarqa syrup,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-chuarqa-240ml-syrup,high,,catalog,Direct catalog product
+buy qarshi chuarqa syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-chuarqa-240ml-syrup,high,,template,Product purchase intent
+qarshi chuarqa syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-chuarqa-240ml-syrup,high,,template,Product price lookup
+qarshi chuarqa syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-chuarqa-240ml-syrup,medium,,template,Product COD
+qarshi demaghi,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-demaghi-100g,high,,catalog,Direct catalog product
+buy qarshi demaghi online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-demaghi-100g,high,,template,Product purchase intent
+qarshi demaghi price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-demaghi-100g,high,,template,Product price lookup
+qarshi demaghi cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-demaghi-100g,medium,,template,Product COD
+genxing 30 capsules,product,brand-search,herbal-product,https://medikart.pk/products/genxing-30-capsules,high,,catalog,Direct catalog product
+buy genxing 30 capsules online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/genxing-30-capsules,high,,template,Product purchase intent
+genxing 30 capsules price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/genxing-30-capsules,high,,template,Product price lookup
+genxing 30 capsules cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/genxing-30-capsules,medium,,template,Product COD
+qarshi ispaghol husk,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-100g-ispaghol-husk,high,,catalog,Direct catalog product
+buy qarshi ispaghol husk online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-100g-ispaghol-husk,high,,template,Product purchase intent
+qarshi ispaghol husk price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-100g-ispaghol-husk,high,,template,Product price lookup
+qarshi ispaghol husk cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-100g-ispaghol-husk,medium,,template,Product COD
+musaffeen tablet,product,brand-search,herbal-product,https://medikart.pk/products/musaffeen-tablet,high,,catalog,Direct catalog product
+buy musaffeen tablet online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/musaffeen-tablet,high,,template,Product purchase intent
+musaffeen tablet price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/musaffeen-tablet,high,,template,Product price lookup
+musaffeen tablet cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/musaffeen-tablet,medium,,template,Product COD
+qarshi roghan loang liquid,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-roghan-loang-8ml-liquid,high,,catalog,Direct catalog product
+buy qarshi roghan loang liquid online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-roghan-loang-8ml-liquid,high,,template,Product purchase intent
+qarshi roghan loang liquid price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-roghan-loang-8ml-liquid,high,,template,Product price lookup
+qarshi roghan loang liquid cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-roghan-loang-8ml-liquid,medium,,template,Product COD
+qarshi sharbat faulad syrup,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-sharbat-faulad-240ml-syrup,high,,catalog,Direct catalog product
+buy qarshi sharbat faulad syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-sharbat-faulad-240ml-syrup,high,,template,Product purchase intent
+qarshi sharbat faulad syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-sharbat-faulad-240ml-syrup,high,,template,Product price lookup
+qarshi sharbat faulad syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-sharbat-faulad-240ml-syrup,medium,,template,Product COD
+sharbat toot siah syrup,product,brand-search,herbal-product,https://medikart.pk/products/sharbat-toot-siah-120ml-syrup,high,,catalog,Direct catalog product
+buy sharbat toot siah syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/sharbat-toot-siah-120ml-syrup,high,,template,Product purchase intent
+sharbat toot siah syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/sharbat-toot-siah-120ml-syrup,high,,template,Product price lookup
+sharbat toot siah syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/sharbat-toot-siah-120ml-syrup,medium,,template,Product COD
+supari pak,product,brand-search,herbal-product,https://medikart.pk/products/supari-pak-70g,high,,catalog,Direct catalog product
+buy supari pak online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/supari-pak-70g,high,,template,Product purchase intent
+supari pak price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/supari-pak-70g,high,,template,Product price lookup
+supari pak cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/supari-pak-70g,medium,,template,Product COD
+surficol plus 120ml cough syrup,product,brand-search,herbal-product,https://medikart.pk/products/surficol-plus-120ml-cough-syrup,high,,catalog,Direct catalog product
+buy surficol plus 120ml cough syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/surficol-plus-120ml-cough-syrup,high,,template,Product purchase intent
+surficol 250 tablet,product,brand-search,herbal-product,https://medikart.pk/products/surficol-250-tablet,high,,catalog,Direct catalog product
+buy surficol 250 tablet online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/surficol-250-tablet,high,,template,Product purchase intent
+surficol 250 tablet price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/surficol-250-tablet,high,,template,Product price lookup
+surficol 250 tablet cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/surficol-250-tablet,medium,,template,Product COD
+marhaba rose water spray,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-rose-water-120ml-spray,high,,catalog,Direct catalog product
+buy marhaba rose water spray online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-rose-water-120ml-spray,high,,template,Product purchase intent
+marhaba rose water spray price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-rose-water-120ml-spray,high,,template,Product price lookup
+marhaba rose water spray cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-rose-water-120ml-spray,medium,,template,Product COD
+aletris cordial syrup,product,brand-search,herbal-product,https://medikart.pk/products/aletris-cordial-240ml-syrup,high,,catalog,Direct catalog product
+buy aletris cordial syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/aletris-cordial-240ml-syrup,high,,template,Product purchase intent
+aletris cordial syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/aletris-cordial-240ml-syrup,high,,template,Product price lookup
+aletris cordial syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/aletris-cordial-240ml-syrup,medium,,template,Product COD
+qarshi johar joshanda sachets 30 sachets,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-johar-joshanda-sachets-30-sachets,high,,catalog,Direct catalog product
+hamdard somina 120gm,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-somina-120gm-1s,high,,catalog,Direct catalog product
+buy hamdard somina 120gm online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-somina-120gm-1s,high,,template,Product purchase intent
+hamdard somina 120gm price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-somina-120gm-1s,high,,template,Product price lookup
+hamdard somina 120gm cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-somina-120gm-1s,medium,,template,Product COD
+marhaba olive oil,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-100ml-olive-oil,high,,catalog,Direct catalog product
+buy marhaba olive oil online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-100ml-olive-oil,high,,template,Product purchase intent
+marhaba olive oil price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-100ml-olive-oil,high,,template,Product price lookup
+marhaba olive oil cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-100ml-olive-oil,medium,,template,Product COD
+bio amla hair oil,product,brand-search,herbal-product,https://medikart.pk/products/bio-amla-100ml-hair-oil,high,,catalog,Direct catalog product
+buy bio amla hair oil online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/bio-amla-100ml-hair-oil,high,,template,Product purchase intent
+bio amla hair oil price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/bio-amla-100ml-hair-oil,high,,template,Product price lookup
+bio amla hair oil cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/bio-amla-100ml-hair-oil,medium,,template,Product COD
+qarshi hazmojin pakhi,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-hazmojin-pakhi-50gm,high,,catalog,Direct catalog product
+buy qarshi hazmojin pakhi online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-hazmojin-pakhi-50gm,high,,template,Product purchase intent
+qarshi hazmojin pakhi price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/qarshi-hazmojin-pakhi-50gm,high,,template,Product price lookup
+qarshi hazmojin pakhi cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/qarshi-hazmojin-pakhi-50gm,medium,,template,Product COD
+qarshi johar joshanda 30 sachets,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-johar-joshanda-30-sachets-1s,high,,catalog,Direct catalog product
+buy qarshi johar joshanda 30 sachets online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-johar-joshanda-30-sachets-1s,high,,template,Product purchase intent
+dr masood bio 21 tablet,product,brand-search,herbal-product,https://medikart.pk/products/dr-masood-bio-21-tablet,high,,catalog,Direct catalog product
+buy dr masood bio 21 tablet online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/dr-masood-bio-21-tablet,high,,template,Product purchase intent
+marhaba balm,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-balm-20gm,high,,catalog,Direct catalog product
+buy marhaba balm online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-balm-20gm,high,,template,Product purchase intent
+marhaba balm price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-balm-20gm,high,,template,Product price lookup
+marhaba balm cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-balm-20gm,medium,,template,Product COD
+qarshi arq e gulab spray,product,brand-search,herbal-product,https://medikart.pk/products/qarshi-arq-e-gulab-120ml-spray,high,,catalog,Direct catalog product
+buy qarshi arq e gulab spray online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/qarshi-arq-e-gulab-120ml-spray,high,,template,Product purchase intent
+q khameera marvareed khas,product,brand-search,herbal-product,https://medikart.pk/products/q-khameera-marvareed-khas-100g,high,,catalog,Direct catalog product
+buy q khameera marvareed khas online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/q-khameera-marvareed-khas-100g,high,,template,Product purchase intent
+q khameera marvareed khas price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/q-khameera-marvareed-khas-100g,high,,template,Product price lookup
+q khameera marvareed khas cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/q-khameera-marvareed-khas-100g,medium,,template,Product COD
+q majoon philaspha,product,brand-search,herbal-product,https://medikart.pk/products/q-majoon-philaspha-100g,high,,catalog,Direct catalog product
+buy q majoon philaspha online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/q-majoon-philaspha-100g,high,,template,Product purchase intent
+q majoon philaspha price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/q-majoon-philaspha-100g,high,,template,Product price lookup
+q majoon philaspha cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/q-majoon-philaspha-100g,medium,,template,Product COD
+hamdard khamira marwareed,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-khamira-marwareed-100g-1s,high,,catalog,Direct catalog product
+buy hamdard khamira marwareed online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-khamira-marwareed-100g-1s,high,,template,Product purchase intent
+hamdard khamira marwareed price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-khamira-marwareed-100g-1s,high,,template,Product price lookup
+hamdard khamira marwareed cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-khamira-marwareed-100g-1s,medium,,template,Product COD
+sharbat-e-bazoori syrup,product,brand-search,herbal-product,https://medikart.pk/products/sharbat-e-bazoori-750ml-syrup,high,,catalog,Direct catalog product
+buy sharbat-e-bazoori syrup online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/sharbat-e-bazoori-750ml-syrup,high,,template,Product purchase intent
+sharbat-e-bazoori syrup price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/sharbat-e-bazoori-750ml-syrup,high,,template,Product price lookup
+sharbat-e-bazoori syrup cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/sharbat-e-bazoori-750ml-syrup,medium,,template,Product COD
+marhaba inhaler,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-inhaler-20s,high,,catalog,Direct catalog product
+buy marhaba inhaler online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-inhaler-20s,high,,template,Product purchase intent
+marhaba inhaler price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-inhaler-20s,high,,template,Product price lookup
+marhaba inhaler cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-inhaler-20s,medium,,template,Product COD
+marhaba sarsona mustard oil,product,brand-search,herbal-product,https://medikart.pk/products/marhaba-sarsona-100ml-mustard-oil,high,,catalog,Direct catalog product
+buy marhaba sarsona mustard oil online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/marhaba-sarsona-100ml-mustard-oil,high,,template,Product purchase intent
+marhaba sarsona mustard oil price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/marhaba-sarsona-100ml-mustard-oil,high,,template,Product price lookup
+marhaba sarsona mustard oil cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/marhaba-sarsona-100ml-mustard-oil,medium,,template,Product COD
+hamdard naunehal colic drop,product,brand-search,herbal-product,https://medikart.pk/products/hamdard-naunehal-30ml-colic-drop,high,,catalog,Direct catalog product
+buy hamdard naunehal colic drop online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/hamdard-naunehal-30ml-colic-drop,high,,template,Product purchase intent
+hamdard naunehal colic drop price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/hamdard-naunehal-30ml-colic-drop,high,,template,Product price lookup
+hamdard naunehal colic drop cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/hamdard-naunehal-30ml-colic-drop,medium,,template,Product COD
+surfi 250 tablet,product,brand-search,herbal-product,https://medikart.pk/products/surfi-250-tablet,high,,catalog,Direct catalog product
+buy surfi 250 tablet online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/surfi-250-tablet,high,,template,Product purchase intent
+surfi 250 tablet price in pakistan,transactional,price-check,herbal-product-pricing,https://medikart.pk/products/surfi-250-tablet,high,,template,Product price lookup
+surfi 250 tablet cash on delivery,transactional,purchase,herbal-product-cod,https://medikart.pk/products/surfi-250-tablet,medium,,template,Product COD
+lasani tut siah plus mulathi,product,brand-search,herbal-product,https://medikart.pk/products/lasani-tut-siah-plus-mulathi-120ml,high,,catalog,Direct catalog product
+buy lasani tut siah plus mulathi online,transactional,purchase,herbal-product-transactional,https://medikart.pk/products/lasani-tut-siah-plus-mulathi-120ml,high,,template,Product purchase intent

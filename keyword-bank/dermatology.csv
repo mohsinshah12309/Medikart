@@ -1,0 +1,685 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+skin care products,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy skin care products online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+skin care products price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order skin care products online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+skin care products cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best skin care products in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable skin care products,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+skin care products home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+skin care products in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+skin care products in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+skin care products in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+skin care products in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+skin care products in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is skin care products,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose skin care products,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use skin care products,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is skin care products available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+skin care products sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+skin care products ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+skin care products online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+skin care products delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+acne treatment,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy acne treatment online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+acne treatment price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order acne treatment online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+acne treatment cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best acne treatment in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable acne treatment,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+acne treatment home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+acne treatment in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+acne treatment in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+acne treatment in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+acne treatment in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+acne treatment in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is acne treatment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose acne treatment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use acne treatment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is acne treatment available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+where to buy acne treatment in pakistan,question,purchase,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,Vendor lookup
+acne treatment sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+acne treatment ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+acne treatment online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+acne treatment delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+medicated face wash,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy medicated face wash online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+medicated face wash price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order medicated face wash online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+medicated face wash cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best medicated face wash in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable medicated face wash,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+medicated face wash home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+medicated face wash in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+medicated face wash in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+medicated face wash in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+medicated face wash in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+medicated face wash in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is medicated face wash,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose medicated face wash,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use medicated face wash,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is medicated face wash available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+medicated face wash sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+medicated face wash ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+medicated face wash online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+medicated face wash delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+sunblock spf 50,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy sunblock spf 50 online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+sunblock spf 50 price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order sunblock spf 50 online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+sunblock spf 50 cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best sunblock spf 50 in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable sunblock spf 50,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+sunblock spf 50 home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+sunblock spf 50 in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+sunblock spf 50 in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+sunblock spf 50 in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+sunblock spf 50 in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+sunblock spf 50 in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is sunblock spf 50,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose sunblock spf 50,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use sunblock spf 50,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is sunblock spf 50 available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+sunblock spf 50 sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+sunblock spf 50 ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+sunblock spf 50 online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+sunblock spf 50 delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+moisturizer for dry skin,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy moisturizer for dry skin online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+moisturizer for dry skin price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order moisturizer for dry skin online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+moisturizer for dry skin cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best moisturizer for dry skin in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable moisturizer for dry skin,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+moisturizer for dry skin home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+moisturizer for dry skin in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+moisturizer for dry skin in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+moisturizer for dry skin in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+moisturizer for dry skin in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+moisturizer for dry skin in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is moisturizer for dry skin,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose moisturizer for dry skin,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use moisturizer for dry skin,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+moisturizer for dry skin sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+moisturizer for dry skin online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+moisturizer for dry skin delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+brightening cream,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy brightening cream online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+brightening cream price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order brightening cream online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+brightening cream cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best brightening cream in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable brightening cream,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+brightening cream home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+brightening cream in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+brightening cream in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+brightening cream in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+brightening cream in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+brightening cream in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is brightening cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose brightening cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use brightening cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is brightening cream available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+where to buy brightening cream in pakistan,question,purchase,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,Vendor lookup
+brightening cream sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+brightening cream ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+brightening cream online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+brightening cream delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+anti-aging serum,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy anti-aging serum online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+anti-aging serum price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order anti-aging serum online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+anti-aging serum cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best anti-aging serum in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable anti-aging serum,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+anti-aging serum home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+anti-aging serum in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+anti-aging serum in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+anti-aging serum in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+anti-aging serum in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+anti-aging serum in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is anti-aging serum,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose anti-aging serum,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use anti-aging serum,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is anti-aging serum available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+where to buy anti-aging serum in pakistan,question,purchase,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,Vendor lookup
+anti-aging serum sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+anti-aging serum ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+anti-aging serum online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+anti-aging serum delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+eczema cream,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy eczema cream online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+eczema cream price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order eczema cream online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+eczema cream cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best eczema cream in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable eczema cream,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+eczema cream home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+eczema cream in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+eczema cream in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+eczema cream in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+eczema cream in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+eczema cream in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is eczema cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose eczema cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use eczema cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is eczema cream available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+where to buy eczema cream in pakistan,question,purchase,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,Vendor lookup
+eczema cream sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+eczema cream ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+eczema cream online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+eczema cream delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+hair loss spray,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy hair loss spray online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+hair loss spray price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order hair loss spray online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+hair loss spray cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best hair loss spray in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable hair loss spray,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+hair loss spray home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+hair loss spray in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+hair loss spray in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+hair loss spray in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+hair loss spray in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+hair loss spray in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is hair loss spray,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose hair loss spray,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use hair loss spray,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is hair loss spray available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+hair loss spray sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+hair loss spray ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+hair loss spray online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+hair loss spray delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+medicated shampoo,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy medicated shampoo online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+medicated shampoo price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order medicated shampoo online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+medicated shampoo cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best medicated shampoo in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable medicated shampoo,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+medicated shampoo home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+medicated shampoo in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+medicated shampoo in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+medicated shampoo in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+medicated shampoo in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+medicated shampoo in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is medicated shampoo,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose medicated shampoo,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use medicated shampoo,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is medicated shampoo available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+where to buy medicated shampoo in pakistan,question,purchase,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,Vendor lookup
+medicated shampoo sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+medicated shampoo ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+medicated shampoo online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+medicated shampoo delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+topical skin cream,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy topical skin cream online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+topical skin cream price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order topical skin cream online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+topical skin cream cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best topical skin cream in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable topical skin cream,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+topical skin cream home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+topical skin cream in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+topical skin cream in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+topical skin cream in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+topical skin cream in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+topical skin cream in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is topical skin cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose topical skin cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use topical skin cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is topical skin cream available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+topical skin cream sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+topical skin cream ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+topical skin cream online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+topical skin cream delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+dermatologist recommended cream,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy dermatologist recommended cream online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+dermatologist recommended cream price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order dermatologist recommended cream online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+dermatologist recommended cream cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best dermatologist recommended cream in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable dermatologist recommended cream,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+dermatologist recommended cream home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+dermatologist recommended cream in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+dermatologist recommended cream in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+dermatologist recommended cream in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+dermatologist recommended cream in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+dermatologist recommended cream in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is dermatologist recommended cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose dermatologist recommended cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use dermatologist recommended cream,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is dermatologist recommended cream available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+dermatologist recommended cream sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+dermatologist recommended cream ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+dermatologist recommended cream online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+dermatologist recommended cream delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+antifungal skin ointment,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy antifungal skin ointment online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+antifungal skin ointment price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order antifungal skin ointment online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+antifungal skin ointment cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best antifungal skin ointment in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable antifungal skin ointment,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+antifungal skin ointment home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+antifungal skin ointment in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+antifungal skin ointment in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+antifungal skin ointment in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+antifungal skin ointment in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+antifungal skin ointment in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is antifungal skin ointment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose antifungal skin ointment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use antifungal skin ointment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is antifungal skin ointment available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+antifungal skin ointment sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+antifungal skin ointment ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+antifungal skin ointment online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+antifungal skin ointment delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+salicylic acid cleanser,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy salicylic acid cleanser online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+salicylic acid cleanser price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order salicylic acid cleanser online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+salicylic acid cleanser cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best salicylic acid cleanser in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable salicylic acid cleanser,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+salicylic acid cleanser home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+salicylic acid cleanser in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+salicylic acid cleanser in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+salicylic acid cleanser in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+salicylic acid cleanser in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+salicylic acid cleanser in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is salicylic acid cleanser,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose salicylic acid cleanser,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use salicylic acid cleanser,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is salicylic acid cleanser available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+salicylic acid cleanser sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+salicylic acid cleanser ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+salicylic acid cleanser online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+salicylic acid cleanser delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+melasma treatment,informational,commercial-investigation,dermatology-core,https://medikart.pk/categories/dermatology,high,,template,Approved seed term
+buy melasma treatment online,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,high,,template,Core purchase intent
+melasma treatment price in pakistan,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,high,,template,Price check intent
+order melasma treatment online pakistan,transactional,purchase,dermatology-transactional,https://medikart.pk/categories/dermatology,medium,,template,Online order
+melasma treatment cash on delivery,transactional,purchase,dermatology-cod,https://medikart.pk/categories/dermatology,medium,,template,COD intent
+best melasma treatment in pakistan,informational,comparison,dermatology-comparison,https://medikart.pk/categories/dermatology,medium,,template,Best in class
+affordable melasma treatment,transactional,price-check,dermatology-pricing,https://medikart.pk/categories/dermatology,low,,template,Affordable value
+melasma treatment home delivery,transactional,purchase,dermatology-delivery,https://medikart.pk/categories/dermatology,medium,,template,Delivery intent
+melasma treatment in lahore,local,local-delivery,dermatology-local-lahore,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in lahore
+melasma treatment in karachi,local,local-delivery,dermatology-local-karachi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in karachi
+melasma treatment in islamabad,local,local-delivery,dermatology-local-islamabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in islamabad
+melasma treatment in rawalpindi,local,local-delivery,dermatology-local-rawalpindi,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in rawalpindi
+melasma treatment in faisalabad,local,local-delivery,dermatology-local-faisalabad,https://medikart.pk/categories/dermatology,medium,,template,1-5 hr delivery in faisalabad
+what is melasma treatment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO direct answer
+how to choose melasma treatment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO selection guide
+how to use melasma treatment,question,informational,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,AEO usage guide
+is melasma treatment available in pakistan,question,commercial-investigation,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,low,,template,Availability question
+where to buy melasma treatment in pakistan,question,purchase,dermatology-aeo,https://medikart.pk/categories/dermatology#faqs,medium,,template,Vendor lookup
+melasma treatment sasti,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Pakistani vernacular
+melasma treatment ki price kitni hai,roman-urdu,price-check,dermatology-roman-urdu,https://medikart.pk/categories/dermatology#faqs,low,,template,Vernacular price query
+melasma treatment online mangwana,roman-urdu,purchase,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular delivery query
+melasma treatment delivery timing,roman-urdu,local-delivery,dermatology-roman-urdu,https://medikart.pk/categories/dermatology,low,,template,Vernacular timing query
+white balance face wash,product,brand-search,dermatology-product,https://medikart.pk/products/white-balance-100ml-face-wash,high,,catalog,Direct catalog product
+buy white balance face wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/white-balance-100ml-face-wash,high,,template,Product purchase intent
+white balance face wash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/white-balance-100ml-face-wash,high,,template,Product price lookup
+white balance face wash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/white-balance-100ml-face-wash,medium,,template,Product COD
+hair max plus hair spray,product,brand-search,dermatology-product,https://medikart.pk/products/hair-max-plus-60ml-hair-spray,high,,catalog,Direct catalog product
+buy hair max plus hair spray online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hair-max-plus-60ml-hair-spray,high,,template,Product purchase intent
+minoxidil 50mg,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+minoxidil 50mg in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+photonic sh 100ml shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/photonic-sh-men-thinning-hair-100ml-shampoo,high,,catalog,Direct catalog product
+buy photonic sh 100ml shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/photonic-sh-men-thinning-hair-100ml-shampoo,high,,template,Product purchase intent
+photonic sh 100ml shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/photonic-sh-men-thinning-hair-100ml-shampoo,high,,template,Product price lookup
+photonic sh 100ml shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/photonic-sh-men-thinning-hair-100ml-shampoo,medium,,template,Product COD
+glutamax whitening soap,product,brand-search,dermatology-product,https://medikart.pk/products/glutamax-75g-whitening-soap,high,,catalog,Direct catalog product
+buy glutamax whitening soap online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/glutamax-75g-whitening-soap,high,,template,Product purchase intent
+glutamax whitening soap price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/glutamax-75g-whitening-soap,high,,template,Product price lookup
+glutamax whitening soap cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/glutamax-75g-whitening-soap,medium,,template,Product COD
+biomousse gel,product,brand-search,dermatology-product,https://medikart.pk/products/biomousse-60ml-gel,high,,catalog,Direct catalog product
+buy biomousse gel online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/biomousse-60ml-gel,high,,template,Product purchase intent
+biomousse gel price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/biomousse-60ml-gel,high,,template,Product price lookup
+biomousse gel cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/biomousse-60ml-gel,medium,,template,Product COD
+dermoteen face wash,product,brand-search,dermatology-product,https://medikart.pk/products/dermoteen-100ml-face-wash,high,,catalog,Direct catalog product
+buy dermoteen face wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/dermoteen-100ml-face-wash,high,,template,Product purchase intent
+dermoteen face wash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/dermoteen-100ml-face-wash,high,,template,Product price lookup
+dermoteen face wash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/dermoteen-100ml-face-wash,medium,,template,Product COD
+lazuxe 45ml sunblock,product,brand-search,dermatology-product,https://medikart.pk/products/lazuxe-spf-60-45ml-sunblock,high,,catalog,Direct catalog product
+buy lazuxe 45ml sunblock online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/lazuxe-spf-60-45ml-sunblock,high,,template,Product purchase intent
+lazuxe 45ml sunblock price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/lazuxe-spf-60-45ml-sunblock,high,,template,Product price lookup
+lazuxe 45ml sunblock cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/lazuxe-spf-60-45ml-sunblock,medium,,template,Product COD
+sebornil shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/sebornil-100ml-shampoo,high,,catalog,Direct catalog product
+buy sebornil shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/sebornil-100ml-shampoo,high,,template,Product purchase intent
+sebornil shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/sebornil-100ml-shampoo,high,,template,Product price lookup
+sebornil shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/sebornil-100ml-shampoo,medium,,template,Product COD
+consumer,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+consumer in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+anagrow 100ml shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/anagrow-anti-hair-loss-100ml-shampoo,high,,catalog,Direct catalog product
+buy anagrow 100ml shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/anagrow-anti-hair-loss-100ml-shampoo,high,,template,Product purchase intent
+anagrow 100ml shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/anagrow-anti-hair-loss-100ml-shampoo,high,,template,Product price lookup
+anagrow 100ml shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/anagrow-anti-hair-loss-100ml-shampoo,medium,,template,Product COD
+anagrow 50ml serum,product,brand-search,dermatology-product,https://medikart.pk/products/anagrow-hair-growth-50ml-serum,high,,catalog,Direct catalog product
+buy anagrow 50ml serum online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/anagrow-hair-growth-50ml-serum,high,,template,Product purchase intent
+anagrow 50ml serum price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/anagrow-hair-growth-50ml-serum,high,,template,Product price lookup
+anagrow 50ml serum cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/anagrow-hair-growth-50ml-serum,medium,,template,Product COD
+acnex 100g bar,product,brand-search,dermatology-product,https://medikart.pk/products/acnex-2-100g-bar,high,,catalog,Direct catalog product
+buy acnex 100g bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acnex-2-100g-bar,high,,template,Product purchase intent
+acnex 100g bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acnex-2-100g-bar,high,,template,Product price lookup
+acnex 100g bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acnex-2-100g-bar,medium,,template,Product COD
+anti acne agents,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+anti acne agents in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+pillus 60ml hair spray,product,brand-search,dermatology-product,https://medikart.pk/products/pillus-anti-hair-thinning-60ml-hair-spray,high,,catalog,Direct catalog product
+buy pillus 60ml hair spray online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/pillus-anti-hair-thinning-60ml-hair-spray,high,,template,Product purchase intent
+pillus 60ml hair spray price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/pillus-anti-hair-thinning-60ml-hair-spray,high,,template,Product price lookup
+pillus 60ml hair spray cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/pillus-anti-hair-thinning-60ml-hair-spray,medium,,template,Product COD
+i-lite roll-on liquid,product,brand-search,dermatology-product,https://medikart.pk/products/i-lite-roll-on-15ml-liquid,high,,catalog,Direct catalog product
+buy i-lite roll-on liquid online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/i-lite-roll-on-15ml-liquid,high,,template,Product purchase intent
+i-lite roll-on liquid price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/i-lite-roll-on-15ml-liquid,high,,template,Product price lookup
+i-lite roll-on liquid cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/i-lite-roll-on-15ml-liquid,medium,,template,Product COD
+hydrophil 180ml lotion,product,brand-search,dermatology-product,https://medikart.pk/products/hydrophil-10-180ml-lotion,high,,catalog,Direct catalog product
+buy hydrophil 180ml lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hydrophil-10-180ml-lotion,high,,template,Product purchase intent
+hydrophil 180ml lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hydrophil-10-180ml-lotion,high,,template,Product price lookup
+hydrophil 180ml lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hydrophil-10-180ml-lotion,medium,,template,Product COD
+urea 01,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+urea 01 in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+melaneez cream,product,brand-search,dermatology-product,https://medikart.pk/products/melaneez-30g-cream,high,,catalog,Direct catalog product
+buy melaneez cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/melaneez-30g-cream,high,,template,Product purchase intent
+melaneez cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/melaneez-30g-cream,high,,template,Product price lookup
+melaneez cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/melaneez-30g-cream,medium,,template,Product COD
+biofad bb cream,product,brand-search,dermatology-product,https://medikart.pk/products/biofad-bb-30g-cream,high,,catalog,Direct catalog product
+buy biofad bb cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/biofad-bb-30g-cream,high,,template,Product purchase intent
+biofad bb cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/biofad-bb-30g-cream,high,,template,Product price lookup
+biofad bb cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/biofad-bb-30g-cream,medium,,template,Product COD
+anti oxidant,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+anti oxidant in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+dermoteen whitening cream,product,brand-search,dermatology-product,https://medikart.pk/products/dermoteen-20ml-whitening-cream,high,,catalog,Direct catalog product
+buy dermoteen whitening cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/dermoteen-20ml-whitening-cream,high,,template,Product purchase intent
+dermoteen whitening cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/dermoteen-20ml-whitening-cream,high,,template,Product price lookup
+dermoteen whitening cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/dermoteen-20ml-whitening-cream,medium,,template,Product COD
+defyderm hydrating serum,product,brand-search,dermatology-product,https://medikart.pk/products/defyderm-hydrating-50ml-serum-1s,high,,catalog,Direct catalog product
+buy defyderm hydrating serum online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/defyderm-hydrating-50ml-serum-1s,high,,template,Product purchase intent
+defyderm hydrating serum price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/defyderm-hydrating-50ml-serum-1s,high,,template,Product price lookup
+defyderm hydrating serum cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/defyderm-hydrating-50ml-serum-1s,medium,,template,Product COD
+hyaluronic acid,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+hyaluronic acid in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+fair pink gold sunscreen,product,brand-search,dermatology-product,https://medikart.pk/products/fair-pink-gold-30g-sunscreen,high,,catalog,Direct catalog product
+buy fair pink gold sunscreen online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/fair-pink-gold-30g-sunscreen,high,,template,Product purchase intent
+fair pink gold sunscreen price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/fair-pink-gold-30g-sunscreen,high,,template,Product price lookup
+fair pink gold sunscreen cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/fair-pink-gold-30g-sunscreen,medium,,template,Product COD
+eventone-c body milk,product,brand-search,dermatology-product,https://medikart.pk/products/eventone-c-150ml-body-milk,high,,catalog,Direct catalog product
+buy eventone-c body milk online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/eventone-c-150ml-body-milk,high,,template,Product purchase intent
+eventone-c body milk price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/eventone-c-150ml-body-milk,high,,template,Product price lookup
+eventone-c body milk cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/eventone-c-150ml-body-milk,medium,,template,Product COD
+spectra matt 30g sunblock,product,brand-search,dermatology-product,https://medikart.pk/products/spectra-matt-40spf-30g-sunblock,high,,catalog,Direct catalog product
+buy spectra matt 30g sunblock online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/spectra-matt-40spf-30g-sunblock,high,,template,Product purchase intent
+spectra matt 30g sunblock price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/spectra-matt-40spf-30g-sunblock,high,,template,Product price lookup
+spectra matt 30g sunblock cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/spectra-matt-40spf-30g-sunblock,medium,,template,Product COD
+mandelac 30g cream,product,brand-search,dermatology-product,https://medikart.pk/products/mandelac-advanced-whitening-30g-cream,high,,catalog,Direct catalog product
+buy mandelac 30g cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/mandelac-advanced-whitening-30g-cream,high,,template,Product purchase intent
+mandelac 30g cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/mandelac-advanced-whitening-30g-cream,high,,template,Product price lookup
+mandelac 30g cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/mandelac-advanced-whitening-30g-cream,medium,,template,Product COD
+mandelic acid 01,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+mandelic acid 01 in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+dermive oily moisturizer lotion,product,brand-search,dermatology-product,https://medikart.pk/products/dermive-oily-moisturizer-100ml-lotion,high,,catalog,Direct catalog product
+buy dermive oily moisturizer lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/dermive-oily-moisturizer-100ml-lotion,high,,template,Product purchase intent
+dermive oily moisturizer lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/dermive-oily-moisturizer-100ml-lotion,high,,template,Product price lookup
+dermive oily moisturizer lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/dermive-oily-moisturizer-100ml-lotion,medium,,template,Product COD
+acti white skin brightening cream,product,brand-search,dermatology-product,https://medikart.pk/products/acti-white-skin-brightening-30g-cream,high,,catalog,Direct catalog product
+buy acti white skin brightening cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acti-white-skin-brightening-30g-cream,high,,template,Product purchase intent
+alanin cream,product,brand-search,dermatology-product,https://medikart.pk/products/alanin-30g-cream,high,,catalog,Direct catalog product
+buy alanin cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/alanin-30g-cream,high,,template,Product purchase intent
+alanin cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/alanin-30g-cream,high,,template,Product price lookup
+alanin cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/alanin-30g-cream,medium,,template,Product COD
+solarin-60 sunblock 30g,product,brand-search,dermatology-product,https://medikart.pk/products/solarin-60-sunblock-spf-60-30g,high,,catalog,Direct catalog product
+buy solarin-60 sunblock 30g online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/solarin-60-sunblock-spf-60-30g,high,,template,Product purchase intent
+solarin-60 sunblock 30g price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/solarin-60-sunblock-spf-60-30g,high,,template,Product price lookup
+solarin-60 sunblock 30g cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/solarin-60-sunblock-spf-60-30g,medium,,template,Product COD
+dandronil shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/dandronil-anti-fungal-100ml-shampoo,high,,catalog,Direct catalog product
+buy dandronil shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/dandronil-anti-fungal-100ml-shampoo,high,,template,Product purchase intent
+dandronil shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/dandronil-anti-fungal-100ml-shampoo,high,,template,Product price lookup
+dandronil shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/dandronil-anti-fungal-100ml-shampoo,medium,,template,Product COD
+climbazole 0005 octopirex 0005,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+climbazole 0005 octopirex 0005 in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+hazel-m face wash,product,brand-search,dermatology-product,https://medikart.pk/products/hazel-m-100ml-face-wash,high,,catalog,Direct catalog product
+buy hazel-m face wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hazel-m-100ml-face-wash,high,,template,Product purchase intent
+hazel-m face wash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hazel-m-100ml-face-wash,high,,template,Product price lookup
+hazel-m face wash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hazel-m-100ml-face-wash,medium,,template,Product COD
+maxall lotion,product,brand-search,dermatology-product,https://medikart.pk/products/maxall-100ml-lotion,high,,catalog,Direct catalog product
+buy maxall lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/maxall-100ml-lotion,high,,template,Product purchase intent
+maxall lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/maxall-100ml-lotion,high,,template,Product price lookup
+maxall lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/maxall-100ml-lotion,medium,,template,Product COD
+rezulin-c whitening cream,product,brand-search,dermatology-product,https://medikart.pk/products/rezulin-c-30gm-whitening-cream,high,,catalog,Direct catalog product
+buy rezulin-c whitening cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/rezulin-c-30gm-whitening-cream,high,,template,Product purchase intent
+rezulin-c whitening cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/rezulin-c-30gm-whitening-cream,high,,template,Product price lookup
+rezulin-c whitening cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/rezulin-c-30gm-whitening-cream,medium,,template,Product COD
+suncoat 30g sunblock,product,brand-search,dermatology-product,https://medikart.pk/products/suncoat-spf-60-30g-sunblock,high,,catalog,Direct catalog product
+buy suncoat 30g sunblock online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/suncoat-spf-60-30g-sunblock,high,,template,Product purchase intent
+suncoat 30g sunblock price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/suncoat-spf-60-30g-sunblock,high,,template,Product price lookup
+suncoat 30g sunblock cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/suncoat-spf-60-30g-sunblock,medium,,template,Product COD
+spf 60,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+spf 60 in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+acnes creamy facewash,product,brand-search,dermatology-product,https://medikart.pk/products/acnes-creamy-50g-facewash,high,,catalog,Direct catalog product
+buy acnes creamy facewash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acnes-creamy-50g-facewash,high,,template,Product purchase intent
+acnes creamy facewash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acnes-creamy-50g-facewash,high,,template,Product price lookup
+acnes creamy facewash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acnes-creamy-50g-facewash,medium,,template,Product COD
+acnes fairness facewash,product,brand-search,dermatology-product,https://medikart.pk/products/acnes-fairness-50g-facewash,high,,catalog,Direct catalog product
+buy acnes fairness facewash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acnes-fairness-50g-facewash,high,,template,Product purchase intent
+acnes fairness facewash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acnes-fairness-50g-facewash,high,,template,Product price lookup
+acnes fairness facewash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acnes-fairness-50g-facewash,medium,,template,Product COD
+acnes scar care gel,product,brand-search,dermatology-product,https://medikart.pk/products/acnes-scar-care-12g-gel,high,,catalog,Direct catalog product
+buy acnes scar care gel online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acnes-scar-care-12g-gel,high,,template,Product purchase intent
+acnes scar care gel price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acnes-scar-care-12g-gel,high,,template,Product price lookup
+acnes scar care gel cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acnes-scar-care-12g-gel,medium,,template,Product COD
+skin aqua clear white cream 25gm,product,brand-search,dermatology-product,https://medikart.pk/products/skin-aqua-clear-white-spf-50-cream-25gm,high,,catalog,Direct catalog product
+skin aqua moisturizing serum 75ml,product,brand-search,dermatology-product,https://medikart.pk/products/skin-aqua-spf-27-moisturizing-serum-75ml,high,,catalog,Direct catalog product
+buy skin aqua moisturizing serum 75ml online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/skin-aqua-spf-27-moisturizing-serum-75ml,high,,template,Product purchase intent
+minoxin plus 60ml topical solution,product,brand-search,dermatology-product,https://medikart.pk/products/minoxin-plus-5-60ml-topical-solution,high,,catalog,Direct catalog product
+buy minoxin plus 60ml topical solution online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/minoxin-plus-5-60ml-topical-solution,high,,template,Product purchase intent
+minoxin 60ml topical solution,product,brand-search,dermatology-product,https://medikart.pk/products/minoxin-2-60ml-topical-solution,high,,catalog,Direct catalog product
+buy minoxin 60ml topical solution online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/minoxin-2-60ml-topical-solution,high,,template,Product purchase intent
+minoxin 60ml topical solution price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/minoxin-2-60ml-topical-solution,high,,template,Product price lookup
+minoxin 60ml topical solution cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/minoxin-2-60ml-topical-solution,medium,,template,Product COD
+minoxidil 20mg,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+minoxidil 20mg in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+folligro 60ml hair spray,product,brand-search,dermatology-product,https://medikart.pk/products/folligro-50mg-60ml-hair-spray,high,,catalog,Direct catalog product
+buy folligro 60ml hair spray online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/folligro-50mg-60ml-hair-spray,high,,template,Product purchase intent
+folligro 60ml hair spray price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/folligro-50mg-60ml-hair-spray,high,,template,Product price lookup
+folligro 60ml hair spray cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/folligro-50mg-60ml-hair-spray,medium,,template,Product COD
+hitone skin whitening bar,product,brand-search,dermatology-product,https://medikart.pk/products/hitone-skin-whitening-75g-bar,high,,catalog,Direct catalog product
+buy hitone skin whitening bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hitone-skin-whitening-75g-bar,high,,template,Product purchase intent
+hitone skin whitening bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hitone-skin-whitening-75g-bar,high,,template,Product price lookup
+hitone skin whitening bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hitone-skin-whitening-75g-bar,medium,,template,Product COD
+acne wash bar,product,brand-search,dermatology-product,https://medikart.pk/products/acne-wash-90g-bar,high,,catalog,Direct catalog product
+buy acne wash bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acne-wash-90g-bar,high,,template,Product purchase intent
+acne wash bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acne-wash-90g-bar,high,,template,Product price lookup
+acne wash bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acne-wash-90g-bar,medium,,template,Product COD
+cilix cream,product,brand-search,dermatology-product,https://medikart.pk/products/cilix-20g-cream,high,,catalog,Direct catalog product
+buy cilix cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/cilix-20g-cream,high,,template,Product purchase intent
+cilix cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/cilix-20g-cream,high,,template,Product price lookup
+cilix cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/cilix-20g-cream,medium,,template,Product COD
+neuage body milk,product,brand-search,dermatology-product,https://medikart.pk/products/neuage-body-220ml-milk,high,,catalog,Direct catalog product
+buy neuage body milk online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/neuage-body-220ml-milk,high,,template,Product purchase intent
+neuage body milk price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/neuage-body-220ml-milk,high,,template,Product price lookup
+neuage body milk cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/neuage-body-220ml-milk,medium,,template,Product COD
+u-veil forte 30g cream,product,brand-search,dermatology-product,https://medikart.pk/products/u-veil-forte-spf-60-30g-cream,high,,catalog,Direct catalog product
+buy u-veil forte 30g cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/u-veil-forte-spf-60-30g-cream,high,,template,Product purchase intent
+u-veil forte 30g cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/u-veil-forte-spf-60-30g-cream,high,,template,Product price lookup
+u-veil forte 30g cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/u-veil-forte-spf-60-30g-cream,medium,,template,Product COD
+zn bar,product,brand-search,dermatology-product,https://medikart.pk/products/zn-90g-bar,high,,catalog,Direct catalog product
+buy zn bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/zn-90g-bar,high,,template,Product purchase intent
+zn bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/zn-90g-bar,high,,template,Product price lookup
+zn bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/zn-90g-bar,medium,,template,Product COD
+mela rid cream,product,brand-search,dermatology-product,https://medikart.pk/products/mela-rid30g-cream,high,,catalog,Direct catalog product
+buy mela rid cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/mela-rid30g-cream,high,,template,Product purchase intent
+mela rid cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/mela-rid30g-cream,high,,template,Product price lookup
+mela rid cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/mela-rid30g-cream,medium,,template,Product COD
+dermive oil free moisturizer lotion,product,brand-search,dermatology-product,https://medikart.pk/products/dermive-oil-free-moisturizer-100ml-lotion,high,,catalog,Direct catalog product
+buy dermive oil free moisturizer lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/dermive-oil-free-moisturizer-100ml-lotion,high,,template,Product purchase intent
+dermive urea lotion,product,brand-search,dermatology-product,https://medikart.pk/products/dermive-urea-100ml-lotion,high,,catalog,Direct catalog product
+buy dermive urea lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/dermive-urea-100ml-lotion,high,,template,Product purchase intent
+dermive urea lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/dermive-urea-100ml-lotion,high,,template,Product price lookup
+dermive urea lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/dermive-urea-100ml-lotion,medium,,template,Product COD
+regro 60ml hair spray,product,brand-search,dermatology-product,https://medikart.pk/products/regro-2-60ml-hair-spray,high,,catalog,Direct catalog product
+buy regro 60ml hair spray online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/regro-2-60ml-hair-spray,high,,template,Product purchase intent
+regro 60ml hair spray price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/regro-2-60ml-hair-spray,high,,template,Product price lookup
+regro 60ml hair spray cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/regro-2-60ml-hair-spray,medium,,template,Product COD
+follinox 60ml topical solution,product,brand-search,dermatology-product,https://medikart.pk/products/follinox-2-60ml-topical-solution,high,,catalog,Direct catalog product
+buy follinox 60ml topical solution online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/follinox-2-60ml-topical-solution,high,,template,Product purchase intent
+follinox 60ml topical solution price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/follinox-2-60ml-topical-solution,high,,template,Product price lookup
+follinox 60ml topical solution cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/follinox-2-60ml-topical-solution,medium,,template,Product COD
+hair plus oil oil,product,brand-search,dermatology-product,https://medikart.pk/products/hair-plus-oil-100ml-oil,high,,catalog,Direct catalog product
+buy hair plus oil oil online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hair-plus-oil-100ml-oil,high,,template,Product purchase intent
+hair plus oil oil price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hair-plus-oil-100ml-oil,high,,template,Product price lookup
+hair plus oil oil cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hair-plus-oil-100ml-oil,medium,,template,Product COD
+vita care bar bar,product,brand-search,dermatology-product,https://medikart.pk/products/vita-care-bar-100g-bar,high,,catalog,Direct catalog product
+buy vita care bar bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/vita-care-bar-100g-bar,high,,template,Product purchase intent
+vita care bar bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/vita-care-bar-100g-bar,high,,template,Product price lookup
+vita care bar bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/vita-care-bar-100g-bar,medium,,template,Product COD
+acnes bar,product,brand-search,dermatology-product,https://medikart.pk/products/acnes-75g-bar,high,,catalog,Direct catalog product
+buy acnes bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acnes-75g-bar,high,,template,Product purchase intent
+acnes bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acnes-75g-bar,high,,template,Product price lookup
+acnes bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acnes-75g-bar,medium,,template,Product COD
+hydrolatum bar,product,brand-search,dermatology-product,https://medikart.pk/products/hydrolatum-75g-bar,high,,catalog,Direct catalog product
+buy hydrolatum bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hydrolatum-75g-bar,high,,template,Product purchase intent
+hydrolatum bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hydrolatum-75g-bar,high,,template,Product price lookup
+hydrolatum bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hydrolatum-75g-bar,medium,,template,Product COD
+lumexa cream,product,brand-search,dermatology-product,https://medikart.pk/products/lumexa-30g-cream,high,,catalog,Direct catalog product
+buy lumexa cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/lumexa-30g-cream,high,,template,Product purchase intent
+lumexa cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/lumexa-30g-cream,high,,template,Product price lookup
+lumexa cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/lumexa-30g-cream,medium,,template,Product COD
+skin supplements,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+skin supplements in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+metafil 100ml cleanser,product,brand-search,dermatology-product,https://medikart.pk/products/metafil-gentle-skin-100ml-cleanser,high,,catalog,Direct catalog product
+buy metafil 100ml cleanser online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/metafil-gentle-skin-100ml-cleanser,high,,template,Product purchase intent
+metafil 100ml cleanser price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/metafil-gentle-skin-100ml-cleanser,high,,template,Product price lookup
+metafil 100ml cleanser cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/metafil-gentle-skin-100ml-cleanser,medium,,template,Product COD
+metafil moist lotion,product,brand-search,dermatology-product,https://medikart.pk/products/metafil-150ml-moist-lotion,high,,catalog,Direct catalog product
+buy metafil moist lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/metafil-150ml-moist-lotion,high,,template,Product purchase intent
+metafil moist lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/metafil-150ml-moist-lotion,high,,template,Product price lookup
+metafil moist lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/metafil-150ml-moist-lotion,medium,,template,Product COD
+metafil os 100ml cleanser,product,brand-search,dermatology-product,https://medikart.pk/products/metafil-os-oily-skin-100ml-cleanser,high,,catalog,Direct catalog product
+buy metafil os 100ml cleanser online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/metafil-os-oily-skin-100ml-cleanser,high,,template,Product purchase intent
+metafil os 100ml cleanser price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/metafil-os-oily-skin-100ml-cleanser,high,,template,Product price lookup
+metafil os 100ml cleanser cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/metafil-os-oily-skin-100ml-cleanser,medium,,template,Product COD
+paramax 45ml shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/paramax-anti-lice-45ml-shampoo,high,,catalog,Direct catalog product
+buy paramax 45ml shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/paramax-anti-lice-45ml-shampoo,high,,template,Product purchase intent
+paramax 45ml shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/paramax-anti-lice-45ml-shampoo,high,,template,Product price lookup
+paramax 45ml shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/paramax-anti-lice-45ml-shampoo,medium,,template,Product COD
+permethrin,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+permethrin in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+sunpro 80 30g sunblock gel,product,brand-search,dermatology-product,https://medikart.pk/products/sunpro-80-spf-50-30g-sunblock-gel,high,,catalog,Direct catalog product
+buy sunpro 80 30g sunblock gel online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/sunpro-80-spf-50-30g-sunblock-gel,high,,template,Product purchase intent
+sunpro 30g gel,product,brand-search,dermatology-product,https://medikart.pk/products/sunpro-spf-40-30g-gel,high,,catalog,Direct catalog product
+buy sunpro 30g gel online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/sunpro-spf-40-30g-gel,high,,template,Product purchase intent
+sunpro 30g gel price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/sunpro-spf-40-30g-gel,high,,template,Product price lookup
+sunpro 30g gel cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/sunpro-spf-40-30g-gel,medium,,template,Product COD
+spf 40,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+spf 40 in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+zarnol sensitive lotion,product,brand-search,dermatology-product,https://medikart.pk/products/zarnol-sensitive-100ml-lotion,high,,catalog,Direct catalog product
+buy zarnol sensitive lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/zarnol-sensitive-100ml-lotion,high,,template,Product purchase intent
+zarnol sensitive lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/zarnol-sensitive-100ml-lotion,high,,template,Product price lookup
+zarnol sensitive lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/zarnol-sensitive-100ml-lotion,medium,,template,Product COD
+zyro-max anti dandruff shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/zyro-max-anti-dandruff-100ml-shampoo,high,,catalog,Direct catalog product
+buy zyro-max anti dandruff shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/zyro-max-anti-dandruff-100ml-shampoo,high,,template,Product purchase intent
+zyro-max anti dandruff shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/zyro-max-anti-dandruff-100ml-shampoo,high,,template,Product price lookup
+zyro-max anti dandruff shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/zyro-max-anti-dandruff-100ml-shampoo,medium,,template,Product COD
+hydroderm benzacide soap,product,brand-search,dermatology-product,https://medikart.pk/products/hydroderm-benzacide-75g-soap,high,,catalog,Direct catalog product
+buy hydroderm benzacide soap online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hydroderm-benzacide-75g-soap,high,,template,Product purchase intent
+hydroderm benzacide soap price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hydroderm-benzacide-75g-soap,high,,template,Product price lookup
+hydroderm benzacide soap cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hydroderm-benzacide-75g-soap,medium,,template,Product COD
+benzoyl peroxide,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+benzoyl peroxide in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+de-lice anti lice shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/de-lice-anti-lice-60ml-shampoo,high,,catalog,Direct catalog product
+buy de-lice anti lice shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/de-lice-anti-lice-60ml-shampoo,high,,template,Product purchase intent
+de-lice anti lice shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/de-lice-anti-lice-60ml-shampoo,high,,template,Product price lookup
+de-lice anti lice shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/de-lice-anti-lice-60ml-shampoo,medium,,template,Product COD
+eventone 4 reveal face wash,product,brand-search,dermatology-product,https://medikart.pk/products/eventone-4-100ml-reveal-face-wash,high,,catalog,Direct catalog product
+buy eventone 4 reveal face wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/eventone-4-100ml-reveal-face-wash,high,,template,Product purchase intent
+eventone-c 10 tablet,product,brand-search,dermatology-product,https://medikart.pk/products/eventone-c-1g-10-tablet,high,,catalog,Direct catalog product
+buy eventone-c 10 tablet online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/eventone-c-1g-10-tablet,high,,template,Product purchase intent
+eventone-c 10 tablet price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/eventone-c-1g-10-tablet,high,,template,Product price lookup
+eventone-c 10 tablet cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/eventone-c-1g-10-tablet,medium,,template,Product COD
+eventone-c 10 tablets,product,brand-search,dermatology-product,https://medikart.pk/products/eventone-c-500mg-10-tablets,high,,catalog,Direct catalog product
+buy eventone-c 10 tablets online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/eventone-c-500mg-10-tablets,high,,template,Product purchase intent
+eventone-c 10 tablets price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/eventone-c-500mg-10-tablets,high,,template,Product price lookup
+eventone-c 10 tablets cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/eventone-c-500mg-10-tablets,medium,,template,Product COD
+eventone-c cream,product,brand-search,dermatology-product,https://medikart.pk/products/eventone-c-30g-cream,high,,catalog,Direct catalog product
+buy eventone-c cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/eventone-c-30g-cream,high,,template,Product purchase intent
+eventone-c cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/eventone-c-30g-cream,high,,template,Product price lookup
+eventone-c cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/eventone-c-30g-cream,medium,,template,Product COD
+hyseke solution,product,brand-search,dermatology-product,https://medikart.pk/products/hyseke-60ml-solution,high,,catalog,Direct catalog product
+buy hyseke solution online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hyseke-60ml-solution,high,,template,Product purchase intent
+hyseke solution price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hyseke-60ml-solution,high,,template,Product price lookup
+hyseke solution cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hyseke-60ml-solution,medium,,template,Product COD
+photonic max shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/photonic-max-120ml-shampoo,high,,catalog,Direct catalog product
+buy photonic max shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/photonic-max-120ml-shampoo,high,,template,Product purchase intent
+photonic max shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/photonic-max-120ml-shampoo,high,,template,Product price lookup
+photonic max shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/photonic-max-120ml-shampoo,medium,,template,Product COD
+photonic tar shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/photonic-tar-100ml-shampoo,high,,catalog,Direct catalog product
+buy photonic tar shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/photonic-tar-100ml-shampoo,high,,template,Product purchase intent
+photonic tar shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/photonic-tar-100ml-shampoo,high,,template,Product price lookup
+photonic tar shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/photonic-tar-100ml-shampoo,medium,,template,Product COD
+sofner lotion,product,brand-search,dermatology-product,https://medikart.pk/products/sofner-60ml-lotion,high,,catalog,Direct catalog product
+buy sofner lotion online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/sofner-60ml-lotion,high,,template,Product purchase intent
+sofner lotion price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/sofner-60ml-lotion,high,,template,Product price lookup
+sofner lotion cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/sofner-60ml-lotion,medium,,template,Product COD
+sofner ultra shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/sofner-ultra-120ml-shampoo,high,,catalog,Direct catalog product
+buy sofner ultra shampoo online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/sofner-ultra-120ml-shampoo,high,,template,Product purchase intent
+sofner ultra shampoo price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/sofner-ultra-120ml-shampoo,high,,template,Product price lookup
+sofner ultra shampoo cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/sofner-ultra-120ml-shampoo,medium,,template,Product COD
+solaris ultra 60ml sun block,product,brand-search,dermatology-product,https://medikart.pk/products/solaris-spf-60-ultra-60ml-sun-block,high,,catalog,Direct catalog product
+buy solaris ultra 60ml sun block online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/solaris-spf-60-ultra-60ml-sun-block,high,,template,Product purchase intent
+hydroderm solo 75 bar,product,brand-search,dermatology-product,https://medikart.pk/products/hydroderm-solo-75-bar,high,,catalog,Direct catalog product
+buy hydroderm solo 75 bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/hydroderm-solo-75-bar,high,,template,Product purchase intent
+hydroderm solo 75 bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/hydroderm-solo-75-bar,high,,template,Product price lookup
+hydroderm solo 75 bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/hydroderm-solo-75-bar,medium,,template,Product COD
+medicated soap,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+medicated soap in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+vagisaf pro 65ml wash,product,brand-search,dermatology-product,https://medikart.pk/products/vagisaf-pro-feminine-hygiene-65ml-wash,high,,catalog,Direct catalog product
+buy vagisaf pro 65ml wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/vagisaf-pro-feminine-hygiene-65ml-wash,high,,template,Product purchase intent
+vagisaf pro 65ml wash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/vagisaf-pro-feminine-hygiene-65ml-wash,high,,template,Product price lookup
+vagisaf pro 65ml wash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/vagisaf-pro-feminine-hygiene-65ml-wash,medium,,template,Product COD
+acneez bar,product,brand-search,dermatology-product,https://medikart.pk/products/acneez-90g-bar,high,,catalog,Direct catalog product
+buy acneez bar online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acneez-90g-bar,high,,template,Product purchase intent
+acneez bar price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acneez-90g-bar,high,,template,Product price lookup
+acneez bar cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acneez-90g-bar,medium,,template,Product COD
+acneez cream,product,brand-search,dermatology-product,https://medikart.pk/products/acneez-30g-cream,high,,catalog,Direct catalog product
+buy acneez cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acneez-30g-cream,high,,template,Product purchase intent
+acneez cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acneez-30g-cream,high,,template,Product price lookup
+acneez cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acneez-30g-cream,medium,,template,Product COD
+acneez face wash,product,brand-search,dermatology-product,https://medikart.pk/products/acneez-60ml-face-wash,high,,catalog,Direct catalog product
+buy acneez face wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/acneez-60ml-face-wash,high,,template,Product purchase intent
+acneez face wash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/acneez-60ml-face-wash,high,,template,Product price lookup
+acneez face wash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/acneez-60ml-face-wash,medium,,template,Product COD
+dandif plus dandruff free shiny hair shampoo,product,brand-search,dermatology-product,https://medikart.pk/products/dandif-plus-dandruff-free-shiny-hair-120ml-shampoo,high,,catalog,Direct catalog product
+gk whitening cream,product,brand-search,dermatology-product,https://medikart.pk/products/gk-whitening-30g-cream,high,,catalog,Direct catalog product
+buy gk whitening cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/gk-whitening-30g-cream,high,,template,Product purchase intent
+gk whitening cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/gk-whitening-30g-cream,high,,template,Product price lookup
+gk whitening cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/gk-whitening-30g-cream,medium,,template,Product COD
+glamfair brightening cream,product,brand-search,dermatology-product,https://medikart.pk/products/glamfair-brightening-30g-cream,high,,catalog,Direct catalog product
+buy glamfair brightening cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/glamfair-brightening-30g-cream,high,,template,Product purchase intent
+glamfair brightening cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/glamfair-brightening-30g-cream,high,,template,Product price lookup
+glamfair brightening cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/glamfair-brightening-30g-cream,medium,,template,Product COD
+hydroquinone mometasone 01,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+hydroquinone mometasone 01 in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+duofilm solution,product,brand-search,dermatology-product,https://medikart.pk/products/duofilm-15ml-solution,high,,catalog,Direct catalog product
+buy duofilm solution online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/duofilm-15ml-solution,high,,template,Product purchase intent
+duofilm solution price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/duofilm-15ml-solution,high,,template,Product price lookup
+duofilm solution cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/duofilm-15ml-solution,medium,,template,Product COD
+salicylic acid lactic acid,brand,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,medium,,catalog,Generic formulation
+salicylic acid lactic acid in pakistan,informational,generic-search,dermatology-generic,https://medikart.pk/categories/dermatology,low,,template,Generic availability
+physiogel calming relief ai body lotion,product,brand-search,dermatology-product,https://medikart.pk/products/physiogel-calming-relief-ai-200ml-body-lotion,high,,catalog,Direct catalog product
+biofad cream,product,brand-search,dermatology-product,https://medikart.pk/products/biofad-30g-cream,high,,catalog,Direct catalog product
+buy biofad cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/biofad-30g-cream,high,,template,Product purchase intent
+biofad cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/biofad-30g-cream,high,,template,Product price lookup
+biofad cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/biofad-30g-cream,medium,,template,Product COD
+deu 11 cream,product,brand-search,dermatology-product,https://medikart.pk/products/deu-11-30g-cream,high,,catalog,Direct catalog product
+buy deu 11 cream online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/deu-11-30g-cream,high,,template,Product purchase intent
+deu 11 cream price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/deu-11-30g-cream,high,,template,Product price lookup
+deu 11 cream cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/deu-11-30g-cream,medium,,template,Product COD
+purel face wash,product,brand-search,dermatology-product,https://medikart.pk/products/purel-70ml-face-wash,high,,catalog,Direct catalog product
+buy purel face wash online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/purel-70ml-face-wash,high,,template,Product purchase intent
+purel face wash price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/purel-70ml-face-wash,high,,template,Product price lookup
+purel face wash cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/purel-70ml-face-wash,medium,,template,Product COD
+pimple patch,product,brand-search,dermatology-product,https://medikart.pk/products/pimple-patch-hygiena,high,,catalog,Direct catalog product
+buy pimple patch online,transactional,purchase,dermatology-product-transactional,https://medikart.pk/products/pimple-patch-hygiena,high,,template,Product purchase intent
+pimple patch price in pakistan,transactional,price-check,dermatology-product-pricing,https://medikart.pk/products/pimple-patch-hygiena,high,,template,Product price lookup
+pimple patch cash on delivery,transactional,purchase,dermatology-product-cod,https://medikart.pk/products/pimple-patch-hygiena,medium,,template,Product COD

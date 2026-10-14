@@ -1,0 +1,519 @@
+keyword,type,intent,cluster,assigned target,priority,volume,source,notes
+multivitamins in pakistan,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy multivitamins in pakistan online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+multivitamins in pakistan price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order multivitamins in pakistan online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+multivitamins in pakistan cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best multivitamins in pakistan in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable multivitamins in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+multivitamins in pakistan home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+multivitamins in pakistan in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+multivitamins in pakistan in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+multivitamins in pakistan in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+multivitamins in pakistan in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+multivitamins in pakistan in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is multivitamins in pakistan,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose multivitamins in pakistan,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use multivitamins in pakistan,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is multivitamins in pakistan available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+multivitamins in pakistan sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+multivitamins in pakistan ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+multivitamins in pakistan online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+multivitamins in pakistan delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+vitamin d3 supplements,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy vitamin d3 supplements online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+vitamin d3 supplements price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order vitamin d3 supplements online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+vitamin d3 supplements cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best vitamin d3 supplements in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable vitamin d3 supplements,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+vitamin d3 supplements home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+vitamin d3 supplements in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+vitamin d3 supplements in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+vitamin d3 supplements in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+vitamin d3 supplements in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+vitamin d3 supplements in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is vitamin d3 supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose vitamin d3 supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use vitamin d3 supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is vitamin d3 supplements available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+vitamin d3 supplements sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+vitamin d3 supplements ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+vitamin d3 supplements online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+vitamin d3 supplements delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+calcium tablets,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy calcium tablets online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+calcium tablets price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order calcium tablets online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+calcium tablets cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best calcium tablets in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable calcium tablets,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+calcium tablets home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+calcium tablets in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+calcium tablets in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+calcium tablets in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+calcium tablets in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+calcium tablets in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is calcium tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose calcium tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use calcium tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is calcium tablets available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+where to buy calcium tablets in pakistan,question,purchase,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,Vendor lookup
+calcium tablets sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+calcium tablets ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+calcium tablets online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+calcium tablets delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+vitamin c tablets,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy vitamin c tablets online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+vitamin c tablets price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order vitamin c tablets online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+vitamin c tablets cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best vitamin c tablets in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable vitamin c tablets,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+vitamin c tablets home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+vitamin c tablets in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+vitamin c tablets in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+vitamin c tablets in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+vitamin c tablets in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+vitamin c tablets in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is vitamin c tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose vitamin c tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use vitamin c tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is vitamin c tablets available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+vitamin c tablets sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+vitamin c tablets ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+vitamin c tablets online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+vitamin c tablets delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+iron supplements,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy iron supplements online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+iron supplements price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order iron supplements online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+iron supplements cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best iron supplements in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable iron supplements,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+iron supplements home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+iron supplements in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+iron supplements in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+iron supplements in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+iron supplements in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+iron supplements in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is iron supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose iron supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use iron supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is iron supplements available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+where to buy iron supplements in pakistan,question,purchase,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,Vendor lookup
+iron supplements sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+iron supplements ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+iron supplements online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+iron supplements delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+zinc tablets,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy zinc tablets online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+zinc tablets price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order zinc tablets online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+zinc tablets cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best zinc tablets in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable zinc tablets,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+zinc tablets home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+zinc tablets in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+zinc tablets in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+zinc tablets in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+zinc tablets in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+zinc tablets in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is zinc tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose zinc tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use zinc tablets,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is zinc tablets available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+where to buy zinc tablets in pakistan,question,purchase,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,Vendor lookup
+zinc tablets sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+zinc tablets ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+zinc tablets online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+zinc tablets delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+daily energy vitamins,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy daily energy vitamins online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+daily energy vitamins price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order daily energy vitamins online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+daily energy vitamins cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best daily energy vitamins in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable daily energy vitamins,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+daily energy vitamins home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+daily energy vitamins in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+daily energy vitamins in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+daily energy vitamins in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+daily energy vitamins in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+daily energy vitamins in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is daily energy vitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose daily energy vitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use daily energy vitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is daily energy vitamins available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+daily energy vitamins sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+daily energy vitamins ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+daily energy vitamins online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+daily energy vitamins delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+prenatal vitamins,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy prenatal vitamins online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+prenatal vitamins price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order prenatal vitamins online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+prenatal vitamins cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best prenatal vitamins in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable prenatal vitamins,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+prenatal vitamins home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+prenatal vitamins in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+prenatal vitamins in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+prenatal vitamins in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+prenatal vitamins in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+prenatal vitamins in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is prenatal vitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose prenatal vitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use prenatal vitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is prenatal vitamins available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+where to buy prenatal vitamins in pakistan,question,purchase,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,Vendor lookup
+prenatal vitamins sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+prenatal vitamins ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+prenatal vitamins online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+prenatal vitamins delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+biotin for hair growth,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy biotin for hair growth online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+biotin for hair growth price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order biotin for hair growth online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+biotin for hair growth cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best biotin for hair growth in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable biotin for hair growth,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+biotin for hair growth home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+biotin for hair growth in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+biotin for hair growth in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+biotin for hair growth in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+biotin for hair growth in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+biotin for hair growth in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is biotin for hair growth,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose biotin for hair growth,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use biotin for hair growth,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+biotin for hair growth sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+biotin for hair growth online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+biotin for hair growth delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+buy vitamin b complex online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+vitamin b complex price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order vitamin b complex online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+vitamin b complex cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best vitamin b complex in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable vitamin b complex,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+vitamin b complex home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+vitamin b complex in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+vitamin b complex in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+vitamin b complex in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+vitamin b complex in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+vitamin b complex in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is vitamin b complex,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose vitamin b complex,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use vitamin b complex,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is vitamin b complex available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+vitamin b complex sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+vitamin b complex ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+vitamin b complex online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+vitamin b complex delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+fish oil capsules,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy fish oil capsules online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+fish oil capsules price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order fish oil capsules online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+fish oil capsules cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best fish oil capsules in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable fish oil capsules,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+fish oil capsules home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+fish oil capsules in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+fish oil capsules in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+fish oil capsules in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+fish oil capsules in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+fish oil capsules in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is fish oil capsules,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose fish oil capsules,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use fish oil capsules,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is fish oil capsules available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+fish oil capsules sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+fish oil capsules ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+fish oil capsules online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+fish oil capsules delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+immunity booster supplements,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy immunity booster supplements online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+immunity booster supplements price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order immunity booster supplements online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+immunity booster supplements cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best immunity booster supplements in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable immunity booster supplements,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+immunity booster supplements home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+immunity booster supplements in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+immunity booster supplements in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+immunity booster supplements in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+immunity booster supplements in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+immunity booster supplements in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is immunity booster supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose immunity booster supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use immunity booster supplements,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is immunity booster supplements available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+immunity booster supplements sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+immunity booster supplements ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+immunity booster supplements online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+immunity booster supplements delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+men multivitamins,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy men multivitamins online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+men multivitamins price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order men multivitamins online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+men multivitamins cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best men multivitamins in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable men multivitamins,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+men multivitamins home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+men multivitamins in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+men multivitamins in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+men multivitamins in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+men multivitamins in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+men multivitamins in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is men multivitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose men multivitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use men multivitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is men multivitamins available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+where to buy men multivitamins in pakistan,question,purchase,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,Vendor lookup
+men multivitamins sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+men multivitamins ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+men multivitamins online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+men multivitamins delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+women multivitamins,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy women multivitamins online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+women multivitamins price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order women multivitamins online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+women multivitamins cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best women multivitamins in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable women multivitamins,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+women multivitamins home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+women multivitamins in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+women multivitamins in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+women multivitamins in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+women multivitamins in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+women multivitamins in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is women multivitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose women multivitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use women multivitamins,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is women multivitamins available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+where to buy women multivitamins in pakistan,question,purchase,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,Vendor lookup
+women multivitamins sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+women multivitamins ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+women multivitamins online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+women multivitamins delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+chewable vitamin gummies,informational,commercial-investigation,vitamins-core,https://medikart.pk/categories/vitamins,high,,template,Approved seed term
+buy chewable vitamin gummies online,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,high,,template,Core purchase intent
+chewable vitamin gummies price in pakistan,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,high,,template,Price check intent
+order chewable vitamin gummies online pakistan,transactional,purchase,vitamins-transactional,https://medikart.pk/categories/vitamins,medium,,template,Online order
+chewable vitamin gummies cash on delivery,transactional,purchase,vitamins-cod,https://medikart.pk/categories/vitamins,medium,,template,COD intent
+best chewable vitamin gummies in pakistan,informational,comparison,vitamins-comparison,https://medikart.pk/categories/vitamins,medium,,template,Best in class
+affordable chewable vitamin gummies,transactional,price-check,vitamins-pricing,https://medikart.pk/categories/vitamins,low,,template,Affordable value
+chewable vitamin gummies home delivery,transactional,purchase,vitamins-delivery,https://medikart.pk/categories/vitamins,medium,,template,Delivery intent
+chewable vitamin gummies in lahore,local,local-delivery,vitamins-local-lahore,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in lahore
+chewable vitamin gummies in karachi,local,local-delivery,vitamins-local-karachi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in karachi
+chewable vitamin gummies in islamabad,local,local-delivery,vitamins-local-islamabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in islamabad
+chewable vitamin gummies in rawalpindi,local,local-delivery,vitamins-local-rawalpindi,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in rawalpindi
+chewable vitamin gummies in faisalabad,local,local-delivery,vitamins-local-faisalabad,https://medikart.pk/categories/vitamins,medium,,template,1-5 hr delivery in faisalabad
+what is chewable vitamin gummies,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO direct answer
+how to choose chewable vitamin gummies,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO selection guide
+how to use chewable vitamin gummies,question,informational,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,medium,,template,AEO usage guide
+is chewable vitamin gummies available in pakistan,question,commercial-investigation,vitamins-aeo,https://medikart.pk/categories/vitamins#faqs,low,,template,Availability question
+chewable vitamin gummies sasti,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Pakistani vernacular
+chewable vitamin gummies ki price kitni hai,roman-urdu,price-check,vitamins-roman-urdu,https://medikart.pk/categories/vitamins#faqs,low,,template,Vernacular price query
+chewable vitamin gummies online mangwana,roman-urdu,purchase,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular delivery query
+chewable vitamin gummies delivery timing,roman-urdu,local-delivery,vitamins-roman-urdu,https://medikart.pk/categories/vitamins,low,,template,Vernacular timing query
+bar-d 1 ampoule injection,product,brand-search,vitamins-product,https://medikart.pk/products/bar-d-5mg-1-ampoule-injection,high,,catalog,Direct catalog product
+buy bar-d 1 ampoule injection online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/bar-d-5mg-1-ampoule-injection,high,,template,Product purchase intent
+bar-d 1 ampoule injection price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/bar-d-5mg-1-ampoule-injection,high,,template,Product price lookup
+bar-d 1 ampoule injection cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/bar-d-5mg-1-ampoule-injection,medium,,template,Product COD
+indrop d 1ml 1 ampoule injection,product,brand-search,vitamins-product,https://medikart.pk/products/indrop-d-200000iu-1ml-1-ampoule-injection,high,,catalog,Direct catalog product
+mabil 1ml 10 ampoule injections,product,brand-search,vitamins-product,https://medikart.pk/products/mabil-500mcgml-1ml-10-ampoule-injections,high,,catalog,Direct catalog product
+buy mabil 1ml 10 ampoule injections online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/mabil-500mcgml-1ml-10-ampoule-injections,high,,template,Product purchase intent
+sunny d insta 1ml ampoule injection,product,brand-search,vitamins-product,https://medikart.pk/products/sunny-d-insta-5mg-1ml-ampoule-injection,high,,catalog,Direct catalog product
+sunvit 1ml injection,product,brand-search,vitamins-product,https://medikart.pk/products/sunvit-5mg-1ml-injection,high,,catalog,Direct catalog product
+buy sunvit 1ml injection online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/sunvit-5mg-1ml-injection,high,,template,Product purchase intent
+sunvit 1ml injection price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/sunvit-5mg-1ml-injection,high,,template,Product price lookup
+sunvit 1ml injection cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/sunvit-5mg-1ml-injection,medium,,template,Product COD
+neurobion injection 25 ampoule,product,brand-search,vitamins-product,https://medikart.pk/products/neurobion-injection-25-ampoule,high,,catalog,Direct catalog product
+buy neurobion injection 25 ampoule online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/neurobion-injection-25-ampoule,high,,template,Product purchase intent
+neurobion injection 25 ampoule price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/neurobion-injection-25-ampoule,high,,template,Product price lookup
+neurobion injection 25 ampoule cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/neurobion-injection-25-ampoule,medium,,template,Product COD
+methycobal 1ml 10 amploue injections,product,brand-search,vitamins-product,https://medikart.pk/products/methycobal-500mcg-1ml-10-amploue-injections,high,,catalog,Direct catalog product
+buy methycobal 1ml 10 amploue injections online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/methycobal-500mcg-1ml-10-amploue-injections,high,,template,Product purchase intent
+methycobal 100 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/methycobal-500mcg-100-tablets,high,,catalog,Direct catalog product
+buy methycobal 100 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/methycobal-500mcg-100-tablets,high,,template,Product purchase intent
+methycobal 100 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/methycobal-500mcg-100-tablets,high,,template,Product price lookup
+methycobal 100 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/methycobal-500mcg-100-tablets,medium,,template,Product COD
+zeest mv 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/zeest-mv-30-tablets,high,,catalog,Direct catalog product
+buy zeest mv 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/zeest-mv-30-tablets,high,,template,Product purchase intent
+zeest mv 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/zeest-mv-30-tablets,high,,template,Product price lookup
+zeest mv 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/zeest-mv-30-tablets,medium,,template,Product COD
+high-c 1000 10 sachets,product,brand-search,vitamins-product,https://medikart.pk/products/high-c-1000-10-sachets,high,,catalog,Direct catalog product
+buy high-c 1000 10 sachets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/high-c-1000-10-sachets,high,,template,Product purchase intent
+high-c 1000 10 sachets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/high-c-1000-10-sachets,high,,template,Product price lookup
+high-c 1000 10 sachets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/high-c-1000-10-sachets,medium,,template,Product COD
+gonadil-f 40 capsules,product,brand-search,vitamins-product,https://medikart.pk/products/gonadil-f-40-capsules,high,,catalog,Direct catalog product
+buy gonadil-f 40 capsules online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/gonadil-f-40-capsules,high,,template,Product purchase intent
+gonadil-f 40 capsules price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/gonadil-f-40-capsules,high,,template,Product price lookup
+gonadil-f 40 capsules cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/gonadil-f-40-capsules,medium,,template,Product COD
+tribulus extract,brand,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,medium,,catalog,Generic formulation
+tribulus extract in pakistan,informational,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,low,,template,Generic availability
+chewcal 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/chewcal-30-tablets,high,,catalog,Direct catalog product
+buy chewcal 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/chewcal-30-tablets,high,,template,Product purchase intent
+chewcal 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/chewcal-30-tablets,high,,template,Product price lookup
+chewcal 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/chewcal-30-tablets,medium,,template,Product COD
+multibionta syrup,product,brand-search,vitamins-product,https://medikart.pk/products/multibionta-120ml-syrup,high,,catalog,Direct catalog product
+buy multibionta syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/multibionta-120ml-syrup,high,,template,Product purchase intent
+multibionta syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/multibionta-120ml-syrup,high,,template,Product price lookup
+multibionta syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/multibionta-120ml-syrup,medium,,template,Product COD
+neuromet 100 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/neuromet-500mcg-100-tablets,high,,catalog,Direct catalog product
+buy neuromet 100 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/neuromet-500mcg-100-tablets,high,,template,Product purchase intent
+neuromet 100 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/neuromet-500mcg-100-tablets,high,,template,Product price lookup
+neuromet 100 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/neuromet-500mcg-100-tablets,medium,,template,Product COD
+cobolmin tablets 50s,product,brand-search,vitamins-product,https://medikart.pk/products/cobolmin-tablets-500ug-50s,high,,catalog,Direct catalog product
+buy cobolmin tablets 50s online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/cobolmin-tablets-500ug-50s,high,,template,Product purchase intent
+cobolmin tablets 50s price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/cobolmin-tablets-500ug-50s,high,,template,Product price lookup
+cobolmin tablets 50s cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/cobolmin-tablets-500ug-50s,medium,,template,Product COD
+bioplus c 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/bioplus-c-30-tablets,high,,catalog,Direct catalog product
+buy bioplus c 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/bioplus-c-30-tablets,high,,template,Product purchase intent
+bioplus c 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/bioplus-c-30-tablets,high,,template,Product price lookup
+bioplus c 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/bioplus-c-30-tablets,medium,,template,Product COD
+regnum syrup,product,brand-search,vitamins-product,https://medikart.pk/products/regnum-120ml-syrup,high,,catalog,Direct catalog product
+buy regnum syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/regnum-120ml-syrup,high,,template,Product purchase intent
+regnum syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/regnum-120ml-syrup,high,,template,Product price lookup
+regnum syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/regnum-120ml-syrup,medium,,template,Product COD
+venofer 5 ampoule injections,product,brand-search,vitamins-product,https://medikart.pk/products/venofer-100mg5ml-5-ampoule-injections,high,,catalog,Direct catalog product
+buy venofer 5 ampoule injections online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/venofer-100mg5ml-5-ampoule-injections,high,,template,Product purchase intent
+venofer 5 ampoule injections price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/venofer-100mg5ml-5-ampoule-injections,high,,template,Product price lookup
+venofer 5 ampoule injections cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/venofer-100mg5ml-5-ampoule-injections,medium,,template,Product COD
+iron sucrose,brand,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,medium,,catalog,Generic formulation
+iron sucrose in pakistan,informational,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,low,,template,Generic availability
+apofer-f 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/apofer-f-100075mg-30-tablets,high,,catalog,Direct catalog product
+buy apofer-f 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/apofer-f-100075mg-30-tablets,high,,template,Product purchase intent
+apofer-f 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/apofer-f-100075mg-30-tablets,high,,template,Product price lookup
+apofer-f 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/apofer-f-100075mg-30-tablets,medium,,template,Product COD
+ferosoft fa 20 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/ferosoft-fa-100035mg-20-tablets,high,,catalog,Direct catalog product
+buy ferosoft fa 20 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/ferosoft-fa-100035mg-20-tablets,high,,template,Product purchase intent
+ferosoft fa 20 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/ferosoft-fa-100035mg-20-tablets,high,,template,Product price lookup
+ferosoft fa 20 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/ferosoft-fa-100035mg-20-tablets,medium,,template,Product COD
+awardin plus 20 capsules,product,brand-search,vitamins-product,https://medikart.pk/products/awardin-plus-20-capsules,high,,catalog,Direct catalog product
+buy awardin plus 20 capsules online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/awardin-plus-20-capsules,high,,template,Product purchase intent
+awardin plus 20 capsules price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/awardin-plus-20-capsules,high,,template,Product price lookup
+awardin plus 20 capsules cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/awardin-plus-20-capsules,medium,,template,Product COD
+multical-1000 10 sachets,product,brand-search,vitamins-product,https://medikart.pk/products/multical-1000-10-sachets,high,,catalog,Direct catalog product
+buy multical-1000 10 sachets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/multical-1000-10-sachets,high,,template,Product purchase intent
+multical-1000 10 sachets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/multical-1000-10-sachets,high,,template,Product price lookup
+multical-1000 10 sachets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/multical-1000-10-sachets,medium,,template,Product COD
+maltofer syrup,product,brand-search,vitamins-product,https://medikart.pk/products/maltofer-syrup,high,,catalog,Direct catalog product
+buy maltofer syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/maltofer-syrup,high,,template,Product purchase intent
+maltofer syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/maltofer-syrup,high,,template,Product price lookup
+maltofer syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/maltofer-syrup,medium,,template,Product COD
+ferosoft 120ml syrup,product,brand-search,vitamins-product,https://medikart.pk/products/ferosoft-50mg5ml-120ml-syrup,high,,catalog,Direct catalog product
+buy ferosoft 120ml syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/ferosoft-50mg5ml-120ml-syrup,high,,template,Product purchase intent
+ferosoft 120ml syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/ferosoft-50mg5ml-120ml-syrup,high,,template,Product price lookup
+ferosoft 120ml syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/ferosoft-50mg5ml-120ml-syrup,medium,,template,Product COD
+rubifer 20 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/rubifer-20-tablets,high,,catalog,Direct catalog product
+buy rubifer 20 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/rubifer-20-tablets,high,,template,Product purchase intent
+rubifer 20 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/rubifer-20-tablets,high,,template,Product price lookup
+rubifer 20 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/rubifer-20-tablets,medium,,template,Product COD
+rubifer 120ml syrup,product,brand-search,vitamins-product,https://medikart.pk/products/rubifer-50mg5ml-120ml-syrup,high,,catalog,Direct catalog product
+buy rubifer 120ml syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/rubifer-50mg5ml-120ml-syrup,high,,template,Product purchase intent
+rubifer 120ml syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/rubifer-50mg5ml-120ml-syrup,high,,template,Product price lookup
+rubifer 120ml syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/rubifer-50mg5ml-120ml-syrup,medium,,template,Product COD
+ferosoft 30ml oral drops,product,brand-search,vitamins-product,https://medikart.pk/products/ferosoft-50mg-30ml-oral-drops,high,,catalog,Direct catalog product
+buy ferosoft 30ml oral drops online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/ferosoft-50mg-30ml-oral-drops,high,,template,Product purchase intent
+ferosoft 30ml oral drops price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/ferosoft-50mg-30ml-oral-drops,high,,template,Product price lookup
+ferosoft 30ml oral drops cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/ferosoft-50mg-30ml-oral-drops,medium,,template,Product COD
+cac-1000 10 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/cac-1000-orange-flavour-10-tablets,high,,catalog,Direct catalog product
+buy cac-1000 10 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/cac-1000-orange-flavour-10-tablets,high,,template,Product purchase intent
+cac-1000 10 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/cac-1000-orange-flavour-10-tablets,high,,template,Product price lookup
+cac-1000 10 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/cac-1000-orange-flavour-10-tablets,medium,,template,Product COD
+rubifer 15ml oral drop,product,brand-search,vitamins-product,https://medikart.pk/products/rubifer-50mgml-15ml-oral-drop,high,,catalog,Direct catalog product
+buy rubifer 15ml oral drop online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/rubifer-50mgml-15ml-oral-drop,high,,template,Product purchase intent
+rubifer 15ml oral drop price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/rubifer-50mgml-15ml-oral-drop,high,,template,Product price lookup
+rubifer 15ml oral drop cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/rubifer-50mgml-15ml-oral-drop,medium,,template,Product COD
+polyfer 60ml syrup,product,brand-search,vitamins-product,https://medikart.pk/products/polyfer-50mg-60ml-syrup,high,,catalog,Direct catalog product
+buy polyfer 60ml syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/polyfer-50mg-60ml-syrup,high,,template,Product purchase intent
+polyfer 60ml syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/polyfer-50mg-60ml-syrup,high,,template,Product price lookup
+polyfer 60ml syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/polyfer-50mg-60ml-syrup,medium,,template,Product COD
+theragran ultra 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/theragran-ultra-30-tablets,high,,catalog,Direct catalog product
+buy theragran ultra 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/theragran-ultra-30-tablets,high,,template,Product purchase intent
+theragran ultra 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/theragran-ultra-30-tablets,high,,template,Product price lookup
+theragran ultra 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/theragran-ultra-30-tablets,medium,,template,Product COD
+ed-3 1 ampoule injection,product,brand-search,vitamins-product,https://medikart.pk/products/ed-3-5mg1ml-1-ampoule-injection,high,,catalog,Direct catalog product
+buy ed-3 1 ampoule injection online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/ed-3-5mg1ml-1-ampoule-injection,high,,template,Product purchase intent
+ed-3 1 ampoule injection price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/ed-3-5mg1ml-1-ampoule-injection,high,,template,Product price lookup
+ed-3 1 ampoule injection cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/ed-3-5mg1ml-1-ampoule-injection,medium,,template,Product COD
+esegrow suspension,product,brand-search,vitamins-product,https://medikart.pk/products/esegrow-60ml-suspension,high,,catalog,Direct catalog product
+buy esegrow suspension online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/esegrow-60ml-suspension,high,,template,Product purchase intent
+esegrow suspension price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/esegrow-60ml-suspension,high,,template,Product price lookup
+esegrow suspension cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/esegrow-60ml-suspension,medium,,template,Product COD
+cartigen 20 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/cartigen-500400mg-20-tablets,high,,catalog,Direct catalog product
+buy cartigen 20 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/cartigen-500400mg-20-tablets,high,,template,Product purchase intent
+cartigen 20 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/cartigen-500400mg-20-tablets,high,,template,Product price lookup
+cartigen 20 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/cartigen-500400mg-20-tablets,medium,,template,Product COD
+chondroitin glucosamine,brand,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,medium,,catalog,Generic formulation
+chondroitin glucosamine in pakistan,informational,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,low,,template,Generic availability
+osnate 60ml suspension,product,brand-search,vitamins-product,https://medikart.pk/products/osnate-400mg-60ml-suspension,high,,catalog,Direct catalog product
+buy osnate 60ml suspension online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/osnate-400mg-60ml-suspension,high,,template,Product purchase intent
+osnate 60ml suspension price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/osnate-400mg-60ml-suspension,high,,template,Product price lookup
+osnate 60ml suspension cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/osnate-400mg-60ml-suspension,medium,,template,Product COD
+calcium 400mg,brand,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,medium,,catalog,Generic formulation
+calcium 400mg in pakistan,informational,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,low,,template,Generic availability
+ossobon d 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/ossobon-d-30-tablets,high,,catalog,Direct catalog product
+buy ossobon d 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/ossobon-d-30-tablets,high,,template,Product purchase intent
+ossobon d 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/ossobon-d-30-tablets,high,,template,Product price lookup
+ossobon d 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/ossobon-d-30-tablets,medium,,template,Product COD
+polymalt 120ml syrup,product,brand-search,vitamins-product,https://medikart.pk/products/polymalt-50mg-120ml-syrup,high,,catalog,Direct catalog product
+buy polymalt 120ml syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/polymalt-50mg-120ml-syrup,high,,template,Product purchase intent
+polymalt 120ml syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/polymalt-50mg-120ml-syrup,high,,template,Product price lookup
+polymalt 120ml syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/polymalt-50mg-120ml-syrup,medium,,template,Product COD
+acefer-f 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/acefer-f-100035mg-30-tablets,high,,catalog,Direct catalog product
+buy acefer-f 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/acefer-f-100035mg-30-tablets,high,,template,Product purchase intent
+acefer-f 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/acefer-f-100035mg-30-tablets,high,,template,Product price lookup
+acefer-f 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/acefer-f-100035mg-30-tablets,medium,,template,Product COD
+bisleri s 5 ampoule injections,product,brand-search,vitamins-product,https://medikart.pk/products/bisleri-s-100mg5ml-5-ampoule-injections,high,,catalog,Direct catalog product
+buy bisleri s 5 ampoule injections online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/bisleri-s-100mg5ml-5-ampoule-injections,high,,template,Product purchase intent
+ferfix fa 20 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/ferfix-fa-100035mg-20-tablets,high,,catalog,Direct catalog product
+buy ferfix fa 20 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/ferfix-fa-100035mg-20-tablets,high,,template,Product purchase intent
+ferfix fa 20 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/ferfix-fa-100035mg-20-tablets,high,,template,Product price lookup
+ferfix fa 20 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/ferfix-fa-100035mg-20-tablets,medium,,template,Product COD
+cal one-d syrup,product,brand-search,vitamins-product,https://medikart.pk/products/cal-one-d-120ml-syrup,high,,catalog,Direct catalog product
+buy cal one-d syrup online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/cal-one-d-120ml-syrup,high,,template,Product purchase intent
+cal one-d syrup price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/cal-one-d-120ml-syrup,high,,template,Product price lookup
+cal one-d syrup cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/cal-one-d-120ml-syrup,medium,,template,Product COD
+osnate-d 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/osnate-d-30-tablets,high,,catalog,Direct catalog product
+buy osnate-d 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/osnate-d-30-tablets,high,,template,Product purchase intent
+osnate-d 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/osnate-d-30-tablets,high,,template,Product price lookup
+osnate-d 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/osnate-d-30-tablets,medium,,template,Product COD
+feralife 20 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/feralife-100mg-20-tablets,high,,catalog,Direct catalog product
+buy feralife 20 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/feralife-100mg-20-tablets,high,,template,Product purchase intent
+feralife 20 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/feralife-100mg-20-tablets,high,,template,Product price lookup
+feralife 20 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/feralife-100mg-20-tablets,medium,,template,Product COD
+intig-d 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/intig-d-30-tablets,high,,catalog,Direct catalog product
+buy intig-d 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/intig-d-30-tablets,high,,template,Product purchase intent
+intig-d 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/intig-d-30-tablets,high,,template,Product price lookup
+intig-d 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/intig-d-30-tablets,medium,,template,Product COD
+osam-d 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/osam-d-30-tablets,high,,catalog,Direct catalog product
+buy osam-d 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/osam-d-30-tablets,high,,template,Product purchase intent
+osam-d 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/osam-d-30-tablets,high,,template,Product price lookup
+osam-d 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/osam-d-30-tablets,medium,,template,Product COD
+ossein mineral complex,brand,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,medium,,catalog,Generic formulation
+ossein mineral complex in pakistan,informational,generic-search,vitamins-generic,https://medikart.pk/categories/vitamins,low,,template,Generic availability
+miura-d 1 ampoule injection,product,brand-search,vitamins-product,https://medikart.pk/products/miura-d-5mgml-1-ampoule-injection,high,,catalog,Direct catalog product
+buy miura-d 1 ampoule injection online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/miura-d-5mgml-1-ampoule-injection,high,,template,Product purchase intent
+miura-d 1 ampoule injection price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/miura-d-5mgml-1-ampoule-injection,high,,template,Product price lookup
+miura-d 1 ampoule injection cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/miura-d-5mgml-1-ampoule-injection,medium,,template,Product COD
+esegrow d 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/esegrow-d-30-tablets,high,,catalog,Direct catalog product
+buy esegrow d 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/esegrow-d-30-tablets,high,,template,Product purchase intent
+esegrow d 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/esegrow-d-30-tablets,high,,template,Product price lookup
+esegrow d 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/esegrow-d-30-tablets,medium,,template,Product COD
+polymalt-f 30 tablets,product,brand-search,vitamins-product,https://medikart.pk/products/polymalt-f-100035mg-30-tablets,high,,catalog,Direct catalog product
+buy polymalt-f 30 tablets online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/polymalt-f-100035mg-30-tablets,high,,template,Product purchase intent
+polymalt-f 30 tablets price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/polymalt-f-100035mg-30-tablets,high,,template,Product price lookup
+polymalt-f 30 tablets cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/polymalt-f-100035mg-30-tablets,medium,,template,Product COD
+d-tres 5 ampoule injections,product,brand-search,vitamins-product,https://medikart.pk/products/d-tres-200000iu-5-ampoule-injections,high,,catalog,Direct catalog product
+buy d-tres 5 ampoule injections online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/d-tres-200000iu-5-ampoule-injections,high,,template,Product purchase intent
+d-tres 5 ampoule injections price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/d-tres-200000iu-5-ampoule-injections,high,,template,Product price lookup
+d-tres 5 ampoule injections cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/d-tres-200000iu-5-ampoule-injections,medium,,template,Product COD
+d-tres 1 injection,product,brand-search,vitamins-product,https://medikart.pk/products/d-tres-200000iu-1-injection,high,,catalog,Direct catalog product
+buy d-tres 1 injection online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/d-tres-200000iu-1-injection,high,,template,Product purchase intent
+d-tres 1 injection price in pakistan,transactional,price-check,vitamins-product-pricing,https://medikart.pk/products/d-tres-200000iu-1-injection,high,,template,Product price lookup
+d-tres 1 injection cash on delivery,transactional,purchase,vitamins-product-cod,https://medikart.pk/products/d-tres-200000iu-1-injection,medium,,template,Product COD
+sangobion 5ml 2 ampoule injections,product,brand-search,vitamins-product,https://medikart.pk/products/sangobion-100mg-5ml-2-ampoule-injections,high,,catalog,Direct catalog product
+buy sangobion 5ml 2 ampoule injections online,transactional,purchase,vitamins-product-transactional,https://medikart.pk/products/sangobion-100mg-5ml-2-ampoule-injections,high,,template,Product purchase intent
