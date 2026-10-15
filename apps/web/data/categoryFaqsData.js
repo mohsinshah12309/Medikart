@@ -53,6 +53,26 @@ export const CATEGORY_FAQS = {
 
   vitamins: [
     {
+      question: "What are the top 3 vitamins to take daily for health in Pakistan?",
+      answer: "Clinical nutritionists and pharmacists in Pakistan commonly recommend three daily essentials: 1) A balanced daily multivitamin (such as Surbex-Z or Centrum) for comprehensive micronutrient support; 2) Vitamin D3 (such as SunnyD or Indrop-D) due to widespread indoor lifestyle deficiency across Pakistani cities; and 3) Omega-3 fish oil or Calcium with Vitamin K2 for bone and heart health. You can explore all DRAP-enlisted formulations on Medikart with nationwide Cash on Delivery.",
+    },
+    {
+      question: "What vitamins should I take for tiredness, fatigue, and low energy?",
+      answer: "For chronic fatigue, lack of stamina, and daily tiredness, the most effective vitamins are Vitamin B-Complex (especially Vitamin B12, B6, and Folic Acid) and Iron. B vitamins convert dietary carbohydrates and proteins into cellular energy (ATP), while Iron supports oxygen transport in red blood cells. Popular verified options on Medikart include Surbex-Z, Neurobion, and Feroglobin. If fatigue persists, consult a physician to check hemoglobin and ferritin levels.",
+    },
+    {
+      question: "Which vitamin is best for glowing skin, acne, and hair fall in Pakistan?",
+      answer: "The best vitamins for healthy skin and hair include: Biotin (Vitamin B7) and Zinc for strengthening hair follicles and reducing thinning; Vitamin C for boosting collagen synthesis and evening skin tone; and Vitamin E for cellular antioxidant protection against environmental pollution and UV stress. Brands like Nutrifactor, Nature's Bounty, and Getz Pharma offer specialized skin-hair-nails formulations available on Medikart.",
+    },
+    {
+      question: "What is the best time of day to take multivitamins and dietary supplements?",
+      answer: "The ideal time to take multivitamins and fat-soluble vitamins (Vitamins A, D, E, and K) is in the morning or early afternoon with a meal that contains healthy dietary fats for optimal absorption and to avoid stomach irritation. Water-soluble vitamins (Vitamin C and B-Complex) can be taken with water in the morning to support daytime energy levels. Avoid taking energizing B vitamins right before bed.",
+    },
+    {
+      question: "Can I take Vitamin C and Vitamin D together every day?",
+      answer: "Yes, taking Vitamin C and Vitamin D together daily is completely safe and clinically synergistic. Vitamin C boosts white blood cell activity and collagen formation, while Vitamin D regulates immune cell response and calcium absorption. Taking both daily helps maintain strong immune resilience against seasonal flu and environmental infections common in urban Pakistan.",
+    },
+    {
       question: "Are vitamins and dietary supplements on Medikart authentic and DRAP certified?",
       answer: "Yes, all vitamins, multivitamins, and dietary supplements listed on Medikart are sourced directly from verified pharmaceutical distributors and authorized importers in Pakistan. They hold valid DRAP Enlistment numbers (Form-6/Form-7 nutraceutical registrations) ensuring they are free from counterfeit compounds.",
     },
