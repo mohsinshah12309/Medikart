@@ -41,7 +41,10 @@ export async function generateMetadata({ params }) {
   } catch (_) {}
 
   if (!product) {
-    return { title: 'Product | Medikart' };
+    return {
+      title: 'Product Not Found | Medikart',
+      robots: { index: false, follow: false },
+    };
   }
 
   // Do not call redirect() inside generateMetadata in Next.js App Router (handled in page component)
@@ -49,6 +52,9 @@ export async function generateMetadata({ params }) {
     return {
       title: `${product.name} | Medikart`,
       robots: { index: false, follow: true },
+      alternates: {
+        canonical: `${SITE_URL}/products/${product.slug}`,
+      },
     };
   }
 
