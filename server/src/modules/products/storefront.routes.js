@@ -61,10 +61,15 @@ router.get("/sitemap/products", async (req, res, next) => {
   }
 });
 
-// GET /api/v1/feeds/google-merchant.xml - Official Google Merchant Center RSS 2.0 XML Feed (All Catalog Products)
+// GET /api/v1/feeds/google-merchant.xml - Official Google Merchant Center RSS 2.0 XML Feed
+// Policy-compliant: Excludes controlled narcotics & prescription-only drugs.
+// Formats price in PKR, includes <g:identifier_exists>no</g:identifier_exists>, and accurate Google categories.
 router.get("/feeds/google-merchant.xml", async (req, res, next) => {
   try {
     const siteUrl = process.env.CLIENT_URL || "https://medikart.pk";
+    const medicinesCat = await Category.findOne({ slug: "medicines" }).select("_id").lean();
+    const medicinesId = medicinesCat ? medicinesCat._id.toString() : null;
+
     const products = await Product.find({ active: true })
       .populate("categoryIds", "name slug")
       .lean();
@@ -79,43 +84,96 @@ router.get("/feeds/google-merchant.xml", async (req, res, next) => {
         .replace(/'/g, "&apos;");
     };
 
+    const narcoticsRegex = /\b(alprazolam|diazepam|lorazepam|tramadol|clonazepam|morphine|codeine|midazolam|buprenorphine|fentanyl|zolpidem|phenobarbital|ketamine|methadone|pentazocine|bromazepam|clobazam|flurazepam|temazepam|chlordiazepoxide|xanax|valium|tramal)\b/i;
+
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
-    <title>Medikart - Authentic Online Pharmacy Pakistan</title>
+    <title>Medikart - Authentic Online Pharmacy &amp; Healthcare Pakistan</title>
     <link>${siteUrl}</link>
-    <description>100% Genuine DRAP-registered prescription medicines, OTC drugs, health essentials, and baby care delivered across Pakistan with Cash on Delivery.</description>
+    <description>Authentic OTC healthcare essentials, vitamins, supplements, mother &amp; baby care, and personal wellness products delivered across Pakistan with Cash on Delivery.</description>
 `;
 
     for (const prod of products) {
-      const id = prod.sku || prod._id.toString();
-      const title = prod.name ? `${prod.name}${prod.genericName ? ` (${prod.genericName})` : ""}` : "Healthcare Product";
-      const desc = prod.description || `Buy authentic ${prod.name} online in Pakistan on Medikart with Cash on Delivery. Genuine pharmacy stock.`;
-      const link = `${siteUrl}/products/${prod.slug || prod._id.toString()}`;
-      
-      let imgLink = `${siteUrl}/icon-512.png`;
-      if (prod.images && prod.images.length > 0 && prod.images[0].path) {
-        const p = prod.images[0].path;
-        imgLink = p.startsWith("http") ? p : `${siteUrl}${p}`;
+      const name = prod.name || "";
+      const generic = prod.genericName || "";
+      const desc = prod.description || "";
+
+      // 1. Strict Google Shopping compliance: zero tolerance for narcotics & controlled substances
+      if (prod.isNarcotic || narcoticsRegex.test(name) || narcoticsRegex.test(generic) || narcoticsRegex.test(desc)) {
+        continue;
       }
 
-      const price = typeof prod.price === "number" ? prod.price.toFixed(2) : "0.00";
-      const availability = prod.stockStatus === "out_of_stock" ? "out_of_stock" : "in_stock";
-      const categoryName = prod.categoryIds && prod.categoryIds.length > 0 && prod.categoryIds[0]?.name
-        ? prod.categoryIds[0].name
-        : "Health & Beauty > Health Care > Medicine & Drugs";
+      // 2. Exclude prescription-only pharmaceuticals
+      if (prod.requiresPrescription) {
+        continue;
+      }
+
+      // Exclude products that only belong to the prescription "medicines" category
+      const catList = Array.isArray(prod.categoryIds) ? prod.categoryIds : [];
+      const catIds = catList.map((c) => (c._id ? c._id.toString() : c.toString()));
+      if (medicinesId && catIds.length === 1 && catIds[0] === medicinesId) {
+        continue;
+      }
+
+      // 3. Price validation: must be a positive number
+      const priceNum = typeof prod.price === "number" ? prod.price : parseFloat(prod.price);
+      if (isNaN(priceNum) || priceNum <= 0) {
+        continue;
+      }
+      const price = priceNum.toFixed(2);
+
+      // 4. Image validation: must have genuine image, avoid generic placeholder
+      let imgLink = "";
+      if (prod.images && prod.images.length > 0 && prod.images[0].path) {
+        const p = prod.images[0].path;
+        if (!p.includes("placeholder") && !p.includes("icon-512")) {
+          imgLink = p.startsWith("http") ? p : `${siteUrl}${p.startsWith("/") ? "" : "/"}${p}`;
+        }
+      }
+      if (!imgLink) {
+        continue;
+      }
+
+      const id = prod.sku || prod._id.toString();
+      const title = prod.name ? `${prod.name}${generic ? ` (${generic})` : ""}` : "Healthcare Product";
+      const productDesc = desc || `Order genuine ${prod.name} online in Pakistan on Medikart. Authentic pharmacy stock with Cash on Delivery.`;
+      const link = `${siteUrl}/products/${prod.slug || prod._id.toString()}`;
+      const availability = prod.stockStatus === "out_of_stock" || (typeof prod.stock === "number" && prod.stock <= 0) ? "out_of_stock" : "in_stock";
+
+      // 5. Intelligent Google Product Category Taxonomy mapping
+      let googleCategory = "Health & Beauty > Health Care";
+      let categoryName = "Health Care";
+      const primaryCat = catList[0];
+      const catSlug = primaryCat?.slug || "";
+      if (primaryCat?.name) categoryName = primaryCat.name;
+
+      if (catSlug === "otc") {
+        googleCategory = "Health & Beauty > Health Care > Medicine & Drugs > Over-the-Counter Medicine";
+      } else if (catSlug === "vitamins" || catSlug === "nutraceutical") {
+        googleCategory = "Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements";
+      } else if (catSlug === "dermatology" || catSlug === "hair-care") {
+        googleCategory = "Health & Beauty > Personal Care > Cosmetics > Skin Care";
+      } else if (catSlug === "diapers-napkins" || catSlug === "milk-powder") {
+        googleCategory = "Baby & Toddler > Diapering > Diapers";
+      } else if (catSlug === "diagnostics" || catSlug === "patient-supports" || catSlug === "surgical-items") {
+        googleCategory = "Health & Beauty > Health Care > Medical Tests & Monitors";
+      }
+
+      const brandName = prod.manufacturer && prod.manufacturer.trim() ? prod.manufacturer.trim() : "Medikart";
 
       xml += `    <item>
       <g:id>${escapeXml(id)}</g:id>
       <g:title>${escapeXml(title)}</g:title>
-      <g:description>${escapeXml(desc)}</g:description>
+      <g:description>${escapeXml(productDesc)}</g:description>
       <g:link>${escapeXml(link)}</g:link>
       <g:image_link>${escapeXml(imgLink)}</g:image_link>
       <g:availability>${availability}</g:availability>
       <g:price>${price} PKR</g:price>
-      <g:brand>${escapeXml(prod.manufacturer || "Medikart")}</g:brand>
+      <g:brand>${escapeXml(brandName)}</g:brand>
       <g:condition>new</g:condition>
-      <g:google_product_category>Health &amp; Beauty &gt; Health Care &gt; Medicine &amp; Drugs</g:google_product_category>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:google_product_category>${escapeXml(googleCategory)}</g:google_product_category>
       <g:product_type>${escapeXml(categoryName)}</g:product_type>
       <g:shipping>
         <g:country>PK</g:country>
