@@ -138,6 +138,20 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
   // Deduplicated single conditions array (Phase 2 Link Engine)
   const displayConditions = conditions;
 
+  const trackRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (trackRef.current) {
+      trackRef.current.scrollBy({ left: -280, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (trackRef.current) {
+      trackRef.current.scrollBy({ left: 280, behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-3 py-2 overflow-hidden">
       {/* Header with Navigation Controls */}
@@ -153,43 +167,30 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => toggleDirection("ltr")}
-            aria-label="Slide Left to Right"
-            title="Slide Left to Right"
-            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
-              slideDirection === "ltr" ? "btn-amber-gradient text-slate-900" : "bg-white border border-amber-200 text-slate-700"
-            }`}
+            onClick={scrollLeft}
+            aria-label="Slide Left"
+            title="Slide Left"
+            className="w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer bg-white border border-amber-200 text-slate-700 hover:bg-yellow-400 hover:text-slate-950 hover:border-yellow-400"
           >
             ‹
           </button>
           <button
             type="button"
-            onClick={() => toggleDirection("rtl")}
-            aria-label="Slide Right to Left"
-            title="Slide Right to Left"
-            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
-              slideDirection === "rtl" ? "btn-amber-gradient text-slate-900" : "bg-white border border-amber-200 text-slate-700"
-            }`}
+            onClick={scrollRight}
+            aria-label="Slide Right"
+            title="Slide Right"
+            className="w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer bg-yellow-400 text-slate-950 border border-yellow-500/50 hover:bg-yellow-500"
           >
             ›
           </button>
         </div>
       </div>
 
-      {/* Auto-Sliding Conditions Track (Continuous Left-to-Right loop, Pauses on Hover) */}
-      <div
-        className="relative w-full overflow-hidden pb-3 pt-2 group"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => setIsPaused(false)}
-      >
+      {/* Horizontally Scrollable & Swipable Conditions Track */}
+      <div className="relative w-full overflow-hidden pb-1">
         <div
-          ref={scrollRef}
-          className={`flex items-stretch gap-4 sm:gap-5 ${
-            slideDirection === "ltr" ? "animate-slide-ltr" : "animate-slide-rtl"
-          }`}
-          style={{ animationPlayState: isPaused ? "paused" : "running" }}
+          ref={trackRef}
+          className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scrollbar-none scroll-smooth pb-3 pt-2"
         >
           {displayConditions.map((item) => {
             const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.svg` : null);

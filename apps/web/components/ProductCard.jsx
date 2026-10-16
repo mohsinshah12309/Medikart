@@ -24,6 +24,17 @@ const getFullUrl = (path) => {
   return path.startsWith('http') || path.startsWith('/') ? path : `${apiOrigin}${path.startsWith('/') ? '' : '/'}${path}`;
 };
 
+const getProductImage = (product) => {
+  if (!product) return "/uploads/placeholder.webp";
+  const raw =
+    product.coverImage ||
+    (Array.isArray(product.images) && product.images.find(img => img.isPrimary)?.path) ||
+    (Array.isArray(product.images) && product.images[0]?.path) ||
+    product.image ||
+    "";
+  return getFullUrl(raw);
+};
+
 function ProductCardComponent({ product }) {
   const { addToCart } = useCart();
   const { isWishlisted, toggleWishlist } = useCustomer();
@@ -44,7 +55,11 @@ function ProductCardComponent({ product }) {
     (typeof product.category === 'object' && product.category?.name?.toLowerCase().includes('otc'))
   );
 
-  const [imgSrc, setImgSrc] = useState(getFullUrl(product.coverImage));
+  const [imgSrc, setImgSrc] = useState(() => getProductImage(product));
+
+  React.useEffect(() => {
+    setImgSrc(getProductImage(product));
+  }, [product.coverImage, product.images, product.image, product._id]);
 
   const handleAddToCart = useCallback((e) => {
     if (e) {

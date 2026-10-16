@@ -45,9 +45,11 @@ export default function CatalogSection({
   const [activeCategoryId, setActiveCategoryId] = useState(initialCategoryId);
   const [categoriesList, setCategoriesList] = useState(Array.isArray(categories) ? categories : []);
   const [currentPage, setCurrentPage] = useState(initialPage);
+  const hasInitialData = Array.isArray(initialProducts) && initialProducts.length > 0;
   const [products, setProducts] = useState(initialProducts);
   const [pagination, setPagination] = useState(initialPagination);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(!hasInitialData);
+  const [hasFetched, setHasFetched] = useState(hasInitialData);
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
@@ -136,6 +138,7 @@ export default function CatalogSection({
 
       setProducts(fetchedProducts);
       setPagination(fetchedPagination);
+      setHasFetched(true);
 
       // Store in memory cache
       prefetchCache.current.set(cacheKey, {
@@ -159,6 +162,7 @@ export default function CatalogSection({
       if (err.name === 'AbortError') return;
       console.error('Catalog fetch failed:', err);
       setErrorMsg('Failed to load products. Please check server connection.');
+      setHasFetched(true);
     } finally {
       setLoading(false);
     }
@@ -441,15 +445,10 @@ export default function CatalogSection({
                 🔄 Retry Loading Catalog
               </button>
             </div>
-          ) : loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-2.5 sm:gap-3.5 animate-pulse">
+          ) : (loading || !hasFetched) ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-6 gap-2.5 sm:gap-3.5">
               {Array.from({ length: 24 }).map((_, i) => (
-                <div key={i} className="bg-white border border-slate-200 rounded-xl p-2.5 flex flex-col gap-2">
-                  <div className="aspect-square bg-slate-100 rounded-lg w-full" />
-                  <div className="h-3 bg-slate-200 rounded w-3/4" />
-                  <div className="h-2.5 bg-slate-100 rounded w-1/2" />
-                  <div className="h-7 bg-slate-100 rounded-lg mt-auto w-full" />
-                </div>
+                <ProductCardSkeleton key={i} />
               ))}
             </div>
           ) : products.length === 0 ? (

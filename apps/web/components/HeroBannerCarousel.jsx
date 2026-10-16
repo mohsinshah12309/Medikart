@@ -56,12 +56,15 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
     initialBanners && initialBanners.length > 0 ? initialBanners : FALLBACK_BANNERS
   );
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 = slide right-to-left (next), -1 = left-to-right (prev)
+  const [direction, setDirection] = useState("next"); // "next" | "prev"
   const [isPaused, setIsPaused] = useState(false);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+  const pauseTimerRef = useRef(null);
 
-  // Fetch banners from API if initialBanners is empty or changes
+  // Swipe / Drag references
+  const dragStartX = useRef(0);
+  const isDragging = useRef(false);
+
+  // Sync with initialBanners or fetch if empty
   useEffect(() => {
     if (initialBanners && initialBanners.length > 0) {
       setBanners(initialBanners);
@@ -78,63 +81,89 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
     }
   }, [initialBanners]);
 
+  const pauseBriefly = useCallback(() => {
+    setIsPaused(true);
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    pauseTimerRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 5000);
+  }, []);
+
   const handleNext = useCallback(() => {
-    setDirection(1);
+    setDirection("next");
     setCurrentIndex((prev) => (prev + 1) % banners.length);
   }, [banners.length]);
 
   const handlePrev = useCallback(() => {
-    setDirection(-1);
+    setDirection("prev");
     setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length);
   }, [banners.length]);
 
   const goToSlide = (idx) => {
     if (idx === currentIndex) return;
-    setDirection(idx > currentIndex ? 1 : -1);
+    setDirection(idx > currentIndex ? "next" : "prev");
     setCurrentIndex(idx);
+    pauseBriefly();
   };
 
-  // Auto-play slide advance every 4 seconds (pause on user interaction)
+  // Continuous Auto-slide every 4.5 seconds (resumes automatically after interaction)
   useEffect(() => {
     if (isPaused || banners.length <= 1) return;
     const timer = setInterval(() => {
       handleNext();
-    }, 4000);
+    }, 4500);
     return () => clearInterval(timer);
   }, [isPaused, banners.length, handleNext]);
 
-  // Touch swipe support for iOS Safari & Android mobile
+  // Touch Swipe for mobile devices
   const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
+    dragStartX.current = e.touches[0].clientX;
   };
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = () => {
-    const diff = touchStartX.current - touchEndX.current;
+  const handleTouchEnd = (e) => {
+    const endX = e.changedTouches[0]?.clientX || 0;
+    const diff = dragStartX.current - endX;
     if (Math.abs(diff) > 40) {
       if (diff > 0) {
         handleNext();
       } else {
         handlePrev();
       }
+      pauseBriefly();
     }
-    touchStartX.current = 0;
-    touchEndX.current = 0;
+  };
+
+  // Mouse Drag Swipe for desktop/laptop trackpad
+  const handleMouseDown = (e) => {
+    // Only drag on main left click and ignore clicks on buttons or links
+    if (e.button !== 0 || e.target.closest("a, button")) return;
+    isDragging.current = true;
+    dragStartX.current = e.clientX;
+  };
+  const handleMouseUp = (e) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const diff = dragStartX.current - e.clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+      pauseBriefly();
+    }
   };
 
   return (
     <div
-      className="relative w-full rounded-3xl overflow-hidden group select-none shadow-sm hover:shadow-md transition-shadow duration-300"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      className="relative w-full rounded-3xl overflow-hidden group select-none shadow-sm hover:shadow-md transition-shadow duration-300 cursor-grab active:cursor-grabbing"
       onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
       role="region"
       aria-label="Promotional Banners Carousel"
     >
-      {/* Slides Container - Relative height wrapper */}
+      {/* Slides Container */}
       <div className="relative w-full min-h-[340px] sm:min-h-[380px] md:min-h-[420px] overflow-hidden rounded-3xl bg-amber-400">
         {banners.map((slide, idx) => {
           const isActive = idx === currentIndex;
@@ -215,17 +244,25 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
         <>
           <button
             type="button"
-            onClick={handlePrev}
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrev();
+              pauseBriefly();
+            }}
             aria-label="Previous Slide"
-            className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-md flex items-center justify-center text-lg font-black transition-all hover:scale-110 active:scale-95 cursor-pointer border border-slate-200 opacity-80 group-hover:opacity-100"
+            className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-lg flex items-center justify-center text-xl font-black transition-all hover:scale-110 active:scale-95 cursor-pointer border border-slate-200 opacity-90 group-hover:opacity-100"
           >
             ‹
           </button>
           <button
             type="button"
-            onClick={handleNext}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNext();
+              pauseBriefly();
+            }}
             aria-label="Next Slide"
-            className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-md flex items-center justify-center text-lg font-black transition-all hover:scale-110 active:scale-95 cursor-pointer border border-slate-200 opacity-80 group-hover:opacity-100"
+            className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-lg flex items-center justify-center text-xl font-black transition-all hover:scale-110 active:scale-95 cursor-pointer border border-slate-200 opacity-90 group-hover:opacity-100"
           >
             ›
           </button>
@@ -234,17 +271,20 @@ export default function HeroBannerCarousel({ initialBanners = [] }) {
 
       {/* Slide Indicator Dots */}
       {banners.length > 1 && (
-        <div className="absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-slate-900/50 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/20">
+        <div className="absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-slate-900/60 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/20">
           {banners.map((_, idx) => (
             <button
               key={idx}
               type="button"
-              onClick={() => goToSlide(idx)}
+              onClick={(e) => {
+                e.stopPropagation();
+                goToSlide(idx);
+              }}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                 idx === currentIndex
-                  ? "w-6 bg-yellow-400 shadow-[0_0_8px_#facc15]"
-                  : "w-2 bg-white/60 hover:bg-white"
+                  ? "w-7 bg-yellow-400 shadow-[0_0_8px_#facc15]"
+                  : "w-2.5 bg-white/60 hover:bg-white"
               }`}
             />
           ))}
