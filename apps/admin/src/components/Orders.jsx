@@ -52,7 +52,26 @@ function Orders({ token, adminUser, initialFilter }) {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [prescriptionBlobUrl, setPrescriptionBlobUrl] = useState("");
+  const [prescriptionBlobUrls, setPrescriptionBlobUrls] = useState([]);
+  const [activePrescriptionIndex, setActivePrescriptionIndex] = useState(0);
   const [prescriptionLoading, setPrescriptionLoading] = useState(false);
+  const [subAdmins, setSubAdmins] = useState([]);
+  const [itemReviewDecisions, setItemReviewDecisions] = useState({});
+  const [itemReviewReasons, setItemReviewReasons] = useState({});
+
+  useEffect(() => {
+    async function loadSubAdmins() {
+      try {
+        const res = await adminFetch("/admin/users");
+        if (res && res.data) {
+          setSubAdmins(Array.isArray(res.data) ? res.data : res.data.users || []);
+        }
+      } catch (err) {
+        console.warn("Could not load sub-admin users:", err.message);
+      }
+    }
+    loadSubAdmins();
+  }, []);
 
   // Pricing Modal States
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
@@ -325,25 +344,42 @@ function Orders({ token, adminUser, initialFilter }) {
     }
   };
 
-  const loadPrescription = async (prescriptionUrl) => {
-    if (!prescriptionUrl) {
+  const loadPrescriptions = async (urls) => {
+    const list = Array.isArray(urls) ? urls.filter(Boolean) : urls ? [urls] : [];
+    if (list.length === 0) {
+      setPrescriptionBlobUrls([]);
       setPrescriptionBlobUrl("");
       return;
     }
 
     setPrescriptionLoading(true);
     try {
-      const res = await adminFetch(prescriptionUrl, {
-        returnRawResponse: true,
-      });
-
-      if (!res.ok) throw new Error("Unauthorized or invalid prescription access");
-
-      const blob = await res.blob();
-      const localUrl = URL.createObjectURL(blob);
-      setPrescriptionBlobUrl(localUrl);
+      const loaded = [];
+      for (const url of list) {
+        try {
+          const res = await adminFetch(url, {
+            returnRawResponse: true,
+          });
+          if (res.ok) {
+            const blob = await res.blob();
+            const localUrl = URL.createObjectURL(blob);
+            const isPdf = url.toLowerCase().includes(".pdf");
+            const filename = url.split("/").pop() || "Prescription";
+            loaded.push({ url, localUrl, isPdf, filename });
+          }
+        } catch (fileErr) {
+          console.warn("Failed to load prescription file:", url, fileErr);
+        }
+      }
+      setPrescriptionBlobUrls(loaded);
+      if (loaded.length > 0) {
+        setPrescriptionBlobUrl(loaded[0].localUrl);
+      } else {
+        setPrescriptionBlobUrl("");
+      }
     } catch (err) {
-      console.error("Prescription fetch error:", err.message);
+      console.error("Prescriptions fetch error:", err.message);
+      setPrescriptionBlobUrls([]);
       setPrescriptionBlobUrl("");
     } finally {
       setPrescriptionLoading(false);
@@ -353,16 +389,31 @@ function Orders({ token, adminUser, initialFilter }) {
   const handleOpenDetails = async (order) => {
     setSelectedOrder(order);
     setIsDetailModalOpen(true);
-    if (order.prescriptionUrl) {
-      await loadPrescription(order.prescriptionUrl);
-    } else {
-      setPrescriptionBlobUrl("");
-    }
+    const initialDecisions = {};
+    const initialReasons = {};
+    (order.items || []).forEach((it) => {
+      const pid = (it.productId?._id || it.productId || "").toString();
+      initialDecisions[pid] = it.reviewStatus || (it.isNarcotic ? "pending" : "approved");
+      initialReasons[pid] = it.rejectionReason || "";
+    });
+    setItemReviewDecisions(initialDecisions);
+    setItemReviewReasons(initialReasons);
+
+    setActivePrescriptionIndex(0);
+    const urls = Array.isArray(order.prescriptionUrls) && order.prescriptionUrls.length > 0
+      ? order.prescriptionUrls
+      : order.prescriptionUrl ? [order.prescriptionUrl] : [];
+    await loadPrescriptions(urls);
   };
 
   const handleCloseDetails = () => {
     setIsDetailModalOpen(false);
     setSelectedOrder(null);
+    setActivePrescriptionIndex(0);
+    prescriptionBlobUrls.forEach((p) => {
+      if (p.localUrl) URL.revokeObjectURL(p.localUrl);
+    });
+    setPrescriptionBlobUrls([]);
     if (prescriptionBlobUrl) {
       URL.revokeObjectURL(prescriptionBlobUrl);
       setPrescriptionBlobUrl("");
@@ -501,23 +552,54 @@ function Orders({ token, adminUser, initialFilter }) {
     }
   };
 
-  const handleReviewNarcotics = async (orderId, decision) => {
+  const handleAssignSubAdmin = async (orderId, subAdminId) => {
+    try {
+      const res = await adminFetch(`/admin/orders/${orderId}/verification`, {
+        method: "PATCH",
+        body: JSON.stringify({ assignedTo: subAdminId || null }),
+      });
+      setSuccessMsg("Sub-admin / Pharmacist assignment updated successfully.");
+      await fetchOrders();
+      if (selectedOrder && selectedOrder._id === orderId) {
+        setSelectedOrder(res.data?.order || null);
+      }
+    } catch (err) {
+      setError(err.message || "Failed to assign sub-admin.");
+    }
+  };
+
+  const handleReviewNarcotics = async (orderId, decision, payload = {}) => {
     setError("");
     setSuccessMsg("");
 
-    const action = decision === "approved" ? "Approve" : "Reject";
-    if (!window.confirm(`Are you sure you want to ${action} this narcotics prescription order?`)) return;
+    const actionText =
+      decision === "approved"
+        ? "Approve ALL items in"
+        : decision === "partially_approved"
+        ? "Approve Valid Normal Items & Remove Rejected Prescription Items for"
+        : "Reject ALL items in";
+
+    if (!window.confirm(`Are you sure you want to ${actionText} this prescription order?`)) return;
 
     try {
-      await adminFetch(`/admin/orders/${orderId}/verification`, {
+      const body = {
+        decision,
+        reason: payload.reason || (decision === "approved" ? "Approved by pharmacist" : "Rejected by pharmacist"),
+        rejectedItemIds: payload.rejectedItemIds || [],
+      };
+
+      const res = await adminFetch(`/admin/orders/${orderId}/verification`, {
         method: "PATCH",
-        body: JSON.stringify({ decision }),
+        body: JSON.stringify(body),
       });
 
       setSuccessMsg(`Prescription order marked as ${decision.toUpperCase()}.`);
-      fetchOrders();
+      await fetchOrders();
+      if (selectedOrder && selectedOrder._id === orderId) {
+        setSelectedOrder(res.data?.order || null);
+      }
     } catch (err) {
-      setError(err.message || "Failed to verify narcotics order.");
+      setError(err.message || "Failed to verify prescription order.");
     }
   };
 
@@ -1480,6 +1562,28 @@ function Orders({ token, adminUser, initialFilter }) {
                     )}
                   </div>
                   <div style={{ margin: "0.4rem 0", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <strong style={{ fontSize: "0.85rem" }}>Pharmacist / Reviewer:</strong>
+                    {adminUser?.role === "super_admin" || adminUser?.role === "admin" ? (
+                      <select
+                        className="form-control"
+                        style={{ fontSize: "0.8rem", padding: "0.25rem 0.5rem", width: "auto", minWidth: "160px" }}
+                        value={typeof selectedOrder.assignedTo === "object" ? selectedOrder.assignedTo?._id || "" : (selectedOrder.assignedTo || selectedOrder.verification?.assignedTo || "")}
+                        onChange={(e) => handleAssignSubAdmin(selectedOrder._id, e.target.value)}
+                      >
+                        <option value="">-- Unassigned (Super Admin) --</option>
+                        {subAdmins.map((adm) => (
+                          <option key={adm._id} value={adm._id}>
+                            {adm.name} ({adm.role || "pharmacist"})
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <span style={{ fontSize: "0.85rem", color: "#475569" }}>
+                        {typeof selectedOrder.assignedTo === "object" ? selectedOrder.assignedTo?.name : (selectedOrder.assignedTo || "Unassigned")}
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ margin: "0.4rem 0", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
                     <strong style={{ fontSize: "0.85rem" }}>Change Status:</strong>
                     <select
                       className="form-control"
@@ -1539,40 +1643,114 @@ function Orders({ token, adminUser, initialFilter }) {
                 </div>
               </div>
 
-              {selectedOrder.prescriptionUrl && (
-                <div style={{ marginBottom: "1rem", padding: "0.75rem", background: "#f8fafc", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                    <h4 style={{ margin: 0, fontSize: "0.9rem", color: "#0f172a" }}>Doctor's Prescription</h4>
-                    {prescriptionBlobUrl && (
+              {/* Prescription & Verification Details Card */}
+              {(selectedOrder.requiresPrescription || selectedOrder.isNarcotic || selectedOrder.type === "narcotics" || (prescriptionBlobUrls && prescriptionBlobUrls.length > 0)) && (
+                <div style={{ marginBottom: "1rem", padding: "0.85rem", background: "#f8fafc", borderRadius: "8px", border: "1px solid #cbd5e1" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem", flexWrap: "wrap", gap: "0.5rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span style={{ fontSize: "1rem" }}>🩺</span>
+                      <strong style={{ fontSize: "0.95rem", color: "#0f172a" }}>Prescription & Patient Details</strong>
+                      <span
+                        style={{
+                          fontSize: "0.75rem",
+                          fontWeight: 700,
+                          padding: "0.15rem 0.5rem",
+                          borderRadius: "4px",
+                          background: selectedOrder.verification?.status === "approved" ? "#dcfce7" : selectedOrder.verification?.status === "partially_approved" ? "#fef3c7" : selectedOrder.verification?.status === "rejected" ? "#fee2e2" : "#fef9c3",
+                          color: selectedOrder.verification?.status === "approved" ? "#15803d" : selectedOrder.verification?.status === "partially_approved" ? "#b45309" : selectedOrder.verification?.status === "rejected" ? "#b91c1c" : "#854d0e",
+                          border: "1px solid currentColor",
+                        }}
+                      >
+                        Verification: {selectedOrder.verification?.status ? selectedOrder.verification.status.toUpperCase() : "PENDING"}
+                      </span>
+                    </div>
+                    {prescriptionBlobUrls.length > 0 && prescriptionBlobUrls[activePrescriptionIndex] && (
                       <a
-                        href={prescriptionBlobUrl}
+                        href={prescriptionBlobUrls[activePrescriptionIndex].localUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="btn btn-sm btn-outline"
                         style={{ padding: "0.25rem 0.6rem", fontSize: "0.75rem" }}
                       >
-                        {selectedOrder.prescriptionUrl.toLowerCase().includes(".pdf") ? "📄 Open PDF in New Tab ↗" : "🔍 View Full Image ↗"}
+                        {prescriptionBlobUrls[activePrescriptionIndex].isPdf ? "📄 Open PDF in New Tab ↗" : "🔍 Full Size Image ↗"}
                       </a>
                     )}
                   </div>
-                  {prescriptionLoading ? (
-                    <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0.5rem 0" }}>Loading secure prescription...</p>
-                  ) : prescriptionBlobUrl ? (
-                    selectedOrder.prescriptionUrl.toLowerCase().includes(".pdf") ? (
-                      <div style={{ marginTop: "0.5rem" }}>
-                        <iframe
-                          src={prescriptionBlobUrl}
-                          title="Doctor's Prescription PDF"
-                          style={{ width: "100%", height: "350px", border: "1px solid #cbd5e1", borderRadius: "6px", background: "#ffffff" }}
-                        />
-                      </div>
-                    ) : (
-                      <a href={prescriptionBlobUrl} target="_blank" rel="noreferrer" style={{ display: "inline-block", cursor: "zoom-in" }}>
-                        <img src={prescriptionBlobUrl} alt="Doctor's Prescription" style={{ maxHeight: "240px", maxWidth: "100%", borderRadius: "6px", objectFit: "contain", border: "1px solid #e2e8f0" }} />
-                      </a>
-                    )
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.5rem", fontSize: "0.85rem", marginBottom: "0.75rem", background: "#ffffff", padding: "0.6rem 0.75rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
+                    <div><strong>Patient Name:</strong> {selectedOrder.patientName || selectedOrder.customer?.name || "Not provided"}</div>
+                    <div><strong>Customer Notes:</strong> {selectedOrder.customerNotes || "None"}</div>
+                    <div><strong>Authenticity:</strong> {selectedOrder.prescriptionConfirmation ? "✓ Confirmed authentic by customer" : "Not declared"}</div>
+                    <div><strong>Reviewed By:</strong> {selectedOrder.verification?.reviewedBy || "Pending"} {selectedOrder.verification?.reviewedAt && `(${new Date(selectedOrder.verification.reviewedAt).toLocaleDateString()})`}</div>
+                    {selectedOrder.verification?.reason && (
+                      <div style={{ gridColumn: "1 / -1" }}><strong>Verification Note:</strong> <span style={{ color: "#b91c1c" }}>{selectedOrder.verification.reason}</span></div>
+                    )}
+                  </div>
+
+                  {/* Multi-file Prescription Gallery */}
+                  {prescriptionBlobUrls.length > 0 ? (
+                    <div>
+                      {prescriptionBlobUrls.length > 1 && (
+                        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", overflowX: "auto", paddingBottom: "4px" }}>
+                          {prescriptionBlobUrls.map((fileObj, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => {
+                                setActivePrescriptionIndex(idx);
+                                setPrescriptionBlobUrl(fileObj.localUrl);
+                              }}
+                              style={{
+                                padding: "0.3rem 0.75rem",
+                                borderRadius: "6px",
+                                border: activePrescriptionIndex === idx ? "2px solid #2563eb" : "1px solid #cbd5e1",
+                                background: activePrescriptionIndex === idx ? "#eff6ff" : "#ffffff",
+                                color: activePrescriptionIndex === idx ? "#1d4ed8" : "#475569",
+                                fontWeight: activePrescriptionIndex === idx ? 700 : 500,
+                                fontSize: "0.75rem",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                              }}
+                            >
+                              <span>{fileObj.isPdf ? "📄" : "🖼️"}</span>
+                              <span>File {idx + 1}</span>
+                              <span style={{ fontSize: "0.65rem", color: "#94a3b8" }}>({fileObj.filename.slice(-10)})</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
+                      {prescriptionLoading ? (
+                        <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0.5rem 0" }}>Loading secure prescription files...</p>
+                      ) : prescriptionBlobUrls[activePrescriptionIndex] ? (
+                        prescriptionBlobUrls[activePrescriptionIndex].isPdf ? (
+                          <iframe
+                            src={prescriptionBlobUrls[activePrescriptionIndex].localUrl}
+                            title="Prescription Document PDF"
+                            style={{ width: "100%", height: "350px", border: "1px solid #cbd5e1", borderRadius: "6px", background: "#ffffff" }}
+                          />
+                        ) : (
+                          <div style={{ textAlign: "center", background: "#f1f5f9", padding: "0.5rem", borderRadius: "6px", border: "1px solid #e2e8f0" }}>
+                            <a href={prescriptionBlobUrls[activePrescriptionIndex].localUrl} target="_blank" rel="noreferrer" style={{ display: "inline-block", cursor: "zoom-in" }}>
+                              <img
+                                src={prescriptionBlobUrls[activePrescriptionIndex].localUrl}
+                                alt="Prescription Document"
+                                style={{ maxHeight: "280px", maxWidth: "100%", borderRadius: "4px", objectFit: "contain" }}
+                              />
+                            </a>
+                            <div style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "4px" }}>Click image to view in full resolution</div>
+                          </div>
+                        )
+                      ) : (
+                        <p style={{ fontSize: "0.85rem", color: "#dc2626", margin: "0.5rem 0" }}>Unable to preview prescription file.</p>
+                      )}
+                    </div>
                   ) : (
-                    <p style={{ fontSize: "0.85rem", color: "#dc2626", margin: "0.5rem 0" }}>Unable to preview prescription file.</p>
+                    <div style={{ fontSize: "0.85rem", color: "#64748b", fontStyle: "italic" }}>
+                      No prescription attachment files detected for this order.
+                    </div>
                   )}
                 </div>
               )}
@@ -1584,24 +1762,114 @@ function Orders({ token, adminUser, initialFilter }) {
                   <thead>
                     <tr>
                       <th>Medicine Name</th>
+                      <th>Class</th>
+                      <th>Review Status</th>
                       <th>Qty</th>
                       <th>Unit Price</th>
                       <th style={{ textAlign: "right" }}>Subtotal</th>
+                      {selectedOrder.status === "pending_verification" && (
+                        <th style={{ textAlign: "center" }}>Line Review Action</th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
                     {selectedOrder.items && selectedOrder.items.length > 0 ? (
-                      selectedOrder.items.map((it, idx) => (
-                        <tr key={idx}>
-                          <td>{it.name || it.productId?.name || "Medicine"}</td>
-                          <td>{it.quantity}</td>
-                          <td>PKR {it.price?.toLocaleString()}</td>
-                          <td style={{ textAlign: "right" }}>PKR {((it.price || 0) * (it.quantity || 1)).toLocaleString()}</td>
-                        </tr>
-                      ))
+                      selectedOrder.items.map((it, idx) => {
+                        const pid = (it.productId?._id || it.productId || idx).toString();
+                        const isRx = it.isNarcotic || it.productId?.isNarcotic || it.requiresPrescription || it.productId?.requiresPrescription;
+                        const currentDecision = itemReviewDecisions[pid] || it.reviewStatus || (isRx ? "pending" : "approved");
+                        const currentReason = itemReviewReasons[pid] || it.rejectionReason || "";
+
+                        return (
+                          <tr key={idx} style={{ background: currentDecision === "rejected" ? "#fef2f2" : "transparent" }}>
+                            <td>
+                              <div style={{ fontWeight: 600, color: currentDecision === "rejected" ? "#991b1b" : "#0f172a" }}>
+                                {it.name || it.productId?.name || "Medicine"}
+                              </div>
+                              {currentDecision === "rejected" && currentReason && (
+                                <div style={{ fontSize: "0.75rem", color: "#dc2626", marginTop: "2px" }}>
+                                  Reason: {currentReason}
+                                </div>
+                              )}
+                            </td>
+                            <td>
+                              {isRx ? (
+                                <span style={{ background: "#fee2e2", color: "#b91c1c", padding: "2px 6px", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 700, border: "1px solid #fca5a5" }}>
+                                  ⛔ Rx Required
+                                </span>
+                              ) : (
+                                <span style={{ background: "#f0fdf4", color: "#166534", padding: "2px 6px", borderRadius: "4px", fontSize: "0.75rem", fontWeight: 600, border: "1px solid #bbf7d0" }}>
+                                  Safe (OTC)
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              {currentDecision === "approved" ? (
+                                <span style={{ color: "#15803d", fontWeight: 700, fontSize: "0.8rem" }}>✓ Approved</span>
+                              ) : currentDecision === "rejected" ? (
+                                <span style={{ color: "#b91c1c", fontWeight: 700, fontSize: "0.8rem" }}>✕ Rejected</span>
+                              ) : (
+                                <span style={{ color: "#b45309", fontWeight: 700, fontSize: "0.8rem" }}>⏳ Pending Review</span>
+                              )}
+                            </td>
+                            <td>{it.quantity}</td>
+                            <td>PKR {it.price?.toLocaleString()}</td>
+                            <td style={{ textAlign: "right", textDecoration: currentDecision === "rejected" ? "line-through" : "none", color: currentDecision === "rejected" ? "#94a3b8" : "inherit" }}>
+                              PKR {((it.price || 0) * (it.quantity || 1)).toLocaleString()}
+                            </td>
+                            {selectedOrder.status === "pending_verification" && (
+                              <td style={{ textAlign: "center" }}>
+                                <div style={{ display: "inline-flex", gap: "4px" }}>
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm"
+                                    style={{
+                                      padding: "0.2rem 0.5rem",
+                                      fontSize: "0.75rem",
+                                      background: currentDecision === "approved" ? "#16a34a" : "#f0fdf4",
+                                      color: currentDecision === "approved" ? "#ffffff" : "#15803d",
+                                      border: "1px solid #16a34a",
+                                      borderRadius: "4px",
+                                    }}
+                                    onClick={() => {
+                                      setItemReviewDecisions((prev) => ({ ...prev, [pid]: "approved" }));
+                                      setItemReviewReasons((prev) => ({ ...prev, [pid]: "" }));
+                                    }}
+                                    title="Approve this line item"
+                                  >
+                                    ✓ Keep
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm"
+                                    style={{
+                                      padding: "0.2rem 0.5rem",
+                                      fontSize: "0.75rem",
+                                      background: currentDecision === "rejected" ? "#dc2626" : "#fef2f2",
+                                      color: currentDecision === "rejected" ? "#ffffff" : "#b91c1c",
+                                      border: "1px solid #dc2626",
+                                      borderRadius: "4px",
+                                    }}
+                                    onClick={() => {
+                                      const reasonPrompt = window.prompt("Reason for rejecting this item (e.g. invalid dosage, expired Rx):", currentReason || "Prescription item unverified");
+                                      if (reasonPrompt !== null) {
+                                        setItemReviewDecisions((prev) => ({ ...prev, [pid]: "rejected" }));
+                                        setItemReviewReasons((prev) => ({ ...prev, [pid]: reasonPrompt }));
+                                      }
+                                    }}
+                                    title="Reject and remove this prescription line"
+                                  >
+                                    ✕ Reject
+                                  </button>
+                                </div>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })
                     ) : (
                       <tr>
-                        <td colSpan="4" style={{ textAlign: "center", color: "#64748b", padding: "1rem" }}>
+                        <td colSpan={selectedOrder.status === "pending_verification" ? "7" : "6"} style={{ textAlign: "center", color: "#64748b", padding: "1rem" }}>
                           No medicines priced yet.
                         </td>
                       </tr>
@@ -1617,11 +1885,49 @@ function Orders({ token, adminUser, initialFilter }) {
                 <div style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#0f172a", marginTop: "0.25rem" }}>Total: PKR {selectedOrder.totals?.total?.toLocaleString() || 0}</div>
               </div>
             </div>
-            <div className="modal-footer">
-              {selectedOrder.status === "awaiting-pharmacist-pricing" && (
+            <div className="modal-footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+              {selectedOrder.status === "pending_verification" ? (
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <button
+                    className="btn btn-primary"
+                    style={{ background: "#16a34a", borderColor: "#16a34a", color: "#ffffff", fontWeight: "bold", fontSize: "0.85rem" }}
+                    onClick={() => handleReviewNarcotics(selectedOrder._id, "approved")}
+                  >
+                    ✓ Approve All Items
+                  </button>
+                  {Object.values(itemReviewDecisions).some((d) => d === "rejected") && (
+                    <button
+                      className="btn"
+                      style={{ background: "#d97706", borderColor: "#d97706", color: "#ffffff", fontWeight: "bold", fontSize: "0.85rem" }}
+                      onClick={() => {
+                        const rejectedIds = Object.keys(itemReviewDecisions).filter((k) => itemReviewDecisions[k] === "rejected");
+                        const rejectReasons = rejectedIds.map((k) => itemReviewReasons[k]).filter(Boolean).join("; ");
+                        handleReviewNarcotics(selectedOrder._id, "partially_approved", {
+                          rejectedItemIds: rejectedIds,
+                          reason: rejectReasons || "Rejected prescription items removed. Remaining items approved.",
+                        });
+                      }}
+                    >
+                      ⚡ Option 1: Approve Valid Items & Remove Rejected ({Object.values(itemReviewDecisions).filter((d) => d === "rejected").length})
+                    </button>
+                  )}
+                  <button
+                    className="btn btn-outline"
+                    style={{ color: "#dc2626", borderColor: "#dc2626", fontSize: "0.85rem" }}
+                    onClick={() => {
+                      const reasonPrompt = window.prompt("Reason for rejecting entire order:", "Prescription verification failed");
+                      if (reasonPrompt !== null) {
+                        handleReviewNarcotics(selectedOrder._id, "rejected", { reason: reasonPrompt });
+                      }
+                    }}
+                  >
+                    ✕ Reject Entire Order
+                  </button>
+                </div>
+              ) : selectedOrder.status === "awaiting-pharmacist-pricing" ? (
                 <button
                   className="btn btn-primary"
-                  style={{ background: "#eab308", color: "#0f172a", fontWeight: "bold", marginRight: "auto" }}
+                  style={{ background: "#eab308", color: "#0f172a", fontWeight: "bold" }}
                   onClick={() => {
                     const cur = selectedOrder;
                     handleCloseDetails();
@@ -1630,7 +1936,7 @@ function Orders({ token, adminUser, initialFilter }) {
                 >
                   ⚡ Price Items
                 </button>
-              )}
+              ) : null}
               <button className="btn btn-secondary" onClick={handleCloseDetails}>Close</button>
             </div>
           </div>

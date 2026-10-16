@@ -333,8 +333,15 @@ export default function DvagoSearchBar({ className = "" }) {
             />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-xs font-bold text-slate-900 truncate group-hover:text-amber-700 transition-colors">
-              {prod.name}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-bold text-slate-900 truncate group-hover:text-amber-700 transition-colors">
+                {prod.name}
+              </span>
+              {(prod.isNarcotic || prod.requiresPrescription || prod.rxStatus === 'prescription_required') && (
+                <span className="text-[8px] font-black bg-amber-100 text-amber-950 px-1 py-0.5 rounded border border-amber-300 shrink-0">
+                  Prescription Required
+                </span>
+              )}
             </div>
             <div className="flex items-baseline gap-1.5 mt-0.5">
               <span className="text-xs font-black text-red-600">
@@ -371,14 +378,6 @@ export default function DvagoSearchBar({ className = "" }) {
             <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1.5 rounded-xl border border-slate-200">
               Out
             </span>
-          ) : prod.isNarcotic ? (
-            <Link
-              href={`/products/${prod.slug || prod._id}`}
-              onClick={() => setIsOpen(false)}
-              className="text-[10px] font-extrabold text-amber-900 bg-amber-100 border border-amber-300 px-2 py-1.5 rounded-xl hover:bg-amber-200 transition-colors"
-            >
-              Rx
-            </Link>
           ) : (
             <button
               type="button"
@@ -386,9 +385,17 @@ export default function DvagoSearchBar({ className = "" }) {
               className={`w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-2xs font-bold text-sm ${
                 isAdded
                   ? "bg-emerald-600 text-white border border-emerald-600 scale-105"
+                  : (prod.isNarcotic || prod.requiresPrescription || prod.rxStatus === 'prescription_required')
+                  ? "bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300"
                   : "bg-amber-500 hover:bg-amber-600 text-slate-950 hover:scale-105 active:scale-95 border border-amber-500"
               }`}
-              title={isAdded ? "Added to Cart!" : "Add to Cart"}
+              title={
+                isAdded
+                  ? "Added to Cart!"
+                  : (prod.isNarcotic || prod.requiresPrescription || prod.rxStatus === 'prescription_required')
+                  ? "Add (Prescription Required)"
+                  : "Add to Cart"
+              }
               aria-label="Add to cart"
             >
               {isAdded ? (

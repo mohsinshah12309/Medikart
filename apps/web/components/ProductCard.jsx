@@ -110,14 +110,10 @@ function ProductCardComponent({ product }) {
           </button>
         </div>
         
-        {/* Narcotics Badge vs Prescription Badge vs OTC Badge */}
-        {product.isNarcotic ? (
-          <span className="absolute bottom-1.5 left-1.5 z-10 bg-amber-100 text-amber-900 border border-amber-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-2xs">
-            Rx ONLY
-          </span>
-        ) : product.requiresPrescription ? (
-          <span className="absolute bottom-1.5 left-1.5 z-10 bg-rose-50 text-rose-700 border border-rose-200 text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow-2xs">
-            Rx ONLY
+        {/* Prescription Required Badge vs OTC Badge */}
+        {product.isNarcotic || product.requiresPrescription || product.rxStatus === 'prescription_required' ? (
+          <span className="absolute bottom-1.5 left-1.5 z-10 bg-amber-100 text-amber-950 border border-amber-300 text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-2xs">
+            Prescription Required
           </span>
         ) : isOtc && !isOutOfStock ? (
           <span className="absolute bottom-1.5 left-1.5 z-10 bg-emerald-50 text-emerald-700 text-[9px] font-bold px-1.5 py-0.5 rounded-md border border-emerald-200">
@@ -199,21 +195,16 @@ function ProductCardComponent({ product }) {
               <span className="w-full inline-block text-center bg-slate-100 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 rounded-xl border border-slate-200">
                 Out of Stock
               </span>
-            ) : product.isNarcotic ? (
-              <Link
-                href={`/products/${product.slug || product._id}`}
-                className="w-full inline-flex items-center justify-center gap-1 text-center bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] sm:text-xs font-bold py-1.5 rounded-xl border border-amber-300 transition-colors"
-              >
-                <span>Rx Required</span>
-                <span>&rarr;</span>
-              </Link>
             ) : (
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className={`w-full py-1.5 px-2 rounded-xl text-[11px] sm:text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
+                disabled={added}
+                className={`w-full py-1.5 px-2 rounded-xl text-[10px] sm:text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
                   added
                     ? 'bg-emerald-600 text-white shadow-emerald-500/20'
+                    : (product.isNarcotic || product.requiresPrescription || product.rxStatus === 'prescription_required')
+                    ? 'bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300'
                     : 'btn-amber-gradient text-slate-950 hover:brightness-105'
                 }`}
               >
@@ -221,6 +212,11 @@ function ProductCardComponent({ product }) {
                   <>
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                     <span>Added!</span>
+                  </>
+                ) : (product.isNarcotic || product.requiresPrescription || product.rxStatus === 'prescription_required') ? (
+                  <>
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                    <span>Add (Prescription Required)</span>
                   </>
                 ) : (
                   <>

@@ -70,14 +70,16 @@ const placeStandardOrder = async ({ customer, items, paymentMethod, otp }) => {
     }
   }
 
-  // ── Verify OTP (FR-CW-09) — runs after product fetch so narcotics can be ──
-  // detected before consuming an OTP attempt on a doomed request.
-  await otpService.verifyOtp(otp.email, otp.code);
-
-  const requiresVerification = products.some((product) => product.isNarcotic === true);
+  // ── Step 5: Check prescription gating BEFORE consuming OTP ────────────────
+  const requiresVerification = products.some(
+    (product) => product.isNarcotic === true || product.rxStatus === "prescription_required" || product.requiresPrescription === true
+  );
   if (requiresVerification) {
-    throw new BadRequestError("This order contains items that require a prescription. Narcotics items cannot be purchased through standard checkout.");
+    throw new BadRequestError("This order contains items that require a prescription. Prescription-required items cannot be purchased through standard checkout.");
   }
+
+  // ── Verify OTP (FR-CW-09) ───────────────────────────────────────────────────
+  await otpService.verifyOtp(otp.email, otp.code);
 
   // ── Build order items with server-computed effective prices ─────────────────
   const orderItems = items.map((item) => {

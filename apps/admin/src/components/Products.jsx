@@ -18,6 +18,7 @@ function Products({ token }) {
   // Filters State
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("");
+  const [rxStatusFilter, setRxStatusFilter] = useState("");
 
   // Modals Visibility
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -38,6 +39,8 @@ function Products({ token }) {
     primaryCategoryId: "",
     secondaryCategoryId: "",
     isNarcotic: false,
+    requiresPrescription: false,
+    rxStatus: "none",
     stockStatus: "in_stock",
     active: true,
   });
@@ -90,7 +93,7 @@ function Products({ token }) {
   useEffect(() => {
     setPage(1);
     fetchProducts(1);
-  }, [selectedCategoryFilter]);
+  }, [selectedCategoryFilter, rxStatusFilter]);
 
   const fetchProducts = async (pageOverride = page) => {
     try {
@@ -103,6 +106,9 @@ function Products({ token }) {
       }
       if (selectedCategoryFilter) {
         queryParams.push(`categoryId=${selectedCategoryFilter}`);
+      }
+      if (rxStatusFilter) {
+        queryParams.push(`rxStatus=${rxStatusFilter}`);
       }
 
       const queryString = queryParams.length ? `?${queryParams.join("&")}` : "";
@@ -137,6 +143,8 @@ function Products({ token }) {
       primaryCategoryId: categories[0]?._id || "",
       secondaryCategoryId: "",
       isNarcotic: false,
+      requiresPrescription: false,
+      rxStatus: "none",
       stockStatus: "in_stock",
       active: true,
     });
@@ -150,6 +158,7 @@ function Products({ token }) {
     const catIds = (product.categoryIds || [])
       .map((c) => (typeof c === "object" && c ? c._id : c))
       .filter(Boolean);
+    const isRx = !!product.isNarcotic || !!product.requiresPrescription;
     setFormData({
       name: product.name || "",
       sku: product.sku || "",
@@ -157,7 +166,9 @@ function Products({ token }) {
       description: product.description || "",
       primaryCategoryId: catIds[0] || "",
       secondaryCategoryId: catIds[1] || "",
-      isNarcotic: !!product.isNarcotic,
+      isNarcotic: isRx,
+      requiresPrescription: isRx,
+      rxStatus: product.rxStatus || (product.isNarcotic ? "prescription_required" : "none"),
       stockStatus: product.stockStatus || "in_stock",
       active: product.active !== false,
     });
@@ -174,13 +185,16 @@ function Products({ token }) {
       .filter(Boolean)
       .filter((id, index, self) => self.indexOf(id) === index);
 
+    const isRx = formData.rxStatus === "prescription_required" || formData.rxStatus === "narcotic" || Boolean(formData.isNarcotic);
     const payload = {
       name: formData.name,
       sku: formData.sku,
       price: parseFloat(formData.price),
       description: formData.description,
       categoryIds: selectedCategoryIds,
-      isNarcotic: formData.isNarcotic,
+      isNarcotic: isRx,
+      requiresPrescription: isRx,
+      rxStatus: formData.rxStatus || (isRx ? "prescription_required" : "none"),
       stockStatus: formData.stockStatus,
       active: formData.active !== false,
     };
@@ -249,12 +263,14 @@ function Products({ token }) {
   const handleToggleNarcotic = async (product) => {
     setError("");
     setSuccessMsg("");
-    const newNarcoticState = !product.isNarcotic;
+    const isCurrentlyRx = product.rxStatus === "prescription_required" || product.rxStatus === "narcotic" || product.isNarcotic;
+    const newNarcoticState = !isCurrentlyRx;
+    const newRxStatus = newNarcoticState ? "prescription_required" : "none";
     const prevProducts = [...products];
 
     // Optimistic UI update: toggle badge immediately
     setProducts((prev) =>
-      prev.map((p) => (p._id === product._id ? { ...p, isNarcotic: newNarcoticState } : p))
+      prev.map((p) => (p._id === product._id ? { ...p, isNarcotic: newNarcoticState, requiresPrescription: newNarcoticState, rxStatus: newRxStatus } : p))
     );
     setSavingNarcoticsId(product._id);
 
@@ -264,11 +280,11 @@ function Products({ token }) {
         body: JSON.stringify({ isNarcotic: newNarcoticState }),
       });
 
-      setSuccessMsg(`Narcotics status for ${product.name} updated to ${newNarcoticState ? "ON (Controlled)" : "OFF (Safe)"}`);
+      setSuccessMsg(`Prescription status for ${product.name} updated to ${newNarcoticState ? "ON (Prescription Required)" : "OFF (Safe / OTC)"}`);
     } catch (err) {
       // Revert optimistic update on failure
       setProducts(prevProducts);
-      setError(err.message || "Failed to update narcotics flag");
+      setError(err.message || "Failed to update prescription flag");
     } finally {
       setSavingNarcoticsId(null);
     }
@@ -463,16 +479,13 @@ function Products({ token }) {
   const handleClearFilters = () => {
     setSearchQuery("");
     setSelectedCategoryFilter("");
+    setRxStatusFilter("");
     setPage(1);
     setProducts([]);
     const fetchCleared = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_URL}/admin/products?page=1&limit=${limit}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "Failed to fetch products");
+        const data = await adminFetch(`/admin/products?page=1&limit=${limit}`);
         setProducts(data.data?.products || []);
         setTotal(data.pagination?.total || 0);
         setPages(data.pagination?.pages || 1);
@@ -497,9 +510,9 @@ function Products({ token }) {
       {error && <div className="alert alert-danger">{error}</div>}
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
 
-      {/* Search and Category Filter Toolbar */}
+      {/* Search, Category and Rx Filter Toolbar */}
       <div className="toolbar-card">
-        <div className="toolbar-container">
+        <div className="toolbar-container" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
           {/* Search form */}
           <form
             onSubmit={(e) => {
@@ -534,12 +547,30 @@ function Products({ token }) {
               placeholder={`All Categories (${categories.length})`}
               searchPlaceholder="Search category name..."
               size="md"
-              minWidth="200px"
-              maxWidth="300px"
+              minWidth="180px"
+              maxWidth="260px"
             />
+          </div>
+
+          {/* Rx Status Filter */}
+          <div className="filter-controls-group" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <label className="filter-label-text" style={{ flexShrink: 0 }}>
+              Rx Status:
+            </label>
+            <select
+              className="form-control"
+              style={{ width: "auto", minWidth: "160px", fontSize: "0.85rem", padding: "0.35rem 0.6rem" }}
+              value={rxStatusFilter}
+              onChange={(e) => setRxStatusFilter(e.target.value)}
+            >
+              <option value="">All Types (OTC & Rx)</option>
+              <option value="none">OTC Only (Safe)</option>
+              <option value="prescription_required">🔒 Prescription Required</option>
+              <option value="narcotic">⛔ Controlled Narcotic</option>
+            </select>
 
             {/* Clear Filters */}
-            {(searchQuery || selectedCategoryFilter) && (
+            {(searchQuery || selectedCategoryFilter || rxStatusFilter) && (
               <button
                 onClick={handleClearFilters}
                 className="btn btn-secondary"
@@ -599,7 +630,7 @@ function Products({ token }) {
                   <th className="th-category">Category</th>
                   <th className="th-price">Price</th>
                   <th className="th-status" style={{ textAlign: "center" }}>Status</th>
-                  <th className="th-narcotics">Narcotics</th>
+                  <th className="th-narcotics">Prescription (Rx)</th>
                   <th className="th-discount">Discount</th>
                   <th className="th-actions">Actions</th>
                 </tr>
@@ -665,24 +696,35 @@ function Products({ token }) {
                       </td>
                       <td className="td-center">
                         <span
-                          className={`badge ${product.isNarcotic ? "badge-narcotic" : "badge-secondary"}`}
+                          className={`badge ${
+                            product.rxStatus === "narcotic"
+                              ? "badge-narcotic"
+                              : product.rxStatus === "prescription_required" || product.isNarcotic
+                              ? "badge-prescription"
+                              : "badge-secondary"
+                          }`}
                           style={{
                             cursor: savingNarcoticsId === product._id ? "wait" : "pointer",
                             opacity: savingNarcoticsId === product._id ? 0.75 : 1,
                             transition: "all 0.15s ease",
+                            padding: "0.25rem 0.55rem",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
                           }}
                           onClick={() => {
                             if (savingNarcoticsId !== product._id) {
                               handleToggleNarcotic(product);
                             }
                           }}
-                          title={product.isNarcotic ? "Click to remove Narcotics flag" : "Click to set Narcotics flag"}
+                          title="Click to toggle Prescription / Narcotics flag"
                         >
                           {savingNarcoticsId === product._id
                             ? "Saving..."
-                            : product.isNarcotic
-                            ? "Narcotic ⚠️"
-                            : "Safe"}
+                            : product.rxStatus === "narcotic"
+                            ? "⛔ Narcotic"
+                            : product.rxStatus === "prescription_required" || product.isNarcotic
+                            ? "🔒 Rx Required"
+                            : "Safe (OTC)"}
                         </span>
                       </td>
                       <td className="td-center">
@@ -919,20 +961,32 @@ function Products({ token }) {
                     </label>
                   </div>
                 </div>
-                <div className="form-group">
-                  <div className="switch-group">
-                    <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#475569" }}>
-                      Narcotics Warning / Gate Required
-                    </span>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={formData.isNarcotic}
-                        onChange={(e) => setFormData({ ...formData, isNarcotic: e.target.checked })}
-                      />
-                      <span className="slider"></span>
-                    </label>
-                  </div>
+                <div className="form-group" style={{ padding: "0.75rem 1rem", backgroundColor: "#f8fafc", borderRadius: "0.75rem", border: "1px solid #e2e8f0" }}>
+                  <label htmlFor="rx-status-select" style={{ fontSize: "0.95rem", fontWeight: 700, color: "#0f172a", marginBottom: "0.4rem", display: "block" }}>
+                    Prescription & Controlled Status
+                  </label>
+                  <select
+                    id="rx-status-select"
+                    className="form-control"
+                    value={formData.rxStatus || (formData.isNarcotic ? "prescription_required" : "none")}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const isRx = val !== "none";
+                      setFormData((prev) => ({
+                        ...prev,
+                        rxStatus: val,
+                        isNarcotic: isRx,
+                        requiresPrescription: isRx,
+                      }));
+                    }}
+                  >
+                    <option value="none">No Prescription Required (General / OTC)</option>
+                    <option value="prescription_required">🔒 Prescription Required (Doctor's Rx Gated)</option>
+                    <option value="narcotic">⛔ Controlled Narcotic (Strict Schedule / Verified Rx)</option>
+                  </select>
+                  <small style={{ color: "#64748b", marginTop: "4px", display: "block" }}>
+                    Selecting Prescription Required or Controlled Narcotic enforces doctor's prescription upload and pharmacist review before fulfillment.
+                  </small>
                 </div>
               </div>
               <div className="modal-footer">

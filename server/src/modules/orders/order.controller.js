@@ -48,24 +48,37 @@ const placeNarcoticsOrder = async (req, res, next) => {
     if (err) return next(err);
 
     try {
-      // Fix 3 — parse the JSON form fields safely (400 on malformed JSON).
+      // Parse the JSON form fields safely
       const payload = {
         customer: parseJsonField(req.body.customer, "customer"),
         items: parseJsonField(req.body.items, "items") || [],
         paymentMethod: req.body.paymentMethod,
         otp: parseJsonField(req.body.otp, "otp"),
+        patientName: req.body.patientName || null,
+        pharmacistNotes: req.body.pharmacistNotes || null,
+        customerNotes: req.body.customerNotes || req.body.notes || null,
+        prescriptionConfirmation:
+          req.body.prescriptionConfirmation === "true" ||
+          req.body.prescriptionConfirmation === true,
         prescriptionFilename: null,
+        prescriptionFilenames: [],
       };
 
-      // Fix 3 — validate the parsed JSON before touching the file system.
+      // Validate parsed JSON before touching the file system
       placeNarcoticsOrderSchema.parse(payload);
 
-      // Fix 4 — validate the prescription file's TRUE content (magic bytes)
-      // and write it to disk only after the payload is known to be valid.
-      // A renamed .exe or fake mimetype is rejected here — never stored.
-      payload.prescriptionFilename = req.file
-        ? await savePrescriptionToDisk(req.file.buffer)
-        : null;
+      // Validate prescription files TRUE content (magic bytes)
+      const uploadedFiles = req.files || (req.file ? [req.file] : []);
+      const savedFilenames = [];
+      for (const file of uploadedFiles) {
+        if (file && file.buffer) {
+          const fn = await savePrescriptionToDisk(file.buffer);
+          savedFilenames.push(fn);
+        }
+      }
+
+      payload.prescriptionFilenames = savedFilenames;
+      payload.prescriptionFilename = savedFilenames[0] || null;
 
       const order = await orderService.placeOrder("narcotics", payload);
       res.status(201).json({
@@ -82,7 +95,7 @@ const reviewNarcoticsOrder = async (req, res, next) => {
   try {
     const order = await orderService.reviewNarcoticsOrder(
       req.params.id,
-      req.body.decision,
+      req.body,
       req.admin,
     );
     res.status(200).json({

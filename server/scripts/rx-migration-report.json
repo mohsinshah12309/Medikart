@@ -1,0 +1,1333 @@
+{
+  "executedAt": "2026-10-16T14:01:57.797Z",
+  "mode": "apply",
+  "totalItems": 66,
+  "exactMatches": [
+    {
+      "itemNo": 1,
+      "name": "Alp (0.25Mg) 30 Tablet",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-alp-025mg-30-tablet",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9073f530ff9f1a1d0f2389",
+      "productName": "Alp (0.25Mg) 30 Tablet",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 2,
+      "name": "Tramal (100Mg) 2Ml 5 Ampoule Injections",
+      "generic": "Tramadol 100mg",
+      "sku": "SKU-tramal-100mg-2ml-5-ampoule-inj",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90742630ff9f1a1d0f293d",
+      "productName": "Tramal (100Mg) 2Ml 5 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 3,
+      "name": "Valium (10Mg/2Ml) 2Ml, 5 Ampoule Injections",
+      "generic": "Diazepam 10mg",
+      "sku": "SKU-valium-10mg2ml-2ml-5-ampoule-i",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90742730ff9f1a1d0f2961",
+      "productName": "Valium (10Mg/2Ml) 2Ml, 5 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 4,
+      "name": "Valium (5Mg) 30 Tablets",
+      "generic": "Diazepam 5mg",
+      "sku": "SKU-valium-5mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90742730ff9f1a1d0f2965",
+      "productName": "Valium (5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 5,
+      "name": "Xanax (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.5mg",
+      "sku": "SKU-xanax-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90742930ff9f1a1d0f29a1",
+      "productName": "Xanax (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 6,
+      "name": "Rivotril (0.5Mg) 50 Tablets",
+      "generic": "Clonazepam 0.5mg",
+      "sku": "SKU-rivotril-05mg-50-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90743130ff9f1a1d0f2a8d",
+      "productName": "Rivotril (0.5Mg) 50 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 7,
+      "name": "Rondec C (120Ml) Cough Syrup",
+      "generic": "Dextromethorphan 7.5mg/5ml, Carbinoxamine 1.25mg/5ml, Pseudoephedrine 30mg/5ml",
+      "sku": "SKU-rondec-c-120ml-cough-syrup",
+      "class": "Controlled Combination Formulations & Precursors",
+      "risk": "MEDIUM",
+      "productId": "6a90743530ff9f1a1d0f2b0d",
+      "productName": "Rondec C (120Ml) Cough Syrup",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 8,
+      "name": "Valium (10Mg) 30 Tablets",
+      "generic": "Diazepam 10mg",
+      "sku": "SKU-valium-10mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90743730ff9f1a1d0f2b31",
+      "productName": "Valium (10Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 9,
+      "name": "Rivotril (2Mg) 30 Tablets",
+      "generic": "Clonazepam 2mg",
+      "sku": "SKU-rivotril-2mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90743730ff9f1a1d0f2b39",
+      "productName": "Rivotril (2Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 10,
+      "name": "Corex-D (120Ml) Cough Syrup",
+      "generic": "Chlorpheniramine, Dextromethorphan, Ephedrine",
+      "sku": "SKU-corex-d-120ml-cough-syrup",
+      "class": "Controlled Combination Formulations & Precursors",
+      "risk": "MEDIUM",
+      "productId": "6a90743830ff9f1a1d0f2b65",
+      "productName": "Corex-D (120Ml) Cough Syrup",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 11,
+      "name": "Cofcol (120Ml) Elixir",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-cofcol-120ml-elixir",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90743f30ff9f1a1d0f2c21",
+      "productName": "Cofcol (120Ml) Elixir",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 12,
+      "name": "Tramal (50Mg) 10 Capsules",
+      "generic": "Tramadol 50mg",
+      "sku": "SKU-tramal-50mg-10-capsules",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90744630ff9f1a1d0f2d0d",
+      "productName": "Tramal (50Mg) 10 Capsules",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 13,
+      "name": "Tramal (50Mg/Ml) 5 Ampoule Injections",
+      "generic": "Tramadol 50mg",
+      "sku": "SKU-tramal-50mgml-5-ampoule-inject",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90744730ff9f1a1d0f2d11",
+      "productName": "Tramal (50Mg/Ml) 5 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 14,
+      "name": "Relaxin (3Mg) 30 Tablets",
+      "generic": "Bromazepam",
+      "sku": "SKU-relaxin-3mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90744a30ff9f1a1d0f2d75",
+      "productName": "Relaxin (3Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 15,
+      "name": "Sambro (3Mg) 30 Tablets",
+      "generic": "Bromazepam",
+      "sku": "SKU-sambro-3mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90744a30ff9f1a1d0f2d7d",
+      "productName": "Sambro (3Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 16,
+      "name": "Neuxam (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-neuxam-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90744e30ff9f1a1d0f2dfd",
+      "productName": "Neuxam (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 17,
+      "name": "Nervin (0.5Mg) 30 Film Coated Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-nervin-05mg-30-film-coated-tab",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90745030ff9f1a1d0f2e39",
+      "productName": "Nervin (0.5Mg) 30 Film Coated Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 18,
+      "name": "Neuxam (0.25Mg) 30 Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-neuxam-025mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90745630ff9f1a1d0f2ef1",
+      "productName": "Neuxam (0.25Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 19,
+      "name": "Azolam (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-azolam-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90745730ff9f1a1d0f2f0d",
+      "productName": "Azolam (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 20,
+      "name": "Zenith (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.5mg",
+      "sku": "SKU-zenith-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90745830ff9f1a1d0f2f21",
+      "productName": "Zenith (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 21,
+      "name": "Kinz (10Mg/Ml) 5 Ampoule Injections",
+      "generic": "Nalbuphine 10mg",
+      "sku": "SKU-kinz-10mgml-5-ampoule-injectio",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90745b30ff9f1a1d0f2f75",
+      "productName": "Kinz (10Mg/Ml) 5 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 22,
+      "name": "Kinz (20Mg/Ml) 5 Ampoule Injections",
+      "generic": "Nalbuphine 20mg",
+      "sku": "SKU-kinz-20mgml-5-ampoule-injectio",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90745b30ff9f1a1d0f2f79",
+      "productName": "Kinz (20Mg/Ml) 5 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 23,
+      "name": "Tramal Sr (100Mg) 10 Tablets",
+      "generic": "Tramadol 100mg",
+      "sku": "SKU-tramal-sr-100mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90746830ff9f1a1d0f3105",
+      "productName": "Tramal Sr (100Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 24,
+      "name": "Tonoflex (50Mg) 10 Capsules",
+      "generic": "Tramadol 50mg",
+      "sku": "SKU-tonoflex-50mg-10-capsules",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90746c30ff9f1a1d0f3185",
+      "productName": "Tonoflex (50Mg) 10 Capsules",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 25,
+      "name": "Tonoflex Sr (100Mg) 10 Tablets",
+      "generic": "Tramadol 100mg",
+      "sku": "SKU-tonoflex-sr-100mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90746c30ff9f1a1d0f3189",
+      "productName": "Tonoflex Sr (100Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 26,
+      "name": "Zultracet (37.5/325Mg) 20 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-zultracet-375325mg-20-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90747730ff9f1a1d0f32dd",
+      "productName": "Zultracet (37.5/325Mg) 20 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 27,
+      "name": "Tonoflex (100Mg/2Ml) 2Ml 5 Ampoule Injections",
+      "generic": "Tramadol 100mg",
+      "sku": "SKU-tonoflex-100mg2ml-2ml-5-ampoul",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9074a430ff9f1a1d0f3839",
+      "productName": "Tonoflex (100Mg/2Ml) 2Ml 5 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 28,
+      "name": "Tonoflex-P (37.5/325Mg) 20 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-tonoflex-p-375325mg-20-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9074b830ff9f1a1d0f3a89",
+      "productName": "Tonoflex-P (37.5/325Mg) 20 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 29,
+      "name": "Tramal Plus (37.5/325Mg) 10 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-tramal-plus-375325mg-10-tablet",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9074ca30ff9f1a1d0f3cbd",
+      "productName": "Tramal Plus (37.5/325Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 30,
+      "name": "Pantra Plus (37.5/325Mg) 10 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-pantra-plus-375325mg-10-tablet",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9074ce30ff9f1a1d0f3d25",
+      "productName": "Pantra Plus (37.5/325Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 31,
+      "name": "Octidol Plus (37.5/325Mg) 20 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-octidol-plus-375325mg-20-table",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9074d230ff9f1a1d0f3dbd",
+      "productName": "Octidol Plus (37.5/325Mg) 20 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 32,
+      "name": "Tapento Ir (75Mg) 10 Tablets",
+      "generic": "Tapentadol 75mg",
+      "sku": "SKU-tapento-ir-75mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9074db30ff9f1a1d0f3ec9",
+      "productName": "Tapento Ir (75Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 33,
+      "name": "Pinix (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.5mg",
+      "sku": "SKU-pinix-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90750730ff9f1a1d0f43f3",
+      "productName": "Pinix (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 34,
+      "name": "Sedonil (3Mg) 30 Tablets",
+      "generic": "Bromazepam",
+      "sku": "SKU-sedonil-3mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90750730ff9f1a1d0f4407",
+      "productName": "Sedonil (3Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 35,
+      "name": "Tovir (0.5Mg) 30 Tablets",
+      "generic": "Clonazepam 0.5mg",
+      "sku": "SKU-tovir-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90750830ff9f1a1d0f440f",
+      "productName": "Tovir (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 36,
+      "name": "Tovir (2mg) 30 Tablets",
+      "generic": "Clonazepam 2mg",
+      "sku": "SKU-tovir-2mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90750830ff9f1a1d0f4413",
+      "productName": "Tovir (2mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 37,
+      "name": "Astadol (37.5/325Mg) 20 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-astadol-375325mg-20-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90751130ff9f1a1d0f451f",
+      "productName": "Astadol (37.5/325Mg) 20 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 38,
+      "name": "Febrol Fast (37.5/325Mg) 10 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-febrol-fast-375325mg-10-tablet",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90751c30ff9f1a1d0f466f",
+      "productName": "Febrol Fast (37.5/325Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 39,
+      "name": "Noctamid (1Mg) 100 Tablets",
+      "generic": "Lormetazepam",
+      "sku": "SKU-noctamid-1mg-100-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90752030ff9f1a1d0f46f3",
+      "productName": "Noctamid (1Mg) 100 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 40,
+      "name": "Alp (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-alp-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90755130ff9f1a1d0f4cbd",
+      "productName": "Alp (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 41,
+      "name": "Azolam (0.25Mg) 30 Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-azolam-025mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90756e30ff9f1a1d0f5033",
+      "productName": "Azolam (0.25Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 42,
+      "name": "Alprazolam (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.5mg",
+      "sku": "SKU-alprazolam-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90757f30ff9f1a1d0f5255",
+      "productName": "Alprazolam (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 43,
+      "name": "Dormicum (5Mg/5Ml) 5Ml, 10 Ampoule Injections",
+      "generic": "Midazolam 5mg",
+      "sku": "SKU-dormicum-5mg5ml-5ml-10-ampoule",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90759530ff9f1a1d0f54ed",
+      "productName": "Dormicum (5Mg/5Ml) 5Ml, 10 Ampoule Injections",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 44,
+      "name": "Dormicum (7.5Mg) 10 Tablets",
+      "generic": "Midazolam 7.5mg",
+      "sku": "SKU-dormicum-75mg-10-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90759530ff9f1a1d0f54f1",
+      "productName": "Dormicum (7.5Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 45,
+      "name": "Rivotril (2.5Mg/Ml) 10Ml Oral Drops",
+      "generic": "Clonazepam 2.5mg",
+      "sku": "SKU-rivotril-25mgml-10ml-oral-drop",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90759530ff9f1a1d0f54f5",
+      "productName": "Rivotril (2.5Mg/Ml) 10Ml Oral Drops",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 46,
+      "name": "Tonoflex-P Forte (75/650Mg) 10 Tablets",
+      "generic": "Paracetamol 650mg, Tramadol HCl 75mg",
+      "sku": "SKU-tonoflex-p-forte-75650mg-10-ta",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90759f30ff9f1a1d0f561d",
+      "productName": "Tonoflex-P Forte (75/650Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 47,
+      "name": "Naze (0.5Mg) 50 Tablets",
+      "generic": "Clonazepam 0.5mg",
+      "sku": "SKU-naze-05mg-50-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9075a430ff9f1a1d0f56b1",
+      "productName": "Naze (0.5Mg) 50 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 48,
+      "name": "Naze (2Mg) 30 Tablets",
+      "generic": "Clonazepam 2mg",
+      "sku": "SKU-naze-2mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9075a430ff9f1a1d0f56b5",
+      "productName": "Naze (2Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 49,
+      "name": "Praz (0.5Mg) 30 Tablets",
+      "generic": "Alprazolam 0.5mg",
+      "sku": "SKU-praz-05mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9075a630ff9f1a1d0f56ed",
+      "productName": "Praz (0.5Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 50,
+      "name": "Neuxam (1Mg) 30 Tablets",
+      "generic": "Alprazolam 1mg",
+      "sku": "SKU-neuxam-1mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9075b030ff9f1a1d0f5825",
+      "productName": "Neuxam (1Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 51,
+      "name": "Debritone (20Mg) 60Ml Elixir",
+      "generic": "Phenobarbitone",
+      "sku": "SKU-debritone-20mg-60ml-elixir",
+      "class": "Barbiturates (Schedule Controlled Sedatives)",
+      "risk": "HIGH",
+      "productId": "6a9075c730ff9f1a1d0f5ad9",
+      "productName": "Debritone (20Mg) 60Ml Elixir",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 52,
+      "name": "Pinix (0.25Mg) 30 Tablets",
+      "generic": "Alprazolam 0.25mg",
+      "sku": "SKU-pinix-025mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9075d930ff9f1a1d0f5cf7",
+      "productName": "Pinix (0.25Mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 53,
+      "name": "Librax (5/2.5Mg) 50 Dragees",
+      "generic": "Chlordiazepoxide Clidinium 5mg",
+      "sku": "SKU-librax-525mg-50-dragees",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9075e330ff9f1a1d0f5e2b",
+      "productName": "Librax (5/2.5Mg) 50 Dragees",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 54,
+      "name": "Lexotanil 3 (3Mg) 50 Tablets",
+      "generic": "Bromazepam",
+      "sku": "SKU-lexotanil-3-3mg-50-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a90760030ff9f1a1d0f61b5",
+      "productName": "Lexotanil 3 (3Mg) 50 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 55,
+      "name": "Frendol-P (37.5/325Mg) 10 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-frendol-p-375325mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90761a30ff9f1a1d0f64d7",
+      "productName": "Frendol-P (37.5/325Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 56,
+      "name": "Tapento Ir (50Mg) 10 Tablets",
+      "generic": "Tapentadol 75mg",
+      "sku": "SKU-tapento-ir-50mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90763530ff9f1a1d0f67ed",
+      "productName": "Tapento Ir (50Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 57,
+      "name": "Seden-P (37.5/325Mg) 10 Tablets",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-seden-p-375325mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90764c30ff9f1a1d0f6ab9",
+      "productName": "Seden-P (37.5/325Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 58,
+      "name": "Tramal-D (75Mg/25Mg) 10 Tablets",
+      "generic": "Tramadol HCl 75mg, Dexketoprofen 25mg",
+      "sku": "SKU-tramal-d-75mg25mg-10-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90768430ff9f1a1d0f7173",
+      "productName": "Tramal-D (75Mg/25Mg) 10 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 59,
+      "name": "Tramapar (37.5/325Mg) 20 Tab",
+      "generic": "Paracetamol 325mg, Tramadol 37.5mg",
+      "sku": "SKU-tramapar-375325mg-20-tab",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a90768c30ff9f1a1d0f7267",
+      "productName": "Tramapar (37.5/325Mg) 20 Tab",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 60,
+      "name": "Xtril Tablets 0.5Mg 30s",
+      "generic": "Clonazepam 0.5mg",
+      "sku": "SKU-xtril-tablets-05mg-30s",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a9076d330ff9f1a1d0f7ad5",
+      "productName": "Xtril Tablets 0.5Mg 30s",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 61,
+      "name": "Pomperc P 20 Tablets",
+      "generic": "Paracetmol + Tramadol Hcl 325mg + 37.5mg",
+      "sku": "SKU-pomperc-p-20-tablets",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a9076d430ff9f1a1d0f7aed",
+      "productName": "Pomperc P 20 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 62,
+      "name": "Debritone Elixir (20Mg/5Ml) 120Ml",
+      "generic": "Phenobarbitone",
+      "sku": "SKU-debritone-elixir-20mg-5ml-120ml",
+      "class": "Barbiturates (Schedule Controlled Sedatives)",
+      "risk": "HIGH",
+      "productId": "6a99d4446f319d7664a4cc47",
+      "productName": "Debritone Elixir (20Mg/5Ml) 120Ml",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 63,
+      "name": "CALFINA 2ML INJ",
+      "generic": "Tramadol",
+      "sku": "SKU-calfina-2ml-inj",
+      "class": "Opioid Analgesics / Narcotics (Schedule Controlled)",
+      "risk": "HIGH",
+      "productId": "6a99d4446f319d7664a4cc63",
+      "productName": "CALFINA 2ML INJ",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 64,
+      "name": "Xanax (1mg) 30 Tablets",
+      "generic": "Alprazolam 1mg",
+      "sku": "SKU-xanax-1mg-30-tablets",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a99d4446f319d7664a4ccb1",
+      "productName": "Xanax (1mg) 30 Tablets",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 65,
+      "name": "Xanax (0.25Mg) 30 Tablet",
+      "generic": "N/A",
+      "sku": "SKU-xanax-0-25mg-30-tablet",
+      "class": "Benzodiazepines & Sedative-Hypnotics (Psychotropic)",
+      "risk": "HIGH",
+      "productId": "6a99d4456f319d7664a4cf89",
+      "productName": "Xanax (0.25Mg) 30 Tablet",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    },
+    {
+      "itemNo": 66,
+      "name": "Sancos Dextromethorphan Cough Syrup (120ml)",
+      "generic": "Dextromethorphan Hydrobromide",
+      "sku": "OTC-SAN-120ML",
+      "class": "Controlled Combination Formulations & Precursors",
+      "risk": ".",
+      "productId": "6aa414e6da2921aeaf5ae21d",
+      "productName": "Sancos Dextromethorphan Cough Syrup (120ml)",
+      "currentStatus": {
+        "isNarcotic": false,
+        "requiresPrescription": false,
+        "rxStatus": "none"
+      }
+    }
+  ],
+  "probableMatches": [],
+  "ambiguousMatches": [],
+  "unmatched": [],
+  "alreadyFlagged": [],
+  "updated": [
+    {
+      "productId": "6a9073f530ff9f1a1d0f2389",
+      "sku": "SKU-alp-025mg-30-tablet",
+      "name": "Alp (0.25Mg) 30 Tablet"
+    },
+    {
+      "productId": "6a90742630ff9f1a1d0f293d",
+      "sku": "SKU-tramal-100mg-2ml-5-ampoule-inj",
+      "name": "Tramal (100Mg) 2Ml 5 Ampoule Injections"
+    },
+    {
+      "productId": "6a90742730ff9f1a1d0f2961",
+      "sku": "SKU-valium-10mg2ml-2ml-5-ampoule-i",
+      "name": "Valium (10Mg/2Ml) 2Ml, 5 Ampoule Injections"
+    },
+    {
+      "productId": "6a90742730ff9f1a1d0f2965",
+      "sku": "SKU-valium-5mg-30-tablets",
+      "name": "Valium (5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90742930ff9f1a1d0f29a1",
+      "sku": "SKU-xanax-05mg-30-tablets",
+      "name": "Xanax (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90743130ff9f1a1d0f2a8d",
+      "sku": "SKU-rivotril-05mg-50-tablets",
+      "name": "Rivotril (0.5Mg) 50 Tablets"
+    },
+    {
+      "productId": "6a90743530ff9f1a1d0f2b0d",
+      "sku": "SKU-rondec-c-120ml-cough-syrup",
+      "name": "Rondec C (120Ml) Cough Syrup"
+    },
+    {
+      "productId": "6a90743730ff9f1a1d0f2b31",
+      "sku": "SKU-valium-10mg-30-tablets",
+      "name": "Valium (10Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90743730ff9f1a1d0f2b39",
+      "sku": "SKU-rivotril-2mg-30-tablets",
+      "name": "Rivotril (2Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90743830ff9f1a1d0f2b65",
+      "sku": "SKU-corex-d-120ml-cough-syrup",
+      "name": "Corex-D (120Ml) Cough Syrup"
+    },
+    {
+      "productId": "6a90743f30ff9f1a1d0f2c21",
+      "sku": "SKU-cofcol-120ml-elixir",
+      "name": "Cofcol (120Ml) Elixir"
+    },
+    {
+      "productId": "6a90744630ff9f1a1d0f2d0d",
+      "sku": "SKU-tramal-50mg-10-capsules",
+      "name": "Tramal (50Mg) 10 Capsules"
+    },
+    {
+      "productId": "6a90744730ff9f1a1d0f2d11",
+      "sku": "SKU-tramal-50mgml-5-ampoule-inject",
+      "name": "Tramal (50Mg/Ml) 5 Ampoule Injections"
+    },
+    {
+      "productId": "6a90744a30ff9f1a1d0f2d75",
+      "sku": "SKU-relaxin-3mg-30-tablets",
+      "name": "Relaxin (3Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90744a30ff9f1a1d0f2d7d",
+      "sku": "SKU-sambro-3mg-30-tablets",
+      "name": "Sambro (3Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90744e30ff9f1a1d0f2dfd",
+      "sku": "SKU-neuxam-05mg-30-tablets",
+      "name": "Neuxam (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90745030ff9f1a1d0f2e39",
+      "sku": "SKU-nervin-05mg-30-film-coated-tab",
+      "name": "Nervin (0.5Mg) 30 Film Coated Tablets"
+    },
+    {
+      "productId": "6a90745630ff9f1a1d0f2ef1",
+      "sku": "SKU-neuxam-025mg-30-tablets",
+      "name": "Neuxam (0.25Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90745730ff9f1a1d0f2f0d",
+      "sku": "SKU-azolam-05mg-30-tablets",
+      "name": "Azolam (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90745830ff9f1a1d0f2f21",
+      "sku": "SKU-zenith-05mg-30-tablets",
+      "name": "Zenith (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90745b30ff9f1a1d0f2f75",
+      "sku": "SKU-kinz-10mgml-5-ampoule-injectio",
+      "name": "Kinz (10Mg/Ml) 5 Ampoule Injections"
+    },
+    {
+      "productId": "6a90745b30ff9f1a1d0f2f79",
+      "sku": "SKU-kinz-20mgml-5-ampoule-injectio",
+      "name": "Kinz (20Mg/Ml) 5 Ampoule Injections"
+    },
+    {
+      "productId": "6a90746830ff9f1a1d0f3105",
+      "sku": "SKU-tramal-sr-100mg-10-tablets",
+      "name": "Tramal Sr (100Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90746c30ff9f1a1d0f3185",
+      "sku": "SKU-tonoflex-50mg-10-capsules",
+      "name": "Tonoflex (50Mg) 10 Capsules"
+    },
+    {
+      "productId": "6a90746c30ff9f1a1d0f3189",
+      "sku": "SKU-tonoflex-sr-100mg-10-tablets",
+      "name": "Tonoflex Sr (100Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90747730ff9f1a1d0f32dd",
+      "sku": "SKU-zultracet-375325mg-20-tablets",
+      "name": "Zultracet (37.5/325Mg) 20 Tablets"
+    },
+    {
+      "productId": "6a9074a430ff9f1a1d0f3839",
+      "sku": "SKU-tonoflex-100mg2ml-2ml-5-ampoul",
+      "name": "Tonoflex (100Mg/2Ml) 2Ml 5 Ampoule Injections"
+    },
+    {
+      "productId": "6a9074b830ff9f1a1d0f3a89",
+      "sku": "SKU-tonoflex-p-375325mg-20-tablets",
+      "name": "Tonoflex-P (37.5/325Mg) 20 Tablets"
+    },
+    {
+      "productId": "6a9074ca30ff9f1a1d0f3cbd",
+      "sku": "SKU-tramal-plus-375325mg-10-tablet",
+      "name": "Tramal Plus (37.5/325Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a9074ce30ff9f1a1d0f3d25",
+      "sku": "SKU-pantra-plus-375325mg-10-tablet",
+      "name": "Pantra Plus (37.5/325Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a9074d230ff9f1a1d0f3dbd",
+      "sku": "SKU-octidol-plus-375325mg-20-table",
+      "name": "Octidol Plus (37.5/325Mg) 20 Tablets"
+    },
+    {
+      "productId": "6a9074db30ff9f1a1d0f3ec9",
+      "sku": "SKU-tapento-ir-75mg-10-tablets",
+      "name": "Tapento Ir (75Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90750730ff9f1a1d0f43f3",
+      "sku": "SKU-pinix-05mg-30-tablets",
+      "name": "Pinix (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90750730ff9f1a1d0f4407",
+      "sku": "SKU-sedonil-3mg-30-tablets",
+      "name": "Sedonil (3Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90750830ff9f1a1d0f440f",
+      "sku": "SKU-tovir-05mg-30-tablets",
+      "name": "Tovir (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90750830ff9f1a1d0f4413",
+      "sku": "SKU-tovir-2mg-30-tablets",
+      "name": "Tovir (2mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90751130ff9f1a1d0f451f",
+      "sku": "SKU-astadol-375325mg-20-tablets",
+      "name": "Astadol (37.5/325Mg) 20 Tablets"
+    },
+    {
+      "productId": "6a90751c30ff9f1a1d0f466f",
+      "sku": "SKU-febrol-fast-375325mg-10-tablet",
+      "name": "Febrol Fast (37.5/325Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90752030ff9f1a1d0f46f3",
+      "sku": "SKU-noctamid-1mg-100-tablets",
+      "name": "Noctamid (1Mg) 100 Tablets"
+    },
+    {
+      "productId": "6a90755130ff9f1a1d0f4cbd",
+      "sku": "SKU-alp-05mg-30-tablets",
+      "name": "Alp (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90756e30ff9f1a1d0f5033",
+      "sku": "SKU-azolam-025mg-30-tablets",
+      "name": "Azolam (0.25Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90757f30ff9f1a1d0f5255",
+      "sku": "SKU-alprazolam-05mg-30-tablets",
+      "name": "Alprazolam (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a90759530ff9f1a1d0f54ed",
+      "sku": "SKU-dormicum-5mg5ml-5ml-10-ampoule",
+      "name": "Dormicum (5Mg/5Ml) 5Ml, 10 Ampoule Injections"
+    },
+    {
+      "productId": "6a90759530ff9f1a1d0f54f1",
+      "sku": "SKU-dormicum-75mg-10-tablets",
+      "name": "Dormicum (7.5Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90759530ff9f1a1d0f54f5",
+      "sku": "SKU-rivotril-25mgml-10ml-oral-drop",
+      "name": "Rivotril (2.5Mg/Ml) 10Ml Oral Drops"
+    },
+    {
+      "productId": "6a90759f30ff9f1a1d0f561d",
+      "sku": "SKU-tonoflex-p-forte-75650mg-10-ta",
+      "name": "Tonoflex-P Forte (75/650Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a9075a430ff9f1a1d0f56b1",
+      "sku": "SKU-naze-05mg-50-tablets",
+      "name": "Naze (0.5Mg) 50 Tablets"
+    },
+    {
+      "productId": "6a9075a430ff9f1a1d0f56b5",
+      "sku": "SKU-naze-2mg-30-tablets",
+      "name": "Naze (2Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a9075a630ff9f1a1d0f56ed",
+      "sku": "SKU-praz-05mg-30-tablets",
+      "name": "Praz (0.5Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a9075b030ff9f1a1d0f5825",
+      "sku": "SKU-neuxam-1mg-30-tablets",
+      "name": "Neuxam (1Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a9075c730ff9f1a1d0f5ad9",
+      "sku": "SKU-debritone-20mg-60ml-elixir",
+      "name": "Debritone (20Mg) 60Ml Elixir"
+    },
+    {
+      "productId": "6a9075d930ff9f1a1d0f5cf7",
+      "sku": "SKU-pinix-025mg-30-tablets",
+      "name": "Pinix (0.25Mg) 30 Tablets"
+    },
+    {
+      "productId": "6a9075e330ff9f1a1d0f5e2b",
+      "sku": "SKU-librax-525mg-50-dragees",
+      "name": "Librax (5/2.5Mg) 50 Dragees"
+    },
+    {
+      "productId": "6a90760030ff9f1a1d0f61b5",
+      "sku": "SKU-lexotanil-3-3mg-50-tablets",
+      "name": "Lexotanil 3 (3Mg) 50 Tablets"
+    },
+    {
+      "productId": "6a90761a30ff9f1a1d0f64d7",
+      "sku": "SKU-frendol-p-375325mg-10-tablets",
+      "name": "Frendol-P (37.5/325Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90763530ff9f1a1d0f67ed",
+      "sku": "SKU-tapento-ir-50mg-10-tablets",
+      "name": "Tapento Ir (50Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90764c30ff9f1a1d0f6ab9",
+      "sku": "SKU-seden-p-375325mg-10-tablets",
+      "name": "Seden-P (37.5/325Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90768430ff9f1a1d0f7173",
+      "sku": "SKU-tramal-d-75mg25mg-10-tablets",
+      "name": "Tramal-D (75Mg/25Mg) 10 Tablets"
+    },
+    {
+      "productId": "6a90768c30ff9f1a1d0f7267",
+      "sku": "SKU-tramapar-375325mg-20-tab",
+      "name": "Tramapar (37.5/325Mg) 20 Tab"
+    },
+    {
+      "productId": "6a9076d330ff9f1a1d0f7ad5",
+      "sku": "SKU-xtril-tablets-05mg-30s",
+      "name": "Xtril Tablets 0.5Mg 30s"
+    },
+    {
+      "productId": "6a9076d430ff9f1a1d0f7aed",
+      "sku": "SKU-pomperc-p-20-tablets",
+      "name": "Pomperc P 20 Tablets"
+    },
+    {
+      "productId": "6a99d4446f319d7664a4cc47",
+      "sku": "SKU-debritone-elixir-20mg-5ml-120ml",
+      "name": "Debritone Elixir (20Mg/5Ml) 120Ml"
+    },
+    {
+      "productId": "6a99d4446f319d7664a4cc63",
+      "sku": "SKU-calfina-2ml-inj",
+      "name": "CALFINA 2ML INJ"
+    },
+    {
+      "productId": "6a99d4446f319d7664a4ccb1",
+      "sku": "SKU-xanax-1mg-30-tablets",
+      "name": "Xanax (1mg) 30 Tablets"
+    },
+    {
+      "productId": "6a99d4456f319d7664a4cf89",
+      "sku": "SKU-xanax-0-25mg-30-tablet",
+      "name": "Xanax (0.25Mg) 30 Tablet"
+    },
+    {
+      "productId": "6aa414e6da2921aeaf5ae21d",
+      "sku": "OTC-SAN-120ML",
+      "name": "Sancos Dextromethorphan Cough Syrup (120ml)"
+    }
+  ]
+}

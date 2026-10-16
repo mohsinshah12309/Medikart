@@ -49,22 +49,23 @@ const prescriptionUpload = multer({
       "image/jpeg",
       "image/png",
       "image/jpg",
+      "image/webp",
       "application/pdf",
     ];
     if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new BadRequestError("Prescription must be a JPEG, PNG, or PDF file"));
+      cb(new BadRequestError("Prescription must be a JPEG, PNG, WEBP, or PDF file"));
     }
   },
-}).single("prescription");
+}).any();
 
 /**
  * Validate the actual content of a prescription buffer (magic bytes / header).
  * Fix 4 — extension and client-supplied mimetype are NOT trusted.
  *
  * @param {Buffer} buffer - raw file content from multer
- * @returns {string} - true file extension ('.jpg', '.png', or '.pdf')
+ * @returns {string} - true file extension ('.jpg', '.png', '.webp', or '.pdf')
  */
 const validatePrescriptionContent = (buffer) => {
   if (!buffer || !Buffer.isBuffer(buffer) || buffer.length < 4) {
@@ -101,8 +102,23 @@ const validatePrescriptionContent = (buffer) => {
     return ".jpg";
   }
 
+  // WebP: starts with RIFF (bytes 52 49 46 46) and WEBP (bytes 57 45 42 50) at offset 8
+  if (
+    buffer.length >= 12 &&
+    buffer[0] === 0x52 &&
+    buffer[1] === 0x49 &&
+    buffer[2] === 0x46 &&
+    buffer[3] === 0x46 &&
+    buffer[8] === 0x57 &&
+    buffer[9] === 0x45 &&
+    buffer[10] === 0x42 &&
+    buffer[11] === 0x50
+  ) {
+    return ".webp";
+  }
+
   throw new ValidationError(
-    "Prescription file content is not a valid JPEG, PNG, or PDF",
+    "Prescription file content is not a valid JPEG, PNG, WEBP, or PDF",
   );
 };
 

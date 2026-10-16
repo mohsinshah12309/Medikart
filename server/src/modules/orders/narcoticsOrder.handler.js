@@ -56,6 +56,11 @@ const placeNarcoticsOrder = async ({
   paymentMethod,
   otp,
   prescriptionFilename,
+  prescriptionFilenames,
+  patientName,
+  pharmacistNotes,
+  customerNotes,
+  prescriptionConfirmation,
 }) => {
   if (otp.email !== customer.email) {
     throw new BadRequestError("OTP email must match the customer email");
@@ -86,33 +91,31 @@ const placeNarcoticsOrder = async ({
   }
 
   // ── Step 3: THE SNAPSHOT ───────────────────────────────────────────────────
-  // requiresVerification is read from the live product flags at the exact
-  // moment of order creation and copied onto the order document. We never
-  // reference Product documents again for this value, and never recompute it
-  // on reads/updates of this order. Check EVERY item — a single narcotics-
-  // flagged item in the cart triggers the whole workflow (FR-CW-14).
   const requiresVerification = products.some(
-    (product) => product.isNarcotic === true,
+    (product) => product.isNarcotic === true || product.requiresPrescription === true || product.rxStatus === "prescription_required",
   );
 
+  const files = Array.isArray(prescriptionFilenames) && prescriptionFilenames.length > 0
+    ? prescriptionFilenames
+    : prescriptionFilename
+    ? [prescriptionFilename]
+    : [];
+
   // ── Step 4: Prescription gate ──────────────────────────────────────────────
-  // If the cart contains a narcotics-flagged product, a prescription file is
-  // mandatory and the order cannot be created without it (FR-CW-13).
-  if (requiresVerification && !prescriptionFilename) {
+  if (requiresVerification && files.length === 0) {
     throw new BadRequestError(
-      "Prescription file is required for an order containing narcotics-flagged products",
+      "Prescription file is required for an order containing prescription-required products",
     );
   }
 
   if (requiresVerification && paymentMethod !== 'cod') {
-    throw new BadRequestError("Narcotics orders can only be paid via Cash on Delivery.");
+    throw new BadRequestError("Prescription orders can only be paid via Cash on Delivery.");
   }
 
   // ── Step 5: Verify OTP (FR-CW-09) ──────────────────────────────────────────
-  // Must succeed before any order document is created.
   await otpService.verifyOtp(otp.email, otp.code);
 
-  // ── Step 6: Build order items with server-computed effective prices ─────────
+  // ── Step 6: Build order items with server-computed effective prices & review status ──
   const orderItems = items.map((item) => {
     const product = products.find((p) => p._id.toString() === item.productId);
     const category = product.categoryIds?.[0] ?? null;
@@ -121,11 +124,18 @@ const placeNarcoticsOrder = async ({
       category,
       storewidePercent,
     );
+    const itemNeedsRx = Boolean(
+      product.isNarcotic || product.requiresPrescription || product.rxStatus === "prescription_required"
+    );
     return {
       productId: product._id,
       name: product.name,
       price: effectivePrice,
       quantity: item.quantity,
+      isNarcotic: Boolean(product.isNarcotic),
+      rxStatus: product.rxStatus || (product.isNarcotic ? "prescription_required" : "none"),
+      reviewStatus: itemNeedsRx ? "pending" : "approved",
+      rejectionReason: null,
     };
   });
 
@@ -137,24 +147,25 @@ const placeNarcoticsOrder = async ({
   const total = round2(subtotal + deliveryCharge + platformFee);
 
   // ── Step 9: Save order — status pending_verification, NOT pending ──────────
-  // The requiresVerification value is baked permanently into this document.
-  // Phase 16 reads paymentState (kept 'pending') for authorize/capture.
+  const prescriptionUrls = files.map((f) => `/api/v1/admin/prescriptions/${f}`);
+  const primaryPrescriptionUrl = prescriptionUrls[0] || null;
+
   const order = await Order.create({
     type: "narcotics",
     customer,
     items: orderItems,
     totals: { subtotal, deliveryCharge, platformFee, total },
     paymentMethod,
-    paymentState: "pending", // Phase 16 owns card authorize/capture from here
-    status: "pending_verification",
-    requiresVerification, // SNAPSHOT — never recomputed after this write
+    paymentState: "pending",
+    status: requiresVerification || files.length > 0 ? "pending_verification" : "pending",
+    requiresVerification: requiresVerification || files.length > 0,
     verification: { status: "pending" },
-    // Fix 1 — prescription files are ONLY accessible through the
-    // authenticated admin route, never a public static URL (FR-SYS-02).
-    prescriptionUrl: prescriptionFilename
-      ? `/api/v1/admin/prescriptions/${prescriptionFilename}`
-      : null,
-    // Phase 19: starts as false; flipped atomically to true when the email fires.
+    prescriptionUrl: primaryPrescriptionUrl,
+    prescriptionUrls,
+    patientName: patientName || null,
+    pharmacistNotes: pharmacistNotes || null,
+    customerNotes: customerNotes || null,
+    prescriptionConfirmation: Boolean(prescriptionConfirmation),
     confirmationEmailSent: false,
   });
 

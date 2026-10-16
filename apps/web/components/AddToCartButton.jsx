@@ -22,6 +22,9 @@ export default function AddToCartButton({ product }) {
   };
 
   const isOutOfStock = product.stockStatus === 'out_of_stock';
+  const requiresRx = Boolean(
+    product.isNarcotic || product.requiresPrescription || product.rxStatus === 'prescription_required'
+  );
 
   return (
     <div className="flex flex-col gap-4 mt-6">
@@ -62,10 +65,18 @@ export default function AddToCartButton({ product }) {
               ? 'bg-slate-150 text-slate-400 cursor-not-allowed border border-slate-200'
               : added
               ? 'bg-emerald-600 text-white shadow-emerald-500/20'
+              : requiresRx
+              ? 'bg-amber-400 hover:bg-amber-500 text-slate-950 border border-amber-500'
               : 'btn-amber-gradient text-slate-950 hover:brightness-105'
           }`}
         >
-          {isOutOfStock ? 'Out of Stock' : added ? '✓ Added to Cart' : 'Add to Cart'}
+          {isOutOfStock
+            ? 'Out of Stock'
+            : added
+            ? '✓ Added to Cart'
+            : requiresRx
+            ? 'Add to Cart (Prescription Required)'
+            : 'Add to Cart'}
         </button>
 
         <button
@@ -83,6 +94,20 @@ export default function AddToCartButton({ product }) {
           <span className="hidden sm:inline">{wishlisted ? "Saved" : "Wishlist"}</span>
         </button>
       </div>
+
+      {requiresRx && (
+        <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex items-start gap-3 shadow-2xs">
+          <span className="text-xl">📋</span>
+          <div>
+            <h4 className="text-xs font-black text-amber-950 uppercase tracking-wider">
+              Doctor's Prescription Required
+            </h4>
+            <p className="text-xs text-amber-900 mt-0.5 leading-relaxed">
+              This controlled medicine can be added to your cart, but a valid doctor's prescription is required to complete your order. You can attach it in your cart or at checkout. Our licensed pharmacist verifies all prescriptions before packing.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

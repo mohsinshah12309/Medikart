@@ -113,11 +113,40 @@ const priceInstantOrder = async (orderId, { items }, admin = null) => {
 };
 
 /**
- * Admin review of a narcotics prescription (Phase 15 / FR-AD-20).
+ * Admin review of a prescription / narcotics order (Phase 15 / FR-AD-20).
+ * Supports full approval, full rejection, assignment to sub-admin/pharmacist,
+ * and partial rejection (Option 1: keep normal items, cancel rejected prescription lines, recalculate total).
  */
-const reviewNarcoticsOrder = async (orderId, decision, reviewer) => {
+const reviewNarcoticsOrder = async (orderId, reviewPayload, reviewer) => {
   const order = await Order.findById(orderId);
   if (!order) throw new NotFoundError("Order not found");
+
+  const decision = typeof reviewPayload === "string" ? reviewPayload : reviewPayload?.decision;
+  const reason = typeof reviewPayload === "object" ? reviewPayload?.reason : null;
+  const rejectedItemIds = Array.isArray(reviewPayload?.rejectedItemIds) ? reviewPayload.rejectedItemIds.map(String) : [];
+  const assignedTo = reviewPayload?.assignedTo || null;
+
+  // Handle assignment to sub-admin / pharmacist
+  if (assignedTo) {
+    order.verification = order.verification || {};
+    order.verification.assignedTo = assignedTo;
+    order.verification.assignedAt = new Date();
+    order.assignedSubAdminId = assignedTo;
+    await order.save();
+
+    logActivity({
+      actor: reviewer,
+      action: "order_assigned_subadmin",
+      entityType: "order",
+      entityId: order._id,
+      before: { assignedSubAdminId: null },
+      after: { assignedSubAdminId: assignedTo },
+    });
+
+    if (!decision) {
+      return order;
+    }
+  }
 
   if (reviewer && reviewer.role !== "super_admin" && reviewer.assignedPharmacyId) {
     const assignedId = order.assignedPharmacyId?.toString();
@@ -132,32 +161,98 @@ const reviewNarcoticsOrder = async (orderId, decision, reviewer) => {
     );
   }
 
+  const beforeVerification = order.verification ? { ...order.verification.toObject?.() || order.verification } : null;
+  const beforeStatus = order.status;
+
   if (decision === "approved") {
+    // Approve all items
+    order.items.forEach((item) => {
+      item.reviewStatus = "approved";
+      item.rejectionReason = null;
+    });
     order.verification = {
       status: "approved",
       reviewedBy: reviewer.email || reviewer.id,
       reviewedAt: new Date(),
+      reason: reason || null,
+      assignedTo: order.verification?.assignedTo || null,
+      assignedAt: order.verification?.assignedAt || null,
     };
     order.status = "pending";
-  } else {
+  } else if (decision === "rejected" && rejectedItemIds.length === 0) {
+    // Full rejection of entire order
+    order.items.forEach((item) => {
+      item.reviewStatus = "rejected";
+      item.rejectionReason = reason || "Prescription verification rejected.";
+    });
     order.verification = {
       status: "rejected",
       reviewedBy: reviewer.email || reviewer.id,
       reviewedAt: new Date(),
+      reason: reason || "Prescription verification rejected.",
+      assignedTo: order.verification?.assignedTo || null,
+      assignedAt: order.verification?.assignedAt || null,
     };
     order.status = "rejected";
+  } else {
+    // Partial approval / Line-item rejection (Option 1)
+    order.items.forEach((item) => {
+      const pid = item.productId.toString();
+      if (rejectedItemIds.includes(pid)) {
+        item.reviewStatus = "rejected";
+        item.rejectionReason = reason || "Item prescription rejected by pharmacist.";
+      } else {
+        item.reviewStatus = "approved";
+      }
+    });
+
+    const approvedItems = order.items.filter((i) => i.reviewStatus === "approved");
+
+    if (approvedItems.length === 0) {
+      // Everything was rejected
+      order.verification = {
+        status: "rejected",
+        reviewedBy: reviewer.email || reviewer.id,
+        reviewedAt: new Date(),
+        reason: reason || "All items rejected.",
+        assignedTo: order.verification?.assignedTo || null,
+        assignedAt: order.verification?.assignedAt || null,
+      };
+      order.status = "rejected";
+    } else {
+      // Normal items or approved items remain: recalculate invoice total
+      const newSubtotal = round2(
+        approvedItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
+      );
+      const deliveryCharge = order.totals?.deliveryCharge || 0;
+      const platformFee = order.totals?.platformFee || 10;
+      const newTotal = round2(newSubtotal + deliveryCharge + platformFee);
+
+      order.totals.subtotal = newSubtotal;
+      order.totals.total = newTotal;
+
+      order.verification = {
+        status: "partially_approved",
+        reviewedBy: reviewer.email || reviewer.id,
+        reviewedAt: new Date(),
+        reason: reason || "Rejected prescription items removed. Remaining items approved.",
+        assignedTo: order.verification?.assignedTo || null,
+        assignedAt: order.verification?.assignedAt || null,
+      };
+      order.status = "pending"; // Valid items continue to dispatch!
+    }
   }
 
   await order.save();
 
-  // Write to Activity Logs — non-blocking
+  // Write to Activity Logs
   logActivity({
     actor: reviewer,
-    action: `narcotics_${decision}`,
+    action: `prescription_review_${decision}`,
     entityType: "order",
     entityId: order._id,
-    before: { verification: { status: "pending" } },
-    after: { verification: order.verification, status: order.status },
+    before: { verification: beforeVerification, status: beforeStatus },
+    after: { verification: order.verification, status: order.status, totals: order.totals },
   });
 
   return order;

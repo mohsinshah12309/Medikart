@@ -239,9 +239,45 @@ export function CartProvider({ children }) {
     }
   };
 
+  // Prescription state for mixed / prescription carts
+  const [prescriptionFiles, setPrescriptionFiles] = useState([]);
+  const [patientName, setPatientName] = useState("");
+  const [pharmacistNotes, setPharmacistNotes] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  // Restore stored patient notes from session
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("medikart_prescription_meta");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.patientName) setPatientName(parsed.patientName);
+        if (parsed.pharmacistNotes) setPharmacistNotes(parsed.pharmacistNotes);
+        if (parsed.isConfirmed) setIsConfirmed(Boolean(parsed.isConfirmed));
+      }
+    } catch (_) {}
+  }, []);
+
+  // Save changes to session storage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(
+        "medikart_prescription_meta",
+        JSON.stringify({ patientName, pharmacistNotes, isConfirmed })
+      );
+    } catch (_) {}
+  }, [patientName, pharmacistNotes, isConfirmed]);
+
   // Optimistic Clear Cart
   const clearCart = async () => {
     setCart([]);
+    setPrescriptionFiles([]);
+    setPatientName("");
+    setPharmacistNotes("");
+    setIsConfirmed(false);
+    try {
+      sessionStorage.removeItem("medikart_prescription_meta");
+    } catch (_) {}
     localStorage.removeItem("medikart_cart");
     localStorage.setItem("medikart_cart_sync", Date.now().toString());
 
@@ -270,6 +306,14 @@ export function CartProvider({ children }) {
         cartCount,
         isLoaded,
         isAuthenticated,
+        prescriptionFiles,
+        setPrescriptionFiles,
+        patientName,
+        setPatientName,
+        pharmacistNotes,
+        setPharmacistNotes,
+        isConfirmed,
+        setIsConfirmed,
       }}
     >
       {children}

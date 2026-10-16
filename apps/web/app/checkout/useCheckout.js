@@ -17,9 +17,25 @@ const CITIES = ['Lahore'];
 /**
  * Custom hook encapsulating Checkout state, validation, OTP cycles, and order placement (SRP).
  */
-export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
+export function useCheckout({
+  cart,
+  cartTotal,
+  clearCart,
+  isLoaded,
+  router,
+  prescriptionFiles = [],
+  setPrescriptionFiles,
+  patientName = '',
+  setPatientName,
+  pharmacistNotes = '',
+  setPharmacistNotes,
+  isConfirmed = false,
+  setIsConfirmed,
+}) {
   const otpInputRef = useRef(null);
-  const hasNarcotics = cart.some((item) => item.isNarcotic);
+  const hasNarcotics = cart.some(
+    (item) => item.isNarcotic || item.requiresPrescription || item.rxStatus === 'prescription_required'
+  );
 
   // Customer form states
   const [customer, setCustomer] = useState({
@@ -49,8 +65,6 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [citiesList, setCitiesList] = useState(CITIES);
   const [paymentMethod, setPaymentMethod] = useState('cod');
-  const [prescriptionFile, setPrescriptionFile] = useState(null);
-  const [prescriptionPreviewUrl, setPrescriptionPreviewUrl] = useState(null);
 
   // Force COD if cart contains narcotics
   useEffect(() => {
@@ -175,10 +189,22 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
       overrideSuggestion = arg2 === true;
     }
 
-    if (hasNarcotics && !prescriptionFile) {
-      setErrorMsg("⚠️ Prescription Required: Your cart contains Rx/Controlled medicine items. You must upload a valid doctor's prescription (PDF or Image) before requesting an OTP verification code.");
-      setOtpFeedback({ type: 'error', msg: 'Prescription document is required above before requesting OTP.' });
-      return;
+    if (hasNarcotics) {
+      if (!prescriptionFiles || prescriptionFiles.length === 0) {
+        setErrorMsg("⚠️ Prescription Required: Your cart contains prescription medicines. Please upload your doctor's prescription (PDF or Image) before requesting an OTP verification code.");
+        setOtpFeedback({ type: 'error', msg: 'Prescription document is required above before requesting OTP.' });
+        return;
+      }
+      if (!patientName || !patientName.trim()) {
+        setErrorMsg("⚠️ Patient Name Required: Please enter the patient's full name for prescription verification.");
+        setOtpFeedback({ type: 'error', msg: "Patient's full name is required for prescription verification." });
+        return;
+      }
+      if (!isConfirmed) {
+        setErrorMsg("⚠️ Confirmation Required: Please check the box confirming this is an authentic doctor's prescription.");
+        setOtpFeedback({ type: 'error', msg: "Prescription authenticity confirmation is required." });
+        return;
+      }
     }
 
     const isOverride = overrideSuggestion === true;
@@ -247,60 +273,7 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
     }
   };
 
-  const handlePrescriptionChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) {
-      setPrescriptionFile(null);
-      setPrescriptionPreviewUrl(null);
-      return;
-    }
 
-    const fileName = file.name.toLowerCase();
-    const fileType = file.type.toLowerCase();
-
-    const forbiddenExts = ['.zip', '.rar', '.7z', '.tar', '.gz', '.bz2', '.iso'];
-    const isForbiddenExt = forbiddenExts.some((ext) => fileName.endsWith(ext));
-    const isForbiddenType =
-      fileType.includes('zip') || fileType.includes('compressed') || fileType.includes('archive');
-
-    if (isForbiddenExt || isForbiddenType) {
-      e.target.value = '';
-      setPrescriptionFile(null);
-      setPrescriptionPreviewUrl(null);
-      setErrorMsg(
-        '⚠️ Upload Error: ZIP folders and compressed archive files are strictly NOT allowed. Please upload a PDF or an Image (JPG, PNG, WEBP).'
-      );
-      return;
-    }
-
-    const allowedExts = ['.pdf', '.jpg', '.jpeg', '.png', '.webp'];
-    const isAllowedExt = allowedExts.some((ext) => fileName.endsWith(ext));
-    const isAllowedType = fileType.startsWith('image/') || fileType === 'application/pdf';
-
-    if (!isAllowedExt || !isAllowedType) {
-      e.target.value = '';
-      setPrescriptionFile(null);
-      setPrescriptionPreviewUrl(null);
-      setErrorMsg('⚠️ Upload Error: Invalid file format. Only PDF documents and Image files (JPG, PNG, WEBP) are allowed.');
-      return;
-    }
-
-    if (file.size > 15 * 1024 * 1024) {
-      e.target.value = '';
-      setPrescriptionFile(null);
-      setPrescriptionPreviewUrl(null);
-      setErrorMsg('⚠️ Upload Error: File size exceeds the maximum limit of 15MB.');
-      return;
-    }
-
-    setErrorMsg('');
-    setPrescriptionFile(file);
-    if (fileType.startsWith('image/')) {
-      setPrescriptionPreviewUrl(URL.createObjectURL(file));
-    } else {
-      setPrescriptionPreviewUrl(null);
-    }
-  };
 
   const PLATFORM_FEE = 10;
   const totalAmount = cartTotal + deliveryCharge + PLATFORM_FEE;
@@ -316,16 +289,20 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
       setErrorMsg('Please verify your email address using the 6-digit OTP code before proceeding.');
       return;
     }
-    if (hasNarcotics && !prescriptionFile) {
-      setErrorMsg('Prescription upload (PDF or Image) is required for controlled medicine items.');
-      return;
+    if (hasNarcotics) {
+      if (!prescriptionFiles || prescriptionFiles.length === 0) {
+        setErrorMsg('Prescription upload (PDF or Image) is required for controlled medicine items.');
+        return;
+      }
+      if (!patientName || !patientName.trim()) {
+        setErrorMsg("Please enter the patient's full name for prescription verification.");
+        return;
+      }
+      if (!isConfirmed) {
+        setErrorMsg("Please check the confirmation checkbox to verify your prescription.");
+        return;
+      }
     }
-    // if (customer.city?.trim().toLowerCase() === 'other' && paymentMethod === 'cod') {
-    //   setErrorMsg(
-    //     "Cash on Delivery (COD) is not available for deliveries in 'Other' cities. Please select Debit / Credit Card payment."
-    //   );
-    //   return;
-    // }
     setErrorMsg('');
     setSubmitting(true);
 
@@ -338,7 +315,7 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
           'items',
           JSON.stringify(
             cart.map((item) => ({
-              productId: item.productId,
+              productId: item.productId || item._id,
               quantity: item.quantity,
             }))
           )
@@ -351,7 +328,17 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
             code: otpCode,
           })
         );
-        formData.append('prescription', prescriptionFile);
+        formData.append('patientName', patientName.trim());
+        if (pharmacistNotes?.trim()) {
+          formData.append('pharmacistNotes', pharmacistNotes.trim());
+          formData.append('customerNotes', pharmacistNotes.trim());
+        }
+        formData.append('prescriptionConfirmation', isConfirmed ? 'true' : 'false');
+
+        // Append all uploaded files
+        prescriptionFiles.forEach((file) => {
+          formData.append('prescriptions', file);
+        });
 
         const res = await placeNarcoticsOrder(formData);
         if (res && res.status !== 'fail') {
@@ -363,7 +350,7 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
         const payload = {
           customer,
           items: cart.map((item) => ({
-            productId: item.productId,
+            productId: item.productId || item._id,
             quantity: item.quantity,
           })),
           paymentMethod,
@@ -442,15 +429,20 @@ export function useCheckout({ cart, cartTotal, clearCart, isLoaded, router }) {
     citiesList,
     paymentMethod,
     setPaymentMethod,
-    prescriptionFile,
-    prescriptionPreviewUrl,
+    prescriptionFiles,
+    setPrescriptionFiles,
+    patientName,
+    setPatientName,
+    pharmacistNotes,
+    setPharmacistNotes,
+    isConfirmed,
+    setIsConfirmed,
     hasNarcotics,
     otpInputRef,
     PLATFORM_FEE,
     totalAmount,
     handleSendOtp,
     handleVerifyOtp,
-    handlePrescriptionChange,
     handleSubmitOrder,
   };
 }

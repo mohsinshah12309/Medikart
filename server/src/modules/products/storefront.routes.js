@@ -535,6 +535,7 @@ router.get("/products/:id/related", async (req, res, next) => {
     const addProductsWithScore = (productsList, scoreBoost) => {
       productsList.forEach((prod) => {
         if (String(prod._id) === String(id)) return;
+        if (prod.isNarcotic === true || prod.rxStatus === "narcotic") return;
         const key = String(prod._id);
         const existing = relatedMap.get(key);
         if (existing) {

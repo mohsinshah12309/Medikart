@@ -5,10 +5,24 @@ import { useCart } from '../../components/CartProvider';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { OrderPlacingOverlay, OrderConfirmedCard, OrderConfirmedModal } from '../../components/OrderConfirmedModal';
+import PrescriptionUploadCard from '../../components/PrescriptionUploadCard';
 import { useCheckout } from './useCheckout';
 
 export default function CheckoutPage() {
-  const { cart, cartTotal, clearCart, isLoaded } = useCart();
+  const {
+    cart,
+    cartTotal,
+    clearCart,
+    isLoaded,
+    prescriptionFiles,
+    setPrescriptionFiles,
+    patientName,
+    setPatientName,
+    pharmacistNotes,
+    setPharmacistNotes,
+    isConfirmed,
+    setIsConfirmed,
+  } = useCart();
   const router = useRouter();
 
   const {
@@ -33,17 +47,28 @@ export default function CheckoutPage() {
     citiesList,
     paymentMethod,
     setPaymentMethod,
-    prescriptionFile,
-    prescriptionPreviewUrl,
     hasNarcotics,
     otpInputRef,
     PLATFORM_FEE,
     totalAmount,
     handleSendOtp,
     handleVerifyOtp,
-    handlePrescriptionChange,
     handleSubmitOrder,
-  } = useCheckout({ cart, cartTotal, clearCart, isLoaded, router });
+  } = useCheckout({
+    cart,
+    cartTotal,
+    clearCart,
+    isLoaded,
+    router,
+    prescriptionFiles,
+    setPrescriptionFiles,
+    patientName,
+    setPatientName,
+    pharmacistNotes,
+    setPharmacistNotes,
+    isConfirmed,
+    setIsConfirmed,
+  });
 
   // If order was just placed, show the full Order Confirmed Card right on screen!
   if (confirmedOrderId) {
@@ -83,13 +108,13 @@ export default function CheckoutPage() {
         <div className="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-2xl text-xs shadow-xs overflow-x-auto">
           {hasNarcotics && (
             <>
-              <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${prescriptionFile ? 'bg-green-600 text-white' : 'bg-yellow-400 text-slate-950 animate-pulse'}`}>
+              <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${prescriptionFiles.length > 0 && patientName && isConfirmed ? 'bg-green-600 text-white' : 'bg-yellow-400 text-slate-950 animate-pulse'}`}>
                 1. Upload Rx
               </span>
               <span className="text-slate-400">→</span>
             </>
           )}
-          <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${otpVerified ? 'bg-green-600 text-white' : (!hasNarcotics || prescriptionFile) ? 'bg-yellow-400 text-slate-950' : 'bg-slate-100 text-slate-500'}`}>
+          <span className={`px-2.5 py-1 rounded-full font-bold whitespace-nowrap ${otpVerified ? 'bg-green-600 text-white' : (!hasNarcotics || (prescriptionFiles.length > 0 && patientName && isConfirmed)) ? 'bg-yellow-400 text-slate-950' : 'bg-slate-100 text-slate-500'}`}>
             {hasNarcotics ? '2. Details & OTP' : '1. Details'}
           </span>
           <span className="text-slate-400">→</span>
@@ -134,84 +159,20 @@ export default function CheckoutPage() {
 
           {/* Mandatory Prescription Upload Section for Controlled/Rx Medicines */}
           {hasNarcotics && (
-            <div className="bg-amber-50/80 border-2 border-amber-300 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col gap-4">
-              <div className="flex items-center justify-between border-b border-amber-200 pb-3">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-8 h-8 rounded-full bg-amber-500 text-white text-sm font-black flex items-center justify-center shadow-xs">
-                    🩺
-                  </span>
-                  <div>
-                    <h2 className="text-base font-black text-amber-950">
-                      Step 1: Upload Doctor's Prescription <span className="text-red-600">*</span>
-                    </h2>
-                    <p className="text-xs text-amber-900 mt-0.5">
-                      Mandatory for Rx medicines before OTP verification
-                    </p>
-                  </div>
-                </div>
-                {prescriptionFile && (
-                  <span className="bg-green-100 border border-green-300 text-green-800 text-xs px-3 py-1 rounded-full font-bold flex items-center gap-1 shadow-2xs">
-                    ✓ Uploaded
-                  </span>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="file"
-                  id="prescriptionUpload"
-                  accept=".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp,application/pdf"
-                  onChange={handlePrescriptionChange}
-                  disabled={submitting}
-                  className="hidden"
-                />
-
-                {!prescriptionFile ? (
-                  <label
-                    htmlFor="prescriptionUpload"
-                    className="border-2 border-dashed border-amber-300 hover:border-amber-500 bg-white/90 hover:bg-white rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all text-center gap-2 group shadow-2xs"
-                  >
-                    <span className="text-3xl group-hover:scale-110 transition-transform">📄</span>
-                    <span className="text-xs font-black text-amber-950">
-                      Click to Browse or Drag & Drop Prescription (PDF, JPG, PNG, WEBP)
-                    </span>
-                    <span className="text-[11px] text-amber-800">
-                      Max size: 15MB • Upload required before OTP verification
-                    </span>
-                  </label>
-                ) : (
-                  <div className="bg-white border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-3 shadow-xs">
-                    <div className="flex items-center gap-3 min-w-0">
-                      {prescriptionPreviewUrl ? (
-                        <img
-                          src={prescriptionPreviewUrl}
-                          alt="Prescription preview"
-                          className="w-14 h-14 rounded-xl object-cover border border-amber-200 shrink-0"
-                        />
-                      ) : (
-                        <div className="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0">
-                          📑
-                        </div>
-                      )}
-                      <div className="min-w-0">
-                        <p className="text-xs font-black text-slate-900 truncate">
-                          {prescriptionFile.name}
-                        </p>
-                        <p className="text-[11px] text-green-700 font-bold mt-0.5">
-                          ✓ {(prescriptionFile.size / 1024).toFixed(1)} KB • Ready for review
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => { setPrescriptionFile(null); setPrescriptionPreviewUrl(null); }}
-                      className="px-3 py-1.5 text-xs text-red-600 hover:text-red-800 hover:bg-red-50 font-bold rounded-xl border border-red-200 transition-colors shrink-0 cursor-pointer"
-                    >
-                      Replace File
-                    </button>
-                  </div>
-                )}
-              </div>
+            <div className="flex flex-col gap-2">
+              <PrescriptionUploadCard
+                isRequired={true}
+                files={prescriptionFiles}
+                setFiles={setPrescriptionFiles}
+                patientName={patientName}
+                setPatientName={setPatientName}
+                notes={pharmacistNotes}
+                setNotes={setPharmacistNotes}
+                isConfirmed={isConfirmed}
+                setIsConfirmed={setIsConfirmed}
+                errorMsg={errorMsg}
+                setErrorMsg={setErrorMsg}
+              />
             </div>
           )}
 

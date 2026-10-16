@@ -111,9 +111,11 @@ export async function fetchPartitionedProducts() {
     // Check price validity (no zero/negative, no obvious errors > 100k)
     const invalidPrice = prod.price === undefined || prod.price === null || prod.price <= 0 || prod.price > 100000;
 
-    if (hasPlaceholder || invalidPrice) {
+    const isNarcoticProd = Boolean(prod.isNarcotic || prod.rxStatus === 'narcotic');
+
+    if (isNarcoticProd || hasPlaceholder || invalidPrice) {
       excludedProducts.push(prod);
-      continue; // Exclude from sitemap per Phase 4 rule
+      continue; // Exclude from sitemap per Phase 3 rule
     }
 
     const nameLower = (prod.name || '').toLowerCase();

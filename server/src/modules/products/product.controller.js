@@ -29,12 +29,13 @@ const createProduct = async (req, res, next) => {
  */
 const getAllProducts = async (req, res, next) => {
   try {
-    const { active, isNarcotic, stockStatus, categoryId, search, page, limit } = req.query;
+    const { active, isNarcotic, rxStatus, stockStatus, categoryId, search, page, limit } = req.query;
 
     // Extract query filters if provided
     const filters = {
       active: active === "true" ? true : active === "false" ? false : undefined,
       isNarcotic: isNarcotic === "true" ? true : isNarcotic === "false" ? false : undefined,
+      rxStatus,
       stockStatus,
       categoryId,
       search,
@@ -44,6 +45,7 @@ const getAllProducts = async (req, res, next) => {
     const countQuery = {};
     if (filters.active !== undefined) countQuery.active = filters.active;
     if (filters.isNarcotic !== undefined) countQuery.isNarcotic = filters.isNarcotic;
+    if (filters.rxStatus) countQuery.rxStatus = filters.rxStatus;
     if (filters.stockStatus) countQuery.stockStatus = filters.stockStatus;
     if (filters.categoryId) countQuery.categoryIds = filters.categoryId;
     if (filters.search) {

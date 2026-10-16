@@ -24,6 +24,14 @@ const orderItemSchema = new mongoose.Schema(
     name: { type: String, required: true },
     price: { type: Number, required: true, min: 0 }, // server-computed effective price, snapshotted
     quantity: { type: Number, required: true, min: 1 },
+    isNarcotic: { type: Boolean, default: false },
+    rxStatus: { type: String, default: "none" },
+    reviewStatus: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "approved",
+    },
+    rejectionReason: { type: String, default: null },
   },
   { _id: false },
 );
@@ -70,11 +78,14 @@ const verificationSchema = new mongoose.Schema(
   {
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
+      enum: ["pending", "approved", "rejected", "partially_approved"],
       default: "pending",
     },
     reviewedBy: { type: String }, // admin ID or email
     reviewedAt: { type: Date },
+    reason: { type: String, default: null },
+    assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: "AdminUser", default: null },
+    assignedAt: { type: Date, default: null },
   },
   { _id: false },
 );
@@ -117,6 +128,17 @@ const orderSchema = new mongoose.Schema(
     verification: { type: verificationSchema }, // Phase 15 / FR-AD-20
     branchDescription: { type: String }, // instant orders (Phase 14)
     prescriptionUrl: { type: String }, // narcotics / instant orders (Phase 14/15)
+    prescriptionUrls: [{ type: String }], // multiple prescription files (Phase 4)
+    patientName: { type: String, trim: true, default: null },
+    pharmacistNotes: { type: String, trim: true, default: null },
+    customerNotes: { type: String, trim: true, default: null },
+    prescriptionConfirmation: { type: Boolean, default: false },
+    assignedSubAdminId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "AdminUser",
+      index: true,
+      default: null,
+    },
     cancellation: { type: cancellationSchema },
     gatewayTransactionId: { type: String }, // card payments (Phase 16)
     // Phase 19 — FR-CW-15: idempotency guard — set to true once the

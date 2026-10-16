@@ -36,6 +36,15 @@ const productSchema = new mongoose.Schema(
     categoryIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     isNarcotic: { type: Boolean, default: false },
     requiresPrescription: { type: Boolean, default: false },
+    rxStatus: {
+      type: String,
+      enum: ["none", "prescription_required", "narcotic"],
+      default: "none",
+    },
+    rxFlaggedAt: { type: Date, default: null },
+    rxFlaggedBy: { type: String, default: null },
+    rxSource: { type: String, default: null },
+    maxQtyPerOrder: { type: Number, default: null },
     stockStatus: {
       type: String,
       enum: ["in_stock", "out_of_stock"],
@@ -61,6 +70,7 @@ const productSchema = new mongoose.Schema(
 // Indexes for fields searched/filtered (NFR-PERF-04).
 productSchema.index({ name: "text", genericName: "text", description: "text", keywords: "text", tags: "text" });
 productSchema.index({ isNarcotic: 1 });
+productSchema.index({ rxStatus: 1 });
 productSchema.index({ active: 1 });
 productSchema.index({ categoryIds: 1 });
 productSchema.index({ genericName: 1 });
@@ -70,6 +80,7 @@ productSchema.index({ slug: 1, active: 1 });
 productSchema.index({ active: 1, name: 1 });
 productSchema.index({ active: 1, categoryIds: 1, name: 1 });
 productSchema.index({ active: 1, isNarcotic: 1, createdAt: -1 });
+productSchema.index({ active: 1, rxStatus: 1, createdAt: -1 });
 productSchema.index({ active: 1, createdAt: -1 });
 productSchema.index({ active: 1, price: 1 });
 

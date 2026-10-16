@@ -50,11 +50,13 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const isNarcoticProduct = Boolean(product.isNarcotic || product.rxStatus === 'narcotic');
+
   // Do not call redirect() inside generateMetadata in Next.js App Router (handled in page component)
   if (OBJECT_ID_REGEX.test(slug) && product.slug && product.slug !== slug) {
     return {
       title: `${product.name} | Medikart`,
-      robots: { index: false, follow: true },
+      robots: isNarcoticProduct ? { index: false, follow: true } : { index: false, follow: true },
       alternates: {
         canonical: `${SITE_URL}/products/${product.slug}`,
       },
@@ -88,6 +90,7 @@ export async function generateMetadata({ params }) {
     return {
       title: { absolute: title },
       description,
+      robots: isNarcoticProduct ? { index: false, follow: true } : { index: true, follow: true },
       alternates: {
         canonical: canonicalUrl,
       },
@@ -387,7 +390,12 @@ export default async function ProductDetailPage({ params }) {
                 {isOutOfStock ? 'Out of Stock' : 'In Stock'}
               </span>
 
-
+              {(product.isNarcotic || product.requiresPrescription || product.rxStatus === 'prescription_required') && (
+                <span className="text-xs px-2.5 py-1 rounded-lg font-black bg-amber-100 text-amber-950 border border-amber-300 flex items-center gap-1 shadow-2xs">
+                  <span>📋</span>
+                  <span>Prescription Required</span>
+                </span>
+              )}
             </div>
           </div>
 
@@ -633,6 +641,52 @@ export default async function ProductDetailPage({ params }) {
                 </div>
               </Link>
             ))}
+          </div>
+        </section>
+      )}
+
+      {/* Prescription Guidance & FAQ Section */}
+      {(product.isNarcotic || product.requiresPrescription || product.rxStatus === 'prescription_required') && (
+        <section aria-label="Prescription FAQs" className="bg-amber-50/80 rounded-3xl border border-amber-200/90 p-6 sm:p-8 space-y-4 shadow-3xs">
+          <div className="flex items-center gap-2.5 border-b border-amber-200/80 pb-3">
+            <span className="text-2xl">🩺</span>
+            <div>
+              <h2 className="text-lg sm:text-xl font-black text-amber-950">
+                Prescription Guidance &amp; Regulations
+              </h2>
+              <p className="text-xs text-amber-900 font-medium mt-0.5">
+                Official dispensing protocols compliant with DRAP pharmaceutical guidelines
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs">
+              <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
+                <span>❓</span> Do I need a prescription to order {product.name}?
+              </h3>
+              <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Yes. {product.name} is a controlled medicine. In accordance with healthcare standards and Drug Regulatory Authority of Pakistan (DRAP) regulations, it can only be dispensed against an authentic doctor's prescription.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs">
+              <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
+                <span>📤</span> How do I submit my prescription?
+              </h3>
+              <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                You can add this product to your cart and upload a clear photo or PDF document of your prescription either in your shopping cart or on the checkout page. You can order both regular items and prescription items in a single checkout.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-4 border border-amber-200 shadow-2xs">
+              <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
+                <span>🔍</span> Who verifies my prescription?
+              </h3>
+              <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                Our qualified, licensed pharmacist inspects your prescription to confirm doctor registration, date, and dosage details before approving your order for packaging and delivery.
+              </p>
+            </div>
           </div>
         </section>
       )}

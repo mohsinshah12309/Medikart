@@ -54,6 +54,9 @@ const getAllProducts = async (filters = {}, page = 1, limit = 20) => {
   if (filters.isNarcotic !== undefined) {
     query.isNarcotic = filters.isNarcotic;
   }
+  if (filters.rxStatus) {
+    query.rxStatus = filters.rxStatus;
+  }
   if (filters.stockStatus) {
     query.stockStatus = filters.stockStatus;
   }
@@ -190,6 +193,8 @@ const setNarcoticFlag = async (productId, isNarcotic, actor) => {
 
   const previousFlag = product.isNarcotic;
   product.isNarcotic = isNarcotic;
+  product.requiresPrescription = isNarcotic;
+  product.rxStatus = isNarcotic ? "prescription_required" : "none";
   await product.save();
 
   // Audit log entry (FR-AD-15 / NFR-COMP-02) — non-blocking call
@@ -222,7 +227,13 @@ const bulkSetNarcoticFlag = async (productIds, isNarcotic, actor) => {
   // Atomic batch update across all matching product IDs
   await Product.updateMany(
     { _id: { $in: productIds } },
-    { $set: { isNarcotic } }
+    {
+      $set: {
+        isNarcotic,
+        requiresPrescription: isNarcotic,
+        rxStatus: isNarcotic ? "prescription_required" : "none",
+      },
+    }
   );
 
   const action = isNarcotic ? "narcotics_flag_added" : "narcotics_flag_removed";
@@ -237,6 +248,8 @@ const bulkSetNarcoticFlag = async (productIds, isNarcotic, actor) => {
       after: { isNarcotic },
     });
     product.isNarcotic = isNarcotic;
+    product.requiresPrescription = isNarcotic;
+    product.rxStatus = isNarcotic ? "prescription_required" : "none";
   }
 
   await invalidateProductCache();

@@ -121,6 +121,10 @@ const placeNarcoticsOrderSchema = z.object({
       .length(6, "OTP code must be exactly 6 digits")
       .regex(/^\d{6}$/, "OTP code must contain digits only"),
   }),
+  patientName: z.string().optional().nullable(),
+  pharmacistNotes: z.string().optional().nullable(),
+  customerNotes: z.string().optional().nullable(),
+  prescriptionConfirmation: z.boolean().optional(),
 }).refine(
   (data) => {
     const city = (data.customer?.city || "").trim().toLowerCase();
@@ -154,15 +158,17 @@ const priceInstantOrderSchema = z.object({
     .min(1, "At least one item is required"),
 });
 
-// PATCH /api/v1/admin/orders/:id/verification — admin approve/reject for
-// narcotics prescription review (Phase 15 / FR-AD-20).
-// SECURITY allow-list: only `decision` is writable. `reviewedBy`/`reviewedAt`
-// are always server-set from req.admin — a client can never inject them.
+// PATCH /api/v1/admin/orders/:id/verification — admin approve/reject/partial-reject
+// and sub-admin assignment for prescription review.
 const narcoticsVerificationSchema = z.object({
-  decision: z.enum(["approved", "rejected"], {
-    invalid_type_error: 'Decision must be "approved" or "rejected"',
-  }),
-});
+  decision: z.enum(["approved", "rejected", "partially_approved"]).optional(),
+  reason: z.string().trim().optional().nullable(),
+  rejectedItemIds: z.array(z.string()).optional(),
+  assignedTo: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid sub-admin ID format").optional().nullable(),
+}).refine(
+  (data) => data.decision || data.assignedTo,
+  { message: "Either a decision or an assignedTo sub-admin ID must be provided" }
+);
 
 // GET /api/v1/admin/orders — admin list with optional filters
 const adminOrderQuerySchema = z.object({

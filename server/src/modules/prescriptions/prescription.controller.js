@@ -29,10 +29,13 @@ const getPrescription = async (req, res, next) => {
     const { filename } = req.params;
 
     // Object-level check: the filename must be tied to a real order's
-    // prescriptionUrl. We never serve a file that isn't referenced by an order.
+    // prescriptionUrl or prescriptionUrls. We never serve a file that isn't referenced by an order.
     const escapedFilename = filename.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const order = await Order.findOne({
-      prescriptionUrl: { $regex: new RegExp(`${escapedFilename}$`) },
+      $or: [
+        { prescriptionUrl: { $regex: new RegExp(`${escapedFilename}$`) } },
+        { prescriptionUrls: { $regex: new RegExp(`${escapedFilename}$`) } },
+      ],
     });
 
     if (!order) {
@@ -47,15 +50,18 @@ const getPrescription = async (req, res, next) => {
       throw new NotFoundError("Prescription file not found on disk");
     }
 
-    // Determine content type from extension (we only allow jpg/png/pdf at upload)
+    // Determine content type from extension (jpg, png, webp, pdf)
     const ext = path.extname(filename).toLowerCase();
     let contentType = "application/octet-stream";
     if (ext === ".jpg" || ext === ".jpeg") contentType = "image/jpeg";
     else if (ext === ".png") contentType = "image/png";
+    else if (ext === ".webp") contentType = "image/webp";
     else if (ext === ".pdf") contentType = "application/pdf";
 
     res.setHeader("Content-Type", contentType);
     res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
+    res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+    res.setHeader("Cache-Control", "private, no-cache, no-store, must-revalidate");
 
     // Stream the file
     const stream = fs.createReadStream(filePath);

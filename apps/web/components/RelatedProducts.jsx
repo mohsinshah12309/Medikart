@@ -44,7 +44,7 @@ export default function RelatedProducts({ currentProduct, primaryCategory, initi
           if (fallbackRes.ok) {
             const fallbackData = await fallbackRes.json();
             const matched = (fallbackData?.data?.products || []).filter(
-              (p) => String(p._id) !== String(currentProduct._id)
+              (p) => String(p._id) !== String(currentProduct._id) && !p.isNarcotic && p.rxStatus !== 'narcotic'
             );
             if (isMounted) setRelatedProducts(matched.slice(0, 6));
           }
