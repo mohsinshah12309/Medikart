@@ -52,69 +52,76 @@ export default function RightBlogSidebar({ isMobileDrawerOpen, setIsMobileDrawer
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* ─── 1. Header: Live Feed Badge & Controls ─── */}
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100 flex-shrink-0">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold shadow-xs">
-            <Stethoscope className="w-5 h-5 text-amber-700" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <h3 className="text-sm sm:text-base font-black font-heading text-slate-900 tracking-tight leading-none">
+      <div className="pb-3 border-b border-slate-100 flex-shrink-0">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold shadow-xs shrink-0">
+              <Stethoscope className="w-5 h-5 text-amber-700" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="text-sm sm:text-base font-black font-heading text-slate-900 tracking-tight leading-snug truncate">
                 Health Blogs
               </h3>
-              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                Live Moving Feed
-              </span>
+              <p className="text-[11px] text-slate-500 font-medium truncate">
+                60+ Verified Medical Articles
+              </p>
             </div>
-            <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-              60+ Verified Medical Articles
-            </p>
+          </div>
+
+          {/* Controls */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Pause / Play */}
+            <button
+              type="button"
+              onClick={() => setIsPaused((prev) => !prev)}
+              title={isPaused ? "Resume Auto-Scroll" : "Pause Auto-Scroll"}
+              aria-label={isPaused ? "Resume Auto-Scroll" : "Pause Auto-Scroll"}
+              className="w-7 h-7 rounded-full bg-slate-50 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 hover:border-amber-300 flex items-center justify-center transition-all cursor-pointer shadow-3xs"
+            >
+              {isPaused ? <Play className="w-3 h-3 text-amber-700 fill-amber-700" /> : <Pause className="w-3 h-3 text-slate-600" />}
+            </button>
+
+            {/* Up / Down */}
+            <button
+              type="button"
+              onClick={() => handleScrollManual("up")}
+              aria-label="Scroll Up"
+              className="w-7 h-7 rounded-full bg-slate-50 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 hover:border-amber-300 hidden sm:flex items-center justify-center transition-all cursor-pointer shadow-3xs"
+            >
+              <ChevronUp className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleScrollManual("down")}
+              aria-label="Scroll Down"
+              className="w-7 h-7 rounded-full bg-slate-50 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 hover:border-amber-300 hidden sm:flex items-center justify-center transition-all cursor-pointer shadow-3xs"
+            >
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Close button for mobile drawer */}
+            {setIsMobileDrawerOpen && (
+              <button
+                type="button"
+                onClick={() => setIsMobileDrawerOpen(false)}
+                aria-label="Close Sidebar"
+                className="xl:hidden w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Controls */}
-        <div className="flex items-center gap-1.5">
-          {/* Pause / Play */}
-          <button
-            type="button"
-            onClick={() => setIsPaused((prev) => !prev)}
-            title={isPaused ? "Resume Auto-Scroll" : "Pause Auto-Scroll"}
-            aria-label={isPaused ? "Resume Auto-Scroll" : "Pause Auto-Scroll"}
-            className="w-7 h-7 rounded-full bg-slate-50 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 hover:border-amber-300 flex items-center justify-center transition-all cursor-pointer shadow-3xs"
-          >
-            {isPaused ? <Play className="w-3 h-3 text-amber-700 fill-amber-700" /> : <Pause className="w-3 h-3 text-slate-600" />}
-          </button>
-
-          {/* Up / Down */}
-          <button
-            type="button"
-            onClick={() => handleScrollManual("up")}
-            aria-label="Scroll Up"
-            className="w-7 h-7 rounded-full bg-slate-50 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 hover:border-amber-300 hidden sm:flex items-center justify-center transition-all cursor-pointer shadow-3xs"
-          >
-            <ChevronUp className="w-3.5 h-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => handleScrollManual("down")}
-            aria-label="Scroll Down"
-            className="w-7 h-7 rounded-full bg-slate-50 hover:bg-amber-100 text-slate-600 hover:text-amber-900 border border-slate-200 hover:border-amber-300 hidden sm:flex items-center justify-center transition-all cursor-pointer shadow-3xs"
-          >
-            <ChevronDown className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Close button for mobile drawer */}
-          {setIsMobileDrawerOpen && (
-            <button
-              type="button"
-              onClick={() => setIsMobileDrawerOpen(false)}
-              aria-label="Close Sidebar"
-              className="xl:hidden w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-all cursor-pointer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+        {/* Live Feed Status Pill */}
+        <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-slate-50 text-[10px]">
+          <span className="inline-flex items-center gap-1.5 font-extrabold text-amber-950 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/80">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+            Live Moving Feed
+          </span>
+          <span className="text-slate-400 font-semibold">
+            {isPaused ? "Paused on hover" : "Continuous loop"}
+          </span>
         </div>
       </div>
 
@@ -224,7 +231,7 @@ export default function RightBlogSidebar({ isMobileDrawerOpen, setIsMobileDrawer
   return (
     <>
       {/* Desktop Persistent Sticky Right Sidebar */}
-      <aside className="hidden xl:flex flex-col w-80 2xl:w-92 flex-shrink-0 sticky top-24 h-[calc(100vh-7rem)] z-30">
+      <aside className="hidden xl:flex flex-col w-80 2xl:w-92 flex-shrink-0 sticky top-[140px] h-[calc(100vh-10rem)] z-30">
         {sidebarBody}
       </aside>
 

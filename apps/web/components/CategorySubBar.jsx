@@ -373,16 +373,17 @@ export default function CategorySubBar({ categories = [] }) {
     scrollToCatalog();
 
     if (pathname !== "/") {
-      router.push(`/?category=${catId}#store-catalog`);
+      router.push(`/?categoryId=${catId}#store-catalog`);
     } else {
       const url = new URL(window.location.href);
       url.searchParams.delete("search");
       if (catId) {
-        url.searchParams.set("category", catId);
+        url.searchParams.set("categoryId", catId);
       } else {
+        url.searchParams.delete("categoryId");
         url.searchParams.delete("category");
       }
-      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
+      window.history.replaceState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 
@@ -400,7 +401,8 @@ export default function CategorySubBar({ categories = [] }) {
       const url = new URL(window.location.href);
       url.searchParams.set("search", query);
       url.searchParams.delete("category");
-      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
+      url.searchParams.delete("categoryId");
+      window.history.replaceState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
     }
   };
 
