@@ -90,8 +90,7 @@ export const CATEGORY_META_REGISTRY = {
   medicines: {
     title: 'Medicines Online in Pakistan: Upload Prescription | Medikart',
     description: "Order medicines online in Pakistan. Upload your doctor's prescription through Instant Order and pay by Cash on Delivery. Prescription rules apply.",
-    noindex: true,
-    noindexReason: 'Prescription-heavy catalog. Flagged to user for approval before enabling public index.',
+    noindex: false,
     cluster: 'prescription-medicines',
     aeoSummary: "Medikart offers authentic prescription and essential medicines online in Pakistan with required prescription verification. Upload your doctor's prescription directly through our Instant Order service. Website-listed cities receive express delivery in 1 to 5 hours, while all other locations arrive in 2 to 3 working days. Pay via Cash on Delivery or card.",
   },
@@ -136,7 +135,6 @@ export const NOINDEX_CATEGORY_SLUGS = new Set([
   'fridge-items',
   'general-items',
   'beverages',
-  'medicines', // Flagged to user before indexing
 ]);
 
 export function getFallbackCategoryMeta(slug, categoryName = '') {

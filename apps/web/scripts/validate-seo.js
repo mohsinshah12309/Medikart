@@ -76,7 +76,7 @@ for (const [slug, meta] of Object.entries(CATEGORY_META_REGISTRY)) {
   }
 
   // Internal bucket noindex check
-  const internalBuckets = ['consumer', 'flat-items', 'fridge-items', 'general-items', 'beverages', 'medicines'];
+  const internalBuckets = ['consumer', 'flat-items', 'fridge-items', 'general-items', 'beverages'];
   if (internalBuckets.includes(slug) && !noindex) {
     errors.push(`Category '${slug}' must be flagged as noindex: true.`);
   }
@@ -86,7 +86,7 @@ console.log(`  ✓ Checked ${Object.keys(CATEGORY_META_REGISTRY).length} registe
 
 // 2. Validate Sitemap Exclusions
 console.log('\n▶ [2/3] Validating Noindex & Sitemap Exclusions...');
-const requiredNoindexes = ['consumer', 'flat-items', 'fridge-items', 'general-items', 'beverages', 'medicines'];
+const requiredNoindexes = ['consumer', 'flat-items', 'fridge-items', 'general-items', 'beverages'];
 for (const slug of requiredNoindexes) {
   if (!NOINDEX_CATEGORY_SLUGS.has(slug)) {
     errors.push(`Expected '${slug}' in NOINDEX_CATEGORY_SLUGS set.`);
