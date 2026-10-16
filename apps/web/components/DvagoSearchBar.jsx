@@ -408,35 +408,46 @@ export default function DvagoSearchBar({ className = "" }) {
   return (
     <>
       {/* ── TOP NAVBAR SEARCH BAR TRIGGER ───────────────────────────────── */}
-      <div
-        className={`relative flex items-center w-full transition-all ${className}`}
+      <form
         role="search"
+        onSubmit={handleFormSubmit}
+        className={`relative flex items-center w-full transition-all ${className}`}
       >
         <div
           onClick={handleOpenModal}
-          className="relative w-full h-10 sm:h-11 flex items-center bg-slate-50 hover:bg-white rounded-full border border-slate-200/90 hover:border-amber-400 transition-all duration-200 shadow-2xs cursor-pointer pl-3.5 sm:pl-4 pr-1.5 group"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleOpenModal();
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label="Search medicines and healthcare products"
+          className="relative w-full h-11 flex items-center bg-slate-50 hover:bg-white focus:bg-white rounded-full border border-slate-200/90 hover:border-amber-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-200/50 transition-all duration-200 shadow-2xs cursor-pointer group"
         >
-          {/* Magnifying Glass */}
-          <div className="text-slate-400 group-hover:text-amber-500 flex items-center justify-center pointer-events-none transition-colors mr-2.5 shrink-0">
+          {/* Magnifier Icon */}
+          <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-amber-500 pointer-events-none transition-colors flex items-center justify-center">
             <Search className="w-4 h-4" />
           </div>
 
-          {/* Dummy search input trigger with animated placeholder */}
-          <div className="relative flex-1 h-full flex items-center overflow-hidden min-w-0 pr-2">
+          {/* Search Input / Rotating Placeholder Container */}
+          <div className="w-full h-full flex items-center pl-10 pr-24 overflow-hidden">
             <input
               ref={searchInputRef}
               type="text"
               readOnly
               value={query}
               placeholder=""
-              className="w-full h-full bg-transparent text-xs sm:text-sm font-medium text-slate-800 placeholder-transparent outline-none cursor-pointer"
-              aria-label="Search medicines and healthcare products"
+              tabIndex={-1}
+              className="w-full bg-transparent text-xs sm:text-[13px] font-medium text-slate-800 placeholder-transparent outline-none cursor-pointer truncate pointer-events-none"
+              aria-hidden="true"
             />
 
             {/* Rotating Animated Placeholder */}
             {!query && (
               <div
-                className={`pointer-events-none absolute left-0 right-0 text-xs sm:text-[13px] text-slate-400 font-medium truncate transition-all duration-200 ${
+                className={`pointer-events-none absolute left-10 right-24 top-1/2 -translate-y-1/2 text-xs sm:text-[13px] text-slate-500 font-medium truncate transition-all duration-200 ${
                   isFading ? "opacity-0 -translate-y-1" : "opacity-100 translate-y-0"
                 }`}
               >
@@ -445,14 +456,20 @@ export default function DvagoSearchBar({ className = "" }) {
             )}
           </div>
 
-          {/* Docked Search Button inside search bar */}
-          <div className="flex items-center shrink-0">
-            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#FFEE45] text-slate-950 border border-[#E5D322] group-hover:bg-[#FDD835] transition-colors shadow-2xs">
-              SEARCH
-            </span>
-          </div>
+          {/* Docked Search Button inside search field on right */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleOpenModal();
+            }}
+            aria-label="Submit search"
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-9 px-3.5 sm:px-4 rounded-full bg-[#FFEE45] hover:bg-[#FDD835] active:scale-95 text-slate-950 border border-[#E5D322] font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center transition-all shadow-2xs cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            SEARCH
+          </button>
         </div>
-      </div>
+      </form>
 
       {/* ── FULL BACKDROP BLURRED OVERLAY MODAL ────────────────────────────── */}
       {isOpen && (

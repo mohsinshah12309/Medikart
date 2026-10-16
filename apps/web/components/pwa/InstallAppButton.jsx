@@ -19,21 +19,22 @@ export default function InstallAppButton({ variant = "navbar", className = "" })
       <button
         type="button"
         onClick={triggerInstall}
-        className={`h-8.5 px-2.5 xl:px-3 rounded-full text-[11px] xl:text-xs font-black transition-all duration-200 cursor-pointer border flex items-center gap-1 shadow-2xs whitespace-nowrap ${
+        className={`h-10 sm:h-11 px-4 rounded-full text-xs font-black transition-all duration-200 cursor-pointer border flex items-center gap-1.5 shadow-2xs whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
           isInstalled
             ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
             : "bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 border-[#E5D322] hover:shadow-xs hover:scale-[1.02] active:scale-95"
         } ${className}`}
-        title={isInstalled ? "Medikart App Installed" : "Download Medikart"}
+        title={isInstalled ? "Medikart App Installed" : "Download Medikart App"}
+        aria-label={isInstalled ? "Medikart App Installed" : "Download Medikart App"}
       >
         {isInstalled ? (
           <>
-            <Check className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-emerald-600" />
+            <Check className="w-4 h-4 text-emerald-600" />
             <span>App Installed</span>
           </>
         ) : (
           <>
-            <Smartphone className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-slate-950" />
+            <Smartphone className="w-3.5 h-3.5 text-slate-950" />
             <span>Download Medikart</span>
             <span className="w-1.5 h-1.5 rounded-full bg-slate-950 animate-pulse ml-0.5" />
           </>

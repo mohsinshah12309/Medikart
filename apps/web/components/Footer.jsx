@@ -195,8 +195,8 @@ export default function Footer({
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 text-left">
             
-            {/* ─── COLUMN 1: BRAND BLOCK (lg:col-span-4) ─── */}
-            <div className="lg:col-span-4 flex flex-col items-start gap-4">
+            {/* ─── COLUMN 1: BRAND BLOCK (lg:col-span-3 xl:col-span-3) ─── */}
+            <div className="lg:col-span-3 xl:col-span-3 flex flex-col items-start gap-4">
               <Link href="/" aria-label="Medikart Home" className="inline-block group">
                 <div className="bg-white/95 hover:bg-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-2xl shadow-sm border border-amber-300/80 hover:border-amber-400 hover:shadow-md hover:scale-[1.02] transition-all duration-200 inline-flex items-center">
                   <InteractiveLogo size="lg" />
@@ -247,8 +247,8 @@ export default function Footer({
               </div>
             </div>
 
-            {/* ─── COLUMN 2: CATEGORIES (lg:col-span-2) ─── */}
-            <div className="lg:col-span-2 flex flex-col items-start gap-3">
+            {/* ─── COLUMN 2: CATEGORIES (lg:col-span-2 xl:col-span-2) ─── */}
+            <div className="lg:col-span-2 xl:col-span-2 flex flex-col items-start gap-3">
               <h3 className="text-sm font-black uppercase tracking-wider text-slate-950 font-heading border-b-2 border-amber-400/80 pb-1 w-full">
                 Categories
               </h3>
@@ -290,37 +290,66 @@ export default function Footer({
               </ul>
             </div>
 
-            {/* ─── COLUMN 3: NAVIGATE (lg:col-span-2) ─── */}
-            <div className="lg:col-span-2 flex flex-col items-start gap-3">
+            {/* ─── COLUMN 3: EXPLORE (lg:col-span-2 xl:col-span-2) ─── */}
+            <div className="lg:col-span-2 xl:col-span-2 flex flex-col items-start gap-3">
               <h3 className="text-sm font-black uppercase tracking-wider text-slate-950 font-heading border-b-2 border-amber-400/80 pb-1 w-full">
-                Navigate
+                Explore
               </h3>
               
               <ul className="flex flex-col gap-2 w-full text-xs sm:text-sm">
-                {navigateLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5"
-                    >
-                      <span className="text-amber-600 text-[10px] font-black">›</span>
-                      <span>{link.label}</span>
-                      {link.badge && (
-                        <span className="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-amber-200 text-amber-900 border border-amber-300">
-                          {link.badge}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <a
+                    href="/medicines-a-z/a"
+                    className="font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5"
+                  >
+                    <span className="text-amber-600 text-[10px] font-black">›</span>
+                    <span>Medicines A-Z</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/brands"
+                    className="font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5"
+                  >
+                    <span className="text-amber-600 text-[10px] font-black">›</span>
+                    <span>Brands</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/refill"
+                    className="font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5"
+                  >
+                    <span className="text-amber-600 text-[10px] font-black">›</span>
+                    <span>Monthly Refill</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/blogs"
+                    className="font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5"
+                  >
+                    <span className="text-amber-600 text-[10px] font-black">›</span>
+                    <span>Health Guides</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/about"
+                    className="font-semibold text-slate-800 hover:text-amber-950 hover:underline hover:translate-x-1 transition-all inline-flex items-center gap-1.5 py-0.5"
+                  >
+                    <span className="text-amber-600 text-[10px] font-black">›</span>
+                    <span>About Medikart</span>
+                  </a>
+                </li>
                 <li className="pt-1">
                   <InstallAppButton variant="footer" />
                 </li>
               </ul>
             </div>
 
-            {/* ─── COLUMN 4: SUPPORT (lg:col-span-2) ─── */}
-            <div className="lg:col-span-2 flex flex-col items-start gap-3">
+            {/* ─── COLUMN 4: SUPPORT (lg:col-span-2 xl:col-span-2) ─── */}
+            <div className="lg:col-span-2 xl:col-span-2 flex flex-col items-start gap-3">
               <h3 className="text-sm font-black uppercase tracking-wider text-slate-950 font-heading border-b-2 border-amber-400/80 pb-1 w-full">
                 Support
               </h3>
@@ -340,8 +369,8 @@ export default function Footer({
               </ul>
             </div>
 
-            {/* ─── COLUMN 5: CONTACT US (lg:col-span-2) ─── */}
-            <div className="lg:col-span-2 flex flex-col items-start gap-3">
+            {/* ─── COLUMN 5: CONTACT US (lg:col-span-3 xl:col-span-3) ─── */}
+            <div className="lg:col-span-3 xl:col-span-3 flex flex-col items-start gap-3">
               <h3 className="text-sm font-black uppercase tracking-wider text-slate-950 font-heading border-b-2 border-amber-400/80 pb-1 w-full">
                 Contact Us
               </h3>

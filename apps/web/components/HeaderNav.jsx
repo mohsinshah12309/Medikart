@@ -3,43 +3,35 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   X,
-  ChevronDown,
-  ChevronRight,
-  ArrowRight,
-  Pill,
   Heart,
-  CalendarSync,
   User,
   LogOut,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 
 import { useCustomer } from "./CustomerProvider";
-import { triggerCategorySelect, scrollToCatalog } from "../lib/catalogEvents";
 import InstallAppButton from "./pwa/InstallAppButton";
+import NavbarCartIcon from "./NavbarCartIcon";
 
-export default function HeaderNav({ initialCategories = [] }) {
-  const [categories, setCategories] = useState(initialCategories);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+export default function HeaderNav() {
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const hoverTimeoutRef = useRef(null);
   const accountTimeoutRef = useRef(null);
   const pathname = usePathname();
   const router = useRouter();
 
-  const { customer, isAuthenticated, logout, wishlistCount, refillCount } = useCustomer();
+  const { customer, isAuthenticated, logout, wishlistCount } = useCustomer();
 
   useEffect(() => {
     setMounted(true);
-    // Instant route prefetching for lightning-fast sub-millisecond page transitions
-    const routesToPrefetch = ['/', '/instant-order', '/cart', '/checkout', '/wishlist', '/refill', '/about', '/contact', '/login'];
+    // Instant route prefetching for fast transitions
+    const routesToPrefetch = ["/", "/instant-order", "/cart", "/checkout", "/wishlist", "/contact", "/login"];
     routesToPrefetch.forEach((route) => {
       try {
         router.prefetch(route);
@@ -47,7 +39,7 @@ export default function HeaderNav({ initialCategories = [] }) {
     });
   }, [router]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile drawer is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       const orig = document.body.style.overflow;
@@ -58,78 +50,15 @@ export default function HeaderNav({ initialCategories = [] }) {
     }
   }, [isMobileMenuOpen]);
 
-  // Load categories if not passed down from server layout
-  useEffect(() => {
-    if (initialCategories.length > 0) {
-      setCategories(initialCategories);
-    } else {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
-      fetch(`${apiUrl}/categories`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.data?.categories && data.data.categories.length > 0) {
-            setCategories(data.data.categories);
-          }
-        })
-        .catch(() => {});
-    }
-  }, [initialCategories]);
-
   // Close mobile drawer on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsDropdownOpen(false);
     setIsAccountMenuOpen(false);
   }, [pathname]);
 
-  // Dropdown hover handlers with grace delay
-  const handleMouseEnter = () => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    setIsDropdownOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    hoverTimeoutRef.current = setTimeout(() => {
-      setIsDropdownOpen(false);
-    }, 220);
-  };
-
-  const handleCategorySelect = (catId, e) => {
-    if (e) e.preventDefault();
-    setIsDropdownOpen(false);
-    setIsMobileMenuOpen(false);
-
-    triggerCategorySelect(catId, true);
-    scrollToCatalog();
-
-    if (pathname !== "/") {
-      router.push(`/?category=${catId}#store-catalog`);
-    } else {
-      const url = new URL(window.location.href);
-      url.searchParams.delete("search");
-      if (catId) {
-        url.searchParams.set("category", catId);
-      } else {
-        url.searchParams.delete("category");
-      }
-      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
-    }
-  };
-
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Instant Order", href: "/instant-order" },
-    { name: "Categories", href: "#categories", isDropdown: true },
-    { name: "Medicines A-Z", href: "/medicines-a-z/a" },
-    { name: "Brands", href: "/brands" },
-    { name: "Refill", href: "/refill" },
-    { name: "Health Guides", href: "/blogs" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
-  ];
-
+  // Mobile drawer content with ONLY the approved items
   const mobileDrawerContent = isMobileMenuOpen && mounted ? (
-    <div className="fixed inset-0 z-[100] md:hidden">
+    <div className="fixed inset-0 z-[100] top-row-mobile-search">
       {/* Backdrop overlay */}
       <div
         className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-200"
@@ -137,18 +66,18 @@ export default function HeaderNav({ initialCategories = [] }) {
         aria-hidden="true"
       />
 
-      {/* Slide-out Drawer Panel (Pinned to full viewport) */}
+      {/* Slide-out Drawer Panel */}
       <aside
         style={{ backgroundColor: "#ffffff", colorScheme: "light" }}
         className="fixed top-0 left-0 bottom-0 w-[310px] max-w-[85vw] h-full max-h-screen bg-white shadow-2xl flex flex-col z-10 border-r border-slate-200 overflow-hidden animate-in slide-in-from-left duration-200"
       >
-        {/* Drawer Top Header (Fixed shrink-0) */}
+        {/* Drawer Header */}
         <div
           style={{ backgroundColor: "#ffffff" }}
           className="shrink-0 p-4 border-b border-slate-200 flex items-center justify-between bg-white shadow-2xs"
         >
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-[#FFCB05] flex items-center justify-center text-slate-950 font-black text-sm shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-[#FFEE45] border border-[#E5D322] flex items-center justify-center text-slate-950 font-black text-sm shadow-xs">
               🛒
             </div>
             <div>
@@ -161,18 +90,18 @@ export default function HeaderNav({ initialCategories = [] }) {
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
             aria-label="Close menu"
-            className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-950 transition-colors cursor-pointer"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 hover:text-slate-950 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Drawer Scrollable Navigation Links (flex-1 min-h-0 for proper scrolling) */}
+        {/* Drawer Body: ONLY Home, Instant Order, Contact, Wishlist, Download Medikart */}
         <div
           style={{ backgroundColor: "#ffffff" }}
           className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2 scrollbar-thin bg-white"
         >
-          {/* Download / Install App Banner Card */}
+          {/* Download Medikart App Banner Card */}
           <div className="pb-1">
             <InstallAppButton variant="mobile-drawer" />
           </div>
@@ -181,6 +110,7 @@ export default function HeaderNav({ initialCategories = [] }) {
           <Link
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
+            aria-current={pathname === "/" ? "page" : undefined}
             className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
               pathname === "/"
                 ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
@@ -198,6 +128,7 @@ export default function HeaderNav({ initialCategories = [] }) {
           <Link
             href="/instant-order"
             onClick={() => setIsMobileMenuOpen(false)}
+            aria-current={pathname === "/instant-order" ? "page" : undefined}
             className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
               pathname === "/instant-order"
                 ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
@@ -207,213 +138,18 @@ export default function HeaderNav({ initialCategories = [] }) {
             <div className="flex items-center gap-3">
               <span className="text-base">⚡</span>
               <span>Instant Order</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-200 text-slate-950 font-black">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FFEE45] text-slate-950 font-black border border-[#E5D322]">
                 Rapid
               </span>
             </div>
             <ChevronRight className="w-4 h-4 text-slate-400" />
           </Link>
 
-          {/* 3. Categories Accordion */}
-          <div className="rounded-xl bg-slate-50/80 border border-slate-200 overflow-hidden shadow-2xs">
-            <button
-              type="button"
-              onClick={() => setIsMobileCategoriesOpen(!isMobileCategoriesOpen)}
-              className="w-full flex items-center justify-between px-3.5 py-3 font-bold text-sm text-slate-900 hover:bg-amber-50/60 transition-colors cursor-pointer"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-base">📁</span>
-                <span>Categories</span>
-                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300/60">
-                  {categories.length}
-                </span>
-              </div>
-              <ChevronDown
-                className={`w-4 h-4 text-slate-500 transition-transform ${
-                  isMobileCategoriesOpen ? "rotate-180 text-amber-600" : ""
-                }`}
-              />
-            </button>
-
-            {isMobileCategoriesOpen && (
-              <div className="px-2 pb-2.5 pt-1 space-y-1 border-t border-slate-200/60 max-h-60 overflow-y-auto bg-white">
-                <Link
-                  href="/categories/medicines"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="flex items-center justify-between p-2 rounded-lg text-xs font-black text-amber-800 bg-amber-50/80 hover:bg-amber-100 transition-colors"
-                >
-                  <span className="flex items-center gap-2">
-                    <span>📦</span>
-                    <span>All Products</span>
-                  </span>
-                  <span className="text-xs">→</span>
-                </Link>
-
-                {categories.map((cat) => {
-                  const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-                  const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
-                  const isCurrentCategory = pathname === `/categories/${slug}`;
-
-                  return (
-                    <Link
-                      key={cat._id}
-                      href={`/categories/${slug}`}
-                      onClick={() => {
-                        setIsDropdownOpen(false);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`flex items-center gap-2.5 p-2 rounded-lg text-xs font-bold transition-colors ${
-                        isCurrentCategory
-                          ? "bg-yellow-400 text-slate-950 font-black shadow-2xs"
-                          : "hover:bg-yellow-50 text-slate-800 hover:text-slate-950"
-                      }`}
-                    >
-                      <div className={`w-6 h-6 rounded-md relative overflow-hidden shrink-0 flex items-center justify-center ${
-                        isCurrentCategory ? "bg-white border border-yellow-500" : "bg-amber-50 border border-amber-200"
-                      }`}>
-                        {imgSrc ? (
-                          <Image
-                            src={imgSrc}
-                            alt={cat.name}
-                            fill
-                            sizes="24px"
-                            className="object-cover"
-                          />
-                        ) : (
-                          <Pill className={`w-3.5 h-3.5 ${isCurrentCategory ? "text-amber-800" : "text-amber-600"}`} />
-                        )}
-                      </div>
-                      <span className="line-clamp-1 flex-1">{cat.name}</span>
-                      <span className={`text-xs ${isCurrentCategory ? "text-slate-950 font-black" : "text-slate-400"}`}>
-                        {isCurrentCategory ? "✓" : "→"}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 3.1. Medicines A-Z Index */}
-          <Link
-            href="/medicines-a-z/a"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
-              pathname?.startsWith("/medicines-a-z")
-                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
-                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-base">📚</span>
-              <span>Medicines A-Z Index</span>
-            </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </Link>
-
-          {/* 3.2. Top Brands */}
-          <Link
-            href="/brands"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
-              pathname?.startsWith("/brands")
-                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
-                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-base">🏛️</span>
-              <span>Top Brands &amp; Manufacturers</span>
-            </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </Link>
-
-          {/* 4. Wishlist */}
-          <Link
-            href="/wishlist"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
-              pathname === "/wishlist"
-                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
-                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <Heart className={`w-4 h-4 ${wishlistCount > 0 ? "text-rose-500 fill-rose-500" : "text-rose-500"}`} />
-              <span>Wishlist</span>
-            </div>
-            {wishlistCount > 0 ? (
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
-                {wishlistCount}
-              </span>
-            ) : (
-              <ChevronRight className="w-4 h-4 text-slate-400" />
-            )}
-          </Link>
-
-          {/* 5. Monthly Refill */}
-          <Link
-            href="/refill"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
-              pathname === "/refill"
-                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
-                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <CalendarSync className="w-4 h-4 text-amber-700" />
-              <span>Monthly Refill</span>
-            </div>
-            {refillCount > 0 ? (
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-yellow-400 text-slate-950">
-                {refillCount}
-              </span>
-            ) : (
-              <ChevronRight className="w-4 h-4 text-slate-400" />
-            )}
-          </Link>
-
-          {/* 6. Health Blogs */}
-          <Link
-            href="/blogs"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
-              pathname === "/blogs"
-                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
-                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-base">📰</span>
-              <span>Health Blogs</span>
-            </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </Link>
-
-          {/* 7. About Medikart */}
-          <Link
-            href="/about"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
-              pathname === "/about"
-                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
-                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-base">ℹ️</span>
-              <span>About Medikart</span>
-            </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </Link>
-
-          {/* 8. Contact Support */}
+          {/* 3. Contact */}
           <Link
             href="/contact"
             onClick={() => setIsMobileMenuOpen(false)}
+            aria-current={pathname === "/contact" ? "page" : undefined}
             className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
               pathname === "/contact"
                 ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
@@ -426,9 +162,33 @@ export default function HeaderNav({ initialCategories = [] }) {
             </div>
             <ChevronRight className="w-4 h-4 text-slate-400" />
           </Link>
+
+          {/* 4. Wishlist */}
+          <Link
+            href="/wishlist"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-current={pathname === "/wishlist" ? "page" : undefined}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname === "/wishlist"
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <Heart className="w-4 h-4 text-rose-500" />
+              <span>Wishlist</span>
+            </div>
+            {wishlistCount > 0 ? (
+              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500 text-white">
+                {wishlistCount}
+              </span>
+            ) : (
+              <ChevronRight className="w-4 h-4 text-slate-400" />
+            )}
+          </Link>
         </div>
 
-        {/* Drawer Bottom Actions (Fixed shrink-0) */}
+        {/* Drawer Bottom Actions: Sign In / Account */}
         <div
           style={{ backgroundColor: "#ffffff" }}
           className="shrink-0 p-4 border-t border-slate-200 bg-white space-y-2.5 shadow-md"
@@ -450,8 +210,9 @@ export default function HeaderNav({ initialCategories = [] }) {
                   setIsMobileMenuOpen(false);
                   logout();
                 }}
-                className="p-1.5 rounded-lg bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 cursor-pointer shadow-2xs"
+                className="p-2 rounded-lg bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 cursor-pointer shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
                 title="Sign Out"
+                aria-label="Sign Out"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -460,21 +221,13 @@ export default function HeaderNav({ initialCategories = [] }) {
             <Link
               href="/login"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-black text-xs shadow-xs transition-colors"
+              className="w-full min-h-[44px] flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-black text-xs shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             >
               <User className="w-4 h-4 text-yellow-400" />
               <span>Sign In / Register</span>
             </Link>
           )}
 
-          <Link
-            href="/instant-order"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="w-full btn-amber-gradient py-2.5 rounded-xl font-black text-xs shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
-          >
-            <span>Upload Prescription</span>
-            <span>→</span>
-          </Link>
           <div className="text-center pt-0.5">
             <span className="text-[10px] text-slate-400 font-medium">
               Medikart Online Pharmacy Pakistan
@@ -487,214 +240,86 @@ export default function HeaderNav({ initialCategories = [] }) {
 
   return (
     <>
-      {/* 1. DESKTOP NAVIGATION BAR */}
-      <nav className="hidden lg:flex items-center gap-0.5 sm:gap-1 xl:gap-1.5 2xl:gap-2.5 relative shrink-0">
-        {navLinks.map((link) => {
-          const isActive = pathname === link.href;
+      {/* ── 1. DESKTOP TOP ROW NAV (Visible at 900px and up) ── */}
+      <nav
+        aria-label="Primary Navigation"
+        className="top-row-desktop items-center gap-2 xl:gap-3 shrink-0"
+      >
+        {/* 1. Home */}
+        <Link
+          href="/"
+          prefetch={true}
+          aria-current={pathname === "/" ? "page" : undefined}
+          className={`h-10 sm:h-11 px-3 flex items-center text-[15px] font-semibold whitespace-nowrap relative rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+            pathname === "/" ? "text-amber-800 font-bold" : "text-slate-800 hover:text-amber-700"
+          }`}
+        >
+          <span>Home</span>
+          {pathname === "/" && (
+            <span className="absolute bottom-1 left-3 right-3 h-[2.5px] bg-amber-500 rounded-full" />
+          )}
+        </Link>
 
-          if (link.isDropdown) {
-            return (
-              <div
-                key={link.name}
-                className="relative flex items-center"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  type="button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`h-8.5 px-1 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center gap-0.5 xl:gap-1 cursor-pointer relative ${
-                    isDropdownOpen || pathname?.startsWith("/categories/")
-                      ? "text-amber-600 font-black"
-                      : "text-slate-700 hover:text-amber-600"
-                  }`}
-                >
-                  <span>Categories</span>
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200 ${
-                      isDropdownOpen ? "rotate-180 text-amber-500" : pathname?.startsWith("/categories/") ? "text-amber-500" : "text-slate-400"
-                    }`}
-                  />
-                  <span
-                    className={`absolute bottom-0 left-1 right-1 h-[2.5px] bg-amber-500 rounded-full transition-all duration-200 ${
-                      isDropdownOpen || pathname?.startsWith("/categories/") ? "w-[calc(100%-8px)]" : "w-0"
-                    }`}
-                  />
-                </button>
+        {/* 2. Instant Order */}
+        <Link
+          href="/instant-order"
+          prefetch={true}
+          title="Upload your prescription"
+          aria-label="Instant Order — Upload your prescription"
+          className="h-10 sm:h-11 px-4 rounded-full bg-[#FFEE45] hover:bg-[#FDD835] active:scale-95 text-slate-950 border border-[#E5D322] font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-2xs whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+        >
+          <span className="text-sm">⚡</span>
+          <span>INSTANT ORDER</span>
+        </Link>
 
-                {/* Categories Dropdown */}
-                {isDropdownOpen && (
-                  <div
-                    className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[720px] lg:w-[800px] xl:w-[860px] max-w-[90vw] z-50 transition-all duration-200"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200/90 overflow-hidden">
-                      <div className="h-1.5 w-full bg-gradient-to-r from-amber-300 via-[#FFEE45] to-yellow-300" />
+        {/* 3. Contact (Full layout at 1200px+, moves to drawer/footer below 1200px) */}
+        <Link
+          href="/contact"
+          prefetch={true}
+          aria-current={pathname === "/contact" ? "page" : undefined}
+          className={`nav-contact-link h-10 sm:h-11 px-3 items-center text-[15px] font-semibold whitespace-nowrap relative rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+            pathname === "/contact" ? "text-amber-800 font-bold" : "text-slate-800 hover:text-amber-700"
+          }`}
+        >
+          <span>Contact</span>
+          {pathname === "/contact" && (
+            <span className="absolute bottom-1 left-3 right-3 h-[2.5px] bg-amber-500 rounded-full" />
+          )}
+        </Link>
 
-                      <div className="px-6 py-3.5 bg-[#FAF8F5] border-b border-amber-100 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-base">💊</span>
-                          <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
-                            Explore Healthcare Categories
-                          </span>
-                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
-                            {categories.length} Available
-                          </span>
-                        </div>
-
-                        <Link
-                          href="/categories/medicines"
-                          onClick={() => {
-                            setIsDropdownOpen(false);
-                          }}
-                          className="text-xs font-bold text-amber-700 hover:text-amber-800 flex items-center gap-1 group"
-                        >
-                          <span>Browse All Products</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                        </Link>
-                      </div>
-
-                      <div className="p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-[420px] overflow-y-auto scrollbar-thin">
-                        {categories.map((cat) => {
-                          const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-                          const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
-                          const isCurrentCategory = pathname === `/categories/${slug}`;
-
-                          return (
-                            <Link
-                              key={cat._id}
-                              href={`/categories/${slug}`}
-                              onClick={() => setIsDropdownOpen(false)}
-                              className={`group flex items-center gap-2.5 p-2 rounded-xl border transition-all ${
-                                isCurrentCategory
-                                  ? "bg-amber-100/80 border-amber-400 shadow-2xs font-black ring-1 ring-amber-300"
-                                  : "border-transparent hover:border-amber-200 hover:bg-amber-50/60"
-                              }`}
-                            >
-                              <div className={`w-10 h-10 rounded-lg flex items-center justify-center relative overflow-hidden shrink-0 group-hover:scale-105 transition-all ${
-                                isCurrentCategory ? "bg-amber-200 border-2 border-amber-400" : "bg-amber-50/80 border border-amber-100 group-hover:border-amber-300"
-                              }`}>
-                                {imgSrc ? (
-                                  <Image
-                                    src={imgSrc}
-                                    alt={cat.name}
-                                    fill
-                                    sizes="40px"
-                                    className="object-cover"
-                                  />
-                                ) : (
-                                  <Pill className={`w-5 h-5 ${isCurrentCategory ? "text-amber-800" : "text-amber-600"}`} />
-                                )}
-                              </div>
-
-                              <div className="flex-1 min-w-0 text-left">
-                                <p className={`text-xs font-bold transition-colors line-clamp-2 leading-tight ${
-                                  isCurrentCategory ? "text-amber-900 font-black" : "text-slate-800 group-hover:text-amber-700"
-                                }`}>
-                                  {cat.name}
-                                </p>
-                              </div>
-
-                              <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-opacity ${
-                                isCurrentCategory ? "text-amber-700 opacity-100 font-bold" : "text-amber-400 opacity-0 group-hover:opacity-100"
-                              }`} />
-                            </Link>
-                          );
-                        })}
-                      </div>
-
-                      <div className="px-6 py-3 bg-gradient-to-r from-amber-50 via-yellow-50 to-white border-t border-amber-100/80 flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs text-slate-700">
-                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                          <span className="font-semibold">Have a doctor's prescription?</span>
-                          <span className="text-slate-500 hidden sm:inline">Pharmacist verified &amp; reviewed</span>
-                        </div>
-                        <Link
-                          href="/instant-order"
-                          onClick={() => setIsDropdownOpen(false)}
-                          className="btn-amber-gradient px-3.5 py-1.5 rounded-full text-xs font-black shadow-xs flex items-center gap-1.5"
-                        >
-                          <span>Upload Now</span>
-                          <span>→</span>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          }
-
-          if (link.name === "Instant Order") {
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                prefetch={true}
-                title="Upload your prescription"
-                aria-label="Instant Order — Upload your prescription"
-                className={`h-8.5 px-2 xl:px-3 rounded-full transition-all flex items-center gap-1 xl:gap-1.5 shadow-2xs whitespace-nowrap text-[10.5px] xl:text-xs font-black uppercase tracking-wider ${
-                  isActive
-                    ? "bg-[#FFEE45] text-slate-950 ring-2 ring-amber-300 font-black shadow-xs"
-                    : "bg-[#FFEE45] hover:bg-[#FDD835] text-slate-950 border border-[#E5D322]"
-                }`}
-              >
-                <span className="text-xs xl:text-sm">⚡</span>
-                <span>INSTANT ORDER</span>
-              </Link>
-            );
-          }
-
-          return (
-            <Link
-              key={link.name}
-              href={link.href}
-              prefetch={true}
-              className={`h-8.5 px-1 xl:px-2 text-xs xl:text-sm font-bold transition-colors flex items-center whitespace-nowrap relative ${
-                link.name === "About" || link.name === "Contact" ? "hidden 2xl:flex" : ""
-              } ${
-                isActive ? "text-amber-700 font-black" : "text-slate-700 hover:text-amber-600"
-              }`}
-            >
-              <span>{link.name}</span>
-              {isActive && (
-                <span className="absolute bottom-0 left-1 right-1 h-[2.5px] bg-amber-500 rounded-full" />
-              )}
-            </Link>
-          );
-        })}
-
-        {/* Wishlist Link */}
+        {/* 4. Wishlist */}
         <Link
           href="/wishlist"
           prefetch={true}
-          className={`h-8.5 px-1 xl:px-1.5 text-xs xl:text-sm font-bold transition-colors flex items-center gap-1 ${
-            pathname === "/wishlist" ? "text-amber-600" : "text-slate-700 hover:text-amber-600"
-          }`}
+          aria-current={pathname === "/wishlist" ? "page" : undefined}
+          aria-label={`Wishlist (${wishlistCount || 0} items)`}
           title="Wishlist"
+          className={`h-10 sm:h-11 px-2.5 min-[1200px]:px-3 flex items-center gap-1.5 text-[15px] font-semibold whitespace-nowrap relative rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+            pathname === "/wishlist" ? "text-amber-800 font-bold" : "text-slate-800 hover:text-amber-700"
+          }`}
         >
           <Heart
             className={`w-4 h-4 ${
               pathname === "/wishlist" || wishlistCount > 0
                 ? "text-rose-500 fill-rose-500"
-                : "text-slate-400"
+                : "text-slate-600"
             }`}
           />
-          <span className="hidden 2xl:inline">Wishlist</span>
+          <span className="nav-wishlist-text">Wishlist</span>
           {wishlistCount > 0 && (
-            <span className="min-w-[17px] h-[17px] flex items-center justify-center bg-rose-500 text-white text-[10px] font-black rounded-full px-1 shadow-xs">
+            <span className="min-w-[18px] h-[18px] px-1 bg-rose-500 text-white text-[10px] font-black rounded-full flex items-center justify-center shadow-xs">
               {wishlistCount > 99 ? "99+" : wishlistCount}
             </span>
           )}
+          {pathname === "/wishlist" && (
+            <span className="absolute bottom-1 left-2.5 right-2.5 h-[2.5px] bg-amber-500 rounded-full" />
+          )}
         </Link>
 
-        {/* Download Medikart Desktop Pill Button */}
-        <div className="hidden lg:block">
-          <InstallAppButton variant="navbar" />
-        </div>
+        {/* 5. Download Medikart */}
+        <InstallAppButton variant="navbar" />
 
-        {/* Customer Account Dropdown / Sign In Button */}
+        {/* 6. Sign In / Account Dropdown */}
         {isAuthenticated ? (
           <div
             className="relative py-1"
@@ -709,7 +334,7 @@ export default function HeaderNav({ initialCategories = [] }) {
             <button
               type="button"
               onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-              className="flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 rounded-full bg-amber-50 border border-amber-200/80 hover:border-amber-400 text-slate-800 transition-all cursor-pointer shadow-2xs"
+              className="h-10 sm:h-11 px-3 rounded-full bg-amber-50 border border-amber-200/80 hover:border-amber-400 text-slate-800 transition-all cursor-pointer shadow-2xs flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             >
               <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-400 to-[#FFEE45] text-slate-950 font-black text-xs flex items-center justify-center shadow-xs">
                 {customer?.name ? customer.name.charAt(0).toUpperCase() : "U"}
@@ -747,26 +372,6 @@ export default function HeaderNav({ initialCategories = [] }) {
                       {wishlistCount}
                     </span>
                   </Link>
-                  <Link
-                    href="/refill"
-                    prefetch={true}
-                    onClick={() => setIsAccountMenuOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-yellow-50 hover:text-amber-900 transition-colors"
-                  >
-                    <span className="flex items-center gap-2">
-                      <CalendarSync className="w-3.5 h-3.5 text-amber-700" />
-                      <span>Monthly Refill</span>
-                    </span>
-                    {refillCount > 0 ? (
-                      <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-[#FFEE45] text-slate-950 border border-[#E5D322]">
-                        {refillCount}
-                      </span>
-                    ) : (
-                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-50 text-amber-800">
-                        30-Day
-                      </span>
-                    )}
-                  </Link>
                   <button
                     type="button"
                     onClick={() => {
@@ -786,28 +391,35 @@ export default function HeaderNav({ initialCategories = [] }) {
           <Link
             href="/login"
             prefetch={true}
-            className="h-8.5 px-2.5 xl:px-3.5 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1 whitespace-nowrap"
+            className="h-10 sm:h-11 px-4 rounded-full bg-white border border-amber-300 hover:border-amber-400 hover:bg-amber-50/50 text-slate-800 text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
-            <User className="w-3.5 h-3.5 text-amber-600" />
+            <User className="w-4 h-4 text-amber-600" />
             <span>Sign In</span>
           </Link>
         )}
+
+        {/* 7. Cart Icon */}
+        <NavbarCartIcon />
       </nav>
 
-      {/* 2. MOBILE HAMBURGER BUTTON & QUICK APP BADGE */}
-      <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
-        <InstallAppButton variant="compact" />
+      {/* ── 2. TABLET / MOBILE ROW 1 CONTROLS (Below 900px) ── */}
+      <div className="top-row-mobile-flex items-center gap-2 shrink-0">
+        <NavbarCartIcon />
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white border border-yellow-300 text-slate-800 hover:text-amber-700 shadow-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+          className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-white border border-yellow-300 text-slate-800 hover:text-amber-700 shadow-xs active:scale-95 transition-all flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
-          {isMobileMenuOpen ? <X className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-slate-900" /> : <Menu className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-slate-900" />}
+          {isMobileMenuOpen ? (
+            <X className="w-5 h-5 text-slate-900" />
+          ) : (
+            <Menu className="w-5 h-5 text-slate-900" />
+          )}
         </button>
       </div>
 
-      {/* 3. MOBILE ASIDE DRAWER (Rendered via React Portal directly into document.body) */}
+      {/* ── 3. MOBILE SLIDE-OUT DRAWER (Rendered via React Portal) ── */}
       {mounted && typeof document !== "undefined" && mobileDrawerContent
         ? createPortal(mobileDrawerContent, document.body)
         : null}

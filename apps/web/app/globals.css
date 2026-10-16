@@ -440,4 +440,47 @@ button:focus-visible {
   animation-play-state: paused !important;
 }
 
+/* ─── Medikart Top-Row Header Scoped Responsive Layout ─── */
+@media (max-width: 899.98px) {
+  .top-row-desktop {
+    display: none !important;
+  }
+  .top-row-mobile-flex {
+    display: flex !important;
+  }
+  .top-row-mobile-search {
+    display: block !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .top-row-desktop {
+    display: flex !important;
+  }
+  .top-row-mobile-flex {
+    display: none !important;
+  }
+  .top-row-mobile-search {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .nav-contact-link {
+    display: none !important;
+  }
+  .nav-wishlist-text {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .nav-contact-link {
+    display: flex !important;
+  }
+  .nav-wishlist-text {
+    display: inline !important;
+  }
+}
+
 

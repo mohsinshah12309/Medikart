@@ -42,7 +42,8 @@ export default function InteractiveLogo({
           width={240}
           height={72}
           priority
-          className={`${currentSize} ${imageClassName} w-auto object-contain`}
+          style={{ height: '40px', width: 'auto' }}
+          className={`${currentSize} ${imageClassName} w-auto object-contain shrink-0`}
         />
       </div>
     </div>
