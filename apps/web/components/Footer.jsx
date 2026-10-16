@@ -81,13 +81,25 @@ function WhatsAppIcon({ className = "w-4 h-4" }) {
  *  - Prominent red clinical disclaimer bar on white background
  *  - Official trust badges & copyright line
  */
+const DEFAULT_FOOTER_CATEGORIES = [
+  { slug: "medicines", name: "Prescription Medicines" },
+  { slug: "otc", name: "OTC & First Aid" },
+  { slug: "vitamins", name: "Vitamins & Supplements" },
+  { slug: "diagnostics", name: "Diagnostics & Diabetes" },
+  { slug: "milk-powder", name: "Baby Care & Nutrition" },
+  { slug: "dermatology", name: "Dermatology & Skin" },
+  { slug: "herbal", name: "Herbal & Organic" },
+];
+
 export default function Footer({
   initialCategories = [],
   contactPhone = "+92 324 4489159",
   contactEmail = "support@medikart.pk",
   address = "92 G1 Johar Town, Lahore, Pakistan",
 }) {
-  const [categories, setCategories] = useState(initialCategories);
+  const [categories, setCategories] = useState(
+    initialCategories && initialCategories.length > 0 ? initialCategories : DEFAULT_FOOTER_CATEGORIES
+  );
   const pathname = usePathname();
   const router = useRouter();
 
@@ -96,7 +108,7 @@ export default function Footer({
     if (initialCategories && initialCategories.length > 0) {
       setCategories(initialCategories);
     } else {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
       fetch(`${apiUrl}/categories`)
         .then((res) => res.json())
         .then((data) => {

@@ -63,7 +63,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
     if (initialConditions.length > 0) {
       setConditions(initialConditions);
     } else {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
       fetch(`${apiUrl}/conditions`)
         .then((res) => res.json())
         .then((data) => {

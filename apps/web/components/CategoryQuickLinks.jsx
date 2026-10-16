@@ -36,7 +36,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
     if (initialCategories.length > 0) {
       setCategories(initialCategories);
     } else {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
       fetch(`${apiUrl}/categories`)
         .then((res) => res.json())
         .then((data) => {
