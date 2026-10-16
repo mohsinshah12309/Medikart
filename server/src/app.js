@@ -325,6 +325,63 @@ const { validate } = require("./middleware/validate");
 app.use("/api/v1", antiScrapingLimiter, publicCacheControl, blogRoutes);
 app.post("/api/v1/contact-messages", storefrontLimiter, validate(createMessageSchema), contactController.createMessage);
 
+// IndexNow instant search engine indexing webhook (supports both /api/indexnow and /api/v1/indexnow)
+app.all(["/api/indexnow", "/api/v1/indexnow"], async (req, res) => {
+  const secret = req.query.secret || req.headers["authorization"]?.replace(/^Bearer\s+/i, "");
+  const expectedSecret = process.env.REVALIDATION_SECRET || "b3f2a1e7d94c8b0f6e52a3d1c7f4b8e0a5d2c9f6b1e4a7d0c3f8b5e2a9d6c3f0";
+
+  if (secret && secret !== expectedSecret) {
+    return res.status(401).json({ status: "error", message: "Unauthorized" });
+  }
+
+  const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "e47c1f83b27a4d59a8c7e92d83b10c9a";
+  const SITE_HOST = "medikart.pk";
+  const KEY_LOCATION = `https://${SITE_HOST}/${INDEXNOW_KEY}.txt`;
+
+  const priorityUrls = req.body?.urls || [
+    `https://${SITE_HOST}/`,
+    `https://${SITE_HOST}/instant-order`,
+    `https://${SITE_HOST}/refill`,
+    `https://${SITE_HOST}/blogs`,
+    `https://${SITE_HOST}/brands`,
+    `https://${SITE_HOST}/faqs`,
+  ];
+
+  try {
+    const payload = {
+      host: SITE_HOST,
+      key: INDEXNOW_KEY,
+      keyLocation: KEY_LOCATION,
+      urlList: priorityUrls,
+    };
+
+    const endpoints = [
+      "https://api.indexnow.org/indexnow",
+      "https://www.bing.com/indexnow",
+    ];
+
+    const results = await Promise.allSettled(
+      endpoints.map((ep) =>
+        fetch(ep, {
+          method: "POST",
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+          body: JSON.stringify(payload),
+        }).then(async (r) => ({ endpoint: ep, status: r.status, text: await r.text() }))
+      )
+    );
+
+    return res.status(200).json({
+      status: "success",
+      message: "IndexNow submission dispatched",
+      key: INDEXNOW_KEY,
+      submittedUrls: priorityUrls.length,
+      results: results.map((r) => (r.status === "fulfilled" ? r.value : { error: r.reason?.message })),
+    });
+  } catch (err) {
+    return res.status(500).json({ status: "error", message: err.message });
+  }
+});
+
 // ─── PROTECTED /admin routes ───────────────────────────────────────────────────
 // auth middleware is applied here, before any /admin route, so every route
 // mounted under /api/v1/admin/* is protected by default.

@@ -12,6 +12,7 @@ import BackButton from '../../../components/BackButton';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound, redirect, RedirectType } from 'next/navigation';
+import NotFound from '../../not-found';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -138,7 +139,32 @@ export default async function ProductDetailPage({ params }) {
   }
 
   if (!product) {
-    notFound();
+    let redirectSlug = null;
+    try {
+      const searchTerm = slug.replace(/[-_]/g, ' ').trim();
+      if (searchTerm.length >= 3) {
+        const searchRes = await getProducts({ search: searchTerm, limit: 5 });
+        const candidates = searchRes?.data?.products || [];
+        if (candidates.length > 0) {
+          const slugTokens = slug.toLowerCase().split(/[-_]/).filter((t) => t.length >= 3);
+          const bestMatch = candidates.find((c) => {
+            if (!c.slug) return false;
+            const candSlug = c.slug.toLowerCase();
+            return slugTokens.every((tok) => candSlug.includes(tok));
+          }) || (candidates[0].slug && candidates[0].slug !== slug ? candidates[0] : null);
+
+          if (bestMatch && bestMatch.slug && bestMatch.slug !== slug) {
+            redirectSlug = bestMatch.slug;
+          }
+        }
+      }
+    } catch (_) {}
+
+    if (redirectSlug) {
+      redirect(`/products/${redirectSlug}`, RedirectType.permanent);
+    }
+
+    return <NotFound />;
   }
 
   // 301 Permanent Redirect for old ObjectId URLs to new clean slug URLs
