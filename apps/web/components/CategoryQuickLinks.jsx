@@ -103,11 +103,11 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
     return <Pill className="w-8 h-8 text-amber-600" />;
   };
 
-  // Deduplicated single category items array (Phase 2 Link Engine)
-  const displayCategories = categories;
+  // Continuous sliding loop: Quadruple items to ensure seamless infinite marquee across all screen sizes
+  const displayCategories = [...categories, ...categories, ...categories, ...categories];
 
   return (
-    <div className="flex flex-col gap-3 py-2 overflow-hidden">
+    <div className="flex flex-col gap-3 py-2 overflow-hidden select-none">
       {/* Header with Navigation Controls */}
       <div className="flex items-center justify-between">
         <div>
@@ -159,13 +159,13 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
           }`}
           style={{ animationPlayState: isPaused ? "paused" : "running" }}
         >
-          {displayCategories.map((cat) => {
+          {displayCategories.map((cat, idx) => {
             const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
             const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
             return (
               <Link
-                key={cat._id || slug}
+                key={`${cat._id || slug}-${idx}`}
                 href={`/categories/${slug}`}
                 className="flex-shrink-0 w-28 sm:w-32 md:w-36 bg-white border border-[#F3EFE6] hover:border-amber-300 rounded-2xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-2xs hover:shadow-warm-card transition-all hover:-translate-y-1 group/card cursor-pointer"
               >

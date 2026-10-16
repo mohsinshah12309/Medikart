@@ -135,25 +135,11 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
     return <Activity className="w-9 h-9 text-amber-600" />;
   };
 
-  // Deduplicated single conditions array (Phase 2 Link Engine)
-  const displayConditions = conditions;
-
-  const trackRef = useRef(null);
-
-  const scrollLeft = () => {
-    if (trackRef.current) {
-      trackRef.current.scrollBy({ left: -280, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (trackRef.current) {
-      trackRef.current.scrollBy({ left: 280, behavior: "smooth" });
-    }
-  };
+  // Continuous sliding loop: Quadruple items to ensure seamless infinite marquee across all screen sizes
+  const displayConditions = [...conditions, ...conditions, ...conditions, ...conditions];
 
   return (
-    <div className="flex flex-col gap-3 py-2 overflow-hidden">
+    <div className="flex flex-col gap-3 py-2 overflow-hidden select-none">
       {/* Header with Navigation Controls */}
       <div className="flex items-center justify-between">
         <div>
@@ -167,38 +153,56 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={scrollLeft}
-            aria-label="Slide Left"
-            title="Slide Left"
-            className="w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer bg-white border border-amber-200 text-slate-700 hover:bg-yellow-400 hover:text-slate-950 hover:border-yellow-400"
+            onClick={() => toggleDirection("ltr")}
+            aria-label="Slide Left to Right"
+            title="Slide Left to Right"
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === "ltr"
+                ? "bg-yellow-400 text-slate-950 border border-yellow-500/50 hover:bg-yellow-500 shadow-sm"
+                : "bg-white border border-amber-200 text-slate-700 hover:bg-yellow-400 hover:text-slate-950"
+            }`}
           >
             ‹
           </button>
           <button
             type="button"
-            onClick={scrollRight}
-            aria-label="Slide Right"
-            title="Slide Right"
-            className="w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer bg-yellow-400 text-slate-950 border border-yellow-500/50 hover:bg-yellow-500"
+            onClick={() => toggleDirection("rtl")}
+            aria-label="Slide Right to Left"
+            title="Slide Right to Left"
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+              slideDirection === "rtl"
+                ? "bg-yellow-400 text-slate-950 border border-yellow-500/50 hover:bg-yellow-500 shadow-sm"
+                : "bg-white border border-amber-200 text-slate-700 hover:bg-yellow-400 hover:text-slate-950"
+            }`}
           >
             ›
           </button>
         </div>
       </div>
 
-      {/* Horizontally Scrollable & Swipable Conditions Track */}
-      <div className="relative w-full overflow-hidden pb-1">
+      {/* Auto-Sliding Conditions Track (Continuous loop, Pauses on Hover & Touch) */}
+      <div
+        className="relative w-full overflow-hidden pb-3 pt-2 group"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+      >
         <div
-          ref={trackRef}
-          className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto scrollbar-none scroll-smooth pb-3 pt-2"
+          ref={scrollRef}
+          className={`flex items-stretch gap-4 sm:gap-5 ${
+            slideDirection === "ltr" ? "animate-slide-ltr" : "animate-slide-rtl"
+          }`}
+          style={{ animationPlayState: isPaused ? "paused" : "running" }}
         >
-          {displayConditions.map((item) => {
+          {displayConditions.map((item, idx) => {
             const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.svg` : null);
             const targetCatSlug = CONDITION_CATEGORY_MAP[item.slug] || "medicines";
             return (
               <Link
-                key={item._id || item.slug}
+                key={`${item._id || item.slug}-${idx}`}
                 href={`/categories/${targetCatSlug}`}
+                onClick={(e) => handleItemClick(item, e)}
                 className="flex-shrink-0 w-28 sm:w-32 md:w-36 flex flex-col items-center group/card cursor-pointer transition-transform duration-200 hover:-translate-y-1"
               >
                 {/* Top Circular Photo Container */}
