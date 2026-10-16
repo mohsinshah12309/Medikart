@@ -146,9 +146,16 @@ const placeNarcoticsOrder = async ({
   );
   const total = round2(subtotal + deliveryCharge + platformFee);
 
-  // ── Step 9: Save order — status pending_verification, NOT pending ──────────
+  // ── Step 9: Save order ────────────────────────────────────────────────────
   const prescriptionUrls = files.map((f) => `/api/v1/admin/prescriptions/${f}`);
   const primaryPrescriptionUrl = prescriptionUrls[0] || null;
+  const hasPrescriptionFiles = files.length > 0;
+  // If prescription is uploaded, pricing will be reviewed and finalized by the pharmacist in admin panel
+  const initialStatus = hasPrescriptionFiles
+    ? "awaiting-pharmacist-pricing"
+    : requiresVerification
+    ? "pending_verification"
+    : "pending";
 
   const order = await Order.create({
     type: "narcotics",
@@ -157,8 +164,8 @@ const placeNarcoticsOrder = async ({
     totals: { subtotal, deliveryCharge, platformFee, total },
     paymentMethod,
     paymentState: "pending",
-    status: requiresVerification || files.length > 0 ? "pending_verification" : "pending",
-    requiresVerification: requiresVerification || files.length > 0,
+    status: initialStatus,
+    requiresVerification: requiresVerification || hasPrescriptionFiles,
     verification: { status: "pending" },
     prescriptionUrl: primaryPrescriptionUrl,
     prescriptionUrls,

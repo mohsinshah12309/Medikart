@@ -459,9 +459,10 @@ function Orders({ token, adminUser, initialFilter }) {
     fetchProducts("", "");
 
     // Fetch prescription if present
-    if (order?.prescriptionUrl) {
+    const rxUrl = order?.prescriptionUrl || (order?.prescriptionUrls && order.prescriptionUrls[0]);
+    if (rxUrl) {
       try {
-        const res = await adminFetch(order.prescriptionUrl, {
+        const res = await adminFetch(rxUrl, {
           returnRawResponse: true,
         });
         if (res.ok) {
@@ -1644,7 +1645,7 @@ function Orders({ token, adminUser, initialFilter }) {
               </div>
 
               {/* Prescription & Verification Details Card */}
-              {(selectedOrder.requiresPrescription || selectedOrder.isNarcotic || selectedOrder.type === "narcotics" || (prescriptionBlobUrls && prescriptionBlobUrls.length > 0)) && (
+              {(selectedOrder.requiresPrescription || selectedOrder.isNarcotic || selectedOrder.type === "narcotics" || selectedOrder.type === "instant" || selectedOrder.prescriptionUrl || (selectedOrder.prescriptionUrls && selectedOrder.prescriptionUrls.length > 0) || (prescriptionBlobUrls && prescriptionBlobUrls.length > 0)) && (
                 <div style={{ marginBottom: "1rem", padding: "0.85rem", background: "#f8fafc", borderRadius: "8px", border: "1px solid #cbd5e1" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem", flexWrap: "wrap", gap: "0.5rem" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>

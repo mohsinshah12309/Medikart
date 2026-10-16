@@ -157,24 +157,22 @@ export default function CheckoutPage() {
           {/* Subtle warm ambient accent */}
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-yellow-300/15 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Mandatory Prescription Upload Section for Controlled/Rx Medicines */}
-          {hasNarcotics && (
-            <div className="flex flex-col gap-2">
-              <PrescriptionUploadCard
-                isRequired={true}
-                files={prescriptionFiles}
-                setFiles={setPrescriptionFiles}
-                patientName={patientName}
-                setPatientName={setPatientName}
-                notes={pharmacistNotes}
-                setNotes={setPharmacistNotes}
-                isConfirmed={isConfirmed}
-                setIsConfirmed={setIsConfirmed}
-                errorMsg={errorMsg}
-                setErrorMsg={setErrorMsg}
-              />
-            </div>
-          )}
+          {/* Prescription Upload Section (Required for Rx items, optional for OTC) */}
+          <div className="flex flex-col gap-2">
+            <PrescriptionUploadCard
+              isRequired={hasNarcotics}
+              files={prescriptionFiles}
+              setFiles={setPrescriptionFiles}
+              patientName={patientName}
+              setPatientName={setPatientName}
+              notes={pharmacistNotes}
+              setNotes={setPharmacistNotes}
+              isConfirmed={isConfirmed}
+              setIsConfirmed={setIsConfirmed}
+              errorMsg={errorMsg}
+              setErrorMsg={setErrorMsg}
+            />
+          </div>
 
           {/* Section: Customer & Shipping Details */}
           <div className="flex flex-col gap-4">

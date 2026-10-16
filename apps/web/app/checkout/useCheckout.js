@@ -36,6 +36,7 @@ export function useCheckout({
   const hasNarcotics = cart.some(
     (item) => item.isNarcotic || item.requiresPrescription || item.rxStatus === 'prescription_required'
   );
+  const hasPrescription = hasNarcotics || (prescriptionFiles && prescriptionFiles.length > 0);
 
   // Customer form states
   const [customer, setCustomer] = useState({
@@ -289,11 +290,11 @@ export function useCheckout({
       setErrorMsg('Please verify your email address using the 6-digit OTP code before proceeding.');
       return;
     }
-    if (hasNarcotics) {
-      if (!prescriptionFiles || prescriptionFiles.length === 0) {
-        setErrorMsg('Prescription upload (PDF or Image) is required for controlled medicine items.');
-        return;
-      }
+    if (hasNarcotics && (!prescriptionFiles || prescriptionFiles.length === 0)) {
+      setErrorMsg('Prescription upload (PDF or Image) is required for controlled medicine items.');
+      return;
+    }
+    if (prescriptionFiles && prescriptionFiles.length > 0) {
       if (!patientName || !patientName.trim()) {
         setErrorMsg("Please enter the patient's full name for prescription verification.");
         return;
@@ -308,7 +309,7 @@ export function useCheckout({
 
     try {
       let orderId;
-      if (hasNarcotics) {
+      if (hasPrescription) {
         const formData = new FormData();
         formData.append('customer', JSON.stringify(customer));
         formData.append(
@@ -328,7 +329,7 @@ export function useCheckout({
             code: otpCode,
           })
         );
-        formData.append('patientName', patientName.trim());
+        formData.append('patientName', (patientName || customer.name || '').trim());
         if (pharmacistNotes?.trim()) {
           formData.append('pharmacistNotes', pharmacistNotes.trim());
           formData.append('customerNotes', pharmacistNotes.trim());
@@ -338,6 +339,7 @@ export function useCheckout({
         // Append all uploaded files
         prescriptionFiles.forEach((file) => {
           formData.append('prescriptions', file);
+          formData.append('prescription', file);
         });
 
         const res = await placeNarcoticsOrder(formData);

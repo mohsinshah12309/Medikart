@@ -33,13 +33,7 @@ const priceInstantOrder = async (orderId, { items }, admin = null) => {
     }
   }
 
-  if (order.type !== "instant") {
-    throw new BadRequestError(
-      "Only instant orders can be priced through this endpoint",
-    );
-  }
-
-  if (order.status !== "awaiting-pharmacist-pricing") {
+  if (order.status !== "awaiting-pharmacist-pricing" && order.status !== "pending_verification") {
     throw new ForbiddenError(
       "This order has already been priced or is not in a priceable state",
     );
@@ -95,10 +89,15 @@ const priceInstantOrder = async (orderId, { items }, admin = null) => {
   // Step 8: NEVER recompute requiresVerification from live Product data.
   const { requiresVerification } = order;
 
-  // Step 9: Update order with pricing.
+  // Step 9: Update order with finalized pricing.
   order.items = orderItems;
   order.totals = { subtotal, deliveryCharge, platformFee, total };
-  order.status = requiresVerification ? "pending_verification" : "pending";
+  order.status = "pending"; // Pricing finalized and approved by pharmacist
+  if (order.verification) {
+    order.verification.status = "approved";
+    order.verification.reviewedBy = admin?.email || admin?.id || "pharmacist";
+    order.verification.reviewedAt = new Date();
+  }
 
   await order.save();
 

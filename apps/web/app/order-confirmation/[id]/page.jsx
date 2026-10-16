@@ -252,8 +252,8 @@ export default function OrderConfirmationPage() {
               </div>
             </div>
 
-            {/* Instant Order Pharmacist Review Notice (if awaiting review) */}
-            {order?.type === "instant" && order?.status === "awaiting-pharmacist-pricing" && (
+            {/* Pharmacist Review Notice (if awaiting pricing or verification) */}
+            {(order?.status === "awaiting-pharmacist-pricing" || order?.status === "pending_verification") && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 my-2 text-left print:border-slate-300">
                 <div className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-amber-200 flex items-center justify-center text-amber-900 font-bold shrink-0 text-xs">
@@ -264,7 +264,7 @@ export default function OrderConfirmationPage() {
                       Prescription Under Pharmacist Review
                     </h3>
                     <p className="text-[11px] text-amber-800 mt-0.5 leading-tight">
-                      Your prescription has been securely transmitted. A qualified pharmacist is verifying your medicines and preparing the quotation.
+                      Your prescription has been securely transmitted. A qualified pharmacist is verifying your medicines and finalizing your order.
                     </p>
                   </div>
                 </div>
