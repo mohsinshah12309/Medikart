@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getBrands } from '../../lib/api';
 
 export const revalidate = 3600;
