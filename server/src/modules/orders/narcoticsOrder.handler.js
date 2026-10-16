@@ -149,11 +149,7 @@ const placeNarcoticsOrder = async ({
   // ── Step 9: Save order ────────────────────────────────────────────────────
   const prescriptionUrls = files.map((f) => `/api/v1/admin/prescriptions/${f}`);
   const primaryPrescriptionUrl = prescriptionUrls[0] || null;
-  const hasPrescriptionFiles = files.length > 0;
-  // If prescription is uploaded, pricing will be reviewed and finalized by the pharmacist in admin panel
-  const initialStatus = hasPrescriptionFiles
-    ? "awaiting-pharmacist-pricing"
-    : requiresVerification
+  const initialStatus = requiresVerification || hasPrescriptionFiles
     ? "pending_verification"
     : "pending";
 
