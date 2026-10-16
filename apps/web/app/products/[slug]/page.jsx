@@ -21,17 +21,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
 const OBJECT_ID_REGEX = /^[0-9a-fA-F]{24}$/;
 
 export async function generateStaticParams() {
-  try {
-    const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
-    const res = await fetch(`${apiUrl}/products?limit=50`, { next: { revalidate: 3600 } });
-    if (res.ok) {
-      const data = await res.json();
-      const products = data?.data?.products || [];
-      return products.map((p) => ({ slug: p.slug || p._id.toString() }));
-    }
-  } catch {
-    // Offline build fallback
-  }
+  // On-demand dynamic rendering (dynamicParams = true) prevents baking stale/offline 404s during build
   return [];
 }
 

@@ -1,8 +1,12 @@
 import { cache } from 'react';
 
+const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
+const FALLBACK_PUBLIC_URL = `${SITE_ORIGIN}/api/v1`;
+const PRIMARY_INTERNAL_URL = (process.env.INTERNAL_API_URL || 'http://127.0.0.1:5000/api/v1').replace('localhost', '127.0.0.1');
+
 const API_URL = typeof window !== 'undefined'
   ? (process.env.NEXT_PUBLIC_API_URL || '/api/v1')
-  : (process.env.INTERNAL_API_URL || 'http://localhost:5000/api/v1');
+  : PRIMARY_INTERNAL_URL;
 
 export async function fetchApi(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
@@ -18,10 +22,29 @@ export async function fetchApi(endpoint, options = {}) {
       },
     });
   } catch (err) {
-    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
-      throw new Error('Request timed out. Please check your internet connection and try again.');
+    // If SSR internal fetch failed (e.g. ECONNREFUSED or port mismatch), retry with public production URL
+    if (typeof window === 'undefined' && API_URL !== FALLBACK_PUBLIC_URL) {
+      try {
+        res = await fetch(`${FALLBACK_PUBLIC_URL}${endpoint}`, {
+          ...options,
+          signal,
+          headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+          },
+        });
+      } catch (fallbackErr) {
+        if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+          throw new Error('Request timed out. Please check your internet connection and try again.');
+        }
+        throw fallbackErr;
+      }
+    } else {
+      if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+        throw new Error('Request timed out. Please check your internet connection and try again.');
+      }
+      throw err;
     }
-    throw err;
   }
 
   if (!res.ok) {
