@@ -76,9 +76,11 @@ export const BUSINESS_FACTS: BusinessFacts = {
     'Sargodha',
   ],
   deliveryCharges: {
-    standardPkr: 150,
-    freeAbovePkr: 2000,
+    standardPkr: 250,
+    freeAbovePkr: null as unknown as number, // Strictly no free delivery tier
   },
+  deliveryTimeExpress: '2 to 4 hours in Lahore, Karachi, Islamabad, and Rawalpindi',
+  deliveryTimeNationwide: '24 to 48 hours nationwide via courier',
   paymentMethods: [
     'Cash on Delivery (COD)',
     'Online Debit / Credit Card (Visa & MasterCard)',

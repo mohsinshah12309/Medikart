@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export default function NotFound() {
-  const popularKeywords = ['Panadol', 'Augmentin', 'Brufen', 'Disprin', 'Paracetamol', 'Multivitamin'];
+  const popularKeywords = ['Panadol', 'Surbex Z', 'Brufen', 'Disprin', 'Paracetamol', 'Multivitamin'];
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center py-12 px-4">

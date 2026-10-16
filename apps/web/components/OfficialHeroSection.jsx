@@ -24,11 +24,11 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
   const [trendingSearches, setTrendingSearches] = useState(
     cachedTrending || [
       { icon: '💊', name: 'Panadol' },
-      { icon: '💊', name: 'Augmentin' },
+      { icon: '💊', name: 'Disprin' },
       { icon: '✨', name: 'Surbex Z' },
       { icon: '🍼', name: 'Baby Diapers' },
       { icon: '✨', name: 'Centrum' },
-      { icon: '🌿', name: 'Nexum' },
+      { icon: '💧', name: 'ORS' },
       { icon: '💊', name: 'Brufen' },
       { icon: '✨', name: 'CAC 1000 Plus' },
       { icon: '🩹', name: 'First Aid' },

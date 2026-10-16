@@ -131,9 +131,9 @@ export default async function sitemap() {
 
   // Category dynamic crawlable URLs - 0.9 priority, daily changeFrequency (excluding internal buckets & noindex)
   categories.forEach((cat) => {
-    const slug = cat.slug || cat._id;
-    if (NOINDEX_CATEGORY_SLUGS.has(slug)) {
-      return; // Skip internal inventory buckets, beverages, and unapproved medicines
+    const slug = (cat.slug || '').trim();
+    if (!slug || NOINDEX_CATEGORY_SLUGS.has(slug)) {
+      return; // Skip missing slugs, internal inventory buckets, beverages, and unapproved medicines
     }
     sitemapEntries.push({
       url: `${baseUrl}/categories/${slug}`,
@@ -143,10 +143,12 @@ export default async function sitemap() {
     });
   });
 
-  // Product dynamic URLs using deterministic clean slugs - 0.85 priority, weekly changeFrequency
+  // Product dynamic URLs using strictly clean slugs - 0.85 priority, weekly changeFrequency
   products.forEach((prod) => {
+    const slug = (prod.slug || '').trim();
+    if (!slug) return; // Strictly omit raw MongoDB ObjectIds to prevent 301 redirect issues in Search Console
     sitemapEntries.push({
-      url: `${baseUrl}/products/${prod.slug || prod._id}`,
+      url: `${baseUrl}/products/${slug}`,
       lastModified: prod.updatedAt ? new Date(prod.updatedAt) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.85,

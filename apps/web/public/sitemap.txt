@@ -8,16 +8,10 @@ https://medikart.pk/faqs
 https://medikart.pk/return-refund-policy
 https://medikart.pk/privacy-policy
 https://medikart.pk/terms-and-conditions
-https://medikart.pk/categories/beverages
-https://medikart.pk/categories/consumer
 https://medikart.pk/categories/dermatology
 https://medikart.pk/categories/diagnostics
 https://medikart.pk/categories/diapers-napkins
-https://medikart.pk/categories/flat-items
-https://medikart.pk/categories/fridge-items
-https://medikart.pk/categories/general-items
 https://medikart.pk/categories/herbal
-https://medikart.pk/categories/medicines
 https://medikart.pk/categories/milk-powder
 https://medikart.pk/categories/nutraceutical
 https://medikart.pk/categories/otc

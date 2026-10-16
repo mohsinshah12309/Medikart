@@ -16,14 +16,14 @@ import {
 
 // Popular Pakistani pharmacy search queries that cycle every 2s in the navbar placeholder
 const ROTATING_PLACEHOLDERS = [
-  'Search for "Medicines & Antibiotics"...',
+  'Search for "Pain Relief & Fever Care"...',
   'Search for "Baby & Mother Care"...',
-  'Search for "Panadol, Augmentin, Disprin"...',
+  'Search for "Panadol, Surbex Z, Disprin"...',
   'Search for "Multivitamins & Supplements"...',
   'Search for "Blood Pressure & Glucometers"...',
   'Search for "ORS & Energy Hydration"...',
   'Search for "Medicated Sunscreens & Skincare"...',
-  'Search for "Diabetes Care & Insulin"...',
+  'Search for "Blood Glucose Monitors & Strips"...',
   'Search for "Diapers & Infant Milk Powder"...',
   'Search for "Cough & Cold Syrups"...',
 ];

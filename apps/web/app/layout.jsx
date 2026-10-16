@@ -77,7 +77,8 @@ export const metadata = {
     'buy medicine online Pakistan',
     'panadol price in pakistan',
     'panadol online delivery',
-    'augmentin pakistan',
+    'surbex z pakistan',
+    'cac 1000 plus pakistan',
     'pharmacy delivery Lahore',
     'medicine home delivery Karachi',
     'pharmacy Islamabad',
@@ -95,9 +96,6 @@ export const metadata = {
     email: true,
     address: true,
     telephone: true,
-  },
-  alternates: {
-    canonical: 'https://medikart.pk',
   },
   manifest: '/manifest.webmanifest',
   icons: {

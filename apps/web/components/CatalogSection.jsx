@@ -501,7 +501,7 @@ export default function CatalogSection({
               <div className="flex flex-col items-center gap-2 max-w-md w-full">
                 <span className="text-xs text-slate-400 font-medium">Suggested Searches:</span>
                 <div className="flex flex-wrap items-center justify-center gap-2">
-                  {['Panadol', 'Augmentin', 'Brufen', 'Disprin', 'Paracetamol', 'Multivitamin'].map((kw) => (
+                  {['Panadol', 'Surbex Z', 'Brufen', 'Disprin', 'Paracetamol', 'Multivitamin'].map((kw) => (
                     <button
                       key={kw}
                       type="button"

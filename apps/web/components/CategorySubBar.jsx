@@ -63,12 +63,12 @@ const DEPARTMENTS = [
         icon: "℞",
         description: "Certified prescription drugs dispensed under licensed pharmacist supervision.",
         nested: [
-          { name: "Antibiotics & Anti-Infectives", query: "Augmentin" },
+          { name: "First Aid & Antiseptics", query: "Pyodine" },
           { name: "Cardiovascular & Blood Pressure", query: "Capoten" },
           { name: "Diabetes Management (Oral)", query: "Glucophage" },
           { name: "Pain Relief & Anti-Inflammatory", query: "Brufen" },
           { name: "Gastrointestinal & Acidity", query: "Gaviscon" },
-          { name: "Neurology & Mental Health", query: "Lexotanil" },
+          { name: "Sleep & Calming Wellness", query: "Melatonin" },
         ],
       },
       {
