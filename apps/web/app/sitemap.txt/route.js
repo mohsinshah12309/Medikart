@@ -1,77 +1,22 @@
+import {
+  getBaseUrl,
+  fetchIndexableCategories,
+  fetchPartitionedProducts
+} from '../../lib/sitemap-utils.js';
 import { BLOGS_DATA } from '../../data/blogsData.js';
-import { NOINDEX_CATEGORY_SLUGS } from '../../src/seo/category-meta.js';
+import { getAllPriorityLandingSlugs } from '../../data/priorityLandingPagesData.js';
 
 export const revalidate = 3600;
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://medikart.pk';
-  const apiUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api/v1';
-
-  let products = [];
-  let categories = [];
-  let dynamicBlogs = [];
-
-  try {
-    let prodRes = await fetch(`${apiUrl}/sitemap/products`, { next: { revalidate: 3600, tags: ['products'] } });
-    if (!prodRes.ok) {
-      prodRes = await fetch(`${apiUrl}/products?limit=100`, { next: { revalidate: 3600 } });
-    }
-    if (prodRes.ok) {
-      const prodBody = await prodRes.json();
-      products = prodBody?.data?.products || [];
-    }
-  } catch (err) {
-    console.error("sitemap.txt products fetch fail:", err.message);
-  }
-
-  const FALLBACK_CATEGORIES = [
-    { slug: 'medicines', name: 'Medicines' },
-    { slug: 'vitamins', name: 'Vitamins & Supplements' },
-    { slug: 'milk-powder', name: 'Milk Powder & Baby Food' },
-    { slug: 'herbal', name: 'Herbal & Organic' },
-    { slug: 'flat-items', name: 'Flat Items' },
-    { slug: 'consumer', name: 'Consumer Care' },
-    { slug: 'fridge-items', name: 'Fridge Items & Insulins' },
-    { slug: 'surgical-items', name: 'Surgical Items' },
-    { slug: 'dermatology', name: 'Dermatology & Skin' },
-    { slug: 'diagnostics', name: 'Diagnostics & Devices' },
-    { slug: 'diapers-babycare', name: 'Diapers & Baby Care' },
-    { slug: 'patient-supports', name: 'Patient Supports' },
-    { slug: 'general-items', name: 'General Items' },
-    { slug: 'beverages', name: 'Beverages & ORS' },
-    { slug: 'nutraceutical', name: 'Nutraceutical' },
-    { slug: 'otc', name: 'Over The Counter (OTC)' },
-  ];
-
-  try {
-    const catRes = await fetch(`${apiUrl}/categories`, { next: { revalidate: 3600 } });
-    if (catRes.ok) {
-      const catBody = await catRes.json();
-      categories = catBody?.data?.categories || [];
-    }
-  } catch (err) {
-    console.error("sitemap.txt categories fetch fail:", err.message);
-  }
-
-  if (!categories || categories.length === 0) {
-    categories = FALLBACK_CATEGORIES;
-  }
-
-  try {
-    const blogRes = await fetch(`${apiUrl}/blogs?limit=100`, { next: { revalidate: 3600 } });
-    if (blogRes.ok) {
-      const blogBody = await blogRes.json();
-      dynamicBlogs = blogBody?.data?.blogs || [];
-    }
-  } catch (err) {
-    console.error("sitemap.txt blogs fetch fail:", err.message);
-  }
+  const baseUrl = getBaseUrl();
 
   const urls = [
     baseUrl,
     `${baseUrl}/instant-order`,
     `${baseUrl}/refill`,
     `${baseUrl}/blogs`,
+    `${baseUrl}/brands`,
     `${baseUrl}/about`,
     `${baseUrl}/contact`,
     `${baseUrl}/faqs`,
@@ -80,34 +25,37 @@ export async function GET() {
     `${baseUrl}/terms-and-conditions`,
   ];
 
-  // Category clean URLs (excluding internal buckets & noindex)
-  categories.forEach((cat) => {
-    const slug = cat.slug || cat._id;
-    if (NOINDEX_CATEGORY_SLUGS.has(slug)) {
-      return;
-    }
-    urls.push(`${baseUrl}/categories/${slug}`);
+  // A-Z Directory
+  'abcdefghijklmnopqrstuvwxyz'.split('').forEach(char => {
+    urls.push(`${baseUrl}/medicines-a-z/${char}`);
   });
 
-  // Product clean URLs
-  products.forEach((prod) => {
-    urls.push(`${baseUrl}/products/${prod.slug || prod._id}`);
+  // Categories
+  const categories = await fetchIndexableCategories();
+  categories.forEach(cat => {
+    urls.push(`${baseUrl}/categories/${cat.slug}`);
   });
 
-  // Blog URLs (Set for uniqueness)
-  const blogSlugs = new Set();
-  dynamicBlogs.forEach((b) => {
-    if (b.slug && !blogSlugs.has(b.slug)) {
-      blogSlugs.add(b.slug);
+  // Brands
+  const prioritySlugs = getAllPriorityLandingSlugs();
+  prioritySlugs.forEach(slug => {
+    urls.push(`${baseUrl}/brands/${slug}`);
+  });
+
+  // Blogs
+  BLOGS_DATA.forEach(b => {
+    if (b.slug) {
       urls.push(`${baseUrl}/blogs/${b.slug}`);
     }
   });
 
-  BLOGS_DATA.forEach((b) => {
-    if (b.slug && !blogSlugs.has(b.slug)) {
-      blogSlugs.add(b.slug);
-      urls.push(`${baseUrl}/blogs/${b.slug}`);
-    }
+  // Products (Priority + Rest)
+  const { priorityProducts, restProducts } = await fetchPartitionedProducts();
+  priorityProducts.forEach(prod => {
+    urls.push(`${baseUrl}/products/${prod.slug}`);
+  });
+  restProducts.forEach(prod => {
+    urls.push(`${baseUrl}/products/${prod.slug}`);
   });
 
   const textOutput = urls.join('\n') + '\n';

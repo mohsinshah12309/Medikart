@@ -44,7 +44,7 @@ router.get("/sitemap/products", async (req, res, next) => {
 
         const products = await Product.find(
           filter,
-          { _id: 1, slug: 1, name: 1, updatedAt: 1 }
+          { _id: 1, slug: 1, name: 1, price: 1, images: 1, stockStatus: 1, requiresPrescription: 1, updatedAt: 1 }
         ).lean();
 
         return {

@@ -61,6 +61,12 @@ export default function robots() {
     ],
     sitemap: [
       `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/sitemap-pages.xml`,
+      `${baseUrl}/sitemap-categories.xml`,
+      `${baseUrl}/sitemap-brands.xml`,
+      `${baseUrl}/sitemap-blogs.xml`,
+      `${baseUrl}/sitemap-products-priority.xml`,
+      `${baseUrl}/sitemap-products-rest.xml`,
       `${baseUrl}/sitemap.txt`,
     ],
   };
