@@ -331,7 +331,7 @@ export default async function ProductDetailPage({ params }) {
 
       {/* Visible Semantic Breadcrumbs */}
       <div className="flex items-center gap-3 flex-wrap">
-        <BackButton fallbackHref={firstCategory ? `/categories/${firstCategory.slug || firstCategory._id}` : "/"} />
+        <BackButton fallbackHref={firstCategory?.slug ? `/categories/${firstCategory.slug}` : "/"} />
 
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-slate-500 overflow-x-auto py-1 scrollbar-none">
           <Link href="/" className="hover:text-amber-700 transition-colors whitespace-nowrap">
@@ -339,7 +339,7 @@ export default async function ProductDetailPage({ params }) {
           </Link>
           <span>/</span>
           {firstCategory ? (
-            <Link href={`/categories/${firstCategory.slug || firstCategory._id}`} className="hover:text-amber-700 transition-colors whitespace-nowrap">
+            <Link href={`/categories/${firstCategory.slug || 'medicines'}`} className="hover:text-amber-700 transition-colors whitespace-nowrap">
               {firstCategory.name}
             </Link>
           ) : (

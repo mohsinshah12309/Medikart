@@ -20,17 +20,11 @@ export default function BackButton({
   const handleBack = (e) => {
     e.preventDefault();
     if (typeof window !== "undefined") {
-      // Check if user has history within the current app session
-      const hasInternalHistory =
-        (window.history.length > 1 &&
-          document.referrer &&
-          document.referrer.includes(window.location.host)) ||
-        (window.history.state && typeof window.history.state.idx === "number" && window.history.state.idx > 0);
-
-      if (hasInternalHistory) {
+      // If user has history in this browser session, use native back
+      if (window.history.length > 1) {
         window.history.back();
       } else {
-        router.push(fallbackHref);
+        router.push(fallbackHref || "/");
       }
     }
   };

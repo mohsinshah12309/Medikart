@@ -95,13 +95,13 @@ export default function CatalogSection({
       setPagination(cached.pagination);
       setLoading(false);
 
-      // Smoothly update browser URL for bookmarking and deep linking
+      // Smoothly update browser URL for bookmarking without cluttering history stack
       const urlParams = new URLSearchParams();
       if (searchQuery) urlParams.append('search', searchQuery);
-      if (categoryId) urlParams.append('category', categoryId);
+      if (categoryId) urlParams.append('categoryId', categoryId);
       if (pageNum > 1) urlParams.append('page', pageNum);
       const newUrl = urlParams.toString() ? `/?${urlParams.toString()}#store-catalog` : '/#store-catalog';
-      window.history.pushState({}, '', newUrl);
+      window.history.replaceState({}, '', newUrl);
 
       // Schedule background pre-fetch for the subsequent page (pageNum + 1)
       if (cached.pagination.page < cached.pagination.pages) {
@@ -146,13 +146,13 @@ export default function CatalogSection({
         pagination: fetchedPagination,
       });
 
-      // Smoothly update browser URL
+      // Smoothly update browser URL without cluttering history stack
       const urlParams = new URLSearchParams();
       if (searchQuery) urlParams.append('search', searchQuery);
-      if (categoryId) urlParams.append('category', categoryId);
+      if (categoryId) urlParams.append('categoryId', categoryId);
       if (pageNum > 1) urlParams.append('page', pageNum);
       const newUrl = urlParams.toString() ? `/?${urlParams.toString()}#store-catalog` : '/#store-catalog';
-      window.history.pushState({}, '', newUrl);
+      window.history.replaceState({}, '', newUrl);
 
       // 2. Pre-fetch the NEXT page (pageNum + 1) in the background so clicking 'Next' feels instant
       if (fetchedPagination.page < fetchedPagination.pages) {
@@ -203,7 +203,7 @@ export default function CatalogSection({
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const s = params.get('search');
-      const c = params.get('category');
+      const c = params.get('categoryId') || params.get('category');
       const p = parseInt(params.get('page'), 10);
       if (s !== null || c !== null || !isNaN(p)) {
         const initialS = s || '';
@@ -222,7 +222,7 @@ export default function CatalogSection({
     const handlePopState = () => {
       const params = new URLSearchParams(window.location.search);
       const s = params.get('search') || '';
-      const c = params.get('category') || '';
+      const c = params.get('categoryId') || params.get('category') || '';
       const p = parseInt(params.get('page'), 10) || 1;
       setSearch(s);
       setActiveCategoryId(c);

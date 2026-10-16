@@ -15,10 +15,10 @@ export async function middleware(request) {
     return NextResponse.redirect(url, 308);
   }
 
-  // 1a: Redirect /?category=x pattern to /categories/[slug]
+  // 1a: Redirect /?category=x pattern to /categories/[slug] (only for valid slugs, never ObjectIds)
   if (pathname === '/' && searchParams.has('category')) {
     const category = searchParams.get('category');
-    if (category) {
+    if (category && !OBJECT_ID_REGEX.test(category)) {
       const url = new URL(`/categories/${encodeURIComponent(category)}`, request.url);
       return NextResponse.redirect(url, 308);
     }

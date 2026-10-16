@@ -87,18 +87,18 @@ export async function generateMetadata({ searchParams }) {
 export default async function Home({ searchParams }) {
   const resolvedParams = await searchParams;
 
-  // 301 Permanent Redirect for /?category=x to canonical /categories/[slug]
+  // 301 Permanent Redirect for /?category=x to canonical /categories/[slug] only when valid slug exists
   if (resolvedParams?.category) {
-    let targetSlug = resolvedParams.category;
     try {
       const categoriesRes = await getCategories();
       const categories = categoriesRes?.data?.categories || [];
       const matched = categories.find(
         (c) => c._id === resolvedParams.category || c.slug === resolvedParams.category
       );
-      if (matched?.slug) targetSlug = matched.slug;
+      if (matched?.slug) {
+        redirect(`/categories/${matched.slug}`, RedirectType.permanent);
+      }
     } catch (_) {}
-    redirect(`/categories/${targetSlug}`, RedirectType.permanent);
   }
 
   const queryParams = {
