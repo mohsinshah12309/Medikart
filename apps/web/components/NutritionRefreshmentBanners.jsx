@@ -1,43 +1,17 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-import {
-  triggerCategorySelect,
-  scrollToCatalog,
-} from "../lib/catalogEvents";
-
 export default function NutritionRefreshmentBanners() {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const handleBannerClick = (type) => {
-    const targetCatId = type === "baby" ? "6a9073f030ff9f1a1d0f231f" : "6a9073f230ff9f1a1d0f2340";
-
-    triggerCategorySelect(targetCatId, true);
-    scrollToCatalog();
-
-    if (pathname !== "/") {
-      router.push(`/?category=${targetCatId}#store-catalog`);
-    } else {
-      const url = new URL(window.location.href);
-      url.searchParams.delete("search");
-      url.searchParams.set("category", targetCatId);
-      window.history.pushState({}, "", `${url.pathname}?${url.searchParams.toString()}#store-catalog`);
-    }
-  };
-
   return (
     <section aria-label="Featured Health Promotions" className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         
         {/* ─── Card 1: Baby Nutrition ("Growing Strong Starts with Proper Nutrition") ─── */}
-        <div
-          onClick={() => handleBannerClick("baby")}
-          className="group relative h-56 sm:h-64 lg:h-72 w-full rounded-3xl overflow-hidden shadow-warm-card border border-[#F3EFE6] cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.01] hover:border-amber-300"
+        <Link
+          href="/categories/milk-powder"
+          className="group relative h-56 sm:h-64 lg:h-72 w-full rounded-3xl overflow-hidden shadow-warm-card border border-[#F3EFE6] cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.01] hover:border-amber-300 block"
         >
           {/* Background High-Res Photograph */}
           <Image
@@ -80,12 +54,12 @@ export default function NutritionRefreshmentBanners() {
               </span>
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* ─── Card 2: Refreshment & Hydration ("Refresh Replenish Repeat") ─── */}
-        <div
-          onClick={() => handleBannerClick("refreshment")}
-          className="group relative h-56 sm:h-64 lg:h-72 w-full rounded-3xl overflow-hidden shadow-warm-card border border-[#F3EFE6] cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.01] hover:border-amber-300"
+        <Link
+          href="/categories/beverages"
+          className="group relative h-56 sm:h-64 lg:h-72 w-full rounded-3xl overflow-hidden shadow-warm-card border border-[#F3EFE6] cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-[1.01] hover:border-amber-300 block"
         >
           {/* Background High-Res Photograph */}
           <Image
@@ -129,7 +103,7 @@ export default function NutritionRefreshmentBanners() {
               </span>
             </div>
           </div>
-        </div>
+        </Link>
 
       </div>
     </section>

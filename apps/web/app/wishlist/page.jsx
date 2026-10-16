@@ -52,7 +52,7 @@ export default function WishlistPage() {
         </div>
 
         <Link
-          href="/#store-catalog"
+          href="/categories/medicines"
           className="btn-amber-gradient px-5 py-2.5 rounded-full text-xs font-bold shadow-xs flex items-center gap-2"
         >
           <span>Continue Shopping</span>
@@ -80,7 +80,7 @@ export default function WishlistPage() {
           </p>
           <div className="mt-6">
             <Link
-              href="/#store-catalog"
+              href="/categories/medicines"
               className="inline-flex items-center gap-2 btn-amber-gradient px-6 py-2.5 rounded-full text-xs font-black shadow-xs"
             >
               <ShoppingBag className="w-4 h-4" />

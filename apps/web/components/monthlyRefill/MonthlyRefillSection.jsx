@@ -380,7 +380,7 @@ export default function MonthlyRefillSection({
             </div>
 
             <Link
-              href="/#store-catalog"
+              href="/categories/medicines"
               className="text-xs font-black text-slate-950 hover:text-amber-950 flex items-center gap-1 hover:underline"
             >
               <span>Explore All</span>

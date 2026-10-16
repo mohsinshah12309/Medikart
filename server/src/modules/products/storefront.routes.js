@@ -201,6 +201,7 @@ router.get("/products", async (req, res, next) => {
     const rawSearch = typeof req.query.search === "string" ? req.query.search : "";
     const rawCategoryId = typeof req.query.categoryId === "string" ? req.query.categoryId : "";
     const rawCondition = typeof req.query.condition === "string" ? req.query.condition : "";
+    const rawBrand = typeof req.query.brand === "string" ? req.query.brand : "";
     const { isNarcotic, page = 1, limit = 20, cursor = "" } = req.query;
 
     const parsedPage = parseInt(page, 10);
@@ -211,6 +212,7 @@ router.get("/products", async (req, res, next) => {
     const search = rawSearch.trim();
     const categoryId = rawCategoryId.trim();
     const condition = rawCondition.trim();
+    const brand = rawBrand.trim();
     const cursorStr = typeof cursor === "string" ? cursor.trim() : "";
 
     // Track search query popularity asynchronously in background
@@ -221,7 +223,7 @@ router.get("/products", async (req, res, next) => {
     }
 
     // Cache check with lease locking and SWR stampede protection
-    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}:cursor:${cursorStr || ""}`;
+    const cacheKey = `cache:storefront:products:search:${search || ""}:cat:${categoryId || ""}:cond:${condition || ""}:brand:${brand || ""}:narcotic:${isNarcotic || ""}:page:${p}:limit:${l}:cursor:${cursorStr || ""}`;
     const responseBody = await cacheService.fetchWithCache({
       key: cacheKey,
       policy: CACHE_POLICIES.PRODUCTS_LISTING,
@@ -301,6 +303,17 @@ router.get("/products", async (req, res, next) => {
 
     if (isNarcotic !== undefined) {
       query.isNarcotic = isNarcotic === "true";
+    }
+
+    if (brand) {
+      const brandRegex = new RegExp(brand.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
+      const brandMatch = [
+        { name: brandRegex },
+        { keywords: brandRegex },
+        { tags: brandRegex },
+        { description: brandRegex },
+      ];
+      query.$or = query.$or ? { $and: [{ $or: query.$or }, { $or: brandMatch }] } : brandMatch;
     }
 
     // Cursor-based seek support (NFR-PERF-02): avoids O(N) skip cost on large catalogs
@@ -1076,6 +1089,582 @@ router.get("/cache/metrics", (req, res) => {
     status: "success",
     data: cacheMetrics.getMetrics(),
   });
+});
+
+// ─── BRAND HUBS & DIRECTORY ENGINE (Phase 2 Link Engine) ──────────────────────
+
+const BRAND_HUBS = [
+  {
+    slug: "getz-pharma",
+    name: "Getz Pharma",
+    shortCode: "GETZ",
+    query: "Getz",
+    logo: "/images/brands/getz-pharma.svg",
+    badge: "Top Stocked",
+    themeColor: "#008080",
+    description: "Getz Pharma is a leading international pharmaceutical manufacturer in Pakistan, producing DRAP-approved cardiovascular, anti-infective, and metabolic medications in state-of-the-art WHO-prequalified facilities.",
+  },
+  {
+    slug: "sami-pharma",
+    name: "Sami Pharmaceuticals",
+    shortCode: "SAMI",
+    query: "Sami",
+    logo: "/images/brands/sami-pharma.svg",
+    badge: "Popular",
+    themeColor: "#4F46E5",
+    description: "Sami Pharmaceuticals offers high-quality generic and therapeutic formulations across Pakistan, covering respiratory, gastroenterology, and antibiotic treatments verified for authentic patient care.",
+  },
+  {
+    slug: "hilton-pharma",
+    name: "Hilton Pharma",
+    shortCode: "HILTON",
+    query: "Hilton",
+    logo: "/images/brands/hilton-pharma.svg",
+    badge: "Essential",
+    themeColor: "#059669",
+    description: "Hilton Pharma manufactures quality pharmaceuticals under strict cGMP standards in Pakistan, providing trusted clinical solutions in pain relief, cardiovascular health, and general wellness.",
+  },
+  {
+    slug: "barrett-hodgson",
+    name: "Barrett Hodgson",
+    shortCode: "BH",
+    query: "Barrett",
+    logo: "/images/brands/barrett-hodgson.svg",
+    badge: "Trusted",
+    themeColor: "#0369A1",
+    description: "Barrett Hodgson Pakistan delivers research-driven pharmaceutical products manufactured under rigorous international specifications, ensuring patient efficacy and quality assurance.",
+  },
+  {
+    slug: "highnoon-labs",
+    name: "Highnoon Laboratories",
+    shortCode: "HIGHNOON",
+    query: "Highnoon",
+    logo: "/images/brands/highnoon-labs.svg",
+    badge: "Healthcare",
+    themeColor: "#D97706",
+    description: "Highnoon Laboratories is an established healthcare innovator in Pakistan, providing therapeutic products in cardiology, respiratory medicine, and metabolic disorder management.",
+  },
+  {
+    slug: "martin-dow",
+    name: "Martin Dow",
+    shortCode: "MARTIN DOW",
+    query: "Martin Dow",
+    logo: "/images/brands/martin-dow.svg",
+    badge: "Quality",
+    themeColor: "#0284C7",
+    description: "Martin Dow manufactures high-standard therapeutic and consumer healthcare formulations in Pakistan, ensuring rigorous adherence to DRAP regulations and international safety norms.",
+  },
+  {
+    slug: "ccl-pharma",
+    name: "CCL Pharmaceuticals",
+    shortCode: "CCL",
+    query: "CCL",
+    logo: "/images/brands/ccl-pharma.svg",
+    badge: "Reliable",
+    themeColor: "#2563EB",
+    description: "CCL Pharmaceuticals supplies essential medicines and healthcare products nationwide, spanning primary care, nutritional supplements, and specialized pharmaceutical treatments.",
+  },
+  {
+    slug: "pharmevo",
+    name: "PharmEvo",
+    shortCode: "PHARMEVO",
+    query: "PharmEvo",
+    logo: "/images/brands/pharmevo.svg",
+    badge: "Wellness",
+    themeColor: "#16A34A",
+    description: "PharmEvo emphasizes preventive healthcare and evidence-based pharmaceuticals in Pakistan, delivering safe therapies in bone health, cardiology, and daily wellness.",
+  },
+  {
+    slug: "abbott-labs",
+    name: "Abbott Laboratories",
+    shortCode: "ABBOTT",
+    query: "Abbott",
+    logo: "/images/brands/abbott-labs.svg",
+    badge: "Global",
+    themeColor: "#0096D6",
+    description: "Abbott Pakistan offers global-standard nutrition, medical diagnostics, and authentic pharmaceuticals trusted by clinicians and families across Pakistan.",
+  },
+  {
+    slug: "gsk-pakistan",
+    name: "GSK Pakistan",
+    shortCode: "GSK",
+    query: "GSK|Glaxo",
+    logo: "/images/brands/gsk-pakistan.svg",
+    badge: "Standard",
+    themeColor: "#F36F21",
+    description: "GlaxoSmithKline (GSK) Pakistan manufactures trusted antibiotics, dermatology solutions, and essential over-the-counter pain and fever remedies across Pakistan.",
+  },
+  {
+    slug: "atco-labs",
+    name: "Atco Laboratories",
+    shortCode: "ATCO",
+    query: "Atco",
+    logo: "/images/brands/atco-labs.svg",
+    badge: "Certified",
+    themeColor: "#7C3AED",
+    description: "Atco Laboratories delivers certified pharmaceuticals across Pakistan, specializing in high-grade sterile preparations, oral solid dosages, and therapeutic syrups.",
+  },
+  {
+    slug: "ferozsons",
+    name: "Ferozsons Laboratories",
+    shortCode: "FEROZSONS",
+    query: "Ferozsons",
+    logo: "/images/brands/ferozsons.svg",
+    badge: "Heritage",
+    themeColor: "#0891B2",
+    description: "Ferozsons Laboratories is a pioneer pharmaceutical enterprise in Pakistan, providing trusted oncology, cardiology, hepatology, and general health treatments.",
+  },
+  {
+    slug: "searle-pharma",
+    name: "Searle Company",
+    shortCode: "SEARLE",
+    query: "Searl",
+    logo: "/images/brands/searle-pharma.svg",
+    badge: "Specialist",
+    themeColor: "#0D9488",
+    description: "The Searle Company is one of Pakistan's largest healthcare enterprises, formulating specialized pharmaceuticals in cardiovascular, gastrointestinal, and pain management.",
+  },
+  {
+    slug: "panadol",
+    name: "Panadol",
+    shortCode: "PANADOL",
+    query: "Panadol",
+    logo: "/images/brands/gsk-pakistan.svg",
+    badge: "OTC Staple",
+    themeColor: "#1E40AF",
+    description: "Panadol (by GSK) is Pakistan's most trusted paracetamol pain and fever relief brand. Browse authentic tablets, syrups, drops, and cold & flu formulations with Cash on Delivery.",
+  },
+  {
+    slug: "nutrifactor",
+    name: "Nutrifactor",
+    shortCode: "NUTRIFACTOR",
+    query: "Nutrifactor",
+    logo: "/images/brands/nutrifactor.svg",
+    badge: "Nutrition",
+    themeColor: "#047857",
+    description: "Nutrifactor manufactures premium halal dietary supplements, multivitamins, and wellness formulations in Pakistan under strict cGMP standards.",
+  },
+  {
+    slug: "qarshi",
+    name: "Qarshi",
+    shortCode: "QARSHI",
+    query: "Qarshi",
+    logo: "/images/brands/qarshi.svg",
+    badge: "Herbal/Natural",
+    themeColor: "#15803D",
+    description: "Qarshi is Pakistan's renowned herbal and natural healthcare brand, offering traditional syrups, herbal tonics, and natural wellness supplements.",
+  },
+  {
+    slug: "marhaba",
+    name: "Marhaba",
+    shortCode: "MARHABA",
+    query: "Marhaba",
+    logo: "/images/brands/marhaba.svg",
+    badge: "Natural Care",
+    themeColor: "#B45309",
+    description: "Marhaba Laboratories provides natural herbal extracts, digestive waters, pure oils, and wellness remedies formulated according to traditional standards.",
+  },
+  {
+    slug: "dettol",
+    name: "Dettol",
+    shortCode: "DETTOL",
+    query: "Dettol",
+    logo: "/images/brands/dettol.svg",
+    badge: "Antiseptic",
+    themeColor: "#047857",
+    description: "Dettol provides trusted antiseptic liquids, antibacterial soaps, and personal hygiene essentials protecting families across Pakistan.",
+  },
+  {
+    slug: "sensodyne",
+    name: "Sensodyne",
+    shortCode: "SENSODYNE",
+    query: "Sensodyne",
+    logo: "/images/brands/sensodyne.svg",
+    badge: "Oral Care",
+    themeColor: "#1D4ED8",
+    description: "Sensodyne is the dentist-recommended oral care brand for sensitive teeth in Pakistan, offering rapid relief, whitening, and daily tooth protection.",
+  },
+];
+
+// Helper to extract clean brand family root from a product name
+function extractBrandFamily(name) {
+  if (!name) return "";
+  let clean = name.replace(/[\(\)\[\]]/g, " ").trim();
+  clean = clean.replace(/\b(\d+(\.\d+)?\s*(mg|ml|gm|g|kg|mcg|iu|%|\/(\d+(\.\d+)?\s*(mg|ml|gm|g|kg|mcg|iu)?)))\b/gi, " ");
+  clean = clean.replace(/\b(\d+\s*('s|s|tablets?|capsules?|caplets?|drops?|sachets?|bottles?|ampoules?|vials?|strips?|packs?))\b/gi, " ");
+  clean = clean.replace(/\b(tablet|tablets|tab|capsule|capsules|cap|syrup|suspension|drops|drop|injection|infusion|cream|gel|lotion|ointment|sachet|sachets|powder|spray|solution|shampoo|wash|liquid)\b/gi, " ");
+  clean = clean.replace(/\b(plus|extra|forte|ultra|regular|plain|retard|sr|cr|xr|mr|ds|es|infant|pediatric|adult|sugar\s*free|sf)\b/gi, " ");
+  clean = clean.replace(/\s+/g, " ").trim();
+  const words = clean.split(" ").filter((w) => w.length >= 2);
+  return words[0] || clean;
+}
+
+// GET /api/v1/medicines-a-z/:letter - Deterministic alphabetical medicine index (Phase 2 Link Engine)
+router.get("/medicines-a-z/:letter", async (req, res, next) => {
+  try {
+    const rawLetter = (req.params.letter || "a").toLowerCase().trim();
+    const isNumeric = rawLetter === "0-9" || rawLetter === "0" || rawLetter === "numeric" || /^[0-9]$/.test(rawLetter);
+    const letter = isNumeric ? "0-9" : (rawLetter.charAt(0) >= "a" && rawLetter.charAt(0) <= "z" ? rawLetter.charAt(0) : "a");
+
+    const parsedPage = parseInt(req.query.page, 10);
+    const page = !isNaN(parsedPage) && parsedPage >= 1 ? parsedPage : 1;
+    const parsedLimit = parseInt(req.query.limit, 10);
+    const limit = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 250) : 200;
+
+    const cacheKey = `cache:storefront:medicines-a-z:${letter}:page:${page}:limit:${limit}`;
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCTS_LISTING,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const filter = {
+          active: true,
+          name: isNumeric ? { $regex: "^[0-9]" } : { $regex: `^${letter}`, $options: "i" },
+        };
+
+        const skip = (page - 1) * limit;
+        const [rawProducts, total, storewidePercent] = await Promise.all([
+          Product.find(filter)
+            .select("name slug genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .populate("categoryIds", "name slug discount active")
+            .sort({ name: 1 })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
+          Product.countDocuments(filter),
+          getStorewideDiscount(),
+        ]);
+
+        const products = rawProducts.map((prod) => {
+          const formatted = formatProductWithImages(prod);
+          const category = formatted.categoryIds?.[0] ?? null;
+          const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+            formatted,
+            category,
+            storewidePercent
+          );
+          return {
+            ...formatted,
+            effectivePrice,
+            appliedDiscount,
+            discountPercent,
+          };
+        });
+
+        const totalPages = Math.ceil(total / limit) || 1;
+        const allLetters = [
+          "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+          "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0-9"
+        ];
+
+        return {
+          status: "success",
+          data: {
+            letter,
+            page,
+            totalPages,
+            total,
+            limit,
+            letters: allLetters,
+            products,
+          },
+        };
+      },
+    });
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/v1/brands - Directory of all top pharmaceutical and OTC brands
+router.get("/brands", async (req, res, next) => {
+  try {
+    const cacheKey = "cache:storefront:brands:all";
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCTS_LISTING,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        return {
+          status: "success",
+          results: BRAND_HUBS.length,
+          data: {
+            brands: BRAND_HUBS,
+          },
+        };
+      },
+    });
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/v1/brands/:slug - Brand Hub details and paginated product list
+router.get("/brands/:slug", async (req, res, next) => {
+  try {
+    const slug = req.params.slug.toLowerCase().trim();
+    const brand = BRAND_HUBS.find((b) => b.slug === slug);
+    if (!brand) {
+      return res.status(404).json({ status: "error", message: "Brand not found" });
+    }
+
+    const parsedPage = parseInt(req.query.page, 10);
+    const page = !isNaN(parsedPage) && parsedPage >= 1 ? parsedPage : 1;
+    const parsedLimit = parseInt(req.query.limit, 10);
+    const limit = !isNaN(parsedLimit) && parsedLimit >= 1 ? Math.min(parsedLimit, 100) : 24;
+
+    const cacheKey = `cache:storefront:brand:${slug}:page:${page}:limit:${limit}`;
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCTS_LISTING,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const brandRegex = new RegExp(brand.query, "i");
+        const filter = {
+          active: true,
+          $or: [
+            { name: brandRegex },
+            { keywords: brandRegex },
+            { tags: brandRegex },
+            { description: brandRegex },
+          ],
+        };
+
+        const skip = (page - 1) * limit;
+        const [rawProducts, total, storewidePercent] = await Promise.all([
+          Product.find(filter)
+            .select("name slug genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .populate("categoryIds", "name slug discount active")
+            .sort({ stockStatus: 1, name: 1 })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
+          Product.countDocuments(filter),
+          getStorewideDiscount(),
+        ]);
+
+        const products = rawProducts.map((prod) => {
+          const formatted = formatProductWithImages(prod);
+          const category = formatted.categoryIds?.[0] ?? null;
+          const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+            formatted,
+            category,
+            storewidePercent
+          );
+          return {
+            ...formatted,
+            effectivePrice,
+            appliedDiscount,
+            discountPercent,
+          };
+        });
+
+        const totalPages = Math.ceil(total / limit) || 1;
+
+        return {
+          status: "success",
+          data: {
+            brand,
+            page,
+            totalPages,
+            total,
+            limit,
+            products,
+          },
+        };
+      },
+    });
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/v1/products/:id/contextual-links - Deterministic SSR Interlinking Engine (Phase 2 Link Engine)
+router.get("/products/:id/contextual-links", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const cacheKey = `cache:storefront:product:${id}:contextual-links`;
+    const responseBody = await cacheService.fetchWithCache({
+      key: cacheKey,
+      policy: CACHE_POLICIES.PRODUCT_RELATED,
+      bypassCache: req.query.bypassCache === "true",
+      fetcher: async () => {
+        const isObjectId = mongoose.Types.ObjectId.isValid(id);
+        const filter = isObjectId
+          ? { $or: [{ _id: id }, { slug: id }], active: true }
+          : { slug: id, active: true };
+
+        const currentProduct = await Product.findOne(filter).lean();
+        if (!currentProduct) return null;
+
+        const storewidePercent = await getStorewideDiscount();
+        const brandRoot = extractBrandFamily(currentProduct.name);
+        const brandRegex = brandRoot && brandRoot.length >= 2
+          ? new RegExp("^" + brandRoot.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i")
+          : null;
+
+        const isOtc = !currentProduct.requiresPrescription && !currentProduct.isNarcotic;
+
+        // 1. Other Pack Sizes & Strengths (Same Brand Family)
+        let brandFamilyRaw = [];
+        if (brandRegex) {
+          brandFamilyRaw = await Product.find({
+            _id: { $ne: currentProduct._id },
+            active: true,
+            name: brandRegex,
+          })
+            .select("name slug genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .populate("categoryIds", "name slug discount active")
+            .limit(6)
+            .lean();
+        }
+
+        // 2. Same Active Ingredient / Generic Equivalent (Different Brand)
+        let sameIngredientRaw = [];
+        if (currentProduct.genericName && currentProduct.genericName.trim().length >= 3) {
+          const mainGeneric = currentProduct.genericName.trim().split(/[,;+\/]/)[0].trim();
+          if (mainGeneric.length >= 3) {
+            const genRegex = new RegExp(mainGeneric.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
+            const sameIngFilter = {
+              _id: { $ne: currentProduct._id },
+              active: true,
+              genericName: genRegex,
+            };
+            if (brandRegex) {
+              sameIngFilter.name = { $not: brandRegex };
+            }
+            sameIngredientRaw = await Product.find(sameIngFilter)
+              .select("name slug genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+              .populate("categoryIds", "name slug discount active")
+              .limit(6)
+              .lean();
+          }
+        }
+
+        // 3. Scored Related Products (generic +5, brand +4, category +3, token +2, price band +1)
+        const primaryCatId = currentProduct.categoryIds?.[0];
+        const currentTokens = (currentProduct.name || "").toLowerCase().split(/\s+/).filter((t) => t.length >= 3);
+        const priceMin = (currentProduct.price || 0) * 0.5;
+        const priceMax = (currentProduct.price || 0) * 1.5;
+
+        // Candidates from category or general active pool
+        const candidateFilter = {
+          _id: { $ne: currentProduct._id },
+          active: true,
+        };
+        if (primaryCatId) {
+          candidateFilter.categoryIds = primaryCatId;
+        }
+        if (isOtc) {
+          candidateFilter.requiresPrescription = false;
+          candidateFilter.isNarcotic = false;
+        }
+
+        const candidatePool = await Product.find(candidateFilter)
+          .select("name slug genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+          .populate("categoryIds", "name slug discount active")
+          .limit(30)
+          .lean();
+
+        // Score each candidate
+        const scoredCandidates = candidatePool.map((cand) => {
+          let score = 0;
+          if (currentProduct.genericName && cand.genericName && currentProduct.genericName.toLowerCase() === cand.genericName.toLowerCase()) {
+            score += 5;
+          }
+          if (brandRegex && brandRegex.test(cand.name)) {
+            score += 4;
+          }
+          if (primaryCatId && cand.categoryIds?.some((c) => String(c._id || c) === String(primaryCatId._id || primaryCatId))) {
+            score += 3;
+          }
+          const candTokens = (cand.name || "").toLowerCase().split(/\s+/);
+          const overlap = currentTokens.filter((t) => candTokens.includes(t)).length;
+          score += overlap * 2;
+          if (cand.price >= priceMin && cand.price <= priceMax) {
+            score += 1;
+          }
+          return { cand, score };
+        });
+
+        // Exclude products already in brandFamily or sameIngredient
+        const seenIds = new Set([
+          String(currentProduct._id),
+          ...brandFamilyRaw.map((p) => String(p._id)),
+          ...sameIngredientRaw.map((p) => String(p._id)),
+        ]);
+
+        const filteredScored = scoredCandidates.filter(({ cand }) => !seenIds.has(String(cand._id)));
+        filteredScored.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          const aInStock = a.cand.stockStatus !== "out_of_stock";
+          const bInStock = b.cand.stockStatus !== "out_of_stock";
+          if (aInStock && !bInStock) return -1;
+          if (!aInStock && bInStock) return 1;
+          return (a.cand.name || "").localeCompare(b.cand.name || "");
+        });
+
+        const relatedRaw = filteredScored.slice(0, 8).map((s) => s.cand);
+
+        // 4. Matched Brand Hub
+        let matchedBrandHub = null;
+        for (const hub of BRAND_HUBS) {
+          const hubRegex = new RegExp(hub.query, "i");
+          if (hubRegex.test(currentProduct.name) || hubRegex.test(currentProduct.keywords?.join(" ") || "")) {
+            matchedBrandHub = {
+              name: hub.name,
+              slug: hub.slug,
+              logo: hub.logo,
+              badge: hub.badge,
+            };
+            break;
+          }
+        }
+
+        const formatList = (list) =>
+          list.map((prod) => {
+            const formatted = formatProductWithImages(prod);
+            const category = formatted.categoryIds?.[0] ?? null;
+            const { effectivePrice, appliedDiscount, discountPercent } = getEffectivePrice(
+              formatted,
+              category,
+              storewidePercent
+            );
+            return {
+              ...formatted,
+              effectivePrice,
+              appliedDiscount,
+              discountPercent,
+            };
+          });
+
+        return {
+          status: "success",
+          data: {
+            brandRoot,
+            brandHub: matchedBrandHub,
+            brandFamily: formatList(brandFamilyRaw),
+            sameIngredient: formatList(sameIngredientRaw),
+            relatedProducts: formatList(relatedRaw),
+          },
+        };
+      },
+    });
+
+    if (!responseBody) {
+      return res.status(404).json({ status: "error", message: "Product not found" });
+    }
+
+    res.status(200).json(responseBody);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

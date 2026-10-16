@@ -45,6 +45,7 @@ export async function getProducts(params = {}) {
   const query = new URLSearchParams();
   if (params.search) query.append('search', params.search);
   if (params.categoryId) query.append('categoryId', params.categoryId);
+  if (params.brand) query.append('brand', params.brand);
   if (params.page) query.append('page', params.page);
   if (params.limit) query.append('limit', params.limit);
 
@@ -102,6 +103,38 @@ export async function getCities() {
 export async function getContent() {
   return fetchApi('/content', { next: { revalidate: 3600, tags: ['content'] } });
 }
+
+export async function getMedicinesByLetter(letter, params = {}) {
+  const query = new URLSearchParams();
+  if (params.page) query.append('page', params.page);
+  if (params.limit) query.append('limit', params.limit);
+  const qStr = query.toString();
+  return fetchApi(`/medicines-a-z/${encodeURIComponent(letter)}${qStr ? `?${qStr}` : ''}`, {
+    next: { revalidate: 3600, tags: [`medicines-a-z-${letter}`, 'medicines-a-z'] },
+  });
+}
+
+export async function getBrands() {
+  return fetchApi('/brands', {
+    next: { revalidate: 3600, tags: ['brands'] },
+  });
+}
+
+export const getBrand = cache(async (slug, params = {}) => {
+  const query = new URLSearchParams();
+  if (params.page) query.append('page', params.page);
+  if (params.limit) query.append('limit', params.limit);
+  const qStr = query.toString();
+  return fetchApi(`/brands/${encodeURIComponent(slug)}${qStr ? `?${qStr}` : ''}`, {
+    next: { revalidate: 3600, tags: [`brand-${slug}`, 'brands'] },
+  });
+});
+
+export const getProductContextualLinks = cache(async (idOrSlug) => {
+  return fetchApi(`/products/${encodeURIComponent(idOrSlug)}/contextual-links`, {
+    next: { revalidate: 3600, tags: [`contextual-${idOrSlug}`, 'products'] },
+  });
+});
 
 async function postFormData(endpoint, formData) {
   const url = `${API_URL}${endpoint}`;

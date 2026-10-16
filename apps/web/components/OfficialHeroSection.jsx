@@ -317,13 +317,12 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
             </Link>
 
             {/* Browse Products Button */}
-            <a
-              href="#store-catalog"
-              onClick={handleScrollCatalog}
+            <Link
+              href="/categories/medicines"
               className="px-4 py-2 rounded-full bg-white/90 hover:bg-white hover:border-amber-400 hover:scale-103 active:scale-97 border border-amber-300 text-xs sm:text-sm font-bold text-slate-900 shadow-xs transition-all cursor-pointer"
             >
               Browse Products
-            </a>
+            </Link>
           </div>
 
         </div>
@@ -639,23 +638,22 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
             From everyday essentials to specialised care — all in one place.
           </p>
           <div className="pt-3">
-            <a
-              href="#store-catalog"
-              onClick={handleScrollCatalog}
+            <Link
+              href="/categories/medicines"
               className="btn-amber-gradient px-4 py-2 text-xs font-extrabold shadow-xs inline-flex items-center gap-1.5 cursor-pointer"
             >
               <span>Shop Categories</span>
               <span>→</span>
-            </a>
+            </Link>
           </div>
         </div>
 
         {/* Middle: 6 Circular Category Photo Cards */}
         <div className="flex-2 grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 w-full lg:w-auto">
           {appCategories.map((cat, idx) => (
-            <div
+            <Link
               key={idx}
-              onClick={(e) => handleAppCategoryClick(cat, e)}
+              href={`/categories/${cat.slug}`}
               className="flex flex-col items-center text-center group cursor-pointer p-2 rounded-2xl hover:bg-amber-50/60 transition-colors"
             >
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-amber-300 group-hover:border-amber-500 shadow-xs group-hover:shadow-md transition-all transform group-hover:scale-110 relative bg-amber-50 flex-shrink-0">
@@ -670,7 +668,7 @@ export default function OfficialHeroSection({ initialCity = 'Lahore', categories
               <span className="text-[11px] sm:text-xs font-bold text-slate-800 mt-2 leading-tight max-w-[85px] group-hover:text-amber-700 transition-colors">
                 {cat.name}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
 

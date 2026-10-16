@@ -1,6 +1,8 @@
 import React from 'react';
-import { getProduct, getProducts } from '../../../lib/api';
+import { getProduct, getProducts, getProductContextualLinks } from '../../../lib/api';
 import ProductGallery from '../../../components/ProductGallery';
+import ProductCard from '../../../components/ProductCard';
+import { BLOGS_DATA } from '../../../data/blogsData';
 
 import AddToCartButton from '../../../components/AddToCartButton';
 import AddToRefillButton from '../../../components/monthlyRefill/AddToRefillButton';
@@ -8,6 +10,7 @@ import RelatedProducts from '../../../components/RelatedProducts';
 import ProductStickyMobileCta from '../../../components/ProductStickyMobileCta';
 import BackButton from '../../../components/BackButton';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound, redirect, RedirectType } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -117,11 +120,16 @@ export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
 
   let product = null;
+  let contextualData = null;
   try {
-    const res = await getProduct(slug);
-    if (res?.data?.product) {
-      product = res.data.product;
+    const [prodRes, contextRes] = await Promise.all([
+      getProduct(slug),
+      getProductContextualLinks(slug).catch(() => null),
+    ]);
+    if (prodRes?.data?.product) {
+      product = prodRes.data.product;
     }
+    contextualData = contextRes?.data || null;
   } catch (err) {
     console.error('Failed to load product detail:', err.message);
   }
@@ -149,6 +157,20 @@ export default async function ProductDetailPage({ params }) {
 
   const canonicalUrl = `${SITE_URL}/products/${product.slug || slug}`;
   const firstCategory = product.categoryIds && product.categoryIds.length > 0 ? product.categoryIds[0] : null;
+
+  const brandFamily = contextualData?.brandFamily || [];
+  const sameIngredient = contextualData?.sameIngredient || [];
+  const relatedProducts = contextualData?.relatedProducts || [];
+  const brandHub = contextualData?.brandHub || null;
+
+  // 1 to 3 related health guides matched by category and keywords
+  const catSlug = firstCategory?.slug || '';
+  const prodTokens = (product.name || '').toLowerCase().split(/\s+/).filter((t) => t.length >= 3);
+  const relatedBlogs = BLOGS_DATA.filter((b) => {
+    const matchCat = catSlug && b.categorySlug && b.categorySlug.toLowerCase().includes(catSlug.toLowerCase());
+    const matchTag = b.tags && b.tags.some((tag) => prodTokens.some((token) => tag.toLowerCase().includes(token)));
+    return matchCat || matchTag;
+  }).slice(0, 3);
 
   // Real, Schema.org-compliant Product JSON-LD (Includes Google Merchant Listings & Free Listings fields)
   const productJsonLd = {
@@ -477,11 +499,143 @@ export default async function ProductDetailPage({ params }) {
         </div>
       </section>
 
-      {/* Relevant Related Products Module */}
+      {/* Brand Hub Quick Link */}
+      {brandHub && (
+        <section aria-label={`${brandHub.name} Brand Hub`} className="bg-gradient-to-r from-amber-50/90 via-yellow-50/50 to-white border border-amber-200/90 rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-3xs">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 p-2 flex items-center justify-center shrink-0 shadow-2xs">
+              {brandHub.logo ? (
+                <div className="relative w-full h-full">
+                  <Image
+                    src={brandHub.logo}
+                    alt={`${brandHub.name} logo`}
+                    fill
+                    sizes="48px"
+                    className="object-contain"
+                  />
+                </div>
+              ) : (
+                <span className="text-base font-black text-slate-800">{brandHub.shortCode || 'MED'}</span>
+              )}
+            </div>
+            <div>
+              <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider block">Official Brand Hub</span>
+              <h3 className="text-base font-black text-slate-900">{brandHub.name}</h3>
+            </div>
+          </div>
+          <Link
+            href={`/brands/${brandHub.slug}`}
+            className="text-xs font-black text-slate-950 bg-yellow-400 hover:bg-yellow-300 border border-yellow-500 px-4 py-2 rounded-xl transition-all shadow-xs self-start sm:self-auto flex items-center gap-1.5"
+          >
+            <span>View All {brandHub.name} Medicines</span>
+            <span>→</span>
+          </Link>
+        </section>
+      )}
+
+      {/* 1. Other Pack Sizes & Strengths (Same Brand Family) */}
+      {brandFamily.length > 0 && (
+        <section aria-label="Other pack sizes and strengths" className="space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+            <div>
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                <span>📦</span> Other Pack Sizes &amp; Strengths
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                Available pack variations and strengths in the same brand line
+              </p>
+            </div>
+            <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+              {brandFamily.length} options
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+            {brandFamily.map((prod) => (
+              <ProductCard key={prod._id || prod.slug} product={prod} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 2. Same Active Ingredient, Other Brands (Generic Equivalents) */}
+      {sameIngredient.length > 0 && (
+        <section aria-label="Same active ingredient, other brands" className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                <span>🧪</span> Same Active Ingredient, Other Brands
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                Formulated with {product.genericName}. Informational overview only; consult your doctor or pharmacist before switching brands.
+              </p>
+            </div>
+            <span className="text-xs font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200 self-start sm:self-auto">
+              Generic Matches
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+            {sameIngredient.map((prod) => (
+              <ProductCard key={prod._id || prod.slug} product={prod} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 3. Relevant Related Products Module (SSR hydrated with initialRelated) */}
       <RelatedProducts
         currentProduct={product}
         primaryCategory={firstCategory}
+        initialRelated={relatedProducts}
       />
+
+      {/* 4. Related Health & Medicine Guides (Blog Authority Flow) */}
+      {relatedBlogs.length > 0 && (
+        <section aria-label="Related Health Guides" className="bg-slate-50/80 rounded-3xl border border-slate-200 p-5 sm:p-7 space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-200/80 pb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">📖</span>
+              <div>
+                <h2 className="text-base sm:text-lg font-black text-slate-900">
+                  Related Health &amp; Medicine Guides
+                </h2>
+                <p className="text-xs text-slate-500 font-medium">
+                  Verified clinical editorial guidance written by licensed healthcare professionals
+                </p>
+              </div>
+            </div>
+            <Link href="/blogs" className="text-xs font-bold text-amber-800 hover:underline shrink-0">
+              Browse all guides →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {relatedBlogs.map((blog) => (
+              <Link
+                key={blog.id || blog.slug}
+                href={`/blogs/${blog.slug}`}
+                className="bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-amber-400 hover:shadow-warm-card transition-all flex items-center gap-3.5 group"
+              >
+                <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-100 bg-slate-50">
+                  <Image
+                    src={blog.image}
+                    alt={blog.title}
+                    fill
+                    sizes="64px"
+                    className="object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <div className="min-w-0 flex-1 space-y-1">
+                  <span className="text-[10px] font-black text-amber-900 bg-amber-100/90 px-2 py-0.5 rounded-full border border-amber-200 uppercase tracking-wide">
+                    {blog.category}
+                  </span>
+                  <h3 className="text-xs font-bold text-slate-900 group-hover:text-amber-800 transition-colors line-clamp-2 leading-snug">
+                    {blog.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Mobile Sticky Add to Cart Bar */}
       <ProductStickyMobileCta product={product} />

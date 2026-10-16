@@ -30,7 +30,7 @@ export default function RefillPage() {
           {/* Top back navigation */}
       <div className="flex items-center justify-between mb-4">
         <Link
-          href="/#store-catalog"
+          href="/categories/medicines"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-amber-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

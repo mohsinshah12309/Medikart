@@ -6,15 +6,17 @@ import Image from 'next/image';
 
 /**
  * Top Pharmaceutical Brands Section
- * Data-driven from the real Medikart catalog (6,112 active products).
+ * Data-driven from the real Medikart catalog (6,149 active products).
  * Lists top licensed manufacturers physically present in the catalog.
+ * Links to clean, dedicated brand hubs (/brands/<slug>).
  */
 const CATALOG_TOP_BRANDS = [
   {
     name: 'Getz Pharma',
+    slug: 'getz-pharma',
     shortCode: 'GETZ',
-    productCount: '240+ Products',
-    query: 'Getz Pharma',
+    productCount: '245+ Products',
+    query: 'Getz',
     themeColor: '#008080',
     bgColor: '#F0FDFA',
     badge: 'Top Stocked',
@@ -22,9 +24,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Sami Pharma',
+    slug: 'sami-pharma',
     shortCode: 'SAMI',
-    productCount: '235+ Products',
-    query: 'Sami Pharmaceuticals',
+    productCount: '260+ Products',
+    query: 'Sami',
     themeColor: '#4F46E5',
     bgColor: '#EEF2FF',
     badge: 'Popular',
@@ -32,9 +35,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Hilton Pharma',
+    slug: 'hilton-pharma',
     shortCode: 'HILTON',
-    productCount: '160+ Products',
-    query: 'Hilton Pharma',
+    productCount: '167+ Products',
+    query: 'Hilton',
     themeColor: '#059669',
     bgColor: '#ECFDF5',
     badge: 'Essential',
@@ -42,9 +46,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Barrett Hodgson',
+    slug: 'barrett-hodgson',
     shortCode: 'BH',
-    productCount: '155+ Products',
-    query: 'Barrett Hodgson',
+    productCount: '158+ Products',
+    query: 'Barrett',
     themeColor: '#0369A1',
     bgColor: '#F0F9FF',
     badge: 'Trusted',
@@ -52,9 +57,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Highnoon Labs',
+    slug: 'highnoon-labs',
     shortCode: 'HIGHNOON',
-    productCount: '145+ Products',
-    query: 'Highnoon Laboratories',
+    productCount: '146+ Products',
+    query: 'Highnoon',
     themeColor: '#D97706',
     bgColor: '#FFFBEB',
     badge: 'Healthcare',
@@ -62,8 +68,9 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Martin Dow',
+    slug: 'martin-dow',
     shortCode: 'MARTIN DOW',
-    productCount: '140+ Products',
+    productCount: '141+ Products',
     query: 'Martin Dow',
     themeColor: '#0284C7',
     bgColor: '#F0F9FF',
@@ -72,9 +79,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'CCL Pharma',
+    slug: 'ccl-pharma',
     shortCode: 'CCL',
-    productCount: '135+ Products',
-    query: 'CCL Pharmaceuticals',
+    productCount: '141+ Products',
+    query: 'CCL',
     themeColor: '#2563EB',
     bgColor: '#EFF6FF',
     badge: 'Reliable',
@@ -82,8 +90,9 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'PharmEvo',
+    slug: 'pharmevo',
     shortCode: 'PHARMEVO',
-    productCount: '125+ Products',
+    productCount: '129+ Products',
     query: 'PharmEvo',
     themeColor: '#16A34A',
     bgColor: '#F0FDF4',
@@ -92,9 +101,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Abbott Labs',
+    slug: 'abbott-labs',
     shortCode: 'ABBOTT',
     productCount: '115+ Products',
-    query: 'Abbott Laboratories',
+    query: 'Abbott',
     themeColor: '#0096D6',
     bgColor: '#EFF6FF',
     badge: 'Global',
@@ -102,9 +112,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'GSK Pakistan',
+    slug: 'gsk-pakistan',
     shortCode: 'GSK',
-    productCount: '110+ Products',
-    query: 'Glaxosmithkline',
+    productCount: '116+ Products',
+    query: 'GSK',
     themeColor: '#F36F21',
     bgColor: '#FFF7ED',
     badge: 'Standard',
@@ -112,9 +123,10 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Atco Labs',
+    slug: 'atco-labs',
     shortCode: 'ATCO',
-    productCount: '110+ Products',
-    query: 'Atco Laboratories',
+    productCount: '112+ Products',
+    query: 'Atco',
     themeColor: '#7C3AED',
     bgColor: '#F5F3FF',
     badge: 'Certified',
@@ -122,33 +134,36 @@ const CATALOG_TOP_BRANDS = [
   },
   {
     name: 'Ferozsons',
+    slug: 'ferozsons',
     shortCode: 'FEROZSONS',
     productCount: '100+ Products',
-    query: 'Ferozsons Laboratories',
+    query: 'Ferozsons',
     themeColor: '#0891B2',
     bgColor: '#ECFEFF',
     badge: 'Heritage',
     logo: '/images/brands/ferozsons.svg',
   },
   {
-    name: 'Searle Pharma',
+    name: 'Searle Company',
+    slug: 'searle-pharma',
     shortCode: 'SEARLE',
     productCount: '95+ Products',
-    query: 'Searl Pharmaceuticals',
+    query: 'Searl',
     themeColor: '#0D9488',
     bgColor: '#F0FDFA',
     badge: 'Specialist',
     logo: '/images/brands/searle-pharma.svg',
   },
   {
-    name: 'High-Q Int.',
-    shortCode: 'HIGH-Q',
-    productCount: '90+ Products',
-    query: 'High-Q International',
-    themeColor: '#E11D48',
-    bgColor: '#FFF1F2',
-    badge: 'Specialist',
-    logo: '/images/brands/high-q.svg',
+    name: 'Panadol',
+    slug: 'panadol',
+    shortCode: 'PANADOL',
+    productCount: '13+ Products',
+    query: 'Panadol',
+    themeColor: '#1E40AF',
+    bgColor: '#EFF6FF',
+    badge: 'OTC Staple',
+    logo: '/images/brands/gsk-pakistan.svg',
   },
 ];
 
@@ -162,8 +177,8 @@ export default function BrandsSection() {
     setIsPaused(false);
   };
 
-  // Duplicate items array for continuous seamless infinite loop
-  const displayBrands = [...CATALOG_TOP_BRANDS, ...CATALOG_TOP_BRANDS];
+  // Deduplicated single items array (Phase 2 Link Engine)
+  const displayBrands = CATALOG_TOP_BRANDS;
 
   return (
     <section className="my-8 md:my-10 overflow-hidden" aria-label="Brands Available on Medikart">
@@ -182,30 +197,39 @@ export default function BrandsSection() {
           </p>
         </div>
 
-        {/* Direction Controls */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => toggleDirection('ltr')}
-            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
-              slideDirection === 'ltr' ? 'btn-amber-gradient text-slate-900' : 'bg-white border border-amber-200 text-slate-700'
-            }`}
-            aria-label="Slide brands left to right"
-            title="Slide brands left to right"
+        {/* Direction Controls and View All */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/brands"
+            className="hidden sm:inline-flex text-xs font-black text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300 px-3 py-1.5 rounded-xl transition-colors"
           >
-            ‹
-          </button>
-          <button
-            type="button"
-            onClick={() => toggleDirection('rtl')}
-            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
-              slideDirection === 'rtl' ? 'btn-amber-gradient text-slate-900' : 'bg-white border border-amber-200 text-slate-700'
-            }`}
-            aria-label="Slide brands right to left"
-            title="Slide brands right to left"
-          >
-            ›
-          </button>
+            VIEW ALL BRANDS →
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => toggleDirection('ltr')}
+              className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+                slideDirection === 'ltr' ? 'btn-amber-gradient text-slate-900' : 'bg-white border border-amber-200 text-slate-700'
+              }`}
+              aria-label="Slide brands left to right"
+              title="Slide brands left to right"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={() => toggleDirection('rtl')}
+              className={`w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-xs transition-all hover:scale-105 active:scale-95 cursor-pointer ${
+                slideDirection === 'rtl' ? 'btn-amber-gradient text-slate-900' : 'bg-white border border-amber-200 text-slate-700'
+              }`}
+              aria-label="Slide brands right to left"
+              title="Slide brands right to left"
+            >
+              ›
+            </button>
+          </div>
         </div>
       </div>
 
@@ -224,11 +248,11 @@ export default function BrandsSection() {
           }`}
           style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
         >
-          {displayBrands.map((brand, idx) => (
+          {displayBrands.map((brand) => (
             <Link
-              key={`${brand.name}-${idx}`}
-              href={`/?search=${encodeURIComponent(brand.query)}#store-catalog`}
-              title={`${brand.name} (${brand.productCount}) — Click to explore products`}
+              key={brand.slug}
+              href={`/brands/${brand.slug}`}
+              title={`${brand.name} (${brand.productCount}) — View brand hub`}
               aria-label={`${brand.name} (${brand.productCount})`}
               className="shrink-0 w-36 sm:w-44 h-20 sm:h-24 bg-white hover:bg-amber-50/50 rounded-2xl border border-slate-200/90 hover:border-amber-400 p-2.5 sm:p-3 flex items-center justify-center transition-all duration-200 hover:shadow-warm-card hover:-translate-y-1 group/card cursor-pointer shadow-xs"
             >
@@ -240,7 +264,6 @@ export default function BrandsSection() {
                   fill
                   sizes="(max-width: 640px) 144px, 176px"
                   className="object-contain transition-transform duration-300 group-hover/card:scale-110"
-                  priority={idx < 8}
                 />
               </div>
             </Link>

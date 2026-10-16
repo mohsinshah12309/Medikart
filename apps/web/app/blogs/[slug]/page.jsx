@@ -850,10 +850,10 @@ export default async function BlogPostPage({ params }) {
             Upload Prescription &rarr;
           </Link>
           <Link
-            href="/#store-catalog"
+            href="/categories/medicines"
             className="px-4 py-2.5 rounded-full bg-white hover:bg-amber-50 text-slate-900 text-xs font-bold shadow-xs transition-all whitespace-nowrap"
           >
-            Shop Catalog
+            Shop Medicines
           </Link>
         </div>
       </div>
@@ -866,7 +866,7 @@ export default async function BlogPostPage({ params }) {
               <Layers className="w-5 h-5 text-amber-500" />
               <span>Related Categories</span>
             </h3>
-            <Link href="/#store-catalog" className="text-xs font-bold text-amber-700 hover:text-amber-800">
+            <Link href="/categories/medicines" className="text-xs font-bold text-amber-700 hover:text-amber-800">
               View All Categories &rarr;
             </Link>
           </div>
@@ -875,7 +875,7 @@ export default async function BlogPostPage({ params }) {
             {relatedCategories.map((cat) => (
               <Link
                 key={cat._id || cat.slug}
-                href={`/?category=${encodeURIComponent(cat.slug || cat._id)}#store-catalog`}
+                href={`/categories/${encodeURIComponent(cat.slug || cat._id)}`}
                 className="p-3.5 rounded-2xl bg-white border border-slate-200/90 hover:border-amber-400 hover:bg-amber-50/20 shadow-3xs transition-all flex items-center gap-3 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-900 text-base font-bold flex-shrink-0 group-hover:scale-105 transition-transform">

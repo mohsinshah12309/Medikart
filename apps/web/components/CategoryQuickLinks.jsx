@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Pill,
   Sparkles,
@@ -102,8 +103,8 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
     return <Pill className="w-8 h-8 text-amber-600" />;
   };
 
-  // Duplicate items array for seamless continuous infinite marquee
-  const displayCategories = [...categories, ...categories];
+  // Deduplicated single category items array (Phase 2 Link Engine)
+  const displayCategories = categories;
 
   return (
     <div className="flex flex-col gap-3 py-2 overflow-hidden">
@@ -158,15 +159,14 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
           }`}
           style={{ animationPlayState: isPaused ? "paused" : "running" }}
         >
-          {displayCategories.map((cat, idx) => {
+          {displayCategories.map((cat) => {
             const slug = cat.slug || cat.name?.toLowerCase().replace(/[^a-z0-9]+/g, "-");
             const imgSrc = cat.imageUrl || (slug ? `/images/categories/${slug}.svg` : null);
 
             return (
-              <a
-                key={`${cat._id}-${idx}`}
-                href="#store-catalog"
-                onClick={(e) => handleItemClick(cat._id, e)}
+              <Link
+                key={cat._id || slug}
+                href={`/categories/${slug}`}
                 className="flex-shrink-0 w-28 sm:w-32 md:w-36 bg-white border border-[#F3EFE6] hover:border-amber-300 rounded-2xl p-2.5 flex flex-col items-center justify-between gap-2 shadow-2xs hover:shadow-warm-card transition-all hover:-translate-y-1 group/card cursor-pointer"
               >
                 {/* Commercial Photography Box */}
@@ -188,7 +188,7 @@ export default function CategoryQuickLinks({ categories: initialCategories = [],
                 <span className="text-xs font-bold text-slate-800 text-center line-clamp-2 min-h-[32px] flex items-center justify-center group-hover/card:text-yellow-700 transition-colors leading-tight">
                   {cat.name}
                 </span>
-              </a>
+              </Link>
             );
           })}
         </div>

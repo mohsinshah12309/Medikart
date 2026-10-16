@@ -261,7 +261,7 @@ export default async function RootLayout({ children }) {
     'url': 'https://medikart.pk',
     'potentialAction': {
       '@type': 'SearchAction',
-      'target': 'https://medikart.pk/?search={search_term_string}#store-catalog',
+      'target': 'https://medikart.pk/?search={search_term_string}',
       'query-input': 'required name=search_term_string'
     }
   };

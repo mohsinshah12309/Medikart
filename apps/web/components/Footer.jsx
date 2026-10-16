@@ -162,6 +162,8 @@ export default function Footer({
   // Verified active routes for Navigate column
   const navigateLinks = [
     { label: "Home", href: "/" },
+    { label: "Medicines A-Z Index", href: "/medicines-a-z/a" },
+    { label: "Top Pharmaceutical Brands", href: "/brands" },
     { label: "Instant Order", href: "/instant-order", badge: "Fast" },
     { label: "Health & Medicine Blogs", href: "/blogs" },
     { label: "Prescription Refill", href: "/refill" },
@@ -277,14 +279,13 @@ export default function Footer({
                 )}
 
                 <li className="pt-1">
-                  <a
-                    href="#store-catalog"
-                    onClick={handleScrollCatalog}
+                  <Link
+                    href="/categories/medicines"
                     className="inline-flex items-center gap-1 text-xs font-black text-amber-900 hover:text-slate-950 uppercase tracking-tight transition-colors cursor-pointer"
                   >
                     <span>All Categories</span>
                     <span>→</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

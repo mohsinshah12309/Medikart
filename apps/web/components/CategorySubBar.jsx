@@ -829,10 +829,9 @@ export default function CategorySubBar({ categories = [] }) {
             {/* Bottom Footer Action */}
             <div className="p-3.5 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-2">
               <Link
-                href="/#store-catalog"
-                onClick={(e) => {
+                href="/categories/medicines"
+                onClick={() => {
                   setMobileDrawerOpen(false);
-                  scrollToCatalog();
                 }}
                 className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-[#FFEE45] text-xs font-black text-center shadow-xs flex items-center justify-center gap-1.5"
               >

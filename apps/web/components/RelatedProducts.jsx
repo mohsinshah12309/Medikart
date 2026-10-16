@@ -5,11 +5,17 @@ import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { Sparkles, ArrowRight, Stethoscope } from "lucide-react";
 
-export default function RelatedProducts({ currentProduct, primaryCategory }) {
-  const [relatedProducts, setRelatedProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function RelatedProducts({ currentProduct, primaryCategory, initialRelated = [] }) {
+  const [relatedProducts, setRelatedProducts] = useState(initialRelated);
+  const [loading, setLoading] = useState(initialRelated.length === 0);
 
   useEffect(() => {
+    if (initialRelated && initialRelated.length > 0) {
+      setRelatedProducts(initialRelated);
+      setLoading(false);
+      return;
+    }
+
     if (!currentProduct?._id) return;
 
     let isMounted = true;

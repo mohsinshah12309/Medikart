@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Scissors,
   Wind,
@@ -16,6 +17,17 @@ import {
 } from "lucide-react";
 
 import { triggerCatalogSearch, scrollToCatalog } from "../lib/catalogEvents";
+
+const CONDITION_CATEGORY_MAP = {
+  "hair-fall": "dermatology",
+  "cough-and-cold": "otc",
+  "bones-and-joints-pain": "patient-supports",
+  "acne-and-skin-care": "dermatology",
+  "pain-and-body-aches": "otc",
+  "sleep-disorders": "herbal",
+  "digestive-health": "otc",
+  "diabetes-care": "diagnostics",
+};
 
 const CONDITION_MAPPINGS = {
   "hair-fall": { search: "Hair", name: "Hair Fall" },
@@ -123,7 +135,8 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
     return <Activity className="w-9 h-9 text-amber-600" />;
   };
 
-  const displayConditions = [...conditions, ...conditions];
+  // Deduplicated single conditions array (Phase 2 Link Engine)
+  const displayConditions = conditions;
 
   return (
     <div className="flex flex-col gap-3 py-2 overflow-hidden">
@@ -178,13 +191,13 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
           }`}
           style={{ animationPlayState: isPaused ? "paused" : "running" }}
         >
-          {displayConditions.map((item, idx) => {
+          {displayConditions.map((item) => {
             const imgSrc = item.imageUrl || (item.slug ? `/images/conditions/${item.slug}.svg` : null);
+            const targetCatSlug = CONDITION_CATEGORY_MAP[item.slug] || "medicines";
             return (
-              <a
-                key={`${item._id || item.slug}-${idx}`}
-                href="#store-catalog"
-                onClick={(e) => handleItemClick(item, e)}
+              <Link
+                key={item._id || item.slug}
+                href={`/categories/${targetCatSlug}`}
                 className="flex-shrink-0 w-28 sm:w-32 md:w-36 flex flex-col items-center group/card cursor-pointer transition-transform duration-200 hover:-translate-y-1"
               >
                 {/* Top Circular Photo Container */}
@@ -208,7 +221,7 @@ export default function CareByConditionSection({ initialConditions = [], onSelec
                     {item.name}
                   </span>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>

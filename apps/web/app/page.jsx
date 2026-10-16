@@ -10,6 +10,7 @@ import BrandsSection from '../components/BrandsSection';
 import NutritionRefreshmentBanners from '../components/NutritionRefreshmentBanners';
 import BlogsSection from '../components/BlogsSection';
 import RightBlogSidebar from '../components/RightBlogSidebar';
+import PopularProductsSection from '../components/PopularProductsSection';
 
 export const revalidate = 60;
 
@@ -153,6 +154,9 @@ export default async function Home({ searchParams }) {
 
         {/* 5. Horizontal Category Quick-Links Scroller */}
         <CategoryQuickLinks categories={categories} />
+
+        {/* 5.5. Popular Products Block (12 Real OTC Healthcare Staples - Phase 2 Link Engine) */}
+        <PopularProductsSection />
 
         {/* 6. Mid-Page Promotional Banner Blocks */}
         <MidPagePromoBanners initialBanners={midBanners} categories={categories} />

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { triggerCategorySelect, scrollToCatalog } from "../lib/catalogEvents";
 
 const FALLBACK_MID_BANNERS = [
@@ -9,7 +10,7 @@ const FALLBACK_MID_BANNERS = [
     title: "Protect the Skin You're In",
     subtitle: "Dermatologist-recommended sunblocks, cleansers & moisturizers",
     targetSlug: "dermatology",
-    linkUrl: "#store-catalog",
+    linkUrl: "/categories/dermatology",
     gradient: "from-amber-100/90 via-yellow-50 to-amber-50/60",
     badge: "Featured Collection",
     icon: "☀️",
@@ -19,7 +20,7 @@ const FALLBACK_MID_BANNERS = [
     title: "Better Health Begins Everyday",
     subtitle: "Explore authentic organic supplements, magnesium & herbal wellness",
     targetSlug: "vitamins",
-    linkUrl: "#store-catalog",
+    linkUrl: "/categories/vitamins",
     gradient: "from-yellow-100/90 via-amber-50 to-emerald-50/50",
     badge: "Featured Collection",
     icon: "💊",
@@ -98,46 +99,42 @@ export default function MidPagePromoBanners({ initialBanners = [], categories = 
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 py-3">
-      {banners.slice(0, 2).map((b, idx) => (
-        <div
-          key={b._id || idx}
-          onClick={(e) => handleBannerClick(b, e)}
-          className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${
-            b.gradient || (idx === 0 ? "from-yellow-200/90 via-amber-100 to-yellow-50" : "from-yellow-200/90 via-yellow-100 to-emerald-50")
-          } p-6 sm:p-8 border border-yellow-300/80 shadow-warm-card hover:shadow-lg transition-all flex flex-col justify-between min-h-[190px] sm:min-h-[210px] cursor-pointer group hover:border-amber-400 hover:scale-[1.01]`}
-        >
-          {/* Ambient Decorative Badge */}
-          <div className="flex items-center justify-between mb-3">
-            <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-white/90 text-slate-900 px-3 py-1 rounded-full shadow-2xs border border-amber-200/80">
-              {b.badge || "Featured Collection"}
-            </span>
-            <span className="text-2xl filter drop-shadow-xs group-hover:scale-110 transition-transform">{b.icon || (idx === 0 ? "☀️" : "💊")}</span>
-          </div>
+      {banners.slice(0, 2).map((b, idx) => {
+        const destUrl = b.linkUrl && b.linkUrl !== "#store-catalog" ? b.linkUrl : (b.targetSlug ? `/categories/${b.targetSlug}` : "/categories/medicines");
+        return (
+          <Link
+            key={b._id || idx}
+            href={destUrl}
+            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${
+              b.gradient || (idx === 0 ? "from-yellow-200/90 via-amber-100 to-yellow-50" : "from-yellow-200/90 via-yellow-100 to-emerald-50")
+            } p-6 sm:p-8 border border-yellow-300/80 shadow-warm-card hover:shadow-lg transition-all flex flex-col justify-between min-h-[190px] sm:min-h-[210px] cursor-pointer group hover:border-amber-400 hover:scale-[1.01]`}
+          >
+            {/* Ambient Decorative Badge */}
+            <div className="flex items-center justify-between mb-3">
+              <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-white/90 text-slate-900 px-3 py-1 rounded-full shadow-2xs border border-amber-200/80">
+                {b.badge || "Featured Collection"}
+              </span>
+              <span className="text-2xl filter drop-shadow-xs group-hover:scale-110 transition-transform">{b.icon || (idx === 0 ? "☀️" : "💊")}</span>
+            </div>
 
-          <div>
-            <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight mb-1.5 group-hover:text-amber-800 transition-colors">
-              {b.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed max-w-sm mb-4">
-              {b.subtitle}
-            </p>
-          </div>
+            <div>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight mb-1.5 group-hover:text-amber-800 transition-colors">
+                {b.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed max-w-sm mb-4">
+                {b.subtitle}
+              </p>
+            </div>
 
-          <div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleBannerClick(b, e);
-              }}
-              className="inline-flex items-center gap-2 text-xs font-black text-slate-950 btn-amber-gradient px-4 py-2 rounded-xl shadow-xs transition-all group-hover:gap-3 cursor-pointer"
-            >
-              <span>Explore Products</span>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-      ))}
+            <div>
+              <span className="inline-flex items-center gap-2 text-xs font-black text-slate-950 btn-amber-gradient px-4 py-2 rounded-xl shadow-xs transition-all group-hover:gap-3 cursor-pointer">
+                <span>Explore Products</span>
+                <span>→</span>
+              </span>
+            </div>
+          </Link>
+        );
+      })}
     </div>
   );
 }

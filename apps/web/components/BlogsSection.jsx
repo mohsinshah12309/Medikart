@@ -80,10 +80,10 @@ export default function BlogsSection() {
             }`}
             style={{ width: "max-content" }}
           >
-            {/* Seamless Dual Loop starting from 0% */}
-            {[...featuredBlogs, ...featuredBlogs].map((blog, idx) => (
+            {/* Deduplicated single array of featured health guides (Phase 2 Link Engine) */}
+            {featuredBlogs.map((blog) => (
               <Link
-                key={`${blog.id}-${idx}`}
+                key={blog.id || blog.slug}
                 href={`/blogs/${blog.slug}`}
                 className="group flex items-center gap-4 p-3.5 sm:p-4 rounded-3xl bg-white hover:bg-amber-50/40 border border-slate-200 hover:border-amber-400 shadow-3xs hover:shadow-warm-card transition-all cursor-pointer w-[340px] sm:w-[400px] md:w-[440px] flex-shrink-0"
               >

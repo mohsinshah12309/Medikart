@@ -120,6 +120,10 @@ export default function HeaderNav({ initialCategories = [] }) {
     { name: "Home", href: "/" },
     { name: "Instant Order", href: "/instant-order" },
     { name: "Categories", href: "#categories", isDropdown: true },
+    { name: "Medicines A-Z", href: "/medicines-a-z/a" },
+    { name: "Brands", href: "/brands" },
+    { name: "Refill", href: "/refill" },
+    { name: "Health Guides", href: "/blogs" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
@@ -234,15 +238,9 @@ export default function HeaderNav({ initialCategories = [] }) {
             {isMobileCategoriesOpen && (
               <div className="px-2 pb-2.5 pt-1 space-y-1 border-t border-slate-200/60 max-h-60 overflow-y-auto bg-white">
                 <Link
-                  href="/#store-catalog"
-                  onClick={(e) => {
+                  href="/categories/medicines"
+                  onClick={() => {
                     setIsMobileMenuOpen(false);
-                    if (pathname === "/") {
-                      e.preventDefault();
-                      window.dispatchEvent(new CustomEvent("select-category", { detail: "" }));
-                      const el = document.getElementById("store-catalog");
-                      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
                   }}
                   className="flex items-center justify-between p-2 rounded-lg text-xs font-black text-amber-800 bg-amber-50/80 hover:bg-amber-100 transition-colors"
                 >
@@ -297,6 +295,40 @@ export default function HeaderNav({ initialCategories = [] }) {
               </div>
             )}
           </div>
+
+          {/* 3.1. Medicines A-Z Index */}
+          <Link
+            href="/medicines-a-z/a"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname?.startsWith("/medicines-a-z")
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">📚</span>
+              <span>Medicines A-Z Index</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
+
+          {/* 3.2. Top Brands */}
+          <Link
+            href="/brands"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm transition-all ${
+              pathname?.startsWith("/brands")
+                ? "bg-amber-100/90 text-slate-950 shadow-2xs border-l-4 border-yellow-500 font-black"
+                : "text-slate-800 hover:bg-amber-50/60 hover:text-slate-950"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">🏛️</span>
+              <span>Top Brands &amp; Manufacturers</span>
+            </div>
+            <ChevronRight className="w-4 h-4 text-slate-400" />
+          </Link>
 
           {/* 4. Wishlist */}
           <Link
@@ -512,15 +544,9 @@ export default function HeaderNav({ initialCategories = [] }) {
                         </div>
 
                         <Link
-                          href="/#store-catalog"
-                          onClick={(e) => {
+                          href="/categories/medicines"
+                          onClick={() => {
                             setIsDropdownOpen(false);
-                            if (pathname === "/") {
-                              e.preventDefault();
-                              window.dispatchEvent(new CustomEvent("select-category", { detail: "" }));
-                              const el = document.getElementById("store-catalog");
-                              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                            }
                           }}
                           className="text-xs font-bold text-amber-700 hover:text-amber-800 flex items-center gap-1 group"
                         >
