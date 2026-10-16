@@ -77,13 +77,13 @@ const POPULAR_OTC_STAPLES = [
   },
   {
     _id: 'pop-8',
-    name: 'Brufen 400mg Tablets (30 Tablets)',
-    slug: 'brufen-400mg-tablets-30-tablets',
-    price: 360,
-    effectivePrice: 360,
+    name: 'Pyodine 10% Antiseptic Solution (60ml)',
+    slug: 'pyodine-10-antiseptic-solution-60ml',
+    price: 180,
+    effectivePrice: 180,
     stockStatus: 'in_stock',
     requiresPrescription: false,
-    images: [{ path: '/images/products/brufen-400mg-tablets-30-tablets.webp', isPrimary: true }],
+    images: [{ path: '/images/products/pyodine-10-antiseptic-solution-60ml.webp', isPrimary: true }],
   },
   {
     _id: 'pop-9',
