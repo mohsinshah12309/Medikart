@@ -3,7 +3,7 @@
  * Submits URL changes directly to Microsoft Bing, Yandex, Seznam, and IndexNow network.
  */
 
-export const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'e47c1f83b27a4d59a8c7e92d83b10c9a';
+export const INDEXNOW_KEY = process.env.INDEXNOW_KEY || 'b76ac79c65b745efb4dd58e5ec9cfcee';
 export const SITE_HOST = 'medikart.pk';
 export const KEY_LOCATION = `https://${SITE_HOST}/${INDEXNOW_KEY}.txt`;
 

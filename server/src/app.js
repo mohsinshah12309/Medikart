@@ -334,7 +334,7 @@ app.all(["/api/indexnow", "/api/v1/indexnow"], async (req, res) => {
     return res.status(401).json({ status: "error", message: "Unauthorized" });
   }
 
-  const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "e47c1f83b27a4d59a8c7e92d83b10c9a";
+  const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "b76ac79c65b745efb4dd58e5ec9cfcee";
   const SITE_HOST = "medikart.pk";
   const KEY_LOCATION = `https://${SITE_HOST}/${INDEXNOW_KEY}.txt`;
 
