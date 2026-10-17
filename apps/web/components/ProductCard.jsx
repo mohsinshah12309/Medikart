@@ -26,10 +26,15 @@ const getFullUrl = (path) => {
 
 const getProductImage = (product) => {
   if (!product) return "/uploads/placeholder.webp";
+  // If coverImage is placeholder or missing, inspect images array for actual product photograph
+  const primaryImg = Array.isArray(product.images) && product.images.find(img => img.isPrimary && img.path && !img.path.includes("placeholder"))?.path;
+  const firstRealImg = Array.isArray(product.images) && product.images.find(img => img.path && !img.path.includes("placeholder"))?.path;
+  
   const raw =
+    (product.coverImage && !product.coverImage.includes("placeholder") ? product.coverImage : null) ||
+    primaryImg ||
+    firstRealImg ||
     product.coverImage ||
-    (Array.isArray(product.images) && product.images.find(img => img.isPrimary)?.path) ||
-    (Array.isArray(product.images) && product.images[0]?.path) ||
     product.image ||
     "";
   return getFullUrl(raw);

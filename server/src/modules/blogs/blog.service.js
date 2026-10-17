@@ -3,6 +3,7 @@ const path = require("path");
 const Blog = require("./blog.model");
 const Category = require("../categories/category.model");
 const Product = require("../products/product.model");
+const { formatProductWithImages } = require("../products/product.service");
 const { generateBrandedBlogThumbnail } = require("./blogThumbnail.service");
 
 /**
@@ -71,9 +72,10 @@ async function getRelatedProductsForBlog(blog) {
     .lean();
 
   return products.map((p) => {
-    const effectivePrice = p.discountPercent > 0 ? Math.round(p.price * (1 - p.discountPercent / 100)) : p.price;
+    const formatted = formatProductWithImages(p);
+    const effectivePrice = formatted.discountPercent > 0 ? Math.round(formatted.price * (1 - formatted.discountPercent / 100)) : formatted.price;
     return {
-      ...p,
+      ...formatted,
       effectivePrice,
     };
   });
