@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Shopping Cart | Medikart Pharmacy",
+  title: "Shopping Cart",
   description: "Review your selected authentic prescription medicines, vitamins, and healthcare essentials in your Medikart shopping cart.",
   robots: {
     index: false,

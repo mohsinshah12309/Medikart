@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Forgot Password Recovery | Medikart",
+  title: "Forgot Password Recovery",
   description: "Recover your Medikart customer account password securely with a single-use verification link.",
   robots: {
     index: false,

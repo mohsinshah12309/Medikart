@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "30-Day Monthly Medicine Refill Program Pakistan | Medikart",
+  title: { absolute: "30-Day Monthly Medicine Refill Program Pakistan | Medikart" },
   description: "Never run out of essential chronic maintenance medicines. Medikart's 30-day automated refill program delivers diabetes, blood pressure & cardiac care medicines on schedule across Pakistan.",
   keywords: [
     "monthly medicine refill Pakistan",

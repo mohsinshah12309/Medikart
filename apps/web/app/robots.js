@@ -33,6 +33,9 @@ export default function robots() {
           'CCBot',
           'Applebot-Extended',
           'bingbot',
+          'meta-externalagent',
+          'FacebookBot',
+          'cohere-ai',
         ],
         allow: [
           '/',

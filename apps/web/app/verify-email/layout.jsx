@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Verify Email Address | Medikart",
+  title: "Verify Account OTP",
   description: "Enter your 6-digit OTP code to verify your Medikart customer account email address.",
   robots: {
     index: false,

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Create Account | Medikart Pharmacy",
+  title: "Create an Account",
   description: "Join Medikart to order authentic medicines, schedule 30-day refills, save wishlists, and track orders across Pakistan.",
   robots: {
     index: false,

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Reset Password | Medikart Account",
+  title: "Set New Password",
   description: "Create a new secure password for your Medikart pharmacy customer account.",
   robots: {
     index: false,

@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Secure Checkout | Medikart Online Pharmacy",
+  title: "Secure Checkout",
   description: "Complete your medicine order with secure verification, Cash on Delivery, or online digital payments on Medikart.",
   robots: {
     index: false,

@@ -1,7 +1,7 @@
 import { redirect, RedirectType } from 'next/navigation';
 
 export const metadata = {
-  title: 'Medicines A-Z Index | Medikart Online Pharmacy Pakistan',
+  title: { absolute: 'Medicines A-Z Directory | Authentic Pharmaceutical Index | Medikart Pakistan' },
   description: 'Complete directory of authentic prescription and OTC medicines available across Pakistan on Medikart.',
   alternates: {
     canonical: 'https://medikart.pk/medicines-a-z/a',

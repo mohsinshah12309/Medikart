@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Order Confirmation & Invoice | Medikart",
+  title: "Order Confirmed & Invoice",
   description: "View your Medikart pharmacy order summary and official medicine invoice.",
   robots: {
     index: false,

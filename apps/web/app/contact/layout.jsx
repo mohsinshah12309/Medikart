@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Contact Us & Pharmacist Support | Medikart Pakistan | +92 324 4489159",
+  title: { absolute: "Contact Us & Pharmacist Support | Medikart Pakistan | +92 324 4489159" },
   description: "Contact Medikart customer care and licensed pharmacist helpline. Official Headquarters: 92 G1 Johar Town, Lahore, Pakistan. WhatsApp: +92 324 4489159. Email: support@medikart.pk. Assistance with doctor prescription verification, order tracking, and express medicine delivery across Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, and all cities in Pakistan.",
   keywords: [
     "contact Medikart",

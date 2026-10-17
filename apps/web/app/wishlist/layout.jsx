@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "My Saved Wishlist | Medikart Pharmacy",
+  title: "My Saved Wishlist",
   description: "View and order your saved medicines, vitamins, and healthcare wellness essentials from your Medikart wishlist.",
   robots: {
     index: false,

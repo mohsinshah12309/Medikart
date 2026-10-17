@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medikart Invoice - INV-MDK-2026-089</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 6mm 8mm 5mm 8mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      font-size: 7.8pt;
+      line-height: 1.25;
+    }
+
+    .invoice-wrapper {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+    }
+
+    .brand-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-pill {
+      background: #FFEE45;
+      color: #0f172a;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14pt;
+      font-weight: 800;
+      padding: 1px 8px;
+      border-radius: 6px;
+      border: 1.5px solid #d4c004;
+      letter-spacing: -0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .logo-pill span {
+      color: #059669;
+    }
+
+    .tagline {
+      font-size: 7.2pt;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 1px;
+    }
+
+    .company-meta {
+      font-size: 6.8pt;
+      color: #64748b;
+      margin-top: 1px;
+    }
+
+    .invoice-meta-card {
+      text-align: right;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      padding: 4px 10px;
+      min-width: 200px;
+    }
+
+    .invoice-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11pt;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 7.2pt;
+      margin-top: 1px;
+    }
+
+    .meta-label {
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .meta-val {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .badge-paid {
+      display: inline-block;
+      background: #fef08a;
+      color: #854d0e;
+      font-size: 6.2pt;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid #facc15;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* ─── Bill To / Project Info ─── */
+    .bill-info-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 4px 10px;
+      margin-bottom: 5px;
+    }
+
+    .info-block h4 {
+      font-size: 6.8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 1px;
+    }
+
+    .info-block p {
+      font-size: 7.8pt;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .info-block span {
+      font-size: 6.8pt;
+      color: #64748b;
+      display: block;
+      margin-top: 0px;
+    }
+
+    /* ─── Table ─── */
+    .table-container {
+      margin-bottom: 5px;
+    }
+
+    table.invoice-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 7.2pt;
+    }
+
+    table.invoice-table thead tr {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    table.invoice-table th {
+      padding: 3.5px 6px;
+      font-size: 6.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+
+    table.invoice-table th.text-center { text-align: center; }
+    table.invoice-table th.text-right { text-align: right; }
+
+    table.invoice-table tbody tr {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    table.invoice-table tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    table.invoice-table td {
+      padding: 2.8px 6px;
+      vertical-align: middle;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    table.invoice-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .item-num {
+      font-weight: 800;
+      color: #64748b;
+      font-size: 6.8pt;
+      text-align: center;
+      width: 20px;
+    }
+
+    .item-desc strong {
+      font-size: 7.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      display: block;
+      margin-bottom: 0px;
+    }
+
+    .item-desc span {
+      font-size: 6.5pt;
+      color: #475569;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .price-col {
+      width: 100px;
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .price-standard {
+      color: #94a3b8;
+      font-weight: 700;
+      font-size: 7.8pt;
+      text-decoration: line-through;
+      text-decoration-color: #ef4444;
+      text-decoration-thickness: 1.5px;
+    }
+
+    .price-final {
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 7.8pt;
+    }
+
+    .free-pill {
+      display: inline-block;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 800;
+      font-size: 6.2pt;
+      padding: 1px 5px;
+      border-radius: 999px;
+      border: 1px solid #86efac;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── Financial Summary Cards ─── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr;
+      gap: 8px;
+      margin-bottom: 5px;
+      page-break-inside: avoid;
+    }
+
+    .discount-banner {
+      background: #fefce8;
+      border: 1.5px solid #fef08a;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .discount-banner .title {
+      font-size: 7.2pt;
+      font-weight: 800;
+      color: #854d0e;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 1px;
+    }
+
+    .discount-banner .detail {
+      font-size: 6.5pt;
+      color: #713f12;
+      line-height: 1.25;
+    }
+
+    .totals-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 7.2pt;
+    }
+
+    .totals-table td {
+      padding: 3px 8px;
+    }
+
+    .totals-table tr.total-row {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .totals-table tr.total-row td {
+      padding: 4.5px 8px;
+      font-size: 9pt;
+      font-weight: 800;
+      color: #FFEE45;
+    }
+
+    /* ─── Installment & Payment Strip ─── */
+    .lower-strip {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 8px;
+      margin-bottom: 5px;
+      page-break-inside: avoid;
+    }
+
+    .panel {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 4px 8px;
+      background: #ffffff;
+    }
+
+    .panel-header {
+      font-size: 7.2pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0f172a;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 2px;
+      margin-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .inst-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 6.8pt;
+    }
+
+    .inst-table th {
+      text-align: left;
+      font-weight: 700;
+      color: #64748b;
+      padding: 1.5px 2px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .inst-table td {
+      padding: 1.8px 2px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+
+    .inst-table tr.advance-row {
+      background: #fefce8;
+      font-weight: 800;
+      color: #854d0e;
+    }
+
+    .account-box {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 5px;
+      padding: 4px 6px;
+      margin-top: 2px;
+    }
+
+    .account-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 6.8pt;
+      margin-bottom: 1.5px;
+    }
+
+    .account-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .acc-label { color: #64748b; font-weight: 600; }
+    .acc-val { color: #0f172a; font-weight: 800; font-family: monospace; font-size: 7.5pt; }
+
+    /* ─── Highlighted Tabular SLA Retainer ─── */
+    .sla-section {
+      margin-top: 4px;
+      page-break-inside: avoid;
+    }
+
+    table.sla-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1.5px solid #0284c7;
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 7pt;
+      background: #f0f9ff;
+    }
+
+    table.sla-table thead tr {
+      background: #0369a1;
+      color: #ffffff;
+    }
+
+    table.sla-table th {
+      padding: 2.5px 6px;
+      font-size: 6.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+
+    table.sla-table td {
+      padding: 3px 6px;
+      vertical-align: middle;
+      border-top: 1px solid #bae6fd;
+    }
+
+    .sla-service-title {
+      font-size: 7.5pt;
+      font-weight: 800;
+      color: #0c4a6e;
+      display: block;
+    }
+
+    .sla-service-sub {
+      font-size: 6.5pt;
+      color: #0284c7;
+      font-weight: 600;
+      display: block;
+      margin-top: 0px;
+    }
+
+    .sla-scope-list {
+      font-size: 6.5pt;
+      color: #1e293b;
+      line-height: 1.25;
+    }
+
+    .sla-scope-list strong {
+      color: #0f172a;
+    }
+
+    .sla-price-cell {
+      text-align: right;
+      white-space: nowrap;
+      background: #e0f2fe;
+      border-left: 1px solid #bae6fd;
+      padding: 3px 8px !important;
+    }
+
+    .sla-price-val {
+      font-size: 9pt;
+      font-weight: 800;
+      color: #0369a1;
+      display: block;
+    }
+
+    .sla-price-cycle {
+      font-size: 6.2pt;
+      color: #0284c7;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .footer-bar {
+      margin-top: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 6.2pt;
+      color: #64748b;
+      page-break-inside: avoid;
+    }
+
+    .sla-tag {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 1.5px 5px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="invoice-wrapper">
+
+  <!-- ─── HEADER ─── -->
+  <div class="header">
+    <div class="brand-section">
+      <div class="logo-container">
+        <div class="logo-pill">MEDI<span>KART</span></div>
+      </div>
+      <div class="tagline">Enterprise Full-Stack Engineering &amp; AI Healthcare Architecture</div>
+      <div class="company-meta">
+        Official Storefront: <strong>https://medikart.pk</strong> · Lahore / Karachi / Islamabad
+      </div>
+    </div>
+
+    <div class="invoice-meta-card">
+      <div class="invoice-title">OFFICIAL INVOICE</div>
+      <div class="meta-row">
+        <span class="meta-label">Invoice Ref:</span>
+        <span class="meta-val">INV-MDK-2026-089</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Issue Date:</span>
+        <span class="meta-val">October 17, 2026</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Billing Cycle:</span>
+        <span class="meta-val">Complete Handover</span>
+      </div>
+      <div class="badge-paid">4-Month Milestone Eligible</div>
+    </div>
+  </div>
+
+  <!-- ─── CLIENT INFO ─── -->
+  <div class="bill-info-strip">
+    <div class="info-block">
+      <h4>Invoiced To (Client Organization):</h4>
+      <p>Medikart Online Pharmacy Pakistan</p>
+      <span>Primary Domain: medikart.pk (PKNIC Verified)</span>
+      <span>Fulfillment Center: 92 G1 Johar Town, Lahore, Pakistan</span>
+    </div>
+    <div class="info-block">
+      <h4>Engineering Scope &amp; Deliverable:</h4>
+      <p>Full-Stack Custom AI Pharmacy &amp; Regulatory Catalog Infrastructure</p>
+      <span>Stack: Next.js 14 SSR, Node.js/Express, MongoDB Atlas, Redis &amp; Cloudflare</span>
+      <span>DRAP Licensure Safe: Zero Catalog Deletions · 6,149 Audited Products</span>
+    </div>
+  </div>
+
+  <!-- ─── ITEMIZED DELIVERABLES TABLE ─── -->
+  <div class="table-container">
+    <table class="invoice-table">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 28px;">#</th>
+          <th>Engineering Scope &amp; Technical Deliverable Description</th>
+          <th class="text-right" style="width: 125px;">Standard Value</th>
+          <th class="text-right" style="width: 130px;">Contract Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item-num">01</td>
+          <td class="item-desc">
+            <strong>Computer Vision (CV), Deep Learning &amp; OCR Automated Image Pipeline</strong>
+            <span>Proprietary CV background subtraction, perspective deskewing &amp; OCR text-to-SKU validation across 6,147 catalog items. WebP lossy compression and high-speed CDN linking.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 60,000</span></td>
+          <td class="price-col text-right"><span class="free-pill">Rs. 0 (FREE)</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">02</td>
+          <td class="item-desc">
+            <strong>"Medi" 24/7 Clinical AI Assistant &amp; Symptom Triage LLM Pipeline</strong>
+            <span>Clinical domain-trained conversational AI for real-time OTC symptom triage, matching queries to in-stock medicines with strict clinical safety guardrails against controlled drugs.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 45,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 30,000</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">03</td>
+          <td class="item-desc">
+            <strong>Regulatory Cybersecurity, Narcotics Gating &amp; Anti-Fraud Suite</strong>
+            <span>Schedule-G controlled medicine gating with licensed pharmacist approval workflows, multimodal prescription magic-byte file validation, anti-scraping rate limiters &amp; Cloudflare WAF.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 40,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 25,000</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">04</td>
+          <td class="item-desc">
+            <strong>Next.js 14 Storefront, Rapid WhatsApp &amp; Mobile Camera Engine</strong>
+            <span>High-performance Server-Side Rendered (SSR) storefront with 1-tap native camera prescription capture (`capture="environment"`), 1-click encrypted WhatsApp order payloads &amp; Refill scheduling.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 70,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 50,000</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">05</td>
+          <td class="item-desc">
+            <strong>Dual-Tier Complementary Cross-Selling Engine</strong>
+            <span>Automated cross-sell matrix: Tier 1 Brand Line pack-size variations + Tier 2 "Frequently Bought Together" pairs (e.g. Antipyretic + Cough Syrup; Glucometer + Test Strips).</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 35,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 25,000</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">06</td>
+          <td class="item-desc">
+            <strong>Pharmacy Operations Desk &amp; Multi-Branch Admin Suite</strong>
+            <span>Multi-location branch order verification, prescription inspection lightbox, real-time inventory toggle, batch pricing manager, and automated Excel reporting for accounting.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 40,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 28,000</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">07</td>
+          <td class="item-desc">
+            <strong>6,147 Pharmaceuticals Database Cleaning &amp; Pricing Multiplier</strong>
+            <span>Algorithmic pack-size multiplier rectifying CSV unit-price glitches into true full-pack MRPs across 2,884 affected items. 100% catalog integrity preserved (zero products deleted).</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 35,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 25,000</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">08</td>
+          <td class="item-desc">
+            <strong>SEO, AEO, GEO &amp; Automated Search Engine Indexing Engine</strong>
+            <span>70 Clinical Health Guides with in-article medicine buy cards, Google Merchant Center automated product feed, Bing IndexNow bulk push API (200 OK verified), &amp; Schema.org JSON-LD.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-standard">PKR 16,800</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 28,800</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">09</td>
+          <td class="item-desc">
+            <strong>Official PKNIC Domain Registration (medikart.pk)</strong>
+            <span>Direct 1-Year PKNIC registrar fee and DNS configuration.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-final">PKR 4,200</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 4,200</span></td>
+        </tr>
+
+        <tr>
+          <td class="item-num">10</td>
+          <td class="item-desc">
+            <strong>High-Performance Cloud VPS Server, MongoDB &amp; SSL Hosting</strong>
+            <span>Production Ubuntu VPS setup, PM2 cluster orchestration, MongoDB Atlas cloud &amp; Cloudflare SSL.</span>
+          </td>
+          <td class="price-col text-right"><span class="price-final">PKR 4,000</span></td>
+          <td class="price-col text-right"><span class="price-final">PKR 4,000</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ─── FINANCIAL SUMMARY ─── -->
+  <div class="summary-grid">
+    <div class="discount-banner">
+      <div class="title">Enterprise Launch Concession Applied</div>
+      <div class="detail">
+        • <strong>100% Fee Waiver:</strong> Computer Vision &amp; OCR Image Processing (PKR 60,000 value) provided at <strong>Rs. 0</strong>.<br>
+        • <strong>Promotional Discount:</strong> Additional commercial concession of PKR 70,000 applied across core stack.<br>
+        • <strong>Total Client Cost Savings:</strong> <strong>PKR 130,000 (37.1% Off)</strong>.
+      </div>
+    </div>
+
+    <table class="totals-table">
+      <tr>
+        <td style="color: #64748b; font-weight: 600;">Gross Standard Commercial Value:</td>
+        <td style="text-align: right; color: #94a3b8; font-weight: 700; text-decoration: line-through; text-decoration-color: #ef4444;">PKR 350,000</td>
+      </tr>
+      <tr>
+        <td style="color: #059669; font-weight: 700;">Promotional &amp; CV Technology Discount:</td>
+        <td style="text-align: right; color: #059669; font-weight: 800;">- PKR 130,000</td>
+      </tr>
+      <tr class="total-row">
+        <td>TOTAL CONTRACT BALANCE DUE:</td>
+        <td style="text-align: right;">PKR 220,000</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ─── INSTALLMENT & PAYMENT STRIP ─── -->
+  <div class="lower-strip">
+    <div class="panel">
+      <div class="panel-header">
+        <span>Flexible 4-Month Milestone Schedule</span>
+        <span style="color: #059669; font-size: 7pt; font-weight: 800;">0% Interest Surcharge</span>
+      </div>
+      <table class="inst-table">
+        <thead>
+          <tr>
+            <th>Milestone Phase</th>
+            <th>Due Timeline</th>
+            <th>Share</th>
+            <th style="text-align: right;">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="advance-row">
+            <td><strong>Advance Milestone</strong></td>
+            <td>Immediate Handover</td>
+            <td>59.1%</td>
+            <td style="text-align: right;"><strong>PKR 130,000</strong></td>
+          </tr>
+          <tr>
+            <td>Installment 1 / 4</td>
+            <td>30 Days Post-Launch</td>
+            <td>10.2%</td>
+            <td style="text-align: right; font-weight: 700;">PKR 22,500</td>
+          </tr>
+          <tr>
+            <td>Installment 2 / 4</td>
+            <td>60 Days Post-Launch</td>
+            <td>10.2%</td>
+            <td style="text-align: right; font-weight: 700;">PKR 22,500</td>
+          </tr>
+          <tr>
+            <td>Installment 3 / 4</td>
+            <td>90 Days Post-Launch</td>
+            <td>10.2%</td>
+            <td style="text-align: right; font-weight: 700;">PKR 22,500</td>
+          </tr>
+          <tr>
+            <td>Installment 4 / 4</td>
+            <td>120 Days Post-Launch</td>
+            <td>10.2%</td>
+            <td style="text-align: right; font-weight: 700;">PKR 22,500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span>Designated Payment Remittance</span>
+        <span style="color: #64748b; font-size: 7pt;">Official Channel</span>
+      </div>
+      <div class="account-box">
+        <div class="account-row">
+          <span class="acc-label">Remittance Channel:</span>
+          <span class="acc-val" style="color: #b45309; font-family: sans-serif;">JazzCash / Mobile Transfer</span>
+        </div>
+        <div class="account-row">
+          <span class="acc-label">Account Title:</span>
+          <span class="acc-val" style="font-family: sans-serif; font-size: 8.5pt;">Syed Asif Ali Shah</span>
+        </div>
+        <div class="account-row">
+          <span class="acc-label">Account Number:</span>
+          <span class="acc-val" style="font-size: 10pt; color: #0f172a; letter-spacing: 0.5px;">03074043799</span>
+        </div>
+        <div class="account-row">
+          <span class="acc-label">Payment Memo / Ref:</span>
+          <span class="acc-val" style="font-size: 7.5pt;">INV-MDK-2026-089</span>
+        </div>
+      </div>
+      <div style="font-size: 6.8pt; color: #64748b; margin-top: 5px; line-height: 1.3;">
+        Kindly share the transaction receipt / proof of payment via WhatsApp or email upon milestone transfer.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ONGOING ENTERPRISE SLA RETAINER (TABULAR HIGHLIGHT) ─── -->
+  <div class="sla-section">
+    <table class="sla-table">
+      <thead>
+        <tr>
+          <th style="width: 27%;">ONGOING RETAINER SCOPE</th>
+          <th style="width: 53%;">SYSTEM HEALTH &amp; REGULATORY COVERAGE</th>
+          <th style="width: 20%; text-align: right;">RETAINER PRICING</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="sla-service-title">Ongoing Enterprise SLA Retainer</span>
+            <span class="sla-service-sub">Dedicated Production Engineering</span>
+          </td>
+          <td class="sla-scope-list">
+            • <strong>24/7 PM2 Cluster Monitoring:</strong> Zero-downtime process surveillance &amp; auto-recovery.<br>
+            • <strong>Automated Database Backups:</strong> Nightly cloud snapshots &amp; DRAP compliance retention.<br>
+            • <strong>Catalog Index &amp; Search Updates:</strong> Google Merchant sync &amp; Bing IndexNow push updates.<br>
+            • <strong>Security &amp; Compliance Patches:</strong> Cloudflare WAF threat mitigation &amp; DRAP regulations.
+          </td>
+          <td class="sla-price-cell">
+            <span class="sla-price-val">PKR 15,000</span>
+            <span class="sla-price-cycle">/ Month (Recurring)</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer-bar">
+      <span>Development deliverables verified &amp; warrantied. Retainer commences upon store production handover.</span>
+      <span class="sla-tag">✓ Certified Enterprise Delivery</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

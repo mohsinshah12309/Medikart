@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "About Us | Authentic Online Pharmacy Network in Pakistan | Medikart.pk",
+  title: { absolute: "About Us | Authentic Online Pharmacy Network in Pakistan | Medikart" },
   description: "Medikart is Pakistan's leading digital healthcare and pharmacy platform connecting patients with licensed retail partner pharmacies. Supplying 100% DRAP-registered prescription medicines, OTC remedies, vitamins, and healthcare essentials with 2-4 hr express delivery in Lahore, Karachi, Islamabad/Rawalpindi and 24-48 hr nationwide delivery across Faisalabad, Multan, Sahiwal, Peshawar, Quetta, and 150+ cities with Cash on Delivery (COD).",
   keywords: [
     "about Medikart",

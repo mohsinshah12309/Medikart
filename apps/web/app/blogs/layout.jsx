@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Healthcare & Wellness Blog | Verified Medical Guides Pakistan | Medikart",
+  title: { absolute: "Healthcare & Wellness Blog | Verified Medical Guides Pakistan | Medikart" },
   description: "Read doctor-reviewed healthcare articles, pediatric nutrition tips, chronic disease management guides, and authentic medicine advice in Pakistan.",
   keywords: [
     "health blog Pakistan",
