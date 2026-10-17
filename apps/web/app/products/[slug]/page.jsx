@@ -211,7 +211,6 @@ export default async function ProductDetailPage({ params }) {
       url: canonicalUrl,
       priceCurrency: 'PKR',
       price: effectivePrice,
-      priceValidUntil: '2027-12-31',
       validFrom: '2024-01-01',
       itemCondition: 'https://schema.org/NewCondition',
       availability: isOutOfStock ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',

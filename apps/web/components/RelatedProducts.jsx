@@ -77,15 +77,15 @@ export default function RelatedProducts({ currentProduct, primaryCategory, initi
                 <Stethoscope className="w-4 h-4 text-amber-700" />
               </div>
               <h2 className="text-xl sm:text-2xl font-black font-heading tracking-tight text-slate-900">
-                Related Products &amp; Suggestions
+                Frequently Bought Together &amp; Complementary Care
               </h2>
               <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-extrabold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full border border-amber-200">
                 <Sparkles className="w-3 h-3 text-amber-600" />
-                Smart Match
+                Frequently Paired
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-              Customers viewing this item also considered these brand variants, authentic alternatives and healthcare essentials
+              Customers viewing this medicine frequently pair it with these complementary essentials, syrups, and health care items
             </p>
           </div>
 

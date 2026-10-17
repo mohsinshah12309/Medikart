@@ -262,7 +262,6 @@ export default async function CategoryPage({ params, searchParams }) {
               priceCurrency: 'PKR',
               availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
               url: prodUrl,
-              priceValidUntil: '2027-12-31',
               seller: {
                 '@type': 'Organization',
                 name: 'Medikart',

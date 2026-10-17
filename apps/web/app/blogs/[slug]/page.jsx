@@ -689,6 +689,39 @@ export default async function BlogPostPage({ params }) {
                   );
                 })}
               </div>
+
+              {/* In-Article Contextual Product Buy Card / Fast Order Widget (Feature 2) */}
+              {sIdx === 1 && relatedProducts && relatedProducts.length > 0 && (
+                <div className="my-8 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-50 via-yellow-50/50 to-white border-2 border-amber-300 shadow-warm-card">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-amber-200/80">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shadow-xs">
+                        💊
+                      </div>
+                      <div>
+                        <h3 className="text-base sm:text-lg font-black text-slate-900">
+                          Recommended Medicines &amp; Tests for this Guide
+                        </h3>
+                        <p className="text-xs text-slate-600 font-medium">
+                          100% Genuine DRAP-registered stock with fast doorstep delivery in Pakistan
+                        </p>
+                      </div>
+                    </div>
+                    <Link
+                      href="/categories/medicines"
+                      className="text-xs font-black text-slate-950 bg-yellow-400 hover:bg-yellow-300 border border-yellow-500 px-3.5 py-1.5 rounded-xl transition-all shadow-xs self-start sm:self-auto flex items-center gap-1"
+                    >
+                      <span>Browse Catalog</span>
+                      <span>→</span>
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {relatedProducts.slice(0, 4).map((prod) => (
+                      <ProductCard key={prod._id || prod.slug} product={prod} />
+                    ))}
+                  </div>
+                </div>
+              )}
             </section>
           );
         })}

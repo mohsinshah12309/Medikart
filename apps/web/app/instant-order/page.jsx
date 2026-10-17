@@ -386,44 +386,66 @@ export default function InstantOrderPage() {
             </span>
           </div>
 
-          {/* Drag & Drop Zone */}
+          {/* Drag & Drop & Camera Capture Zone */}
           {!prescriptionFile ? (
-            <div 
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-2xl p-8 sm:p-10 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3 ${
-                isDragOver 
-                  ? 'border-yellow-500 bg-yellow-100/70 scale-[1.01]' 
-                  : 'border-yellow-300 bg-yellow-50/40 hover:border-yellow-500 hover:bg-yellow-50/80'
-              }`}
-            >
-              <div className="w-16 h-16 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-slate-950 text-3xl mb-1 shadow-xs">
-                📤
+            <div className="space-y-3">
+              <div 
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onClick={() => fileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-2xl p-7 sm:p-9 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3 ${
+                  isDragOver 
+                    ? 'border-yellow-500 bg-yellow-100/70 scale-[1.01]' 
+                    : 'border-yellow-300 bg-yellow-50/40 hover:border-yellow-500 hover:bg-yellow-50/80'
+                }`}
+              >
+                <div className="w-14 h-14 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-slate-950 text-2xl mb-1 shadow-xs">
+                  📤
+                </div>
+                <div>
+                  <p className="text-slate-950 font-black text-base sm:text-lg">
+                    Click to Upload or Drag &amp; Drop Prescription
+                  </p>
+                  <p className="text-slate-600 text-xs sm:text-sm mt-1">
+                    Supported formats: <strong className="text-slate-950">PDF, JPG, PNG, WEBP</strong> (Max 15MB)
+                  </p>
+                </div>
+                <div className="mt-1 bg-red-50 border border-red-200 px-4 py-1.5 rounded-full text-xs text-red-700 font-bold">
+                  🚫 ZIP files and compressed archives are strictly blocked
+                </div>
+                
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  id="prescription"
+                  accept=".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp,application/pdf"
+                  required
+                  onChange={handleFileChange}
+                  disabled={submitting}
+                  className="hidden"
+                />
               </div>
-              <div>
-                <p className="text-slate-950 font-black text-base sm:text-lg">
-                  Click to Upload or Drag &amp; Drop Prescription
-                </p>
-                <p className="text-slate-600 text-xs sm:text-sm mt-1">
-                  Supported formats: <strong className="text-slate-950">PDF, JPG, PNG, WEBP</strong> (Max 15MB)
-                </p>
+
+              {/* Direct Camera Button (Mobile & Desktop WebRTC Capture) */}
+              <div className="flex items-center justify-center">
+                <label
+                  htmlFor="prescription-camera"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer border border-slate-700"
+                >
+                  <span className="text-base">📸</span>
+                  <span>Take Photo with Camera</span>
+                  <input
+                    id="prescription-camera"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    onChange={handleFileChange}
+                    disabled={submitting}
+                    className="sr-only"
+                  />
+                </label>
               </div>
-              <div className="mt-2 bg-red-50 border border-red-200 px-4 py-1.5 rounded-full text-xs text-red-700 font-bold">
-                🚫 ZIP files and compressed archives are strictly blocked
-              </div>
-              
-              <input
-                ref={fileInputRef}
-                type="file"
-                id="prescription"
-                accept=".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp,application/pdf"
-                required
-                onChange={handleFileChange}
-                disabled={submitting}
-                className="hidden"
-              />
             </div>
           ) : (
             /* Selected File Preview Box */

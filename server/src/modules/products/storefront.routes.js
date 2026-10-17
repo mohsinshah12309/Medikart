@@ -1772,7 +1772,43 @@ router.get("/products/:id/contextual-links", async (req, res, next) => {
         const primaryCatId = currentProduct.categoryIds?.[0];
         const currentTokens = (currentProduct.name || "").toLowerCase().split(/\s+/).filter((t) => t.length >= 3);
         const priceMin = (currentProduct.price || 0) * 0.5;
-        const priceMax = (currentProduct.price || 0) * 1.5;
+        // 3. Clinical Complementary Mapping & Frequently Bought Together (Feature 4)
+        // If customer is viewing fever/pain/analgesic (e.g. Panadol, Brufen, Calpol), cross-sell cough syrup, hydration & vitamins
+        const complementaryQueries = [];
+        const lowerName = (currentProduct.name || "").toLowerCase();
+        const lowerGeneric = (currentProduct.genericName || "").toLowerCase();
+
+        if (lowerName.includes("panadol") || lowerName.includes("paracetamol") || lowerName.includes("calpol") || lowerName.includes("brufen") || lowerGeneric.includes("paracetamol") || lowerGeneric.includes("ibuprofen")) {
+          complementaryQueries.push({
+            name: /(syrup|cough|saniplast|thermometer|cac\s*1000|surbex|hydr|ors|vitamin)/i,
+            _id: { $ne: currentProduct._id },
+            active: true,
+            isNarcotic: false,
+          });
+        } else if (lowerName.includes("accu") || lowerName.includes("strip") || lowerName.includes("sugar") || lowerName.includes("glucophage") || lowerGeneric.includes("metformin")) {
+          complementaryQueries.push({
+            name: /(lancet|strip|alcohol\s*swab|sugar\s*free|canderel|glucometer)/i,
+            _id: { $ne: currentProduct._id },
+            active: true,
+            isNarcotic: false,
+          });
+        } else if (lowerName.includes("risek") || lowerName.includes("nexum") || lowerName.includes("gaviscon") || lowerGeneric.includes("omeprazole") || lowerGeneric.includes("esomeprazole")) {
+          complementaryQueries.push({
+            name: /(gaviscon|antacid|ispaghol|mucaine|digestion|probiotic)/i,
+            _id: { $ne: currentProduct._id },
+            active: true,
+            isNarcotic: false,
+          });
+        }
+
+        let complementaryPool = [];
+        if (complementaryQueries.length > 0) {
+          complementaryPool = await Product.find({ $or: complementaryQueries })
+            .select("name slug genericName price sku categoryIds isNarcotic requiresPrescription stockStatus images discount active")
+            .populate("categoryIds", "name slug discount active")
+            .limit(10)
+            .lean();
+        }
 
         // Candidates from category or general active pool
         const candidateFilter = {
@@ -1793,9 +1829,19 @@ router.get("/products/:id/contextual-links", async (req, res, next) => {
           .limit(30)
           .lean();
 
+        // Merge candidate pool with complementary pool (ensuring uniqueness)
+        const poolMap = new Map();
+        complementaryPool.forEach(p => poolMap.set(String(p._id), { p, isComp: true }));
+        candidatePool.forEach(p => {
+          if (!poolMap.has(String(p._id))) poolMap.set(String(p._id), { p, isComp: false });
+        });
+
         // Score each candidate
-        const scoredCandidates = candidatePool.map((cand) => {
+        const scoredCandidates = Array.from(poolMap.values()).map(({ p: cand, isComp }) => {
           let score = 0;
+          if (isComp) {
+            score += 8; // High priority to clinical complementary cross-sells
+          }
           if (currentProduct.genericName && cand.genericName && currentProduct.genericName.toLowerCase() === cand.genericName.toLowerCase()) {
             score += 5;
           }
